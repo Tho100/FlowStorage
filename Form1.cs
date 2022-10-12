@@ -717,6 +717,16 @@ namespace FlowSERVER1 {
             var ReadFile = new List<string>(File.ReadAllLines(setupPath));
             ReadFile.RemoveAt(1);
             File.WriteAllLines(setupPath,ReadFile.ToArray());
+            setupUserDate();
+        }
+
+        public void setupUserDate() {
+            var setupPath = @"C:\FLOWSTORAGEINFO\";
+            if(Directory.Exists(setupPath)) {
+                FileInfo getCustfile = new FileInfo(setupPath + "cust_username.txt");
+                DateTime getCreationTime = getCustfile.CreationTime;
+                label10.Text = getCreationTime.ToString().Substring(0,10);
+            }
         }
         // Dir
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -1462,31 +1472,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox1_TextChanged_1(object sender, EventArgs e) {
-
-        }
-
         private void guna2Panel5_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void panel2_Paint_1(object sender, PaintEventArgs e) {
 
         }
     }
