@@ -693,5 +693,17 @@ namespace FlowSERVER1 {
         private void panel1_Paint(object sender, PaintEventArgs e) {
 
         }
+
+        private void guna2Button3_Click(object sender, EventArgs e) {
+            guna2Button1.Visible = true;
+            guna2Button3.Visible = false;
+            guna2TextBox2.PasswordChar = '\0';
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+            guna2Button1.Visible = false;
+            guna2Button3.Visible = true;
+            guna2TextBox2.PasswordChar = '*';
+        }
     }
 }

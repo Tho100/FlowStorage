@@ -24,11 +24,6 @@ namespace FlowSERVER1 {
             this.WindowState = FormWindowState.Maximized;
             this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
 
-            /*Directory.CreateDirectory(@"C:\FLOWSTORAGEINFO");
-            if (Directory.Exists(@"C:\FLOWSTORAGEINFO")) {
-                File.Create(@"C:\FLOWSTORAGEINFO\cust_username.txt");
-            }*/
-
             randomizeUser();
 
             string server = "localhost";

@@ -152,10 +152,6 @@ namespace FlowSERVER1
             }
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.Close();
             LogIN SignForm = new LogIN();
@@ -176,6 +172,18 @@ namespace FlowSERVER1
 
         private void label3_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button3_Click(object sender, EventArgs e) {
+            guna2Button3.Visible = false;
+            guna2Button4.Visible = true;
+            guna2TextBox2.PasswordChar = '\0';
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            guna2Button3.Visible = true;
+            guna2Button4.Visible = false;
+            guna2TextBox2.PasswordChar = '*';
         }
     }
 }
