@@ -22,7 +22,15 @@ namespace FlowSERVER1 {
         public Form1() {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");           
+            this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
+
+            /*Directory.CreateDirectory(@"C:\FLOWSTORAGEINFO");
+            if (Directory.Exists(@"C:\FLOWSTORAGEINFO")) {
+                File.Create(@"C:\FLOWSTORAGEINFO\cust_username.txt");
+            }*/
+
+            randomizeUser();
+
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";
@@ -686,10 +694,30 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e) {
+        // GENERATE USERNAME
+        public void randomizeUser() {
+            Random setupRand = new Random();
+            int randInt1 = setupRand.Next(0,300);
+            int randInt2 = setupRand.Next(0, 300);
+            int randInt3 = setupRand.Next(0, 300);
+            int randInt4 = setupRand.Next(0, 9);
+            var usernameSet = "Guest" + randInt1 + randInt2 + randInt3 + randInt4;
+            var setupPath = @"C:\FLOWSTORAGEINFO\cust_username.txt";
+            Directory.CreateDirectory(@"C:\FLOWSTORAGEINFO\"); 
+            if(Directory.Exists(@"C:\FLOWSTORAGEINFO\")) {
+                using (StreamWriter sw = File.AppendText(setupPath)) {
+                    sw.WriteLine(usernameSet);
+                    sw.Close();
+                }
+            }
 
+            String retrieveFirstLine = File.ReadLines(@"C:\FLOWSTORAGEINFO\cust_username.txt").First();
+            label5.Text = retrieveFirstLine;
+
+            var ReadFile = new List<string>(File.ReadAllLines(setupPath));
+            ReadFile.RemoveAt(1);
+            File.WriteAllLines(setupPath,ReadFile.ToArray());
         }
-
         // Dir
         private void guna2Button1_Click(object sender, EventArgs e) {
             Form4 create_dir = new Form4();
