@@ -746,18 +746,16 @@ namespace FlowSERVER1 {
                 MySqlCommand command;
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|HTML files(*.html;)|*.html;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
+                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|HTML files(*.html;)|*.html;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
                     string get_ex = open.FileName;
                     string getName = open.SafeFileName;
                     string retrieved = System.IO.Path.GetExtension(get_ex);
                     string retrievedName = System.IO.Path.GetFileNameWithoutExtension(open.FileName);
-                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg") {
+                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico") {
                         curr++;
                         var getImg = new Bitmap(open.FileName);
-
-                        // INSERT USERNAME
 
                         var imgWidth = getImg.Width;
                         var imgHeight = getImg.Height;
@@ -775,9 +773,7 @@ namespace FlowSERVER1 {
 
                         top += h_p;
                         flowLayoutPanel1.Controls.Add(panelPic);
-                        /*
-                        flowLayoutPanel1.Location = new Point(13, 10);
-                        flowLayoutPanel1.Size = new Size(1118, 579);*/
+           
 
                         var panel = ((Guna2Panel)flowLayoutPanel1.Controls["ImgPan" + curr]);
 
@@ -885,21 +881,33 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@username",label5.Text);
                         command.Parameters.AddWithValue("@password", label3.Text);
                         
-                        MemoryStream ms = new MemoryStream();
-                        var imgBox = ((Guna2PictureBox)panel.Controls["Img" + curr]);
-                        imgBox.Image.Save(ms, imgBox.Image.RawFormat);
-                        
-                        byte[] imgSetup = ms.ToArray();
+                        if(!(retrieved == ".ico")) {
 
-                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                        command.Parameters["@CUST_FILE"].Value = imgSetup;
-                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters[@"UPLOAD_DATE"].Value = varDate;
-                        command.Parameters[@"CUST_PASSWORD"].Value = label3.Text;
-                        if(command.ExecuteNonQuery() == 1) {
-                            //
+                            MemoryStream ms = new MemoryStream();
+                            var imgBox = ((Guna2PictureBox)panel.Controls["Img" + curr]);
+                            imgBox.Image.Save(ms, imgBox.Image.RawFormat);
+                        
+                            byte[] imgSetup = ms.ToArray();
+ 
+                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                            command.Parameters["@CUST_FILE"].Value = imgSetup;
+                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                            command.Parameters[@"UPLOAD_DATE"].Value = varDate;
+                            command.Parameters[@"CUST_PASSWORD"].Value = label3.Text;
+                            if(command.ExecuteNonQuery() == 1) {
+                                //
+                            } 
                         } else {
-                            //
+                            Icon getIcon = Icon.ExtractAssociatedIcon(open.FileName);
+                            Image bitMapIcon = getIcon.ToBitmap();
+                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                            command.Parameters["@CUST_FILE"].Value = bitMapIcon;
+                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                            command.Parameters[@"UPLOAD_DATE"].Value = varDate;
+                            command.Parameters[@"CUST_PASSWORD"].Value = label3.Text;
+                            if (command.ExecuteNonQuery() == 1) {
+                                //
+                            }
                         }
 
                         command = new MySqlCommand("SELECT COUNT(CUST_FILE) FROM file_info WHERE CUST_USERNAME = @username",con);
@@ -1164,7 +1172,7 @@ namespace FlowSERVER1 {
                         } else {
                             MessageBox.Show("D");
                         }
-                    } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm") {
+                    } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
                         con.Open();
                         String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
                         command = new MySqlCommand(setupPacketMax,con);
