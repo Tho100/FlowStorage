@@ -4,8 +4,8 @@
 #
 
 ### Requirement
-- 25MB disk space
-- Internet connection 
+- 25MB Disk Space
+- Internet Connection 
 
 ### Operating System
 - Windows 10 
