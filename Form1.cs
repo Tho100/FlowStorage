@@ -697,8 +697,9 @@ namespace FlowSERVER1 {
         // GENERATE USERNAME
         public void randomizeUser() {
             Random setupRand = new Random();
-            int randInt1 = setupRand.Next(0,300);
-            int randInt2 = setupRand.Next(0, 300);
+	    int setupTotalRand = setupRand.Next(0,300);
+            int randInt1 = setupRand.Next(0,setupTotalRand);
+            int randInt2 = setupRand.Next(1, 300);
             int randInt3 = setupRand.Next(0, 300);
             int randInt4 = setupRand.Next(0, 9);
             var usernameSet = "Guest" + randInt1 + randInt2 + randInt3 + randInt4;
@@ -1033,9 +1034,10 @@ namespace FlowSERVER1 {
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;
                         command.Parameters["@CUST_FILE_TXT"].Value = nonLine;
                         if(command.ExecuteNonQuery() == 1) {
-                            //
+                            guna2Button6.Visible = false;
+		                    label8.Visible = false;
                         } else {
-                            MessageBox.Show("");
+                            //
                         }
 
                     } else if (retrieved == ".exe") {
@@ -1351,31 +1353,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            /*
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
-            string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
-            MySqlConnection con = new MySqlConnection(constring);
-            con.Open();
-
-            string query = "SET sql_mode = NO_BACKSLASH_ESCAPES; DELETE FROM file_info WHERE CUST_FILE_PATH = '" + guna2TextBox1.Text + "' AND " + "CUST_ID = " + 4;
-            MySqlCommand command = new MySqlCommand(query,con); 
-            /*
-            if (guna2ComboBox1.Text == "Remove from FlowStorage") {
-                if (MessageBox.Show("Please confirm before proceed" + "\n" + "Do you want to Continue ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-                    if(command.ExecuteNonQuery() == 1) {
-                        MessageBox.Show("REMOVED");
-                        //guna2PictureBox1.Image = null;
-                        //guna2TextBox1.Text = "";
-                    } else {
-                        MessageBox.Show("An error occurred while attempting to remove this file.","FlowStorage System");
-                    }
-                }
-            }
-            */
+           
         }
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
@@ -1384,32 +1362,7 @@ namespace FlowSERVER1 {
 
         private void guna2ComboBox2_SelectedIndexChanged(object sender, EventArgs e) {
             
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
-            string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
-            MySqlConnection con = new MySqlConnection(constring);
-            con.Open();
-            /*
-            string query = "SET sql_mode = NO_BACKSLASH_ESCAPES; DELETE FROM file_info WHERE CUST_FILE_PATH = '" + guna2TextBox2.Text + "' AND " + "CUST_ID = " + 4;
-            MySqlCommand command = new MySqlCommand(query,con);
-            
-            if (guna2ComboBox2.Text == "Remove from FlowStorage") {
-                if (MessageBox.Show("Please confirm before proceed" + "\n" + "Do you want to Continue ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-                    if (command.ExecuteNonQuery() == 1) {
-                        MessageBox.Show("REMOVED");
-                        //guna2PictureBox2.Image = null;
-                        //guna2TextBox2.Text = "";
-                    }
-                    else {
-                        MessageBox.Show(//guna2TextBox2.Text);
-                    }
-                }
-
-            }
-            */
+           
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
