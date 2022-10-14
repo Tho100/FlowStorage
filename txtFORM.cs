@@ -19,6 +19,7 @@ namespace FlowSERVER1 {
             instance = this;
             //guna2TextBox1.Text = getText;
             label1.Text = fileName;
+            label2.Text = Form1.instance.label5.Text;
 
             string server = "localhost";
             string db = "flowserver_db";
@@ -81,6 +82,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
 
         }
     }

@@ -211,32 +211,20 @@ namespace FlowSERVER1 {
                             }
                         };
 
-/*                        Guna2Button savButTxt = new Guna2Button();
-                        panelF.Controls.Add(savButTxt);
-                        savButTxt.Name = "savImg" + i;
-                        savButTxt.Width = 39;
-                        savButTxt.Height = 35;
-                        savButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
-                        savButTxt.BorderRadius = 6;
-                        savButTxt.BorderThickness = 1;
-                        savButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                        savButTxt.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                        savButTxt.Visible = true;
-                        savButTxt.Location = new Point(147, 218);*/
-
                         guna2Button6.Visible = false;
                         label8.Visible = false;
+                        var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
-                        String retrieveImg = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(retrieveImg,con);
-                        command.Parameters.AddWithValue("@username",label5.Text);
+                        String retrieveImg = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(retrieveImg, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
 
                         MySqlDataAdapter da = new MySqlDataAdapter(command);
                         DataSet ds = new DataSet();
 
                         da.Fill(ds);
                         MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
-                        var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
                         img.Image = new Bitmap(ms);
                     }
                 }
@@ -644,11 +632,13 @@ namespace FlowSERVER1 {
             }
 
             // COUNT TOTAL FILE
-            command = new MySqlCommand("SELECT COUNT(*) FROM file_info WHERE CUST_USERNAME = @username", con);
+            /*
+            command = new MySqlCommand("SELECT COUNT(*) FROM file_info WHERE CUST_USERNAME = @username" AND CUST_PASSWORD = @password, con);
+	    command.Parameters.AddWithValue("@password",label3.Text);
             command.Parameters.AddWithValue("@username",label5.Text);
             var totalFilesCount = command.ExecuteScalar();
             var totalFileInt = Convert.ToInt32(totalFilesCount);
-            label6.Text = totalFileInt.ToString();
+            label6.Text = totalFileInt.ToString();*/
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -898,10 +888,14 @@ namespace FlowSERVER1 {
                                 //
                             } 
                         } else {
-                            Icon getIcon = Icon.ExtractAssociatedIcon(open.FileName);
-                            Image bitMapIcon = getIcon.ToBitmap();
+                            Image retrieveIcon = Image.FromFile(open.FileName);
+                            byte[] dataIco;
+                            using(MemoryStream msIco = new MemoryStream()) {
+                                retrieveIcon.Save(msIco,System.Drawing.Imaging.ImageFormat.Bmp);
+                                dataIco = msIco.ToArray();
+                            }
                             command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                            command.Parameters["@CUST_FILE"].Value = bitMapIcon;
+                            command.Parameters["@CUST_FILE"].Value = dataIco;
                             command.Parameters["@CUST_USERNAME"].Value = label5.Text;
                             command.Parameters[@"UPLOAD_DATE"].Value = varDate;
                             command.Parameters[@"CUST_PASSWORD"].Value = label3.Text;
