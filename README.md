@@ -3,7 +3,7 @@
 #### Flow Storage is awesome bcause it allows you to upload & manage your file from any devices with supports of creating multiple accounts
 #
 
-### Requirement
+### Requirements
 - 25MB Disk Space
 - Internet Connection 
 
