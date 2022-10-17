@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using MySql.Data;
 
 namespace FlowSERVER1 {
     public partial class exeFORM : Form {
@@ -19,7 +21,6 @@ namespace FlowSERVER1 {
         }
 
         private void exeFORM_Load(object sender, EventArgs e) {
-
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
@@ -32,6 +33,18 @@ namespace FlowSERVER1 {
 
         private void label2_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button3_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Normal;
+            guna2Button3.Visible = false;
+            guna2Button1.Visible = true;
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Maximized;
+            guna2Button3.Visible = true;
+            guna2Button1.Visible = false;
         }
     }
 }

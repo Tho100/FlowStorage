@@ -126,7 +126,7 @@ namespace FlowSERVER1 {
                         dateLab.ForeColor = Color.DarkGray;
                         dateLab.Visible = true;
                         dateLab.Enabled = true;
-                        dateLab.Location = new Point(12, 235);
+                        dateLab.Location = new Point(12, 208);
                         dateLab.Text = dateValues[i];
 
                         String getTitleQue = "SELECT CUST_FILE_PATH FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
@@ -151,7 +151,7 @@ namespace FlowSERVER1 {
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 1000;
+                        titleLab.Width = 220;
                         titleLab.Height = 30;
                         titleLab.Text = titleValues[i];
 
@@ -273,7 +273,7 @@ namespace FlowSERVER1 {
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 1000;
+                        titleLab.Width = 220;
                         titleLab.Height = 30;
                         titleLab.Text = titlesValuesTxt[q];
 
@@ -349,7 +349,7 @@ namespace FlowSERVER1 {
                         dateLabTxt.ForeColor = Color.DarkGray;
                         dateLabTxt.Visible = true;
                         dateLabTxt.Enabled = true;
-                        dateLabTxt.Location = new Point(12, 235);
+                        dateLabTxt.Location = new Point(12, 208);
                         dateLabTxt.Width = 1000;
                         dateLabTxt.Text = dateValuesTxt[q];
                     }
@@ -398,7 +398,7 @@ namespace FlowSERVER1 {
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 1000;
+                        titleLab.Width = 220;
                         titleLab.Height = 30;
                         titleLab.Text = titleValues[i];
 
@@ -408,11 +408,24 @@ namespace FlowSERVER1 {
                         textboxExe.Width = 240;
                         textboxExe.Height = 164;
                         textboxExe.FillColor = ColorTranslator.FromHtml("#232323");
-                        textboxExe.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                         textboxExe.SizeMode = PictureBoxSizeMode.CenterImage;
                         textboxExe.BorderRadius = 8;
                         textboxExe.Enabled = true;
                         textboxExe.Visible = true;
+
+                        var imgExe = ((Guna2PictureBox)mainPanelTxt.Controls["ExeBoxF" + i]);
+                        /*
+                        String retrieveImgExe = "SELECT CUST_THUMB FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(retrieveImgExe,con);
+                        command.Parameters.AddWithValue("@username",label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+
+                        MySqlDataAdapter da_exe = new MySqlDataAdapter(command);
+                        DataSet ds_exe = new DataSet();
+
+                        da_exe.Fill(ds_exe);
+                        MemoryStream ms_exe = new MemoryStream((byte[])ds_exe.Tables[0].Rows[i][0]);
+                        imgExe.Image = new Bitmap(ms_exe);*/
 
                         textboxExe.Click += (sender_ex, e_ex) => {
                             exeFORM exeFormShow = new exeFORM(titleLab.Text);
@@ -475,7 +488,7 @@ namespace FlowSERVER1 {
                         dateLabTxt.ForeColor = Color.DarkGray;
                         dateLabTxt.Visible = true;
                         dateLabTxt.Enabled = true;
-                        dateLabTxt.Location = new Point(12, 235);
+                        dateLabTxt.Location = new Point(12, 208);
                         dateLabTxt.Text = uploadDateValues[i];
 
                         exeDateReader.Close();
@@ -525,7 +538,7 @@ namespace FlowSERVER1 {
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 1000;
+                        titleLab.Width = 220;
                         titleLab.Height = 30;
                         titleLab.Text = titleValues[i];
 
@@ -618,7 +631,7 @@ namespace FlowSERVER1 {
                         dateLabTxt.ForeColor = Color.DarkGray;
                         dateLabTxt.Visible = true;
                         dateLabTxt.Enabled = true;
-                        dateLabTxt.Location = new Point(12, 235);
+                        dateLabTxt.Location = new Point(12, 208);
                         dateLabTxt.Text =  uploadDateValues[i];
                         exeDateReader.Close();
 
@@ -731,9 +744,32 @@ namespace FlowSERVER1 {
                 string username = "root";
                 string password = "nfreal-yt10";
                 string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
+
+                void deletionMethod(String fileName) {
+                    String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
+                    command = new MySqlCommand(offSqlUpdates,con);
+                    command.ExecuteNonQuery();
+
+                    String removeQuery = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(removeQuery, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    command.Parameters.AddWithValue("@filename", fileName);
+
+                    command.ExecuteNonQuery();
+                    if (flowLayoutPanel1.Controls.Count == 0) {
+                        label8.Visible = true;
+                        guna2Button6.Visible = true;
+                    }
+                }
+
+                void increaseSizeMethod() {
+                    String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
+                    command = new MySqlCommand(setupPacketMax, con);
+                    command.ExecuteNonQuery();
+                }
 
                 OpenFileDialog open = new OpenFileDialog();
                 open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|HTML files(*.html;)|*.html;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
@@ -764,18 +800,17 @@ namespace FlowSERVER1 {
                         top += h_p;
                         flowLayoutPanel1.Controls.Add(panelPic);
            
-
                         var panel = ((Guna2Panel)flowLayoutPanel1.Controls["ImgPan" + curr]);
-
+                        
                         Label titleLab = new Label();
                         panel.Controls.Add(titleLab);
-                        titleLab.Name = "ImgTitle" + curr;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Name = "ImgTitle" + curr;
                         titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                         titleLab.ForeColor = Color.Gainsboro;
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 1000;
+                        titleLab.Width = 220;
                         titleLab.Height = 30;
                         titleLab.Text = getName;
 
@@ -794,18 +829,18 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
                             displayPic.Show();
                         };
 
                         Label dateLab = new Label();
                         panel.Controls.Add(dateLab);
-                        dateLab.Name = "ImgDate" + curr;//Segoe UI Semibold, 11.25pt, style=Bold
+                        dateLab.Name = "ImgDate" + curr;
                         dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
                         dateLab.ForeColor = Color.DarkGray;
                         dateLab.Visible = true;
                         dateLab.Enabled = true;
-                        dateLab.Location = new Point(12, 235);
+                        dateLab.Location = new Point(12, 208);
                         dateLab.Text = varDate;
 
                         Guna2Button remBut = new Guna2Button();
@@ -825,22 +860,8 @@ namespace FlowSERVER1 {
                             var titleFile = titleLab.Text;
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
-                                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                command = new MySqlCommand(noSafeUpdate, con);
-                                command.ExecuteNonQuery();
-
-                                String removeQuery = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-                                command = new MySqlCommand(removeQuery, con);
-                                command.Parameters.AddWithValue("@username", label5.Text);
-                                command.Parameters.AddWithValue("@password", label3.Text);
-                                command.Parameters.AddWithValue("@filename", titleFile);
-                                command.ExecuteNonQuery();
-
                                 panelPic.Dispose();
-                                if (flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
-                                }
+                                deletionMethod(titleFile);
                             }
                         };
 
@@ -852,12 +873,8 @@ namespace FlowSERVER1 {
                             img.Image = new Bitmap(open.FileName);
                         }
 
-                        // Txt section
-                        // COUNT TOTAL FILES
                         con.Open();
-                        String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
-                        command = new MySqlCommand(setupPacketMax, con);
-                        command.ExecuteNonQuery();
+                        increaseSizeMethod();
 
                         string selectUsername = "SELECT CUST_USERNAME from information WHERE CUST_USERNAME = @username";
                         String query = "INSERT IGNORE INTO file_info(CUST_FILE_PATH,CUST_FILE,CUST_USERNAME,UPLOAD_DATE,CUST_PASSWORD) VALUES (@CUST_FILE_PATH,@CUST_FILE,@CUST_USERNAME,@UPLOAD_DATE,@CUST_PASSWORD)";
@@ -932,8 +949,6 @@ namespace FlowSERVER1 {
                         textboxPic.Name = "TxtBox" + txtCurr;
                         textboxPic.Width = 240;
                         textboxPic.Height = 164;
-                        textboxPic.FillColor = ColorTranslator.FromHtml("#232323");
-                        textboxPic.ForeColor = Color.LightGray;
                         textboxPic.BorderRadius = 8;
                         textboxPic.SizeMode = PictureBoxSizeMode.CenterImage; 
                         textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
@@ -953,13 +968,13 @@ namespace FlowSERVER1 {
 
                         Label titleLab = new Label();
                         mainPanelTxt.Controls.Add(titleLab);
-                        titleLab.Name = "LabVidUp" + vidCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                        titleLab.Font = new Font("Segoe UI Semibold", 11, FontStyle.Bold);
+                        titleLab.Name = "LabVidUp" + txtCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                         titleLab.ForeColor = Color.Gainsboro;
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 1000;
+                        titleLab.Width = 220;
                         titleLab.Height = 30;
                         titleLab.Text = getName;
 
@@ -975,27 +990,14 @@ namespace FlowSERVER1 {
                         remButTxt.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
                         remButTxt.Visible = true;
                         remButTxt.Location = new Point(189, 218);
+                        remButTxt.BringToFront();
 
                         remButTxt.Click += (sender_tx, e_tx) => {
                             var titleFile = titleLab.Text;
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
-                                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                command = new MySqlCommand(noSafeUpdate, con);
-                                command.ExecuteNonQuery();
-
-                                String removeQuery = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_TXT_NAME = @filename";
-                                command = new MySqlCommand(removeQuery, con);
-                                command.Parameters.AddWithValue("@username", label5.Text);
-                                command.Parameters.AddWithValue("@password", label3.Text);
-                                command.Parameters.AddWithValue("@filename", titleFile);
-                                command.ExecuteNonQuery();
-
+                                deletionMethod(titleFile);
                                 panelTxt.Dispose();
-                                if (flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
-                                }
                             }
                         };
 
@@ -1006,14 +1008,12 @@ namespace FlowSERVER1 {
                         dateLabTxt.ForeColor = Color.DarkGray;
                         dateLabTxt.Visible = true;
                         dateLabTxt.Enabled = true;
-                        dateLabTxt.Location = new Point(12, 235);
+                        dateLabTxt.Location = new Point(12, 208);
                         dateLabTxt.Width = 1000;
                         dateLabTxt.Text = varDate;
 
                         con.Open();
-                        String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
-                        command = new MySqlCommand(setupPacketMax, con);
-                        command.ExecuteNonQuery();
+                        increaseSizeMethod();
 
                         String insertTxtQuery = "INSERT INTO file_info_expand(CUST_FILE_TXT_NAME,CUST_FILE_TXT_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_TXT) VALUE (@CUST_FILE_TXT_NAME,@CUST_FILE_TXT_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_TXT)";
                         command = new MySqlCommand(insertTxtQuery,con);
@@ -1039,17 +1039,16 @@ namespace FlowSERVER1 {
 
                     } else if (retrieved == ".exe") {
                         con.Open();
-                        String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
-                        command = new MySqlCommand(setupPacketMax, con);
-                        command.ExecuteNonQuery();
+                        increaseSizeMethod();
                         //Process.Start(open.FileName);
-                        String exeInsQuery = "INSERT INTO file_info_exe(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_EXE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_EXE)";
+                        String exeInsQuery = "INSERT INTO file_info_exe(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_EXE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_EXE,@CUST_THUMB)";
                         command = new MySqlCommand(exeInsQuery,con);
                         command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
                         command.Parameters.Add("@CUST_USERNAME",MySqlDbType.Text);
                         command.Parameters.Add("@CUST_PASSWORD",MySqlDbType.Text);
                         command.Parameters.Add("@UPLOAD_DATE",MySqlDbType.VarChar,255);
                         command.Parameters.Add("@CUST_FILE_EXE",MySqlDbType.LongBlob);
+                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
 
                         command.Parameters["@CUST_FILE_PATH"].Value = getName;
                         command.Parameters["@CUST_USERNAME"].Value = label5.Text;
@@ -1059,6 +1058,8 @@ namespace FlowSERVER1 {
                         Byte[] streamRead = File.ReadAllBytes(open.FileName);
                         command.Parameters["@CUST_FILE_EXE"].Value = streamRead;
 
+                        Icon retrieveExeIco = Icon.ExtractAssociatedIcon(open.FileName);
+                        command.Parameters["@CUST_THUMB"].Value = retrieveExeIco;
                         if(command.ExecuteNonQuery() == 1) {
                             exeCurr++;
                             int top = 275;
@@ -1085,7 +1086,7 @@ namespace FlowSERVER1 {
                             titleLab.Visible = true;
                             titleLab.Enabled = true;
                             titleLab.Location = new Point(12, 182);
-                            titleLab.Width = 1000;
+                            titleLab.Width = 220;
                             titleLab.Height = 30;
                             titleLab.Text = getName;
 
@@ -1123,22 +1124,8 @@ namespace FlowSERVER1 {
                                 var titleFile = titleLab.Text;
                                 DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                                 if (verifyDialog == DialogResult.Yes) {
-                                    String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                    command = new MySqlCommand(noSafeUpdate, con);
-                                    command.ExecuteNonQuery();
-
-                                    String removeQuery = "DELETE FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-                                    command = new MySqlCommand(removeQuery, con);
-                                    command.Parameters.AddWithValue("@username", label5.Text);
-                                    command.Parameters.AddWithValue("@password", label3.Text);
-                                    command.Parameters.AddWithValue("@filename", titleFile);
-                                    command.ExecuteNonQuery();
-
+                                    deletionMethod(titleFile);
                                     panelTxt.Dispose();
-                                    if (flowLayoutPanel1.Controls.Count == 0) {
-                                        label8.Visible = true;
-                                        guna2Button6.Visible = true;
-                                    }
                                 }
                             };
 
@@ -1149,7 +1136,7 @@ namespace FlowSERVER1 {
                             dateLabExe.ForeColor = Color.DarkGray;
                             dateLabExe.Visible = true;
                             dateLabExe.Enabled = true;
-                            dateLabExe.Location = new Point(12, 235);
+                            dateLabExe.Location = new Point(12, 208);
                             dateLabExe.Width = 1000;
                             dateLabExe.Text = varDate;
 
@@ -1168,9 +1155,7 @@ namespace FlowSERVER1 {
                         }
                     } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
                         con.Open();
-                        String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
-                        command = new MySqlCommand(setupPacketMax,con);
-                        command.ExecuteNonQuery();
+                        increaseSizeMethod();    
 
                         String insertVidQue = "INSERT INTO file_info_vid(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_VID,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_VID,@CUST_THUMB)";
                         command = new MySqlCommand(insertVidQue,con);
@@ -1222,7 +1207,7 @@ namespace FlowSERVER1 {
                             titleLab.Visible = true;
                             titleLab.Enabled = true;
                             titleLab.Location = new Point(12, 182);
-                            titleLab.Width = 1000;
+                            titleLab.Width = 220;
                             titleLab.Height = 30;
                             titleLab.Text = getName;
 
@@ -1266,22 +1251,8 @@ namespace FlowSERVER1 {
                                 var titleFile = titleLab.Text;
                                 DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                                 if (verifyDialog == DialogResult.Yes) {
-                                    String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                    command = new MySqlCommand(noSafeUpdate, con);
-                                    command.ExecuteNonQuery();
-
-                                    String removeQuery = "DELETE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-                                    command = new MySqlCommand(removeQuery, con);
-                                    command.Parameters.AddWithValue("@username", label5.Text);
-                                    command.Parameters.AddWithValue("@password", label3.Text);
-                                    command.Parameters.AddWithValue("@filename", titleFile);
-                                    command.ExecuteNonQuery();
-
+                                    deletionMethod(titleFile);
                                     panelVid.Dispose();
-                                    if (flowLayoutPanel1.Controls.Count == 0) {
-                                        label8.Visible = true;
-                                        guna2Button6.Visible = true;
-                                    }
                                 }
                             };
 
@@ -1292,7 +1263,7 @@ namespace FlowSERVER1 {
                             dateLabVid.ForeColor = Color.DarkGray;
                             dateLabVid.Visible = true;
                             dateLabVid.Enabled = true;
-                            dateLabVid.Location = new Point(12, 235);
+                            dateLabVid.Location = new Point(12, 208);
                             dateLabVid.Width = 1000;
                             dateLabVid.Text = varDate;
 
