@@ -65,8 +65,6 @@ namespace FlowSERVER1 {
 
                 if (Convert.ToInt32(command.ExecuteScalar()) > 0) {
                     try {
-                        MessageBox.Show(form.label5.Text);
-                        MessageBox.Show(form.label3.Text);
                         string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                         command = new MySqlCommand(countRowTxt, con);
                         command.Parameters.AddWithValue("@username", form.label5.Text);
@@ -138,7 +136,7 @@ namespace FlowSERVER1 {
                                 dateLab.ForeColor = Color.DarkGray;
                                 dateLab.Visible = true;
                                 dateLab.Enabled = true;
-                                dateLab.Location = new Point(12, 235);
+                                dateLab.Location = new Point(12, 208);
                                 dateLab.Text = dateValues[i];
 
                                 String getTitleQue = "SELECT CUST_FILE_PATH FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
@@ -163,7 +161,7 @@ namespace FlowSERVER1 {
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
                                 titleLab.Location = new Point(12, 182);
-                                titleLab.Width = 1000;
+                                titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = titleValues[i];
 
@@ -278,7 +276,7 @@ namespace FlowSERVER1 {
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
                                 titleLab.Location = new Point(12, 182);
-                                titleLab.Width = 1000;
+                                titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = titlesValuesTxt[q];
 
@@ -348,8 +346,7 @@ namespace FlowSERVER1 {
                                 dateLabTxt.ForeColor = Color.DarkGray;
                                 dateLabTxt.Visible = true;
                                 dateLabTxt.Enabled = true;
-                                dateLabTxt.Location = new Point(12, 235);
-                                dateLabTxt.Width = 1000;
+                                dateLabTxt.Location = new Point(12, 208);
                                 dateLabTxt.Text = dateValuesTxt[q];
                             }
 
@@ -397,7 +394,7 @@ namespace FlowSERVER1 {
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
                                 titleLab.Location = new Point(12, 182);
-                                titleLab.Width = 1000;
+                                titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = titleValues[i];
 
@@ -468,7 +465,7 @@ namespace FlowSERVER1 {
                                 dateLabTxt.ForeColor = Color.DarkGray;
                                 dateLabTxt.Visible = true;
                                 dateLabTxt.Enabled = true;
-                                dateLabTxt.Location = new Point(12, 235);
+                                dateLabTxt.Location = new Point(12, 208);
                                 dateLabTxt.Text = uploadDateValues[i];
 
                                 exeDateReader.Close();
@@ -518,7 +515,7 @@ namespace FlowSERVER1 {
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
                                 titleLab.Location = new Point(12, 182);
-                                titleLab.Width = 1000;
+                                titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = titleValues[i];
 
@@ -605,7 +602,7 @@ namespace FlowSERVER1 {
                                 dateLabTxt.ForeColor = Color.DarkGray;
                                 dateLabTxt.Visible = true;
                                 dateLabTxt.Enabled = true;
-                                dateLabTxt.Location = new Point(12, 235);
+                                dateLabTxt.Location = new Point(12, 208);
                                 dateLabTxt.Text = uploadDateValues[i];
                                 exeDateReader.Close();
 
