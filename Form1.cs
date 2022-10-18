@@ -747,12 +747,12 @@ namespace FlowSERVER1 {
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
 
-                void deletionMethod(String fileName) {
+                void deletionMethod(String fileName, String getDB) {
                     String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
                     command = new MySqlCommand(offSqlUpdates,con);
                     command.ExecuteNonQuery();
 
-                    String removeQuery = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                    String removeQuery = "DELETE FROM " + getDB + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(removeQuery, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@password", label3.Text);
@@ -861,7 +861,12 @@ namespace FlowSERVER1 {
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
                                 panelPic.Dispose();
-                                deletionMethod(titleFile);
+                                deletionMethod(titleFile,"file_info");
+                            }
+
+                            if (flowLayoutPanel1.Controls.Count == 0) {
+                                label8.Visible = true;
+                                guna2Button6.Visible = true;
                             }
                         };
 
@@ -996,8 +1001,13 @@ namespace FlowSERVER1 {
                             var titleFile = titleLab.Text;
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
-                                deletionMethod(titleFile);
+                                deletionMethod(titleFile,"file_info_expand");
                                 panelTxt.Dispose();
+                            }
+
+                            if (flowLayoutPanel1.Controls.Count == 0) {
+                                label8.Visible = true;
+                                guna2Button6.Visible = true;
                             }
                         };
 
@@ -1015,17 +1025,17 @@ namespace FlowSERVER1 {
                         con.Open();
                         increaseSizeMethod();
 
-                        String insertTxtQuery = "INSERT INTO file_info_expand(CUST_FILE_TXT_NAME,CUST_FILE_TXT_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_TXT) VALUE (@CUST_FILE_TXT_NAME,@CUST_FILE_TXT_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_TXT)";
+                        String insertTxtQuery = "INSERT INTO file_info_expand(CUST_FILE_TXT_NAME,CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_TXT) VALUE (@CUST_FILE_TXT_NAME,@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_TXT)";
                         command = new MySqlCommand(insertTxtQuery,con);
                         command.Parameters.Add("@CUST_FILE_TXT_NAME",MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_FILE_TXT_PATH", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.VarChar,255);
                         command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
                         command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
                         command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar,255);
                         command.Parameters.Add("@CUST_FILE_TXT", MySqlDbType.LongText);
 
                         command.Parameters["@CUST_FILE_TXT_NAME"].Value = getName;
-                        command.Parameters["@CUST_FILE_TXT_PATH"].Value = filePath;
+                        command.Parameters["@CUST_FILE_PATH"].Value = filePath;
                         command.Parameters["@CUST_USERNAME"].Value = label5.Text;
                         command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;
@@ -1124,8 +1134,13 @@ namespace FlowSERVER1 {
                                 var titleFile = titleLab.Text;
                                 DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                                 if (verifyDialog == DialogResult.Yes) {
-                                    deletionMethod(titleFile);
+                                    deletionMethod(titleFile,"file_info_exe");
                                     panelTxt.Dispose();
+                                }
+
+                                if(flowLayoutPanel1.Controls.Count == 0) {
+                                    label8.Visible = true;
+                                    guna2Button6.Visible = true;
                                 }
                             };
 
@@ -1151,7 +1166,7 @@ namespace FlowSERVER1 {
                             label8.Visible = false;
                             guna2Button6.Visible = false;
                         } else {
-                            MessageBox.Show("D");
+                            MessageBox.Show("Adding file failed");
                         }
                     } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
                         con.Open();
@@ -1251,8 +1266,13 @@ namespace FlowSERVER1 {
                                 var titleFile = titleLab.Text;
                                 DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                                 if (verifyDialog == DialogResult.Yes) {
-                                    deletionMethod(titleFile);
+                                    deletionMethod(titleFile,"file_info_vid");
                                     panelVid.Dispose();
+                                }
+
+                                if (flowLayoutPanel1.Controls.Count == 0) {
+                                    label8.Visible = true;
+                                    guna2Button6.Visible = true;
                                 }
                             };
 
