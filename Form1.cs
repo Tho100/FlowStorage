@@ -13,6 +13,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack;
+using System.Data.OleDb;
 
 namespace FlowSERVER1 {
     public partial class Form1 : Form {
@@ -664,7 +665,7 @@ namespace FlowSERVER1 {
                 var time = DateTime.Now.ToString("hh:mm:ss tt");
                 var theTime = Convert.ToInt32(time.Substring(0, 1));
                 var getPeriod = time.Substring(time.Length - 2);
-                if(theTime == 0) {
+                if(theTime == 0) { // theTime == 0;
                     var theTimeOne = Convert.ToInt32(time.Substring(1, 1));
                     one = theTimeOne;
                     if(getPeriod == "PM" && one >= 1 && one <= 5) {
@@ -674,7 +675,7 @@ namespace FlowSERVER1 {
                         label1.Text = "Good late-evening " + label5.Text + " :)";
                         pictureBox3.Visible = true;
                     }
-                    else if(getPeriod == "AM" && one >= 1 && one <= 10) {
+                    else if(getPeriod == "AM" && one >= 1 && one <= 11) {
                         label1.Text = "Good morning " + label5.Text + " :)";
                         pictureBox2.Visible = true;
                     }
@@ -737,6 +738,7 @@ namespace FlowSERVER1 {
         int txtCurr = 0;
         int exeCurr = 0;
         int vidCurr = 0;
+        int exlCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
                 string server = "localhost";
@@ -766,13 +768,13 @@ namespace FlowSERVER1 {
                 }
 
                 void increaseSizeMethod() {
-                    String setupPacketMax = "SET GLOBAL max_allowed_packet=10000000000000;";
+                    String setupPacketMax = "SET GLOBAL max_allowed_packet=2000000000000000000;"; // +5
                     command = new MySqlCommand(setupPacketMax, con);
                     command.ExecuteNonQuery();
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|HTML files(*.html;)|*.html;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
+                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
                     string get_ex = open.FileName;
@@ -1290,8 +1292,126 @@ namespace FlowSERVER1 {
                             label8.Visible = false;
                             guna2Button6.Visible = false;
                         }
-                    }
-                } 
+                    } else if (retrieved == ".xlsx" || retrieved == ".csv") {
+                        //increaseSizeMethod();
+                        /*
+                        String insertVidQue = "INSERT INTO file_info_vid(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_VID,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_VID,@CUST_THUMB)";
+                        command = new MySqlCommand(insertVidQue, con);
+                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+                        command.Parameters.Add("@CUST_FILE_VID", MySqlDbType.LongBlob);
+                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+
+                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
+                        Byte[] streamReadVid = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE_VID"].Value = streamReadVid;
+
+                        ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+
+                        Bitmap getThumbNail = shellFile.Thumbnail.Bitmap;
+                        var setupThumb = ImageToByte(getThumbNail);
+                        command.Parameters["@CUST_THUMB"].Value = setupThumb;
+                        */
+                        if (1+1 == 2) {
+                            exlCurr++;
+                            int top = 275;
+                            int h_p = 100;
+                            var panelVid = new Guna2Panel() {
+                                Name = "PanExl" + exlCurr,
+                                Width = 240,
+                                Height = 262,
+                                BorderRadius = 8,
+                                FillColor = ColorTranslator.FromHtml("#121212"),
+                                BackColor = Color.Transparent,
+                                Location = new Point(600, top)
+                            };
+
+                            top += h_p;
+                            flowLayoutPanel1.Controls.Add(panelVid);
+                            var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExl" + exlCurr]);
+
+                            Label titleLab = new Label();
+                            mainPanelTxt.Controls.Add(titleLab);
+                            titleLab.Name = "LabExlUp" + exlCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                            titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                            titleLab.ForeColor = Color.Gainsboro;
+                            titleLab.Visible = true;
+                            titleLab.Enabled = true;
+                            titleLab.Location = new Point(12, 182);
+                            titleLab.Width = 220;
+                            titleLab.Height = 30;
+                            titleLab.Text = getName;
+
+                            // LOAD THUMBNAIL
+
+                            var textboxExl = new Guna2PictureBox();
+                            mainPanelTxt.Controls.Add(textboxExl);
+                            textboxExl.Name = "ExeExl" + exlCurr;
+                            textboxExl.Width = 240;
+                            textboxExl.Height = 164;
+                            textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
+                            textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
+                            textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
+                            textboxExl.BorderRadius = 8;
+                            textboxExl.Enabled = true;
+                            textboxExl.Visible = true;
+
+                            textboxExl.Click += (sender_eq, e_eq) => {
+
+                                exlFORM exlForm = new exlFORM(titleLab.Text,open.FileName);
+                                exlForm.Show();
+                            };
+
+                            Guna2Button remButExl = new Guna2Button();
+                            mainPanelTxt.Controls.Add(remButExl);
+                            remButExl.Name = "RemExlBut" + exlCurr;
+                            remButExl.Width = 39;
+                            remButExl.Height = 35;
+                            remButExl.FillColor = ColorTranslator.FromHtml("#4713BF");
+                            remButExl.BorderRadius = 6;
+                            remButExl.BorderThickness = 1;
+                            remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
+                            remButExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                            remButExl.Visible = true;
+                            remButExl.Location = new Point(189, 218);
+
+                            remButExl.Click += (sender_vid, e_vid) => {
+                                var titleFile = titleLab.Text;
+                                DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                if (verifyDialog == DialogResult.Yes) {
+                                    deletionMethod(titleFile, "file_info_vid");
+                                    panelVid.Dispose();
+                                }
+
+                                if (flowLayoutPanel1.Controls.Count == 0) {
+                                    label8.Visible = true;
+                                    guna2Button6.Visible = true;
+                                }
+                            };
+
+                            Label dateLabExl = new Label();
+                            mainPanelTxt.Controls.Add(dateLabExl);
+                            dateLabExl.Name = "LabExlUp" + exlCurr;
+                            dateLabExl.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                            dateLabExl.ForeColor = Color.DarkGray;
+                            dateLabExl.Visible = true;
+                            dateLabExl.Enabled = true;
+                            dateLabExl.Location = new Point(12, 208);
+                            dateLabExl.Width = 1000;
+                            dateLabExl.Text = varDate;
+
+                            label8.Visible = false;
+                            guna2Button6.Visible = false;
+                        }
+                    } 
+                }
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }

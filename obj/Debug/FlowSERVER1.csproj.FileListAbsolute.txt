@@ -50,3 +50,7 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.picFORM
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.txtFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exeFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.vidFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exlFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.pdb
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.xml
