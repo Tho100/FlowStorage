@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack;
 using System.Data.OleDb;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class Form1 : Form {
@@ -1293,6 +1295,7 @@ namespace FlowSERVER1 {
                             guna2Button6.Visible = false;
                         }
                     } else if (retrieved == ".xlsx" || retrieved == ".csv") {
+
                         //increaseSizeMethod();
                         /*
                         String insertVidQue = "INSERT INTO file_info_vid(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_VID,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_VID,@CUST_THUMB)";
@@ -1364,7 +1367,37 @@ namespace FlowSERVER1 {
                             textboxExl.Visible = true;
 
                             textboxExl.Click += (sender_eq, e_eq) => {
+                                /*
+                                String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + open.FileName + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
+                                OleDbConnection conExl = new OleDbConnection(pathExl);
+                                conExl.Open();
+                                DataTable Sheets = conExl.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
 
+                                List<string> sheetsValues = new List<string>();
+
+                                for (int i = 0; i < Sheets.Rows.Count; i++) {
+                                    string worksheets = Sheets.Rows[i]["TABLE_NAME"].ToString();
+                                    string sqlQuery = String.Format("SELECT * FROM [{0}]", worksheets);
+                                    sheetsValues.Add(sqlQuery);
+                                }
+                                foreach (var item in sheetsValues) {
+                                    var output = String.Join(";", Regex.Matches(item, @"\[(.+?)\$")
+                                                                        .Cast<Match>()
+                                                                        .Select(m => m.Groups[1].Value));
+                                    exlFORM.instance.guna2ComboBox1.Items.Add("");
+                                }*/
+                                
+                                /*
+                                var firstSheetDefault = exlFORM.instance.guna2ComboBox1.Items[0];
+                                exlFORM.instance.guna2ComboBox1.SelectedIndex = 0;
+                                exlFORM.instance.guna2ComboBox1.SelectedItem = firstSheetDefault;
+
+                                OleDbDataAdapter adptCon = new OleDbDataAdapter("select * from [" + exlFORM.instance.guna2ComboBox1.SelectedItem + "$]", conExl);
+                                DataTable mainTable = new DataTable();
+                                adptCon.Fill(mainTable);
+
+                                exlFORM.instance.guna2DataGridView1.DataSource = mainTable;
+                                */
                                 exlFORM exlForm = new exlFORM(titleLab.Text,open.FileName);
                                 exlForm.Show();
                             };

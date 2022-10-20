@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
-using System.Text;
+using MySql.Data.MySqlClient;
+using MySql.Data;
+using System.IO;
+using System.Xml;
 
 namespace FlowSERVER1 {
     public partial class exlFORM : Form {
@@ -20,6 +23,7 @@ namespace FlowSERVER1 {
             label1.Text = title;
             label2.Text = Form1.instance.label5.Text;
             label4.Text = Path;
+            
             String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
             OleDbConnection conExl = new OleDbConnection(pathExl);
             conExl.Open();
@@ -48,6 +52,70 @@ namespace FlowSERVER1 {
             adptCon.Fill(mainTable);
 
             guna2DataGridView1.DataSource = mainTable;
+
+            try {
+                string server = "localhost";
+                string db = "flowserver_db";
+                string username = "root";
+                string password = "nfreal-yt10";
+                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+
+                MySqlConnection con = new MySqlConnection(constring);
+                MySqlCommand command;
+
+                DataTable dt = getDVGTable(guna2DataGridView1);
+                DataSet ds = new DataSet();
+                ds.Tables.Add(dt);
+               
+                StringWriter sm = new StringWriter();
+                ds.WriteXml(sm);
+                string resultXML = sm.ToString();
+
+                /*
+                 *                         command.Parameters.Add("@CUST_FILE_TXT", MySqlDbType.LongText);
+                                string varDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+                        command.Parameters["@CUST_FILE_TXT_NAME"].Value = getName;
+                 */
+                String varDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+                con.Open();
+
+                String insertXML = "INSERT INTO file_info_excel(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
+                command = new MySqlCommand(insertXML,con);
+                command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
+                command.Parameters.Add("@CUST_USERNAME",MySqlDbType.Text);
+                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+                command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar,255);
+                command.Parameters.Add("@CUST_FILE", MySqlDbType.LongText);
+
+                command.Parameters["@CUST_FILE_PATH"].Value = Path;
+                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
+                command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                command.Parameters["@CUST_FILE"].Value = resultXML;
+                command.ExecuteNonQuery();
+            }
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+            }
+        }
+
+        private DataTable getDVGTable(DataGridView dvg) {
+            var dt = new DataTable();
+            foreach(DataGridViewColumn column in dvg.Columns) {
+                if(column.Visible) {
+                    dt.Columns.Add();
+                }
+            }
+            object[] cellValues = new object[dvg.Columns.Count];
+            foreach(DataGridViewRow row in dvg.Rows) {
+                for(int i=0; i<row.Cells.Count; i++) {
+                    cellValues[i] = row.Cells[i].Value;
+                }
+                dt.Rows.Add(cellValues);
+            }
+            return dt;
         }
 
         private void Form5_Load(object sender, EventArgs e) {
