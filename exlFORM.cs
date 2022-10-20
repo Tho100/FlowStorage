@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
             OleDbConnection conExl = new OleDbConnection(pathExl);
             conExl.Open();
             DataTable Sheets = conExl.GetOleDbSchemaTable(OleDbSchemaGuid.Tables,null);
-
+            
             List<string> sheetsValues = new List<string>();
 
             for (int i = 0; i < Sheets.Rows.Count; i++) {
@@ -36,7 +36,8 @@ namespace FlowSERVER1 {
                 string sqlQuery = String.Format("SELECT * FROM [{0}]", worksheets);
                 sheetsValues.Add(sqlQuery);
             }
-            foreach(var item in sheetsValues) {
+
+            foreach (var item in sheetsValues) {
                 var output = String.Join(";", Regex.Matches(item, @"\[(.+?)\$")
                                                     .Cast<Match>()
                                                     .Select(m => m.Groups[1].Value));
@@ -79,9 +80,9 @@ namespace FlowSERVER1 {
                  */
                 String varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-                con.Open();
+                //con.Open();
 
-                String insertXML = "INSERT INTO file_info_excel(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
+                /*String insertXML = "INSERT INTO file_info_excel(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
                 command = new MySqlCommand(insertXML,con);
                 command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
                 command.Parameters.Add("@CUST_USERNAME",MySqlDbType.Text);
@@ -93,15 +94,18 @@ namespace FlowSERVER1 {
                 command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
                 command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                command.Parameters["@CUST_FILE"].Value = resultXML;
-                command.ExecuteNonQuery();
+                command.Parameters["@CUST_FILE"].Value = resultXML;*/
+                //command.ExecuteNonQuery();
+
+                // !SELECT * FROM file_info_excel!
+                // NOT INSERT INTO file_info_excel
             }
             catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }
         }
 
-        private DataTable getDVGTable(DataGridView dvg) {
+        public DataTable getDVGTable(DataGridView dvg) {
             var dt = new DataTable();
             foreach(DataGridViewColumn column in dvg.Columns) {
                 if(column.Visible) {
