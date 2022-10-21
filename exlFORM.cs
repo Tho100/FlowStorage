@@ -17,12 +17,56 @@ using System.Xml;
 namespace FlowSERVER1 {
     public partial class exlFORM : Form {
         public static exlFORM instance;
-        public exlFORM(String title,String Path) {
+        public exlFORM(String title,String getXML) {
             InitializeComponent();
             instance = this;
             label1.Text = title;
             label2.Text = Form1.instance.label5.Text;
-            label4.Text = Path;
+            
+            try {
+
+                string server = "localhost";
+                string db = "flowserver_db";
+                string username = "root";
+                string password = "nfreal-yt10";
+                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+
+                MySqlConnection con = new MySqlConnection(constring);
+                MySqlCommand command;
+
+                con.Open();
+                
+                String selectXml = "SELECT CUST_FILE FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @path";
+                command = new MySqlCommand(selectXml,con);
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@password",Form1.instance.label3.Text);
+                command.Parameters.AddWithValue("@path",label1.Text);
+
+                List<string> xmlValues = new List<string>();
+
+                MySqlDataReader readXml = command.ExecuteReader();
+                while(readXml.Read()) {
+                    xmlValues.Add(readXml.GetString(0));    
+                }
+               
+                StringReader mainReader = new StringReader(xmlValues[0]);
+                DataSet dataset = new DataSet();
+                dataset.ReadXml(mainReader);
+
+                guna2DataGridView1.DataSource = dataset.Tables[0]; 
+
+            }
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+            }
+            /*
+            StringReader mainReader = new StringReader(getXML);
+            DataSet dataset = new DataSet();
+            dataset.ReadXml(mainReader);
+
+            guna2DataGridView1.DataSource = dataset.Tables[0];*/
+
+            /*
             
             String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
             OleDbConnection conExl = new OleDbConnection(pathExl);
@@ -52,8 +96,8 @@ namespace FlowSERVER1 {
             DataTable mainTable = new DataTable();
             adptCon.Fill(mainTable);
 
-            guna2DataGridView1.DataSource = mainTable;
-
+            guna2DataGridView1.DataSource = mainTable;*/
+            /*
             try {
                 string server = "localhost";
                 string db = "flowserver_db";
@@ -72,17 +116,17 @@ namespace FlowSERVER1 {
                 ds.WriteXml(sm);
                 string resultXML = sm.ToString();
 
-                /*
-                 *                         command.Parameters.Add("@CUST_FILE_TXT", MySqlDbType.LongText);
+                
+                                         command.Parameters.Add("@CUST_FILE_TXT", MySqlDbType.LongText);
                                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
                         command.Parameters["@CUST_FILE_TXT_NAME"].Value = getName;
-                 */
+                
                 String varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
                 //con.Open();
 
-                /*String insertXML = "INSERT INTO file_info_excel(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
+                String insertXML = "INSERT INTO file_info_excel(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
                 command = new MySqlCommand(insertXML,con);
                 command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
                 command.Parameters.Add("@CUST_USERNAME",MySqlDbType.Text);
@@ -94,7 +138,7 @@ namespace FlowSERVER1 {
                 command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
                 command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                command.Parameters["@CUST_FILE"].Value = resultXML;*/
+                command.Parameters["@CUST_FILE"].Value = resultXML;
                 //command.ExecuteNonQuery();
 
                 // !SELECT * FROM file_info_excel!
@@ -102,7 +146,7 @@ namespace FlowSERVER1 {
             }
             catch (Exception eq) {
                 MessageBox.Show(eq.Message);
-            }
+            }*/
         }
 
         public DataTable getDVGTable(DataGridView dvg) {

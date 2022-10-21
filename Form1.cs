@@ -83,6 +83,13 @@ namespace FlowSERVER1 {
                 var intRow = Convert.ToInt32(totalRow);
                 label6.Text = intRow.ToString();
 
+                string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                command = new MySqlCommand(countRowExcel,con);
+                command.Parameters.AddWithValue("@username",label5.Text);
+                command.Parameters.AddWithValue("@password", label3.Text);
+                var totalRowExcel = command.ExecuteScalar();
+                int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
+
                 if (intRow > 0) {
                     for(int i=0; i<intRow; i++) {
                         int top = 275;
@@ -636,6 +643,132 @@ namespace FlowSERVER1 {
                         dateLabTxt.Enabled = true;
                         dateLabTxt.Location = new Point(12, 208);
                         dateLabTxt.Text =  uploadDateValues[i];
+                        exeDateReader.Close();
+
+                        label8.Visible = false;
+                        guna2Button6.Visible = false;
+                    }
+                }
+                if(intTotalRowExcel > 0) {
+                    for (int i = 0; i < intTotalRowExcel; i++) {
+                        int top = 275;
+                        int h_p = 100;
+                        var panelTxt = new Guna2Panel() {
+                            Name = "PanExlF" + i,
+                            Width = 240,
+                            Height = 262,
+                            BorderRadius = 8,
+                            FillColor = ColorTranslator.FromHtml("#121212"),
+                            BackColor = Color.Transparent,
+                            Location = new Point(600, top)
+                        };
+
+                        top += h_p;
+                        flowLayoutPanel1.Controls.Add(panelTxt);
+                        var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExlF" + i]);
+
+                        List<string> titleValues = new List<string>();
+
+                        String getPathQue = "SELECT CUST_FILE_PATH FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = con.CreateCommand();
+                        command.CommandText = getPathQue;
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+
+                        MySqlDataReader exlPathReader = command.ExecuteReader();
+                        while (exlPathReader.Read()) {
+                            titleValues.Add(exlPathReader.GetString(0));
+                        }
+
+                        exlPathReader.Close();
+
+                        Label titleLab = new Label();
+                        mainPanelTxt.Controls.Add(titleLab);
+                        titleLab.Name = "LabExlUp" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                        titleLab.ForeColor = Color.Gainsboro;
+                        titleLab.Visible = true;
+                        titleLab.Enabled = true;
+                        titleLab.Location = new Point(12, 182);
+                        titleLab.Width = 220;
+                        titleLab.Height = 30;
+                        titleLab.Text = titleValues[i];
+
+                        var textboxVid = new Guna2PictureBox();
+                        mainPanelTxt.Controls.Add(textboxVid);
+                        textboxVid.Name = "ExlBoxF" + i;
+                        textboxVid.Width = 241;
+                        textboxVid.Height = 164; // 144
+                        textboxVid.FillColor = ColorTranslator.FromHtml("#232323");
+                        textboxVid.SizeMode = PictureBoxSizeMode.CenterImage;
+                        textboxVid.Image = Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
+                        textboxVid.BorderRadius = 6;
+                        textboxVid.Enabled = true;
+                        textboxVid.Visible = true;
+
+                        textboxVid.Click += (sender_vq, e_vq) => {
+                            exlFORM exlForm = new exlFORM(titleLab.Text,"D");
+                            exlForm.Show();
+                        };
+
+                        Guna2Button remButVid = new Guna2Button();
+                        mainPanelTxt.Controls.Add(remButVid);
+                        remButVid.Name = "RemExlBut" + i;
+                        remButVid.Width = 39;
+                        remButVid.Height = 35;
+                        remButVid.FillColor = ColorTranslator.FromHtml("#4713BF");
+                        remButVid.BorderRadius = 6;
+                        remButVid.BorderThickness = 1;
+                        remButVid.BorderColor = ColorTranslator.FromHtml("#232323");
+                        remButVid.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                        remButVid.Visible = true;
+                        remButVid.Location = new Point(189, 218);
+
+                        remButVid.Click += (sender_vid, e_vid) => {
+                            var titleFile = titleLab.Text;
+                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            if (verifyDialog == DialogResult.Yes) {
+                                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                                command = new MySqlCommand(noSafeUpdate, con);
+                                command.ExecuteNonQuery();
+
+                                String removeQuery = "DELETE FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                command = new MySqlCommand(removeQuery, con);
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                command.Parameters.AddWithValue("@password", label3.Text);
+                                command.Parameters.AddWithValue("@filename", titleFile);
+                                command.ExecuteNonQuery();
+
+                                panelTxt.Dispose();
+                                if (flowLayoutPanel1.Controls.Count == 0) {
+                                    label8.Visible = true;
+                                    guna2Button6.Visible = true;
+                                }
+                            }
+                        };
+
+                        List<string> uploadDateValues = new List<string>();
+
+                        String getDateQue = "SELECT UPLOAD_DATE FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = con.CreateCommand();
+                        command.CommandText = getDateQue;
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+
+                        MySqlDataReader exeDateReader = command.ExecuteReader();
+                        while (exeDateReader.Read()) {
+                            uploadDateValues.Add(exeDateReader.GetString(0));
+                        }
+
+                        Label dateLabTxt = new Label();
+                        mainPanelTxt.Controls.Add(dateLabTxt);
+                        dateLabTxt.Name = "LabExlUp" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                        dateLabTxt.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                        dateLabTxt.ForeColor = Color.DarkGray;
+                        dateLabTxt.Visible = true;
+                        dateLabTxt.Enabled = true;
+                        dateLabTxt.Location = new Point(12, 208);
+                        dateLabTxt.Text = uploadDateValues[i];
                         exeDateReader.Close();
 
                         label8.Visible = false;
@@ -1335,7 +1468,7 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
                         command.Parameters.Add("@CUST_FILE", MySqlDbType.LongText);
 
-                        command.Parameters["@CUST_FILE_PATH"].Value = open.FileName;
+                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
                         command.Parameters["@CUST_USERNAME"].Value = label5.Text;
                         command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;
@@ -1386,7 +1519,7 @@ namespace FlowSERVER1 {
                             textboxExl.Visible = true;
 
                             textboxExl.Click += (sender_eq, e_eq) => {                     
-                                exlFORM exlForm = new exlFORM(titleLab.Text,open.FileName);
+                                exlFORM exlForm = new exlFORM(titleLab.Text,resultXML);
                                 exlForm.Show();
                             };
 
@@ -1407,7 +1540,7 @@ namespace FlowSERVER1 {
                                 var titleFile = titleLab.Text;
                                 DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                                 if (verifyDialog == DialogResult.Yes) {
-                                    deletionMethod(titleFile, "file_info_vid");
+                                    deletionMethod(titleFile, "file_info_excel");
                                     panelVid.Dispose();
                                 }
 
