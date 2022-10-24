@@ -4,7 +4,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.AssemblyReference.cache
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.SuggestedBindingRedirects.cache
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Form1.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Properties.Resources.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.GenerateResource.cache
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.CoreCompileInputs.cache
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exe
@@ -54,3 +53,5 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exlFORM
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Resource1.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Properties\Resources\excelIcon.png

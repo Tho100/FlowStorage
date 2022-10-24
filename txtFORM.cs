@@ -32,7 +32,7 @@ namespace FlowSERVER1 {
 
             con.Open();
 
-            string countRow = "SELECT COUNT(CUST_FILE_TXT) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+            string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
             command = new MySqlCommand(countRow, con);
             command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
@@ -40,7 +40,7 @@ namespace FlowSERVER1 {
             var rowTotal = command.ExecuteScalar();
             var intTotalRow = Convert.ToInt32(rowTotal);
 
-            string getTxtQue = "SELECT CUST_FILE_TXT FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_TXT_NAME = @filename";
+            string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(getTxtQue,con);
             command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@password",Form1.instance.label3.Text);

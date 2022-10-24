@@ -46,7 +46,7 @@ namespace FlowSERVER1 {
             String query = "INSERT IGNORE INTO file_info(CUST_FILE_PATH,CUST_FILE,CUST_USERNAME,UPLOAD_DATE) VALUES (@CUST_FILE_PATH,@CUST_FILE,@CUST_USERNAME,@UPLOAD_DATE)";
 
             command = new MySqlCommand(query, con);
-            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.VarChar, 255);
+            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
 
             try {
 
@@ -182,7 +182,6 @@ namespace FlowSERVER1 {
 
                             picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
                             displayPic.Show();
-
                         };
 
                         Guna2Button remBut = new Guna2Button();
@@ -229,7 +228,7 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(retrieveImg, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@password", label3.Text);
-
+                        
                         MySqlDataAdapter da = new MySqlDataAdapter(command);
                         DataSet ds = new DataSet();
 
@@ -262,7 +261,7 @@ namespace FlowSERVER1 {
                         List<string> titlesValuesTxt = new List<string>();
                         List<string> dateValuesTxt = new List<string>();
 
-                        String getTitleTxt = "SELECT CUST_FILE_TXT_NAME FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        String getTitleTxt = "SELECT CUST_FILE_PATH FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                         command = con.CreateCommand();
                         command.CommandText = getTitleTxt;
                         command.Parameters.AddWithValue("@username",label5.Text);
@@ -337,7 +336,7 @@ namespace FlowSERVER1 {
                                 command = new MySqlCommand(noSafeUpdate,con);
                                 command.ExecuteNonQuery();
 
-                                String removeQuery = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_TXT_NAME = @filename";
+                                String removeQuery = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                                 command = new MySqlCommand(removeQuery,con);
                                 command.Parameters.AddWithValue("@username",label5.Text);
                                 command.Parameters.AddWithValue("@password", label3.Text);
@@ -701,7 +700,7 @@ namespace FlowSERVER1 {
                         textboxVid.Height = 164; // 144
                         textboxVid.FillColor = ColorTranslator.FromHtml("#232323");
                         textboxVid.SizeMode = PictureBoxSizeMode.CenterImage;
-                        textboxVid.Image = Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
+                        textboxVid.Image = Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
                         textboxVid.BorderRadius = 6;
                         textboxVid.Enabled = true;
                         textboxVid.Visible = true;
@@ -912,168 +911,38 @@ namespace FlowSERVER1 {
                 open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
+
+                    void clearRedundane() {
+                        label8.Visible = false;
+                        guna2Button6.Visible = false;
+                    }
+
                     string get_ex = open.FileName;
                     string getName = open.SafeFileName;
                     string retrieved = System.IO.Path.GetExtension(get_ex);
                     string retrievedName = System.IO.Path.GetFileNameWithoutExtension(open.FileName);
-                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico") {
-                        curr++;
-                        var getImg = new Bitmap(open.FileName);
 
-                        var imgWidth = getImg.Width;
-                        var imgHeight = getImg.Height;
-                        int top = 275;
-                        int h_p = 100;
-                        var panelPic = new Guna2Panel() {
-                            Name = "ImgPan" + curr,
-                            Width = 240,
-                            Height = 262,
-                            BorderRadius = 8,
-                            FillColor = ColorTranslator.FromHtml("#121212"),
-                            BackColor = Color.Transparent,
-                            Location = new Point(600, top)
-                        };
-
-                        top += h_p;
-                        flowLayoutPanel1.Controls.Add(panelPic);
-           
-                        var panel = ((Guna2Panel)flowLayoutPanel1.Controls["ImgPan" + curr]);
-                        
-                        Label titleLab = new Label();
-                        panel.Controls.Add(titleLab);
-                        titleLab.Name = "ImgTitle" + curr;
-                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                        titleLab.ForeColor = Color.Gainsboro;
-                        titleLab.Visible = true;
-                        titleLab.Enabled = true;
-                        titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 220;
-                        titleLab.Height = 30;
-                        titleLab.Text = getName;
-
-                        Guna2PictureBox picMain = new Guna2PictureBox();
-                        panel.Controls.Add(picMain);
-                        picMain.Name = "Img" + curr;
-                        picMain.SizeMode = PictureBoxSizeMode.CenterImage;
-                        picMain.BorderRadius = 6;
-                        picMain.Width = 241;
-                        picMain.Height = 164;
-                        picMain.Visible = true;
-
-                        picMain.Click += (sender_f, e_f) => {
-                            var getImgName = (Guna2PictureBox)sender_f;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
-                            displayPic.Show();
-                        };
-
-                        Label dateLab = new Label();
-                        panel.Controls.Add(dateLab);
-                        dateLab.Name = "ImgDate" + curr;
-                        dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                        dateLab.ForeColor = Color.DarkGray;
-                        dateLab.Visible = true;
-                        dateLab.Enabled = true;
-                        dateLab.Location = new Point(12, 208);
-                        dateLab.Text = varDate;
-
-                        Guna2Button remBut = new Guna2Button();
-                        panel.Controls.Add(remBut);
-                        remBut.Name = "remImg" + curr;
-                        remBut.Width = 39;
-                        remBut.Height = 35;
-                        remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
-                        remBut.BorderRadius = 6;
-                        remBut.BorderThickness = 1;
-                        remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                        remBut.Visible = true;
-                        remBut.Location = new Point(189, 218);
-
-                        remBut.Click += (sender_im, e_im) => {
-                            var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (verifyDialog == DialogResult.Yes) {
-                                panelPic.Dispose();
-                                deletionMethod(titleFile,"file_info");
-                            }
-
-                            if (flowLayoutPanel1.Controls.Count == 0) {
-                                label8.Visible = true;
-                                guna2Button6.Visible = true;
-                            }
-                        };
-
-                        label8.Visible = false;
-                        guna2Button6.Visible = false;
-
-                        for (int i=0; i<flowLayoutPanel1.Controls.Count; i++) {
-                            var img = ((Guna2PictureBox)panel.Controls["Img" + curr]);
-                            img.Image = new Bitmap(open.FileName);
-                        }
+                    void createPanelMain(String nameTable,String panName,int itemCurr,Object keyVal) {
 
                         con.Open();
-                        increaseSizeMethod();
 
-                        string selectUsername = "SELECT CUST_USERNAME from information WHERE CUST_USERNAME = @username";
-                        String query = "INSERT IGNORE INTO file_info(CUST_FILE_PATH,CUST_FILE,CUST_USERNAME,UPLOAD_DATE,CUST_PASSWORD) VALUES (@CUST_FILE_PATH,@CUST_FILE,@CUST_USERNAME,@UPLOAD_DATE,@CUST_PASSWORD)";
-                        
-                        command = new MySqlCommand(query, con);
-                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.VarChar, 255);
-                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                        command.Parameters.Add(@"CUST_USERNAME",MySqlDbType.Text);
-                        command.Parameters.Add(@"CUST_PASSWORD", MySqlDbType.Text);
-                        command.Parameters.Add(@"UPLOAD_DATE", MySqlDbType.VarChar,255);
-                        command.Parameters.AddWithValue("@username",label5.Text);
-                        command.Parameters.AddWithValue("@password", label3.Text);
-                        
-                        if(!(retrieved == ".ico")) {
+                        String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUE (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
+                        command = new MySqlCommand(insertTxtQuery, con);
 
-                            MemoryStream ms = new MemoryStream();
-                            var imgBox = ((Guna2PictureBox)panel.Controls["Img" + curr]);
-                            imgBox.Image.Save(ms, imgBox.Image.RawFormat);
-                        
-                            byte[] imgSetup = ms.ToArray();
- 
-                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                            command.Parameters["@CUST_FILE"].Value = imgSetup;
-                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                            command.Parameters[@"UPLOAD_DATE"].Value = varDate;
-                            command.Parameters[@"CUST_PASSWORD"].Value = label3.Text;
-                            if(command.ExecuteNonQuery() == 1) {
-                                //
-                            } 
-                        } else {
-                            Image retrieveIcon = Image.FromFile(open.FileName);
-                            byte[] dataIco;
-                            using(MemoryStream msIco = new MemoryStream()) {
-                                retrieveIcon.Save(msIco,System.Drawing.Imaging.ImageFormat.Bmp);
-                                dataIco = msIco.ToArray();
-                            }
-                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                            command.Parameters["@CUST_FILE"].Value = dataIco;
-                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                            command.Parameters[@"UPLOAD_DATE"].Value = varDate;
-                            command.Parameters[@"CUST_PASSWORD"].Value = label3.Text;
-                            if (command.ExecuteNonQuery() == 1) {
-                                //
-                            }
-                        }
+                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
 
-                        command = new MySqlCommand("SELECT COUNT(CUST_FILE) FROM file_info WHERE CUST_USERNAME = @username",con);
-                        command.Parameters.AddWithValue("@username",label5.Text);
-                        var totalFilesCount = command.ExecuteScalar();
-                        var totalFileInt = Convert.ToInt32(totalFilesCount);
-                        label6.Text = totalFileInt.ToString();
-                    } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml") {
-                        txtCurr++;
+                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
                         int top = 275;
                         int h_p = 100;
                         var panelTxt = new Guna2Panel() {
-                            Name = "PanTxt" + txtCurr,
+                            Name = panName + itemCurr,
                             Width = 240,
                             Height = 262,
                             BorderRadius = 8,
@@ -1084,33 +953,21 @@ namespace FlowSERVER1 {
 
                         top += h_p;
                         flowLayoutPanel1.Controls.Add(panelTxt);
-                        var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanTxt" + txtCurr]);
+                        var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[panName + itemCurr]);
 
                         var textboxPic = new Guna2PictureBox();
                         mainPanelTxt.Controls.Add(textboxPic);
-                        textboxPic.Name = "TxtBox" + txtCurr;
+                        textboxPic.Name = "TxtBox" + itemCurr;
                         textboxPic.Width = 240;
                         textboxPic.Height = 164;
                         textboxPic.BorderRadius = 8;
-                        textboxPic.SizeMode = PictureBoxSizeMode.CenterImage; 
-                        textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
+                        textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
                         textboxPic.Enabled = true;
                         textboxPic.Visible = true;
 
-                        String nonLine = "";
-                        using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
-                            nonLine = ReadFileTxt.ReadToEnd();
-                        }
-                        var filePath = open.SafeFileName;
-
-                        textboxPic.Click += (sender_t, e_t) => {
-                            txtFORM txtFormShow = new txtFORM(nonLine,filePath);
-                            txtFormShow.Show();
-                        };
-
                         Label titleLab = new Label();
                         mainPanelTxt.Controls.Add(titleLab);
-                        titleLab.Name = "LabVidUp" + txtCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Name = "LabVidUp" + itemCurr;//Segoe UI Semibold, 11.25pt, style=Bold
                         titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                         titleLab.ForeColor = Color.Gainsboro;
                         titleLab.Visible = true;
@@ -1120,9 +977,85 @@ namespace FlowSERVER1 {
                         titleLab.Height = 30;
                         titleLab.Text = getName;
 
+                        if (nameTable == "file_info") {
+                            command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
+
+                            textboxPic.Image = new Bitmap(open.FileName);
+                            textboxPic.Click += (sender_f,e_f) => {
+                                var getImgName = (Guna2PictureBox)sender_f;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
+                                displayPic.Show();
+                            };
+                            clearRedundane();
+                        }
+
+                        if(nameTable == "file_info_expand") {
+                            command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
+
+                            textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
+                            String nonLine = "";
+                            using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
+                                nonLine = ReadFileTxt.ReadToEnd();
+                            }
+
+                            var filePath = open.SafeFileName;
+
+                            textboxPic.Click += (sender_t, e_t) => {
+                                txtFORM txtFormShow = new txtFORM(nonLine, filePath);
+                                txtFormShow.Show();
+                            };
+                            clearRedundane();
+                        }
+
+                        if(nameTable == "file_info_exe") {
+                            command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
+                            textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                            textboxPic.Click += (sender_ex, e_ex) => {
+                                Process.Start(open.FileName);
+                                exeFORM exeFormShow = new exeFORM(titleLab.Text);
+                                exeFormShow.Show();
+                            };
+                            clearRedundane();
+                        }
+
+                        if (nameTable == "file_info_vid") {
+                            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                            command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+
+                            ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                            Bitmap getThumbNail = shellFile.Thumbnail.Bitmap;
+                            var setupThumb = ImageToByte(getThumbNail);
+                            command.Parameters["@CUST_THUMB"].Value = setupThumb;
+                            command.ExecuteNonQuery();
+
+                            textboxPic.Image = toBitMap;
+                            textboxPic.Click += (sender_ex, e_ex) => {
+                                var getImgName = (Guna2PictureBox)sender_ex;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImg = new Bitmap(getImgName.Image);
+
+                                vidFORM vidShow = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text);
+                                vidShow.Show();
+                            };
+                            clearRedundane();
+                        }
+
                         Guna2Button remButTxt = new Guna2Button();
                         mainPanelTxt.Controls.Add(remButTxt);
-                        remButTxt.Name = "RemTxtBut" + txtCurr;
+                        remButTxt.Name = "RemTxtBut" + itemCurr;
                         remButTxt.Width = 39;
                         remButTxt.Height = 35;
                         remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
@@ -1138,7 +1071,7 @@ namespace FlowSERVER1 {
                             var titleFile = titleLab.Text;
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
-                                deletionMethod(titleFile,"file_info_expand");
+                                deletionMethod(titleFile, nameTable);
                                 panelTxt.Dispose();
                             }
 
@@ -1150,7 +1083,7 @@ namespace FlowSERVER1 {
 
                         Label dateLabTxt = new Label();
                         mainPanelTxt.Controls.Add(dateLabTxt);
-                        dateLabTxt.Name = "LabTxtUp" + txtCurr;
+                        dateLabTxt.Name = "LabTxtUp" + itemCurr;
                         dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                         dateLabTxt.ForeColor = Color.DarkGray;
                         dateLabTxt.Visible = true;
@@ -1159,274 +1092,57 @@ namespace FlowSERVER1 {
                         dateLabTxt.Width = 1000;
                         dateLabTxt.Text = varDate;
 
-                        con.Open();
                         increaseSizeMethod();
+                    }
 
-                        String insertTxtQuery = "INSERT INTO file_info_expand(CUST_FILE_TXT_NAME,CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_TXT) VALUE (@CUST_FILE_TXT_NAME,@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_TXT)";
-                        command = new MySqlCommand(insertTxtQuery,con);
-                        command.Parameters.Add("@CUST_FILE_TXT_NAME",MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.VarChar,255);
-                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar,255);
-                        command.Parameters.Add("@CUST_FILE_TXT", MySqlDbType.LongText);
-
-                        command.Parameters["@CUST_FILE_TXT_NAME"].Value = getName;
-                        command.Parameters["@CUST_FILE_PATH"].Value = filePath;
-                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                        command.Parameters["@CUST_FILE_TXT"].Value = nonLine;
-                        if(command.ExecuteNonQuery() == 1) {
-                            guna2Button6.Visible = false;
-		                    label8.Visible = false;
-                        } else {
-                            //
+                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico") {
+                        curr++;
+                        var getImg = new Bitmap(open.FileName);
+                        var imgWidth = getImg.Width;
+                        var imgHeight = getImg.Height;
+                        if (retrieved != ".ico") {
+                            using(MemoryStream ms = new MemoryStream()) {
+                                getImg.Save(ms,System.Drawing.Imaging.ImageFormat.Png);
+                                var setupImg = ms.ToArray();
+                                createPanelMain("file_info","PanImg",curr,setupImg);
+                            }
+                        }
+                        else {
+                            Image retrieveIcon = Image.FromFile(open.FileName);
+                            byte[] dataIco;
+                            using(MemoryStream msIco = new MemoryStream()) {
+                                retrieveIcon.Save(msIco,System.Drawing.Imaging.ImageFormat.Png);
+                                dataIco = msIco.ToArray();
+                                createPanelMain("file_info","PanImg", curr, dataIco);
+                            }
                         }
 
+                        /*command = new MySqlCommand("SELECT COUNT(CUST_FILE) FROM file_info WHERE CUST_USERNAME = @username",con);
+                        command.Parameters.AddWithValue("@username",label5.Text);
+                        var totalFilesCount = command.ExecuteScalar();
+                        var totalFileInt = Convert.ToInt32(totalFilesCount);
+                        label6.Text = totalFileInt.ToString();*/
+                    } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml") {
+                        txtCurr++;
+                        String nonLine = "";
+                        using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
+                            nonLine = ReadFileTxt.ReadToEnd();
+                        }
+                        createPanelMain("file_info_expand","PanTxt",txtCurr,nonLine);
                     } else if (retrieved == ".exe") {
-                        con.Open();
-                        increaseSizeMethod();
-                        //Process.Start(open.FileName);
-                        String exeInsQuery = "INSERT INTO file_info_exe(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_EXE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_EXE,@CUST_THUMB)";
-                        command = new MySqlCommand(exeInsQuery,con);
-                        command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_USERNAME",MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_PASSWORD",MySqlDbType.Text);
-                        command.Parameters.Add("@UPLOAD_DATE",MySqlDbType.VarChar,255);
-                        command.Parameters.Add("@CUST_FILE_EXE",MySqlDbType.LongBlob);
-                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-
-                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
+                        exeCurr++;
                         Byte[] streamRead = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE_EXE"].Value = streamRead;
-
-                        Icon retrieveExeIco = Icon.ExtractAssociatedIcon(open.FileName);
-                        command.Parameters["@CUST_THUMB"].Value = retrieveExeIco;
-                        if(command.ExecuteNonQuery() == 1) {
-                            exeCurr++;
-                            int top = 275;
-                            int h_p = 100;
-                            var panelTxt = new Guna2Panel() {
-                                Name = "PanExe" + exeCurr,
-                                Width = 240,
-                                Height = 262,
-                                BorderRadius = 8,
-                                FillColor = ColorTranslator.FromHtml("#121212"),
-                                BackColor = Color.Transparent,
-                                Location = new Point(600, top)
-                            };
-
-                            top += h_p;
-                            flowLayoutPanel1.Controls.Add(panelTxt);
-                            var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExe" + exeCurr]);
-
-                            Label titleLab = new Label();
-                            mainPanelTxt.Controls.Add(titleLab);
-                            titleLab.Name = "LabVidUp" + vidCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                            titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                            titleLab.ForeColor = Color.Gainsboro;
-                            titleLab.Visible = true;
-                            titleLab.Enabled = true;
-                            titleLab.Location = new Point(12, 182);
-                            titleLab.Width = 220;
-                            titleLab.Height = 30;
-                            titleLab.Text = getName;
-
-                            var textboxExe = new Guna2PictureBox();
-                            mainPanelTxt.Controls.Add(textboxExe);
-                            textboxExe.Name = "ExeBox" + exeCurr;
-                            textboxExe.Width = 240;
-                            textboxExe.Height = 164;
-                            textboxExe.FillColor = ColorTranslator.FromHtml("#232323");
-                            textboxExe.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
-                            textboxExe.SizeMode = PictureBoxSizeMode.CenterImage;
-                            textboxExe.BorderRadius = 8;
-                            textboxExe.Enabled = true;
-                            textboxExe.Visible = true;
-
-                            textboxExe.Click += (sender_ex, e_ex) => {
-                                exeFORM exeFormShow = new exeFORM(titleLab.Text);
-                                exeFormShow.Show();
-                            };
-
-                            Guna2Button remButExe = new Guna2Button();
-                            mainPanelTxt.Controls.Add(remButExe);
-                            remButExe.Name = "RemExeBut" + exeCurr;
-                            remButExe.Width = 39;
-                            remButExe.Height = 35;
-                            remButExe.FillColor = ColorTranslator.FromHtml("#4713BF");
-                            remButExe.BorderRadius = 6;
-                            remButExe.BorderThickness = 1;
-                            remButExe.BorderColor = ColorTranslator.FromHtml("#232323");
-                            remButExe.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                            remButExe.Visible = true;
-                            remButExe.Location = new Point(189, 218);
-
-                            remButExe.Click += (sender_exe, e_exe) => {
-                                var titleFile = titleLab.Text;
-                                DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                                if (verifyDialog == DialogResult.Yes) {
-                                    deletionMethod(titleFile,"file_info_exe");
-                                    panelTxt.Dispose();
-                                }
-
-                                if(flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
-                                }
-                            };
-
-                            Label dateLabExe = new Label();
-                            mainPanelTxt.Controls.Add(dateLabExe);
-                            dateLabExe.Name = "LabExeUp" + exeCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                            dateLabExe.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                            dateLabExe.ForeColor = Color.DarkGray;
-                            dateLabExe.Visible = true;
-                            dateLabExe.Enabled = true;
-                            dateLabExe.Location = new Point(12, 208);
-                            dateLabExe.Width = 1000;
-                            dateLabExe.Text = varDate;
-
-                            String countExeQue = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                            command = new MySqlCommand(countExeQue,con);
-                            command.Parameters.AddWithValue("@username",label5.Text);
-                            command.Parameters.AddWithValue("@password", label3.Text);
-                            var totalRow = command.ExecuteScalar();
-                            var intTotalExeRow = Convert.ToInt32(totalRow);
-                            label4.Text = intTotalExeRow.ToString();
-
-                            label8.Visible = false;
-                            guna2Button6.Visible = false;
-                        } else {
-                            MessageBox.Show("Adding file failed");
-                        }
-                    } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
-                        con.Open();
-                        increaseSizeMethod();    
-
-                        String insertVidQue = "INSERT INTO file_info_vid(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE_VID,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE_VID,@CUST_THUMB)";
-                        command = new MySqlCommand(insertVidQue,con);
-                        command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                        command.Parameters.Add("@CUST_FILE_VID", MySqlDbType.LongBlob);
-                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-
-                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
+                        createPanelMain("file_info_exe","PanExe",exeCurr,streamRead);
+                        //Process.Start(open.FileName);
+                        /*
+                        //command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+                        //Icon retrieveExeIco = Icon.ExtractAssociatedIcon(open.FileName);
+                        //command.Parameters["@CUST_THUMB"].Value = retrieveExeIco;
+                        }*/
+                    } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") { 
+                        vidCurr++;
                         Byte[] streamReadVid = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE_VID"].Value = streamReadVid;
-
-                        ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
-                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-
-                        Bitmap getThumbNail = shellFile.Thumbnail.Bitmap;
-                        var setupThumb = ImageToByte(getThumbNail);
-                        command.Parameters["@CUST_THUMB"].Value = setupThumb;
-
-                        if (command.ExecuteNonQuery() == 1) {
-                            vidCurr++;
-                            int top = 275;
-                            int h_p = 100;
-                            var panelVid = new Guna2Panel() {
-                                Name = "PanVid" + vidCurr,
-                                Width = 240,
-                                Height = 262,
-                                BorderRadius = 8,
-                                FillColor = ColorTranslator.FromHtml("#121212"),
-                                BackColor = Color.Transparent,
-                                Location = new Point(600, top)
-                            };
-
-                            top += h_p;
-                            flowLayoutPanel1.Controls.Add(panelVid);
-                            var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanVid" + vidCurr]);
-
-                            Label titleLab = new Label();
-                            mainPanelTxt.Controls.Add(titleLab);
-                            titleLab.Name = "LabVidUp" + vidCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                            titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                            titleLab.ForeColor = Color.Gainsboro;
-                            titleLab.Visible = true;
-                            titleLab.Enabled = true;
-                            titleLab.Location = new Point(12, 182);
-                            titleLab.Width = 220;
-                            titleLab.Height = 30;
-                            titleLab.Text = getName;
-
-                            // LOAD THUMBNAIL
-
-                            var textboxVid = new Guna2PictureBox();
-                            mainPanelTxt.Controls.Add(textboxVid);
-                            textboxVid.Name = "ExeVid" + vidCurr;
-                            textboxVid.Width = 240;
-                            textboxVid.Height = 164;
-                            textboxVid.FillColor = ColorTranslator.FromHtml("#232323");
-                            textboxVid.Image = toBitMap;
-                            textboxVid.SizeMode = PictureBoxSizeMode.CenterImage;
-                            textboxVid.BorderRadius = 8;
-                            textboxVid.Enabled = true;
-                            textboxVid.Visible = true;
-
-                            textboxVid.Click += (sender_vq, e_vq) => {
-                                var getImgName = (Guna2PictureBox)sender_vq;
-                                var getWidth = getImgName.Image.Width;
-                                var getHeight = getImgName.Image.Height;
-                                Bitmap defaultImage = new Bitmap(getImgName.Image);
-                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight,titleLab.Text);
-                                vidFormShow.Show();
-                            };
-
-                            Guna2Button remButVid = new Guna2Button();
-                            mainPanelTxt.Controls.Add(remButVid);
-                            remButVid.Name = "RemVidBut" + vidCurr;
-                            remButVid.Width = 39;
-                            remButVid.Height = 35;
-                            remButVid.FillColor = ColorTranslator.FromHtml("#4713BF");
-                            remButVid.BorderRadius = 6;
-                            remButVid.BorderThickness = 1;
-                            remButVid.BorderColor = ColorTranslator.FromHtml("#232323");
-                            remButVid.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                            remButVid.Visible = true;
-                            remButVid.Location = new Point(189, 218);
-
-                            remButVid.Click += (sender_vid, e_vid) => {
-                                var titleFile = titleLab.Text;
-                                DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                                if (verifyDialog == DialogResult.Yes) {
-                                    deletionMethod(titleFile,"file_info_vid");
-                                    panelVid.Dispose();
-                                }
-
-                                if (flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
-                                }
-                            };
-
-                            Label dateLabVid = new Label();
-                            mainPanelTxt.Controls.Add(dateLabVid);
-                            dateLabVid.Name = "LabVidUp" + vidCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                            dateLabVid.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                            dateLabVid.ForeColor = Color.DarkGray;
-                            dateLabVid.Visible = true;
-                            dateLabVid.Enabled = true;
-                            dateLabVid.Location = new Point(12, 208);
-                            dateLabVid.Width = 1000;
-                            dateLabVid.Text = varDate;
-
-                            label8.Visible = false;
-                            guna2Button6.Visible = false;
-                        }
+                        createPanelMain("file_info_vid","PanVid",vidCurr,streamReadVid);
                     } else if (retrieved == ".xlsx" || retrieved == ".csv") {
                         String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + open.FileName + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
                         var conExl = new OleDbConnection(pathExl);
@@ -1567,7 +1283,7 @@ namespace FlowSERVER1 {
                     } 
                 }
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                //MessageBox.Show(eq.Message);
             }
         }
 

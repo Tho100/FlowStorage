@@ -53,8 +53,7 @@ namespace FlowSERVER1 {
                 DataSet dataset = new DataSet();
                 dataset.ReadXml(mainReader);
 
-                guna2DataGridView1.DataSource = dataset.Tables[0]; 
-
+                guna2DataGridView1.DataSource = dataset.Tables[0];
             }
             catch (Exception eq) {
                 MessageBox.Show(eq.Message);
