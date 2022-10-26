@@ -61,29 +61,21 @@ namespace FlowSERVER1 {
                     Form1.instance.label8.Visible = true;
                     Form1.instance.guna2Button6.Visible = true;
                 }
+                this.Close();
                 try {
-
-                    String length = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-
-                    command = new MySqlCommand(length,con);
-                    command.Parameters.AddWithValue("@username", user);
-                    command.Parameters.AddWithValue("@password", pass);
-
-                    var totalRowImg = command.ExecuteScalar();
-                    int intTotalRowImg = Convert.ToInt32(totalRowImg);
 
                     string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowTxt, con);
-                    command.Parameters.AddWithValue("@username", user);
-                    command.Parameters.AddWithValue("@password", pass);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                     var totalRowTxt = command.ExecuteScalar();
                     int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
 
                     string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExe, con);
-                    command.Parameters.AddWithValue("@username", user);
-                    command.Parameters.AddWithValue("@password", pass);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                     var totalRowExe = command.ExecuteScalar();
                     int intTotalRowExe = Convert.ToInt32(totalRowExe);
@@ -91,155 +83,174 @@ namespace FlowSERVER1 {
 
                     string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowVid, con);
-                    command.Parameters.AddWithValue("@username", user);
-                    command.Parameters.AddWithValue("@password", pass);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                     var totalRowVid = command.ExecuteScalar();
                     int intTotalRowVid = Convert.ToInt32(totalRowVid);
-                    for (int i = 0; i<intTotalRowImg; i++) {
-                        int top = 275;
-                        int h_p = 100;
 
-                        flowlayout.Location = new Point(13, 10);
-                        flowlayout.Size = new Size(1118, 579);
+                    String countRowImg = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowImg, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    var totalRowImg = command.ExecuteScalar();
+                    var intRowImg = Convert.ToInt32(totalRowImg);
+                    //Form1.instance.label6.Text = intRow.ToString();
 
-                        var panelPic_Q = new Guna2Panel() {
-                            Name = "PanG" + i,
-                            Width = 240,
-                            Height = 262,
-                            BorderRadius = 8,
-                            FillColor = ColorTranslator.FromHtml("#121212"),
-                            BackColor = Color.Transparent,
-                            Location = new Point(600, top)
-                        };
-                        top += h_p;
-                        flowlayout.Controls.Add(panelPic_Q);
+                    string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowExcel, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    var totalRowExcel = command.ExecuteScalar();
+                    int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
 
-                        var panelF = ((Guna2Panel)flowlayout.Controls["PanG" + i]);
+                    if (intRowImg > 0) {
+                        for (int i = 0; i < intRowImg; i++) {
+                            int top = 275;
+                            int h_p = 100;
 
-                        List<string> dateValues = new List<string>();
-                        List<string> titleValues = new List<string>();
+                            flowlayout.Location = new Point(13, 10);
+                            flowlayout.Size = new Size(1118, 579);
 
-                        String getUpDate = "SELECT UPLOAD_DATE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                        command = new MySqlCommand(getUpDate, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getUpDate;
+                            var panelPic_Q = new Guna2Panel() {
+                                Name = "PanG" + i,
+                                Width = 240,
+                                Height = 262,
+                                BorderRadius = 8,
+                                FillColor = ColorTranslator.FromHtml("#121212"),
+                                BackColor = Color.Transparent,
+                                Location = new Point(600, top)
+                            };
+                            top += h_p;
+                            flowlayout.Controls.Add(panelPic_Q);
 
-                        command.Parameters.AddWithValue("@username", user);
-                        command.Parameters.AddWithValue("@password", pass);
-                        MySqlDataReader readerDate = command.ExecuteReader();
+                            var panelF = ((Guna2Panel)flowlayout.Controls["PanG" + i]);
 
-                        while (readerDate.Read()) {
-                            dateValues.Add(readerDate.GetString(0));
-                        }
-                        readerDate.Close();
+                            List<string> dateValues = new List<string>();
+                            List<string> titleValues = new List<string>();
 
-                        Label dateLab = new Label();
-                        panelF.Controls.Add(dateLab);
-                        dateLab.Name = "LabG" + i;//Segoe UI Semibold, 11.25pt, style=Bold
-                        dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                        dateLab.ForeColor = Color.DarkGray;
-                        dateLab.Visible = true;
-                        dateLab.Enabled = true;
-                        dateLab.Location = new Point(12, 208);
-                        dateLab.Text = dateValues[i];
+                            String getUpDate = "SELECT UPLOAD_DATE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            command = new MySqlCommand(getUpDate, con);
+                            command = con.CreateCommand();
+                            command.CommandText = getUpDate;
 
-                        String getTitleQue = "SELECT CUST_FILE_PATH FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                        command = new MySqlCommand(getTitleQue, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getTitleQue;
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                            MySqlDataReader readerDate = command.ExecuteReader();
 
-                        command.Parameters.AddWithValue("@username", user);
-                        command.Parameters.AddWithValue("@password", pass);
-
-                        MySqlDataReader titleReader = command.ExecuteReader();
-                        while (titleReader.Read()) {
-                            titleValues.Add(titleReader.GetString(0));
-                        }
-                        titleReader.Close();
-
-                        Label titleLab = new Label();
-                        panelF.Controls.Add(titleLab);
-                        titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
-                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                        titleLab.ForeColor = Color.Gainsboro;
-                        titleLab.Visible = true;
-                        titleLab.Enabled = true;
-                        titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 220;
-                        titleLab.Height = 30;
-                        titleLab.Text = titleValues[i];
-
-                        Guna2PictureBox picMain_Q = new Guna2PictureBox();
-                        panelF.Controls.Add(picMain_Q);
-                        picMain_Q.Name = "ImgG" + i;
-                        picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                        picMain_Q.BorderRadius = 6;
-                        picMain_Q.Width = 241;
-                        picMain_Q.Height = 165;
-                        picMain_Q.Visible = true;
-
-                        picMain_Q.Click += (sender, e) => {
-                            var getImgName = (Guna2PictureBox)sender;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                            displayPic.Show();
-
-                        };
-
-                        Guna2Button remBut = new Guna2Button();
-                        panelF.Controls.Add(remBut);
-                        remBut.Name = "Rem" + i;
-                        remBut.Width = 39;
-                        remBut.Height = 35;
-                        remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
-                        remBut.BorderRadius = 6;
-                        remBut.BorderThickness = 1;
-                        remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                        remBut.Visible = true;
-                        remBut.Location = new Point(189, 218);
-
-                        remBut.Click += (sender_im, e_im) => {
-                            var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (verifyDialog == DialogResult.Yes) {
-                                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                command = new MySqlCommand(noSafeUpdate, con);
-                                command.ExecuteNonQuery();
-
-                                String removeQuery = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-                                command = new MySqlCommand(removeQuery, con);
-                                command.Parameters.AddWithValue("@username", user);
-                                command.Parameters.AddWithValue("@password", pass);
-                                command.Parameters.AddWithValue("@filename", titleFile);
-                                command.ExecuteNonQuery();
-
-                                panelPic_Q.Dispose();
+                            while (readerDate.Read()) {
+                                dateValues.Add(readerDate.GetString(0));
                             }
-                        };
+                            readerDate.Close();
 
-                        Form1.instance.guna2Button6.Visible = false;
-                        Form1.instance.label8.Visible = false;
-                        this.Close();
-                        var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
+                            Label dateLab = new Label();
+                            panelF.Controls.Add(dateLab);
+                            dateLab.Name = "LabG" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                            dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                            dateLab.ForeColor = Color.DarkGray;
+                            dateLab.Visible = true;
+                            dateLab.Enabled = true;
+                            dateLab.Location = new Point(12, 208);
+                            dateLab.Text = dateValues[i];
 
-                        String retrieveImg = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                        command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", user);
-                        command.Parameters.AddWithValue("@password", pass);
+                            String getTitleQue = "SELECT CUST_FILE_PATH FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            command = new MySqlCommand(getTitleQue, con);
+                            command = con.CreateCommand();
+                            command.CommandText = getTitleQue;
 
-                        MySqlDataAdapter da = new MySqlDataAdapter(command);
-                        DataSet ds = new DataSet();
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
-                        da.Fill(ds);
-                        MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
-                        img.Image = new Bitmap(ms);
+                            MySqlDataReader titleReader = command.ExecuteReader();
+                            while (titleReader.Read()) {
+                                titleValues.Add(titleReader.GetString(0));
+                            }
+                            titleReader.Close();
+
+                            Label titleLab = new Label();
+                            panelF.Controls.Add(titleLab);
+                            titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                            titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                            titleLab.ForeColor = Color.Gainsboro;
+                            titleLab.Visible = true;
+                            titleLab.Enabled = true;
+                            titleLab.Location = new Point(12, 182);
+                            titleLab.Width = 220;
+                            titleLab.Height = 30;
+                            titleLab.Text = titleValues[i];
+
+                            Guna2PictureBox picMain_Q = new Guna2PictureBox();
+                            panelF.Controls.Add(picMain_Q);
+                            picMain_Q.Name = "ImgG" + i;
+                            picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
+                            picMain_Q.BorderRadius = 6;
+                            picMain_Q.Width = 241;
+                            picMain_Q.Height = 165;
+                            picMain_Q.Visible = true;
+
+                            picMain_Q.Click += (sender, e) => {
+                                var getImgName = (Guna2PictureBox)sender;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                displayPic.Show();
+                            };
+
+                            Guna2Button remBut = new Guna2Button();
+                            panelF.Controls.Add(remBut);
+                            remBut.Name = "Rem" + i;
+                            remBut.Width = 39;
+                            remBut.Height = 35;
+                            remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
+                            remBut.BorderRadius = 6;
+                            remBut.BorderThickness = 1;
+                            remBut.BorderColor = ColorTranslator.FromHtml("#232323");
+                            remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                            remBut.Visible = true;
+                            remBut.Location = new Point(189, 218);
+
+                            remBut.Click += (sender_im, e_im) => {
+                                var titleFile = titleLab.Text;
+                                DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                if (verifyDialog == DialogResult.Yes) {
+                                    String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                                    command = new MySqlCommand(noSafeUpdate, con);
+                                    command.ExecuteNonQuery();
+
+                                    String removeQuery = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                    command = new MySqlCommand(removeQuery, con);
+                                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                                    command.Parameters.AddWithValue("@filename", titleFile);
+                                    command.ExecuteNonQuery();
+
+                                    panelPic_Q.Dispose();
+                                    if (flowlayout.Controls.Count == 0) {
+                                        lab8.Visible = true;
+                                        but6.Visible = true;
+                                    }
+                                }
+                            };
+
+                            but6.Visible = false;
+                            lab8.Visible = false;
+                            var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
+
+                            String retrieveImg = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            command = new MySqlCommand(retrieveImg, con);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+
+                            MySqlDataAdapter da = new MySqlDataAdapter(command);
+                            DataSet ds = new DataSet();
+
+                            da.Fill(ds);
+                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
+                            img.Image = new Bitmap(ms);
+                        }
                     }
-                    
 
                     // LOAD .TXT
 
@@ -264,11 +275,11 @@ namespace FlowSERVER1 {
                             List<string> titlesValuesTxt = new List<string>();
                             List<string> dateValuesTxt = new List<string>();
 
-                            String getTitleTxt = "SELECT CUST_FILE_TXT_NAME FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            String getTitleTxt = "SELECT CUST_FILE_PATH FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = con.CreateCommand();
                             command.CommandText = getTitleTxt;
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataReader pathReaderTxt = command.ExecuteReader();
                             while (pathReaderTxt.Read()) {
@@ -292,8 +303,8 @@ namespace FlowSERVER1 {
                             String getDateTxt = "SELECT UPLOAD_DATE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = con.CreateCommand();
                             command.CommandText = getDateTxt;
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataReader dateReaderTxt = command.ExecuteReader();
                             while (dateReaderTxt.Read()) {
@@ -339,14 +350,18 @@ namespace FlowSERVER1 {
                                     command = new MySqlCommand(noSafeUpdate, con);
                                     command.ExecuteNonQuery();
 
-                                    String removeQuery = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_TXT_NAME = @filename";
+                                    String removeQuery = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                                     command = new MySqlCommand(removeQuery, con);
-                                    command.Parameters.AddWithValue("@username", user);
-                                    command.Parameters.AddWithValue("@password", pass);
+                                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
                                     command.Parameters.AddWithValue("@filename", titleFile);
                                     command.ExecuteNonQuery();
 
                                     panelTxt.Dispose();
+                                    if (flowlayout.Controls.Count == 0) {
+                                        lab8.Visible = true;
+                                        but6.Visible = true;
+                                    }
                                 }
                             };
 
@@ -362,8 +377,8 @@ namespace FlowSERVER1 {
                             dateLabTxt.Text = dateValuesTxt[q];
                         }
 
-                        Form1.instance.label8.Visible = false;
-                        Form1.instance.guna2Button6.Visible = false;
+                        lab8.Visible = false;
+                        but6.Visible = false;
                     }
                     if (intTotalRowExe > 0) {
                         for (int i = 0; i < intTotalRowExe; i++) {
@@ -388,8 +403,8 @@ namespace FlowSERVER1 {
                             String getPathQue = "SELECT CUST_FILE_PATH FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = con.CreateCommand();
                             command.CommandText = getPathQue;
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataReader exePathReader = command.ExecuteReader();
                             while (exePathReader.Read()) {
@@ -422,6 +437,18 @@ namespace FlowSERVER1 {
                             textboxExe.Visible = true;
 
                             var imgExe = ((Guna2PictureBox)mainPanelTxt.Controls["ExeBoxF" + i]);
+                            /*
+                            String retrieveImgExe = "SELECT CUST_THUMB FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            command = new MySqlCommand(retrieveImgExe,con);
+                            command.Parameters.AddWithValue("@username",label5.Text);
+                            command.Parameters.AddWithValue("@password", label3.Text);
+
+                            MySqlDataAdapter da_exe = new MySqlDataAdapter(command);
+                            DataSet ds_exe = new DataSet();
+
+                            da_exe.Fill(ds_exe);
+                            MemoryStream ms_exe = new MemoryStream((byte[])ds_exe.Tables[0].Rows[i][0]);
+                            imgExe.Image = new Bitmap(ms_exe);*/
 
                             textboxExe.Click += (sender_ex, e_ex) => {
                                 exeFORM exeFormShow = new exeFORM(titleLab.Text);
@@ -451,12 +478,16 @@ namespace FlowSERVER1 {
 
                                     String removeQuery = "DELETE FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                                     command = new MySqlCommand(removeQuery, con);
-                                    command.Parameters.AddWithValue("@username", user);
-                                    command.Parameters.AddWithValue("@password", pass);
+                                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
                                     command.Parameters.AddWithValue("@filename", titleFile);
                                     command.ExecuteNonQuery();
 
                                     panelTxt.Dispose();
+                                    if (flowlayout.Controls.Count == 0) {
+                                        lab8.Visible = true;
+                                        but6.Visible = true;
+                                    }
                                 }
                             };
 
@@ -465,8 +496,8 @@ namespace FlowSERVER1 {
                             String getDateQue = "SELECT UPLOAD_DATE FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = con.CreateCommand();
                             command.CommandText = getDateQue;
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataReader exeDateReader = command.ExecuteReader();
                             while (exeDateReader.Read()) {
@@ -484,8 +515,8 @@ namespace FlowSERVER1 {
                             dateLabTxt.Text = uploadDateValues[i];
 
                             exeDateReader.Close();
-                            Form1.instance.label8.Visible = false;
-                            Form1.instance.guna2Button6.Visible = false;
+                            lab8.Visible = false;
+                            but6.Visible = false;
                         }
                     }
 
@@ -512,8 +543,8 @@ namespace FlowSERVER1 {
                             String getPathQue = "SELECT CUST_FILE_PATH FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = con.CreateCommand();
                             command.CommandText = getPathQue;
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataReader vidPathReader = command.ExecuteReader();
                             while (vidPathReader.Read()) {
@@ -556,8 +587,8 @@ namespace FlowSERVER1 {
 
                             String getImgQue = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = new MySqlCommand(getImgQue, con);
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataAdapter da = new MySqlDataAdapter(command);
                             DataSet ds = new DataSet();
@@ -590,12 +621,16 @@ namespace FlowSERVER1 {
 
                                     String removeQuery = "DELETE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                                     command = new MySqlCommand(removeQuery, con);
-                                    command.Parameters.AddWithValue("@username", user);
-                                    command.Parameters.AddWithValue("@password", pass);
+                                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
                                     command.Parameters.AddWithValue("@filename", titleFile);
                                     command.ExecuteNonQuery();
 
                                     panelTxt.Dispose();
+                                    if (flowlayout.Controls.Count == 0) {
+                                        lab8.Visible = true;
+                                        but6.Visible = true;
+                                    }
                                 }
                             };
 
@@ -604,8 +639,8 @@ namespace FlowSERVER1 {
                             String getDateQue = "SELECT UPLOAD_DATE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                             command = con.CreateCommand();
                             command.CommandText = getDateQue;
-                            command.Parameters.AddWithValue("@username", user);
-                            command.Parameters.AddWithValue("@password", pass);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
 
                             MySqlDataReader exeDateReader = command.ExecuteReader();
                             while (exeDateReader.Read()) {
@@ -623,11 +658,139 @@ namespace FlowSERVER1 {
                             dateLabTxt.Text = uploadDateValues[i];
                             exeDateReader.Close();
 
-                            Form1.instance.label8.Visible = false;
-                            Form1.instance.guna2Button6.Visible = false;
+                            lab8.Visible = false;
+                            but6.Visible = false;
                         }
                     }
-                } catch (Exception eq) {
+                    if (intTotalRowExcel > 0) {
+                        for (int i = 0; i < intTotalRowExcel; i++) {
+                            int top = 275;
+                            int h_p = 100;
+                            var panelTxt = new Guna2Panel() {
+                                Name = "PanExlF" + i,
+                                Width = 240,
+                                Height = 262,
+                                BorderRadius = 8,
+                                FillColor = ColorTranslator.FromHtml("#121212"),
+                                BackColor = Color.Transparent,
+                                Location = new Point(600, top)
+                            };
+
+                            top += h_p;
+                            flowlayout.Controls.Add(panelTxt);
+                            var mainPanelTxt = ((Guna2Panel)flowlayout.Controls["PanExlF" + i]);
+
+                            List<string> titleValues = new List<string>();
+
+                            String getPathQue = "SELECT CUST_FILE_PATH FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            command = con.CreateCommand();
+                            command.CommandText = getPathQue;
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+
+                            MySqlDataReader exlPathReader = command.ExecuteReader();
+                            while (exlPathReader.Read()) {
+                                titleValues.Add(exlPathReader.GetString(0));
+                            }
+
+                            exlPathReader.Close();
+
+                            Label titleLab = new Label();
+                            mainPanelTxt.Controls.Add(titleLab);
+                            titleLab.Name = "LabExlUp" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                            titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                            titleLab.ForeColor = Color.Gainsboro;
+                            titleLab.Visible = true;
+                            titleLab.Enabled = true;
+                            titleLab.Location = new Point(12, 182);
+                            titleLab.Width = 220;
+                            titleLab.Height = 30;
+                            titleLab.Text = titleValues[i];
+
+                            var textboxVid = new Guna2PictureBox();
+                            mainPanelTxt.Controls.Add(textboxVid);
+                            textboxVid.Name = "ExlBoxF" + i;
+                            textboxVid.Width = 241;
+                            textboxVid.Height = 164; // 144
+                            textboxVid.FillColor = ColorTranslator.FromHtml("#232323");
+                            textboxVid.SizeMode = PictureBoxSizeMode.CenterImage;
+                            textboxVid.Image = Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
+                            textboxVid.BorderRadius = 6;
+                            textboxVid.Enabled = true;
+                            textboxVid.Visible = true;
+
+                            textboxVid.Click += (sender_vq, e_vq) => {
+                                exlFORM exlForm = new exlFORM(titleLab.Text, "D");
+                                exlForm.Show();
+                            };
+
+                            Guna2Button remButVid = new Guna2Button();
+                            mainPanelTxt.Controls.Add(remButVid);
+                            remButVid.Name = "RemExlBut" + i;
+                            remButVid.Width = 39;
+                            remButVid.Height = 35;
+                            remButVid.FillColor = ColorTranslator.FromHtml("#4713BF");
+                            remButVid.BorderRadius = 6;
+                            remButVid.BorderThickness = 1;
+                            remButVid.BorderColor = ColorTranslator.FromHtml("#232323");
+                            remButVid.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                            remButVid.Visible = true;
+                            remButVid.Location = new Point(189, 218);
+
+                            remButVid.Click += (sender_vid, e_vid) => {
+                                var titleFile = titleLab.Text;
+                                DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                if (verifyDialog == DialogResult.Yes) {
+                                    String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                                    command = new MySqlCommand(noSafeUpdate, con);
+                                    command.ExecuteNonQuery();
+
+                                    String removeQuery = "DELETE FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                    command = new MySqlCommand(removeQuery, con);
+                                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                                    command.Parameters.AddWithValue("@filename", titleFile);
+                                    command.ExecuteNonQuery();
+
+                                    panelTxt.Dispose();
+                                    if (flowlayout.Controls.Count == 0) {
+                                        lab8.Visible = true;
+                                        but6.Visible = true;
+                                    }
+                                }
+                            };
+
+                            List<string> uploadDateValues = new List<string>();
+
+                            String getDateQue = "SELECT UPLOAD_DATE FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            command = con.CreateCommand();
+                            command.CommandText = getDateQue;
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+
+                            MySqlDataReader exeDateReader = command.ExecuteReader();
+                            while (exeDateReader.Read()) {
+                                uploadDateValues.Add(exeDateReader.GetString(0));
+                            }
+
+                            Label dateLabTxt = new Label();
+                            mainPanelTxt.Controls.Add(dateLabTxt);
+                            dateLabTxt.Name = "LabExlUp" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                            dateLabTxt.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                            dateLabTxt.ForeColor = Color.DarkGray;
+                            dateLabTxt.Visible = true;
+                            dateLabTxt.Enabled = true;
+                            dateLabTxt.Location = new Point(12, 208);
+                            dateLabTxt.Text = uploadDateValues[i];
+                            exeDateReader.Close();
+
+                            lab8.Visible = false;
+                            but6.Visible = false;
+                        }
+                    }
+
+                }
+                catch (Exception eq) {
                     //
                 }
             } else {

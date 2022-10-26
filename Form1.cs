@@ -1493,5 +1493,9 @@ namespace FlowSERVER1 {
             LogIN showLogin = new LogIN();
             showLogin.Show();
         }
+
+        private void guna2Button12_Click(object sender, EventArgs e) {
+
+        }
     }
 }
