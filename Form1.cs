@@ -24,6 +24,7 @@ namespace FlowSERVER1 {
 
         public Form1() {
             InitializeComponent();
+
             this.WindowState = FormWindowState.Maximized;
             this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
 
@@ -791,6 +792,7 @@ namespace FlowSERVER1 {
 
         private void Form1_Load(object sender, EventArgs e) {
             setupTime();
+            this.WindowState = FormWindowState.Maximized;
         }
         int one = 0;
         int two = 0;
@@ -1326,10 +1328,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
            
         }
@@ -1405,6 +1403,95 @@ namespace FlowSERVER1 {
 
         private void guna2Panel5_Paint(object sender, PaintEventArgs e) {
 
+        }
+
+        private void guna2Button11_Click(object sender, EventArgs e) {
+            string server = "localhost";
+            string db = "flowserver_db";
+            string username = "root";
+            string password = "nfreal-yt10";
+            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+
+            MySqlConnection con = new MySqlConnection(constring);
+
+            MySqlCommand command;
+
+            string get_user = guna2TextBox1.Text;
+            string get_pass = guna2TextBox2.Text;
+            var flowlayout = Form1.instance.flowLayoutPanel1;
+
+            con.Open();
+            String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+            command = con.CreateCommand();
+            command.CommandText = verifyQue;
+            command.Parameters.AddWithValue("@username", get_user);
+            command.Parameters.AddWithValue("@password", get_pass);
+
+            List<string> userExists = new List<string>();
+
+            MySqlDataReader userReader = command.ExecuteReader();
+            while (userReader.Read()) {
+                userExists.Add(userReader.GetString(0));
+            }
+
+            userReader.Close();
+            con.Close();
+
+            if (userExists.Count() >= 1) {
+                label12.Visible = true;
+                label12.Text = "Account already exists";
+            }
+            else {
+                label12.Visible = false;
+                if (!String.IsNullOrEmpty(get_pass)) {
+                    if (!String.IsNullOrEmpty(get_user)) {
+                        flowlayout.Controls.Clear();
+                        if (flowlayout.Controls.Count == 0) {
+                            Form1.instance.label8.Visible = true;
+                            Form1.instance.guna2Button6.Visible = true;
+                        }
+                        Form1.instance.setupLabel.Text = get_user;
+                        Form1.instance.label3.Text = get_pass;
+                        if (Form1.instance.setupLabel.Text.Length > 14) {
+                            var label = Form1.instance.setupLabel;
+                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                            label.Location = new Point(3, 27);
+                        }
+
+                        con.Open();
+                        string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD) VALUES(@CUST_USERNAME,@CUST_PASSWORD)";
+
+                        using (var cmd = new MySqlCommand(query, con)) {
+                            cmd.Parameters.AddWithValue("@CUST_USERNAME", get_user);
+                            cmd.Parameters.AddWithValue("@CUST_PASSWORD", get_pass);
+                            cmd.ExecuteNonQuery();
+                        }
+                        label11.Visible = false;
+                        label12.Visible = false;
+                        setupTime();
+                        guna2Panel7.Visible = false;
+                    }
+                    else {
+                        label11.Visible = true;
+                    }
+                }
+                else {
+                    label12.Visible = true;
+                }
+            }
+        }
+
+        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button17_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button10_Click(object sender, EventArgs e) {
+            LogIN showLogin = new LogIN();
+            showLogin.Show();
         }
     }
 }

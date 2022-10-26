@@ -55,9 +55,14 @@ namespace FlowSERVER1 {
                 but6.Visible = false;
                 lab8.Visible = false;
                 label4.Visible = false;
+                Form1.instance.guna2Panel7.Visible = false;
                 setupTime();
-
+                if (flowlayout.Controls.Count == 0) {
+                    Form1.instance.label8.Visible = true;
+                    Form1.instance.guna2Button6.Visible = true;
+                }
                 try {
+
                     String length = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
 
                     command = new MySqlCommand(length,con);
@@ -91,7 +96,6 @@ namespace FlowSERVER1 {
 
                     var totalRowVid = command.ExecuteScalar();
                     int intTotalRowVid = Convert.ToInt32(totalRowVid);
-
                     for (int i = 0; i<intTotalRowImg; i++) {
                         int top = 275;
                         int h_p = 100;
@@ -215,15 +219,12 @@ namespace FlowSERVER1 {
                                 command.ExecuteNonQuery();
 
                                 panelPic_Q.Dispose();
-                                if (flowlayout.Controls.Count == 0) {
-                                    Form1.instance.label8.Visible = true;
-                                    Form1.instance.guna2Button6.Visible = true;
-                                }
                             }
                         };
 
                         Form1.instance.guna2Button6.Visible = false;
                         Form1.instance.label8.Visible = false;
+                        this.Close();
                         var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
                         String retrieveImg = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
@@ -346,10 +347,6 @@ namespace FlowSERVER1 {
                                     command.ExecuteNonQuery();
 
                                     panelTxt.Dispose();
-                                    if (flowlayout.Controls.Count == 0) {
-                                        Form1.instance.label8.Visible = true;
-                                        Form1.instance.guna2Button6.Visible = true;
-                                    }
                                 }
                             };
 
@@ -460,10 +457,6 @@ namespace FlowSERVER1 {
                                     command.ExecuteNonQuery();
 
                                     panelTxt.Dispose();
-                                    if (flowlayout.Controls.Count == 0) {
-                                        Form1.instance.label8.Visible = true;
-                                        Form1.instance.guna2Button6.Visible = true;
-                                    }
                                 }
                             };
 
@@ -603,10 +596,6 @@ namespace FlowSERVER1 {
                                     command.ExecuteNonQuery();
 
                                     panelTxt.Dispose();
-                                    if (flowlayout.Controls.Count == 0) {
-                                        Form1.instance.label8.Visible = true;
-                                        Form1.instance.guna2Button6.Visible = true;
-                                    }
                                 }
                             };
 

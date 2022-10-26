@@ -159,7 +159,6 @@ namespace FlowSERVER1
         }
 
         private void Form2_Load(object sender, EventArgs e) {
-
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
