@@ -798,30 +798,42 @@ namespace FlowSERVER1 {
         int two = 0;
         public void setupTime() {
             try {
-                var time = DateTime.Now.ToString("hh:mm:ss tt");
-                var theTime = Convert.ToInt32(time.Substring(0, 1));
-                var getPeriod = time.Substring(time.Length - 2);
-                if(theTime == 0) { // theTime == 0;
-                    var theTimeOne = Convert.ToInt32(time.Substring(1, 1));
-                    one = theTimeOne;
-                    if(getPeriod == "PM" && one >= 1 && one <= 5) {
-                        label1.Text = "Good afternoon " + label5.Text + " :)";
-                        pictureBox2.Visible = true;
-                    } else if(getPeriod == "PM" && one >= 6 && one <= 9) {
-                        label1.Text = "Good late-evening " + label5.Text + " :)";
-                        pictureBox3.Visible = true;
-                    }
-                    else if(getPeriod == "AM" && one >= 1 && one <= 11) {
-                        label1.Text = "Good morning " + label5.Text + " :)";
-                        pictureBox2.Visible = true;
-                    }
-                } else if (theTime != 0) {
-                    var theTimeTwo = Convert.ToInt32(time.Substring(0, 2));
-                    two = theTimeTwo;
-                    if(getPeriod == "PM" && two >= 10 && two < 12) {
-                        label1.Text = "Good night " + label5.Text + " :) shouldn't you be sleeping?";
-                        pictureBox2.Visible = false;
-                    } 
+                string[] morningKeys = {"start your day with a coffee?", ""};
+                var random = new Random();
+                var getKeyRand = random.Next(0,1);
+                var getMorningKeys = morningKeys[getKeyRand];
+
+                DateTime now = DateTime.Now;
+                DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
+                DateTime AFTERNOON = MORNING.AddHours(8);
+                DateTime EVENING = AFTERNOON.AddHours(8);
+                DateTime start;
+
+                // Note that hour 22 is 10PM, not hour 20 as in your example
+                if (now.Hour >= 22 || now.Hour < 6) {
+                    // Evening
+                    /*start = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0);
+                    AFTERNOON -= TimeSpan.FromDays(1);
+                    MORNING -= TimeSpan.FromDays(1);*/
+                    label1.Text = "Good night... " + label5.Text + " shouldn't you be sleeping now?";
+                    pictureBox2.Visible = false;
+
+                }
+                else if (now.Hour >= 13) {
+                    // Afternoon
+                    /*start = new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
+                    EVENING -= TimeSpan.FromDays(1);
+                    MORNING -= TimeSpan.FromDays(1);*/
+                    label1.Text = "Good Afternoon " + label5.Text + " :)";
+                    pictureBox2.Visible = true;
+                }
+                else {
+                    // Morning
+                    /*start = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
+                    EVENING -= TimeSpan.FromDays(1);
+                    AFTERNOON -= TimeSpan.FromDays(1);*/
+                    label1.Text = "Good Morning " + label5.Text + " :) " + getMorningKeys;
+                    pictureBox2.Visible = true;
                 }
             }
             catch (Exception) {
