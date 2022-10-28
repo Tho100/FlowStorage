@@ -46,39 +46,37 @@ namespace FlowSERVER1
         public void setupTime() {
             var form = Form1.instance;
             try {
-                var time = DateTime.Now.ToString("hh:mm:ss tt");
-                var theTime = Convert.ToInt32(time.Substring(0, 1));
-                var getPeriod = time.Substring(time.Length - 2);
-                if (theTime == 0) {
-                    var theTimeOne = Convert.ToInt32(time.Substring(1, 1));
-                    one = theTimeOne;
-                    if (getPeriod == "PM" && one >= 1 && one <= 5) {
-                        form.label1.Text = "Good afternoon " + form.label5.Text + " :)";
-                        form.pictureBox2.Visible = true;
-                    }
-                    else if (getPeriod == "PM" && one > 6 && one <= 8) {
-                        form.label1.Text = "Good late-evening " + form.label5.Text + " :)";
-                        form.pictureBox3.Visible = true;
-                    }
-                    else if (getPeriod == "AM" && one >= 1 && one <= 10) {
-                        form.label1.Text = "Good morning " + form.label5.Text + " :)";
-                        form.pictureBox2.Visible = true;
-                    }
+                string[] morningKeys = { "start your day with a coffee?", "" };
+                var random = new Random();
+                var getKeyRand = random.Next(0, 1);
+                var getMorningKeys = morningKeys[getKeyRand];
+
+                DateTime now = DateTime.Now;
+                DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
+                DateTime AFTERNOON = MORNING.AddHours(8);
+                DateTime EVENING = AFTERNOON.AddHours(8);
+
+                if (now.Hour >= 22 || now.Hour < 6) {
+                    // Evening
+                    form.label1.Text = "Good night... " + guna2TextBox1.Text + " shouldn't you be sleeping now?";
+                    form.pictureBox2.Visible = false;
+
                 }
-                else if (theTime != 0) {
-                    var theTimeTwo = Convert.ToInt32(time.Substring(0, 2));
-                    two = theTimeTwo;
-                    if (getPeriod == "PM" && two >= 9 && two < 12) {
-                        form.label1.Text = "Good night " + form.label5.Text + " :) shouldn't you be sleeping?";
-                        form.pictureBox2.Visible = false;
-                    }
+                else if (now.Hour >= 13) {
+                    // Afternoon
+                    form.label1.Text = "Good Afternoon " + guna2TextBox1.Text + " :)";
+                    form.pictureBox2.Visible = true;
+                }
+                else {
+                    // Morning
+                    form.label1.Text = "Good Morning " + guna2TextBox1.Text + " :) " + getMorningKeys;
+                    form.pictureBox2.Visible = true;
                 }
             }
             catch (Exception) {
                 MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
             }
         }
-
 
         private void guna2Button2_Click(object sender, EventArgs e) {
 
@@ -97,41 +95,44 @@ namespace FlowSERVER1
             var flowlayout = Form1.instance.flowLayoutPanel1;
 
             con.Open();
-            String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+            //String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+            String verifyQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             command = con.CreateCommand();
             command.CommandText = verifyQue;
-            command.Parameters.AddWithValue("@username",get_user);
-            command.Parameters.AddWithValue("@password", get_pass);
+            command.Parameters.AddWithValue("@username", get_user);
+            //            command.Parameters.AddWithValue("@password", get_pass);
 
             List<string> userExists = new List<string>();
 
             MySqlDataReader userReader = command.ExecuteReader();
-            while(userReader.Read()) {
+            while (userReader.Read()) {
                 userExists.Add(userReader.GetString(0));
             }
-         
+
             userReader.Close();
             con.Close();
 
-            if(userExists.Count() > 1) {
+            if (userExists.Count() >= 1) {
                 label4.Visible = true;
-                label4.Text = "Account already exists";
-            } else {
+                label4.Text = "Username is taken.";
+            }
+            else {
+                label4.Visible = false;
                 if (!String.IsNullOrEmpty(get_pass)) {
-                    if(!String.IsNullOrEmpty(get_user)) {
+                    if (!String.IsNullOrEmpty(get_user)) {
                         flowlayout.Controls.Clear();
-                        if(flowlayout.Controls.Count == 0) {
+                        if (flowlayout.Controls.Count == 0) {
                             Form1.instance.label8.Visible = true;
                             Form1.instance.guna2Button6.Visible = true;
                         }
                         Form1.instance.setupLabel.Text = get_user;
                         Form1.instance.label3.Text = get_pass;
-                        if(Form1.instance.setupLabel.Text.Length > 14) {
+                        if (Form1.instance.setupLabel.Text.Length > 14) {
                             var label = Form1.instance.setupLabel;
-                            label.Font = new Font("Segoe UI",14,FontStyle.Bold);
+                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
                             label.Location = new Point(3, 27);
                         }
-            
+
                         con.Open();
                         string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD) VALUES(@CUST_USERNAME,@CUST_PASSWORD)";
 
@@ -140,13 +141,17 @@ namespace FlowSERVER1
                             cmd.Parameters.AddWithValue("@CUST_PASSWORD", get_pass);
                             cmd.ExecuteNonQuery();
                         }
-                        label4.Visible = false;
                         label5.Visible = false;
+                        label4.Visible = false;
+                        Form1.instance.label5.Text = get_user;
                         setupTime();
-                    } else {
+                        this.Close();
+                    }
+                    else {
                         label5.Visible = true;
                     }
-                } else {
+                }
+                else {
                     label4.Visible = true;
                 }
             }

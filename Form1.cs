@@ -794,8 +794,6 @@ namespace FlowSERVER1 {
             setupTime();
             this.WindowState = FormWindowState.Maximized;
         }
-        int one = 0;
-        int two = 0;
         public void setupTime() {
             try {
                 string[] morningKeys = {"start your day with a coffee?", ""};
@@ -807,31 +805,20 @@ namespace FlowSERVER1 {
                 DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
                 DateTime AFTERNOON = MORNING.AddHours(8);
                 DateTime EVENING = AFTERNOON.AddHours(8);
-                DateTime start;
-
-                // Note that hour 22 is 10PM, not hour 20 as in your example
+              
                 if (now.Hour >= 22 || now.Hour < 6) {
                     // Evening
-                    /*start = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0);
-                    AFTERNOON -= TimeSpan.FromDays(1);
-                    MORNING -= TimeSpan.FromDays(1);*/
                     label1.Text = "Good night... " + label5.Text + " shouldn't you be sleeping now?";
                     pictureBox2.Visible = false;
 
                 }
                 else if (now.Hour >= 13) {
                     // Afternoon
-                    /*start = new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
-                    EVENING -= TimeSpan.FromDays(1);
-                    MORNING -= TimeSpan.FromDays(1);*/
                     label1.Text = "Good Afternoon " + label5.Text + " :)";
                     pictureBox2.Visible = true;
                 }
                 else {
                     // Morning
-                    /*start = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
-                    EVENING -= TimeSpan.FromDays(1);
-                    AFTERNOON -= TimeSpan.FromDays(1);*/
                     label1.Text = "Good Morning " + label5.Text + " :) " + getMorningKeys;
                     pictureBox2.Visible = true;
                 }
@@ -1454,11 +1441,12 @@ namespace FlowSERVER1 {
             var flowlayout = Form1.instance.flowLayoutPanel1;
 
             con.Open();
-            String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+            //String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+            String verifyQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             command = con.CreateCommand();
             command.CommandText = verifyQue;
             command.Parameters.AddWithValue("@username", get_user);
-            command.Parameters.AddWithValue("@password", get_pass);
+//            command.Parameters.AddWithValue("@password", get_pass);
 
             List<string> userExists = new List<string>();
 
@@ -1472,7 +1460,7 @@ namespace FlowSERVER1 {
 
             if (userExists.Count() >= 1) {
                 label12.Visible = true;
-                label12.Text = "Account already exists";
+                label12.Text = "Username is taken.";
             }
             else {
                 label12.Visible = false;

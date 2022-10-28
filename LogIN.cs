@@ -209,6 +209,15 @@ namespace FlowSERVER1 {
                                 displayPic.Show();
                             };
 
+                            picMain_Q.MouseHover += (_senderM, _ev) => {
+                                panelPic_Q.ShadowDecoration.Enabled = true;
+                                panelPic_Q.ShadowDecoration.BorderRadius = 8;
+                            };
+
+                            picMain_Q.MouseLeave += (_senderQ, _evQ) => {
+                                panelPic_Q.ShadowDecoration.Enabled = false;
+                            };
+
                             Guna2Button remBut = new Guna2Button();
                             panelF.Controls.Add(remBut);
                             remBut.Name = "Rem" + i;
@@ -340,6 +349,15 @@ namespace FlowSERVER1 {
                                 txtFormShow.Show();
                             };
 
+                            textboxPic.MouseHover += (_senderM, _ev) => {
+                                panelTxt.ShadowDecoration.Enabled = true;
+                                panelTxt.ShadowDecoration.BorderRadius = 8;
+                            };
+
+                            textboxPic.MouseLeave += (_senderQ, _evQ) => {
+                                panelTxt.ShadowDecoration.Enabled = false;
+                            };
+
                             Guna2Button remButTxt = new Guna2Button();
                             mainPanelTxt.Controls.Add(remButTxt);
                             remButTxt.Name = "RemTxt" + q;
@@ -446,6 +464,15 @@ namespace FlowSERVER1 {
                             textboxExe.BorderRadius = 8;
                             textboxExe.Enabled = true;
                             textboxExe.Visible = true;
+
+                            textboxExe.MouseHover += (_senderM, _ev) => {
+                                panelTxt.ShadowDecoration.Enabled = true;
+                                panelTxt.ShadowDecoration.BorderRadius = 8;
+                            };
+
+                            textboxExe.MouseLeave += (_senderQ, _evQ) => {
+                                panelTxt.ShadowDecoration.Enabled = false;
+                            };
 
                             var imgExe = ((Guna2PictureBox)mainPanelTxt.Controls["ExeBoxF" + i]);
                             /*
@@ -891,13 +918,13 @@ namespace FlowSERVER1 {
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
-            guna2TextBox2.PasswordChar = '\0';
+            guna2TextBox2.PasswordChar = '*';
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
-            guna2TextBox2.PasswordChar = '*';
+            guna2TextBox2.PasswordChar = '\0';
         }
     }
 }
