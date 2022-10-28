@@ -991,6 +991,24 @@ namespace FlowSERVER1 {
                         titleLab.Height = 30;
                         titleLab.Text = getName;
 
+                        textboxPic.MouseHover += (_senderM, _ev) => {
+                            mainPanelTxt.ShadowDecoration.Enabled = true;
+                            mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                        };
+
+                        textboxPic.MouseLeave += (_senderQ, _evQ) => {
+                            mainPanelTxt.ShadowDecoration.Enabled = false;
+                        };
+
+                        mainPanelTxt.MouseHover += (_senderM, _ev) => {
+                            mainPanelTxt.ShadowDecoration.Enabled = true;
+                            mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                        };
+
+                        mainPanelTxt.MouseLeave += (_senderQ, _evQ) => {
+                            mainPanelTxt.ShadowDecoration.Enabled = false;
+                        };
+
                         if (nameTable == "file_info") {
                             command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
                             command.Parameters["@CUST_FILE"].Value = keyVal;
@@ -1008,24 +1026,6 @@ namespace FlowSERVER1 {
                             };
 
                             clearRedundane();
-
-                            textboxPic.MouseHover += (_senderM, _ev) => {
-                                mainPanelTxt.ShadowDecoration.Enabled = true;
-                                mainPanelTxt.ShadowDecoration.BorderRadius = 8;
-                            };
-
-                            textboxPic.MouseLeave += (_senderQ, _evQ) => {
-                                mainPanelTxt.ShadowDecoration.Enabled = false;
-                            };
-
-                            mainPanelTxt.MouseHover += (_senderM, _ev) => {
-                                mainPanelTxt.ShadowDecoration.Enabled = true;
-                                mainPanelTxt.ShadowDecoration.BorderRadius = 8;
-                            };
-
-                            mainPanelTxt.MouseLeave += (_senderQ, _evQ) => {
-                                mainPanelTxt.ShadowDecoration.Enabled = false;
-                            };
 
                         }
 
@@ -1047,6 +1047,7 @@ namespace FlowSERVER1 {
                                 txtFormShow.Show();
                             };
                             clearRedundane();
+
                         }
 
                         if(nameTable == "file_info_exe") {
