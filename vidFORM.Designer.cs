@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -134,7 +135,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 21);
+            this.label1.Location = new System.Drawing.Point(12, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 21);
             this.label1.TabIndex = 25;
@@ -146,9 +147,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2PictureBox1.ImageRotate = 0F;
-            this.guna2PictureBox1.Location = new System.Drawing.Point(16, 55);
+            this.guna2PictureBox1.Location = new System.Drawing.Point(16, 67);
             this.guna2PictureBox1.Name = "guna2PictureBox1";
-            this.guna2PictureBox1.Size = new System.Drawing.Size(570, 352);
+            this.guna2PictureBox1.Size = new System.Drawing.Size(570, 346);
             this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.guna2PictureBox1.TabIndex = 26;
             this.guna2PictureBox1.TabStop = false;
@@ -176,12 +177,24 @@
             this.guna2Button5.TabIndex = 27;
             this.guna2Button5.Click += new System.EventHandler(this.guna2Button5_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label2.Location = new System.Drawing.Point(12, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 20);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "guest919402";
+            // 
             // vidFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(598, 425);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.guna2Button5);
             this.Controls.Add(this.guna2PictureBox1);
             this.Controls.Add(this.label1);
@@ -210,5 +223,6 @@
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
         public Guna.UI2.WinForms.Guna2Button guna2Button5;
+        private System.Windows.Forms.Label label2;
     }
 }

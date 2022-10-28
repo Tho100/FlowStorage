@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
             InitializeComponent();
             label1.Text = getTitle;
             instance = this;
-            label2.Text = Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
         }
 
         private void exeFORM_Load(object sender, EventArgs e) {

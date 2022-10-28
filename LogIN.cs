@@ -22,6 +22,17 @@ namespace FlowSERVER1 {
             instance = this;
         }
 
+        public void setupAutoLogin(String _custPass, String _custUsername) {
+            String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            if (!(Directory.Exists(setupDir))) {
+                Directory.CreateDirectory(setupDir);
+            }
+            if (Directory.Exists(setupDir)) {
+/*                using (FileStream _fs = File.Create(setupDir + "\\CUST_DATAS.txt")) {
+                   
+                }*/
+            }
+        }
         public void loadUserData() {
             string server = "localhost";
             string db = "flowserver_db";
@@ -788,7 +799,8 @@ namespace FlowSERVER1 {
                             but6.Visible = false;
                         }
                     }
-
+                    if (guna2CheckBox2.Checked == true) { 
+                    }
                 }
                 catch (Exception eq) {
                     //
@@ -796,6 +808,10 @@ namespace FlowSERVER1 {
             } else {
                 label4.Visible = true;
             }
+
+            // AUTO-LOGIN SYSTEM
+
+
         }
         private void label4_Click(object sender, EventArgs e) {
 

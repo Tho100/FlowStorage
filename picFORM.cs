@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
             var setupImage = resizeUserImage(userImage,new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = title;
-            label2.Text = Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             ToolTip saveTip = new ToolTip();
             saveTip.SetToolTip(this.guna2Button4,"Download Image");

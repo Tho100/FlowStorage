@@ -1006,7 +1006,27 @@ namespace FlowSERVER1 {
                                 picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
                                 displayPic.Show();
                             };
+
                             clearRedundane();
+
+                            textboxPic.MouseHover += (_senderM, _ev) => {
+                                mainPanelTxt.ShadowDecoration.Enabled = true;
+                                mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                            };
+
+                            textboxPic.MouseLeave += (_senderQ, _evQ) => {
+                                mainPanelTxt.ShadowDecoration.Enabled = false;
+                            };
+
+                            mainPanelTxt.MouseHover += (_senderM, _ev) => {
+                                mainPanelTxt.ShadowDecoration.Enabled = true;
+                                mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                            };
+
+                            mainPanelTxt.MouseLeave += (_senderQ, _evQ) => {
+                                mainPanelTxt.ShadowDecoration.Enabled = false;
+                            };
+
                         }
 
                         if(nameTable == "file_info_expand") {
@@ -1507,6 +1527,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button12_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button22_Click(object sender, EventArgs e) {
 
         }
     }

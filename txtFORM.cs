@@ -19,7 +19,7 @@ namespace FlowSERVER1 {
             instance = this;
             //guna2TextBox1.Text = getText;
             label1.Text = fileName;
-            label2.Text = Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             string server = "localhost";
             string db = "flowserver_db";

@@ -17,6 +17,7 @@ namespace FlowSERVER1 {
             var setupImage = resizeImage(getThumb, new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = getTitle;
+            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
         }
 
         public static Image resizeImage(Image userImg, Size size) {

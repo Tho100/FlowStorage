@@ -250,6 +250,8 @@
     <Content Include="Properties\Resources\excelIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icons8-closed-eye-24.png" />
+    <None Include="Resources\icons8-eye-24.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

@@ -76,6 +76,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.guna2Panel8 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.guna2Panel14 = new Guna.UI2.WinForms.Guna2Panel();
             this.label24 = new System.Windows.Forms.Label();
             this.guna2Button24 = new Guna.UI2.WinForms.Guna2Button();
@@ -93,8 +95,6 @@
             this.guna2Button16 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button15 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button14 = new Guna.UI2.WinForms.Guna2Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
@@ -824,6 +824,30 @@
             this.guna2Panel8.Size = new System.Drawing.Size(518, 750);
             this.guna2Panel8.TabIndex = 29;
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label19.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.label19.Location = new System.Drawing.Point(20, 24);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(175, 37);
+            this.label19.TabIndex = 34;
+            this.label19.Text = "Flow Storage";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.DarkGray;
+            this.label18.Location = new System.Drawing.Point(21, 68);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(243, 17);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "Free file hosting service for any device.";
+            // 
             // guna2Panel14
             // 
             this.guna2Panel14.BackColor = System.Drawing.Color.Transparent;
@@ -895,7 +919,7 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.LightGray;
-            this.label22.Location = new System.Drawing.Point(256, 80);
+            this.label22.Location = new System.Drawing.Point(256, 83);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(71, 20);
             this.label22.TabIndex = 32;
@@ -906,7 +930,7 @@
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.LightGray;
-            this.label21.Location = new System.Drawing.Point(99, 76);
+            this.label21.Location = new System.Drawing.Point(99, 83);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(65, 20);
             this.label21.TabIndex = 31;
@@ -940,8 +964,8 @@
             this.guna2Button21.ForeColor = System.Drawing.Color.White;
             this.guna2Button21.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button21.Image")));
             this.guna2Button21.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button21.ImageSize = new System.Drawing.Size(60, 60);
-            this.guna2Button21.Location = new System.Drawing.Point(39, 65);
+            this.guna2Button21.ImageSize = new System.Drawing.Size(42, 42);
+            this.guna2Button21.Location = new System.Drawing.Point(43, 65);
             this.guna2Button21.Name = "guna2Button21";
             this.guna2Button21.Size = new System.Drawing.Size(59, 52);
             this.guna2Button21.TabIndex = 26;
@@ -962,11 +986,12 @@
             this.guna2Button22.ForeColor = System.Drawing.Color.White;
             this.guna2Button22.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button22.Image")));
             this.guna2Button22.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button22.ImageSize = new System.Drawing.Size(50, 50);
-            this.guna2Button22.Location = new System.Drawing.Point(191, 66);
+            this.guna2Button22.ImageSize = new System.Drawing.Size(42, 42);
+            this.guna2Button22.Location = new System.Drawing.Point(191, 67);
             this.guna2Button22.Name = "guna2Button22";
             this.guna2Button22.Size = new System.Drawing.Size(71, 51);
             this.guna2Button22.TabIndex = 25;
+            this.guna2Button22.Click += new System.EventHandler(this.guna2Button22_Click);
             // 
             // guna2Button23
             // 
@@ -1005,6 +1030,7 @@
             this.guna2Panel12.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.guna2Panel12.Location = new System.Drawing.Point(44, 196);
             this.guna2Panel12.Name = "guna2Panel12";
+            this.guna2Panel12.ShadowDecoration.Color = System.Drawing.Color.White;
             this.guna2Panel12.Size = new System.Drawing.Size(424, 145);
             this.guna2Panel12.TabIndex = 29;
             // 
@@ -1130,30 +1156,6 @@
             this.guna2Button14.Name = "guna2Button14";
             this.guna2Button14.Size = new System.Drawing.Size(55, 51);
             this.guna2Button14.TabIndex = 24;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.DarkGray;
-            this.label18.Location = new System.Drawing.Point(21, 68);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(243, 17);
-            this.label18.TabIndex = 1;
-            this.label18.Text = "Free file hosting service for any device.";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label19.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.label19.Location = new System.Drawing.Point(20, 24);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(175, 37);
-            this.label19.TabIndex = 34;
-            this.label19.Text = "Flow Storage";
             // 
             // Form1
             // 
