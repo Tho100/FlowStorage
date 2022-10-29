@@ -6,15 +6,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using System.Resources;
-using System.Globalization;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack;
 using System.Data.OleDb;
-using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -30,6 +26,16 @@ namespace FlowSERVER1 {
             this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
 
             randomizeUser();
+
+            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            String _getAuth = _getPath + "\\CUST_DATAS.txt";
+            if(File.Exists(_getAuth)) {
+                String _UsernameFirst = File.ReadLines(_getAuth).First();
+                if (new FileInfo(_getAuth).Length != 0) {
+                    guna2Panel7.Visible = false;
+                    label5.Text = _UsernameFirst;
+                }
+            }
 
             string server = "localhost";
             string db = "flowserver_db";

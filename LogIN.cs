@@ -24,13 +24,10 @@ namespace FlowSERVER1 {
 
         public void setupAutoLogin(String _custPass, String _custUsername) {
             String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            if (!(Directory.Exists(setupDir))) {
-                Directory.CreateDirectory(setupDir);
-            }
-            if (Directory.Exists(setupDir)) {
-/*                using (FileStream _fs = File.Create(setupDir + "\\CUST_DATAS.txt")) {
-                   
-                }*/
+            Directory.CreateDirectory(setupDir);
+            using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
+                _performWrite.WriteLine(_custUsername);
+                _performWrite.WriteLine(_custPass);
             }
         }
         public void loadUserData() {
@@ -826,9 +823,10 @@ namespace FlowSERVER1 {
                             but6.Visible = false;
                         }
                     }
-                    if (guna2CheckBox2.Checked == true) { 
+                    Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
+                    if (guna2CheckBox2.Checked == true) {
+                        setupAutoLogin(guna2TextBox2.Text, Form1.instance.label5.Text);
                     }
-                 Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
                 }
                 catch (Exception eq) {
                     //
@@ -838,7 +836,6 @@ namespace FlowSERVER1 {
             }
 
             // AUTO-LOGIN SYSTEM
-
 
         }
         private void label4_Click(object sender, EventArgs e) {
