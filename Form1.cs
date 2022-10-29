@@ -16,6 +16,7 @@ using Microsoft.WindowsAPICodePack;
 using System.Data.OleDb;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FlowSERVER1 {
     public partial class Form1 : Form {
@@ -775,11 +776,10 @@ namespace FlowSERVER1 {
                         guna2Button6.Visible = false;
                     }
                 }
-
+                label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }
-
             // COUNT TOTAL FILE
             /*
             command = new MySqlCommand("SELECT COUNT(*) FROM file_info WHERE CUST_USERNAME = @username" AND CUST_PASSWORD = @password, con);
@@ -796,29 +796,39 @@ namespace FlowSERVER1 {
         }
         public void setupTime() {
             try {
-                string[] morningKeys = {"start your day with a coffee?", ""};
+                string[] morningKeys = { "start your day with a coffee?", "" };
                 var random = new Random();
-                var getKeyRand = random.Next(0,1);
+                var getKeyRand = random.Next(0, 1);
                 var getMorningKeys = morningKeys[getKeyRand];
 
                 DateTime now = DateTime.Now;
                 DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
                 DateTime AFTERNOON = MORNING.AddHours(8);
                 DateTime EVENING = AFTERNOON.AddHours(8);
-              
+
+                // Note that hour 22 is 10PM, not hour 20 as in your example
                 if (now.Hour >= 22 || now.Hour < 6) {
                     // Evening
+                    /*start = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0);
+                    AFTERNOON -= TimeSpan.FromDays(1);
+                    MORNING -= TimeSpan.FromDays(1);*/
                     label1.Text = "Good night... " + label5.Text + " shouldn't you be sleeping now?";
                     pictureBox2.Visible = false;
 
                 }
                 else if (now.Hour >= 13) {
                     // Afternoon
+                    /*start = new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
+                    EVENING -= TimeSpan.FromDays(1);
+                    MORNING -= TimeSpan.FromDays(1);*/
                     label1.Text = "Good Afternoon " + label5.Text + " :)";
                     pictureBox2.Visible = true;
                 }
                 else {
                     // Morning
+                    /*start = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
+                    EVENING -= TimeSpan.FromDays(1);
+                    AFTERNOON -= TimeSpan.FromDays(1);*/
                     label1.Text = "Good Morning " + label5.Text + " :) " + getMorningKeys;
                     pictureBox2.Visible = true;
                 }
@@ -979,14 +989,14 @@ namespace FlowSERVER1 {
                         titleLab.Text = getName;
 
                         textboxPic.MouseHover += (_senderM, _ev) => {
-                            mainPanelTxt.ShadowDecoration.Enabled = true;
-                            mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                            panelTxt.ShadowDecoration.Enabled = true;
+                            panelTxt.ShadowDecoration.BorderRadius = 8;
                         };
 
                         textboxPic.MouseLeave += (_senderQ, _evQ) => {
-                            mainPanelTxt.ShadowDecoration.Enabled = false;
+                            panelTxt.ShadowDecoration.Enabled = false;
                         };
-
+                        /*
                         mainPanelTxt.MouseHover += (_senderM, _ev) => {
                             mainPanelTxt.ShadowDecoration.Enabled = true;
                             mainPanelTxt.ShadowDecoration.BorderRadius = 8;
@@ -994,12 +1004,14 @@ namespace FlowSERVER1 {
 
                         mainPanelTxt.MouseLeave += (_senderQ, _evQ) => {
                             mainPanelTxt.ShadowDecoration.Enabled = false;
-                        };
+                        };*/
 
                         if (nameTable == "file_info") {
                             command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
                             command.Parameters["@CUST_FILE"].Value = keyVal;
                             command.ExecuteNonQuery();
+
+                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
 
                             textboxPic.Image = new Bitmap(open.FileName);
                             textboxPic.Click += (sender_f,e_f) => {
@@ -1021,6 +1033,8 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_FILE"].Value = keyVal;
                             command.ExecuteNonQuery();
 
+                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
+
                             textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
                             String nonLine = "";
                             using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
@@ -1041,6 +1055,9 @@ namespace FlowSERVER1 {
                             command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
                             command.Parameters["@CUST_FILE"].Value = keyVal;
                             command.ExecuteNonQuery();
+
+                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
+
                             textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 Process.Start(open.FileName);
@@ -1061,6 +1078,8 @@ namespace FlowSERVER1 {
                             var setupThumb = ImageToByte(getThumbNail);
                             command.Parameters["@CUST_THUMB"].Value = setupThumb;
                             command.ExecuteNonQuery();
+
+                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
 
                             textboxPic.Image = toBitMap;
                             textboxPic.Click += (sender_ex, e_ex) => {
@@ -1117,7 +1136,7 @@ namespace FlowSERVER1 {
                         increaseSizeMethod();
                     }
 
-                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico") {
+                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".svg") {
                         curr++;
                         var getImg = new Bitmap(open.FileName);
                         var imgWidth = getImg.Width;
@@ -1521,6 +1540,25 @@ namespace FlowSERVER1 {
 
         private void guna2Button22_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Panel8_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button12_Click_1(object sender, EventArgs e) {
+            try {
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.InitialDirectory = "";
+                dialog.IsFolderPicker = true;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
+    
+                }
+
+
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+            }
         }
     }
 }

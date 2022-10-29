@@ -828,6 +828,7 @@ namespace FlowSERVER1 {
                     }
                     if (guna2CheckBox2.Checked == true) { 
                     }
+                 Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
                 }
                 catch (Exception eq) {
                     //
@@ -851,8 +852,6 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
             loadUserData();
         }
-        int one = 0;
-        int two = 0;
         public void setupTime() {
             var form = Form1.instance;
             var lab1 = form.label1;
