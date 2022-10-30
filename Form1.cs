@@ -103,7 +103,6 @@ namespace FlowSERVER1 {
                 var totalRowExcel = command.ExecuteScalar();
                 int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
 
-                var numberOfFiles = intRow + intTotalRowTxt;
                 void _generateUserFiles(String _tableName, String parameterName, int currItem) {
                     for(int i=0; i<currItem; i++) {
                         int top = 275;
@@ -187,6 +186,15 @@ namespace FlowSERVER1 {
                         picMain_Q.Width = 241;
                         picMain_Q.Height = 165;
                         picMain_Q.Visible = true;
+
+                        picMain_Q.MouseHover += (_senderM, _ev) => {
+                            panelF.ShadowDecoration.Enabled = true;
+                            panelF.ShadowDecoration.BorderRadius = 8;
+                        };
+
+                        picMain_Q.MouseLeave += (_senderQ, _evQ) => {
+                            panelF.ShadowDecoration.Enabled = false;
+                        };
 
                         Guna2Button remBut = new Guna2Button();
                         panelF.Controls.Add(remBut);

@@ -11,6 +11,8 @@ using MySql;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
+using System.IO;
+
 namespace FlowSERVER1 {
     public partial class txtFORM : Form {
         public static txtFORM instance;
@@ -86,7 +88,16 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-
+            SaveFileDialog _OpenDialog = new SaveFileDialog();
+            _OpenDialog.Filter = "Text Files|*.txt";
+            try {
+                if(_OpenDialog.ShowDialog() == DialogResult.OK) {
+                    File.WriteAllText(_OpenDialog.FileName,guna2textbox1.Text);
+                }
+            } catch (Exception eq) {
+                MessageBox.Show("An error occurred while attempting to save file.","Flow Storage",
+                    MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
         }
     }
 }
