@@ -22,9 +22,6 @@ namespace FlowSERVER1 {
         public Form1() {
             InitializeComponent();
 
-            this.WindowState = FormWindowState.Maximized;
-            this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
-
             randomizeUser();
 
             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
@@ -342,7 +339,6 @@ namespace FlowSERVER1 {
 
         private void Form1_Load(object sender, EventArgs e) {
             setupTime();
-            this.WindowState = FormWindowState.Maximized;
         }
         public void setupTime() {
             try {
