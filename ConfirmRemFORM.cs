@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.IO;
+
 namespace FlowSERVER1 {
     public partial class ConfirmRemFORM : Form {
         public ConfirmRemFORM() {
@@ -15,6 +17,16 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
+
+            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            String _getAuth = _getPath + "\\CUST_DATAS.txt";
+            if (File.Exists(_getAuth)) {
+                String _UsernameFirst = File.ReadLines(_getAuth).First();
+                if (_UsernameFirst == remAccFORM.instance.label1.Text) {
+                    Directory.Delete(_getPath,true);
+                }
+            } 
+
             try {
                 string server = "localhost";
                 string db = "flowserver_db";
