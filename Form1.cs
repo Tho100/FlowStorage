@@ -27,11 +27,6 @@ namespace FlowSERVER1 {
 
             randomizeUser();
 
-            label5.Click += (_senderQ, _evgQ) => {
-                remAccFORM _RemAccShow = new remAccFORM(label5.Text);
-                _RemAccShow.Show();
-            };
-
             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             String _getAuth = _getPath + "\\CUST_DATAS.txt";
             if(File.Exists(_getAuth)) {
@@ -355,29 +350,34 @@ namespace FlowSERVER1 {
                 var random = new Random();
                 var getKeyRand = random.Next(0, 1);
                 var getMorningKeys = morningKeys[getKeyRand];
-
                 DateTime now = DateTime.Now;
-                DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
-                DateTime AFTERNOON = MORNING.AddHours(8);
-                DateTime EVENING = AFTERNOON.AddHours(8);
-
-                // Note that hour 22 is 10PM, not hour 20 as in your example
-                if (now.Hour >= 22 || now.Hour < 6) {
-                    // Evening
-                    label1.Text = "Good night... " + label5.Text + " shouldn't you be sleeping now?";
+                var hours = now.Hour;
+                String greeting = null;
+                if (hours >= 1 && hours <= 12) {
+                    greeting = "Good Morning " + label5.Text + " :) " + getMorningKeys;
+                    pictureBox2.Visible = true;
+                    pictureBox1.Visible = false;
+                    pictureBox3.Visible = false;
+                }
+                else if (hours >= 12 && hours <= 16) {
+                    greeting = "Good Afternoon " + label5.Text + " :)";
+                    pictureBox2.Visible = true;
+                    pictureBox1.Visible = false;
+                    pictureBox3.Visible = false;
+                }
+                else if (hours >= 16 && hours <= 21) {
+                    greeting = "Good Evening " + label5.Text + " :)";
+                    pictureBox3.Visible = true;
                     pictureBox2.Visible = false;
-
+                    pictureBox1.Visible = false;
                 }
-                else if (now.Hour >= 13) {
-                    // Afternoon
-                    label1.Text = "Good Afternoon " + label5.Text + " :)";
-                    pictureBox2.Visible = true;
+                else if (hours >= 21 && hours <= 24) {
+                    greeting = "Good Night " + label5.Text + " :)";
+                    pictureBox1.Visible = true;
+                    pictureBox2.Visible = false;
+                    pictureBox3.Visible = false;
                 }
-                else {
-                    // Morning
-                    label1.Text = "Good Morning " + label5.Text + " :) " + getMorningKeys;
-                    pictureBox2.Visible = true;
-                }
+                label1.Text = greeting;
             }
             catch (Exception) {
                 MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
@@ -915,7 +915,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-
+            remAccFORM _RemAccShow = new remAccFORM(label5.Text);
+            _RemAccShow.Show();
         }
 
         private void label4_Click(object sender, EventArgs e) {

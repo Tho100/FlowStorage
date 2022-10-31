@@ -855,44 +855,40 @@ namespace FlowSERVER1 {
             var lab5 = form.label5;
             var picturebox2 = form.pictureBox2;
             var picturebox3 = form.pictureBox3;
+            var picturebox1 = form.pictureBox1;
             try {
                 string[] morningKeys = { "start your day with a coffee?", "" };
                 var random = new Random();
                 var getKeyRand = random.Next(0, 1);
                 var getMorningKeys = morningKeys[getKeyRand];
-
                 DateTime now = DateTime.Now;
-                DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
-                DateTime AFTERNOON = MORNING.AddHours(8);
-                DateTime EVENING = AFTERNOON.AddHours(8);
-                DateTime start;
-
-                // Note that hour 22 is 10PM, not hour 20 as in your example
-                if (now.Hour >= 22 || now.Hour < 6) {
-                    // Evening
-                    /*start = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0);
-                    AFTERNOON -= TimeSpan.FromDays(1);
-                    MORNING -= TimeSpan.FromDays(1);*/
-                    lab1.Text = "Good night... " + lab5.Text + " shouldn't you be sleeping now?";
+                var hours = now.Hour;
+                String greeting = null;
+                if (hours >= 1 && hours <= 12) {
+                    greeting = "Good Morning " + lab5.Text + " :) " + getMorningKeys;
+                    picturebox2.Visible = true;
+                    picturebox1.Visible = false;
+                    picturebox3.Visible = false;
+                }
+                else if (hours >= 12 && hours <= 16) {
+                    greeting = "Good Afternoon " + lab5.Text + " :)";
+                    picturebox2.Visible = true;
+                    picturebox1.Visible = false;
+                    picturebox3.Visible = false;
+                }
+                else if (hours >= 16 && hours <= 21) {
+                    greeting = "Good Evening " + lab5.Text + " :)";
+                    picturebox3.Visible = true;
                     picturebox2.Visible = false;
-
+                    picturebox1.Visible = false;
                 }
-                else if (now.Hour >= 13) {
-                    // Afternoon
-                    /*start = new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
-                    EVENING -= TimeSpan.FromDays(1);
-                    MORNING -= TimeSpan.FromDays(1);*/
-                    lab1.Text = "Good Afternoon " + lab5.Text + " :)";
-                    picturebox2.Visible = true;
+                else if (hours >= 21 && hours <= 24) {
+                    greeting = "Good Night " + lab5.Text + " :)";
+                    picturebox1.Visible = true;
+                    picturebox2.Visible = false;
+                    picturebox3.Visible = false;
                 }
-                else {
-                    // Morning
-                    /*start = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
-                    EVENING -= TimeSpan.FromDays(1);
-                    AFTERNOON -= TimeSpan.FromDays(1);*/
-                    lab1.Text = "Good Morning " + lab5.Text + " :) " + getMorningKeys;
-                    picturebox2.Visible = true;
-                }
+                lab1.Text = greeting;
             }
             catch (Exception) {
                 MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
