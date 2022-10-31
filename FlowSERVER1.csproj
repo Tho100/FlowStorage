@@ -129,6 +129,12 @@
     <Compile Include="Button_WOC.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ConfirmRemFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmRemFORM.Designer.cs">
+      <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="exeFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +185,12 @@
     <Compile Include="LogIN.Designer.cs">
       <DependentUpon>LogIN.cs</DependentUpon>
     </Compile>
+    <Compile Include="remAccFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="remAccFORM.Designer.cs">
+      <DependentUpon>remAccFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -196,6 +208,9 @@
     <Compile Include="vidFORM.Designer.cs">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ConfirmRemFORM.resx">
+      <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="exeFORM.resx">
       <DependentUpon>exeFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -219,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogIN.resx">
       <DependentUpon>LogIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="remAccFORM.resx">
+      <DependentUpon>remAccFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>

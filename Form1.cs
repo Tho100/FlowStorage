@@ -27,6 +27,11 @@ namespace FlowSERVER1 {
 
             randomizeUser();
 
+            label5.Click += (_senderQ, _evgQ) => {
+                remAccFORM _RemAccShow = new remAccFORM(label5.Text);
+                _RemAccShow.Show();
+            };
+
             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             String _getAuth = _getPath + "\\CUST_DATAS.txt";
             if(File.Exists(_getAuth)) {
@@ -1060,6 +1065,8 @@ namespace FlowSERVER1 {
                         label12.Visible = false;
                         setupTime();
                         guna2Panel7.Visible = false;
+                        guna2TextBox1.Text = String.Empty;
+                        guna2TextBox2.Text = String.Empty;
                     }
                     else {
                         label11.Visible = true;

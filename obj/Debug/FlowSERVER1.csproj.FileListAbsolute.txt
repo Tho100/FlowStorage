@@ -55,3 +55,5 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Resource1.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Properties\Resources\excelIcon.png
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.remAccFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ConfirmRemFORM.resources
