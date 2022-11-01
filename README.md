@@ -23,16 +23,22 @@
 - .mov
 - .webm
 
-#### Image 
+#### Image Files
 - .png
 - .jpg
 - .jpeg
 - .ico
 
-#### Text
+#### Text Files
 - .txt
 
-#### Markup/Programming Languages
+
+#### Audio Files
+- .mp3 
+- .wav
+- .mpeg
+
+#### Markup/Programming Languages Files
 - .php
 - .py
 - .html
@@ -40,7 +46,7 @@
 - .cpp
 - .js
 
-#### Windows 
+#### Windows Files
 
 - .xlsx
 - .doc
