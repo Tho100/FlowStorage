@@ -121,6 +121,27 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="guna2Button6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAPRJREFUSEvt
+        lkFKQ0EUBOdUUW+geFs1F0q8h/6SEgLdgfdXQkxBrarnrWfd+b8c1sfrw3r/3PzS8+N6ezEHe/dX4eHF
+        kV9P5mBru/ZXKUd+NAdti+Y57Qiag7ZF85x2BM1B26J5TjuC5qBt0TynHUFz0LZontOOoDloWzTPaUfQ
+        HLQtmue0I2gO2hbNc9oRNAdti+Y57Qiag7ZF85x2BM1B26J5TjuC5qBt0TynHUFz0LZontOOoDloWzTP
+        aUfQHLQtmue0I2gO2hbNc9oRNAdti+Y57Qiag7ZF85zt0d98ffiobQ8vj52e1vHZHOzd37l11voGFh7w
+        7qgset8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="_wmpVid.OcxState" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAtwAAAAIB
+        AAAAAQAAAAAAAAAAAAAAAKIAAAABAwAACAAAAAAABQAAAAAAAADwPwMAAAAAAAUAAAAAAAAAAAAIAAIA
+        AAAAAAMAAQAAAAsA//8DAAAAAAALAP//CAACAAAAAAADADIAAAALAAAACAAKAAAAbgBvAG4AZQAAAAsA
+        AAALAAAACwD//wsA//8LAAAACAACAAAAAAAIAAIAAAAAAAgAAgAAAAAACAACAAAAAAALAAAA6ToAAAIc
+        AAAL
+</value>
+  </data>
   <data name="guna2Button5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAABGdBTUEAALGPC/xhBQAAAZJJREFUaEPt

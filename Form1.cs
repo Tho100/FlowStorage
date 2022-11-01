@@ -296,7 +296,7 @@ namespace FlowSERVER1 {
                                 var getWidth = getImgName.Image.Width;
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
-                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text,"DDD");
                                 vidFormShow.Show();
                             };
                             clearRedundane();
@@ -630,7 +630,7 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                vidFORM vidShow = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text);
+                                vidFORM vidShow = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName);
                                 vidShow.Show();
                             };
                             clearRedundane();

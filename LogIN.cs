@@ -616,7 +616,7 @@ namespace FlowSERVER1 {
                                 var getWidth = getImgName.Image.Width;
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
-                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text,"");
                                 vidFormShow.Show();
                             };
 
