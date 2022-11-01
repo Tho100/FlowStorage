@@ -12,3 +12,35 @@
 - Mac OS
 - Android 
 - iOS
+
+#
+
+### Supported Formats
+
+#### Video Files 
+- .mp4 
+- .avi
+- .mov
+- .webm
+
+#### Image 
+- .png
+- .jpg
+- .jpeg
+- .ico
+
+#### Text
+- .txt
+
+#### Markup/Programming Languages
+- .php
+- .py
+- .html
+- .cs
+- .cpp
+- .js
+
+#### Windows 
+
+- .xlsx
+- .doc
