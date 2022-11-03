@@ -62,3 +62,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\AxInterop.WMPLib.dl
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.ResolveComReference.cache
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Interop.WMPLib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.audFORM.resources

@@ -126,6 +126,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="audFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="audFORM.Designer.cs">
+      <DependentUpon>audFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="Button_WOC.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -208,6 +214,9 @@
     <Compile Include="vidFORM.Designer.cs">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="audFORM.resx">
+      <DependentUpon>audFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfirmRemFORM.resx">
       <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
     </EmbeddedResource>

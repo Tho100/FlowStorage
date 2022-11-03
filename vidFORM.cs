@@ -20,6 +20,7 @@ namespace FlowSERVER1 {
             label1.Text = getTitle;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
             label3.Text = path;
+            MessageBox.Show(label3.Text);
         }
 
         public static Image resizeImage(Image userImg, Size size) {

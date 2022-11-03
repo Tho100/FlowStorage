@@ -100,6 +100,13 @@ namespace FlowSERVER1 {
                 var totalRowExcel = command.ExecuteScalar();
                 int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
 
+                string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                command = new MySqlCommand(countRowAudi,con);
+                command.Parameters.AddWithValue("@username",label5.Text);
+                command.Parameters.AddWithValue("@password", label3.Text);
+                var totalRowAudi = command.ExecuteScalar();
+                int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
+
                 void _generateUserFiles(String _tableName, String parameterName, int currItem) {
                     for(int i=0; i<currItem; i++) {
                         int top = 275;
@@ -248,14 +255,13 @@ namespace FlowSERVER1 {
                             img.Image = new Bitmap(ms);
 
                             picMain_Q.Click += (sender, e) => {
-                            var getImgName = (Guna2PictureBox)sender;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                                var getImgName = (Guna2PictureBox)sender;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                            displayPic.Show();
-
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                displayPic.Show();
                             };
                             clearRedundane();
                         }
@@ -288,7 +294,7 @@ namespace FlowSERVER1 {
                             DataSet ds = new DataSet();
 
                             da.Fill(ds);
-                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
+                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i]["CUST_THUMB"]);
                             img.Image = new Bitmap(ms);
 
                             picMain_Q.Click += (sender_vq, e_vq) => {
@@ -307,6 +313,17 @@ namespace FlowSERVER1 {
                             picMain_Q.Click += (sender_vq, e_vq) => {
                                 exlFORM exlForm = new exlFORM(titleLab.Text, "D");
                                 exlForm.Show();
+                            };
+                        }
+                        
+                        if(_tableName == "file_info_audi") {
+                            picMain_Q.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
+
+                            // INSERT AUDIO DATA
+
+                            picMain_Q.Click += (sender_Aud, e_Aud) => {
+                                audFORM audForm = new audFORM(titleLab.Text);
+                                audForm.Show();
                             };
                         }
                     }
@@ -330,6 +347,9 @@ namespace FlowSERVER1 {
                 }
                 if(intTotalRowExcel > 0) {
                     _generateUserFiles("file_info_excel","exlFile",intTotalRowExcel);
+                }
+                if(intTotalRowAudi > 0) {
+                    _generateUserFiles("file_info_audi","audiFile",intTotalRowAudi);
                 }
                 label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
             } catch (Exception eq) {
@@ -426,6 +446,7 @@ namespace FlowSERVER1 {
         int exeCurr = 0;
         int vidCurr = 0;
         int exlCurr = 0;
+        int audCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
                 string server = "localhost";
@@ -461,7 +482,7 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|FlowDB Records(*.fldb)|.*fldb;";
+                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|Audio(*.mp3;*.mpeg;*.wav)|*.mp3;*.mpeg;*.wav";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
@@ -479,7 +500,7 @@ namespace FlowSERVER1 {
 
                         con.Open();
 
-                        String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUE (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
+                        String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
                         command = new MySqlCommand(insertTxtQuery, con);
 
                         command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
@@ -530,6 +551,20 @@ namespace FlowSERVER1 {
                         titleLab.Height = 30;
                         titleLab.Text = getName;
 
+                        Guna2Button remButTxt = new Guna2Button();
+                        mainPanelTxt.Controls.Add(remButTxt);
+                        remButTxt.Name = "RemTxtBut" + itemCurr;
+                        remButTxt.Width = 39;
+                        remButTxt.Height = 35;
+                        remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
+                        remButTxt.BorderRadius = 6;
+                        remButTxt.BorderThickness = 1;
+                        remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
+                        remButTxt.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                        remButTxt.Visible = true;
+                        remButTxt.Location = new Point(189, 218);
+                        remButTxt.BringToFront();
+
                         textboxPic.MouseHover += (_senderM, _ev) => {
                             panelTxt.ShadowDecoration.Enabled = true;
                             panelTxt.ShadowDecoration.BorderRadius = 8;
@@ -538,15 +573,6 @@ namespace FlowSERVER1 {
                         textboxPic.MouseLeave += (_senderQ, _evQ) => {
                             panelTxt.ShadowDecoration.Enabled = false;
                         };
-                        /*
-                        mainPanelTxt.MouseHover += (_senderM, _ev) => {
-                            mainPanelTxt.ShadowDecoration.Enabled = true;
-                            mainPanelTxt.ShadowDecoration.BorderRadius = 8;
-                        };
-
-                        mainPanelTxt.MouseLeave += (_senderQ, _evQ) => {
-                            mainPanelTxt.ShadowDecoration.Enabled = false;
-                        };*/
 
                         if (nameTable == "file_info") {
                             command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
@@ -567,7 +593,6 @@ namespace FlowSERVER1 {
                             };
 
                             clearRedundane();
-
                         }
 
                         if(nameTable == "file_info_expand") {
@@ -588,6 +613,7 @@ namespace FlowSERVER1 {
                             textboxPic.Click += (sender_t, e_t) => {
                                 txtFORM txtFormShow = new txtFORM(nonLine, filePath);
                                 txtFormShow.Show();
+                                
                             };
                             clearRedundane();
 
@@ -610,20 +636,36 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_vid") {
+
+                            String insertThumbQue = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB)";
+                            command = new MySqlCommand(insertThumbQue, con);
+
+                            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+                            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+
+                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                            command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
                             command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                            command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+                            command.Parameters.Add("@CUST_THUMB",MySqlDbType.LongBlob);
+
                             command.Parameters["@CUST_FILE"].Value = keyVal;
 
                             ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
                             Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                            Bitmap getThumbNail = shellFile.Thumbnail.Bitmap;
-                            var setupThumb = ImageToByte(getThumbNail);
-                            command.Parameters["@CUST_THUMB"].Value = setupThumb;
+                            textboxPic.Image = toBitMap;
+
+                            using (var stream = new MemoryStream()) {
+                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                            }
+
                             command.ExecuteNonQuery();
 
-                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
-
-                            textboxPic.Image = toBitMap;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 var getImgName = (Guna2PictureBox)sender_ex;
                                 var getWidth = getImgName.Image.Width;
@@ -633,23 +675,23 @@ namespace FlowSERVER1 {
                                 vidFORM vidShow = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName);
                                 vidShow.Show();
                             };
+                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
+                            clearRedundane();
+                        }
+                        if(nameTable == "file_info_audi") {
+                            command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
+
+                            textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
+                            textboxPic.Click += (sender_ex, e_ex) => {
+                                audFORM vidShow = new audFORM(titleLab.Text);
+                                vidShow.Show();
+                            };
                             clearRedundane();
                         }
 
-                        Guna2Button remButTxt = new Guna2Button();
-                        mainPanelTxt.Controls.Add(remButTxt);
-                        remButTxt.Name = "RemTxtBut" + itemCurr;
-                        remButTxt.Width = 39;
-                        remButTxt.Height = 35;
-                        remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
-                        remButTxt.BorderRadius = 6;
-                        remButTxt.BorderThickness = 1;
-                        remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remButTxt.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                        remButTxt.Visible = true;
-                        remButTxt.Location = new Point(189, 218);
-                        remButTxt.BringToFront();
-
+                        ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                         remButTxt.Click += (sender_tx, e_tx) => {
                             var titleFile = titleLab.Text;
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -872,10 +914,18 @@ namespace FlowSERVER1 {
                             label8.Visible = false;
                             guna2Button6.Visible = false;
                         }
-                    } 
+                    } else if (retrieved == ".mp3" || retrieved == ".mpeg" || retrieved == ".wav") {
+                        audCurr++;
+
+                        // Read audio and convert them to blob
+                        // var _getBytes = open.FileName;
+                        Byte[] toByte_ = File.ReadAllBytes(open.FileName);
+                        createPanelMain("file_info_audi","PanAud",audCurr,toByte_);
+
+                    }
                 }
             } catch (Exception eq) {
-                //MessageBox.Show(eq.Message);
+                MessageBox.Show(eq.Message);
             }
         }
 
@@ -1012,6 +1062,7 @@ namespace FlowSERVER1 {
             var flowlayout = Form1.instance.flowLayoutPanel1;
 
             con.Open();
+
             //String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
             String verifyQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             command = con.CreateCommand();
