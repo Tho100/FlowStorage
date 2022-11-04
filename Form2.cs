@@ -189,5 +189,9 @@ namespace FlowSERVER1
             guna2Button4.Visible = false;
             guna2TextBox2.PasswordChar = '*';
         }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            this.Close();
+        }
     }
 }

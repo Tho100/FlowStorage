@@ -472,5 +472,9 @@ namespace FlowSERVER1 {
         private void guna2CheckBox2_CheckedChanged(object sender, EventArgs e) {
 
         }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            this.Close();
+        }
     }
 }
