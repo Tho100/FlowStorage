@@ -24,16 +24,6 @@ namespace FlowSERVER1 {
 
             randomizeUser();
 
-            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            String _getAuth = _getPath + "\\CUST_DATAS.txt";
-            if(File.Exists(_getAuth)) {
-                String _UsernameFirst = File.ReadLines(_getAuth).First();
-                if (new FileInfo(_getAuth).Length != 0) {
-                    guna2Panel7.Visible = false;
-                    label5.Text = _UsernameFirst;
-                }
-            }
-
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";
@@ -60,298 +50,315 @@ namespace FlowSERVER1 {
                     label8.Visible = false;
                 }
 
-                string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowTxt, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
+                String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                String _getAuth = _getPath + "\\CUST_DATAS.txt";
+                if (File.Exists(_getAuth)) {
+                    String _UsernameFirst = File.ReadLines(_getAuth).First();
+                    String _PassSecond = File.ReadLines(_getAuth).ElementAtOrDefault(1);
+                    if (new FileInfo(_getAuth).Length != 0) {
+                        guna2Panel7.Visible = false;
+                        label5.Text = _UsernameFirst;
+                        label3.Text = _PassSecond;
 
-                var totalRowTxt = command.ExecuteScalar();
-                int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
-
-                string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowExe, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-
-                var totalRowExe = command.ExecuteScalar();
-                int intTotalRowExe = Convert.ToInt32(totalRowExe);
-                label4.Text = intTotalRowExe.ToString();
-
-                string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowVid, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-
-                var totalRowVid = command.ExecuteScalar();
-                int intTotalRowVid = Convert.ToInt32(totalRowVid);
-
-                String countRow = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRow, con);
-                command.Parameters.AddWithValue("@username",label5.Text);
-                command.Parameters.AddWithValue("@password",label3.Text);
-                var totalRow = command.ExecuteScalar();
-                var intRow = Convert.ToInt32(totalRow);
-                label6.Text = intRow.ToString();
-
-                string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowExcel,con);
-                command.Parameters.AddWithValue("@username",label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowExcel = command.ExecuteScalar();
-                int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
-
-                string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowAudi,con);
-                command.Parameters.AddWithValue("@username",label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowAudi = command.ExecuteScalar();
-                int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
-
-                void _generateUserFiles(String _tableName, String parameterName, int currItem) {
-                    for(int i=0; i<currItem; i++) {
-                        int top = 275;
-                        int h_p = 100;
-
-                        flowLayoutPanel1.Location = new Point(13, 10);
-                        flowLayoutPanel1.Size = new Size(1118, 579);
-
-                        var panelPic_Q = new Guna2Panel() {
-                            Name = parameterName + i,
-                            Width = 240,
-                            Height = 262,
-                            BorderRadius = 8,
-                            FillColor = ColorTranslator.FromHtml("#121212"),
-                            BackColor = Color.Transparent,
-                            Location = new Point(600, top)
-                        };
-                        top += h_p;
-                        flowLayoutPanel1.Controls.Add(panelPic_Q);
-
-                        var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
-
-                        List<string> dateValues = new List<string>();
-                        List<string> titleValues = new List<string>();
-
-                        String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                        command = new MySqlCommand(getUpDate, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getUpDate;
-
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@password", label3.Text);
-                        MySqlDataReader readerDate = command.ExecuteReader();
-
-                        while (readerDate.Read()) {
-                            dateValues.Add(readerDate.GetString(0));
-                        }
-                        readerDate.Close();
-
-                        Label dateLab = new Label();
-                        panelF.Controls.Add(dateLab);
-                        dateLab.Name = "LabG" + i;//Segoe UI Semibold, 11.25pt, style=Bold
-                        dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                        dateLab.ForeColor = Color.DarkGray;
-                        dateLab.Visible = true;
-                        dateLab.Enabled = true;
-                        dateLab.Location = new Point(12, 208);
-                        dateLab.Text = dateValues[i];
-
-                        String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                        command = new MySqlCommand(getTitleQue, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getTitleQue;
-
+                        string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRowTxt, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@password", label3.Text);
 
-                        MySqlDataReader titleReader = command.ExecuteReader();
-                        while (titleReader.Read()) {
-                            titleValues.Add(titleReader.GetString(0));
-                        }
-                        titleReader.Close();
+                        var totalRowTxt = command.ExecuteScalar();
+                        int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
 
-                        Label titleLab = new Label();
-                        panelF.Controls.Add(titleLab);
-                        titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
-                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                        titleLab.ForeColor = Color.Gainsboro;
-                        titleLab.Visible = true;
-                        titleLab.Enabled = true;
-                        titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 220;
-                        titleLab.Height = 30;
-                        titleLab.Text = titleValues[i];
+                        string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRowExe, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
 
-                        Guna2PictureBox picMain_Q = new Guna2PictureBox();
-                        panelF.Controls.Add(picMain_Q);
-                        picMain_Q.Name = "ImgG" + i;
-                        picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                        picMain_Q.BorderRadius = 6;
-                        picMain_Q.Width = 241;
-                        picMain_Q.Height = 165;
-                        picMain_Q.Visible = true;
+                        var totalRowExe = command.ExecuteScalar();
+                        int intTotalRowExe = Convert.ToInt32(totalRowExe);
+                        label4.Text = intTotalRowExe.ToString();
 
-                        picMain_Q.MouseHover += (_senderM, _ev) => {
-                            panelF.ShadowDecoration.Enabled = true;
-                            panelF.ShadowDecoration.BorderRadius = 8;
-                        };
+                        string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRowVid, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
 
-                        picMain_Q.MouseLeave += (_senderQ, _evQ) => {
-                            panelF.ShadowDecoration.Enabled = false;
-                        };
+                        var totalRowVid = command.ExecuteScalar();
+                        int intTotalRowVid = Convert.ToInt32(totalRowVid);
 
-                        Guna2Button remBut = new Guna2Button();
-                        panelF.Controls.Add(remBut);
-                        remBut.Name = "Rem" + i;
-                        remBut.Width = 39;
-                        remBut.Height = 35;
-                        remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
-                        remBut.BorderRadius = 6;
-                        remBut.BorderThickness = 1;
-                        remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                        remBut.Visible = true;
-                        remBut.Location = new Point(189, 218);
+                        String countRow = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRow, con);
+                        command.Parameters.AddWithValue("@username",label5.Text);
+                        command.Parameters.AddWithValue("@password",label3.Text);
+                        var totalRow = command.ExecuteScalar();
+                        var intRow = Convert.ToInt32(totalRow);
+                        label6.Text = intRow.ToString();
 
-                        remBut.Click += (sender_im, e_im) => {
-                            var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (verifyDialog == DialogResult.Yes) {
-                                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                command = new MySqlCommand(noSafeUpdate, con);
-                                command.ExecuteNonQuery();
+                        string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRowExcel,con);
+                        command.Parameters.AddWithValue("@username",label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+                        var totalRowExcel = command.ExecuteScalar();
+                        int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
 
-                                String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-                                command = new MySqlCommand(removeQuery, con);
+                        string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRowAudi,con);
+                        command.Parameters.AddWithValue("@username",label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+                        var totalRowAudi = command.ExecuteScalar();
+                        int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
+
+                        MessageBox.Show(intTotalRowVid.ToString());
+                        MessageBox.Show(label5.Text);
+                        MessageBox.Show(label3.Text);
+
+                        void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+                            for (int i = 0; i < currItem; i++) {
+                                int top = 275;
+                                int h_p = 100;
+
+                                flowLayoutPanel1.Location = new Point(13, 10);
+                                flowLayoutPanel1.Size = new Size(1118, 579);
+
+                                var panelPic_Q = new Guna2Panel() {
+                                    Name = parameterName + i,
+                                    Width = 240,
+                                    Height = 262,
+                                    BorderRadius = 8,
+                                    FillColor = ColorTranslator.FromHtml("#121212"),
+                                    BackColor = Color.Transparent,
+                                    Location = new Point(600, top)
+                                };
+                                top += h_p;
+                                flowLayoutPanel1.Controls.Add(panelPic_Q);
+
+                                var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
+
+                                List<string> dateValues = new List<string>();
+                                List<string> titleValues = new List<string>();
+
+                                String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                                command = new MySqlCommand(getUpDate, con);
+                                command = con.CreateCommand();
+                                command.CommandText = getUpDate;
+
                                 command.Parameters.AddWithValue("@username", label5.Text);
                                 command.Parameters.AddWithValue("@password", label3.Text);
-                                command.Parameters.AddWithValue("@filename", titleFile);
-                                command.ExecuteNonQuery();
+                                MySqlDataReader readerDate = command.ExecuteReader();
 
-                                panelPic_Q.Dispose();
-                                if (flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
+                                while (readerDate.Read()) {
+                                    dateValues.Add(readerDate.GetString(0));
+                                }
+                                readerDate.Close();
+
+                                Label dateLab = new Label();
+                                panelF.Controls.Add(dateLab);
+                                dateLab.Name = "LabG" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                                dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                                dateLab.ForeColor = Color.DarkGray;
+                                dateLab.Visible = true;
+                                dateLab.Enabled = true;
+                                dateLab.Location = new Point(12, 208);
+                                dateLab.Text = dateValues[i];
+
+                                String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                                command = new MySqlCommand(getTitleQue, con);
+                                command = con.CreateCommand();
+                                command.CommandText = getTitleQue;
+
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                command.Parameters.AddWithValue("@password", label3.Text);
+
+                                MySqlDataReader titleReader = command.ExecuteReader();
+                                while (titleReader.Read()) {
+                                    titleValues.Add(titleReader.GetString(0));
+                                }
+                                titleReader.Close();
+
+                                Label titleLab = new Label();
+                                panelF.Controls.Add(titleLab);
+                                titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                                titleLab.ForeColor = Color.Gainsboro;
+                                titleLab.Visible = true;
+                                titleLab.Enabled = true;
+                                titleLab.Location = new Point(12, 182);
+                                titleLab.Width = 220;
+                                titleLab.Height = 30;
+                                titleLab.Text = titleValues[i];
+
+                                Guna2PictureBox picMain_Q = new Guna2PictureBox();
+                                panelF.Controls.Add(picMain_Q);
+                                picMain_Q.Name = "ImgG" + i;
+                                picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
+                                picMain_Q.BorderRadius = 6;
+                                picMain_Q.Width = 241;
+                                picMain_Q.Height = 165;
+                                picMain_Q.Visible = true;
+
+                                picMain_Q.MouseHover += (_senderM, _ev) => {
+                                    panelF.ShadowDecoration.Enabled = true;
+                                    panelF.ShadowDecoration.BorderRadius = 8;
+                                };
+
+                                picMain_Q.MouseLeave += (_senderQ, _evQ) => {
+                                    panelF.ShadowDecoration.Enabled = false;
+                                };
+
+                                Guna2Button remBut = new Guna2Button();
+                                panelF.Controls.Add(remBut);
+                                remBut.Name = "Rem" + i;
+                                remBut.Width = 39;
+                                remBut.Height = 35;
+                                remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
+                                remBut.BorderRadius = 6;
+                                remBut.BorderThickness = 1;
+                                remBut.BorderColor = ColorTranslator.FromHtml("#232323");
+                                remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                                remBut.Visible = true;
+                                remBut.Location = new Point(189, 218);
+
+                                remBut.Click += (sender_im, e_im) => {
+                                    var titleFile = titleLab.Text;
+                                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                    if (verifyDialog == DialogResult.Yes) {
+                                        String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                                        command = new MySqlCommand(noSafeUpdate, con);
+                                        command.ExecuteNonQuery();
+
+                                        String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                        command = new MySqlCommand(removeQuery, con);
+                                        command.Parameters.AddWithValue("@username", label5.Text);
+                                        command.Parameters.AddWithValue("@password", label3.Text);
+                                        command.Parameters.AddWithValue("@filename", titleFile);
+                                        command.ExecuteNonQuery();
+
+                                        panelPic_Q.Dispose();
+                                        if (flowLayoutPanel1.Controls.Count == 0) {
+                                            label8.Visible = true;
+                                            guna2Button6.Visible = true;
+                                        }
+                                    }
+                                };
+
+                                guna2Button6.Visible = false;
+                                label8.Visible = false;
+                                var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
+
+                                if (_tableName == "file_info") {
+
+                                    String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                                    command = new MySqlCommand(retrieveImg, con);
+                                    command.Parameters.AddWithValue("@username", label5.Text);
+                                    command.Parameters.AddWithValue("@password", label3.Text);
+
+                                    MySqlDataAdapter da = new MySqlDataAdapter(command);
+                                    DataSet ds = new DataSet();
+
+                                    da.Fill(ds);
+                                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
+                                    img.Image = new Bitmap(ms);
+
+                                    picMain_Q.Click += (sender, e) => {
+                                        var getImgName = (Guna2PictureBox)sender;
+                                        var getWidth = getImgName.Image.Width;
+                                        var getHeight = getImgName.Image.Height;
+                                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                        displayPic.Show();
+
+                                    };
+                                    clearRedundane();
+                                }
+
+                                if (_tableName == "file_info_expand") {
+                                    img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                    picMain_Q.Click += (sender_t, e_t) => {
+                                        txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
+                                        txtFormShow.Show();
+                                    };
+                                    clearRedundane();
+                                }
+
+                                if (_tableName == "file_info_exe") {
+                                    img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                                    picMain_Q.Click += (sender_ex, e_ex) => {
+                                        exeFORM exeFormShow = new exeFORM(titleLab.Text);
+                                        exeFormShow.Show();
+                                    };
+                                    clearRedundane();
+                                }
+
+                                if (_tableName == "file_info_vid") {
+
+                                    String getImgQue = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                                    command = new MySqlCommand(getImgQue, con);
+                                    command.Parameters.AddWithValue("@username", label5.Text);
+                                    command.Parameters.AddWithValue("@password", label3.Text);
+
+                                    MySqlDataAdapter da = new MySqlDataAdapter(command);
+                                    DataSet ds = new DataSet();
+
+                                    da.Fill(ds);
+                                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i]["CUST_THUMB"]);
+                                    img.Image = new Bitmap(ms);
+
+                                    picMain_Q.Click += (sender_vq, e_vq) => {
+                                        var getImgName = (Guna2PictureBox)sender_vq;
+                                        var getWidth = getImgName.Image.Width;
+                                        var getHeight = getImgName.Image.Height;
+                                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "DDD");
+                                        vidFormShow.Show();
+                                    };
+                                    clearRedundane();
+                                }
+
+                                if (_tableName == "file_info_excel") {
+                                    picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
+                                    picMain_Q.Click += (sender_vq, e_vq) => {
+                                        exlFORM exlForm = new exlFORM(titleLab.Text, "D");
+                                        exlForm.Show();
+                                    };
+                                }
+
+                                if (_tableName == "file_info_audi") {
+                                    picMain_Q.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
+
+                                    picMain_Q.Click += (sender_Aud, e_Aud) => {
+                                        audFORM audForm = new audFORM(titleLab.Text);
+                                        audForm.Show();
+                                    };
+                                    clearRedundane();
                                 }
                             }
-                        };
-
-                        guna2Button6.Visible = false;
-                        label8.Visible = false;
-                        var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
-
-                        if(_tableName == "file_info") {
-
-                            String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                            command = new MySqlCommand(retrieveImg, con);
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@password", label3.Text);
-
-                            MySqlDataAdapter da = new MySqlDataAdapter(command);
-                            DataSet ds = new DataSet();
-
-                            da.Fill(ds);
-                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
-                            img.Image = new Bitmap(ms);
-
-                            picMain_Q.Click += (sender, e) => {
-                                var getImgName = (Guna2PictureBox)sender;
-                                var getWidth = getImgName.Image.Width;
-                                var getHeight = getImgName.Image.Height;
-                                Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                                displayPic.Show();
-                            };
-                            clearRedundane();
                         }
 
-                        if (_tableName == "file_info_expand") {
-                            img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
-                            picMain_Q.Click += (sender_t, e_t) => {
-                                txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
-                                txtFormShow.Show();
-                            };
-                            clearRedundane();
+                        // LOAD IMG
+                        if (intRow > 0) {
+                            _generateUserFiles("file_info", "imgFile", intRow);
                         }
-
-                        if(_tableName == "file_info_exe") {
-                            img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
-                            picMain_Q.Click += (sender_ex, e_ex) => {
-                                exeFORM exeFormShow = new exeFORM(titleLab.Text);
-                                exeFormShow.Show();
-                            };
-                            clearRedundane();
+                        // LOAD .TXT
+                        if (intTotalRowTxt > 0) {
+                            _generateUserFiles("file_info_expand", "txtFile", intTotalRowTxt);
                         }
-
-                        if(_tableName == "file_info_vid") {
-                            String getImgQue = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                            command = new MySqlCommand(getImgQue, con);
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@password", label3.Text);
-
-                            MySqlDataAdapter da = new MySqlDataAdapter(command);
-                            DataSet ds = new DataSet();
-
-                            da.Fill(ds);
-                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i]["CUST_THUMB"]);
-                            img.Image = new Bitmap(ms);
-
-                            picMain_Q.Click += (sender_vq, e_vq) => {
-                                var getImgName = (Guna2PictureBox)sender_vq;
-                                var getWidth = getImgName.Image.Width;
-                                var getHeight = getImgName.Image.Height;
-                                Bitmap defaultImage = new Bitmap(getImgName.Image);
-                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text,"DDD");
-                                vidFormShow.Show();
-                            };
-                            clearRedundane();
+                        // LOAD EXE
+                        if (intTotalRowExe > 0) {
+                            _generateUserFiles("file_info_exe", "exeFile", intTotalRowExe);
                         }
-
-                        if(_tableName == "file_info_excel") {
-                            picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
-                            picMain_Q.Click += (sender_vq, e_vq) => {
-                                exlFORM exlForm = new exlFORM(titleLab.Text, "D");
-                                exlForm.Show();
-                            };
+                        // LOAD VID
+                        if (intTotalRowVid > 0) {
+                            _generateUserFiles("file_info_vid", "vidFile", intTotalRowVid);
                         }
-                        
-                        if(_tableName == "file_info_audi") {
-                            picMain_Q.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
-
-                            // INSERT AUDIO DATA
-
-                            picMain_Q.Click += (sender_Aud, e_Aud) => {
-                                audFORM audForm = new audFORM(titleLab.Text);
-                                audForm.Show();
-                            };
+                        if (intTotalRowExcel > 0) {
+                            _generateUserFiles("file_info_excel", "exlFile", intTotalRowExcel);
                         }
+                        if (intTotalRowAudi > 0) {
+                            _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
+                        }
+                        label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
                     }
                 }
-
-                // LOAD IMG
-                if (intRow > 0) {
-                    _generateUserFiles("file_info","imgFile",intRow);
-                }
-                // LOAD .TXT
-                if(intTotalRowTxt > 0) {
-                    _generateUserFiles("file_info_expand","txtFile",intTotalRowTxt);
-                }
-                // LOAD EXE
-                if(intTotalRowExe > 0) {
-                    _generateUserFiles("file_info_exe","exeFile",intTotalRowExe);                
-                }
-                // LOAD VID
-                if(intTotalRowVid > 0) {
-                    _generateUserFiles("file_info_vid","vidFile",intTotalRowVid);
-                }
-                if(intTotalRowExcel > 0) {
-                    _generateUserFiles("file_info_excel","exlFile",intTotalRowExcel);
-                }
-                if(intTotalRowAudi > 0) {
-                    _generateUserFiles("file_info_audi","audiFile",intTotalRowAudi);
-                }
-                label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }

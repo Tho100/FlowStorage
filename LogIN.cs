@@ -375,7 +375,7 @@ namespace FlowSERVER1 {
                     Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
 
                     if (guna2CheckBox2.Checked == true) {
-                        setupAutoLogin(guna2TextBox2.Text, Form1.instance.label5.Text);
+                        setupAutoLogin(Form1.instance.label3.Text, Form1.instance.label5.Text);
                     }     
                 }
                 catch (Exception eq) {
