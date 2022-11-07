@@ -119,11 +119,44 @@ namespace FlowSERVER1 {
                     var totalRowAudi = command.ExecuteScalar();
                     int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
 
+                    string countRowFolder = "SELECT COUNT(CUST_USERNAME) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowFolder,con);
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    var totalRowFold = command.ExecuteScalar();
+                    int inttotalRowFold = Convert.ToInt32(totalRowFold);
+
                     var _form = Form1.instance;
 
                     void clearRedundane() {
                         _form.guna2Button6.Visible = false;
                         _form.label8.Visible = false;
+                    }
+
+                    void _generateUserFolder(String userName,string passUser) {
+                        
+                        _form.listBox1.Items.Add("Home");
+                        _form.listBox1.SelectedIndex = 0;
+
+                        List<string> titleValues = new List<string>();
+
+                        String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(getTitles,con);
+                        command = con.CreateCommand();
+                        command.CommandText = getTitles;
+
+                        command.Parameters.AddWithValue("@username",userName);
+                        command.Parameters.AddWithValue("@password",passUser);
+                        MySqlDataReader fold_Reader = command.ExecuteReader();
+                        while(fold_Reader.Read()) {
+                            titleValues.Add(fold_Reader.GetString(0));
+                        }
+
+                        fold_Reader.Close();
+
+                        for(int i=0; i<titleValues.Count; i++) {
+                            _form.listBox1.Items.Add(titleValues[i]);
+                        }
                     }
 
                     void _generateUserFiles(String _tableName, String parameterName, int currItem) {
@@ -370,6 +403,9 @@ namespace FlowSERVER1 {
                     }
                     if (intTotalRowAudi > 0) {
                         _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
+                    }
+                    if(inttotalRowFold > 0) {
+                        _generateUserFolder(user,pass);
                     }
 
                     Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();

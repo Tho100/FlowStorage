@@ -1054,6 +1054,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button11_Click(object sender, EventArgs e) {
+
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";
@@ -1093,6 +1094,7 @@ namespace FlowSERVER1 {
             }
             else {
                 label12.Visible = false;
+
                 if (!String.IsNullOrEmpty(get_pass)) {
                     if (!String.IsNullOrEmpty(get_user)) {
                         flowlayout.Controls.Clear();
@@ -1122,6 +1124,9 @@ namespace FlowSERVER1 {
                         guna2Panel7.Visible = false;
                         guna2TextBox1.Text = String.Empty;
                         guna2TextBox2.Text = String.Empty;
+                
+                        listBox1.Items.Add("Home");
+                        listBox1.SelectedIndex = 0;
                     }
                     else {
                         label11.Visible = true;
@@ -1160,17 +1165,46 @@ namespace FlowSERVER1 {
 
         private void guna2Button12_Click_1(object sender, EventArgs e) {
             try {
+
+                string server = "localhost";
+                string db = "flowserver_db";
+                string username = "root";
+                string password = "nfreal-yt10";
+                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+
+                MySqlConnection con = new MySqlConnection(constring);
+
+                MySqlCommand command;
+
+                con.Open();
+
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog();
                 dialog.InitialDirectory = "";
                 dialog.IsFolderPicker = true;
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
-    
+                    var _getDirPage = dialog.FileName;
+                    var _getDirTitle = new DirectoryInfo(_getDirPage).Name;
+                    listBox1.Items.Add(_getDirTitle);
+
+                    String insertFoldQue_ = "INSERT INTO FOLDER_UPLOAD_INFO(FOLDER_TITLE,CUST_USERNAME,CUST_PASSWORD) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_PASSWORD)";
+                    command = new MySqlCommand(insertFoldQue_,con);
+
+                    command.Parameters.Add("@FOLDER_TITLE", MySqlDbType.Text);
+                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                    command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+
+                    command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
+                    command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                    command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                    command.ExecuteNonQuery();
                 }
-
-
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }
+        }
+
+        private void label25_Click(object sender, EventArgs e) {
+
         }
     }
 }

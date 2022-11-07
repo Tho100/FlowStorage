@@ -69,11 +69,18 @@ namespace FlowSERVER1 {
                     command = new MySqlCommand(remTxt_Query, con);
                     command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
                     command.Parameters.AddWithValue("@password", guna2TextBox1.Text);
+
+                    String remFolder = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(remFolder, con);
+                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
+                    command.Parameters.AddWithValue("@password", guna2TextBox1.Text);
+
                     command.ExecuteNonQuery();
 
                     this.Close();
                     Application.OpenForms["remAccFORM"].Close();
                     Form1.instance.guna2Panel7.Visible = true;
+                    Form1.instance.listBox1.Items.Clear();
                 } else {
                     MessageBox.Show("WRONG PASSWORD");
                 }

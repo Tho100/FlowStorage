@@ -50,28 +50,34 @@ namespace FlowSERVER1
                 var random = new Random();
                 var getKeyRand = random.Next(0, 1);
                 var getMorningKeys = morningKeys[getKeyRand];
-
                 DateTime now = DateTime.Now;
-                DateTime MORNING = new DateTime(now.Year, now.Month, now.Day, 6, 0, 0);
-                DateTime AFTERNOON = MORNING.AddHours(8);
-                DateTime EVENING = AFTERNOON.AddHours(8);
-
-                if (now.Hour >= 22 || now.Hour < 6) {
-                    // Evening
-                    form.label1.Text = "Good night... " + guna2TextBox1.Text + " shouldn't you be sleeping now?";
+                var hours = now.Hour;
+                String greeting = null;
+                if (hours >= 1 && hours <= 12) {
+                    greeting = "Good Morning " + label5.Text + " :) " + getMorningKeys;
+                    form.pictureBox2.Visible = true;
+                    form.pictureBox1.Visible = false;
+                    form.pictureBox3.Visible = false;
+                }
+                else if (hours >= 12 && hours <= 16) {
+                    greeting = "Good Afternoon " + label5.Text + " :)";
+                    form.pictureBox2.Visible = true;
+                    form.pictureBox1.Visible = false;
+                    form.pictureBox3.Visible = false;
+                }
+                else if (hours >= 16 && hours <= 21) {
+                    greeting = "Good Evening " + label5.Text + " :)";
+                    form.pictureBox3.Visible = true;
                     form.pictureBox2.Visible = false;
-
+                    form.pictureBox1.Visible = false;
                 }
-                else if (now.Hour >= 13) {
-                    // Afternoon
-                    form.label1.Text = "Good Afternoon " + guna2TextBox1.Text + " :)";
-                    form.pictureBox2.Visible = true;
+                else if (hours >= 21 && hours <= 24) {
+                    greeting = "Good Night " + label5.Text + " :)";
+                    form.pictureBox1.Visible = true;
+                    form.pictureBox2.Visible = false;
+                    form.pictureBox3.Visible = false;
                 }
-                else {
-                    // Morning
-                    form.label1.Text = "Good Morning " + guna2TextBox1.Text + " :) " + getMorningKeys;
-                    form.pictureBox2.Visible = true;
-                }
+                label1.Text = greeting;
             }
             catch (Exception) {
                 MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
@@ -141,10 +147,15 @@ namespace FlowSERVER1
                             cmd.Parameters.AddWithValue("@CUST_PASSWORD", get_pass);
                             cmd.ExecuteNonQuery();
                         }
+
                         label5.Visible = false;
                         label4.Visible = false;
                         Form1.instance.label5.Text = get_user;
+                        Form1.instance.listBox1.Items.Clear();
+                        Form1.instance.listBox1.Items.Add("Home");
+                        Form1.instance.listBox1.SelectedIndex = 0;
                         setupTime();
+
                         this.Close();
                     }
                     else {
