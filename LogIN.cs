@@ -138,7 +138,13 @@ namespace FlowSERVER1 {
                         _form.listBox1.Items.Add("Home");
                         _form.listBox1.SelectedIndex = 0;
 
-                        List<string> titleValues = new List<string>();
+                        List<String> titleValues = new List<String>();
+                        List<String> updatesTitle = new List<String>();
+
+                        /*
+                         @ Fix folder name duplication on login 
+                         STATUS: In-Progress
+                         */
 
                         String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                         command = new MySqlCommand(getTitles,con);
@@ -155,7 +161,11 @@ namespace FlowSERVER1 {
                         fold_Reader.Close();
 
                         for(int i=0; i<titleValues.Count; i++) {
-                            _form.listBox1.Items.Add(titleValues[i]);
+                            //_form.listBox1.Items.Add(titleValues[i]);
+                            updatesTitle.Add(titleValues[i].Distinct().ToList());
+                        }
+                        foreach(var defaultValues in titleValues) {
+                            updatesTitle.Add(defaultValues.Distinct());
                         }
                     }
 
