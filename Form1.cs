@@ -1196,6 +1196,8 @@ namespace FlowSERVER1 {
                     command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
 
+                    String[] _TitleValues = Directory.GetFiles(_getDirPath,"*").Select(Path.GetFileName).ToArray();
+
                     int _IntCurr = 0;
                     foreach(var _Images in Directory.EnumerateFiles(_getDirPath,"*")) {
                         command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
@@ -1225,7 +1227,6 @@ namespace FlowSERVER1 {
                                     Location = new Point(600, top)
                                 };
 
-
                                 top += h_p;
                                 flowLayoutPanel1.Controls.Add(panelVid);
                                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExlFold" + _IntCurr]);
@@ -1244,7 +1245,7 @@ namespace FlowSERVER1 {
                                 titleLab.Location = new Point(12, 182);
                                 titleLab.Width = 220;
                                 titleLab.Height = 30;
-                                //titleLab.Text = getName;
+                                titleLab.Text = _TitleValues[_IntCurr-1];
 
                                 // LOAD THUMBNAIL
 
