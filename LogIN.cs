@@ -405,9 +405,9 @@ namespace FlowSERVER1 {
                     if (intTotalRowAudi > 0) {
                         _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
                     }
-                    if(inttotalRowFold > 0) {
-                        _generateUserFolder(user,pass);
-                    }
+                    //if(inttotalRowFold > 0) {
+                    _generateUserFolder(user,pass);
+                    //}
 
                     Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
 
