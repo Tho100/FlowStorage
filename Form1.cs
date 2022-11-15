@@ -392,7 +392,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        public void _generateUserFold(String _folderName,String _parName,String[] _fileType, int _intLength) {
+        /*public void _generateUserFold(String _folderName,String _parName,String[] _fileType, int _intLength) {
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";
@@ -524,7 +524,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@password", label3.Text);
                         command.Parameters.AddWithValue("@filename", titleFile);
-                        command.ExecuteNonQuery();*/
+                        command.ExecuteNonQuery();
 
                         panelPic_Q.Dispose();
                         if (flowLayoutPanel1.Controls.Count == 0) {
@@ -627,7 +627,196 @@ namespace FlowSERVER1 {
                         audForm.Show();
                     };
                     clearRedundane();
-                }*/
+                }
+            }
+        }*/
+
+        public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
+            string server = "localhost";
+            string db = "flowserver_db";
+            string username = "root";
+            string password = "nfreal-yt10";
+            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+
+            MySqlConnection con = new MySqlConnection(constring);
+            MySqlCommand command;
+            con.Open();
+
+            List<String> typeValues = new List<String>(_fileType);
+
+            for (int i = 0; i < currItem; i++) {
+                int top = 275;
+                int h_p = 100;
+
+                flowLayoutPanel1.Location = new Point(13, 10);
+                flowLayoutPanel1.Size = new Size(1118, 579);
+
+                var panelPic_Q = new Guna2Panel() {
+                    Name = "panelf" + i,
+                    Width = 240,
+                    Height = 262,
+                    BorderRadius = 8,
+                    FillColor = ColorTranslator.FromHtml("#121212"),
+                    BackColor = Color.Transparent,
+                    Location = new Point(600, top)
+                };
+                top += h_p;
+                flowLayoutPanel1.Controls.Add(panelPic_Q);
+
+                var panelF = ((Guna2Panel)flowLayoutPanel1.Controls["panelf" + i]);
+
+                List<string> dateValues = new List<string>();
+                List<string> titleValues = new List<string>();
+
+                String getUpDate = "SELECT UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                command = new MySqlCommand(getUpDate, con);
+                command = con.CreateCommand();
+                command.CommandText = getUpDate;
+
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@password", label3.Text);
+                command.Parameters.AddWithValue("@foldername",_foldTitle);
+                MySqlDataReader readerDate = command.ExecuteReader();
+
+                while (readerDate.Read()) {
+                    dateValues.Add(readerDate.GetString(0));
+                }
+                readerDate.Close();
+
+                Label dateLab = new Label();
+                panelF.Controls.Add(dateLab);
+                dateLab.Name = "datef" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                dateLab.ForeColor = Color.DarkGray;
+                dateLab.Visible = true;
+                dateLab.Enabled = true;
+                dateLab.Location = new Point(12, 208);
+                dateLab.Text = dateValues[i];
+
+                String getTitleQue = "SELECT FILE_NAME FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                command = new MySqlCommand(getTitleQue, con);
+                command = con.CreateCommand();
+                command.CommandText = getTitleQue;
+
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@password", label3.Text);
+                command.Parameters.AddWithValue("@foldername", _foldTitle);
+
+                MySqlDataReader titleReader = command.ExecuteReader();
+                while (titleReader.Read()) {
+                    titleValues.Add(titleReader.GetString(0));
+                }
+                titleReader.Close();
+
+                Label titleLab = new Label();
+                panelF.Controls.Add(titleLab);
+                titleLab.Name = "titlef" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                titleLab.ForeColor = Color.Gainsboro;
+                titleLab.Visible = true;
+                titleLab.Enabled = true;
+                titleLab.Location = new Point(12, 182);
+                titleLab.Width = 220;
+                titleLab.Height = 30;
+                titleLab.Text = titleValues[i];
+
+                Guna2PictureBox picMain_Q = new Guna2PictureBox();
+                panelF.Controls.Add(picMain_Q);
+                picMain_Q.Name = "imgf" + i;
+                picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
+                picMain_Q.BorderRadius = 6;
+                picMain_Q.Width = 241;
+                picMain_Q.Height = 165;
+                picMain_Q.Visible = true;
+
+                picMain_Q.MouseHover += (_senderM, _ev) => {
+                    panelF.ShadowDecoration.Enabled = true;
+                    panelF.ShadowDecoration.BorderRadius = 8;
+                };
+
+                picMain_Q.MouseLeave += (_senderQ, _evQ) => {
+                    panelF.ShadowDecoration.Enabled = false;
+                };
+
+                Guna2Button remBut = new Guna2Button();
+                panelF.Controls.Add(remBut);
+                remBut.Name = "remf" + i;
+                remBut.Width = 39;
+                remBut.Height = 35;
+                remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
+                remBut.BorderRadius = 6;
+                remBut.BorderThickness = 1;
+                remBut.BorderColor = ColorTranslator.FromHtml("#232323");
+                remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remBut.Visible = true;
+                remBut.Location = new Point(189, 218);
+
+                remBut.Click += (sender_im, e_im) => {
+                    var titleFile = titleLab.Text;
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (verifyDialog == DialogResult.Yes) {
+                        String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                        command = new MySqlCommand(noSafeUpdate, con);
+                        command.ExecuteNonQuery();
+
+                        String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FILE_NAME = @filename AND FOLDER_TITLE = @foldername";
+                        command = new MySqlCommand(removeQuery, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+                        command.Parameters.AddWithValue("@filename", titleFile);
+                        command.Parameters.AddWithValue("@foldername",_foldTitle);
+                        command.ExecuteNonQuery();
+
+                        panelPic_Q.Dispose();
+                        if (flowLayoutPanel1.Controls.Count == 0) {
+                            label8.Visible = true;
+                            guna2Button6.Visible = true;
+                        }
+                    }
+                };
+
+                guna2Button6.Visible = false;
+                label8.Visible = false;
+                var img = ((Guna2PictureBox)panelF.Controls["imgf" + i]);
+
+                foreach(var _typeValues in typeValues) {
+                    MessageBox.Show(_typeValues);
+                    if (_typeValues == ".png" || _typeValues == ".jpeg" || _typeValues == ".jpg" || _typeValues == ".bmp") {
+                        String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                        command = new MySqlCommand(retrieveImg, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+                        command.Parameters.AddWithValue("@foldername", _foldTitle);
+
+                        MySqlDataAdapter da = new MySqlDataAdapter(command);
+                        DataSet ds = new DataSet();
+
+                        da.Fill(ds);
+                        MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
+                        img.Image = new Bitmap(ms);
+
+                        picMain_Q.Click += (sender, e) => {
+                            var getImgName = (Guna2PictureBox)sender;
+                            var getWidth = getImgName.Image.Width;
+                            var getHeight = getImgName.Image.Height;
+                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                            displayPic.Show();
+
+                        };
+                        clearRedundane();
+                    } 
+                    if(_typeValues == ".txt") {
+                        img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                        picMain_Q.Click += (sender_t, e_t) => {
+                            txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
+                            txtFormShow.Show();
+                        };
+                        clearRedundane();
+                        
+                    }
+                }
             }
         }
 
@@ -1439,7 +1628,6 @@ namespace FlowSERVER1 {
         private void guna2Panel8_Paint(object sender, PaintEventArgs e) {
 
         }
-
         private void guna2Button12_Click_1(object sender, EventArgs e) {
             try {
 
@@ -1479,127 +1667,152 @@ namespace FlowSERVER1 {
                     String[] _TitleValues = Directory.GetFiles(_getDirPath,"*").Select(Path.GetFileName).ToArray();
 
                     int _IntCurr = 0;
-                    foreach(var _Images in Directory.EnumerateFiles(_getDirPath,"*")) {
+                    foreach (var _Files in Directory.EnumerateFiles(_getDirPath,"*")) {
                         String varDate = DateTime.Now.ToString("dd/MM/yyyy");
                         command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
                         command.Parameters["@CUST_USERNAME"].Value = label5.Text;
                         command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@FILE_NAME"].Value = Path.GetFileName(_Images);
-                        command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Images);
+                        command.Parameters["@FILE_NAME"].Value = Path.GetFileName(_Files);
+                        command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
-                        var _imgContent = new Bitmap(_Images);
-                        using(MemoryStream _ms = new MemoryStream()) {
-                            _imgContent.Save(_ms,System.Drawing.Imaging.ImageFormat.Png);
-                            var _setupImg = _ms.ToArray();
-                            command.Parameters["@CUST_FILE"].Value = _setupImg;
+                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
+                        listBox1.SelectedIndex = _dirPosition;
 
-                            if(command.ExecuteNonQuery() == 1) {
-                                var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                                listBox1.SelectedIndex = _dirPosition;
+                        _IntCurr++;
+                        int top = 275;
+                        int h_p = 100;
 
-                                _IntCurr++;
-                                int top = 275;
-                                int h_p = 100;
+                        var panelVid = new Guna2Panel() {
+                            Name = "PanExlFold" + _IntCurr,
+                            Width = 240,
+                            Height = 262,
+                            BorderRadius = 8,
+                            FillColor = ColorTranslator.FromHtml("#121212"),
+                            BackColor = Color.Transparent,
+                            Location = new Point(600, top)
+                        };
 
-                                var panelVid = new Guna2Panel() {
-                                    Name = "PanExlFold" + _IntCurr,
-                                    Width = 240,
-                                    Height = 262,
-                                    BorderRadius = 8,
-                                    FillColor = ColorTranslator.FromHtml("#121212"),
-                                    BackColor = Color.Transparent,
-                                    Location = new Point(600, top)
-                                };
+                        top += h_p;
+                        flowLayoutPanel1.Controls.Add(panelVid);
+                        var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExlFold" + _IntCurr]);
 
-                                top += h_p;
-                                flowLayoutPanel1.Controls.Add(panelVid);
-                                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExlFold" + _IntCurr]);
+                        Label titleLab = new Label();
+                        mainPanelTxt.Controls.Add(titleLab);
+                        titleLab.Name = "LabExlUpFold" + _IntCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                        titleLab.ForeColor = Color.Gainsboro;
+                        titleLab.Visible = true;
+                        titleLab.Enabled = true;
+                        titleLab.Location = new Point(12, 182);
+                        titleLab.Width = 220;
+                        titleLab.Height = 30;
+                        titleLab.Text = _TitleValues[_IntCurr - 1];
 
-                                Label titleLab = new Label();
-                                mainPanelTxt.Controls.Add(titleLab);
-                                titleLab.Name = "LabExlUpFold" + _IntCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                                titleLab.ForeColor = Color.Gainsboro;
-                                titleLab.Visible = true;
-                                titleLab.Enabled = true;
-                                titleLab.Location = new Point(12, 182);
-                                titleLab.Width = 220;
-                                titleLab.Height = 30;
-                                titleLab.Text = _TitleValues[_IntCurr-1];
+                        // LOAD THUMBNAIL
 
-                                // LOAD THUMBNAIL
+                        var textboxExl = new Guna2PictureBox();
+                        mainPanelTxt.Controls.Add(textboxExl);
+                        textboxExl.Name = "ExeExlFold" + _IntCurr;
+                        textboxExl.Width = 240;
+                        textboxExl.Height = 164;
+                        textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
+                        textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
+                        textboxExl.BorderRadius = 8;
+                        textboxExl.Enabled = true;
+                        textboxExl.Visible = true;
 
-                                var textboxExl = new Guna2PictureBox();
-                                mainPanelTxt.Controls.Add(textboxExl);
-                                textboxExl.Name = "ExeExlFold" + _IntCurr;
-                                textboxExl.Width = 240;
-                                textboxExl.Height = 164;
-                                textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
-                                textboxExl.Image = _imgContent;
-                                textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
-                                textboxExl.BorderRadius = 8;
-                                textboxExl.Enabled = true;
-                                textboxExl.Visible = true;
+                        textboxExl.Click += (sender_w, ev_w) => {
 
-                                textboxExl.Click += (sender_w, ev_w) => {
+                        };
 
-                                };
+                        textboxExl.MouseHover += (_senderM, _ev) => {
+                            mainPanelTxt.ShadowDecoration.Enabled = true;
+                            mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                        };
 
-                                textboxExl.MouseHover += (_senderM, _ev) => {
-                                    mainPanelTxt.ShadowDecoration.Enabled = true;
-                                    mainPanelTxt.ShadowDecoration.BorderRadius = 8;
-                                };
+                        textboxExl.MouseLeave += (_senderQ, _evQ) => {
+                            mainPanelTxt.ShadowDecoration.Enabled = false;
+                        };
 
-                                textboxExl.MouseLeave += (_senderQ, _evQ) => {
-                                    mainPanelTxt.ShadowDecoration.Enabled = false;
-                                };
+                        textboxExl.Click += (sender_eq, e_eq) => {
 
-                                textboxExl.Click += (sender_eq, e_eq) => {
-                                   
-                                };
+                        };
 
-                                Guna2Button remButExl = new Guna2Button();
-                                mainPanelTxt.Controls.Add(remButExl);
-                                remButExl.Name = "RemExlButFold" + _IntCurr;
-                                remButExl.Width = 39;
-                                remButExl.Height = 35;
-                                remButExl.FillColor = ColorTranslator.FromHtml("#4713BF");
-                                remButExl.BorderRadius = 6;
-                                remButExl.BorderThickness = 1;
-                                remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
-                                remButExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                                remButExl.Visible = true;
-                                remButExl.Location = new Point(189, 218);
+                        Guna2Button remButExl = new Guna2Button();
+                        mainPanelTxt.Controls.Add(remButExl);
+                        remButExl.Name = "RemExlButFold" + _IntCurr;
+                        remButExl.Width = 39;
+                        remButExl.Height = 35;
+                        remButExl.FillColor = ColorTranslator.FromHtml("#4713BF");
+                        remButExl.BorderRadius = 6;
+                        remButExl.BorderThickness = 1;
+                        remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
+                        remButExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                        remButExl.Visible = true;
+                        remButExl.Location = new Point(189, 218);
 
-                                remButExl.Click += (sender_vid, e_vid) => {
-                                    var titleFile = titleLab.Text;
-                                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                                    if (verifyDialog == DialogResult.Yes) {
-                                        //deletionMethod(titleFile, "file_info_excel");
-                                        panelVid.Dispose();
-                                    }
+                        remButExl.Click += (sender_vid, e_vid) => {
+                            var titleFile = titleLab.Text;
+                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            if (verifyDialog == DialogResult.Yes) {
+                                //deletionMethod(titleFile, "file_info_excel");
+                                panelVid.Dispose();
+                            }
 
-                                    if (flowLayoutPanel1.Controls.Count == 0) {
-                                        label8.Visible = true;
-                                        guna2Button6.Visible = true;
-                                    }
-                                };
+                            if (flowLayoutPanel1.Controls.Count == 0) {
+                                label8.Visible = true;
+                                guna2Button6.Visible = true;
+                            }
+                        };
 
-                                Label dateLabExl = new Label();
-                                mainPanelTxt.Controls.Add(dateLabExl);
-                                dateLabExl.Name = "LabExlUpFold" + _IntCurr;
-                                dateLabExl.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                                dateLabExl.ForeColor = Color.DarkGray;
-                                dateLabExl.Visible = true;
-                                dateLabExl.Enabled = true;
-                                dateLabExl.Location = new Point(12, 208);
-                                dateLabExl.Width = 1000;
-                                dateLabExl.Text = varDate;
+                        Label dateLabExl = new Label();
+                        mainPanelTxt.Controls.Add(dateLabExl);
+                        dateLabExl.Name = "LabExlUpFold" + _IntCurr;
+                        dateLabExl.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                        dateLabExl.ForeColor = Color.DarkGray;
+                        dateLabExl.Visible = true;
+                        dateLabExl.Enabled = true;
+                        dateLabExl.Location = new Point(12, 208);
+                        dateLabExl.Width = 1000;
+                        dateLabExl.Text = varDate;
 
-                                label8.Visible = false;
-                                guna2Button6.Visible = false;
+                        label8.Visible = false;
+                        guna2Button6.Visible = false;
 
+                        var _extTypes = Path.GetExtension(_Files);
+                        if(_extTypes == ".png" || _extTypes == ".jpg" || _extTypes == ".jpeg" || _extTypes == ".bmp") {
+                            var _imgContent = new Bitmap(_Files);
+                            using(MemoryStream _ms = new MemoryStream()) {
+                                _imgContent.Save(_ms,System.Drawing.Imaging.ImageFormat.Png);
+                                var _setupImg = _ms.ToArray();
+                                command.Parameters["@CUST_FILE"].Value = _setupImg;
+                            }
+                            textboxExl.Image = _imgContent;
+                            textboxExl.Click += (sender_f, e_f) => {
+                                var getImgName = (Guna2PictureBox)sender;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                displayPic.Show();
+
+                            };
+                            if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+                        }
+                        if(_extTypes == ".txt") {
+                            var _readText = File.ReadAllText(_Files);
+                            textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                            textboxExl.Click += (sender_t, e_t) => {
+                                txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
+                                txtFormShow.Show();
+                            };
+                            command.Parameters["@CUST_FILE"].Value = _readText; // Receive text
+                            if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
                             }
                         }
                     }
@@ -1628,6 +1841,7 @@ namespace FlowSERVER1 {
                 if(_selectedFolder == "Home") {
                     foldCurr++;
                     flowLayoutPanel1.Controls.Clear();
+
                     con.Open();
 
                     string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
@@ -1635,8 +1849,8 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@password", label3.Text);
 
-                    var totalRowTxt = command.ExecuteScalar();
-                    int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
+                    //var totalRowTxt = command.ExecuteScalar();
+                    //int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
 
                     string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExe, con);
@@ -1691,8 +1905,8 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Clear();
 
                     con.Open();
-
-                    String getFileType = "SELECT FILE_NAME FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                    // Count total row of that folder and use it into parameter
+                    String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
                     command = new MySqlCommand(getFileType,con);
                     command = con.CreateCommand();
                     command.CommandText = getFileType;
@@ -1712,8 +1926,9 @@ namespace FlowSERVER1 {
                      Status: In-Progress
                      Happens when: _generateUserFold function executed
                      */
+                    var currLength_ = typesValues.Count;
+                    _generateUserFold(typesValues,_selectedFolder,"Testing",currLength_); // fold_naem parname filetype curr
 
-                    //_generateUserFold(_selectedFolder,"foldSetup",typesValues,mainFoldCurr); // fold_naem parname filetype curr
 
                     if (flowLayoutPanel1.Controls.Count == 0) {
                         showRedundane();
