@@ -729,6 +729,7 @@ namespace FlowSERVER1 {
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
 
+
                 picMain_Q.MouseHover += (_senderM, _ev) => {
                     panelF.ShadowDecoration.Enabled = true;
                     panelF.ShadowDecoration.BorderRadius = 8;
@@ -779,43 +780,41 @@ namespace FlowSERVER1 {
                 label8.Visible = false;
                 var img = ((Guna2PictureBox)panelF.Controls["imgf" + i]);
 
-                foreach(var _typeValues in typeValues) {
-                    MessageBox.Show(_typeValues);
-                    if (_typeValues == ".png" || _typeValues == ".jpeg" || _typeValues == ".jpg" || _typeValues == ".bmp") {
-                        String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
-                        command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@password", label3.Text);
-                        command.Parameters.AddWithValue("@foldername", _foldTitle);
+                if (typeValues[i] == ".png" || typeValues[i] == ".jpeg" || typeValues[i] == ".jpg" || typeValues[i] == ".bmp") {
+                    String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                    command = new MySqlCommand(retrieveImg, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    command.Parameters.AddWithValue("@foldername", _foldTitle);
 
-                        MySqlDataAdapter da = new MySqlDataAdapter(command);
-                        DataSet ds = new DataSet();
+                    MySqlDataAdapter da = new MySqlDataAdapter(command);
+                    DataSet ds = new DataSet();
 
-                        da.Fill(ds);
-                        MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
-                        img.Image = new Bitmap(ms);
+                    da.Fill(ds);
+                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
 
-                        picMain_Q.Click += (sender, e) => {
-                            var getImgName = (Guna2PictureBox)sender;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    img.Image = new Bitmap(ms); 
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                            displayPic.Show();
+                    picMain_Q.Click += (sender, e) => {
+                        var getImgName = (Guna2PictureBox)sender;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+                        Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        };
-                        clearRedundane();
-                    } 
-                    if(_typeValues == ".txt") {
-                        img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
-                        picMain_Q.Click += (sender_t, e_t) => {
-                            txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
-                            txtFormShow.Show();
-                        };
-                        clearRedundane();
-                        
-                    }
+                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                        displayPic.Show();
+
+                    };
+                    clearRedundane();
+                }
+
+                if(typeValues[i] == ".txt") {
+                    img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    picMain_Q.Click += (sender_t, e_t) => {
+                        txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
+                        txtFormShow.Show();
+                    };
+                    clearRedundane();
                 }
             }
         }
@@ -1919,17 +1918,12 @@ namespace FlowSERVER1 {
 
                     while (_readType.Read()) {
                         typesValues.Add(_readType.GetString(0));// Append ToAr;
-                    }                    
+                    }  
+                    
+                    List<String> mainTypes = typesValues.Distinct().ToList();
+                    var currMainLength = mainTypes.Count;
 
-                    /*
-                     Syntax erorr: "WHERE CUST_USERNAME = '' AND CUST_PASSWORD = '' AND FOLDER_TITLE = ''"
-                     Status: In-Progress
-                     Happens when: _generateUserFold function executed
-                     */
-                    var currLength_ = typesValues.Count;
-                    _generateUserFold(typesValues,_selectedFolder,"Testing",currLength_); // fold_naem parname filetype curr
-
-
+                    _generateUserFold(typesValues,_selectedFolder,"Testing",currMainLength); // fold_naem parname filetype curr
                     if (flowLayoutPanel1.Controls.Count == 0) {
                         showRedundane();
                     } else {
