@@ -1789,7 +1789,7 @@ namespace FlowSERVER1 {
                             }
                             textboxExl.Image = _imgContent;
                             textboxExl.Click += (sender_f, e_f) => {
-                                var getImgName = (Guna2PictureBox)sender;
+                                var getImgName = (Guna2PictureBox)sender_f;
                                 var getWidth = getImgName.Image.Width;
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
@@ -1848,8 +1848,8 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@password", label3.Text);
 
-                    //var totalRowTxt = command.ExecuteScalar();
-                    //int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
+                    var totalRowTxt = command.ExecuteScalar();
+                    int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
 
                     string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExe, con);
@@ -1893,7 +1893,11 @@ namespace FlowSERVER1 {
                     if(intRow > 0) {
                         _generateUserFiles("file_info","imageFoldHome",intRow);
                     }
-                    if(flowLayoutPanel1.Controls.Count == 0) {
+                    if (intTotalRowTxt > 0) {
+                        _generateUserFiles("file_info_expand", "txtFoldHome", intTotalRowTxt);
+                    }
+
+                    if (flowLayoutPanel1.Controls.Count == 0) {
                         showRedundane();
                     } else {
                         clearRedundane();
@@ -1904,7 +1908,7 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Clear();
 
                     con.Open();
-                    // Count total row of that folder and use it into parameter
+
                     String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
                     command = new MySqlCommand(getFileType,con);
                     command = con.CreateCommand();
