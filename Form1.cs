@@ -23,6 +23,7 @@ namespace FlowSERVER1 {
             InitializeComponent();
 
             randomizeUser();
+            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 
             string server = "localhost";
             string db = "flowserver_db";
@@ -643,7 +644,6 @@ namespace FlowSERVER1 {
             con.Open();
 
             List<String> typeValues = new List<String>(_fileType);
-
             for (int i = 0; i < currItem; i++) {
                 int top = 275;
                 int h_p = 100;
@@ -728,7 +728,6 @@ namespace FlowSERVER1 {
                 picMain_Q.Width = 241;
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
-
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
                     panelF.ShadowDecoration.Enabled = true;
@@ -1533,7 +1532,6 @@ namespace FlowSERVER1 {
             string get_user = guna2TextBox1.Text;
             string get_pass = guna2TextBox2.Text;
             var flowlayout = Form1.instance.flowLayoutPanel1;
-
             con.Open();
 
             //String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
@@ -1706,7 +1704,7 @@ namespace FlowSERVER1 {
                         titleLab.Location = new Point(12, 182);
                         titleLab.Width = 220;
                         titleLab.Height = 30;
-                        titleLab.Text = _TitleValues[_IntCurr - 1];
+                        titleLab.Text = _TitleValues[_IntCurr - 1]; // [_IntCurr - 1];
 
                         // LOAD THUMBNAIL
 
@@ -1800,6 +1798,8 @@ namespace FlowSERVER1 {
                             };
                             if (command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
+                            } else {
+                                MessageBox.Show("F");
                             }
                         }
                         if(_extTypes == ".txt") {
@@ -1828,6 +1828,12 @@ namespace FlowSERVER1 {
         int mainFoldCurr = 0;
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
+            guna2Panel17.Visible = true;
+            label27.Visible = true;
+            label26.Visible = true;
+            guna2Button19.Visible = true;
+            label26.Text = _selectedFolder;
+
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";
@@ -1925,8 +1931,7 @@ namespace FlowSERVER1 {
                     }  
                     
                     List<String> mainTypes = typesValues.Distinct().ToList();
-                    var currMainLength = mainTypes.Count;
-
+                    var currMainLength = typesValues.Count;
                     _generateUserFold(typesValues,_selectedFolder,"Testing",currMainLength); // fold_naem parname filetype curr
                     if (flowLayoutPanel1.Controls.Count == 0) {
                         showRedundane();
@@ -1937,6 +1942,57 @@ namespace FlowSERVER1 {
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }
+        }
+
+        public void _removeFoldFunc(String foldName) {
+            string server = "localhost";
+            string db = "flowserver_db";
+            string username = "root";
+            string password = "nfreal-yt10";
+            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+            MySqlConnection con = new MySqlConnection(constring);
+            MySqlCommand command;
+
+            try {
+                con.Open();
+                String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                command = new MySqlCommand(removeFoldQue,con);
+                command.Parameters.AddWithValue("@username",label5.Text);
+                command.Parameters.AddWithValue("@password", label3.Text);
+                command.Parameters.AddWithValue("@foldername", foldName);
+                command.ExecuteNonQuery();
+
+                listBox1.Items.Remove(foldName);
+                int indexSelected = listBox1.Items.IndexOf("Home");
+                listBox1.SelectedIndex = indexSelected;
+            }
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+            }
+        }
+        // REMOVE DIR BUT
+        private void guna2Button19_Click(object sender, EventArgs e) {
+            String _currentFold = listBox1.GetItemText(listBox1.SelectedItem);
+            _removeFoldFunc(_currentFold);            
+        }
+        private void listBox1_DrawItem(object sender, DrawItemEventArgs e) {
+            if (e.Index < 0) return;
+            //if the item state is selected them change the back color 
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                e = new DrawItemEventArgs(e.Graphics,
+                                          e.Font,
+                                          e.Bounds,
+                                          e.Index,
+                                          e.State ^ DrawItemState.Selected,
+                                          e.ForeColor,
+                                          Color.Yellow);//Choose the color
+
+            // Draw the background of the ListBox control for each item.
+            e.DrawBackground();
+            // Draw the current item text
+            e.Graphics.DrawString(listBox1.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+            // If the ListBox has focus, draw a focus rectangle around the selected item.
+            e.DrawFocusRectangle();
         }
     }
 }
