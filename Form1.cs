@@ -13,6 +13,9 @@ using Microsoft.WindowsAPICodePack.Shell;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Globalization;
+using System.Text;
+using System.Management;
 
 namespace FlowSERVER1 {
     public partial class Form1 : Form {
@@ -808,9 +811,25 @@ namespace FlowSERVER1 {
                 }
 
                 if(typeValues[i] == ".txt") {
+                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_TYPE = @filetype";
+                    command = new MySqlCommand(retrieveImg, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    command.Parameters.AddWithValue("@foldername", _foldTitle);
+                    command.Parameters.AddWithValue("@filetype", ".txt");
+
+                    List<String> textValues_ = new List<String>();
+
+                    MySqlDataReader _ReadTexts = command.ExecuteReader();
+                    while(_ReadTexts.Read()) {
+                        textValues_.Add(_ReadTexts.GetString(0));
+                    }
+                   
+                    var getMainText = textValues_[0];
+
                     img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                     picMain_Q.Click += (sender_t, e_t) => {
-                        txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
+                        txtFORM txtFormShow = new txtFORM(getMainText, titleLab.Text);
                         txtFormShow.Show();
                     };
                     clearRedundane();
@@ -1626,6 +1645,7 @@ namespace FlowSERVER1 {
 
         }
         private void guna2Button12_Click_1(object sender, EventArgs e) {
+            String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
             try {
 
                 string server = "localhost";
@@ -1806,7 +1826,7 @@ namespace FlowSERVER1 {
                             var _readText = File.ReadAllText(_Files);
                             textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                             textboxExl.Click += (sender_t, e_t) => {
-                                txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
+                                txtFORM txtFormShow = new txtFORM("D", titleLab.Text);
                                 txtFormShow.Show();
                             };
                             command.Parameters["@CUST_FILE"].Value = _readText; // Receive text

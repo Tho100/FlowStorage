@@ -19,44 +19,75 @@ namespace FlowSERVER1 {
         public txtFORM(String getText,String fileName) {
             InitializeComponent();
             instance = this;
-            //guna2TextBox1.Text = getText;
             label1.Text = fileName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
-            string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+            if(getText != String.Empty) {
+                string server = "localhost";
+                string db = "flowserver_db";
+                string username = "root";
+                string password = "nfreal-yt10";
+                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
 
-            MySqlConnection con = new MySqlConnection(constring);
-            MySqlCommand command;
+                MySqlConnection con = new MySqlConnection(constring);
 
-            con.Open();
+                MySqlCommand command;
 
-            string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-            command = new MySqlCommand(countRow, con);
-            command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                con.Open();
+                String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_TYPE = @filetype";
+                command = new MySqlCommand(retrieveImg, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
+                command.Parameters.AddWithValue("@filetype", ".txt");
 
-            var rowTotal = command.ExecuteScalar();
-            var intTotalRow = Convert.ToInt32(rowTotal);
+                List<String> textValues_ = new List<String>();
 
-            string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(getTxtQue,con);
-            command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@password",Form1.instance.label3.Text);
-            command.Parameters.AddWithValue("@filename",label1.Text);
+                MySqlDataReader _ReadTexts = command.ExecuteReader();
+                while (_ReadTexts.Read()) {
+                    textValues_.Add(_ReadTexts.GetString(0));
+                }
+                var getMainText = textValues_[0];
+                guna2textbox1.Text = getMainText;
+            } else {
+                string server = "localhost";
+                string db = "flowserver_db";
+                string username = "root";
+                string password = "nfreal-yt10";
+                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
 
-            List<string> textValuesF = new List<string>();
+                MySqlConnection con = new MySqlConnection(constring);
+                MySqlCommand command;
 
-            MySqlDataReader txtReader = command.ExecuteReader();
-            while(txtReader.Read()) {
-                textValuesF.Add(txtReader.GetString(0));
+                con.Open();
+
+                string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                command = new MySqlCommand(countRow, con);
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+
+                var rowTotal = command.ExecuteScalar();
+                var intTotalRow = Convert.ToInt32(rowTotal);
+
+                string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                command = new MySqlCommand(getTxtQue,con);
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@password",Form1.instance.label3.Text);
+                command.Parameters.AddWithValue("@filename",label1.Text);
+
+                List<string> textValuesF = new List<string>();
+
+                MySqlDataReader txtReader = command.ExecuteReader();
+                while(txtReader.Read()) {
+                    textValuesF.Add(txtReader.GetString(0));
+                }
+                txtReader.Close();
+
+                guna2textbox1.Text = textValuesF[0];
             }
-            txtReader.Close();
 
-            guna2textbox1.Text = textValuesF[0];
+            //guna2TextBox1.Text = getText;
+
         }
 
         private void txtFORM_Load(object sender, EventArgs e) {
