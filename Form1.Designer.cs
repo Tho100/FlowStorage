@@ -102,9 +102,9 @@
             this.guna2Button15 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button14 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel17 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button19 = new Guna.UI2.WinForms.Guna2Button();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.guna2Button19 = new Guna.UI2.WinForms.Guna2Button();
             this.panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
@@ -431,13 +431,12 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.LightGray;
             this.label1.Location = new System.Drawing.Point(286, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 30);
+            this.label1.Size = new System.Drawing.Size(512, 30);
             this.label1.TabIndex = 18;
             this.label1.Text = "Test";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -1266,6 +1265,29 @@
             this.guna2Panel17.TabIndex = 25;
             this.guna2Panel17.Visible = false;
             // 
+            // guna2Button19
+            // 
+            this.guna2Button19.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button19.Animated = true;
+            this.guna2Button19.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button19.BorderRadius = 10;
+            this.guna2Button19.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button19.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button19.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button19.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button19.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button19.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button19.ForeColor = System.Drawing.Color.White;
+            this.guna2Button19.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button19.Image")));
+            this.guna2Button19.ImageOffset = new System.Drawing.Point(0, 13);
+            this.guna2Button19.Location = new System.Drawing.Point(251, 7);
+            this.guna2Button19.Name = "guna2Button19";
+            this.guna2Button19.Size = new System.Drawing.Size(25, 24);
+            this.guna2Button19.TabIndex = 35;
+            this.guna2Button19.Text = "Sign Up";
+            this.guna2Button19.Visible = false;
+            this.guna2Button19.Click += new System.EventHandler(this.guna2Button19_Click);
+            // 
             // label26
             // 
             this.label26.AutoSize = true;
@@ -1289,29 +1311,6 @@
             this.label27.Size = new System.Drawing.Size(65, 17);
             this.label27.TabIndex = 20;
             this.label27.Text = "Directory";
-            // 
-            // guna2Button19
-            // 
-            this.guna2Button19.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button19.Animated = true;
-            this.guna2Button19.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button19.BorderRadius = 10;
-            this.guna2Button19.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button19.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button19.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button19.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button19.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button19.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button19.ForeColor = System.Drawing.Color.White;
-            this.guna2Button19.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button19.Image")));
-            this.guna2Button19.ImageOffset = new System.Drawing.Point(0, 13);
-            this.guna2Button19.Location = new System.Drawing.Point(251, 7);
-            this.guna2Button19.Name = "guna2Button19";
-            this.guna2Button19.Size = new System.Drawing.Size(25, 24);
-            this.guna2Button19.TabIndex = 35;
-            this.guna2Button19.Text = "Sign Up";
-            this.guna2Button19.Visible = false;
-            this.guna2Button19.Click += new System.EventHandler(this.guna2Button19_Click);
             // 
             // Form1
             // 

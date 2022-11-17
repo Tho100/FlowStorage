@@ -54,30 +54,30 @@ namespace FlowSERVER1
                 var hours = now.Hour;
                 String greeting = null;
                 if (hours >= 1 && hours <= 12) {
-                    greeting = "Good Morning " + label5.Text + " :) " + getMorningKeys;
+                    greeting = "Good Morning " + form.label5.Text + " :) " + getMorningKeys;
                     form.pictureBox2.Visible = true;
                     form.pictureBox1.Visible = false;
                     form.pictureBox3.Visible = false;
                 }
                 else if (hours >= 12 && hours <= 16) {
-                    greeting = "Good Afternoon " + label5.Text + " :)";
+                    greeting = "Good Afternoon " + form.label5.Text + " :)";
                     form.pictureBox2.Visible = true;
                     form.pictureBox1.Visible = false;
                     form.pictureBox3.Visible = false;
                 }
                 else if (hours >= 16 && hours <= 21) {
-                    greeting = "Good Evening " + label5.Text + " :)";
+                    greeting = "Good Evening " + form.label5.Text + " :)";
                     form.pictureBox3.Visible = true;
                     form.pictureBox2.Visible = false;
                     form.pictureBox1.Visible = false;
                 }
                 else if (hours >= 21 && hours <= 24) {
-                    greeting = "Good Night " + label5.Text + " :)";
+                    greeting = "Good Night " + form.label5.Text + " :)";
                     form.pictureBox1.Visible = true;
                     form.pictureBox2.Visible = false;
                     form.pictureBox3.Visible = false;
                 }
-                label1.Text = greeting;
+                form.label1.Text = greeting;
             }
             catch (Exception) {
                 MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
