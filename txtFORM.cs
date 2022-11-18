@@ -22,7 +22,6 @@ namespace FlowSERVER1 {
             label1.Text = fileName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
             if(getText == "") {
-                MessageBox.Show("TESTING");
                 string server = "localhost";
                 string db = "flowserver_db";
                 string username = "root";
@@ -50,7 +49,6 @@ namespace FlowSERVER1 {
                 var getMainText = textValues_[0];
                 guna2textbox1.Text = getMainText;
             } else {
-                MessageBox.Show("TESTING1");
                 string server = "localhost";
                 string db = "flowserver_db";
                 string username = "root";

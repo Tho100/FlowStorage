@@ -74,7 +74,7 @@ namespace FlowSERVER1 {
 
                         var totalRowExe = command.ExecuteScalar();
                         int intTotalRowExe = Convert.ToInt32(totalRowExe);
-                        label4.Text = intTotalRowExe.ToString();
+                        //label4.Text = intTotalRowExe.ToString();
 
                         string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                         command = new MySqlCommand(countRowVid, con);
@@ -128,7 +128,8 @@ namespace FlowSERVER1 {
                         if (intTotalRowAudi > 0) {
                             _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
                         }
-                        label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
+                        //label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
+                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                         // @ ADD FOLDERS TO LISTBOX
 
@@ -590,7 +591,7 @@ namespace FlowSERVER1 {
 
                     img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                     picMain_Q.Click += (sender_t, e_t) => {
-                        txtFORM txtFormShow = new txtFORM(getMainText, titleLab.Text);
+                        txtFORM txtFormShow = new txtFORM("", titleLab.Text); // getMainText
                         txtFormShow.Show();
                     };
                     clearRedundane();
@@ -854,8 +855,6 @@ namespace FlowSERVER1 {
                             command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
                             command.Parameters["@CUST_FILE"].Value = keyVal;
                             command.ExecuteNonQuery();
-
-                            label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
 
                             textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
                             String nonLine = "";
@@ -1178,6 +1177,7 @@ namespace FlowSERVER1 {
                         createPanelMain("file_info_audi","PanAud",audCurr,toByte_);
 
                     }
+                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
@@ -1600,6 +1600,7 @@ namespace FlowSERVER1 {
                             }
                         }
                     }
+                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
@@ -1723,6 +1724,7 @@ namespace FlowSERVER1 {
                     } else {
                         clearRedundane();
                     }
+                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
