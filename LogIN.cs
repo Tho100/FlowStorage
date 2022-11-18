@@ -31,6 +31,7 @@ namespace FlowSERVER1 {
             }
         }
         public void loadUserData() {
+
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";
@@ -46,6 +47,8 @@ namespace FlowSERVER1 {
             var lab8 = form.label8;
             var user = guna2TextBox1.Text;
             var pass = guna2TextBox2.Text;
+
+            form.listBox1.Items.Clear();
 
             con.Open();
 

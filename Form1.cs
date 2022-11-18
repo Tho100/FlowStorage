@@ -1631,6 +1631,7 @@ namespace FlowSERVER1 {
             try {
                 if(_selectedFolder == "Home") {
                     foldCurr++;
+                    guna2Button19.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
 
                     con.Open();
@@ -1697,6 +1698,7 @@ namespace FlowSERVER1 {
 
                 } else if(_selectedFolder != "Home") {
                     mainFoldCurr++;
+                    guna2Button19.Visible = true;
                     flowLayoutPanel1.Controls.Clear();
 
                     con.Open();
