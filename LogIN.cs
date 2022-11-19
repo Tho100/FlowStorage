@@ -122,6 +122,13 @@ namespace FlowSERVER1 {
                     var totalRowAudi = command.ExecuteScalar();
                     int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
 
+                    string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowGif, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    var totalRowGif = command.ExecuteScalar();
+                    int intTotalRowGif = Convert.ToInt32(totalRowGif);
+
                     string countRowFolder = "SELECT COUNT(CUST_USERNAME) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowFolder,con);
                     command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
@@ -343,7 +350,7 @@ namespace FlowSERVER1 {
 
                             if (_tableName == "file_info_vid") {
                                 
-                                String getImgQue = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                                String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                                 command = new MySqlCommand(getImgQue, con);
                                 command.Parameters.AddWithValue("@username", _form.label5.Text);
                                 command.Parameters.AddWithValue("@password", _form.label3.Text);
@@ -383,6 +390,25 @@ namespace FlowSERVER1 {
                                 };
                                 clearRedundane();
                             }
+
+                            if (_tableName == "file_info_gif") {
+                                MessageBox.Show("in");
+                                String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                                command = new MySqlCommand(getImgQue, con);
+                                command.Parameters.AddWithValue("@username", _form.label5.Text);
+                                command.Parameters.AddWithValue("@password", _form.label3.Text);
+
+                                MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
+                                DataSet ds_Read = new DataSet();
+                                da_Read.Fill(ds_Read);
+                                MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[i]["CUST_THUMB"]);
+                                img.Image = new Bitmap(ms);
+
+                                picMain_Q.Click += (sender_gi, ex_gi) => {
+
+                                };
+                            }
+                            clearRedundane();
                         }
                     }
 
@@ -407,6 +433,9 @@ namespace FlowSERVER1 {
                     }
                     if (intTotalRowAudi > 0) {
                         _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
+                    }
+                    if(intTotalRowGif > 0) {
+                        _generateUserFiles("file_info_gif","gifFile",intTotalRowGif);
                     }
                     //if(inttotalRowFold > 0) {
                     _generateUserFolder(user,pass);

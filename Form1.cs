@@ -106,6 +106,14 @@ namespace FlowSERVER1 {
                         var totalRowAudi = command.ExecuteScalar();
                         int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
 
+                        string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        command = new MySqlCommand(countRowGif, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@password", label3.Text);
+                        var totalRowGif = command.ExecuteScalar();
+                        int intTotalRowGif = Convert.ToInt32(totalRowGif);
+
+
                         // LOAD IMG
                         if (intRow > 0) {
                             _generateUserFiles("file_info", "imgFile", intRow);
@@ -127,6 +135,9 @@ namespace FlowSERVER1 {
                         }
                         if (intTotalRowAudi > 0) {
                             _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
+                        }
+                        if(intTotalRowGif > 0) {
+                            _generateUserFiles("file_info_gif","gifFile",intTotalRowGif);
                         }
                         //label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
@@ -394,6 +405,24 @@ namespace FlowSERVER1 {
                     };
                     clearRedundane();
                 }
+
+                if(_tableName == "file_info_gif") {
+                    String getImgQue = "SELECT CUST_THUMB FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(getImgQue,con);
+                    command.Parameters.AddWithValue("@username",label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+
+                    MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
+                    DataSet ds_Read = new DataSet();
+                    da_Read.Fill(ds_Read);
+                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[i]["CUST_THUMB"]);
+                    img.Image = new Bitmap(ms);
+
+                    picMain_Q.Click += (sender_gi, ex_gi) => {
+
+                    };
+                }
+                clearRedundane();
             }
         }
         public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
@@ -696,6 +725,7 @@ namespace FlowSERVER1 {
             Form4 create_dir = new Form4();
             create_dir.Show();
         }
+
         // Add File  
         int curr = 0;
         int txtCurr = 0;
@@ -703,6 +733,7 @@ namespace FlowSERVER1 {
         int vidCurr = 0;
         int exlCurr = 0;
         int audCurr = 0;
+        int gifCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
                 string server = "localhost";
@@ -738,13 +769,43 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|Audio(*.mp3;*.mpeg;*.wav)|*.mp3;*.mpeg;*.wav";
+                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif files|*.gif|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|Audio(*.mp3;*.mpeg;*.wav)|*.mp3;*.mpeg;*.wav";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
                     void clearRedundane() {
                         label8.Visible = false;
                         guna2Button6.Visible = false;
+                    }
+
+                    void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
+
+                        String insertThumbQue = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB)";
+                        command = new MySqlCommand(insertThumbQue, con);
+
+                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                        command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+
+                        command.Parameters["@CUST_FILE_PATH"].Value = getNamePath;
+                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
+                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+
+                        command.Parameters["@CUST_FILE"].Value = keyValMain;
+
+                        ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+
+                        using (var stream = new MemoryStream()) {
+                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                            command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                        }
+                        command.ExecuteNonQuery();
                     }
 
                     string get_ex = open.FileName;
@@ -890,35 +951,10 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_vid") {
-
-                            String insertThumbQue = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB)";
-                            command = new MySqlCommand(insertThumbQue, con);
-
-                            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-                            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-
-                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                            command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                            command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
-                            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                            command.Parameters.Add("@CUST_THUMB",MySqlDbType.LongBlob);
-
-                            command.Parameters["@CUST_FILE"].Value = keyVal;
-
+                            containThumbUpload(nameTable,getName,keyVal);
                             ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
                             Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                             textboxPic.Image = toBitMap;
-
-                            using (var stream = new MemoryStream()) {
-                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
-                            }
-
-                            command.ExecuteNonQuery();
 
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 var getImgName = (Guna2PictureBox)sender_ex;
@@ -941,6 +977,17 @@ namespace FlowSERVER1 {
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 audFORM vidShow = new audFORM(titleLab.Text);
                                 vidShow.Show();
+                            };
+                            clearRedundane();
+                        }
+                        if(nameTable == "file_info_gif") {
+                            containThumbUpload(nameTable,getName,keyVal);
+                            ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                            textboxPic.Image = toBitMap;
+
+                            textboxPic.Click += (sender_gi, e_gi) => {
+                                MessageBox.Show("LOL");
                             };
                             clearRedundane();
                         }
@@ -1170,12 +1217,14 @@ namespace FlowSERVER1 {
                         }
                     } else if (retrieved == ".mp3" || retrieved == ".mpeg" || retrieved == ".wav") {
                         audCurr++;
-
-                        // Read audio and convert them to blob
-                        // var _getBytes = open.FileName;
                         Byte[] toByte_ = File.ReadAllBytes(open.FileName);
                         createPanelMain("file_info_audi","PanAud",audCurr,toByte_);
 
+                    }
+                    else if (retrieved == ".gif") {
+                        gifCurr++;
+                        Byte[] toByteGif_ = File.ReadAllBytes(open.FileName);
+                        createPanelMain("file_info_gif", "PanGif", gifCurr, toByteGif_);
                     }
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
@@ -1683,11 +1732,24 @@ namespace FlowSERVER1 {
                     var totalRowAudi = command.ExecuteScalar();
                     int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
 
-                    if(intRow > 0) {
+                    string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowGif, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    var totalRowGif = command.ExecuteScalar();
+                    int intTotalRowGif = Convert.ToInt32(totalRowGif);
+
+                    if (intRow > 0) {
                         _generateUserFiles("file_info","imageFoldHome",intRow);
                     }
                     if (intTotalRowTxt > 0) {
                         _generateUserFiles("file_info_expand", "txtFoldHome", intTotalRowTxt);
+                    }
+                    if(intTotalRowGif > 0) {
+                        _generateUserFiles("file_info_gif","gifFoldHome",intTotalRowGif);
+                    }
+                    if (intTotalRowVid > 0) {
+                        _generateUserFiles("file_info_vid", "vidFoldHome", intTotalRowVid);
                     }
 
                     if (flowLayoutPanel1.Controls.Count == 0) {
@@ -1695,6 +1757,7 @@ namespace FlowSERVER1 {
                     } else {
                         clearRedundane();
                     }
+                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 } else if(_selectedFolder != "Home") {
                     mainFoldCurr++;
@@ -1726,9 +1789,10 @@ namespace FlowSERVER1 {
                     } else {
                         clearRedundane();
                     }
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
-            } catch (Exception eq) {
+                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            }
+            catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }
         }
