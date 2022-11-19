@@ -405,7 +405,8 @@ namespace FlowSERVER1 {
                                 img.Image = new Bitmap(ms);
 
                                 picMain_Q.Click += (sender_gi, ex_gi) => {
-
+                                    gifFORM gifForm = new gifFORM(titleLab.Text);
+                                    gifForm.Show();
                                 };
                             }
                             clearRedundane();

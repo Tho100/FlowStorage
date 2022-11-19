@@ -177,6 +177,12 @@
     <Compile Include="exlFORM.Designer.cs">
       <DependentUpon>exlFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="gifFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gifFORM.Designer.cs">
+      <DependentUpon>gifFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="picFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="exlFORM.resx">
       <DependentUpon>exlFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gifFORM.resx">
+      <DependentUpon>gifFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="picFORM.resx">
       <DependentUpon>picFORM.cs</DependentUpon>
