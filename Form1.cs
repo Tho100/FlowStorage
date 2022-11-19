@@ -26,7 +26,6 @@ namespace FlowSERVER1 {
             InitializeComponent();
 
             randomizeUser();
-            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 
             string server = "localhost";
             string db = "flowserver_db";
@@ -718,7 +717,7 @@ namespace FlowSERVER1 {
             if(Directory.Exists(setupPath)) {
                 FileInfo getCustfile = new FileInfo(setupPath + "cust_username.txt");
                 DateTime getCreationTime = getCustfile.CreationTime;
-                label10.Text = getCreationTime.ToString().Substring(0,10);
+                //label10.Text = getCreationTime.ToString().Substring(0,10);
             }
         }
         // Dir
@@ -1836,24 +1835,6 @@ namespace FlowSERVER1 {
             String _currentFold = listBox1.GetItemText(listBox1.SelectedItem);
             _removeFoldFunc(_currentFold);            
         }
-        private void listBox1_DrawItem(object sender, DrawItemEventArgs e) {
-            if (e.Index < 0) return;
-            //if the item state is selected them change the back color 
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                e = new DrawItemEventArgs(e.Graphics,
-                                          e.Font,
-                                          e.Bounds,
-                                          e.Index,
-                                          e.State ^ DrawItemState.Selected,
-                                          e.ForeColor,
-                                          Color.Yellow);//Choose the color
 
-            // Draw the background of the ListBox control for each item.
-            e.DrawBackground();
-            // Draw the current item text
-            e.Graphics.DrawString(listBox1.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
-            // If the ListBox has focus, draw a focus rectangle around the selected item.
-            e.DrawFocusRectangle();
-        }
     }
 }

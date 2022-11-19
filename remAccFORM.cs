@@ -15,7 +15,7 @@ namespace FlowSERVER1 {
         public static remAccFORM instance;
         public remAccFORM(String _accName) {
             InitializeComponent();
-            label1.Text = _accName;
+            label5.Text = _accName;
             instance = this;
         }
 
