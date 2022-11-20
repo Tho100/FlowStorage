@@ -176,8 +176,6 @@ namespace FlowSERVER1 {
                         command = con.CreateCommand();
                         command.CommandText = getTitles;
 
-                        MessageBox.Show(encryptionKeyVal);
-
                         command.Parameters.AddWithValue("@username",userName);
                         command.Parameters.AddWithValue("@password",encryptionKeyVal);
                         MySqlDataReader fold_Reader = command.ExecuteReader();

@@ -1637,18 +1637,18 @@ namespace FlowSERVER1 {
                             };
                             if (command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
-                            } else {
-                                MessageBox.Show("F");
-                            }
+                            } 
                         }
                         if(_extTypes == ".txt") {
+                            // TXTCONTS = TEXT CONTENTS
+                            var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
                             var _readText = File.ReadAllText(_Files);
                             textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                             textboxExl.Click += (sender_t, e_t) => {
                                 txtFORM txtFormShow = new txtFORM("", titleLab.Text);
                                 txtFormShow.Show();
                             };
-                            command.Parameters["@CUST_FILE"].Value = _readText; // Receive text
+                            command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
                             if (command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
                             }
@@ -1840,5 +1840,20 @@ namespace FlowSERVER1 {
             _removeFoldFunc(_currentFold);            
         }
 
+        private void guna2Panel16_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Separator1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

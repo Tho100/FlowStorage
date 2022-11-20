@@ -47,7 +47,7 @@ namespace FlowSERVER1 {
                 while (_ReadTexts.Read()) {
                     textValues_.Add(_ReadTexts.GetString(0));
                 }
-                var getMainText = textValues_[0];
+                var getMainText = EncryptionModel.Decrypt(textValues_[0],"TXTCONTS");
                 guna2textbox1.Text = getMainText;
             } else {
                 string server = "localhost";
