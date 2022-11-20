@@ -30,6 +30,9 @@ namespace FlowSERVER1 {
                 _performWrite.WriteLine(_custPass);
             }
         }
+
+        String decryptMainKey;
+        String encryptionKeyVal;
         public void loadUserData() {
 
             string server = "localhost";
@@ -50,19 +53,9 @@ namespace FlowSERVER1 {
 
             form.listBox1.Items.Clear();
 
-            con.Open();
-
-            String countRow = "SELECT COUNT(CUST_USERNAME) FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-            command = new MySqlCommand(countRow, con);
-            command.Parameters.AddWithValue("@username", user);
-            command.Parameters.AddWithValue("@password", pass);
-
-            var totalRow = command.ExecuteScalar();
-            var intRow = Convert.ToInt32(totalRow);
-            if(intRow > 0) {
+            void setupRedundane() {
                 flowlayout.Controls.Clear();
                 form.label5.Text = user;
-                form.label3.Text = pass;
                 but6.Visible = false;
                 lab8.Visible = false;
                 label4.Visible = false;
@@ -72,13 +65,41 @@ namespace FlowSERVER1 {
                     Form1.instance.label8.Visible = true;
                     Form1.instance.guna2Button6.Visible = true;
                 }
+            }
+
+            con.Open();
+
+            //////////////////// DECRYPTION AND ENCRYPTION
+   
+            List<String> passValuesKey_ = new List<String>();
+            String selectPasswordQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            command = con.CreateCommand();
+            command.CommandText = selectPasswordQue;
+            command.Parameters.AddWithValue("@username", user);
+
+            MySqlDataReader userReader = command.ExecuteReader();
+            while (userReader.Read()) {
+                passValuesKey_.Add(userReader.GetString(0));
+            }
+            userReader.Close();
+
+            if(passValuesKey_.Count > 0) {
+                decryptMainKey = EncryptionModel.Decrypt(passValuesKey_[0], "ABHABH24");
+                encryptionKeyVal = passValuesKey_[0];
+            }
+
+            ///////////////////
+
+            if (pass == decryptMainKey) {
+                Form1.instance.label3.Text = encryptionKeyVal;
+                setupRedundane();
                 this.Close();
                 try {
-
+         
                     string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowTxt, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                     var totalRowTxt = command.ExecuteScalar();
                     int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
@@ -86,7 +107,7 @@ namespace FlowSERVER1 {
                     string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExe, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                     var totalRowExe = command.ExecuteScalar();
                     int intTotalRowExe = Convert.ToInt32(totalRowExe);
@@ -95,7 +116,7 @@ namespace FlowSERVER1 {
                     string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowVid, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                     var totalRowVid = command.ExecuteScalar();
                     int intTotalRowVid = Convert.ToInt32(totalRowVid);
@@ -103,7 +124,7 @@ namespace FlowSERVER1 {
                     String countRowImg = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowImg, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowImg = command.ExecuteScalar();
                     var intRowImg = Convert.ToInt32(totalRowImg);
                     //Form1.instance.label6.Text = intRow.ToString();
@@ -111,28 +132,28 @@ namespace FlowSERVER1 {
                     string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExcel, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowExcel = command.ExecuteScalar();
                     int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
 
                     string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowAudi, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowAudi = command.ExecuteScalar();
                     int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
 
                     string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowGif, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowGif = command.ExecuteScalar();
                     int intTotalRowGif = Convert.ToInt32(totalRowGif);
 
                     string countRowFolder = "SELECT COUNT(CUST_USERNAME) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowFolder,con);
                     command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowFold = command.ExecuteScalar();
                     int inttotalRowFold = Convert.ToInt32(totalRowFold);
 
@@ -143,7 +164,7 @@ namespace FlowSERVER1 {
                         _form.label8.Visible = false;
                     }
 
-                    void _generateUserFolder(String userName,string passUser) {
+                    void _generateUserFolder(String userName,String passUser) {
                         
                         _form.listBox1.Items.Add("Home");
                         _form.listBox1.SelectedIndex = 0;
@@ -155,8 +176,10 @@ namespace FlowSERVER1 {
                         command = con.CreateCommand();
                         command.CommandText = getTitles;
 
+                        MessageBox.Show(encryptionKeyVal);
+
                         command.Parameters.AddWithValue("@username",userName);
-                        command.Parameters.AddWithValue("@password",passUser);
+                        command.Parameters.AddWithValue("@password",encryptionKeyVal);
                         MySqlDataReader fold_Reader = command.ExecuteReader();
                         while(fold_Reader.Read()) {
                             titleValues.Add(fold_Reader.GetString(0));
@@ -201,7 +224,7 @@ namespace FlowSERVER1 {
                             command.CommandText = getUpDate;
 
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            command.Parameters.AddWithValue("@password", _form.label3.Text);
+                            command.Parameters.AddWithValue("@password", encryptionKeyVal);
                             MySqlDataReader readerDate = command.ExecuteReader();
 
                             while (readerDate.Read()) {
@@ -225,7 +248,7 @@ namespace FlowSERVER1 {
                             command.CommandText = getTitleQue;
 
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            command.Parameters.AddWithValue("@password", _form.label3.Text);
+                            command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                             MySqlDataReader titleReader = command.ExecuteReader();
                             while (titleReader.Read()) {
@@ -287,7 +310,7 @@ namespace FlowSERVER1 {
                                     String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                                     command = new MySqlCommand(removeQuery, con);
                                     command.Parameters.AddWithValue("@username", _form.label5.Text);
-                                    command.Parameters.AddWithValue("@password", label3.Text);
+                                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
                                     command.Parameters.AddWithValue("@filename", titleFile);
                                     command.ExecuteNonQuery();
 
@@ -308,7 +331,7 @@ namespace FlowSERVER1 {
                                 String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                                 command = new MySqlCommand(retrieveImg, con);
                                 command.Parameters.AddWithValue("@username", _form.label5.Text);
-                                command.Parameters.AddWithValue("@password", _form.label3.Text);
+                                command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                                 MySqlDataAdapter da = new MySqlDataAdapter(command);
                                 DataSet ds = new DataSet();
@@ -353,7 +376,7 @@ namespace FlowSERVER1 {
                                 String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                                 command = new MySqlCommand(getImgQue, con);
                                 command.Parameters.AddWithValue("@username", _form.label5.Text);
-                                command.Parameters.AddWithValue("@password", _form.label3.Text);
+                                command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                                 MySqlDataAdapter da = new MySqlDataAdapter(command);
                                 DataSet ds = new DataSet();
@@ -392,11 +415,10 @@ namespace FlowSERVER1 {
                             }
 
                             if (_tableName == "file_info_gif") {
-                                MessageBox.Show("in");
                                 String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                                 command = new MySqlCommand(getImgQue, con);
                                 command.Parameters.AddWithValue("@username", _form.label5.Text);
-                                command.Parameters.AddWithValue("@password", _form.label3.Text);
+                                command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                                 MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
                                 DataSet ds_Read = new DataSet();
@@ -415,7 +437,7 @@ namespace FlowSERVER1 {
 
                     // LOAD IMG
                     if (intRowImg > 0) {
-                        _generateUserFiles("file_info", "imgFile", intRow);
+                        _generateUserFiles("file_info", "imgFile", intRowImg);
                     }
                     // LOAD .TXT
                     if (intTotalRowTxt > 0) {
@@ -445,7 +467,7 @@ namespace FlowSERVER1 {
                     Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
 
                     if (guna2CheckBox2.Checked == true) {
-                        setupAutoLogin(Form1.instance.label3.Text, Form1.instance.label5.Text);
+                        setupAutoLogin(Form1.instance.label5.Text,encryptionKeyVal);
                     }     
                 }
                 catch (Exception eq) {
@@ -454,9 +476,6 @@ namespace FlowSERVER1 {
             } else {
                 label4.Visible = true;
             }
-
-            // AUTO-LOGIN SYSTEM
-
         }
         private void label4_Click(object sender, EventArgs e) {
 

@@ -827,7 +827,7 @@ namespace FlowSERVER1 {
 
                         command.Parameters["@CUST_FILE_PATH"].Value = getName;
                         command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;//EncryptionModel.Encrypt(label3.Text,"ABHABH24");//label3.Text;
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
                         int top = 275;
@@ -913,8 +913,9 @@ namespace FlowSERVER1 {
                         }
 
                         if(nameTable == "file_info_expand") {
+                            var encryptValue = EncryptionModel.Encrypt(keyVal.ToString(),"MAINKEY9999");
                             command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
-                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.Parameters["@CUST_FILE"].Value = encryptValue;
                             command.ExecuteNonQuery();
 
                             textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
@@ -1399,8 +1400,11 @@ namespace FlowSERVER1 {
                             Form1.instance.label8.Visible = true;
                             Form1.instance.guna2Button6.Visible = true;
                         }
-                        Form1.instance.setupLabel.Text = get_user;
-                        Form1.instance.label3.Text = get_pass;
+                        var encryptPassVal = EncryptionModel.Encrypt(get_pass,"ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
+                        setupLabel.Text = get_user;
+                        label3.Text = encryptPassVal;
+                        encryptedPassKey = encryptPassVal;
+        
                         if (Form1.instance.setupLabel.Text.Length > 14) {
                             var label = Form1.instance.setupLabel;
                             label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
@@ -1409,10 +1413,9 @@ namespace FlowSERVER1 {
 
                         con.Open();
                         string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD) VALUES(@CUST_USERNAME,@CUST_PASSWORD)";
-
                         using (var cmd = new MySqlCommand(query, con)) {
                             cmd.Parameters.AddWithValue("@CUST_USERNAME", get_user);
-                            cmd.Parameters.AddWithValue("@CUST_PASSWORD", get_pass);
+                            cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
                             cmd.ExecuteNonQuery();
                         }
                         label11.Visible = false;
@@ -1459,6 +1462,7 @@ namespace FlowSERVER1 {
         private void guna2Panel8_Paint(object sender, PaintEventArgs e) {
 
         }
+        String encryptedPassKey;
         private void guna2Button12_Click_1(object sender, EventArgs e) {
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
             try {
@@ -1497,7 +1501,7 @@ namespace FlowSERVER1 {
                     command.Parameters.Add("@FILE_NAME", MySqlDbType.Text);
 
                     String[] _TitleValues = Directory.GetFiles(_getDirPath,"*").Select(Path.GetFileName).ToArray();
-
+                    
                     int _IntCurr = 0;
                     foreach (var _Files in Directory.EnumerateFiles(_getDirPath,"*")) {
                         String varDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -1677,7 +1681,6 @@ namespace FlowSERVER1 {
             string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
-
             try {
                 if(_selectedFolder == "Home") {
                     foldCurr++;
@@ -1701,7 +1704,7 @@ namespace FlowSERVER1 {
 
                     var totalRowExe = command.ExecuteScalar();
                     int intTotalRowExe = Convert.ToInt32(totalRowExe);
-                    label4.Text = intTotalRowExe.ToString();
+                    //label4.Text = intTotalRowExe.ToString();
 
                     string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowVid, con);
@@ -1717,7 +1720,7 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@password", label3.Text);
                     var totalRow = command.ExecuteScalar();
                     var intRow = Convert.ToInt32(totalRow);
-                    label6.Text = intRow.ToString();
+                    //label6.Text = intRow.ToString();
 
                     string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExcel, con);
@@ -1799,6 +1802,7 @@ namespace FlowSERVER1 {
         }
 
         public void _removeFoldFunc(String foldName) {
+
             string server = "localhost";
             string db = "flowserver_db";
             string username = "root";

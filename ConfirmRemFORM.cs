@@ -44,7 +44,7 @@ namespace FlowSERVER1 {
                 command_Read = new MySqlCommand(checkPassword_Query,con);
                 command_Read = con.CreateCommand();
                 command_Read.CommandText = checkPassword_Query;
-                command_Read.Parameters.AddWithValue("@username",remAccFORM.instance.label1.Text);
+                command_Read.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
                 MySqlDataReader readerPass_ = command_Read.ExecuteReader();
 
                 while(readerPass_.Read()) {
@@ -52,28 +52,31 @@ namespace FlowSERVER1 {
                 }
                 readerPass_.Close();
 
-                if(guna2TextBox1.Text == passValues_[0]) {
+                var decryptPass = EncryptionModel.Decrypt(passValues_[0],"ABHABH24");
+                var encryptedPass = passValues_[0];
+
+                if(guna2TextBox1.Text == decryptPass) {
                     String remInfo_Query = "DELETE FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remInfo_Query, con);
-                    command.Parameters.AddWithValue("@username",remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password",guna2TextBox1.Text);
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password",encryptedPass);
                     command.ExecuteNonQuery();
 
                     String remImg_Query = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remImg_Query, con);
-                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password", guna2TextBox1.Text);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
                     command.ExecuteNonQuery();
 
                     String remTxt_Query = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remTxt_Query, con);
                     command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password", guna2TextBox1.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
 
                     String remFolder = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remFolder, con);
-                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password", guna2TextBox1.Text);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
 
                     command.ExecuteNonQuery();
 

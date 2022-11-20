@@ -21,7 +21,8 @@ namespace FlowSERVER1 {
             instance = this;
             label1.Text = fileName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-            if(getText == "") {
+            var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "ABHABH24");
+            if (getText == "") {
                 string server = "localhost";
                 string db = "flowserver_db";
                 string username = "root";
@@ -63,7 +64,7 @@ namespace FlowSERVER1 {
                 string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                 command = new MySqlCommand(countRow, con);
                 command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                command.Parameters.AddWithValue("@password", EncryptionModel.Decrypt(Form1.instance.label3.Text, "ABHABH24"));
 
                 var rowTotal = command.ExecuteScalar();
                 var intTotalRow = Convert.ToInt32(rowTotal);
@@ -75,14 +76,14 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filename",label1.Text);
 
                 List<string> textValuesF = new List<string>();
-
+                
                 MySqlDataReader txtReader = command.ExecuteReader();
                 while(txtReader.Read()) {
                     textValuesF.Add(txtReader.GetString(0));
                 }
                 txtReader.Close();
-
-                guna2textbox1.Text = textValuesF[0];
+                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0],"MAINKEY9999");
+                guna2textbox1.Text = decryptValueKey;     
             }
 
             //guna2TextBox1.Text = getText;
