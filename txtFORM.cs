@@ -38,12 +38,12 @@ namespace FlowSERVER1 {
                 MySqlCommand command;
 
                 con.Open();
-                String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_TYPE = @filetype";
+                String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
                 command = new MySqlCommand(retrieveImg, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
                 command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
-                command.Parameters.AddWithValue("@filetype", ".txt");
+                command.Parameters.AddWithValue("@filename",fileName);
 
                 List<String> textValues_ = new List<String>();
 

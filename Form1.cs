@@ -616,7 +616,7 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
 
-                if(typeValues[i] == ".txt" || typeValues[i] == ".py") {
+                if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html") {
                     String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_TYPE = @filetype";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -1697,7 +1697,7 @@ namespace FlowSERVER1 {
                                 clearRedundane();
                             } 
                         }
-                        if(_extTypes == ".txt" || _extTypes == ".py") {
+                        if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html") {
                             // TXTCONTS = TEXT CONTENTS
                             if(_extTypes == ".py") {
                                 textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
