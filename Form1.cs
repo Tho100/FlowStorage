@@ -346,7 +346,13 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_expand") {
-                    img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                    if (_extTypes == ".py") {
+                        img.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                    }
+                    else if (_extTypes == ".txt") {
+                        img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    }
                     picMain_Q.Click += (sender_t, e_t) => {
                         txtFORM txtFormShow = new txtFORM("IGNORETHIS", titleLab.Text);
                         txtFormShow.Show();
@@ -610,7 +616,7 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
 
-                if(typeValues[i] == ".txt") {
+                if(typeValues[i] == ".txt" || typeValues[i] == ".py") {
                     String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_TYPE = @filetype";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -627,7 +633,14 @@ namespace FlowSERVER1 {
                    _ReadTexts.Close();
                     var getMainText = textValues_[0];
 
-                    img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                    if (typeValues[i] == ".py") {
+                        img.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                    }
+                    else if (typeValues[i] == ".txt") {
+                        img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    }
+
                     picMain_Q.Click += (sender_t, e_t) => {
                         txtFORM txtFormShow = new txtFORM("", titleLab.Text); // getMainText
                         txtFormShow.Show();
@@ -779,7 +792,7 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|APK Files|*.apk";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Markup Languages|*.py;*.cs;*.cpp;*.php|APK Files|*.apk";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
@@ -928,7 +941,13 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_FILE"].Value = encryptValue;
                             command.ExecuteNonQuery();
 
-                            textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\Gallery\icons8-txt-48.png");
+                            var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                            if (_extTypes == ".py") {
+                                textboxPic.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                            } else if (_extTypes == ".txt") {
+                                textboxPic.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                            }
+
                             String nonLine = "";
                             using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
                                 nonLine = ReadFileTxt.ReadToEnd();
@@ -1073,7 +1092,7 @@ namespace FlowSERVER1 {
                         var totalFilesCount = command.ExecuteScalar();
                         var totalFileInt = Convert.ToInt32(totalFilesCount);
                         label6.Text = totalFileInt.ToString();*/
-                    } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml") {
+                    } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py") {
                         txtCurr++;
                         String nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
@@ -1678,11 +1697,15 @@ namespace FlowSERVER1 {
                                 clearRedundane();
                             } 
                         }
-                        if(_extTypes == ".txt") {
+                        if(_extTypes == ".txt" || _extTypes == ".py") {
                             // TXTCONTS = TEXT CONTENTS
+                            if(_extTypes == ".py") {
+                                textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                            } else if (_extTypes == ".txt") {
+                                textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                            }
                             var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
                             var _readText = File.ReadAllText(_Files);
-                            textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                             textboxExl.Click += (sender_t, e_t) => {
                                 txtFORM txtFormShow = new txtFORM("", titleLab.Text);
                                 txtFormShow.Show();
