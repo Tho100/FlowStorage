@@ -792,7 +792,7 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming|*.py;*.cs;*.cpp;*.java;*.php|Markup|*.html;*.xml|APK Files|*.apk";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.xml|APK Files|*.apk";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
