@@ -51,10 +51,9 @@ namespace FlowSERVER1 {
             var user = guna2TextBox1.Text;
             var pass = guna2TextBox2.Text;
 
-            form.listBox1.Items.Clear();
-
             void setupRedundane() {
                 flowlayout.Controls.Clear();
+                form.listBox1.Items.Clear();
                 form.label5.Text = user;
                 but6.Visible = false;
                 lab8.Visible = false;
@@ -149,6 +148,13 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowGif = command.ExecuteScalar();
                     int intTotalRowGif = Convert.ToInt32(totalRowGif);
+
+                    string countRowApk = "SELECT COUNT(CUST_USERNAME) FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowApk, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
+                    var totalRowApk = command.ExecuteScalar();
+                    int intTotalRowApk = Convert.ToInt32(totalRowApk);
 
                     string countRowFolder = "SELECT COUNT(CUST_USERNAME) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowFolder,con);
@@ -428,8 +434,15 @@ namespace FlowSERVER1 {
                                     gifFORM gifForm = new gifFORM(titleLab.Text);
                                     gifForm.Show();
                                 };
+                                clearRedundane();
                             }
-                            clearRedundane();
+
+                            if(_tableName == "file_info_apk") {
+                                picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                                picMain_Q.Click += (sender_ap, ex_ap) => {
+                                    //
+                                };
+                            }
                         }
                     }
 
@@ -457,6 +470,9 @@ namespace FlowSERVER1 {
                     }
                     if(intTotalRowGif > 0) {
                         _generateUserFiles("file_info_gif","gifFile",intTotalRowGif);
+                    }
+                    if(intTotalRowApk > 0) {
+                        _generateUserFiles("file_info_apk","apkFile",intTotalRowApk);
                     }
                     //if(inttotalRowFold > 0) {
                     _generateUserFolder(user,pass);

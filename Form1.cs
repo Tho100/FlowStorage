@@ -16,6 +16,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Globalization;
 using System.Text;
 using System.Management;
+using System.Reflection;
 
 namespace FlowSERVER1 {
     public partial class Form1 : Form {
@@ -421,8 +422,16 @@ namespace FlowSERVER1 {
                         gifFORM gifForm = new gifFORM(titleLab.Text);
                         gifForm.Show();
                     };
+                    clearRedundane();
                 }
-                clearRedundane();
+                
+               if(_tableName == "file_info_apk") {
+                    picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    picMain_Q.Click += (sender_ap, ex_ap) => {
+                        //
+                    };
+                    clearRedundane();
+                }
             }
         }
         public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
@@ -734,6 +743,7 @@ namespace FlowSERVER1 {
         int exlCurr = 0;
         int audCurr = 0;
         int gifCurr = 0;
+        int apkCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
                 string server = "localhost";
@@ -769,7 +779,7 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files(*.*)|*.*|Images(*.jpg;*.jpeg;*.png;*.bmp)|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif files|*.gif|Text files(*.txt;)|*.txt;|Excel(*.xlsx;)|*.xlsx;|Exe Files(*.exe)|*.exe|Audio(*.mp3;*.mpeg;*.wav)|*.mp3;*.mpeg;*.wav";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|APK Files|*.apk";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
@@ -993,7 +1003,20 @@ namespace FlowSERVER1 {
                             };
                             clearRedundane();
                         }
+                        if (nameTable == "file_info_apk") {
+                            command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
 
+                            Byte[] _getApkBytes = File.ReadAllBytes(open.FileName);
+                            textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+
+                            textboxPic.Click += (sender_gi, e_gi) => {
+                                gifFORM gifForm = new gifFORM(titleLab.Text);
+                                gifForm.Show();
+                            };
+                            clearRedundane();
+                        }
                         ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                         remButTxt.Click += (sender_tx, e_tx) => {
                             var titleFile = titleLab.Text;
@@ -1227,6 +1250,11 @@ namespace FlowSERVER1 {
                         gifCurr++;
                         Byte[] toByteGif_ = File.ReadAllBytes(open.FileName);
                         createPanelMain("file_info_gif", "PanGif", gifCurr, toByteGif_);
+                    }
+                    else if (retrieved == ".apk") {
+                        apkCurr++;
+                        Byte[] readApkBytes = File.ReadAllBytes(open.FileName);
+                        createPanelMain("file_info_apk","PanApk",apkCurr,readApkBytes);
                     }
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
@@ -1743,6 +1771,13 @@ namespace FlowSERVER1 {
                     var totalRowGif = command.ExecuteScalar();
                     int intTotalRowGif = Convert.ToInt32(totalRowGif);
 
+                    string countRowApk = "SELECT COUNT(CUST_USERNAME) FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowApk, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    var totalRowApk = command.ExecuteScalar();
+                    int intTotalRowApk = Convert.ToInt32(totalRowApk);
+
                     if (intRow > 0) {
                         _generateUserFiles("file_info","imageFoldHome",intRow);
                     }
@@ -1754,6 +1789,9 @@ namespace FlowSERVER1 {
                     }
                     if (intTotalRowVid > 0) {
                         _generateUserFiles("file_info_vid", "vidFoldHome", intTotalRowVid);
+                    }
+                    if(intTotalRowApk > 0) {
+                        _generateUserFiles("file_info_apk","apkFoldHome",intTotalRowApk);
                     }
 
                     if (flowLayoutPanel1.Controls.Count == 0) {
@@ -1816,7 +1854,7 @@ namespace FlowSERVER1 {
                 String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(removeFoldQue,con);
                 command.Parameters.AddWithValue("@username",label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
+                command.Parameters.AddWithValue("@password", EncryptionModel.Decrypt(label3.Text,"ABHABH24"));
                 command.Parameters.AddWithValue("@foldername", foldName);
                 command.ExecuteNonQuery();
                 

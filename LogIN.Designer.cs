@@ -140,7 +140,7 @@
             this.guna2Button1.FillColor = System.Drawing.Color.Empty;
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Image = global::FlowSERVER1.Resource1.icons8_closed_eye_24;
+            //this.guna2Button1.Image = global::FlowSERVER1.Resource1.icons8_closed_eye_24;
             this.guna2Button1.Location = new System.Drawing.Point(319, 138);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(31, 26);
@@ -161,7 +161,7 @@
             this.guna2Button3.FillColor = System.Drawing.Color.Empty;
             this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
-            this.guna2Button3.Image = global::FlowSERVER1.Resource1.icons8_eye_24;
+            //this.guna2Button3.Image = global::FlowSERVER1.Resource1.icons8_eye_24;
             this.guna2Button3.Location = new System.Drawing.Point(319, 138);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(31, 26);

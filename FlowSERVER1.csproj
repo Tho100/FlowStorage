@@ -259,6 +259,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="txtFORM.resx">
@@ -287,7 +288,8 @@
     <Content Include="Properties\Resources\excelIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\icons8-closed-eye-24.png" />
+    <None Include="Resources\testing.png" />
+    <None Include="icons8-closed-eye-24.png" />
     <None Include="Resources\icons8-eye-24.png" />
   </ItemGroup>
   <ItemGroup>
