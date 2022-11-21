@@ -1507,6 +1507,17 @@ namespace FlowSERVER1 {
 
                 con.Open();
 
+                void deletionFoldFile(String _Username, String _fileName, String _foldTitle) {
+                    String _remQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND FILE_NAME = @filename";
+                    command = new MySqlCommand(_remQue,con);
+                    command.Parameters.AddWithValue("@username",_Username);
+                    command.Parameters.AddWithValue("@foldtitle", _foldTitle);
+                    command.Parameters.AddWithValue("@filename", _fileName);
+                    if(command.ExecuteNonQuery() != 1) {
+                        MessageBox.Show("There's an unknown error while attempting to delete this file.","Erorr");
+                    } 
+                }
+
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog();
                 dialog.InitialDirectory = "";
                 dialog.IsFolderPicker = true;
@@ -1620,7 +1631,7 @@ namespace FlowSERVER1 {
                             var titleFile = titleLab.Text;
                             DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
-                                //deletionMethod(titleFile, "file_info_excel");
+                                deletionFoldFile(label5.Text,titleLab.Text,label26.Text);
                                 panelVid.Dispose();
                             }
 
@@ -1678,6 +1689,17 @@ namespace FlowSERVER1 {
                             };
                             command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
                             if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+                        }
+                        if(_extTypes == ".apk") {
+                            Byte[] _readApkBytes = File.ReadAllBytes(_Files);
+                            command.Parameters["@CUST_FILE"].Value = _readApkBytes;
+                            textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                            textboxExl.Click += (sender_ap, e_ap) => {
+                                //
+                            };
+                            if(command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
                             }
                         }
