@@ -311,6 +311,8 @@ namespace FlowSERVER1 {
                             label8.Visible = true;
                             guna2Button6.Visible = true;
                         }
+                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
                     }
                 };
 
@@ -584,6 +586,8 @@ namespace FlowSERVER1 {
                             label8.Visible = true;
                             guna2Button6.Visible = true;
                         }
+                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
                     }
                 };
 
@@ -1052,6 +1056,8 @@ namespace FlowSERVER1 {
                             if (verifyDialog == DialogResult.Yes) {
                                 deletionMethod(titleFile, nameTable);
                                 panelTxt.Dispose();
+                                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
                             }
 
                             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -1246,6 +1252,8 @@ namespace FlowSERVER1 {
                                 if (verifyDialog == DialogResult.Yes) {
                                     deletionMethod(titleFile, "file_info_excel");
                                     panelVid.Dispose();
+                                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
                                 }
 
                                 if (flowLayoutPanel1.Controls.Count == 0) {
@@ -1661,6 +1669,7 @@ namespace FlowSERVER1 {
                             if (verifyDialog == DialogResult.Yes) {
                                 deletionFoldFile(label5.Text,titleLab.Text,label26.Text);
                                 panelVid.Dispose();
+                                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                             }
 
                             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -1907,10 +1916,9 @@ namespace FlowSERVER1 {
 
             try {
                 con.Open();
-                String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(removeFoldQue,con);
                 command.Parameters.AddWithValue("@username",label5.Text);
-                command.Parameters.AddWithValue("@password", EncryptionModel.Decrypt(label3.Text,"ABHABH24"));
                 command.Parameters.AddWithValue("@foldername", foldName);
                 command.ExecuteNonQuery();
                 
@@ -1947,6 +1955,30 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Separator1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button9_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2TextBox1_TextChanged_1(object sender, EventArgs e) {
 
         }
     }

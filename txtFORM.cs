@@ -199,8 +199,9 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
+            var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
             SaveFileDialog _OpenDialog = new SaveFileDialog();
-            _OpenDialog.Filter = "Text Files|*.txt";
+            _OpenDialog.Filter = "Files|*" + FileExt_;
             try {
                 if(_OpenDialog.ShowDialog() == DialogResult.OK) {
                     File.WriteAllText(_OpenDialog.FileName,guna2textbox1.Text);
