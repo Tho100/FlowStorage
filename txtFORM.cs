@@ -53,11 +53,14 @@ namespace FlowSERVER1 {
                 }
                 var getMainText = EncryptionModel.Decrypt(textValues_[0],"TXTCONTS");
                 richTextBox1.Text = getMainText;
-                if(FileExt_ == ".py") {
+                if (FileExt_ == ".py") {
                     pythonSyntax();
                 }
                 if (FileExt_ == ".html") {
                     htmlSyntax();
+                }
+                if (FileExt_ == ".css") {
+                    cssSyntax();
                 }
             } else {
                 string server = "localhost";
@@ -94,11 +97,14 @@ namespace FlowSERVER1 {
                 txtReader.Close();
                 var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0],"MAINKEY9999");
                 richTextBox1.Text = decryptValueKey;
-                if(FileExt_ == ".py") {
+                if (FileExt_ == ".py") {
                     pythonSyntax();
-                } 
-                if(FileExt_ == ".html") {
+                }
+                if (FileExt_ == ".html") {
                     htmlSyntax();
+                }
+                if(FileExt_ == ".css") {
+                    cssSyntax();
                 }
             }
         }
@@ -148,6 +154,10 @@ namespace FlowSERVER1 {
             ColorizePattern("/h1", _blueRGB);
             ColorizePattern("h2", _blueRGB);
             ColorizePattern("/h2", _blueRGB);
+            ColorizePattern("h3", _blueRGB);
+            ColorizePattern("/h3", _blueRGB);
+            ColorizePattern("h4", _blueRGB);
+            ColorizePattern("/h4", _blueRGB);
 
             ColorizePattern("src", _cyanRGB);
             ColorizePattern("content", _cyanRGB);
@@ -159,6 +169,47 @@ namespace FlowSERVER1 {
             ColorizePattern("\\<",Color.Gray);
             ColorizePattern("\\>", Color.Gray);
 
+        }
+
+        public void cssSyntax() {
+            Color _orangeRgb = Color.FromArgb(196, 135, 59);
+            Color _cyanRGB = Color.FromArgb(96, 194, 251);
+
+            ColorizePattern("body",_orangeRgb);
+            ColorizePattern("class", _orangeRgb);
+            ColorizePattern("button", _orangeRgb);
+            ColorizePattern("h2", _orangeRgb);
+            ColorizePattern("h1", _orangeRgb);
+            ColorizePattern("h3", _orangeRgb);
+            ColorizePattern("h4", _orangeRgb);
+
+            ColorizePattern("background-color", _cyanRGB);
+            ColorizePattern("background", _cyanRGB);
+            ColorizePattern("box-sizing", _cyanRGB);
+            ColorizePattern("max-height", _cyanRGB);
+            ColorizePattern("max-width", _cyanRGB);
+            ColorizePattern("text-align", _cyanRGB);
+            ColorizePattern("color", _cyanRGB);
+            ColorizePattern("cursor", _cyanRGB);
+            ColorizePattern("border", _cyanRGB);
+            ColorizePattern("content", _cyanRGB);
+            ColorizePattern("position", _cyanRGB);
+            ColorizePattern("width", _cyanRGB);
+            ColorizePattern("top", _cyanRGB);
+            ColorizePattern("height", _cyanRGB);
+            ColorizePattern("right", _cyanRGB);
+            ColorizePattern("font-weight",_cyanRGB);
+            ColorizePattern("outline", _cyanRGB);
+            ColorizePattern("z-index", _cyanRGB);
+            ColorizePattern("border-radius", _cyanRGB);
+            ColorizePattern("font-weight", _cyanRGB);
+            ColorizePattern("padding", _cyanRGB);
+            ColorizePattern("margin", _cyanRGB);
+            ColorizePattern("font-family", _cyanRGB);
+            ColorizePattern("font-size", _cyanRGB);
+            ColorizePattern("left", _cyanRGB);
+            ColorizePattern("text-decoration", _cyanRGB);
+            ColorizePattern("text-transform", _cyanRGB);
         }
         private void ColorizePattern(string pattern, Color color) {
             int selectStart = this.richTextBox1.SelectionStart;

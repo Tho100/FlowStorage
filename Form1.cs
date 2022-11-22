@@ -357,6 +357,8 @@ namespace FlowSERVER1 {
                     }
                     else if (_extTypes == ".html") {
                         img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                    } else if (_extTypes == ".css") {
+                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
                         txtFORM txtFormShow = new txtFORM("IGNORETHIS", titleLab.Text);
@@ -623,7 +625,7 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
 
-                if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html") {
+                if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css") {
                     String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -649,6 +651,9 @@ namespace FlowSERVER1 {
                     }
                     else if (_extTypes == ".html") {
                         img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                    }
+                    else if (_extTypes == ".css") {
+                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
@@ -802,7 +807,7 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.xml|APK Files|*.apk";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
@@ -960,6 +965,9 @@ namespace FlowSERVER1 {
                             else if (_extTypes == ".html") {
                                 textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                             }
+                            else if (_extTypes == ".css") {
+                                textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                            }
 
                             String nonLine = "";
                             using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
@@ -1107,7 +1115,7 @@ namespace FlowSERVER1 {
                         var totalFilesCount = command.ExecuteScalar();
                         var totalFileInt = Convert.ToInt32(totalFilesCount);
                         label6.Text = totalFileInt.ToString();*/
-                    } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py") {
+                    } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css") {
                         txtCurr++;
                         String nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
@@ -1715,7 +1723,7 @@ namespace FlowSERVER1 {
                                 clearRedundane();
                             } 
                         }
-                        if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html") {
+                        if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css") {
                             // TXTCONTS = TEXT CONTENTS
                             if(_extTypes == ".py") {
                                 textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
@@ -1724,6 +1732,10 @@ namespace FlowSERVER1 {
                             } else if (_extTypes == ".html") {
                                 textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                             }
+                            else if (_extTypes == ".css") {
+                                textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                            }
+
                             var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
                             var _readText = File.ReadAllText(_Files);
                             textboxExl.Click += (sender_t, e_t) => {
