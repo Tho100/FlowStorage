@@ -56,6 +56,9 @@ namespace FlowSERVER1 {
                 if(FileExt_ == ".py") {
                     pythonSyntax();
                 }
+                if (FileExt_ == ".html") {
+                    htmlSyntax();
+                }
             } else {
                 string server = "localhost";
                 string db = "flowserver_db";
@@ -93,6 +96,9 @@ namespace FlowSERVER1 {
                 richTextBox1.Text = decryptValueKey;
                 if(FileExt_ == ".py") {
                     pythonSyntax();
+                } 
+                if(FileExt_ == ".html") {
+                    htmlSyntax();
                 }
             }
         }
@@ -118,6 +124,42 @@ namespace FlowSERVER1 {
             ColorizePattern("\\(", Color.Yellow);
         }
 
+        public void htmlSyntax() {
+            Color _blueRGB = Color.FromArgb(30, 58, 165);
+            Color _cyanRGB = Color.FromArgb(96, 194, 251);
+
+            ColorizePattern("div",_blueRGB);
+            ColorizePattern("!DOCTYPE",_blueRGB);
+            ColorizePattern("/head", _blueRGB);
+            ColorizePattern("head", _blueRGB);
+            ColorizePattern("body", _blueRGB);
+            ColorizePattern("/body", _blueRGB);
+            ColorizePattern("script", _blueRGB);
+            ColorizePattern("/script", _blueRGB);
+            ColorizePattern("header", _blueRGB);
+            ColorizePattern("/header", _blueRGB);
+            ColorizePattern("title", _blueRGB);
+            ColorizePattern("/title", _blueRGB);
+            ColorizePattern("html", _blueRGB);
+            ColorizePattern("/html", _blueRGB);
+            ColorizePattern("meta", _blueRGB);
+
+            ColorizePattern("h1", _blueRGB);
+            ColorizePattern("/h1", _blueRGB);
+            ColorizePattern("h2", _blueRGB);
+            ColorizePattern("/h2", _blueRGB);
+
+            ColorizePattern("src", _cyanRGB);
+            ColorizePattern("content", _cyanRGB);
+            ColorizePattern("rel", _cyanRGB);
+            ColorizePattern("type", _cyanRGB);
+            ColorizePattern("class", _cyanRGB);
+            ColorizePattern("charset", _cyanRGB);
+
+            ColorizePattern("\\<",Color.Gray);
+            ColorizePattern("\\>", Color.Gray);
+
+        }
         private void ColorizePattern(string pattern, Color color) {
             int selectStart = this.richTextBox1.SelectionStart;
             foreach (Match match in Regex.Matches(richTextBox1.Text, pattern)) {

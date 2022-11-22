@@ -353,6 +353,9 @@ namespace FlowSERVER1 {
                     else if (_extTypes == ".txt") {
                         img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                     }
+                    else if (_extTypes == ".html") {
+                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                    }
                     picMain_Q.Click += (sender_t, e_t) => {
                         txtFORM txtFormShow = new txtFORM("IGNORETHIS", titleLab.Text);
                         txtFormShow.Show();
@@ -617,12 +620,12 @@ namespace FlowSERVER1 {
                 }
 
                 if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html") {
-                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_TYPE = @filetype";
+                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@password", label3.Text);
                     command.Parameters.AddWithValue("@foldername", _foldTitle);
-                    command.Parameters.AddWithValue("@filetype", ".txt");
+                    command.Parameters.AddWithValue("@filename", titleLab.Text);
 
                     List<String> textValues_ = new List<String>();
 
@@ -639,6 +642,9 @@ namespace FlowSERVER1 {
                     }
                     else if (typeValues[i] == ".txt") {
                         img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    }
+                    else if (_extTypes == ".html") {
+                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
@@ -946,6 +952,9 @@ namespace FlowSERVER1 {
                                 textboxPic.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                             } else if (_extTypes == ".txt") {
                                 textboxPic.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                            }
+                            else if (_extTypes == ".html") {
+                                textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                             }
 
                             String nonLine = "";
@@ -1703,6 +1712,8 @@ namespace FlowSERVER1 {
                                 textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                             } else if (_extTypes == ".txt") {
                                 textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                            } else if (_extTypes == ".html") {
+                                textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                             }
                             var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
                             var _readText = File.ReadAllText(_Files);

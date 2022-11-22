@@ -358,7 +358,16 @@ namespace FlowSERVER1 {
                             }
 
                             if (_tableName == "file_info_expand") {
-                                img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                                if (_extTypes == ".py") {
+                                    img.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                }
+                                else if (_extTypes == ".txt") {
+                                    img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                }
+                                else if (_extTypes == ".html") {
+                                    img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                }
                                 picMain_Q.Click += (sender_t, e_t) => {
                                     txtFORM txtFormShow = new txtFORM("LOLOL", titleLab.Text);
                                     txtFormShow.Show();
