@@ -149,8 +149,8 @@
             this.guna2Panel3.BorderRadius = 8;
             this.guna2Panel3.BorderThickness = 1;
             this.guna2Panel3.Controls.Add(this.label8);
-            this.guna2Panel3.Controls.Add(this.flowLayoutPanel1);
             this.guna2Panel3.Controls.Add(this.guna2Button6);
+            this.guna2Panel3.Controls.Add(this.flowLayoutPanel1);
             this.guna2Panel3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.guna2Panel3.Location = new System.Drawing.Point(12, 82);
             this.guna2Panel3.Name = "guna2Panel3";
@@ -162,9 +162,9 @@
             // 
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(82, 61);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(16, 13);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(149, 147);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1075, 484);
             this.flowLayoutPanel1.TabIndex = 16;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -273,11 +273,12 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.LightGray;
-            this.label8.Location = new System.Drawing.Point(471, 217);
+            this.label8.Location = new System.Drawing.Point(479, 230);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(214, 32);
             this.label8.TabIndex = 28;
             this.label8.Text = "Directory is empty";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // guna2Button6
             // 
@@ -291,10 +292,11 @@
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
             this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
             this.guna2Button6.ImageSize = new System.Drawing.Size(65, 65);
-            this.guna2Button6.Location = new System.Drawing.Point(531, 132);
+            this.guna2Button6.Location = new System.Drawing.Point(539, 145);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(76, 92);
             this.guna2Button6.TabIndex = 27;
+            this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
             // 
             // Form3
             // 
@@ -313,6 +315,7 @@
             this.Name = "Form3";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form3";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form3_Load);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();

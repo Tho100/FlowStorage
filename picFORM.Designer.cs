@@ -183,6 +183,7 @@
             this.Name = "picFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "picFORM";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.picFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);

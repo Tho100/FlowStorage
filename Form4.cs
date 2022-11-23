@@ -140,8 +140,32 @@ namespace FlowSERVER1
                 };
 
                 picBanner.Click += (sender_f, e_f) => {
-                    Form3 dirForm = new Form3(dirName.Text);
-                    dirForm.Show();
+                    Form backgrounDblur = new Form();
+                    try {
+                      using(Form3 dirForm = new Form3(dirName.Text)) {
+                            backgrounDblur.StartPosition = FormStartPosition.Manual;
+                            backgrounDblur.FormBorderStyle = FormBorderStyle.None;
+                            backgrounDblur.Opacity = .28d;
+                            backgrounDblur.BackColor = Color.Black;
+                            backgrounDblur.WindowState = FormWindowState.Maximized;
+                            backgrounDblur.TopMost = true;
+                            backgrounDblur.Location = this.Location;
+                            backgrounDblur.StartPosition = FormStartPosition.Manual;
+                            backgrounDblur.ShowInTaskbar = false;
+                            backgrounDblur.Show();
+
+                            dirForm.Owner = backgrounDblur;
+
+                            dirForm.ShowDialog();
+
+                            backgrounDblur.Dispose();
+                        }
+                    } catch (Exception eq) {
+                        //
+                    }
+
+                    //Form3 dirForm = new Form3(dirName.Text);
+                    //dirForm.Show();
                 };
                 clearRedundane();
                 this.Close();
@@ -150,7 +174,8 @@ namespace FlowSERVER1
             }
         }
         public static int value_Dir = 0;
-        public void guna2Button2_Click(object sender, EventArgs e) {     
+        public void guna2Button2_Click(object sender, EventArgs e) {
+
             String _GetDirTitle = guna2TextBox1.Text;
             if(_GetDirTitle != String.Empty) {
                 value_Dir++;

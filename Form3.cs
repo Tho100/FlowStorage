@@ -120,5 +120,13 @@ namespace FlowSERVER1
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.Close();
         }
+
+        private void label8_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+
+        }
     }
 }

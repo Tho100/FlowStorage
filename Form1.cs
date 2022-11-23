@@ -340,8 +340,24 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                        displayPic.Show();
+                        Form bgBlur = new Form();
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
 
                     };
                     clearRedundane();
@@ -361,8 +377,24 @@ namespace FlowSERVER1 {
                         img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
-                        txtFORM txtFormShow = new txtFORM("IGNORETHIS", titleLab.Text);
-                        txtFormShow.Show();
+                        Form bgBlur = new Form();
+                        using (txtFORM displayPic = new txtFORM("IGNORETHIS",titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
                     };
                     clearRedundane();
                 }
@@ -618,8 +650,24 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                        displayPic.Show();
+                        Form bgBlur = new Form();
+                        using (picFORM displayPic = new picFORM(defaultImage,getWidth,getHeight,titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
 
                     };
                     clearRedundane();
@@ -657,8 +705,24 @@ namespace FlowSERVER1 {
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
-                        txtFORM txtFormShow = new txtFORM("", titleLab.Text); // getMainText
-                        txtFormShow.Show();
+                        Form bgBlur = new Form();
+                        using (txtFORM displayPic = new txtFORM("",titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
                     };
                     clearRedundane();
                 }
@@ -845,7 +909,7 @@ namespace FlowSERVER1 {
                         }
                         command.ExecuteNonQuery();
                     }
-
+                        
                     string get_ex = open.FileName;
                     string getName = open.SafeFileName;
                     string retrieved = System.IO.Path.GetExtension(get_ex);
@@ -943,8 +1007,27 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
-                                displayPic.Show();
+                                //picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
+                                //displayPic.Show();
+
+                                Form bgBlur = new Form();
+                                using (picFORM displayPic = new picFORM(defaultImage,getWidth,getHeight,getName)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
                             };
 
                             clearRedundane();
@@ -977,9 +1060,28 @@ namespace FlowSERVER1 {
                             var filePath = open.SafeFileName;
 
                             textboxPic.Click += (sender_t, e_t) => {
-                                txtFORM txtFormShow = new txtFORM("IGNORETHIS", filePath);
-                                txtFormShow.Show();
-                                
+                                //txtFORM txtFormShow = new txtFORM("IGNORETHIS", filePath);
+                                //txtFormShow.Show();
+
+                                Form bgBlur = new Form();
+                                using (txtFORM txtFormShow = new txtFORM("IGNORETHIS",filePath)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    txtFormShow.Owner = bgBlur;
+                                    txtFormShow.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+
                             };
                             clearRedundane();
 
@@ -1715,8 +1817,24 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
-                                displayPic.Show();
+                                Form bgBlur = new Form();
+                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
 
                             };
                             if (command.ExecuteNonQuery() == 1) {
@@ -1739,8 +1857,25 @@ namespace FlowSERVER1 {
                             var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
                             var _readText = File.ReadAllText(_Files);
                             textboxExl.Click += (sender_t, e_t) => {
-                                txtFORM txtFormShow = new txtFORM("", titleLab.Text);
-                                txtFormShow.Show();
+                                Form bgBlur = new Form();
+                                using (txtFORM displayPic = new txtFORM("",titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+
                             };
                             command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
                             if (command.ExecuteNonQuery() == 1) {
