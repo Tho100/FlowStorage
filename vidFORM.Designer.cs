@@ -30,6 +30,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this._wmpVid = new AxWMPLib.AxWindowsMediaPlayer();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -38,6 +39,7 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this._wmpVid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,6 +95,16 @@
             this._wmpVid.Size = new System.Drawing.Size(570, 271);
             this._wmpVid.TabIndex = 31;
             this._wmpVid.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icon1;
+            this.pictureBox1.Location = new System.Drawing.Point(117, 11);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // guna2Button6
             // 
@@ -246,6 +258,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(598, 425);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.guna2Button6);
             this.Controls.Add(this._wmpVid);
             this.Controls.Add(this.label3);
@@ -263,6 +276,7 @@
             this.Text = "vidFORM";
             this.Load += new System.EventHandler(this.vidFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this._wmpVid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -283,5 +297,6 @@
         private System.Windows.Forms.Label label3;
         private AxWMPLib.AxWindowsMediaPlayer _wmpVid;
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

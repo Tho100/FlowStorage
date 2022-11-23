@@ -69,5 +69,13 @@ namespace FlowSERVER1 {
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e) {
+
+        }
     }
 }

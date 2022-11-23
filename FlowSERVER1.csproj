@@ -198,16 +198,21 @@
     <Compile Include="LogIN.Designer.cs">
       <DependentUpon>LogIN.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="remAccFORM.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="remAccFORM.Designer.cs">
       <DependentUpon>remAccFORM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Resource1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
     <Compile Include="txtFORM.cs">
       <SubType>Form</SubType>
@@ -254,13 +259,16 @@
     <EmbeddedResource Include="LogIN.resx">
       <DependentUpon>LogIN.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resource1.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="txtFORM.resx">
       <DependentUpon>txtFORM.cs</DependentUpon>
@@ -285,12 +293,17 @@
   <ItemGroup>
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
-    <Content Include="Properties\Resources\excelIcon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Resources\testing.png" />
+    <None Include="Resources\icon1.png" />
+    <None Include="Resources\icons8-garbage-66.png" />
+    <None Include="Resources\excelIcon.png" />
+    <None Include="Resources\icons8-exe-48.png" />
+    <None Include="Resources\icons8-garbage-66 %281%29.png" />
+    <None Include="Resources\icons8-txt-48.png" />
+    <None Include="Resources\icons8-python-file-48.png" />
+    <None Include="Resources\icons8-html-filetype-48 %281%29.png" />
+    <None Include="Resources\icons8-android-os-50.png" />
+    <None Include="Resources\icons8-css-filetype-48 %281%29.png" />
     <None Include="icons8-closed-eye-24.png" />
-    <None Include="Resources\icons8-eye-24.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -304,9 +317,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FlowStorage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <COMReference Include="AxWMPLib">
       <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>

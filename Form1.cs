@@ -287,7 +287,7 @@ namespace FlowSERVER1 {
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
                 remBut.Visible = true;
                 remBut.Location = new Point(189, 218);
 
@@ -366,15 +366,15 @@ namespace FlowSERVER1 {
                 if (_tableName == "file_info_expand") {
                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                     if (_extTypes == ".py") {
-                        img.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                     }
                     else if (_extTypes == ".txt") {
-                        img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                     }
                     else if (_extTypes == ".html") {
-                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                     } else if (_extTypes == ".css") {
-                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
                         Form bgBlur = new Form();
@@ -400,7 +400,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_exe") {
-                    img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                    img.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         exeFORM exeFormShow = new exeFORM(titleLab.Text);
                         exeFormShow.Show();
@@ -471,7 +471,7 @@ namespace FlowSERVER1 {
                 }
                 
                if(_tableName == "file_info_apk") {
-                    picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         //
                     };
@@ -595,7 +595,7 @@ namespace FlowSERVER1 {
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                remBut.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
                 remBut.Visible = true;
                 remBut.Location = new Point(189, 218);
 
@@ -692,16 +692,16 @@ namespace FlowSERVER1 {
 
                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                     if (typeValues[i] == ".py") {
-                        img.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                     }
                     else if (typeValues[i] == ".txt") {
-                        img.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                     }
                     else if (_extTypes == ".html") {
-                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                     }
                     else if (_extTypes == ".css") {
-                        img.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
@@ -979,7 +979,7 @@ namespace FlowSERVER1 {
                         remButTxt.BorderRadius = 6;
                         remButTxt.BorderThickness = 1;
                         remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remButTxt.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                        remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
                         remButTxt.Visible = true;
                         remButTxt.Location = new Point(189, 218);
                         remButTxt.BringToFront();
@@ -1041,15 +1041,15 @@ namespace FlowSERVER1 {
 
                             var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                             if (_extTypes == ".py") {
-                                textboxPic.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                             } else if (_extTypes == ".txt") {
-                                textboxPic.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                             }
                             else if (_extTypes == ".html") {
-                                textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                             }
                             else if (_extTypes == ".css") {
-                                textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                             }
 
                             String nonLine = "";
@@ -1094,7 +1094,7 @@ namespace FlowSERVER1 {
 
                             label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
 
-                            textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 Process.Start(open.FileName);
                                 exeFORM exeFormShow = new exeFORM(titleLab.Text);
@@ -1151,7 +1151,7 @@ namespace FlowSERVER1 {
                             command.ExecuteNonQuery();
 
                             Byte[] _getApkBytes = File.ReadAllBytes(open.FileName);
-                            textboxPic.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
 
                             textboxPic.Click += (sender_gi, e_gi) => {
                                 gifFORM gifForm = new gifFORM(titleLab.Text);
@@ -1323,7 +1323,7 @@ namespace FlowSERVER1 {
                             textboxExl.Width = 240;
                             textboxExl.Height = 164;
                             textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
-                            textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
                             textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
                             textboxExl.BorderRadius = 8;
                             textboxExl.Enabled = true;
@@ -1352,7 +1352,7 @@ namespace FlowSERVER1 {
                             remButExl.BorderRadius = 6;
                             remButExl.BorderThickness = 1;
                             remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
-                            remButExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                            remButExl.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
                             remButExl.Visible = true;
                             remButExl.Location = new Point(189, 218);
 
@@ -1769,7 +1769,7 @@ namespace FlowSERVER1 {
                         remButExl.BorderRadius = 6;
                         remButExl.BorderThickness = 1;
                         remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remButExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                        remButExl.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;///Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
                         remButExl.Visible = true;
                         remButExl.Location = new Point(189, 218);
 
@@ -1844,14 +1844,14 @@ namespace FlowSERVER1 {
                         if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css") {
                             // TXTCONTS = TEXT CONTENTS
                             if(_extTypes == ".py") {
-                                textboxExl.Image = Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                             } else if (_extTypes == ".txt") {
-                                textboxExl.Image = Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
                             } else if (_extTypes == ".html") {
-                                textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                             }
                             else if (_extTypes == ".css") {
-                                textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                             }
 
                             var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
@@ -1885,7 +1885,7 @@ namespace FlowSERVER1 {
                         if(_extTypes == ".apk") {
                             Byte[] _readApkBytes = File.ReadAllBytes(_Files);
                             command.Parameters["@CUST_FILE"].Value = _readApkBytes;
-                            textboxExl.Image = Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                             textboxExl.Click += (sender_ap, e_ap) => {
                                 //
                             };
