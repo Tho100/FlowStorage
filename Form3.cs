@@ -17,11 +17,11 @@ namespace FlowSERVER1
 
     public partial class Form3 : Form
     {
-        public Form3()
+        public Form3(String sendTitle_)
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
             this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
+            label1.Text = sendTitle_;
         }
 
         public void label3_Click(object sender, EventArgs e)
@@ -30,10 +30,10 @@ namespace FlowSERVER1
         }
 
         private void Form3_Load(object sender, EventArgs e) {
-            Form4 get_dir_title = new Form4();
-            string dir_title = get_dir_title.guna2TextBox1.Text;
-            label3.Text = dir_title;
-            this.Text = "Directory: " + label3.Text;
+            //Form4 get_dir_title = new Form4();
+            //string dir_title = get_dir_title.guna2TextBox1.Text;
+            //label3.Text = dir_title;
+            //this.Text = "Directory: " + label3.Text;
 
         }
 
@@ -99,6 +99,26 @@ namespace FlowSERVER1
 
         private void panel2_Paint(object sender, PaintEventArgs e) {
 
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel3_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+            this.Close();
         }
     }
 }
