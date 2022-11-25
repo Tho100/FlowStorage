@@ -28,12 +28,12 @@ namespace FlowSERVER1 {
 
             randomizeUser();
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+            int port = 16889;
+            string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
 
@@ -176,12 +176,12 @@ namespace FlowSERVER1 {
 
         public void _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+            int port = 16889;
+            string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
             con.Open();
@@ -473,19 +473,36 @@ namespace FlowSERVER1 {
                if(_tableName == "file_info_apk") {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     picMain_Q.Click += (sender_ap, ex_ap) => {
-                        //
+                        Form bgBlur = new Form();
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text,label5.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
                     };
                     clearRedundane();
                 }
             }
         }
         public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+            int port = 16889;
+            string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
             con.Open();
@@ -838,11 +855,12 @@ namespace FlowSERVER1 {
         int apkCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
+                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+                string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+                int port = 16889;
+                string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
 
@@ -1154,8 +1172,24 @@ namespace FlowSERVER1 {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
 
                             textboxPic.Click += (sender_gi, e_gi) => {
-                                gifFORM gifForm = new gifFORM(titleLab.Text);
-                                gifForm.Show();
+                                Form bgBlur = new Form();
+                                using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
                             };
                             clearRedundane();
                         }
@@ -1528,12 +1562,12 @@ namespace FlowSERVER1 {
 
         private void guna2Button11_Click(object sender, EventArgs e) {
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+            int port = 16889;
+            string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
 
             MySqlCommand command;
@@ -1641,12 +1675,12 @@ namespace FlowSERVER1 {
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
             try {
 
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
+                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+                string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+                int port = 16889;
+                string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
 
                 MySqlCommand command;
@@ -1887,7 +1921,24 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_FILE"].Value = _readApkBytes;
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                             textboxExl.Click += (sender_ap, e_ap) => {
-                                //
+                                Form bgBlur = new Form();
+                                using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
                             };
                             if(command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
@@ -1914,11 +1965,11 @@ namespace FlowSERVER1 {
             guna2Button19.Visible = true;
             label26.Text = _selectedFolder;
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+            string constring = "SERVER=" + server + "; Port=16889; " + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
             try {
@@ -2053,11 +2104,12 @@ namespace FlowSERVER1 {
 
         public void _removeFoldFunc(String foldName) {
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+            int port = 16889;
+            string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
 

@@ -64,3 +64,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.exe
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.Properties.Resources.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.Properties.Resource1.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.apkFORM.resources

@@ -53,8 +53,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exlFORM
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelDataReader.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Resource1.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Properties\Resources\excelIcon.png
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.remAccFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ConfirmRemFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Interop.WMPLib.dll
@@ -64,3 +62,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Interop.WMPLib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AxInterop.WMPLib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.audFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.gifFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.apkFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Properties.Resource1.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Properties.Resources.resources

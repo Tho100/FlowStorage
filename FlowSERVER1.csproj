@@ -126,6 +126,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="apkFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="apkFORM.Designer.cs">
+      <DependentUpon>apkFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="audFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,6 +232,9 @@
     <Compile Include="vidFORM.Designer.cs">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="apkFORM.resx">
+      <DependentUpon>apkFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
     </EmbeddedResource>

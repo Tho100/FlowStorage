@@ -28,12 +28,12 @@ namespace FlowSERVER1 {
             } 
 
             try {
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
+                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+                string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+                int port = 16889;
+                string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command,command_Read;
                 con.Open();

@@ -35,13 +35,14 @@ namespace FlowSERVER1 {
         String encryptionKeyVal;
         public void loadUserData() {
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+            int port = 16889;
+            string constring = "SERVER=" + server + ";" + "Port=" + port + ";"+ "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
+
             MySqlCommand command;
 
             var form = Form1.instance;
@@ -451,7 +452,24 @@ namespace FlowSERVER1 {
                             if(_tableName == "file_info_apk") {
                                 picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                                 picMain_Q.Click += (sender_ap, ex_ap) => {
-                                    //
+                                    Form bgBlur = new Form();
+                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayPic.Owner = bgBlur;
+                                        displayPic.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
                                 };
                             }
                         }
