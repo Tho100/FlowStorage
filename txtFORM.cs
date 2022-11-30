@@ -22,7 +22,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13449;
+        public static int mainPort_ = 16634;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -36,12 +36,10 @@ namespace FlowSERVER1 {
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
             var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "ABHABH24");
 
-            if(tableName == "upload_info_directory" & getText == "") {
-                MessageBox.Show("Hi");
-            }
+            if(tableName == "upload_info_directory" & getText != "") {
+                richTextBox1.Text = getText;
 
-            if (getText == "" && tableName == "folder_upload_info") {
-
+            } else if (getText == "" && tableName == "folder_upload_info") {
                 con.Open();
                 String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
                 command = new MySqlCommand(retrieveImg, con);

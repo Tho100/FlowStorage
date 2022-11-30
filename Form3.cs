@@ -32,7 +32,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 13449;
+                int mainPort_ = 16634;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -59,7 +59,7 @@ namespace FlowSERVER1
                 List<String> mainTypes = typesValues.Distinct().ToList();
                 var currMainLength = typesValues.Count;
 
-                generateUserDirectory(typesValues,label1.Text,"DIRPAR",currMainLength);
+                generateUserDirectory(typesValues,label1.Text,"DIRPAR",typesValues.Count);
 
                 if (flowLayoutPanel1.Controls.Count == 0) {
                     label8.Visible = true;
@@ -82,7 +82,7 @@ namespace FlowSERVER1
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 13449;
+            int mainPort_ = 16634;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
@@ -97,7 +97,7 @@ namespace FlowSERVER1
                 int top = 275;
                 int h_p = 100;
                 var panelTxt = new Guna2Panel() {
-                    Name = parameterName + itemCurr,
+                    Name = parameterName + q,
                     Width = 240,
                     Height = 262,
                     BorderRadius = 8,
@@ -108,11 +108,11 @@ namespace FlowSERVER1
 
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelTxt);
-                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + itemCurr]);
+                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + q]);
 
                 var textboxPic = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxPic);
-                textboxPic.Name = "TxtBox" + itemCurr;
+                textboxPic.Name = "TxtBox" + q;
                 textboxPic.Width = 240;
                 textboxPic.Height = 164;
                 textboxPic.BorderRadius = 8;
@@ -120,9 +120,25 @@ namespace FlowSERVER1
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
 
+                List<String> filesNames = new List<string>();
+
+                String _selectFileName = "SELECT CUST_FILE_PATH FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @dirname";
+                command = new MySqlCommand(_selectFileName,con);
+                command = con.CreateCommand();
+                command.CommandText = _selectFileName;
+                command.Parameters.AddWithValue("@username",form1.label5.Text);
+                command.Parameters.AddWithValue("@password", form1.label3.Text);
+                command.Parameters.AddWithValue("@dirname", label1.Text);
+
+                MySqlDataReader _readFileNames = command.ExecuteReader();
+                while(_readFileNames.Read()) {
+                    filesNames.Add(_readFileNames.GetString(0));
+                }
+                _readFileNames.Close();
+
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = "LabVidUp" + itemCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = "LabVidUp" + q;//Segoe UI Semibold, 11.25pt, style=Bold
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -130,11 +146,11 @@ namespace FlowSERVER1
                 titleLab.Location = new Point(12, 182);
                 titleLab.Width = 220;
                 titleLab.Height = 30;
-                titleLab.Text = _dirTitle;
+                titleLab.Text = filesNames[q];
 
                 Guna2Button remButTxt = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButTxt);
-                remButTxt.Name = "RemTxtBut" + itemCurr;
+                remButTxt.Name = "RemTxtBut" + q;
                 remButTxt.Width = 39;
                 remButTxt.Height = 35;
                 remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
@@ -171,7 +187,7 @@ namespace FlowSERVER1
 
                 Label dateLabTxt = new Label();
                 mainPanelTxt.Controls.Add(dateLabTxt);
-                dateLabTxt.Name = "LabTxtUp" + itemCurr;
+                dateLabTxt.Name = "LabTxtUp" + q;
                 dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 dateLabTxt.ForeColor = Color.DarkGray;
                 dateLabTxt.Visible = true;
@@ -227,6 +243,58 @@ namespace FlowSERVER1
                             bgBlur.Dispose();
                         }
                     };
+                }
+
+                if(typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".css") {
+                    if (typeValues[q] == ".py") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                    }
+                    else if (typeValues[q] == ".txt") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                    }
+                    else if (typeValues[q] == ".html") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                    }
+                    else if (typeValues[q] == ".css") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                    }
+                    textboxPic.Click += (sender_t, e_t) => {
+                        String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
+                        command = new MySqlCommand(retrieveContents, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                        command.Parameters.AddWithValue("@filename", titleLab.Text);
+                        command.Parameters.AddWithValue("@foldername", label1.Text);
+
+                        List<String> _contentValues = new List<String>();
+                        MySqlDataReader _readContents = command.ExecuteReader();
+                        while (_readContents.Read()) {
+                            _contentValues.Add(_readContents.GetString(0));
+                        }
+                        _readContents.Close();
+
+                        var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS");
+
+                        Form bgBlur = new Form();
+                        using (txtFORM displayPic = new txtFORM(_theContents, "upload_info_directory", titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+
                 }
             }
         }
@@ -346,7 +414,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 13449;
+                int mainPort_ = 16634;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -445,7 +513,7 @@ namespace FlowSERVER1
                                 command = new MySqlCommand(noSafeUpdate, con);
                                 command.ExecuteNonQuery();
 
-                                String removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
                                 command = new MySqlCommand(removeQuery, con);
                                 command.Parameters.AddWithValue("@username", form1.label5.Text);
                                 command.Parameters.AddWithValue("@password", form1.label3.Text);
@@ -523,8 +591,24 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                             }
                             textboxPic.Click += (sender_t, e_t) => {
+                                String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
+                                command = new MySqlCommand(retrieveContents,con);
+                                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                                command.Parameters.AddWithValue("@filename", titleLab.Text);
+                                command.Parameters.AddWithValue("@foldername", label1.Text);
+
+                                List<String> _contentValues = new List<String>();
+                                MySqlDataReader _readContents = command.ExecuteReader();
+                                while(_readContents.Read()) {
+                                    _contentValues.Add(_readContents.GetString(0));
+                                }
+                                _readContents.Close();
+
+                                var _theContents = EncryptionModel.Decrypt(_contentValues[0],"TXTCONTS");
+
                                 Form bgBlur = new Form();
-                                using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text)) {
+                                using (txtFORM displayPic = new txtFORM(_theContents,"upload_info_directory", titleLab.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -585,6 +669,10 @@ namespace FlowSERVER1
             catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }
+        }
+
+        private void guna2VSeparator1_Click(object sender, EventArgs e) {
+
         }
     }
 }

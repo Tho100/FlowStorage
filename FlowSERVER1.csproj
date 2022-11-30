@@ -302,6 +302,7 @@
   <ItemGroup>
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
+    <None Include="Resources\icons8-exe-96.png" />
     <None Include="Resources\icon1.png" />
     <None Include="Resources\icons8-garbage-66.png" />
     <None Include="Resources\excelIcon.png" />
