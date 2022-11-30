@@ -233,7 +233,7 @@
             this.guna2Button12.TabIndex = 29;
             this.guna2Button12.Text = "Upload Folder";
             this.guna2Button12.TextOffset = new System.Drawing.Point(4, 0);
-            this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click_1);
+            this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
             // label9
             // 

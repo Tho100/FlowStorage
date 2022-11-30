@@ -59,14 +59,12 @@ namespace FlowSERVER1 {
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int port = 16889;
-                string constring = "SERVER=" + server + ";" + "Port=" + port + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+                int mainPort_ = 13449;
+                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
 
                 con.Open();
-
-                List<byte[]> apkValues = new List<byte[]>();
 
                 String _readApkFiles = "SELECT CUST_FILE FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
@@ -77,9 +75,6 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filetitle",label1.Text);
 
                 MySqlDataReader _apkReader = command.ExecuteReader();
-                /*while(_apkReader.Read()) {
-                    apkValues.Add(_apkReader.GetBytes(0));
-                }*/
                 if(_apkReader.Read()) {
                     var get_apkValues = (byte[])_apkReader["CUST_FILE"];
                     SaveFileDialog _OpenDialog = new SaveFileDialog();

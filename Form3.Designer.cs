@@ -268,6 +268,7 @@
             this.guna2Button2.TabIndex = 30;
             this.guna2Button2.Text = "Upload File";
             this.guna2Button2.TextOffset = new System.Drawing.Point(4, 0);
+            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click_1);
             // 
             // guna2VSeparator1
             // 

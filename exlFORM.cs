@@ -17,20 +17,51 @@ using System.Xml;
 namespace FlowSERVER1 {
     public partial class exlFORM : Form {
         public static exlFORM instance;
-        public exlFORM(String title,String getXML) {
+        public exlFORM(String title) {
             InitializeComponent();
             instance = this;
             label1.Text = title;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-            
-            try {
 
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
+            string password = "nfreal-yt10";
+            int mainPort_ = 13449;
+            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+            MySqlConnection con = new MySqlConnection(constring);
+            MySqlCommand command;
+
+            con.Open();
+
+            var form1 = Form1.instance;
+            String selectSheets_Name = "SELECT SHEET_NAME FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+            command = new MySqlCommand(selectSheets_Name,con);
+            command.Parameters.AddWithValue("@username",form1.label5.Text);
+            command.Parameters.AddWithValue("@password", form1.label3.Text);
+            command.Parameters.AddWithValue("@filename", title);
+
+            List<String> sheetName_Values = new List<String>();
+
+            MySqlDataReader readerSheets_ = command.ExecuteReader();
+            while(readerSheets_.Read()) {
+                sheetName_Values.Add(readerSheets_.GetString(0));
+            }
+            readerSheets_.Close();
+
+            List<String> fixedSheetNames = sheetName_Values.Distinct().ToList();
+            foreach(var sheetNameValues in fixedSheetNames) {
+                guna2ComboBox1.Items.Add(sheetNameValues);
+            }
+            guna2ComboBox1.SelectedIndex = 0;
+            /*try {
+
+                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+                string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+                int mainPort_ = 13449;
+                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
 
@@ -48,16 +79,41 @@ namespace FlowSERVER1 {
                 while(readXml.Read()) {
                     xmlValues.Add(readXml.GetString(0));    
                 }
-               
+                readXml.Close();
+
                 StringReader mainReader = new StringReader(xmlValues[0]);
                 DataSet dataset = new DataSet();
                 dataset.ReadXml(mainReader);
 
                 guna2DataGridView1.DataSource = dataset.Tables[0];
+
+                String selectSheetName = "SELECT CUST_FILE_PATH FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE = @fileval";
+                command = new MySqlCommand(selectSheetName,con);
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                command.Parameters.AddWithValue("@fileval",xmlValues);
+                
+
+                List<string> sheetNames = new List<string>();
+                MySqlDataReader readSheets = command.ExecuteReader();
+                while(readSheets.Read()) {
+                    sheetNames.Add(readSheets.GetString(0));
+                }
+                readSheets.Close();
+                foreach(var item in sheetNames) {
+                    MessageBox.Show(item);
+                }
+                MessageBox.Show(sheetNames.Count().ToString());
             }
             catch (Exception eq) {
                 MessageBox.Show(eq.Message);
-            }
+            }*/
+
+
+
+
+
+
             /*
             StringReader mainReader = new StringReader(getXML);
             DataSet dataset = new DataSet();
@@ -188,7 +244,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + label4.Text + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
+            /*String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + label4.Text + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
             OleDbConnection conExl = new OleDbConnection(pathExl);
             conExl.Open();
             DataTable Sheets = conExl.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
@@ -197,7 +253,7 @@ namespace FlowSERVER1 {
             DataTable mainTable = new DataTable();
             adptCon.Fill(mainTable);
 
-            guna2DataGridView1.DataSource = mainTable;
+            guna2DataGridView1.DataSource = mainTable;*/
         }
 
         private void label3_Click(object sender, EventArgs e) {

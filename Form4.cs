@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using MySql.Data.MySqlClient;
+using MySql.Data;
+
 namespace FlowSERVER1
 {
     public partial class Form4 : Form
@@ -175,12 +178,41 @@ namespace FlowSERVER1
         }
         public static int value_Dir = 0;
         public void guna2Button2_Click(object sender, EventArgs e) {
-
             String _GetDirTitle = guna2TextBox1.Text;
             if(_GetDirTitle != String.Empty) {
                 value_Dir++;
                 generateDir(value_Dir,_GetDirTitle);
             } 
+            try {
+            
+                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+                string username = "root"; // epiz_33067528 | root
+                string password = "nfreal-yt10";
+                int mainPort_ = 13449;
+                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+                MySqlConnection con = new MySqlConnection(constring);
+                MySqlCommand command;
+
+                con.Open();
+
+                var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                command = new MySqlCommand(_insertValues,con);
+                command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
+                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+
+                command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
+
+                command.ExecuteNonQuery();
+
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+            }
 
             /*Form3 dir_page = new Form3();
             dir_page.Text = "Directory: " + _GetDirTitle;

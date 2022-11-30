@@ -17,7 +17,17 @@ using System.Text.RegularExpressions;
 namespace FlowSERVER1 {
     public partial class txtFORM : Form {
         public static txtFORM instance;
-        public txtFORM(String getText,String fileName) {
+
+        public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+        public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+        public static string username = "root"; // epiz_33067528 | root
+        public static string password = "nfreal-yt10";
+        public static int mainPort_ = 13449;
+        public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+        public MySqlConnection con = new MySqlConnection(constring);
+        public MySqlCommand command;
+
+        public txtFORM(String getText,String tableName,String fileName) {
             InitializeComponent();
             instance = this;
             label1.Text = fileName;
@@ -26,16 +36,11 @@ namespace FlowSERVER1 {
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
             var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "ABHABH24");
 
-            if (getText == "") {
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
-                string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+            if(tableName == "upload_info_directory" & getText == "") {
+                MessageBox.Show("Hi");
+            }
 
-                MySqlConnection con = new MySqlConnection(constring);
-
-                MySqlCommand command;
+            if (getText == "" && tableName == "folder_upload_info") {
 
                 con.Open();
                 String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
@@ -63,14 +68,7 @@ namespace FlowSERVER1 {
                     cssSyntax();
                 }
             } else {
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
-                string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
 
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
 
                 con.Open();
 
@@ -267,6 +265,10 @@ namespace FlowSERVER1 {
         }
 
         private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e) {
 
         }
     }

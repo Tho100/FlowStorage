@@ -86,14 +86,13 @@ namespace FlowSERVER1
 
         private void guna2Button2_Click(object sender, EventArgs e) {
 
-            string server = "localhost";
-            string db = "flowserver_db";
-            string username = "root";
+            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+            string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
+            int mainPort_ = 13449;
+            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
-
             MySqlCommand command;
 
             string get_user = guna2TextBox1.Text;
