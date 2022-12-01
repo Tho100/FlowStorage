@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 16634;
+        public static int mainPort_ = 13560;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -728,6 +728,30 @@ namespace FlowSERVER1 {
 
                 if(typeValues[i] == ".xlsx") {
                     //
+                }
+
+                if(typeValues[i] == ".apk") {
+                    img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    img.Click += (sender_ap, e_ap) => {
+                        Form bgBlur = new Form();
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
                 }
             }
         }

@@ -32,7 +32,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 16634;
+                int mainPort_ = 13560;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -82,7 +82,7 @@ namespace FlowSERVER1
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 16634;
+            int mainPort_ = 13560;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
@@ -245,7 +245,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if(typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".css") {
+                if(typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".css" || typeValues[q] == ".py") {
                     if (typeValues[q] == ".py") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                     }
@@ -294,7 +294,30 @@ namespace FlowSERVER1
                             bgBlur.Dispose();
                         }
                     };
+                }
 
+                if(typeValues[q] == ".apk") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    textboxPic.Click += (sender_ap, e_ap) => {
+                        Form bgBlur = new Form();
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
                 }
             }
         }
@@ -405,6 +428,8 @@ namespace FlowSERVER1
         }
         public static int currImg = 0;
         public static int currTxt = 0;
+        public static int currApk = 0;
+        public static int currExe = 0;
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
 
@@ -414,7 +439,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 16634;
+                int mainPort_ = 13560;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -627,6 +652,54 @@ namespace FlowSERVER1
                                 }
                             };
                         }
+
+                        if(type_ == "Apk") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                            textboxPic.Click += (sender_ap, e_ap) => {
+                                Form bgBlur = new Form();
+                                using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
+
+                        if(type_ == "Exe") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                            textboxPic.Click += (sender_ex, e_ex) => {
+                                Form bgBlur = new Form();
+                                using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayExe.Owner = bgBlur;
+                                    displayExe.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
                     }
 
                     if(retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -661,6 +734,21 @@ namespace FlowSERVER1
                         command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
                         createPanelMain("Texts","TextPar",currTxt);
                     }
+
+                    if(retrieved == ".apk") {
+                        currApk++;
+                        Byte[] _readApkBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readApkBytes;
+                        createPanelMain("Apk","ApkPar",currApk);
+                    }
+
+                    if(retrieved == ".exe") {
+                        currExe++;
+                        Byte[] _readExeBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readExeBytes;
+                        createPanelMain("Exe","ExePar",currExe);
+                    }
+
                     if(command.ExecuteNonQuery() == 1) {
                         clearRedundane();
                     }
