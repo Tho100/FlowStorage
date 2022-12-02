@@ -22,7 +22,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13560;
+        public static int mainPort_ = 12592;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -38,6 +38,7 @@ namespace FlowSERVER1 {
 
             if(tableName == "upload_info_directory" & getText != "") {
                 richTextBox1.Text = getText;
+                MessageBox.Show("IN");
 
             } else if (getText == "" && tableName == "folder_upload_info") {
                 con.Open();
@@ -65,7 +66,7 @@ namespace FlowSERVER1 {
                 if (FileExt_ == ".css") {
                     cssSyntax();
                 }
-            } else {
+            } else if (tableName == "file_info_expand"){
 
 
                 con.Open();
@@ -91,6 +92,7 @@ namespace FlowSERVER1 {
                     textValuesF.Add(txtReader.GetString(0));
                 }
                 txtReader.Close();
+
                 var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0],"MAINKEY9999");
                 richTextBox1.Text = decryptValueKey;
                 if (FileExt_ == ".py") {

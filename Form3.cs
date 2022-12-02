@@ -32,7 +32,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 13560;
+                int mainPort_ = 12592;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -82,7 +82,7 @@ namespace FlowSERVER1
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 13560;
+            int mainPort_ = 12592;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
@@ -319,6 +319,54 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if(typeValues[q] == ".exe") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                    textboxPic.Click += (sender_ex, e_ex) => {
+                        Form bgBlur = new Form();
+                        using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayExe.Owner = bgBlur;
+                            displayExe.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
+                if(typeValues[q] == ".pdf") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                    textboxPic.Click += (sender_pd, e_pd) => {
+                        Form bgBlur = new Form();
+                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPdf.Owner = bgBlur;
+                            displayPdf.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
             }
         }
 
@@ -430,6 +478,7 @@ namespace FlowSERVER1
         public static int currTxt = 0;
         public static int currApk = 0;
         public static int currExe = 0;
+        public static int currPdf = 0;
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
 
@@ -439,7 +488,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 13560;
+                int mainPort_ = 12592;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -700,6 +749,31 @@ namespace FlowSERVER1
                                 }
                             };
                         }
+
+                        if(type_ == "Pdf") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                            textboxPic.Click += (sender_pd, e_pd) => {
+                                Form bgBlur = new Form();
+                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPdf.Owner = bgBlur;
+                                    displayPdf.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                            clearRedundane();
+                        }
                     }
 
                     if(retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -748,7 +822,12 @@ namespace FlowSERVER1
                         command.Parameters["@CUST_FILE"].Value = _readExeBytes;
                         createPanelMain("Exe","ExePar",currExe);
                     }
-
+                    if(retrieved == ".pdf") {
+                        currPdf++;
+                        Byte[] _readPdfBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
+                        createPanelMain("Pdf","PdfPar",currPdf);
+                    }
                     if(command.ExecuteNonQuery() == 1) {
                         clearRedundane();
                     }

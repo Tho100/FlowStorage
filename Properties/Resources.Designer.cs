@@ -153,6 +153,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_pdf_60__1_ {
+            get {
+                object obj = ResourceManager.GetObject("icons8-pdf-60 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_python_file_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-python-file-48", resourceCulture);

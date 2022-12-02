@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13560;
+        public static int mainPort_ = 12592;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -490,6 +490,31 @@ namespace FlowSERVER1 {
                     };
                     clearRedundane();
                 }
+
+               if(_tableName == "file_info_pdf") {
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                    picMain_Q.Click += (sender_pd, e_pd) => {
+                        Form bgBlur = new Form();
+                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPdf.Owner = bgBlur;
+                            displayPdf.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                    clearRedundane();
+                }
             }
         }
         public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
@@ -859,6 +884,7 @@ namespace FlowSERVER1 {
         int audCurr = 0;
         int gifCurr = 0;
         int apkCurr = 0;
+        int pdfCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
                 
@@ -887,7 +913,7 @@ namespace FlowSERVER1 {
                 }
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|Acrobat Files|*.pdf";
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 if (open.ShowDialog() == DialogResult.OK) {
 
@@ -1199,6 +1225,34 @@ namespace FlowSERVER1 {
                             };
                             clearRedundane();
                         }
+                        if(nameTable == "file_info_pdf") {
+                            command.Parameters.Add("@CUST_FILE",MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
+
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                            textboxPic.Click += (sender_pd, e_pd) => {
+                                Form bgBlur = new Form();
+                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPdf.Owner = bgBlur;
+                                    displayPdf.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                            clearRedundane();
+                        }
                         ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                         remButTxt.Click += (sender_tx, e_tx) => {
                             var titleFile = titleLab.Text;
@@ -1488,6 +1542,11 @@ namespace FlowSERVER1 {
                         apkCurr++;
                         Byte[] readApkBytes = File.ReadAllBytes(open.FileName);
                         createPanelMain("file_info_apk","PanApk",apkCurr,readApkBytes);
+                    }
+                    else if (retrieved == ".pdf") {
+                        pdfCurr++;
+                        Byte[] readPdfBytes = File.ReadAllBytes(open.FileName);
+                        createPanelMain("file_info_pdf","PanPdf",pdfCurr,readPdfBytes);
                     }
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
@@ -2062,6 +2121,13 @@ namespace FlowSERVER1 {
                     var totalRowDir = command.ExecuteScalar();
                     int intTotalRowDir = Convert.ToInt32(totalRowDir);
 
+                    string countRowPdf = "SELECT COUNT(CUST_USERNAME) FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowPdf, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    var totalRowPdf = command.ExecuteScalar();
+                    int intTotalRowPdf = Convert.ToInt32(totalRowPdf);
+
                     if (intRow > 0) {
                         _generateUserFiles("file_info","imageFoldHome",intRow);
                     }
@@ -2080,6 +2146,9 @@ namespace FlowSERVER1 {
                     if(intTotalRowDir > 0) {
                         //_generateUserFiles("file_info_directory","dirFoldHome",intTotalRowDir);
                         _generateUserDirectory(label5.Text,label3.Text,intTotalRowDir);
+                    }
+                    if(intTotalRowPdf > 0) {
+                        _generateUserFiles("file_info_pdf","pdfFoldHome",intTotalRowPdf);
                     }
 
                     if (flowLayoutPanel1.Controls.Count == 0) {
