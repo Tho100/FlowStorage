@@ -97,7 +97,7 @@ namespace FlowSERVER1 {
                     Form1.instance.guna2Panel7.Visible = true;
                     Form1.instance.listBox1.Items.Clear();
                 } else {
-                    MessageBox.Show("WRONG PASSWORD");
+                    label1.Visible = true;
                 }
             } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
@@ -105,6 +105,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
+            
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
             this.Close();
         }
     }
