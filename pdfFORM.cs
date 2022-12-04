@@ -18,7 +18,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 12592;
+        public static int mainPort_ = 12033;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -72,6 +72,7 @@ namespace FlowSERVER1 {
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
+            label1.AutoSize = true;
         }
 
         private void pdfFORM_Load(object sender, EventArgs e) {

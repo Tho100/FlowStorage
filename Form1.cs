@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 12592;
+        public static int mainPort_ = 12033;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -1719,10 +1719,14 @@ namespace FlowSERVER1 {
                             label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
                             label.Location = new Point(3, 27);
                         }
-                        string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD) VALUES(@CUST_USERNAME,@CUST_PASSWORD)";
+
+                        String getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                        string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE)";
                         using (var cmd = new MySqlCommand(query, con)) {
                             cmd.Parameters.AddWithValue("@CUST_USERNAME", get_user);
                             cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
+                            cmd.Parameters.AddWithValue("@CREATED_DATE",getDate);
                             cmd.ExecuteNonQuery();
                         }
                         label11.Visible = false;
@@ -2225,7 +2229,6 @@ namespace FlowSERVER1 {
         }
 
         void _generateUserDirectory(String userName, String passUser, int rowLength) {
-
             for (int i = 0; i < rowLength-rowLength+1; i++) {
                 int top = 275;
                 int h_p = 100;
@@ -2327,11 +2330,18 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                        command = new MySqlCommand(removeQuery, con);
+                        String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
+                        command = new MySqlCommand(_removeDirQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@password", label3.Text);
-                        command.ExecuteNonQuery();
+                        command.Parameters.AddWithValue("@dirname", titleLab.Text);
+                        if (command.ExecuteNonQuery() == 1) {
+                            MessageBox.Show(titleLab.Text);
+                        } else {
+                            MessageBox.Show(titleLab.Text,"failed");
+                        }
+
+                        MessageBox.Show(titleLab.Text);
+             
 
                         panelPic_Q.Dispose();
                         if (flowLayoutPanel1.Controls.Count == 0) {

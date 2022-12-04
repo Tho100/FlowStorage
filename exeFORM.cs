@@ -48,6 +48,7 @@ namespace FlowSERVER1 {
             this.WindowState = FormWindowState.Maximized;
             guna2Button3.Visible = true;
             guna2Button1.Visible = false;
+            label1.AutoSize = true;
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
@@ -56,7 +57,7 @@ namespace FlowSERVER1 {
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 12592;
+            int mainPort_ = 12033;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
@@ -79,6 +80,10 @@ namespace FlowSERVER1 {
                     File.WriteAllBytes(_OpenDialog.FileName,_getExeValues);
                 }
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
         }
     }
 }

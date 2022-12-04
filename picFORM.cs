@@ -39,6 +39,7 @@ namespace FlowSERVER1 {
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
+            label1.AutoSize = true;
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {

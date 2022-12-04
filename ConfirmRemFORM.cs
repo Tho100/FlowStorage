@@ -32,7 +32,7 @@ namespace FlowSERVER1 {
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 12592;
+                int mainPort_ = 12033;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command,command_Read;
@@ -72,12 +72,24 @@ namespace FlowSERVER1 {
                     command = new MySqlCommand(remTxt_Query, con);
                     command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
+                    command.ExecuteNonQuery();
 
                     String remFolder = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remFolder, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
+                    command.ExecuteNonQuery();
 
+                    String remDirectory = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(remDirectory, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
+                    command.ExecuteNonQuery();
+
+                    String remUploadDir = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(remUploadDir, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
                     command.ExecuteNonQuery();
 
                     this.Close();

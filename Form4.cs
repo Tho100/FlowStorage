@@ -52,6 +52,18 @@ namespace FlowSERVER1
 
         public void generateDir(int currMain, String getDirTitle) {
             try {
+
+                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
+                string username = "root"; // epiz_33067528 | root
+                string password = "nfreal-yt10";
+                int mainPort_ = 12033;
+                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
+                MySqlConnection con = new MySqlConnection(constring);
+                MySqlCommand command;
+
+                con.Open();
+
                 var flowlayout = Form1.instance.flowLayoutPanel1;
                 int top = 275;
                 int h_p = 100;
@@ -134,6 +146,19 @@ namespace FlowSERVER1
                         panel.Dispose();
                         Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
+
+                        String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
+                        command = new MySqlCommand(_removeDirQuery, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@dirname", getDirTitle);
+                        command.ExecuteNonQuery();
+
+                        String _removeUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
+                        command = new MySqlCommand(_removeUploadQuery, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@dirname", getDirTitle);
+                        command.ExecuteNonQuery();
+
                     }
 
                     if (Form1.instance.flowLayoutPanel1.Controls.Count == 0) {
@@ -189,7 +214,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 12592;
+                int mainPort_ = 12033;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
