@@ -90,7 +90,7 @@ namespace FlowSERVER1
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 12033;
+            int mainPort_ =  11160;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
@@ -138,12 +138,15 @@ namespace FlowSERVER1
                             label.Location = new Point(3, 27);
                         }
 
+                        String getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
                         con.Open();
-                        string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD) VALUES(@CUST_USERNAME,@CUST_PASSWORD)";
+                        string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE)";
 
                         using (var cmd = new MySqlCommand(query, con)) {
                             cmd.Parameters.AddWithValue("@CUST_USERNAME", get_user);
                             cmd.Parameters.AddWithValue("@CUST_PASSWORD", get_pass);
+                            cmd.Parameters.AddWithValue("@CREATED_DATE",getDate);
                             cmd.ExecuteNonQuery();
                         }
 

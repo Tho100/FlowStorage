@@ -288,6 +288,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ptxFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ptxFORM.Designer.cs">
+      <DependentUpon>ptxFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="remAccFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -353,6 +359,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ptxFORM.resx">
+      <DependentUpon>ptxFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -379,6 +388,7 @@
   <ItemGroup>
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
+    <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
     <None Include="Resources\icons8-pdf-60 %281%29.png" />
     <None Include="Resources\icons8-exe-96.png" />
     <None Include="Resources\icon1.png" />

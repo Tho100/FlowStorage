@@ -111,3 +111,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Diagnostics.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.ValueTuple.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\nl\PdfiumViewer.resources.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ptxFORM.resources

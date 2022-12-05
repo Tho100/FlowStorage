@@ -32,7 +32,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 12033;
+                int mainPort_ =  11160;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -82,7 +82,7 @@ namespace FlowSERVER1
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 12033;
+            int mainPort_ =  11160;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
@@ -367,6 +367,30 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if(typeValues[q] == ".pptx" || typeValues[q] == ".ppt") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                    textboxPic.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPtx.Owner = bgBlur;
+                            displayPtx.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
             }
         }
 
@@ -479,6 +503,7 @@ namespace FlowSERVER1
         public static int currApk = 0;
         public static int currExe = 0;
         public static int currPdf = 0;
+        public static int currPtx = 0;
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
 
@@ -488,7 +513,7 @@ namespace FlowSERVER1
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 12033;
+                int mainPort_ =  11160;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command;
@@ -774,6 +799,30 @@ namespace FlowSERVER1
                             };
                             clearRedundane();
                         }
+
+                        if(type_ == "Ptx") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                            textboxPic.Click += (sender_pt, e_pt) => {
+                                Form bgBlur = new Form();
+                                using (ptxFORM displayPtx = new ptxFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPtx.Owner = bgBlur;
+                                    displayPtx.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
                     }
 
                     if(retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -827,6 +876,12 @@ namespace FlowSERVER1
                         Byte[] _readPdfBytes = File.ReadAllBytes(open.FileName);
                         command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
                         createPanelMain("Pdf","PdfPar",currPdf);
+                    }
+                    if(retrieved == ".pptx" || retrieved == ".ppt") {
+                        currPtx++;
+                        Byte[] _readPtxBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
+                        createPanelMain("Ptx","PtxPar",currPtx);
                     }
                     if(command.ExecuteNonQuery() == 1) {
                         clearRedundane();
