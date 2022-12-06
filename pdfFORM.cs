@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using PdfiumViewer;
+using Apitron.PDF.Rasterizer;
 using System.IO;
 using System.Dynamic;
 
@@ -18,7 +18,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ =  11160;
+        public static int mainPort_ = 10851;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -40,22 +40,12 @@ namespace FlowSERVER1 {
             MySqlDataReader _readBytes = command.ExecuteReader();
             if(_readBytes.Read()) { 
                 var getPdfValues = (byte[])_readBytes["CUST_FILE"];
-                //LoadPdf(getPdfValues);
+                String base64 = Convert.ToBase64String(getPdfValues);
+
+                FileStream _FileStream = new FileStream(base64,FileMode.Open);
+                pdfViewer1.Document = new Document(_FileStream);
             }
             _readBytes.Close();
-        }
-
-        public void LoadPdf(byte[] pdfBytes) {
-            var stream = new MemoryStream(pdfBytes);
-            LoadPdf(stream);
-        }
-
-        public void LoadPdf(Stream stream) {
-            // Create PDF Document
-            var pdfDocument = PdfDocument.Load(stream);
-
-            // Load PDF Document into WinForms Control
-            //pdfViewer1.Load(pdfDocument);
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
@@ -101,6 +91,14 @@ namespace FlowSERVER1 {
 
         private void pdfRenderer1_Click(object sender, EventArgs e) {
             MessageBox.Show("FUCK YOU LOL");
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void pdfViewer1_Load(object sender, EventArgs e) {
+
         }
     }
 }

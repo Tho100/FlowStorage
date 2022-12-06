@@ -33,13 +33,14 @@ namespace FlowSERVER1 {
 
         String decryptMainKey;
         String encryptionKeyVal;
+        String custUsername;
         public void loadUserData() {
 
             string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ =  11160;
+            int mainPort_ = 10851;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";"+ "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
 
@@ -49,13 +50,33 @@ namespace FlowSERVER1 {
             var flowlayout = form.flowLayoutPanel1;
             var but6 = form.guna2Button6;
             var lab8 = form.label8;
-            var user = guna2TextBox1.Text;
-            var pass = guna2TextBox2.Text;
+            var _getEmail = guna2TextBox1.Text;
+            var _getPass = guna2TextBox2.Text;
+
+            con.Open();
+
 
             void setupRedundane() {
+
+                String _selectUser = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
+                command = con.CreateCommand();
+                command.CommandText = _selectUser;
+                command.Parameters.AddWithValue("@email",_getEmail);
+
+                List<String> _usernameValues = new List<String>();
+                MySqlDataReader _readUsers = command.ExecuteReader();
+                while(_readUsers.Read()) {
+                    _usernameValues.Add(_readUsers.GetString(0));
+                }
+                _readUsers.Close();
+
+                if(_usernameValues.Count() > 0) {
+                    custUsername = _usernameValues[0];
+                }
+
                 flowlayout.Controls.Clear();
                 form.listBox1.Items.Clear();
-                form.label5.Text = user;
+                form.label5.Text = custUsername;
                 but6.Visible = false;
                 lab8.Visible = false;
                 label4.Visible = false;
@@ -67,15 +88,13 @@ namespace FlowSERVER1 {
                 }
             }
 
-            con.Open();
-
             //////////////////// DECRYPTION AND ENCRYPTION
    
             List<String> passValuesKey_ = new List<String>();
-            String selectPasswordQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            String selectPasswordQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_EMAIL = @email";
             command = con.CreateCommand();
             command.CommandText = selectPasswordQue;
-            command.Parameters.AddWithValue("@username", user);
+            command.Parameters.AddWithValue("@email", _getEmail);
 
             MySqlDataReader userReader = command.ExecuteReader();
             while (userReader.Read()) {
@@ -90,7 +109,7 @@ namespace FlowSERVER1 {
 
             ///////////////////
 
-            if (pass == decryptMainKey) {
+            if (_getPass == decryptMainKey) {
                 Form1.instance.label3.Text = encryptionKeyVal;
                 setupRedundane();
                 this.Close();
@@ -699,7 +718,7 @@ namespace FlowSERVER1 {
                     }
                     //if(inttotalRowFold > 0) {
                     //_generateUserDirectory(user,pass,intTotalRowDir);
-                    _generateUserFolder(user,pass);
+                    _generateUserFolder(custUsername,_getPass);
                     
                     //}
 

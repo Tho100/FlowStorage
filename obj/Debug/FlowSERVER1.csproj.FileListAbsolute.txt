@@ -112,3 +112,13 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Threading.Ta
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.ValueTuple.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\nl\PdfiumViewer.resources.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ptxFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Controls.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Rasterizer.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Controls.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\BitMiracle.LibJpeg.NET.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.PDFPrinter.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Windows.PDFBookmarks.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Windows.PDFViewer.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ionic.Zlib.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\log4net.dll

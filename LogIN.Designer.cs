@@ -86,7 +86,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(99, 20);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Username";
+            this.label2.Text = "Email";
             // 
             // guna2Panel1
             // 
@@ -128,7 +128,7 @@
             this.guna2Button4.FillColor = System.Drawing.Color.Empty;
             this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button4.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button4.Location = new System.Drawing.Point(289, 296);
+            this.guna2Button4.Location = new System.Drawing.Point(287, 298);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(80, 23);
             this.guna2Button4.TabIndex = 24;
@@ -282,7 +282,7 @@
             this.guna2Panel2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Panel2.Location = new System.Drawing.Point(-7, -4);
             this.guna2Panel2.Name = "guna2Panel2";
-            this.guna2Panel2.Size = new System.Drawing.Size(504, 60);
+            this.guna2Panel2.Size = new System.Drawing.Size(518, 60);
             this.guna2Panel2.TabIndex = 19;
             // 
             // label5

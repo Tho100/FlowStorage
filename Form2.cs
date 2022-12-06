@@ -83,89 +83,113 @@ namespace FlowSERVER1
                 MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
             }
         }
-
         private void guna2Button2_Click(object sender, EventArgs e) {
 
             string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ =  11160;
+            int mainPort_ = 10851;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
             MySqlCommand command;
 
-            string get_user = guna2TextBox1.Text;
-            string get_pass = guna2TextBox2.Text;
-            var flowlayout = Form1.instance.flowLayoutPanel1;
+            String _getEmail = guna2TextBox1.Text;
+            String _getPass = guna2TextBox2.Text;
+            String _getUser = guna2TextBox3.Text;
+            Control flowlayout = Form1.instance.flowLayoutPanel1;
 
             con.Open();
-            //String verifyQue = "SELECT * FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-            String verifyQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+            
+            String verifyEmailQue = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
             command = con.CreateCommand();
-            command.CommandText = verifyQue;
-            command.Parameters.AddWithValue("@username", get_user);
-            //            command.Parameters.AddWithValue("@password", get_pass);
+            command.CommandText = verifyEmailQue;
+            command.Parameters.AddWithValue("@email", _getEmail);
 
-            List<string> userExists = new List<string>();
+            List<String> emailExists = new List<String>();
+            List<String> usernameExists = new List<String>();
 
-            MySqlDataReader userReader = command.ExecuteReader();
-            while (userReader.Read()) {
-                userExists.Add(userReader.GetString(0));
+            MySqlDataReader emailReader = command.ExecuteReader();
+            while (emailReader.Read()) {
+                emailExists.Add(emailReader.GetString(0));
             }
+            emailReader.Close();
 
-            userReader.Close();
-            con.Close();
+            String verifyUsernameQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+            command = con.CreateCommand();
+            command.CommandText = verifyUsernameQue;
+            command.Parameters.AddWithValue("@username", _getUser);
 
-            if (userExists.Count() >= 1) {
-                label4.Visible = true;
-                label4.Text = "Username is taken.";
+            MySqlDataReader usernameReader = command.ExecuteReader();
+            while (usernameReader.Read()) {
+                usernameExists.Add(usernameReader.GetString(0));
+            }
+            usernameReader.Close();
+
+            if (emailExists.Count() >= 1 || usernameExists.Count() >= 1) {
+                if(emailExists.Count() >= 1) {
+                    label5.Visible = true;
+                    label5.Text = "Email already exists.";
+                } 
+                if(usernameExists.Count() >= 1) {
+                    label7.Visible = true;
+                    label7.Text = "Username is taken.";
+                }
             }
             else {
+                label5.Visible = false;
                 label4.Visible = false;
-                if (!String.IsNullOrEmpty(get_pass)) {
-                    if (!String.IsNullOrEmpty(get_user)) {
-                        flowlayout.Controls.Clear();
-                        if (flowlayout.Controls.Count == 0) {
-                            Form1.instance.label8.Visible = true;
-                            Form1.instance.guna2Button6.Visible = true;
+                label7.Visible = false;
+                if (!String.IsNullOrEmpty(_getUser)) {
+                    if (!String.IsNullOrEmpty(_getPass)) {
+                        if (!String.IsNullOrEmpty(_getEmail)) {
+                            flowlayout.Controls.Clear();
+                            if (flowlayout.Controls.Count == 0) {
+                                Form1.instance.label8.Visible = true;
+                                Form1.instance.guna2Button6.Visible = true;
+                            }
+                            if (Form1.instance.setupLabel.Text.Length > 14) {
+                                var label = Form1.instance.setupLabel;
+                                label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                label.Location = new Point(3, 27);
+                            }
+
+                            var encryptionPass = EncryptionModel.Encrypt(_getPass, "ABHABH24");
+                            Form1.instance.setupLabel.Text = _getUser;
+                            Form1.instance.label3.Text = encryptionPass;
+
+                            String getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                            string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+
+                            using (var cmd = new MySqlCommand(query, con)) {
+                                cmd.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptionPass);
+                                cmd.Parameters.AddWithValue("@CREATED_DATE", getDate);
+                                cmd.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            label5.Visible = false;
+                            label4.Visible = false;
+                            Form1.instance.label5.Text = _getUser;
+                            Form1.instance.listBox1.Items.Clear();
+                            Form1.instance.listBox1.Items.Add("Home");
+                            Form1.instance.listBox1.SelectedIndex = 0;
+                            setupTime();
+
+                            this.Close();
                         }
-                        Form1.instance.setupLabel.Text = get_user;
-                        Form1.instance.label3.Text = get_pass;
-                        if (Form1.instance.setupLabel.Text.Length > 14) {
-                            var label = Form1.instance.setupLabel;
-                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                            label.Location = new Point(3, 27);
+                        else {
+                            label5.Visible = true;
                         }
-
-                        String getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                        con.Open();
-                        string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE)";
-
-                        using (var cmd = new MySqlCommand(query, con)) {
-                            cmd.Parameters.AddWithValue("@CUST_USERNAME", get_user);
-                            cmd.Parameters.AddWithValue("@CUST_PASSWORD", get_pass);
-                            cmd.Parameters.AddWithValue("@CREATED_DATE",getDate);
-                            cmd.ExecuteNonQuery();
-                        }
-
-                        label5.Visible = false;
-                        label4.Visible = false;
-                        Form1.instance.label5.Text = get_user;
-                        Form1.instance.listBox1.Items.Clear();
-                        Form1.instance.listBox1.Items.Add("Home");
-                        Form1.instance.listBox1.SelectedIndex = 0;
-                        setupTime();
-
-                        this.Close();
                     }
                     else {
-                        label5.Visible = true;
+                        label4.Visible = true;
                     }
                 }
                 else {
-                    label4.Visible = true;
+                    label7.Visible = true;
                 }
             }
         }
