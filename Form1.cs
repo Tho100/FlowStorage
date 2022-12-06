@@ -27,14 +27,14 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 10851;
+        public static int mainPort_ = 14024;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
 
         public Form1() {
             InitializeComponent();
-            randomizeUser();
+            //randomizeUser();
 
             instance = this;
             setupLabel = label5;
@@ -48,8 +48,10 @@ namespace FlowSERVER1 {
                 String _PassSed = File.ReadLines(_getAuth).ElementAtOrDefault(1);
                 if (new FileInfo(_getAuth).Length != 0) {
                     guna2Panel7.Visible = false;
-                    label5.Text = _UsernameFirst;
-                    label3.Text = _PassSed;
+                    label5.Text = _PassSed;
+                    label3.Text = _UsernameFirst;
+
+                    setupTime();
 
                     string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowTxt, con);
@@ -82,7 +84,6 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@password",label3.Text);
                     var totalRow = command.ExecuteScalar();
                     var intRow = Convert.ToInt32(totalRow);
-                    label6.Text = intRow.ToString();
 
                     string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowExcel,con);
@@ -105,6 +106,13 @@ namespace FlowSERVER1 {
                     var totalRowGif = command.ExecuteScalar();
                     int intTotalRowGif = Convert.ToInt32(totalRowGif);
 
+                    string countRowPdf = "SELECT COUNT(CUST_USERNAME) FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(countRowPdf, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
+                    var totalRowPdf = command.ExecuteScalar();
+                    int intTotalRowPdf = Convert.ToInt32(totalRowPdf);
+
                     string countRowDirectory = "SELECT COUNT(CUST_USERNAME) FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowDirectory, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -112,35 +120,39 @@ namespace FlowSERVER1 {
                     var totalRowDir = command.ExecuteScalar();
                     int intTotalRowDir = Convert.ToInt32(totalRowDir);
 
+                    //string countRowUploadDir = "SELECT COUNT"
+
                     // LOAD IMG
                     if (intRow > 0) {
-                        _generateUserFiles("file_info", "imgFile", intRow);
+                        _generateUserFiles("file_info", "imgAtLoad", intRow);
                     }
                     // LOAD .TXT
                     if (intTotalRowTxt > 0) {
-                        _generateUserFiles("file_info_expand", "txtFile", intTotalRowTxt);
+                        _generateUserFiles("file_info_expand", "txtAtLoad", intTotalRowTxt);
                     }
                     // LOAD EXE
                     if (intTotalRowExe > 0) {
-                        _generateUserFiles("file_info_exe", "exeFile", intTotalRowExe);
+                        _generateUserFiles("file_info_exe", "exeAtLoad", intTotalRowExe);
                     }
                     // LOAD VID
                     if (intTotalRowVid > 0) {
-                        _generateUserFiles("file_info_vid", "vidFile", intTotalRowVid);
+                        _generateUserFiles("file_info_vid", "vidAtLoad", intTotalRowVid);
                     }
                     if (intTotalRowExcel > 0) {
-                        _generateUserFiles("file_info_excel", "exlFile", intTotalRowExcel);
+                        _generateUserFiles("file_info_excel", "exlAtLoad", intTotalRowExcel);
                     }
                     if (intTotalRowAudi > 0) {
-                        _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
+                        _generateUserFiles("file_info_audi", "audiAtLoad", intTotalRowAudi);
                     }
                     if(intTotalRowGif > 0) {
-                        _generateUserFiles("file_info_gif","gifFile",intTotalRowGif);
+                        _generateUserFiles("file_info_gif","gifAtLoad",intTotalRowGif);
+                    }
+                    if(intTotalRowPdf > 0) {
+                        _generateUserFiles("file_info_pdf","pdfAtLoad",intTotalRowPdf);
                     }
                     if(intTotalRowDir > 0) {
                         //_generateUserFiles("file_info_directory","dirFile",intTotalRowDir);
                     }
-                    //label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRow).ToString();
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                     // @ ADD FOLDERS TO LISTBOX
@@ -155,8 +167,8 @@ namespace FlowSERVER1 {
                     command = con.CreateCommand();
                     command.CommandText = getTitles;
 
-                    command.Parameters.AddWithValue("@username", label3.Text);
-                    command.Parameters.AddWithValue("@password", label5.Text);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
                     MySqlDataReader fold_Reader = command.ExecuteReader();
                     while (fold_Reader.Read()) {
                         titleValues.Add(fold_Reader.GetString(0));
@@ -1766,56 +1778,62 @@ namespace FlowSERVER1 {
                 label22.Visible = false;
                 label12.Visible = false;
                 label11.Visible = false;
-                if (!String.IsNullOrEmpty(_getEmail)) {
-                    if (!String.IsNullOrEmpty(_getPass)) {
-                        if (!String.IsNullOrEmpty(_getUser)) {
-                            flowlayout.Controls.Clear();
-                            if (flowlayout.Controls.Count == 0) {
-                                Form1.instance.label8.Visible = true;
-                                Form1.instance.guna2Button6.Visible = true;
+                if(_getPass.Length > 5) {
+                    if (!String.IsNullOrEmpty(_getEmail)) {
+                        if (!String.IsNullOrEmpty(_getPass)) {
+                            if (!String.IsNullOrEmpty(_getUser)) {
+                                flowlayout.Controls.Clear();
+                                if (flowlayout.Controls.Count == 0) {
+                                    Form1.instance.label8.Visible = true;
+                                    Form1.instance.guna2Button6.Visible = true;
+                                }
+                                if (Form1.instance.setupLabel.Text.Length > 14) {
+                                    var label = Form1.instance.setupLabel;
+                                    label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                    label.Location = new Point(3, 27);
+                                }
+
+                                var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
+                                setupLabel.Text = _getUser;
+                                label3.Text = encryptPassVal;
+                                encryptedPassKey = encryptPassVal;
+
+                                String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                                string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+                                using (var cmd = new MySqlCommand(query, con)) {
+                                    cmd.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                    cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
+                                    cmd.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                                    cmd.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                label11.Visible = false;
+                                label12.Visible = false;
+                                guna2Panel7.Visible = false;
+                                guna2TextBox1.Text = String.Empty;
+                                guna2TextBox2.Text = String.Empty;
+                                guna2TextBox3.Text = String.Empty;
+                                setupTime();
+
+                                listBox1.Items.Add("Home");
+                                listBox1.SelectedIndex = 0;
                             }
-                            if (Form1.instance.setupLabel.Text.Length > 14) {
-                                var label = Form1.instance.setupLabel;
-                                label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                label.Location = new Point(3, 27);
+                            else {
+                                label11.Visible = true;
                             }
-
-                            var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
-                            setupLabel.Text = _getUser;
-                            label3.Text = encryptPassVal;
-                            encryptedPassKey = encryptPassVal;
-
-                            String getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                            string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
-                            using (var cmd = new MySqlCommand(query, con)) {
-                                cmd.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
-                                cmd.Parameters.AddWithValue("@CREATED_DATE", getDate);
-                                cmd.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            label11.Visible = false;
-                            label12.Visible = false;
-                            guna2Panel7.Visible = false;
-                            guna2TextBox1.Text = String.Empty;
-                            guna2TextBox2.Text = String.Empty;
-                            setupTime();
-
-                            listBox1.Items.Add("Home");
-                            listBox1.SelectedIndex = 0;
                         }
                         else {
-                            label11.Visible = true;
+                            label12.Visible = true;
                         }
                     }
                     else {
-                        label12.Visible = true;
+                        label22.Visible = true;
                     }
-                }
-                else {
-                    label22.Visible = true;
+                } else {
+                    label12.Visible = true;
+                    label12.Text = "Password must be longer than 5 characters.";
                 }
             }
         }
@@ -2404,14 +2422,7 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(_removeDirQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@dirname", titleLab.Text);
-                        if (command.ExecuteNonQuery() == 1) {
-                            MessageBox.Show(titleLab.Text);
-                        } else {
-                            MessageBox.Show(titleLab.Text,"failed");
-                        }
-
-                        MessageBox.Show(titleLab.Text);
-             
+                        command.ExecuteNonQuery();                     
 
                         panelPic_Q.Dispose();
                         if (flowLayoutPanel1.Controls.Count == 0) {

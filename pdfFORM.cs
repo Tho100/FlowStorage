@@ -18,7 +18,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 10851;
+        public static int mainPort_ = 14024;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -40,10 +40,15 @@ namespace FlowSERVER1 {
             MySqlDataReader _readBytes = command.ExecuteReader();
             if(_readBytes.Read()) { 
                 var getPdfValues = (byte[])_readBytes["CUST_FILE"];
-                String base64 = Convert.ToBase64String(getPdfValues);
+                //String base64 = Convert.ToBase64String(getPdfValues);
 
-                FileStream _FileStream = new FileStream(base64,FileMode.Open);
-                pdfViewer1.Document = new Document(_FileStream);
+                using(var _memoryStream = new MemoryStream(getPdfValues)) {
+                    _memoryStream.Position = 0;
+                    pdfViewer1.Document = new Document(_memoryStream);
+                }
+
+                //FileStream _FileStream = new FileStream(base64,FileMode.Open);
+                //pdfViewer1.Document = new Document(_FileStream);
             }
             _readBytes.Close();
         }

@@ -18,21 +18,12 @@ namespace FlowSERVER1 {
 
         private void guna2Button2_Click(object sender, EventArgs e) {
 
-            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            String _getAuth = _getPath + "\\CUST_DATAS.txt";
-            if (File.Exists(_getAuth)) {
-                String _UsernameFirst = File.ReadLines(_getAuth).First();
-                if (_UsernameFirst == remAccFORM.instance.label1.Text) {
-                    Directory.Delete(_getPath,true);
-                }
-            } 
-
             try {
                 string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 10851;
+                int mainPort_ = 14024;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command,command_Read;
@@ -56,6 +47,12 @@ namespace FlowSERVER1 {
                 var encryptedPass = passValues_[0];
 
                 if(guna2TextBox1.Text == decryptPass) {
+                    String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                    String _getAuth = _getPath + "\\CUST_DATAS.txt";
+                    if (File.Exists(_getAuth)) {
+                        Directory.Delete(_getPath,true);
+                    }
+
                     String remInfo_Query = "DELETE FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remInfo_Query, con);
                     command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
@@ -70,6 +67,18 @@ namespace FlowSERVER1 {
 
                     String remTxt_Query = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remTxt_Query, con);
+                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
+                    command.ExecuteNonQuery();
+
+                    String remApk_Query = "DELETE FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(remApk_Query, con);
+                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
+                    command.Parameters.AddWithValue("@password", encryptedPass);
+                    command.ExecuteNonQuery();
+
+                    String remPdf_Query = "DELETE FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(remPdf_Query, con);
                     command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
                     command.ExecuteNonQuery();
