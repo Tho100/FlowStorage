@@ -122,3 +122,5 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Win
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Windows.PDFViewer.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ionic.Zlib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\log4net.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x86\pdfium.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x64\pdfium.dll

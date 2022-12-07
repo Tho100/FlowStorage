@@ -40,7 +40,7 @@ namespace FlowSERVER1 {
             string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
             string username = "root"; // epiz_33067528 | root
             string password = "nfreal-yt10";
-            int mainPort_ = 14024;
+            int mainPort_ = 15817;
             string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";"+ "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
             MySqlConnection con = new MySqlConnection(constring);
 
@@ -663,7 +663,7 @@ namespace FlowSERVER1 {
                                 picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                                 picMain_Q.Click += (sender_pd, e_pd) => {
                                     Form bgBlur = new Form();
-                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 14024;
+        public static int mainPort_ = 15817;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -499,7 +499,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     picMain_Q.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
-                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -597,7 +597,7 @@ namespace FlowSERVER1 {
                 dateLab.Location = new Point(12, 208);
                 dateLab.Text = dateValues[i];
 
-                String getTitleQue = "SELECT FILE_NAME FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                String getTitleQue = "SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(getTitleQue, con);
                 command = con.CreateCommand();
                 command.CommandText = getTitleQue;
@@ -662,7 +662,7 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FILE_NAME = @filename AND FOLDER_TITLE = @foldername";
+                        String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@password", label3.Text);
@@ -727,7 +727,7 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
                 if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css") {
-                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
+                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@password", label3.Text);
@@ -789,6 +789,30 @@ namespace FlowSERVER1 {
                     img.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
                         using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
+                if(typeValues[i] == ".pdf") {
+                    img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                    img.Click += (sender_pdf, e_pdf) => {
+                        Form bgBlur = new Form();
+                        using (pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1262,7 +1286,7 @@ namespace FlowSERVER1 {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                         textboxPic.Click += (sender_pd, e_pd) => {
                             Form bgBlur = new Form();
-                            using (pdfFORM displayPdf = new pdfFORM(titleLab.Text)) {
+                            using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -1865,7 +1889,7 @@ namespace FlowSERVER1 {
             try {
 
                 void deletionFoldFile(String _Username, String _fileName, String _foldTitle) {
-                    String _remQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND FILE_NAME = @filename";
+                    String _remQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(_remQue,con);
                     command.Parameters.AddWithValue("@username",_Username);
                     command.Parameters.AddWithValue("@foldtitle", _foldTitle);
@@ -1885,7 +1909,7 @@ namespace FlowSERVER1 {
                     listBox1.Items.Add(_getDirTitle);
                     flowLayoutPanel1.Controls.Clear();
 
-                    String insertFoldQue_ = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_PASSWORD,CUST_FILE,FILE_TYPE,UPLOAD_DATE,FILE_NAME) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_PASSWORD,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@FILE_NAME)";
+                    String insertFoldQue_ = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_PASSWORD,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_PASSWORD,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH)";
                     command = new MySqlCommand(insertFoldQue_,con);
 
                     command.Parameters.Add("@FOLDER_TITLE", MySqlDbType.Text);
@@ -1894,7 +1918,7 @@ namespace FlowSERVER1 {
                     command.Parameters.Add("@FILE_TYPE",MySqlDbType.VarChar,15);
                     command.Parameters.Add("@UPLOAD_DATE",MySqlDbType.Text);
                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                    command.Parameters.Add("@FILE_NAME", MySqlDbType.Text);
+                    command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
 
                     String[] _TitleValues = Directory.GetFiles(_getDirPath,"*").Select(Path.GetFileName).ToArray();
                     
@@ -1904,7 +1928,7 @@ namespace FlowSERVER1 {
                         command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
                         command.Parameters["@CUST_USERNAME"].Value = label5.Text;
                         command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@FILE_NAME"].Value = Path.GetFileName(_Files);
+                        command.Parameters["@CUST_FILE_PATH"].Value = Path.GetFileName(_Files);
                         command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;
                         _IntCurr++;
@@ -2096,6 +2120,34 @@ namespace FlowSERVER1 {
                             textboxExl.Click += (sender_ap, e_ap) => {
                                 Form bgBlur = new Form();
                                 using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                            if(command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+                        }
+                        if(_extTypes == ".pdf") {
+                            Byte[] readPdfBytes = File.ReadAllBytes(_Files);
+                            command.Parameters["@CUST_FILE"].Value = readPdfBytes;
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                            textboxExl.Click += (sender_pdf, e_pdf) => {
+                                Form bgBlur = new Form();
+                                using (pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;

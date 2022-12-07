@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using Apitron.PDF.Rasterizer;
 using System.IO;
 using System.Dynamic;
+using PdfiumViewer;
 
 namespace FlowSERVER1 {
     public partial class pdfFORM : Form {
@@ -18,19 +19,18 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 14024;
+        public static int mainPort_ = 15817;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
-        public pdfFORM(String _FileTitle) {
+        public pdfFORM(String _FileTitle, String _tableName) {
             InitializeComponent();
             label1.Text = _FileTitle;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             con.Open();
-            // @ SELECT PDF BYTES
 
-            String _getPdfBytes = "SELECT CUST_FILE FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            String _getPdfBytes = "SELECT CUST_FILE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(_getPdfBytes,con);
             command = con.CreateCommand();
             command.CommandText = _getPdfBytes;
@@ -40,17 +40,19 @@ namespace FlowSERVER1 {
             MySqlDataReader _readBytes = command.ExecuteReader();
             if(_readBytes.Read()) { 
                 var getPdfValues = (byte[])_readBytes["CUST_FILE"];
-                //String base64 = Convert.ToBase64String(getPdfValues);
-
-                using(var _memoryStream = new MemoryStream(getPdfValues)) {
-                    _memoryStream.Position = 0;
-                    pdfViewer1.Document = new Document(_memoryStream);
-                }
-
-                //FileStream _FileStream = new FileStream(base64,FileMode.Open);
-                //pdfViewer1.Document = new Document(_FileStream);
+                setupPdf(getPdfValues);
             }
             _readBytes.Close();
+        }
+        // @SUMMARY Convert bytes of PDF file to stream
+        public void setupPdf(byte[] pdfBytes) {
+            var _getStream = new MemoryStream(pdfBytes);
+            LoadPdf(_getStream);
+        }
+        // @SUMMARY Load stream of bytes to pdf renderer
+        public void LoadPdf(Stream stream) {
+            var _pdfDocumentSetup = PdfDocument.Load(stream);
+            pdfRenderer1.Load(_pdfDocumentSetup);
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
@@ -92,10 +94,6 @@ namespace FlowSERVER1 {
                 }
             }
             _readBytes.Close();
-        }
-
-        private void pdfRenderer1_Click(object sender, EventArgs e) {
-            MessageBox.Show("FUCK YOU LOL");
         }
 
         private void label1_Click(object sender, EventArgs e) {
