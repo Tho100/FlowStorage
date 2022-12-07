@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 15817;
+        public static int mainPort_ = 10616;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -31,6 +31,8 @@ namespace FlowSERVER1 {
             label20.Text = countTotalFolders.ToString();
 
             con.Open();
+
+            // @SUMMARY Retrieve account creation date and display the date on label
 
             String _getJoinDate = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
             command = con.CreateCommand();
@@ -106,6 +108,18 @@ namespace FlowSERVER1 {
 
         private void chart1_Click(object sender, EventArgs e) {
 
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button3_Click(object sender, EventArgs e) {
+            this.Close();
         }
     }
 }
