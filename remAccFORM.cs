@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 17873;
+        public static int mainPort_ = 13179;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -54,6 +54,10 @@ namespace FlowSERVER1 {
             chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
             generateChart("Image","file_info");
             generateChart("Text","file_info_expand");
+            generateChart("Video","file_info_vid");
+            generateChart("PDF","file_info_pdf");
+            generateChart("APK","file_info_apk");
+            generateChart("Exe","file_info_exe");
 
         }
         // @SUMMARY Total upload charts stats
@@ -76,6 +80,16 @@ namespace FlowSERVER1 {
                 _datesValues.Add(_readRowUploadTexts.GetString("UPLOAD_DATE"));
             }
             _readRowUploadTexts.Close();
+
+            if(_tableName == "file_info") {
+                label26.Text = _totalRow[0].ToString();
+            }
+            if(_tableName == "file_info_expand") {
+                label27.Text = _totalRow[0].ToString();
+            }
+            if (_tableName == "file_info_vid") {
+                label28.Text = _totalRow[0].ToString();
+            }
 
             for (int i = 0; i < _totalRow.Count(); i++) {
                 chart1.Series[_serName].Points.AddXY(_datesValues[i], _totalRow[i]);
