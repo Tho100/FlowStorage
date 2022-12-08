@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 10616;
+        public static int mainPort_ = 17873;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
         public MySqlCommand command;
@@ -51,32 +51,37 @@ namespace FlowSERVER1 {
 
             con.Close();
 
-            // @SUMMARY Total upload charts stats
+            chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
+            generateChart("Image","file_info");
+            generateChart("Text","file_info_expand");
+
+        }
+        // @SUMMARY Total upload charts stats
+
+        public void generateChart(String _serName, String _tableName) {
 
             con.Open();
 
             List<String> _datesValues = new List<string>();
             List<int> _totalRow = new List<int>();
 
-            String _countUpload = "SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM file_info WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) >= 1";
+            String _countUpload = "SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM " + _tableName + " WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) >= 1";
             command = con.CreateCommand();
             command.CommandText = _countUpload;
-            command.Parameters.AddWithValue("@username",label5.Text);
+            command.Parameters.AddWithValue("@username", label5.Text);
 
-            MySqlDataReader _readRowUpload = command.ExecuteReader();
-            while(_readRowUpload.Read()) {
-                _totalRow.Add(_readRowUpload.GetInt32("COUNT(UPLOAD_DATE)"));
-                _datesValues.Add(_readRowUpload.GetString("UPLOAD_DATE"));
+            MySqlDataReader _readRowUploadTexts = command.ExecuteReader();
+            while (_readRowUploadTexts.Read()) {
+                _totalRow.Add(_readRowUploadTexts.GetInt32("COUNT(UPLOAD_DATE)"));
+                _datesValues.Add(_readRowUploadTexts.GetString("UPLOAD_DATE"));
             }
-            _readRowUpload.Close();
+            _readRowUploadTexts.Close();
 
-            for(int i=0; i<_totalRow.Count(); i++) {
-                chart1.Series["Total Upload"].Points.AddXY(_datesValues[i],_totalRow[i]);
+            for (int i = 0; i < _totalRow.Count(); i++) {
+                chart1.Series[_serName].Points.AddXY(_datesValues[i], _totalRow[i]);
             }
-
             con.Close();
         }
-
         private void remAccFORM_Load(object sender, EventArgs e) {
 
         }
