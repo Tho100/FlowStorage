@@ -12,15 +12,9 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class remAccFORM : Form {
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public static remAccFORM instance;
-        public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-        public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string username = "root"; // epiz_33067528 | root
-        public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13179;
-        public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-        public MySqlConnection con = new MySqlConnection(constring);
-        public MySqlCommand command;
         public remAccFORM(String _accName) {
             InitializeComponent();
             instance = this;
@@ -29,8 +23,6 @@ namespace FlowSERVER1 {
 
             var countTotalFolders = Form1.instance.listBox1.Items.Count-1;
             label20.Text = countTotalFolders.ToString();
-
-            con.Open();
 
             // @SUMMARY Retrieve account creation date and display the date on label
 
@@ -49,8 +41,6 @@ namespace FlowSERVER1 {
             var joinedDate = _JoinedDateValues[0];
             label16.Text = joinedDate;
 
-            con.Close();
-
             chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
             generateChart("Image","file_info");
             generateChart("Text","file_info_expand");
@@ -63,8 +53,6 @@ namespace FlowSERVER1 {
         // @SUMMARY Total upload charts stats
 
         public void generateChart(String _serName, String _tableName) {
-
-            con.Open();
 
             List<String> _datesValues = new List<string>();
             List<int> _totalRow = new List<int>();
@@ -81,20 +69,21 @@ namespace FlowSERVER1 {
             }
             _readRowUploadTexts.Close();
 
-            if(_tableName == "file_info") {
-                label26.Text = _totalRow[0].ToString();
-            }
-            if(_tableName == "file_info_expand") {
-                label27.Text = _totalRow[0].ToString();
-            }
-            if (_tableName == "file_info_vid") {
-                label28.Text = _totalRow[0].ToString();
+            if(_totalRow.Count() > 0) {
+                if(_tableName == "file_info") {
+                    label26.Text = _totalRow[0].ToString();
+                }
+                if(_tableName == "file_info_expand") {
+                    label27.Text = _totalRow[0].ToString();
+                }
+                if (_tableName == "file_info_vid") {
+                    label28.Text = _totalRow[0].ToString();
+                }
             }
 
             for (int i = 0; i < _totalRow.Count(); i++) {
                 chart1.Series[_serName].Points.AddXY(_datesValues[i], _totalRow[i]);
             }
-            con.Close();
         }
         private void remAccFORM_Load(object sender, EventArgs e) {
 
@@ -139,6 +128,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.Close();
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e) {
+
         }
     }
 }

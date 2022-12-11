@@ -16,6 +16,8 @@ using Guna.UI2.WinForms;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public static LogIN instance;
         public LogIN() {
             InitializeComponent();
@@ -36,25 +38,12 @@ namespace FlowSERVER1 {
         String custUsername;
         public void loadUserData() {
 
-            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-            string username = "root"; // epiz_33067528 | root
-            string password = "nfreal-yt10";
-            int mainPort_ = 13179;
-            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";"+ "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-            MySqlConnection con = new MySqlConnection(constring);
-
-            MySqlCommand command;
-
             var form = Form1.instance;
             var flowlayout = form.flowLayoutPanel1;
             var but6 = form.guna2Button6;
             var lab8 = form.label8;
             var _getEmail = guna2TextBox1.Text;
             var _getPass = guna2TextBox2.Text;
-
-            con.Open();
-
 
             void setupRedundane() {
 

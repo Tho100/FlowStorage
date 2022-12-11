@@ -19,24 +19,27 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+                /*string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
                 string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
                 string username = "root"; // epiz_33067528 | root
                 string password = "nfreal-yt10";
-                int mainPort_ = 13179;
+                int mainPort_ = 11433;
                 string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
                 MySqlConnection con = new MySqlConnection(constring);
                 MySqlCommand command,command_Read;
-                con.Open();
+
+                con.Open*/
+
+                ConnectionModel.con.Open();
 
                 List<string> passValues_ = new List<string>();
 
                 String checkPassword_Query = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-                command_Read = new MySqlCommand(checkPassword_Query,con);
-                command_Read = con.CreateCommand();
-                command_Read.CommandText = checkPassword_Query;
-                command_Read.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                MySqlDataReader readerPass_ = command_Read.ExecuteReader();
+                ConnectionModel.command = new MySqlCommand(checkPassword_Query,ConnectionModel.con);
+                ConnectionModel.command = ConnectionModel.con.CreateCommand();
+                ConnectionModel.command.CommandText = checkPassword_Query;
+                ConnectionModel.command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                MySqlDataReader readerPass_ = ConnectionModel.command.ExecuteReader();
 
                 while(readerPass_.Read()) {
                     passValues_.Add(readerPass_.GetString(0));
@@ -54,12 +57,12 @@ namespace FlowSERVER1 {
                     }
 
                     String remInfo_Query = "DELETE FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remInfo_Query, con);
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password",encryptedPass);
-                    command.ExecuteNonQuery();
+                    ConnectionModel.command = new MySqlCommand(remInfo_Query, ConnectionModel.con);
+                    ConnectionModel.command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    ConnectionModel.command.Parameters.AddWithValue("@password",encryptedPass);
+                    ConnectionModel.command.ExecuteNonQuery();
 
-                    String remImg_Query = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    /*String remImg_Query = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remImg_Query, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
@@ -99,7 +102,7 @@ namespace FlowSERVER1 {
                     command = new MySqlCommand(remUploadDir, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();*/
 
                     this.Close();
                     Application.OpenForms["remAccFORM"].Close();
@@ -119,6 +122,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.Close();
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+
         }
     }
 }

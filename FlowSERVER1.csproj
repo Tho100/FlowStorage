@@ -245,6 +245,7 @@
     <Compile Include="ConfirmRemFORM.Designer.cs">
       <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConnectionModel.cs" />
     <Compile Include="EncryptionModel.cs" />
     <Compile Include="exeFORM.cs">
       <SubType>Form</SubType>

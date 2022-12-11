@@ -15,20 +15,12 @@ using PdfiumViewer;
 
 namespace FlowSERVER1 {
     public partial class pdfFORM : Form {
-        public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-        public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string username = "root"; // epiz_33067528 | root
-        public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13179;
-        public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-        public MySqlConnection con = new MySqlConnection(constring);
-        public MySqlCommand command;
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public pdfFORM(String _FileTitle, String _tableName) {
             InitializeComponent();
             label1.Text = _FileTitle;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-
-            con.Open();
 
             String _getPdfBytes = "SELECT CUST_FILE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(_getPdfBytes,con);

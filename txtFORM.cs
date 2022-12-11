@@ -18,14 +18,8 @@ namespace FlowSERVER1 {
     public partial class txtFORM : Form {
         public static txtFORM instance;
 
-        public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-        public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string username = "root"; // epiz_33067528 | root
-        public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13179;
-        public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-        public MySqlConnection con = new MySqlConnection(constring);
-        public MySqlCommand command;
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
 
         public txtFORM(String getText,String tableName,String fileName) {
             InitializeComponent();
@@ -49,7 +43,6 @@ namespace FlowSERVER1 {
                 }
 
             } else if (getText == "" && tableName == "folder_upload_info") {
-                con.Open();
                 String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
                 command = new MySqlCommand(retrieveImg, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -75,9 +68,6 @@ namespace FlowSERVER1 {
                     cssSyntax();
                 }
             } else if (tableName == "file_info_expand"){
-
-
-                con.Open();
 
                 string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                 command = new MySqlCommand(countRow, con);

@@ -23,14 +23,17 @@ namespace FlowSERVER1 {
         public static Form1 instance;
         public Label setupLabel;
 
-        public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+        /*public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
         public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string username = "root"; // epiz_33067528 | root
         public static string password = "nfreal-yt10";
-        public static int mainPort_ = 13179;
+        public static int mainPort_ = 11433;
         public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
         public MySqlConnection con = new MySqlConnection(constring);
-        public MySqlCommand command;
+        public MySqlCommand command;*/
+
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
 
         public Form1() {
             InitializeComponent();
@@ -163,12 +166,12 @@ namespace FlowSERVER1 {
                     List<String> titleValues = new List<String>();
 
                     String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(getTitles, con);
-                    command = con.CreateCommand();
+                    command = new MySqlCommand(getTitles, ConnectionModel.con);
+                    command = ConnectionModel.con.CreateCommand();
                     command.CommandText = getTitles;
 
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
+                    ConnectionModel.command.Parameters.AddWithValue("@password", label3.Text);
                     MySqlDataReader fold_Reader = command.ExecuteReader();
                     while (fold_Reader.Read()) {
                         titleValues.Add(fold_Reader.GetString(0));
@@ -887,41 +890,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        // GENERATE USERNAME
-        public void randomizeUser() {
-            Random setupRand = new Random();
-	    int setupTotalRand = setupRand.Next(0,300);
-            int randInt1 = setupRand.Next(0,setupTotalRand);
-            int randInt2 = setupRand.Next(1, 300);
-            int randInt3 = setupRand.Next(0, 300);
-            int randInt4 = setupRand.Next(0, 9);
-            var usernameSet = "Guest" + randInt1 + randInt2 + randInt3 + randInt4;
-            var setupPath = @"C:\FLOWSTORAGEINFO\cust_username.txt";
-            Directory.CreateDirectory(@"C:\FLOWSTORAGEINFO\"); 
-            if(Directory.Exists(@"C:\FLOWSTORAGEINFO\")) {
-                using (StreamWriter sw = File.AppendText(setupPath)) {
-                    sw.WriteLine(usernameSet);
-                    sw.Close();
-                }
-            }
-
-            String retrieveFirstLine = File.ReadLines(@"C:\FLOWSTORAGEINFO\cust_username.txt").First();
-            label5.Text = retrieveFirstLine;
-
-            var ReadFile = new List<string>(File.ReadAllLines(setupPath));
-            ReadFile.RemoveAt(1);
-            File.WriteAllLines(setupPath,ReadFile.ToArray());
-            setupUserDate();
-        }
-
-        public void setupUserDate() {
-            var setupPath = @"C:\FLOWSTORAGEINFO\";
-            if(Directory.Exists(setupPath)) {
-                FileInfo getCustfile = new FileInfo(setupPath + "cust_username.txt");
-                DateTime getCreationTime = getCustfile.CreationTime;
-                //label10.Text = getCreationTime.ToString().Substring(0,10);
-            }
-        }
         // Dir
         private void guna2Button1_Click(object sender, EventArgs e) {
             Form4 create_dir = new Form4();

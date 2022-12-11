@@ -18,7 +18,11 @@ using System.Globalization;
 namespace FlowSERVER1
 {
     public partial class Form2 : Form
+
     {
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
+
         public static Form2 instance;
         public Form2()
         {
@@ -26,7 +30,6 @@ namespace FlowSERVER1
             this.Text = "Login Page";
             this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
             instance = this;
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -84,15 +87,6 @@ namespace FlowSERVER1
             }
         }
         private void guna2Button2_Click(object sender, EventArgs e) {
-
-            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-            string username = "root"; // epiz_33067528 | root
-            string password = "nfreal-yt10";
-            int mainPort_ = 13179;
-            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-            MySqlConnection con = new MySqlConnection(constring);
-            MySqlCommand command;
 
             String _getEmail = guna2TextBox1.Text;
             String _getPass = guna2TextBox2.Text;
