@@ -13,6 +13,8 @@ using System.IO;
 
 namespace FlowSERVER1 {
     public partial class apkFORM : Form {
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public apkFORM(String _titleFile, String _userName) {
             InitializeComponent();
             label1.Text = _titleFile;
@@ -60,17 +62,6 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
 
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
-
                 String _readApkFiles = "SELECT CUST_FILE FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
                 command = new MySqlCommand(_readApkFiles,con);
@@ -95,7 +86,7 @@ namespace FlowSERVER1 {
                 //_msApk.Close();
 
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                MessageBox.Show("Failed to download this file.","Flowstorage");
             }
         }
     }

@@ -1585,7 +1585,15 @@ namespace FlowSERVER1 {
                 else if (retrieved == ".gif") {
                     gifCurr++;
                     Byte[] toByteGif_ = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_gif", "PanGif", gifCurr, toByteGif_);
+                    /*var getImg = new Bitmap(open.FileName);
+                    var imgWidth = getImg.Width;
+                    var imgHeight = getImg.Height;
+                    using (MemoryStream ms = new MemoryStream()) {
+                        getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+                        var setupGif = ms.ToArray();
+                        createPanelMain("file_info_gif", "PanGif", gifCurr, setupGif);
+                    }*/
+                    createPanelMain("file_info_gif","PanGif",gifCurr,toByteGif_);
                 }
                 else if (retrieved == ".apk") {
                     apkCurr++;
