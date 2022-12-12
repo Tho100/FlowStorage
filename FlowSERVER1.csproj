@@ -419,6 +419,7 @@
   <ItemGroup>
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
+    <None Include="Resources\icons8-javascript-50.png" />
     <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
     <None Include="Resources\icons8-pdf-60 %281%29.png" />
     <None Include="Resources\icons8-exe-96.png" />

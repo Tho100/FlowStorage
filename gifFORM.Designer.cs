@@ -176,6 +176,7 @@
             this.guna2PictureBox1.Size = new System.Drawing.Size(570, 349);
             this.guna2PictureBox1.TabIndex = 38;
             this.guna2PictureBox1.TabStop = false;
+            this.guna2PictureBox1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
             // gifFORM
             // 

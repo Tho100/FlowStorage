@@ -88,5 +88,9 @@ namespace FlowSERVER1 {
                 MessageBox.Show("Failed to download this file.","Flowstorage");
             }
         }
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

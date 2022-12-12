@@ -48,6 +48,7 @@ namespace FlowSERVER1 {
             generateChart("PDF","file_info_pdf");
             generateChart("APK","file_info_apk");
             generateChart("Exe","file_info_exe");
+            generateChart("GIF","file_info_gif");
 
         }
         // @SUMMARY Total upload charts stats
@@ -69,15 +70,15 @@ namespace FlowSERVER1 {
             }
             _readRowUploadTexts.Close();
 
-            if(_totalRow.Count() > 0) {
+            if(_totalRow.Count() >= 0) {
                 if(_tableName == "file_info") {
-                    label26.Text = _totalRow[0].ToString();
+                    label26.Text = _totalRow.Count().ToString();
                 }
                 if(_tableName == "file_info_expand") {
-                    label27.Text = _totalRow[0].ToString();
+                    //label27.Text = _totalRow[0].ToString();
                 }
                 if (_tableName == "file_info_vid") {
-                    label28.Text = _totalRow[0].ToString();
+                    //label28.Text = _totalRow[0].ToString();
                 }
             }
 

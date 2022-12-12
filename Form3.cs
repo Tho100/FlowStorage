@@ -689,6 +689,9 @@ namespace FlowSERVER1
                             else if (retrieved == ".css") {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                             }
+                            else if (retrieved == ".js") {
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
+                            }
                             textboxPic.Click += (sender_t, e_t) => {
                                 String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
                                 command = new MySqlCommand(retrieveContents,con);

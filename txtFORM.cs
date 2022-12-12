@@ -67,6 +67,9 @@ namespace FlowSERVER1 {
                 if (FileExt_ == ".css") {
                     cssSyntax();
                 }
+                if (FileExt_ == ".js") {
+                    jsSyntax();
+                }
             } else if (tableName == "file_info_expand"){
 
                 string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
@@ -102,6 +105,9 @@ namespace FlowSERVER1 {
                 if(FileExt_ == ".css") {
                     cssSyntax();
                 }
+                if(FileExt_ == ".js") {
+                    jsSyntax();
+                }
             }
         }
 
@@ -112,6 +118,29 @@ namespace FlowSERVER1 {
 
             ColorizePattern("def", _blueRGB);
             ColorizePattern("class", _blueRGB);
+
+            ColorizePattern("import", _purpleRGB);
+            ColorizePattern("from", _purpleRGB);
+            ColorizePattern("while", _purpleRGB);
+            ColorizePattern("if", _purpleRGB);
+            ColorizePattern("break", _purpleRGB);
+            ColorizePattern("return", _purpleRGB);
+
+            ColorizePattern("input", _yellowRGB);
+            ColorizePattern("print", _yellowRGB);
+            ColorizePattern("\\)", Color.Yellow);
+            ColorizePattern("\\(", Color.Yellow);
+        }
+
+        public void jsSyntax() {
+            Color _blueRGB = Color.FromArgb(49, 100, 169);
+            Color _purpleRGB = Color.FromArgb(142, 94, 175);
+            Color _yellowRGB = Color.FromArgb(250, 195, 4);
+
+            ColorizePattern("def", _blueRGB);
+            ColorizePattern("class", _blueRGB);
+            ColorizePattern("let",_blueRGB);
+            ColorizePattern("this", _blueRGB);
 
             ColorizePattern("import", _purpleRGB);
             ColorizePattern("from", _purpleRGB);

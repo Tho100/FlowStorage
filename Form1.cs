@@ -23,26 +23,16 @@ namespace FlowSERVER1 {
         public static Form1 instance;
         public Label setupLabel;
 
-        /*public static string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-        public static string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string username = "root"; // epiz_33067528 | root
-        public static string password = "nfreal-yt10";
-        public static int mainPort_ = 11433;
-        public static string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-        public MySqlConnection con = new MySqlConnection(constring);
-        public MySqlCommand command;*/
-
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
 
         public Form1() {
             InitializeComponent();
-            //randomizeUser();
+
+            con.Open();
 
             instance = this;
             setupLabel = label5;
-
-            con.Open();
 
             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             String _getAuth = _getPath + "\\CUST_DATAS.txt";
@@ -171,7 +161,7 @@ namespace FlowSERVER1 {
                     command.CommandText = getTitles;
 
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    ConnectionModel.command.Parameters.AddWithValue("@password", label3.Text);
+                    command.Parameters.AddWithValue("@password", label3.Text);
                     MySqlDataReader fold_Reader = command.ExecuteReader();
                     while (fold_Reader.Read()) {
                         titleValues.Add(fold_Reader.GetString(0));
@@ -296,7 +286,7 @@ namespace FlowSERVER1 {
 
                 remBut.Click += (sender_im, e_im) => {
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);
@@ -378,6 +368,8 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
                     } else if (_extTypes == ".css") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                    } else if (_extTypes == ".js") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
                         Form bgBlur = new Form();
@@ -659,7 +651,7 @@ namespace FlowSERVER1 {
 
                 remBut.Click += (sender_im, e_im) => {
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);
@@ -729,7 +721,7 @@ namespace FlowSERVER1 {
                     };
                     clearRedundane();
                 }
-                if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css") {
+                if(typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js") {
                     String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -758,6 +750,9 @@ namespace FlowSERVER1 {
                     }
                     else if (_extTypes == ".css") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                    } 
+                    else if (_extTypes == ".js") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
@@ -934,7 +929,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|Acrobat Files|*.pdf";
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
             if (open.ShowDialog() == DialogResult.OK) {
 
@@ -1111,6 +1106,9 @@ namespace FlowSERVER1 {
                         else if (_extTypes == ".css") {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                         }
+                        else if (_extTypes == ".js") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
+                        }
 
                         String nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
@@ -1120,9 +1118,6 @@ namespace FlowSERVER1 {
                         var filePath = open.SafeFileName;
 
                         textboxPic.Click += (sender_t, e_t) => {
-                            //txtFORM txtFormShow = new txtFORM("IGNORETHIS", filePath);
-                            //txtFormShow.Show();
-
                             Form bgBlur = new Form();
                             using (txtFORM txtFormShow = new txtFORM("IGNORETHIS","file_info_expand",filePath)) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
@@ -1305,7 +1300,7 @@ namespace FlowSERVER1 {
                     ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                     remButTxt.Click += (sender_tx, e_tx) => {
                         var titleFile = titleLab.Text;
-                        DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (verifyDialog == DialogResult.Yes) {
                             deletionMethod(titleFile, nameTable);
                             panelTxt.Dispose();
@@ -1354,13 +1349,7 @@ namespace FlowSERVER1 {
                             createPanelMain("file_info","PanImg", curr, dataIco);
                         }
                     }
-
-                    /*command = new MySqlCommand("SELECT COUNT(CUST_FILE) FROM file_info WHERE CUST_USERNAME = @username",con);
-                    command.Parameters.AddWithValue("@username",label5.Text);
-                    var totalFilesCount = command.ExecuteScalar();
-                    var totalFileInt = Convert.ToInt32(totalFilesCount);
-                    label6.Text = totalFileInt.ToString();*/
-                } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css") {
+                } else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js") {
                     txtCurr++;
                     String nonLine = "";
                     using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
@@ -1371,12 +1360,6 @@ namespace FlowSERVER1 {
                     exeCurr++;
                     Byte[] streamRead = File.ReadAllBytes(open.FileName);
                     createPanelMain("file_info_exe","PanExe",exeCurr,streamRead);
-                    //Process.Start(open.FileName);
-                    /*
-                    //command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-                    //Icon retrieveExeIco = Icon.ExtractAssociatedIcon(open.FileName);
-                    //command.Parameters["@CUST_THUMB"].Value = retrieveExeIco;
-                    }*/
                 } else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") { 
                     vidCurr++;
                     Byte[] streamReadVid = File.ReadAllBytes(open.FileName);
@@ -1551,7 +1534,7 @@ namespace FlowSERVER1 {
 
                     remButExl.Click += (sender_vid, e_vid) => {
                         var titleFile = titleLab.Text;
-                        DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (verifyDialog == DialogResult.Yes) {
                             deletionMethod(titleFile, "file_info_excel");
                             panelVid.Dispose();
@@ -1982,7 +1965,7 @@ namespace FlowSERVER1 {
 
                         remButExl.Click += (sender_vid, e_vid) => {
                             var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
                                 deletionFoldFile(label5.Text,titleLab.Text,label26.Text);
                                 panelVid.Dispose();
@@ -2048,7 +2031,7 @@ namespace FlowSERVER1 {
                                 clearRedundane();
                             } 
                         }
-                        if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css") {
+                        if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js") {
                             // TXTCONTS = TEXT CONTENTS
                             if(_extTypes == ".py") {
                                 textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
@@ -2059,6 +2042,8 @@ namespace FlowSERVER1 {
                             }
                             else if (_extTypes == ".css") {
                                 textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                            } else if (_extTypes == ".js") {
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
                             }
 
                             var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files),"TXTCONTS");
@@ -2440,7 +2425,7 @@ namespace FlowSERVER1 {
 
                 remBut.Click += (sender_im, e_im) => {
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' Directory?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' Directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);

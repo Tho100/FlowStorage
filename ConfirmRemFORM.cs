@@ -12,6 +12,8 @@ using System.IO;
 
 namespace FlowSERVER1 {
     public partial class ConfirmRemFORM : Form {
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public ConfirmRemFORM() {
             InitializeComponent();
         }
@@ -19,18 +21,6 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
-                /*string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command,command_Read;
-
-                con.Open*/
-
-                ConnectionModel.con.Open();
 
                 List<string> passValues_ = new List<string>();
 
@@ -62,7 +52,7 @@ namespace FlowSERVER1 {
                     ConnectionModel.command.Parameters.AddWithValue("@password",encryptedPass);
                     ConnectionModel.command.ExecuteNonQuery();
 
-                    /*String remImg_Query = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    String remImg_Query = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(remImg_Query, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
@@ -102,7 +92,7 @@ namespace FlowSERVER1 {
                     command = new MySqlCommand(remUploadDir, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();*/
+                    command.ExecuteNonQuery();
 
                     this.Close();
                     Application.OpenForms["remAccFORM"].Close();

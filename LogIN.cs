@@ -711,7 +711,8 @@ namespace FlowSERVER1 {
                     
                     //}
 
-                    Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
+                    //Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
+                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                     if (guna2CheckBox2.Checked == true) {
                         setupAutoLogin(Form1.instance.label5.Text,encryptionKeyVal);
