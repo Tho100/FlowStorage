@@ -1761,7 +1761,7 @@ namespace FlowSERVER1 {
                 label22.Visible = false;
                 label12.Visible = false;
                 label11.Visible = false;
-                if(_getPass.Length > 5) {
+                if(_getPass.Length > 15) {
                     if (!String.IsNullOrEmpty(_getEmail)) {
                         if (!String.IsNullOrEmpty(_getPass)) {
                             if (!String.IsNullOrEmpty(_getUser)) {
