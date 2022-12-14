@@ -1,24 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql.Data;
-using MySql;
-using MySql.Data.MySqlClient;
 using System.IO;
-using System.Globalization;
+using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using System.Diagnostics;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Data.OleDb;
+using System.Text.RegularExpressions;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Globalization;
+using System.Text;
+using System.Management;
+using System.Reflection;
 
 namespace FlowSERVER1
 {
 
-    public partial class Form3 : Form
-    {
+    public partial class Form3 : Form {
+
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
+
         public Form3(String sendTitle_)
         {
             InitializeComponent();
@@ -27,67 +34,39 @@ namespace FlowSERVER1
 
             var form1 = Form1.instance;
 
-            try {
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
+            String getFilesType = "SELECT FILE_EXT FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @dirname";
+            command = new MySqlCommand(getFilesType,con);
+            command = con.CreateCommand();
+            command.CommandText = getFilesType;
+            command.Parameters.AddWithValue("@username",form1.label5.Text);
+            command.Parameters.AddWithValue("@password", form1.label3.Text);
+            command.Parameters.AddWithValue("@dirname", label1.Text);
 
-                con.Open();
+            MySqlDataReader _readType = command.ExecuteReader();
 
-                String getFilesType = "SELECT FILE_EXT FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @dirname";
-                command = new MySqlCommand(getFilesType,con);
-                command = con.CreateCommand();
-                command.CommandText = getFilesType;
-                command.Parameters.AddWithValue("@username",form1.label5.Text);
-                command.Parameters.AddWithValue("@password", form1.label3.Text);
-                command.Parameters.AddWithValue("@dirname", label1.Text);
+            List<string> typesValues = new List<string>();
 
-                MySqlDataReader _readType = command.ExecuteReader();
-
-                List<string> typesValues = new List<string>();
-
-                while (_readType.Read()) {
-                    typesValues.Add(_readType.GetString(0));// Append ToAr;
-                }
-                _readType.Close();
-
-                List<String> mainTypes = typesValues.Distinct().ToList();
-                var currMainLength = typesValues.Count;
-
-                generateUserDirectory(typesValues,label1.Text,"DIRPAR",typesValues.Count);
-
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    label8.Visible = true;
-                    guna2Button6.Visible = true;
-                }
-                else {
-                    label8.Visible = false;
-                    guna2Button6.Visible = false;
-                }
-
-            } catch (Exception eq) {
-                //
+            while (_readType.Read()) {
+                typesValues.Add(_readType.GetString(0));// Append ToAr;
             }
+            _readType.Close();
 
+            List<String> mainTypes = typesValues.Distinct().ToList();
+            var currMainLength = typesValues.Count;
+
+            generateUserDirectory(typesValues,label1.Text,"DIRPAR",typesValues.Count);
+
+            if (flowLayoutPanel1.Controls.Count == 0) {
+                label8.Visible = true;
+                guna2Button6.Visible = true;
+            }
+            else {
+                label8.Visible = false;
+                guna2Button6.Visible = false;
+            }
         }
 
         public void generateUserDirectory(List<String> _extTypes, String _dirTitle, String parameterName, int itemCurr) {
-
-            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-            string username = "root"; // epiz_33067528 | root
-            string password = "nfreal-yt10";
-            int mainPort_ = 11433;
-            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-            MySqlConnection con = new MySqlConnection(constring);
-            MySqlCommand command;
-
-            con.Open();
 
             var form1 = Form1.instance;
             String varDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -391,6 +370,41 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if(typeValues[q] == ".gif") {
+
+                    String getGifThumb = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(getGifThumb, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@filename",titleLab.Text);
+
+                    MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
+                    DataSet ds_Read = new DataSet();
+                    da_Read.Fill(ds_Read);
+                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[q]["CUST_THUMB"]);
+                    textboxPic.Image = new Bitmap(ms);
+                    textboxPic.Click += (sender_gif, e_gif) => {
+                        Form bgBlur = new Form();
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayGif.Owner = bgBlur;
+                            displayGif.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
             }
         }
 
@@ -504,24 +518,14 @@ namespace FlowSERVER1
         public static int currExe = 0;
         public static int currPdf = 0;
         public static int currPtx = 0;
+        public static int currGif = 0;
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
 
                 String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
                 var form1 = Form1.instance;
 
-                String _insertValues = "INSERT INTO upload_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_FILE_PATH,FILE_EXT) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_FILE_PATH,@FILE_EXT)";
+                String _insertValues = "INSERT INTO upload_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_FILE_PATH,FILE_EXT,CUST_THUMB) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_FILE_PATH,@FILE_EXT,@CUST_THUMB)";
                 command = new MySqlCommand(_insertValues, con);
                 command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
                 command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
@@ -530,6 +534,7 @@ namespace FlowSERVER1
                 command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                 command.Parameters.Add("@FILE_EXT",MySqlDbType.Text);
+                command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
 
                 OpenFileDialog open = new OpenFileDialog();
                 open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk";
@@ -826,6 +831,32 @@ namespace FlowSERVER1
                                 }
                             };
                         }
+
+                        if(type_ == "Gif") {
+                            ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                            textboxPic.Image = toBitMap;
+                            textboxPic.Click += (sender_pt, e_pt) => {
+                                Form bgBlur = new Form();
+                                using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayGif.Owner = bgBlur;
+                                    displayGif.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
                     }
 
                     if(retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -885,6 +916,19 @@ namespace FlowSERVER1
                         Byte[] _readPtxBytes = File.ReadAllBytes(open.FileName);
                         command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
                         createPanelMain("Ptx","PtxPar",currPtx);
+                    }
+                    if(retrieved == ".gif") {
+                        currGif++;
+                        Byte[] _readGifBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readGifBytes;
+
+                        ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                        using (var stream = new MemoryStream()) {
+                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                            command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                        }
+                        createPanelMain("Gif","GifPar",currGif);
                     }
                     if(command.ExecuteNonQuery() == 1) {
                         clearRedundane();

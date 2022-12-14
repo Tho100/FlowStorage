@@ -16,6 +16,10 @@ namespace FlowSERVER1
     public partial class Form4 : Form
     {
         public static Form4 instance;
+
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
+
         public Form4() {
             InitializeComponent();
             this.Text = "Create New Directory Page";
@@ -52,17 +56,6 @@ namespace FlowSERVER1
 
         public void generateDir(int currMain, String getDirTitle) {
             try {
-
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
 
                 var flowlayout = Form1.instance.flowLayoutPanel1;
                 int top = 275;
@@ -209,17 +202,6 @@ namespace FlowSERVER1
                 generateDir(value_Dir,_GetDirTitle);
             } 
             try {
-            
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
 
                 var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 

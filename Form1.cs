@@ -459,8 +459,24 @@ namespace FlowSERVER1 {
                     img.Image = new Bitmap(ms);
 
                     picMain_Q.Click += (sender_gi, ex_gi) => {
-                        gifFORM gifForm = new gifFORM(titleLab.Text);
-                        gifForm.Show();
+                        Form bgBlur = new Form();
+                        using (gifFORM displayPic = new gifFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
                     };
                     clearRedundane();
                 }
@@ -1206,8 +1222,24 @@ namespace FlowSERVER1 {
                         textboxPic.Image = toBitMap;
 
                         textboxPic.Click += (sender_gi, e_gi) => {
-                            gifFORM gifForm = new gifFORM(titleLab.Text);
-                            gifForm.Show();
+                            Form bgBlur = new Form();
+                            using (gifFORM displayPic = new gifFORM(titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPic.Owner = bgBlur;
+                                displayPic.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
                         };
                         clearRedundane();
                     }
@@ -1568,14 +1600,6 @@ namespace FlowSERVER1 {
                 else if (retrieved == ".gif") {
                     gifCurr++;
                     Byte[] toByteGif_ = File.ReadAllBytes(open.FileName);
-                    /*var getImg = new Bitmap(open.FileName);
-                    var imgWidth = getImg.Width;
-                    var imgHeight = getImg.Height;
-                    using (MemoryStream ms = new MemoryStream()) {
-                        getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
-                        var setupGif = ms.ToArray();
-                        createPanelMain("file_info_gif", "PanGif", gifCurr, setupGif);
-                    }*/
                     createPanelMain("file_info_gif","PanGif",gifCurr,toByteGif_);
                 }
                 else if (retrieved == ".apk") {
@@ -1596,12 +1620,6 @@ namespace FlowSERVER1 {
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
             }
            
-        }
-
-        public byte[] ImageToByte(Image imgIn) {
-            ImageConverter _imageConverter = new ImageConverter();
-            byte[] xByte = (byte[])_imageConverter.ConvertTo(imgIn, typeof(byte[]));
-            return xByte;
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e) {
@@ -1761,62 +1779,67 @@ namespace FlowSERVER1 {
                 label22.Visible = false;
                 label12.Visible = false;
                 label11.Visible = false;
-                if(_getPass.Length > 15) {
-                    if (!String.IsNullOrEmpty(_getEmail)) {
-                        if (!String.IsNullOrEmpty(_getPass)) {
-                            if (!String.IsNullOrEmpty(_getUser)) {
-                                flowlayout.Controls.Clear();
-                                if (flowlayout.Controls.Count == 0) {
-                                    Form1.instance.label8.Visible = true;
-                                    Form1.instance.guna2Button6.Visible = true;
+                if(_getUser.Length <= 15) {
+                    if(_getPass.Length > 5) {
+                        if (!String.IsNullOrEmpty(_getEmail)) {
+                            if (!String.IsNullOrEmpty(_getPass)) {
+                                if (!String.IsNullOrEmpty(_getUser)) {
+                                    flowlayout.Controls.Clear();
+                                    if (flowlayout.Controls.Count == 0) {
+                                        Form1.instance.label8.Visible = true;
+                                        Form1.instance.guna2Button6.Visible = true;
+                                    }
+                                    if (Form1.instance.setupLabel.Text.Length > 14) {
+                                        var label = Form1.instance.setupLabel;
+                                        label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                        label.Location = new Point(3, 27);
+                                    }
+
+                                    var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
+                                    setupLabel.Text = _getUser;
+                                    label3.Text = encryptPassVal;
+                                    encryptedPassKey = encryptPassVal;
+
+                                    String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                                    string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+                                    using (var cmd = new MySqlCommand(query, con)) {
+                                        cmd.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                        cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
+                                        cmd.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                                        cmd.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                        cmd.ExecuteNonQuery();
+                                    }
+
+                                    label11.Visible = false;
+                                    label12.Visible = false;
+                                    guna2Panel7.Visible = false;
+                                    guna2TextBox1.Text = String.Empty;
+                                    guna2TextBox2.Text = String.Empty;
+                                    guna2TextBox3.Text = String.Empty;
+                                    setupTime();
+
+                                    listBox1.Items.Add("Home");
+                                    listBox1.SelectedIndex = 0;
                                 }
-                                if (Form1.instance.setupLabel.Text.Length > 14) {
-                                    var label = Form1.instance.setupLabel;
-                                    label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                    label.Location = new Point(3, 27);
+                                else {
+                                    label11.Visible = true;
                                 }
-
-                                var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
-                                setupLabel.Text = _getUser;
-                                label3.Text = encryptPassVal;
-                                encryptedPassKey = encryptPassVal;
-
-                                String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                                string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
-                                using (var cmd = new MySqlCommand(query, con)) {
-                                    cmd.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                    cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
-                                    cmd.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                                    cmd.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                    cmd.ExecuteNonQuery();
-                                }
-
-                                label11.Visible = false;
-                                label12.Visible = false;
-                                guna2Panel7.Visible = false;
-                                guna2TextBox1.Text = String.Empty;
-                                guna2TextBox2.Text = String.Empty;
-                                guna2TextBox3.Text = String.Empty;
-                                setupTime();
-
-                                listBox1.Items.Add("Home");
-                                listBox1.SelectedIndex = 0;
                             }
                             else {
-                                label11.Visible = true;
+                                label12.Visible = true;
                             }
                         }
                         else {
-                            label12.Visible = true;
+                            label22.Visible = true;
                         }
-                    }
-                    else {
-                        label22.Visible = true;
+                    } else {
+                        label12.Visible = true;
+                        label12.Text = "Password must be longer than 5 characters.";
                     }
                 } else {
-                    label12.Visible = true;
-                    label12.Text = "Password must be longer than 5 characters.";
+                    label11.Visible = true;
+                    label11.Text = "Username character length limit is 15.";
                 }
             }
         }

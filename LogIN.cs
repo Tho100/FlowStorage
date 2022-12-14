@@ -13,6 +13,7 @@ using MySql;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
@@ -618,10 +619,25 @@ namespace FlowSERVER1 {
                                 img.Image = new Bitmap(ms);
 
                                 picMain_Q.Click += (sender_gi, ex_gi) => {
-                                    gifFORM gifForm = new gifFORM(titleLab.Text);
-                                    gifForm.Show();
+                                    Form bgBlur = new Form();
+                                    using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayGif.Owner = bgBlur;
+                                        displayGif.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
                                 };
-                                clearRedundane();
                             }
 
                             if(_tableName == "file_info_apk") {
