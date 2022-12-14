@@ -34,6 +34,15 @@ namespace FlowSERVER1 {
             instance = this;
             setupLabel = label5;
 
+            int _countRow(String _tableName) {
+                String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                command = new MySqlCommand(_countRowTable, con);
+                command.Parameters.AddWithValue("@username", label5.Text);
+                var _totalRow = command.ExecuteScalar();
+                int totalRowInt = Convert.ToInt32(_totalRow);
+                return totalRowInt;
+            }
+
             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             String _getAuth = _getPath + "\\CUST_DATAS.txt";
             if (File.Exists(_getAuth)) {
@@ -46,105 +55,42 @@ namespace FlowSERVER1 {
 
                     setupTime();
 
-                    string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowTxt, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-
-                    var totalRowTxt = command.ExecuteScalar();
-                    int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
-
-                    string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowExe, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-
-                    var totalRowExe = command.ExecuteScalar();
-                    int intTotalRowExe = Convert.ToInt32(totalRowExe);
-                    //label4.Text = intTotalRowExe.ToString();
-
-                    string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowVid, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-
-                    var totalRowVid = command.ExecuteScalar();
-                    int intTotalRowVid = Convert.ToInt32(totalRowVid);
-
-                    String countRow = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRow, con);
-                    command.Parameters.AddWithValue("@username",label5.Text);
-                    command.Parameters.AddWithValue("@password",label3.Text);
-                    var totalRow = command.ExecuteScalar();
-                    var intRow = Convert.ToInt32(totalRow);
-
-                    string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowExcel,con);
-                    command.Parameters.AddWithValue("@username",label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-                    var totalRowExcel = command.ExecuteScalar();
-                    int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
-
-                    string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowAudi,con);
-                    command.Parameters.AddWithValue("@username",label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-                    var totalRowAudi = command.ExecuteScalar();
-                    int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
-
-                    string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowGif, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-                    var totalRowGif = command.ExecuteScalar();
-                    int intTotalRowGif = Convert.ToInt32(totalRowGif);
-
-                    string countRowPdf = "SELECT COUNT(CUST_USERNAME) FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowPdf, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-                    var totalRowPdf = command.ExecuteScalar();
-                    int intTotalRowPdf = Convert.ToInt32(totalRowPdf);
-
-                    string countRowDirectory = "SELECT COUNT(CUST_USERNAME) FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowDirectory, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-                    var totalRowDir = command.ExecuteScalar();
-                    int intTotalRowDir = Convert.ToInt32(totalRowDir);
-
-                    //string countRowUploadDir = "SELECT COUNT"
-
                     // LOAD IMG
-                    if (intRow > 0) {
-                        _generateUserFiles("file_info", "imgAtLoad", intRow);
+                    if (_countRow("file_info") > 0) {
+                        _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
                     }
                     // LOAD .TXT
-                    if (intTotalRowTxt > 0) {
-                        _generateUserFiles("file_info_expand", "txtAtLoad", intTotalRowTxt);
+                    if (_countRow("file_info_expand") > 0) {
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
                     }
                     // LOAD EXE
-                    if (intTotalRowExe > 0) {
-                        _generateUserFiles("file_info_exe", "exeAtLoad", intTotalRowExe);
+                    if (_countRow("file_info_exe") > 0) {
+                        _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
                     }
                     // LOAD VID
-                    if (intTotalRowVid > 0) {
-                        _generateUserFiles("file_info_vid", "vidAtLoad", intTotalRowVid);
+                    if (_countRow("file_info_vid") > 0) {
+                        _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
                     }
-                    if (intTotalRowExcel > 0) {
-                        _generateUserFiles("file_info_excel", "exlAtLoad", intTotalRowExcel);
+                    if (_countRow("file_info_excel") > 0) {
+                        _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
                     }
-                    if (intTotalRowAudi > 0) {
-                        _generateUserFiles("file_info_audi", "audiAtLoad", intTotalRowAudi);
+                    if (_countRow("file_info_audi") > 0) {
+                        _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
                     }
-                    if(intTotalRowGif > 0) {
-                        _generateUserFiles("file_info_gif","gifAtLoad",intTotalRowGif);
+                    if (_countRow("file_info_gif") > 0) {
+                        _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
                     }
-                    if(intTotalRowPdf > 0) {
-                        _generateUserFiles("file_info_pdf","pdfAtLoad",intTotalRowPdf);
+                    if (_countRow("file_info_apk") > 0) {
+                        _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
                     }
-                    if(intTotalRowDir > 0) {
-                        //_generateUserFiles("file_info_directory","dirFile",intTotalRowDir);
+                    if (_countRow("file_info_pdf") > 0) {
+                        _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
+                    }
+                    if (_countRow("file_info_ptx") > 0) {
+                        _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
+                    }
+                    if (_countRow("file_info_directory") > 0) {
+                        _generateUserFiles("file_info_directory","dirFile",_countRow("file_info_directory"));
                     }
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 

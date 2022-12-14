@@ -105,7 +105,7 @@ namespace FlowSERVER1 {
                 this.Close();
                 try {
          
-                    string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                   /* string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                     command = new MySqlCommand(countRowTxt, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptionKeyVal);
@@ -185,7 +185,7 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@password", encryptionKeyVal);
                     var totalRowPdf = command.ExecuteScalar();
-                    int intTotalRowPdf = Convert.ToInt32(totalRowPdf);
+                    int intTotalRowPdf = Convert.ToInt32(totalRowPdf);*/
 
                     var _form = Form1.instance;
 
@@ -690,36 +690,51 @@ namespace FlowSERVER1 {
                         }
                     }
 
+                    int _countRow(String _tableName) {
+                        String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
+                        command = new MySqlCommand(_countRowTable, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        var _totalRow = command.ExecuteScalar();
+                        int totalRowInt = Convert.ToInt32(_totalRow);
+                        return totalRowInt;
+                    }
+
                     // LOAD IMG
-                    if (intRowImg > 0) {
-                        _generateUserFiles("file_info", "imgFile", intRowImg);
+                    if (_countRow("file_info") > 0) {
+                        _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
                     }
                     // LOAD .TXT
-                    if (intTotalRowTxt > 0) {
-                        _generateUserFiles("file_info_expand", "txtFile", intTotalRowTxt);
+                    if (_countRow("file_info_expand") > 0) {
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
                     }
                     // LOAD EXE
-                    if (intTotalRowExe > 0) {
-                        _generateUserFiles("file_info_exe", "exeFile", intTotalRowExe);
+                    if (_countRow("file_info_exe") > 0) {
+                        _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
                     }
                     // LOAD VID
-                    if (intTotalRowVid > 0) {
-                        _generateUserFiles("file_info_vid", "vidFile", intTotalRowVid);
+                    if (_countRow("file_info_vid") > 0) {
+                        _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
                     }
-                    if (intTotalRowExcel > 0) {
-                        _generateUserFiles("file_info_excel", "exlFile", intTotalRowExcel);
+                    if (_countRow("file_info_excel") > 0) {
+                        _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
                     }
-                    if (intTotalRowAudi > 0) {
-                        _generateUserFiles("file_info_audi", "audiFile", intTotalRowAudi);
+                    if (_countRow("file_info_audi") > 0) {
+                        _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
                     }
-                    if(intTotalRowGif > 0) {
-                        _generateUserFiles("file_info_gif","gifFile",intTotalRowGif);
+                    if (_countRow("file_info_gif") > 0) {
+                        _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
                     }
-                    if(intTotalRowApk > 0) {
-                        //_generateUserFiles("file_info_apk","apkFile",intTotalRowApk);
+                    if (_countRow("file_info_apk") > 0) {
+                        _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
                     }
-                    if(intTotalRowPdf > 0) {
-                        _generateUserFiles("file_info_pdf","pdfFile",intTotalRowPdf);
+                    if (_countRow("file_info_pdf") > 0) {
+                        _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
+                    }
+                    if (_countRow("file_info_ptx") > 0) {
+                        _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
+                    }
+                    if (_countRow("file_info_directory") > 0) {
+                        _generateUserFiles("file_info_directory", "dirFile", _countRow("file_info_directory"));
                     }
                     //if(inttotalRowFold > 0) {
                     //_generateUserDirectory(user,pass,intTotalRowDir);
