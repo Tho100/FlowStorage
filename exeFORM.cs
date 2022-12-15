@@ -20,7 +20,6 @@ namespace FlowSERVER1 {
             label1.Text = getTitle;
             instance = this;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-            label3.Text = "405Mb";
         }
 
         private void exeFORM_Load(object sender, EventArgs e) {
@@ -83,6 +82,10 @@ namespace FlowSERVER1 {
         }
 
         private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e) {
 
         }
     }

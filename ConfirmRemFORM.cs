@@ -22,14 +22,21 @@ namespace FlowSERVER1 {
 
             try {
 
+                void remove_ItemsTab(String _tableName) {
+                    String _remQueryBegin = "DELETE FROM " + _tableName +  " WHERE CUST_USERNAME = @username";
+                    command = new MySqlCommand(_remQueryBegin, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.ExecuteNonQuery();
+                }
+
                 List<string> passValues_ = new List<string>();
 
                 String checkPassword_Query = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-                ConnectionModel.command = new MySqlCommand(checkPassword_Query,ConnectionModel.con);
-                ConnectionModel.command = ConnectionModel.con.CreateCommand();
-                ConnectionModel.command.CommandText = checkPassword_Query;
-                ConnectionModel.command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                MySqlDataReader readerPass_ = ConnectionModel.command.ExecuteReader();
+                command = new MySqlCommand(checkPassword_Query,con);
+                command = ConnectionModel.con.CreateCommand();
+                command.CommandText = checkPassword_Query;
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                MySqlDataReader readerPass_ = command.ExecuteReader();
 
                 while(readerPass_.Read()) {
                     passValues_.Add(readerPass_.GetString(0));
@@ -46,55 +53,21 @@ namespace FlowSERVER1 {
                         Directory.Delete(_getPath,true);
                     }
 
-                    String remInfo_Query = "DELETE FROM information WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    ConnectionModel.command = new MySqlCommand(remInfo_Query, ConnectionModel.con);
-                    ConnectionModel.command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    ConnectionModel.command.Parameters.AddWithValue("@password",encryptedPass);
-                    ConnectionModel.command.ExecuteNonQuery();
-
-                    String remImg_Query = "DELETE FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remImg_Query, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
-
-                    String remTxt_Query = "DELETE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remTxt_Query, con);
-                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
-
-                    String remApk_Query = "DELETE FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remApk_Query, con);
-                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
-
-                    String remPdf_Query = "DELETE FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remPdf_Query, con);
-                    command.Parameters.AddWithValue("@username", remAccFORM.instance.label1.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
-
-                    String remFolder = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remFolder, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
-
-                    String remDirectory = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remDirectory, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
-
-                    String remUploadDir = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(remUploadDir, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptedPass);
-                    command.ExecuteNonQuery();
+                    remove_ItemsTab("information");
+                    remove_ItemsTab("file_info");
+                    remove_ItemsTab("file_info_expand");
+                    remove_ItemsTab("file_info_ptx");
+                    remove_ItemsTab("file_info_pdf");
+                    remove_ItemsTab("file_info_gif");
+                    remove_ItemsTab("file_info_apk");
+                    remove_ItemsTab("file_info_exe");
+                    remove_ItemsTab("file_info_excel");
+                    remove_ItemsTab("file_info_directory");
+                    remove_ItemsTab("upload_info_directory");
+                    remove_ItemsTab("folder_upload_info");
 
                     this.Close();
+
                     Application.OpenForms["remAccFORM"].Close();
                     Form1.instance.guna2Panel7.Visible = true;
                     Form1.instance.listBox1.Items.Clear();
@@ -102,7 +75,7 @@ namespace FlowSERVER1 {
                     label1.Visible = true;
                 }
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                MessageBox.Show("Failed to delete account.","Flowstorage");
             }
         }
 

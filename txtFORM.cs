@@ -56,6 +56,7 @@ namespace FlowSERVER1 {
                 while (_ReadTexts.Read()) {
                     textValues_.Add(_ReadTexts.GetString(0));
                 }
+                _ReadTexts.Close();
                 var getMainText = EncryptionModel.Decrypt(textValues_[0],"TXTCONTS");
                 richTextBox1.Text = getMainText;
                 if (FileExt_ == ".py") {

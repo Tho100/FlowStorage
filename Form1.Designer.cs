@@ -601,6 +601,7 @@
             this.guna2TextBox3.SelectedText = "";
             this.guna2TextBox3.Size = new System.Drawing.Size(504, 47);
             this.guna2TextBox3.TabIndex = 42;
+            this.guna2TextBox3.TextChanged += new System.EventHandler(this.guna2TextBox3_TextChanged);
             // 
             // label14
             // 
@@ -926,7 +927,6 @@
             this.guna2Panel17.Name = "guna2Panel17";
             this.guna2Panel17.Size = new System.Drawing.Size(363, 69);
             this.guna2Panel17.TabIndex = 25;
-            this.guna2Panel17.Visible = false;
             // 
             // guna2Button19
             // 
@@ -1035,12 +1035,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.guna2Panel17);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.guna2Panel5);
+            this.Controls.Add(this.guna2Panel17);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Flow Storage";
+            this.Text = "Flowstorage";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);

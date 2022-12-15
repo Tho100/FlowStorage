@@ -19,7 +19,6 @@ namespace FlowSERVER1 {
             InitializeComponent();
             label1.Text = _titleFile;
             label2.Text = "Uploaded by " + _userName;
-            label3.Text = (3240).ToString() + "Mb";
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {

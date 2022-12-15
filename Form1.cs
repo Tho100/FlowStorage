@@ -29,97 +29,101 @@ namespace FlowSERVER1 {
         public Form1() {
             InitializeComponent();
 
-            con.Open();
+            try {
 
-            instance = this;
-            setupLabel = label5;
+                con.Open();
 
-            int _countRow(String _tableName) {
-                String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(_countRowTable, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                var _totalRow = command.ExecuteScalar();
-                int totalRowInt = Convert.ToInt32(_totalRow);
-                return totalRowInt;
-            }
+                instance = this;
+                setupLabel = label5;
 
-            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            String _getAuth = _getPath + "\\CUST_DATAS.txt";
-            if (File.Exists(_getAuth)) {
-                String _UsernameFirst = File.ReadLines(_getAuth).First();
-                String _PassSed = File.ReadLines(_getAuth).ElementAtOrDefault(1);
-                if (new FileInfo(_getAuth).Length != 0) {
-                    guna2Panel7.Visible = false;
-                    label5.Text = _PassSed;
-                    label3.Text = _UsernameFirst;
-
-                    setupTime();
-
-                    // LOAD IMG
-                    if (_countRow("file_info") > 0) {
-                        _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
-                    }
-                    // LOAD .TXT
-                    if (_countRow("file_info_expand") > 0) {
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
-                    }
-                    // LOAD EXE
-                    if (_countRow("file_info_exe") > 0) {
-                        _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
-                    }
-                    // LOAD VID
-                    if (_countRow("file_info_vid") > 0) {
-                        _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
-                    }
-                    if (_countRow("file_info_excel") > 0) {
-                        _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
-                    }
-                    if (_countRow("file_info_audi") > 0) {
-                        _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
-                    }
-                    if (_countRow("file_info_gif") > 0) {
-                        _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
-                    }
-                    if (_countRow("file_info_apk") > 0) {
-                        _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
-                    }
-                    if (_countRow("file_info_pdf") > 0) {
-                        _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
-                    }
-                    if (_countRow("file_info_ptx") > 0) {
-                        _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
-                    }
-                    if (_countRow("file_info_directory") > 0) {
-                        _generateUserFiles("file_info_directory","dirFile",_countRow("file_info_directory"));
-                    }
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-                    // @ ADD FOLDERS TO LISTBOX
-
-                    listBox1.Items.Add("Home");
-                    listBox1.SelectedIndex = 0;
-
-                    List<String> titleValues = new List<String>();
-
-                    String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(getTitles, ConnectionModel.con);
-                    command = ConnectionModel.con.CreateCommand();
-                    command.CommandText = getTitles;
-
+                int _countRow(String _tableName) {
+                    String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    command = new MySqlCommand(_countRowTable, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
-                    MySqlDataReader fold_Reader = command.ExecuteReader();
-                    while (fold_Reader.Read()) {
-                        titleValues.Add(fold_Reader.GetString(0));
-                    }
+                    var _totalRow = command.ExecuteScalar();
+                    int totalRowInt = Convert.ToInt32(_totalRow);
+                    return totalRowInt;
+                }
 
-                    fold_Reader.Close();
+                String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                String _getAuth = _getPath + "\\CUST_DATAS.txt";
+                if (File.Exists(_getAuth)) {
+                    String _UsernameFirst = File.ReadLines(_getAuth).First();
+                    String _PassSed = File.ReadLines(_getAuth).ElementAtOrDefault(1);
+                    if (new FileInfo(_getAuth).Length != 0) {
+                        guna2Panel7.Visible = false;
+                        label5.Text = _PassSed;
+                        label3.Text = _UsernameFirst;
 
-                    List<String> updatesTitle = titleValues.Distinct().ToList();
-                    for (int iterateTitles = 0; iterateTitles < updatesTitle.Count; iterateTitles++) {
-                        listBox1.Items.Add(updatesTitle[iterateTitles]);
+                        setupTime();
+
+                        // LOAD IMG
+                        /*if (_countRow("file_info") > 0) {
+                            _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
+                        }
+                        // LOAD .TXT
+                        if (_countRow("file_info_expand") > 0) {
+                            _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
+                        }
+                        // LOAD EXE
+                        if (_countRow("file_info_exe") > 0) {
+                            _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
+                        }
+                        // LOAD VID
+                        if (_countRow("file_info_vid") > 0) {
+                            _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
+                        }
+                        if (_countRow("file_info_excel") > 0) {
+                            _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
+                        }
+                        if (_countRow("file_info_audi") > 0) {
+                            _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
+                        }
+                        if (_countRow("file_info_gif") > 0) {
+                            _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
+                        }
+                        if (_countRow("file_info_apk") > 0) {
+                            _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
+                        }
+                        if (_countRow("file_info_pdf") > 0) {
+                            _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
+                        }
+                        if (_countRow("file_info_ptx") > 0) {
+                            _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
+                        }
+                        if (_countRow("file_info_directory") > 0) {
+                            _generateUserFiles("file_info_directory","dirFile",_countRow("file_info_directory"));
+                        }*/
+                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                        // @ ADD FOLDERS TO LISTBOX
+
+                        listBox1.Items.Add("Home");
+                        listBox1.SelectedIndex = 0;
+
+                        List<String> titleValues = new List<String>();
+
+                        String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+                        command = new MySqlCommand(getTitles, ConnectionModel.con);
+                        command = ConnectionModel.con.CreateCommand();
+                        command.CommandText = getTitles;
+
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        MySqlDataReader fold_Reader = command.ExecuteReader();
+                        while (fold_Reader.Read()) {
+                            titleValues.Add(fold_Reader.GetString(0));
+                        }
+
+                        fold_Reader.Close();
+
+                        List<String> updatesTitle = titleValues.Distinct().ToList();
+                        for (int iterateTitles = 0; iterateTitles < updatesTitle.Count; iterateTitles++) {
+                            listBox1.Items.Add(updatesTitle[iterateTitles]);
+                        }
                     }
                 }
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
             }
         }
 
@@ -2475,6 +2479,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox1_TextChanged_1(object sender, EventArgs e) {
+
+        }
+
+        private void guna2TextBox3_TextChanged(object sender, EventArgs e) {
 
         }
     }

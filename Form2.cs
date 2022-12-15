@@ -92,8 +92,6 @@ namespace FlowSERVER1
             String _getPass = guna2TextBox2.Text;
             String _getUser = guna2TextBox3.Text;
             Control flowlayout = Form1.instance.flowLayoutPanel1;
-
-            con.Open();
             
             String verifyEmailQue = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
             command = con.CreateCommand();

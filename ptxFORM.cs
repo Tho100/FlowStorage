@@ -13,23 +13,14 @@ using System.Globalization;
 
 namespace FlowSERVER1 {
     public partial class ptxFORM : Form {
+        public static MySqlCommand command = ConnectionModel.command;
+        public static MySqlConnection con = ConnectionModel.con;
         public ptxFORM(String _Title) {
             InitializeComponent();
             label1.Text = _Title;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             try {
-
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
 
                 String _readPtxValues = "SELECT CUST_FILE FROM file_info_ptx WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
@@ -50,7 +41,7 @@ namespace FlowSERVER1 {
                 }
             }
             catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                MessageBox.Show("Failed to load this file.","Flowstorage");
             }
         }
 
@@ -59,17 +50,6 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
 
                 String _readPtxValues = "SELECT CUST_FILE FROM file_info_ptx WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
@@ -96,7 +76,7 @@ namespace FlowSERVER1 {
 
             }
             catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                MessageBox.Show("Failed to download this file.","Flowstorage");
             }
         }
 
