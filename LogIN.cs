@@ -555,10 +555,26 @@ namespace FlowSERVER1 {
                             }
 
                             if (_tableName == "file_info_exe") {
-                                img.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                                picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                                 picMain_Q.Click += (sender_ex, e_ex) => {
-                                    exeFORM exeFormShow = new exeFORM(titleLab.Text);
-                                    exeFormShow.Show();
+                                    Form bgBlur = new Form();
+                                    using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayExe.Owner = bgBlur;
+                                        displayExe.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
                                 };
                                 clearRedundane();
                             }
@@ -589,7 +605,7 @@ namespace FlowSERVER1 {
                             }
 
                             if (_tableName == "file_info_excel") {
-                                picMain_Q.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
+                                img.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
                                 picMain_Q.Click += (sender_vq, e_vq) => {
                                     exlFORM exlForm = new exlFORM(titleLab.Text);
                                     exlForm.Show();
@@ -597,7 +613,7 @@ namespace FlowSERVER1 {
                             }
 
                             if (_tableName == "file_info_audi") {
-                                picMain_Q.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
+                                img.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
 
                                 picMain_Q.Click += (sender_Aud, e_Aud) => {
                                     audFORM audForm = new audFORM(titleLab.Text);
@@ -687,6 +703,30 @@ namespace FlowSERVER1 {
                                     }
                                 };
                             }
+
+                            if(_tableName == "file_info_msi") {
+                                picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                                picMain_Q.Click += (sender_ptx, e_ptx) => {
+                                    Form bgBlur = new Form();
+                                    using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayMsi.Owner = bgBlur;
+                                        displayMsi.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
+                                };
+                            }
                         }
                     }
 
@@ -733,8 +773,11 @@ namespace FlowSERVER1 {
                     if (_countRow("file_info_ptx") > 0) {
                         _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
                     }
+                    if(_countRow("file_info_msi") > 0) {
+                        _generateUserFiles("file_info_msi","msiFile",_countRow("file_info_msi"));
+                    }
                     if (_countRow("file_info_directory") > 0) {
-                        _generateUserFiles("file_info_directory", "dirFile", _countRow("file_info_directory"));
+                        _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
                     }
                     //if(inttotalRowFold > 0) {
                     //_generateUserDirectory(user,pass,intTotalRowDir);

@@ -124,3 +124,9 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Release\System.ValueTuple
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Release\nl\PdfiumViewer.resources.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.pdfFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.ptxFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.msiFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Release\FlowSERVER1.exe.manifest
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Release\FlowSERVER1.application
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.TrustInfo.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.exe.manifest
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Release\FlowSERVER1.application

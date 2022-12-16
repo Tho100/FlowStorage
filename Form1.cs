@@ -57,43 +57,6 @@ namespace FlowSERVER1 {
 
                         setupTime();
 
-                        // LOAD IMG
-                        /*if (_countRow("file_info") > 0) {
-                            _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
-                        }
-                        // LOAD .TXT
-                        if (_countRow("file_info_expand") > 0) {
-                            _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
-                        }
-                        // LOAD EXE
-                        if (_countRow("file_info_exe") > 0) {
-                            _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
-                        }
-                        // LOAD VID
-                        if (_countRow("file_info_vid") > 0) {
-                            _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
-                        }
-                        if (_countRow("file_info_excel") > 0) {
-                            _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
-                        }
-                        if (_countRow("file_info_audi") > 0) {
-                            _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
-                        }
-                        if (_countRow("file_info_gif") > 0) {
-                            _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
-                        }
-                        if (_countRow("file_info_apk") > 0) {
-                            _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
-                        }
-                        if (_countRow("file_info_pdf") > 0) {
-                            _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
-                        }
-                        if (_countRow("file_info_ptx") > 0) {
-                            _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
-                        }
-                        if (_countRow("file_info_directory") > 0) {
-                            _generateUserFiles("file_info_directory","dirFile",_countRow("file_info_directory"));
-                        }*/
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                         // @ ADD FOLDERS TO LISTBOX
@@ -347,8 +310,24 @@ namespace FlowSERVER1 {
                 if (_tableName == "file_info_exe") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                     picMain_Q.Click += (sender_ex, e_ex) => {
-                        exeFORM exeFormShow = new exeFORM(titleLab.Text);
-                        exeFormShow.Show();
+                        Form bgBlur = new Form();
+                        using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayExe.Owner = bgBlur;
+                            displayExe.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
                     };
                     clearRedundane();
                 }
@@ -499,6 +478,31 @@ namespace FlowSERVER1 {
 
                             displayPtx.Owner = bgBlur;
                             displayPtx.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                    clearRedundane();
+                }
+
+                if (_tableName == "file_info_msi") {
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                    picMain_Q.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayMsi.Owner = bgBlur;
+                            displayMsi.ShowDialog();
 
                             bgBlur.Dispose();
                         }
@@ -868,6 +872,7 @@ namespace FlowSERVER1 {
         int apkCurr = 0;
         int pdfCurr = 0;
         int ptxCurr = 0;
+        int msiCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
                 
             void deletionMethod(String fileName, String getDB) {
@@ -895,7 +900,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|Acrobat Files|*.pdf|MSI Files|*.msi";
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
             if (open.ShowDialog() == DialogResult.OK) {
 
@@ -1278,6 +1283,33 @@ namespace FlowSERVER1 {
                         };
                         clearRedundane();
                     }
+                    if(nameTable == "file_info_msi") {
+                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                        command.Parameters["@CUST_FILE"].Value = keyVal;
+                        command.ExecuteNonQuery();
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                        textboxPic.Click += (sender_ptx, e_ptx) => {
+                            Form bgBlur = new Form();
+                            using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayMsi.Owner = bgBlur;
+                                displayMsi.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
+                        clearRedundane();
+                    }
 
                     ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                     remButTxt.Click += (sender_tx, e_tx) => {
@@ -1566,6 +1598,11 @@ namespace FlowSERVER1 {
                     ptxCurr++;
                     Byte[] readPtxBytes = File.ReadAllBytes(open.FileName);
                     createPanelMain("file_info_ptx","PanPtx",ptxCurr,readPtxBytes);
+                }
+                else if (retrieved == ".msi") {
+                    msiCurr++;
+                    Byte[] readMsiBytes = File.ReadAllBytes(open.FileName);
+                    createPanelMain("file_info_msi","PanMsi",msiCurr,readMsiBytes);
                 }
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
             }
@@ -2126,12 +2163,61 @@ namespace FlowSERVER1 {
             guna2Button19.Visible = true;
             label26.Text = _selectedFolder;
 
-            if(_selectedFolder == "Home") {
+            int _countRow(String _tableName) {
+                String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName +  " WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(_countRowTable, con);
+                command.Parameters.AddWithValue("@username", label5.Text);
+                var _totalRow = command.ExecuteScalar();
+                int totalRowInt = Convert.ToInt32(_totalRow);
+                return totalRowInt;
+            }
+
+            if (_selectedFolder == "Home") {
                 foldCurr++;
                 guna2Button19.Visible = false;
                 flowLayoutPanel1.Controls.Clear();
 
-                string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                if (_countRow("file_info") > 0) {
+                    _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
+                }
+                // LOAD .TXT
+                if (_countRow("file_info_expand") > 0) {
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
+                }
+                // LOAD EXE
+                if (_countRow("file_info_exe") > 0) {
+                    _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
+                }
+                // LOAD VID
+                if (_countRow("file_info_vid") > 0) {
+                    _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
+                }
+                if (_countRow("file_info_excel") > 0) {
+                    _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
+                }
+                if (_countRow("file_info_audi") > 0) {
+                    _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
+                }
+                if (_countRow("file_info_gif") > 0) {
+                    _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
+                }
+                if (_countRow("file_info_apk") > 0) {
+                    _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
+                }
+                if (_countRow("file_info_pdf") > 0) {
+                    _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
+                }
+                if (_countRow("file_info_ptx") > 0) {
+                    _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
+                }
+                if (_countRow("file_info_msi") > 0) {
+                    _generateUserFiles("file_info_msi", "msiFile", _countRow("file_info_msi"));
+                }
+                if (_countRow("file_info_directory") > 0) {
+                    _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
+                }
+
+                /*string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
                 command = new MySqlCommand(countRowTxt, con);
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@password", label3.Text);
@@ -2236,7 +2322,7 @@ namespace FlowSERVER1 {
                 }
                 if(intTotalRowPtx > 0) {
                     _generateUserFiles("file_info_ptx","ptxFoldHome",intTotalRowPtx);
-                }
+                }*/
 
                 if (flowLayoutPanel1.Controls.Count == 0) {
                     showRedundane();

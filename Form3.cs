@@ -405,6 +405,30 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if(typeValues[q] == ".msi") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                    textboxPic.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayMsi.Owner = bgBlur;
+                            displayMsi.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
             }
         }
 
@@ -519,6 +543,7 @@ namespace FlowSERVER1
         public static int currPdf = 0;
         public static int currPtx = 0;
         public static int currGif = 0;
+        public static int currMsi = 0;
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
 
@@ -537,7 +562,7 @@ namespace FlowSERVER1
                 command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|MSI Files|*.msi";
                 if (open.ShowDialog() == DialogResult.OK) {
                     string get_ex = open.FileName;
                     string getName = open.SafeFileName;
@@ -857,6 +882,30 @@ namespace FlowSERVER1
                                 }
                             };
                         }
+
+                        if(type_ == "Msi") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                            textboxPic.Click += (sender_pt, e_pt) => {
+                                Form bgBlur = new Form();
+                                using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayMsi.Owner = bgBlur;
+                                    displayMsi.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
                     }
 
                     if(retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -929,6 +978,12 @@ namespace FlowSERVER1
                             command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                         }
                         createPanelMain("Gif","GifPar",currGif);
+                    }
+                    if(retrieved == ".msi") {
+                        currMsi++;
+                        Byte[] _readMsiBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
+                        createPanelMain("Msi","MsiPar",currMsi);
                     }
                     if(command.ExecuteNonQuery() == 1) {
                         clearRedundane();

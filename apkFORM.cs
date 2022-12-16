@@ -78,6 +78,7 @@ namespace FlowSERVER1 {
                         File.WriteAllBytes(_OpenDialog.FileName,get_apkValues);
                     }
                 }
+                _apkReader.Close();
                      
                 //var get_apkValues = apkValues[0];
                 //MemoryStream _msApk = new MemoryStream(apkValues[0]);

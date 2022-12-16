@@ -14,7 +14,10 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>C:\Program Files %28x86%29\Flowstorage\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -24,13 +27,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Flowstorage</ProductName>
+    <PublisherName>Hafiy Danish</PublisherName>
+    <SuiteName>Flowstorage Sdn Bhd</SuiteName>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +55,24 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B091CD2E54802C87ECE2E34C03CEBA255D703720</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>open-delivered-box 1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Apitron.PDF.Controls, Version=1.0.169.0, Culture=neutral, PublicKeyToken=6e759dbb0039406e, processorArchitecture=MSIL">
@@ -289,6 +312,12 @@
     <Compile Include="gifFORM.Designer.cs">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="msiFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="msiFORM.Designer.cs">
+      <DependentUpon>msiFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="pdfFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -373,6 +402,9 @@
     <EmbeddedResource Include="gifFORM.resx">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="msiFORM.resx">
+      <DependentUpon>msiFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pdfFORM.resx">
       <DependentUpon>pdfFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -403,6 +435,7 @@
       <DependentUpon>vidFORM.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -419,6 +452,8 @@
   <ItemGroup>
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
+    <Content Include="open-delivered-box 1.ico" />
+    <None Include="Resources\icons8-software-installer-32.png" />
     <None Include="Resources\icons8-javascript-50.png" />
     <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
     <None Include="Resources\icons8-pdf-60 %281%29.png" />

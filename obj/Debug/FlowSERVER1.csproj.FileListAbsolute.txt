@@ -124,3 +124,9 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ionic.Zlib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\log4net.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x86\pdfium.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x64\pdfium.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.exe.manifest
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.application
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.msiFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.TrustInfo.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exe.manifest
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.application

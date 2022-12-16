@@ -15,6 +15,8 @@ using System.Globalization;
 namespace FlowSERVER1 {
     public partial class exeFORM : Form {
         public static exeFORM instance;
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public exeFORM(String getTitle) {
             InitializeComponent();
             label1.Text = getTitle;
@@ -52,32 +54,27 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
 
-            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-            string username = "root"; // epiz_33067528 | root
-            string password = "nfreal-yt10";
-            int mainPort_ = 11433;
-            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-            MySqlConnection con = new MySqlConnection(constring);
-            MySqlCommand command;
+            try {
 
-            con.Open();
-
-            String _readExeBytes = "SELECT CUST_FILE FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
-            command = new MySqlCommand(_readExeBytes,con);
-            command = con.CreateCommand();
-            command.CommandText = _readExeBytes;
-            command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filetitle", label1.Text);
+                String _readExeBytes = "SELECT CUST_FILE FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
+                command = new MySqlCommand(_readExeBytes,con);
+                command = con.CreateCommand();
+                command.CommandText = _readExeBytes;
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filetitle", label1.Text);
             
-            MySqlDataReader _exeReader = command.ExecuteReader();
-            if(_exeReader.Read()) {
-                var _getExeValues = (byte[])_exeReader["CUST_FILE"];
-                SaveFileDialog _OpenDialog = new SaveFileDialog();
-                _OpenDialog.Filter = "Exe|*.exe";
-                if(_OpenDialog.ShowDialog() == DialogResult.OK) {
-                    File.WriteAllBytes(_OpenDialog.FileName,_getExeValues);
+                MySqlDataReader _exeReader = command.ExecuteReader();
+                if(_exeReader.Read()) {
+                    var _getExeValues = (byte[])_exeReader["CUST_FILE"];
+                    SaveFileDialog _OpenDialog = new SaveFileDialog();
+                    _OpenDialog.Filter = "Exe|*.exe";
+                    if(_OpenDialog.ShowDialog() == DialogResult.OK) {
+                        File.WriteAllBytes(_OpenDialog.FileName,_getExeValues);
+                    }
                 }
+                _exeReader.Close();
+            } catch (Exception eq) {
+                MessageBox.Show("Failed to download this file.","Flowstorage");
             }
         }
 
