@@ -195,6 +195,15 @@
     <Reference Include="PdfiumViewer, Version=2.13.0.0, Culture=neutral, PublicKeyToken=91e4789cfb0609e0, processorArchitecture=MSIL">
       <HintPath>..\packages\PdfiumViewer.2.13.0.0\lib\net20\PdfiumViewer.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.Doc, Version=10.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.DocViewer.7.6.0\lib\net46\Spire.Doc.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.DocViewer.Forms, Version=7.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.DocViewer.7.6.0\lib\net46\Spire.DocViewer.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=8.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.DocViewer.7.6.0\lib\net46\Spire.Pdf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -372,6 +381,12 @@
     <Compile Include="vidFORM.Designer.cs">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="wordFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="wordFORM.Designer.cs">
+      <DependentUpon>wordFORM.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="apkFORM.resx">
       <DependentUpon>apkFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -414,6 +429,7 @@
     <EmbeddedResource Include="LogIN.resx">
       <DependentUpon>LogIN.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
@@ -434,6 +450,9 @@
     <EmbeddedResource Include="vidFORM.resx">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="wordFORM.resx">
+      <DependentUpon>wordFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -453,6 +472,7 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="open-delivered-box 1.ico" />
+    <None Include="Resources\icons8-microsoft-word-60.png" />
     <None Include="Resources\icons8-software-installer-32.png" />
     <None Include="Resources\icons8-javascript-50.png" />
     <None Include="Resources\icons8-microsoft-powerpoint-60.png" />

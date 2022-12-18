@@ -727,6 +727,30 @@ namespace FlowSERVER1 {
                                     }
                                 };
                             }
+
+                            if (_tableName == "file_info_word") {
+                                picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                                picMain_Q.Click += (sender_ptx, e_ptx) => {
+                                    Form bgBlur = new Form();
+                                    using (wordFORM displayMsi = new wordFORM(titleLab.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayMsi.Owner = bgBlur;
+                                        displayMsi.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
+                                };
+                            }
                         }
                     }
 
@@ -775,6 +799,9 @@ namespace FlowSERVER1 {
                     }
                     if(_countRow("file_info_msi") > 0) {
                         _generateUserFiles("file_info_msi","msiFile",_countRow("file_info_msi"));
+                    }
+                    if(_countRow("file_info_word") > 0) {
+                        _generateUserFiles("file_info_word","docFile",_countRow("file_info_word"));
                     }
                     if (_countRow("file_info_directory") > 0) {
                         _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));

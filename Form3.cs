@@ -143,7 +143,7 @@ namespace FlowSERVER1
 
                 remButTxt.Click += (sender_im, e_im) => {
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);
@@ -429,6 +429,30 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if (typeValues[q] == ".docx") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                    textboxPic.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (wordFORM displayDocx = new wordFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayDocx.Owner = bgBlur;
+                            displayDocx.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
             }
         }
 
@@ -544,6 +568,7 @@ namespace FlowSERVER1
         public static int currPtx = 0;
         public static int currGif = 0;
         public static int currMsi = 0;
+        public static int currDoc = 0;
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
 
@@ -906,6 +931,30 @@ namespace FlowSERVER1
                                 }
                             };
                         }
+
+                        if (type_ == "Docx") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                            textboxPic.Click += (sender_pt, e_pt) => {
+                                Form bgBlur = new Form();
+                                using (wordFORM displayDocx = new wordFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayDocx.Owner = bgBlur;
+                                    displayDocx.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
                     }
 
                     if(retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -985,7 +1034,13 @@ namespace FlowSERVER1
                         command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
                         createPanelMain("Msi","MsiPar",currMsi);
                     }
-                    if(command.ExecuteNonQuery() == 1) {
+                    if (retrieved == ".docx") {
+                        currDoc++;
+                        Byte[] _readDocxBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
+                        createPanelMain("Docx", "DocPar", currDoc);
+                    }
+                    if (command.ExecuteNonQuery() == 1) {
                         clearRedundane();
                     }
                 }

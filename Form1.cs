@@ -509,6 +509,31 @@ namespace FlowSERVER1 {
                     };
                     clearRedundane();
                 }
+
+                if (_tableName == "file_info_word") {
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                    picMain_Q.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (wordFORM displayMsi = new wordFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayMsi.Owner = bgBlur;
+                            displayMsi.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                    clearRedundane();
+                }
             }
         }
         public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
@@ -776,7 +801,31 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                if(typeValues[i] == ".pdf") {
+                if (typeValues[i] == ".exe") {
+                    img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    img.Click += (sender_ap, e_ap) => {
+                        Form bgBlur = new Form();
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayPic.Owner = bgBlur;
+                            displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
+                if (typeValues[i] == ".pdf") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     img.Click += (sender_pdf, e_pdf) => {
                         Form bgBlur = new Form();
@@ -794,6 +843,30 @@ namespace FlowSERVER1 {
 
                             displayPic.Owner = bgBlur;
                             displayPic.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
+                if (typeValues[i] == ".msi") {
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                    picMain_Q.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayMsi.Owner = bgBlur;
+                            displayMsi.ShowDialog();
 
                             bgBlur.Dispose();
                         }
@@ -873,6 +946,7 @@ namespace FlowSERVER1 {
         int pdfCurr = 0;
         int ptxCurr = 0;
         int msiCurr = 0;
+        int docxCurr = 0;
         private void guna2Button2_Click(object sender, EventArgs e) {
                 
             void deletionMethod(String fileName, String getDB) {
@@ -900,7 +974,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|Acrobat Files|*.pdf|MSI Files|*.msi";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon|*.ico|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
             if (open.ShowDialog() == DialogResult.OK) {
 
@@ -1311,6 +1385,34 @@ namespace FlowSERVER1 {
                         clearRedundane();
                     }
 
+                    if (nameTable == "file_info_word") {
+                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                        command.Parameters["@CUST_FILE"].Value = keyVal;
+                        command.ExecuteNonQuery();
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                        textboxPic.Click += (sender_ptx, e_ptx) => {
+                            Form bgBlur = new Form();
+                            using (wordFORM displayWord = new wordFORM(titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayWord.Owner = bgBlur;
+                                displayWord.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
+                        clearRedundane();
+                    }
+
                     ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                     remButTxt.Click += (sender_tx, e_tx) => {
                         var titleFile = titleLab.Text;
@@ -1603,6 +1705,11 @@ namespace FlowSERVER1 {
                     msiCurr++;
                     Byte[] readMsiBytes = File.ReadAllBytes(open.FileName);
                     createPanelMain("file_info_msi","PanMsi",msiCurr,readMsiBytes);
+                } 
+                else if (retrieved == ".docx") {
+                    docxCurr++;
+                    Byte[] readDocxBytes = File.ReadAllBytes(open.FileName);
+                    createPanelMain("file_info_word","PanDoc",docxCurr,readDocxBytes);
                 }
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
             }
@@ -1804,6 +1911,7 @@ namespace FlowSERVER1 {
                                     guna2TextBox1.Text = String.Empty;
                                     guna2TextBox2.Text = String.Empty;
                                     guna2TextBox3.Text = String.Empty;
+                                    MessageBox.Show(label5.Text);
                                     setupTime();
 
                                     listBox1.Items.Add("Home");
@@ -2140,6 +2248,35 @@ namespace FlowSERVER1 {
                                 clearRedundane();
                             }
                         }
+
+                        if(_extTypes == ".docx") {
+                            Byte[] readWordBytes = File.ReadAllBytes(_Files);
+                            command.Parameters["@CUST_FILE"].Value = readWordBytes;
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                            textboxExl.Click += (sender_pdf, e_pdf) => {
+                                Form bgBlur = new Form();
+                                using (wordFORM displayPic = new wordFORM(titleLab.Text)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                            if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+                        }
                     }
                     var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
                     listBox1.SelectedIndex = _dirPosition;
@@ -2212,6 +2349,9 @@ namespace FlowSERVER1 {
                 }
                 if (_countRow("file_info_msi") > 0) {
                     _generateUserFiles("file_info_msi", "msiFile", _countRow("file_info_msi"));
+                }
+                if(_countRow("file_info_word") > 0) {
+                    _generateUserFiles("file_info_word","docFile",_countRow("file_info_word"));
                 }
                 if (_countRow("file_info_directory") > 0) {
                     _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));

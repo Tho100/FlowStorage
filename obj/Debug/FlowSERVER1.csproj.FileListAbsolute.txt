@@ -130,3 +130,12 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.msiFORM
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.TrustInfo.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exe.manifest
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.application
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.wordFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Doc.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.DocViewer.Forms.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Pdf.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.mshtml.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Doc.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.DocViewer.Forms.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Pdf.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exe.licenses

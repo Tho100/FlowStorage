@@ -821,7 +821,7 @@
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
             this.label11.Location = new System.Drawing.Point(636, 251);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(144, 20);
+            this.label11.Size = new System.Drawing.Size(415, 20);
             this.label11.TabIndex = 20;
             this.label11.Text = "Please add username";
             this.label11.Visible = false;
