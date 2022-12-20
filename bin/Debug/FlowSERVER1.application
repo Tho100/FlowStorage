@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="FlowSERVER1.exe.manifest" size="45256">
+    <dependentAssembly dependencyType="install" codebase="FlowSERVER1.exe.manifest" size="61677">
       <assemblyIdentity name="FlowSERVER1.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lw95DucFCXVcmJM4a+ch6qKXKrrKNY3CeMEa4c4HK68=</dsig:DigestValue>
+        <dsig:DigestValue>S9r8WaYzlvUpEEQ5o5/tkMN2Or2XJxnvFVdSoNY7u3s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

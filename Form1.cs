@@ -1911,7 +1911,6 @@ namespace FlowSERVER1 {
                                     guna2TextBox1.Text = String.Empty;
                                     guna2TextBox2.Text = String.Empty;
                                     guna2TextBox3.Text = String.Empty;
-                                    MessageBox.Show(label5.Text);
                                     setupTime();
 
                                     listBox1.Items.Add("Home");

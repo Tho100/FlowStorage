@@ -4,12 +4,12 @@
         <name>Spire.Doc</name>
     </assembly>
     <members>
-        <member name="F:Spire.CompoundFile.Doc.ClipboardData.Format">
+        <member name="P:Spire.CompoundFile.Doc.ClipboardData.Format">
             <summary>
             Clipboard format.
             </summary>
         </member>
-        <member name="F:Spire.CompoundFile.Doc.ClipboardData.Data">
+        <member name="P:Spire.CompoundFile.Doc.ClipboardData.Data">
             <summary>
             Clipboard data.
             </summary>
@@ -857,6 +857,10 @@
         </member>
         <member name="M:Spire.Doc.Documents.Converters.HTMLExport.GetPrefixValue(Spire.Doc.Formatting.ListFormat,System.Int32)">
             <param name="listFormat"></param>
+        </member>
+        <member name="T:Spire.Doc.Documents.Converters.FitText">
+            Specifies a width,in twips,to which text is expanded or condensed to fit.By default,text is not modified to
+            fit into a specific width..
         </member>
         <member name="P:Spire.Doc.Documents.Converters.FootnoteSeparator.TextBody">
             <summary>
@@ -2947,6 +2951,13 @@
             Initializes a new instance of the <see cref="T:Spire.Doc.Documents.CommentMark"/> class.
             </summary>
             <param name="doc">The doc.</param>
+        </member>
+        <member name="M:Spire.Doc.Documents.CommentMark.#ctor(Spire.Doc.Interface.IDocument,Spire.Doc.Documents.CommentMarkType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Doc.Documents.CommentMark"/> class.
+            </summary>
+            <param name="doc">The document.</param>
+            <param name="type">The comment mark type.</param>
         </member>
         <member name="P:Spire.Doc.Documents.XmlParagraphItem.DocumentObjectType">
             <summary>
@@ -5984,6 +5995,16 @@
             Equation DSMT4
             </summary>
         </member>
+        <member name="F:Spire.Doc.Documents.OleObjectType.WordTemplate">
+            <summary>
+            Word.Template.12
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.OleObjectType.WordMacroTemplate">
+            <summary>
+            Microsoft Word Macro-Enabled Template
+            </summary>
+        </member>
         <member name="T:Spire.Doc.Documents.ImageType">
             <summary>
             Specifies the image type.
@@ -7305,6 +7326,22 @@
             Finds Style by id
             </summary>
             <param name="styleId">The style id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Doc.Collections.StyleCollection.FindByIstd(System.Int32)">
+            <summary>
+            Finds Style by istd.
+            </summary>
+            <param name="istd">The style istd.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Doc.Collections.StyleCollection.FindByIdentifier(System.Int32)">
+            <summary>
+            Finds Style by identifier
+            </summary>
+            <param name="sIdentifier">The style identifier.
+            The parameter value is the <see cref="T:Spire.Doc.Documents.BuiltinStyle"/> enumeration value 
+            or the <see cref="T:Spire.Doc.Documents.DefaultTableStyle"/> enumeration value.</param>
             <returns></returns>
         </member>
         <member name="T:Spire.Doc.Collections.TabCollection">
@@ -8641,6 +8678,11 @@
              Returns or sets underline color
              </summary>
         </member>
+        <member name="P:Spire.Doc.Formatting.CharacterFormat.FitText">
+            <summary>
+            Returns or sets fitText
+            </summary>
+        </member>
         <member name="P:Spire.Doc.Formatting.CharacterFormat.Kerning">
             add kern tiger 2015-01-04
              <summary>
@@ -9063,6 +9105,11 @@
             </summary>
             <value>if spacing after is automatic, set to <c>true</c>.</value>
         </member>
+        <member name="P:Spire.Doc.Formatting.ParagraphFormat.SnapToGrid">
+            <summary>
+            Gets or sets a value specifies whether the current paragraph snaps to grid when document grid is defined.
+            </summary>
+        </member>
         <member name="P:Spire.Doc.Formatting.ParagraphFormat.OutlineLevel">
             <summary>
             Gets or sets the outline level.
@@ -9191,6 +9238,9 @@
         <member name="P:Spire.Doc.Formatting.RowFormat.CellSpacing">
             <summary>
             Returns or sets spacing between cells.
+            The setting value must be between 0 pt and 264.5 pt. 
+            The value will not be applied to this property if it is set out of range.
+            This property will be cleared if the set value is less than 0. 
             </summary>
         </member>
         <member name="P:Spire.Doc.Formatting.RowFormat.LeftIndent">
@@ -9894,22 +9944,6 @@
             <summary>
             Writes TransformCollection in XML form.
             </summary>
-        </member>
-        <member name="M:Spire.Doc.Fields.Shape.Ps.ShapeTransformer.UpdateBounds(System.Drawing.RectangleF@,Spire.Doc.Fields.Shape.FillTile,Spire.Pdf.General.Paper.Drawing.Images.ImageSizeCore,System.Drawing.RectangleF)">
-            <summary>
-            update the bounds which the picture should be tiled.
-            </summary>
-            <param name="bounds"></param>
-            <param name="tile"></param>
-            <param name="imgSize"></param>
-            <param name="rawBounds"></param>
-        </member>
-        <member name="M:Spire.Doc.Fields.Shape.Ps.ShapeTransformer.UpdateBounds(System.Drawing.RectangleF@,Spire.Doc.Fields.Shape.FillStretch)">
-            <summary>
-            update the bounds which the picture should be stretched.
-            </summary>
-            <param name="bounds"></param>
-            <param name="stretch"></param>
         </member>
         <member name="P:Spire.Doc.Fields.Shape.ShapeBase.AlternativeText">
             <summary>
@@ -11267,14 +11301,24 @@
             Returns or sets picture width.
             </summary>
         </member>
-        <member name="P:Spire.Doc.Fields.DocPicture.HeightScale">
+        <member name="P:Spire.Doc.Fields.DocPicture.OriginalPicHeight">
             <summary>
-            Returns or sets picture height scale factor in percent.
+            Returns the original height from the byte data of the image
             </summary>
         </member>
-        <member name="P:Spire.Doc.Fields.DocPicture.WidthScale">
+        <member name="P:Spire.Doc.Fields.DocPicture.OriginalPicWidth">
             <summary>
-            Returns or sets picture width scale factor in percent.
+            Returns the original width from the byte data of the image
+            </summary>
+        </member>
+        <member name="M:Spire.Doc.Fields.DocPicture.SetScale(System.Single)">
+            <summary>
+            Scale the image by scale factor.
+            </summary>
+        </member>
+        <member name="M:Spire.Doc.Fields.DocPicture.SetScale(System.Single,System.Single)">
+            <summary>
+            Scale the image by scale factor.
             </summary>
         </member>
         <member name="P:Spire.Doc.Fields.DocPicture.Image">
@@ -13968,9 +14012,9 @@
             Indicate which operation is applied in current document 
             </summary>
         </member>
-        <member name="E:Spire.Doc.Document.FreeInformation">
+        <member name="E:Spire.Doc.Document.EvalInformation">
             <summary>
-            Get Spire.Doc free version limit information.
+            Get Spire.Doc Eval version limit information.
             </summary>
         </member>
         <member name="E:Spire.Doc.Document.BookmarkLayout">
@@ -15075,25 +15119,30 @@
             Reset the page layout cache data of the new engine.
             </summary>
         </member>
-        <member name="T:Spire.Doc.SpireDocFreeInfo">
+        <member name="M:Spire.Doc.Document.UpdateTableLayout">
+            <summary>
+            Update table grid before saving the document when using the new engine.
+            </summary>
+        </member>
+        <member name="T:Spire.Doc.SpireDocEvalInfo">
             <summary>
             Represents the method that will handle an event that with event data.
             </summary>
             <param name="sender">The source of the event.</param>
             <param name="args">The args that contains event data.</param>
         </member>
-        <member name="T:Spire.Doc.SpireDocFreeException">
+        <member name="T:Spire.Doc.SpireDocEvalException">
             <summary>
             Class free version exception.
             </summary>
         </member>
-        <member name="M:Spire.Doc.SpireDocFreeException.#ctor(System.String)">
+        <member name="M:Spire.Doc.SpireDocEvalException.#ctor(System.String)">
             <summary>
             Class using the specified error message and a new instance of the class.
             </summary>
             <param name="message">the message.</param>
         </member>
-        <member name="P:Spire.Doc.SpireDocFreeException.Message">
+        <member name="P:Spire.Doc.SpireDocEvalException.Message">
             <summary>
             Gets the message that describes the current exception.
             </summary>
@@ -15575,6 +15624,16 @@
             	if restart page numbering, set to <c>true</c>.
             </value>
         </member>
+        <member name="P:Spire.Doc.PageSetup.GridType">
+            <summary>
+            Gets or Sets the grid type of this section.
+            </summary>
+        </member>
+        <member name="P:Spire.Doc.PageSetup.LinesPerPage">
+            <summary>
+            Gets or sets the number of lines per page in the document grid.
+            </summary>
+        </member>
         <member name="P:Spire.Doc.PageSetup.ColumnsLineBetween">
             <summary>
             Gets or sets the value specifies if a vertical line is draw between each 
@@ -15722,12 +15781,6 @@
             <summary>
             Gets or sets the default width of each column.
             </summary>
-        </member>
-        <member name="M:Spire.Doc.Table.AutoFit(Spire.Doc.AutoFitBehaviorType)">
-            <summary>
-            Determines how Microsoft Word resizes a table when the AutoFit feature is used.
-            </summary>
-            <param name="behavior">How Word resizes the specified table with the AutoFit feature is used.</param>
         </member>
         <member name="P:Spire.Doc.Table.TableGridList">
             <summary>
@@ -15989,6 +16042,12 @@
             <param name="columnIndex">Index of the column.</param>
             <param name="columnWidth">The column width.</param>
             <param name="columnWidthType">The column width type.</param>
+        </member>
+        <member name="M:Spire.Doc.Table.AutoFit(Spire.Doc.AutoFitBehaviorType)">
+            <summary>
+            Determines how Microsoft Word resizes a table when the AutoFit feature is used.
+            </summary>
+            <param name="behavior">How Word resizes the specified table with the AutoFit feature is used.</param>
         </member>
         <member name="T:Spire.Doc.WidthType">
             <summary>
@@ -21150,11 +21209,6 @@
         <member name="P:Spire.Doc.Utf32EnumeratorExtended.Offset">
             <summary>
             Gets the index of the current character in the source string.
-            </summary>
-        </member>
-        <member name="T:Spire.Doc.Writerlog">
-            <summary>
-            Write the log information.
             </summary>
         </member>
         <member name="F:Spire.Doc.SpecialCharacters.SpecialBreakCodeArr">

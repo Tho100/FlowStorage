@@ -32,7 +32,7 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.officeViewer1 = new Spire.OfficeViewer.Forms.OfficeViewer();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -68,7 +68,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(460, 21);
+            this.guna2Button4.Location = new System.Drawing.Point(659, 21);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 33;
@@ -90,7 +90,7 @@
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
             this.guna2Button3.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button3.Location = new System.Drawing.Point(504, 21);
+            this.guna2Button3.Location = new System.Drawing.Point(703, 21);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(38, 31);
             this.guna2Button3.TabIndex = 32;
@@ -113,7 +113,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button1.Location = new System.Drawing.Point(504, 21);
+            this.guna2Button1.Location = new System.Drawing.Point(703, 21);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 31);
             this.guna2Button1.TabIndex = 31;
@@ -145,30 +145,31 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(548, 21);
+            this.guna2Button2.Location = new System.Drawing.Point(747, 21);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 29;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // webBrowser1
+            // officeViewer1
             // 
-            this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.officeViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser1.Location = new System.Drawing.Point(14, 72);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(571, 342);
-            this.webBrowser1.TabIndex = 36;
+            this.officeViewer1.Location = new System.Drawing.Point(16, 74);
+            this.officeViewer1.Name = "officeViewer1";
+            this.officeViewer1.Size = new System.Drawing.Size(769, 434);
+            this.officeViewer1.TabIndex = 35;
+            this.officeViewer1.Text = "officeViewer1";
+            this.officeViewer1.Click += new System.EventHandler(this.officeViewer1_Click);
             // 
             // ptxFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(598, 425);
-            this.Controls.Add(this.webBrowser1);
+            this.ClientSize = new System.Drawing.Size(797, 520);
+            this.Controls.Add(this.officeViewer1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.guna2Button3);
@@ -193,6 +194,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button1;
         private System.Windows.Forms.Label label1;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private Spire.OfficeViewer.Forms.OfficeViewer officeViewer1;
     }
 }

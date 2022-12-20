@@ -166,6 +166,14 @@
             <param name="fileName">Name of the file.</param>
             <param name="formatType">Type of the format.</param>
         </member>
+        <member name="M:Spire.DocViewer.Forms.DocDocumentViewer.LoadFromFile(System.String,Spire.Doc.FileFormat,Spire.Doc.Documents.XHTMLValidationType)">
+            <summary>
+            Opens the HTML document from a file.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="formatType">Type of the format.</param>
+            <param name="validationType">Type of the validation.</param>
+        </member>
         <member name="M:Spire.DocViewer.Forms.DocDocumentViewer.LoadFromFile(System.String,System.String)">
             <summary>
             Opens the document from a file in word format.
@@ -441,35 +449,6 @@
             <param name="fnBar"></param>
             <param name="bShow"></param>
             <returns></returns>
-        </member>
-        <member name="F:Spire.DocViewer.Forms.FreeWarningInfo.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:Spire.DocViewer.Forms.FreeWarningInfo.#ctor">
-            <summary>
-            Initialize FreeWarningInfo.
-            </summary>
-        </member>
-        <member name="M:Spire.DocViewer.Forms.FreeWarningInfo.thirdline_LinkClicked(System.Object,System.Windows.Forms.LinkLabelLinkClickedEventArgs)">
-            <summary>
-            
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:Spire.DocViewer.Forms.FreeWarningInfo.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:Spire.DocViewer.Forms.FreeWarningInfo.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
         </member>
         <member name="P:Spire.DocViewer.Forms.FindStringPanel.SearchChar">
             <summary>

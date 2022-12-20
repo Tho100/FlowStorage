@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Globalization;
+using PdfiumViewer;
 
 namespace FlowSERVER1 {
     public partial class ptxFORM : Form {
@@ -33,16 +34,23 @@ namespace FlowSERVER1 {
                 MySqlDataReader _ptxReader = command.ExecuteReader();
                 if (_ptxReader.Read()) {
                     var get_ptxValues = (byte[])_ptxReader["CUST_FILE"];
-                    //var _bmp = new Bitmap(new MemoryStream(get_ptxValues));
-                    /*using(var _Memorystream = new MemoryStream(get_ptxValues)) {
-                        //Bitmap _Bitmap = new Bitmap(_Memorystream); 
-                        Image _Image = Image.FromStream(_Memorystream);
-                    }*/
+                    setupPtx(get_ptxValues);
                 }
+                _ptxReader.Close();
             }
             catch (Exception eq) {
-                MessageBox.Show("Failed to load this file.","Flowstorage");
+                MessageBox.Show(eq.Message);
             }
+        }
+
+        public void setupPtx(Byte[] _getByte) {
+            var _memoryStream = new MemoryStream(_getByte);
+            LoadPtx(_memoryStream);
+        }
+        public void LoadPtx(Stream _getStream) {
+            //var _ptxSetup = PdfDocument.Load(_getStream);
+            officeViewer1.LoadFromStream(_getStream);
+           
         }
 
         private void label2_Click(object sender, EventArgs e) {
@@ -58,7 +66,7 @@ namespace FlowSERVER1 {
                 command.CommandText = _readPtxValues;
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filetitle", label1.Text);
-
+                
                 MySqlDataReader _ptxReader = command.ExecuteReader();
                 if (_ptxReader.Read()) {
                     var get_apkValues = (byte[])_ptxReader["CUST_FILE"];
@@ -68,11 +76,6 @@ namespace FlowSERVER1 {
                         File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
                     }
                 }
-
-                //var get_apkValues = apkValues[0];
-                //MemoryStream _msApk = new MemoryStream(apkValues[0]);
-                //Byte[] _msByteAr = _msApk.ToArray();
-                //_msApk.Close();
 
             }
             catch (Exception eq) {
@@ -105,6 +108,18 @@ namespace FlowSERVER1 {
         }
 
         private void ptxFORM_Load(object sender, EventArgs e) {
+
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e) {
+
+        }
+
+        private void pdfViewer1_Load(object sender, EventArgs e) {
+
+        }
+
+        private void officeViewer1_Click(object sender, EventArgs e) {
 
         }
     }

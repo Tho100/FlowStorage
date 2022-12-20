@@ -164,6 +164,7 @@
             this.pdfRenderer1.TabIndex = 37;
             this.pdfRenderer1.Text = "pdfRenderer1";
             this.pdfRenderer1.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitHeight;
+            this.pdfRenderer1.Click += new System.EventHandler(this.pdfRenderer1_Click);
             // 
             // pdfFORM
             // 

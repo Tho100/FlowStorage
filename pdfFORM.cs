@@ -90,5 +90,9 @@ namespace FlowSERVER1 {
         private void label2_Click(object sender, EventArgs e) {
 
         }
+
+        private void pdfRenderer1_Click(object sender, EventArgs e) {
+
+        }
     }
 }
