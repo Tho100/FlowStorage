@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FlowSERVER1.exe" size="685016">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FlowSERVER1.exe" size="687576">
       <assemblyIdentity name="FlowSERVER1" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>KVwZUFpUvKllVNh2kEJg+5TL4IDwA9wG6F6QfkpNjqc=</dsig:DigestValue>
+        <dsig:DigestValue>qhqmdBohF89f1uwSugMX3UjckUVSsg6S0zfp5ZCGllI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -218,7 +218,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HmPrh24VjxLgxO1O7KPqCZRIg+q3HDPjs+1gAdjQVDQ=</dsig:DigestValue>
+        <dsig:DigestValue>2JxkFMKaFy598pjXIPiip9Qc0IN9IBmHdBbX+cUNAKY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
