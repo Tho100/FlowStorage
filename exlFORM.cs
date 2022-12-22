@@ -17,24 +17,17 @@ using System.Xml;
 namespace FlowSERVER1 {
     public partial class exlFORM : Form {
         public static exlFORM instance;
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public exlFORM(String title) {
             InitializeComponent();
             instance = this;
             label1.Text = title;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-
-            string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-            string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-            string username = "root"; // epiz_33067528 | root
-            string password = "nfreal-yt10";
-            int mainPort_ = 11433;
-            string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-            MySqlConnection con = new MySqlConnection(constring);
-            MySqlCommand command;
-
-            con.Open();
-
+            
             var form1 = Form1.instance;
+        
+            /*
             String selectSheets_Name = "SELECT SHEET_NAME FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(selectSheets_Name,con);
             command.Parameters.AddWithValue("@username",form1.label5.Text);
@@ -53,7 +46,10 @@ namespace FlowSERVER1 {
             foreach(var sheetNameValues in fixedSheetNames) {
                 guna2ComboBox1.Items.Add(sheetNameValues);
             }
-            guna2ComboBox1.SelectedIndex = 0;
+            guna2ComboBox1.SelectedIndex = 0;*/
+
+
+
             /*try {
 
                 string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
@@ -202,6 +198,7 @@ namespace FlowSERVER1 {
             catch (Exception eq) {
                 MessageBox.Show(eq.Message);
             }*/
+
         }
 
         public DataTable getDVGTable(DataGridView dvg) {
@@ -264,6 +261,14 @@ namespace FlowSERVER1 {
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
+        }
+
+        private void spreadsheet1_Load(object sender, EventArgs e) {
+
+        }
+
+        private void spreadsheet1_Click(object sender, EventArgs e) {
+
         }
     }
 }

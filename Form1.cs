@@ -1679,7 +1679,6 @@ namespace FlowSERVER1 {
                     audCurr++;
                     Byte[] toByte_ = File.ReadAllBytes(open.FileName);
                     createPanelMain("file_info_audi","PanAud",audCurr,toByte_);
-
                 }
                 else if (retrieved == ".gif") {
                     gifCurr++;
@@ -2355,113 +2354,6 @@ namespace FlowSERVER1 {
                 if (_countRow("file_info_directory") > 0) {
                     _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
                 }
-
-                /*string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowTxt, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-
-                var totalRowTxt = command.ExecuteScalar();
-                int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
-
-                string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowExe, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-
-                var totalRowExe = command.ExecuteScalar();
-                int intTotalRowExe = Convert.ToInt32(totalRowExe);
-                //label4.Text = intTotalRowExe.ToString();
-
-                string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowVid, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-
-                var totalRowVid = command.ExecuteScalar();
-                int intTotalRowVid = Convert.ToInt32(totalRowVid);
-
-                String countRow = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRow, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRow = command.ExecuteScalar();
-                var intRow = Convert.ToInt32(totalRow);
-                //label6.Text = intRow.ToString();
-
-                string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowExcel, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowExcel = command.ExecuteScalar();
-                int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
-
-                string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowAudi, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowAudi = command.ExecuteScalar();
-                int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
-
-                string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowGif, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowGif = command.ExecuteScalar();
-                int intTotalRowGif = Convert.ToInt32(totalRowGif);
-
-                string countRowApk = "SELECT COUNT(CUST_USERNAME) FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowApk, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowApk = command.ExecuteScalar();
-                int intTotalRowApk = Convert.ToInt32(totalRowApk);
-
-                string countRowDirectory = "SELECT COUNT(CUST_USERNAME) FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowDirectory, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowDir = command.ExecuteScalar();
-                int intTotalRowDir = Convert.ToInt32(totalRowDir);
-
-                string countRowPdf = "SELECT COUNT(CUST_USERNAME) FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowPdf, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowPdf = command.ExecuteScalar();
-                int intTotalRowPdf = Convert.ToInt32(totalRowPdf);
-
-                string countRowPtx = "SELECT COUNT(CUST_USERNAME) FROM file_info_ptx WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                command = new MySqlCommand(countRowPtx, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
-                var totalRowPtx = command.ExecuteScalar();
-                int intTotalRowPtx = Convert.ToInt32(totalRowPtx);
-
-                if (intRow > 0) {
-                    _generateUserFiles("file_info","imageFoldHome",intRow);
-                }
-                if (intTotalRowTxt > 0) {
-                    _generateUserFiles("file_info_expand", "txtFoldHome", intTotalRowTxt);
-                }
-                if(intTotalRowGif > 0) {
-                    _generateUserFiles("file_info_gif","gifFoldHome",intTotalRowGif);
-                }
-                if (intTotalRowVid > 0) {
-                    _generateUserFiles("file_info_vid", "vidFoldHome", intTotalRowVid);
-                }
-                if(intTotalRowApk > 0) {
-                    _generateUserFiles("file_info_apk","apkFoldHome",intTotalRowApk);
-                }
-                if(intTotalRowDir > 0) {
-                    _generateUserDirectory(label5.Text,label3.Text,intTotalRowDir);
-                }
-                if(intTotalRowPdf > 0) {
-                    _generateUserFiles("file_info_pdf","pdfFoldHome",intTotalRowPdf);
-                }
-                if(intTotalRowPtx > 0) {
-                    _generateUserFiles("file_info_ptx","ptxFoldHome",intTotalRowPtx);
-                }*/
 
                 if (flowLayoutPanel1.Controls.Count == 0) {
                     showRedundane();

@@ -1,125 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Globalization;
 using System.Diagnostics;
 using System.Media;
+using NAudio.Wave;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
+        public static MySqlConnection con = ConnectionModel.con;
+        public static MySqlCommand command = ConnectionModel.command;
         public audFORM(String titleName) {
             InitializeComponent();
-            //label3.Text = _path;
             label1.Text = titleName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
         }
-
+        SoundPlayer _getSoundPlayer = null;
+        Byte[] _mp3Byte = null;
         private void guna2Button5_Click(object sender, EventArgs e) {
-
             try {
 
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
-                string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
-
-                List<Byte> audValues = new List<Byte>();
+                String _audType = label1.Text.Substring(label1.Text.Length-3);
 
                 String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(_selectAud, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", label1.Text);
-                //MySqlDataAdapter ad = new MySqlDataAdapter(command);
-                //DataSet ds = new DataSet();
-                //ad.Fill(ds);
-                
-                MySqlDataReader _dr = command.ExecuteReader();
 
-                while(_dr.Read()) {
-                    audValues.Add(_dr.GetByte(0));
+                MySqlDataReader _AudReader = command.ExecuteReader();
+                if(_AudReader.Read()) {
+                    var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                    if(_audType == "wav") {
+                        using(MemoryStream _ms = new MemoryStream(_getByteAud)) {
+                            SoundPlayer player = new SoundPlayer(_ms);
+                            _getSoundPlayer = player;
+                            player.Play();
+                        }
+                    } else if (_audType == "mp3") {
+                        mp3ToWav(_getByteAud);
+                    }
                 }
-                                                        
-                _dr.Close();
-
-                using(MemoryStream _ms = new MemoryStream(audValues[0])) {
-                    SoundPlayer player = new SoundPlayer(_ms);
-                    player.Play();
-                }
-                
-                ///DataTable _DT = new DataTable();
-                //_DT.Load(_dr); 
-                //Byte[] audioSetup_ = (byte[])_DT.Rows[0][0];
-
-                //_dr.Close();
-
-        
-                /*
-                byte[] sound = ASCIIEncoding.Default.GetBytes(audioSetup_.ToString());
-                using(MemoryStream _ms = new MemoryStream(sound)) {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(_ms);
-                    player.Load();
-                    player.Play();
-                }
-                */
-
-
-
-                /*
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer();
-                
-                sound.Stream.Position = 0;     // Manually rewind stream 
-                player.Stream = null;    // Then we have to set stream to null 
-                player.Stream = sound;  // And set it again, to force it to be loaded again... 
-                player.Play();          // Yes! We can play the sound! 
-                */
-
-
-                //DataTable _DT = new DataTable();
-                //_DT.Load(_dr); 
-                //Byte[] audioSetup_ = (byte[])_DT.Rows[0][0];
-                //File.WriteAllBytes("C:\\test.wma", audioSetup_);
-                /*
-                string name = Path.ChangeExtension(Path.GetRandomFileName(), ".mp3");
-                string path = Path.Combine(Path.GetTempPath(), name);
-                File.WriteAllBytes(path, audioSetup_);
-                Process.Start(path);*/
-
+                _AudReader.Close();
             }
             catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                MessageBox.Show("Failed to play this audio.","Flowstorage");
             }
-
-            
-            //_wmpVid.uiMode = "none";
-            //_wmpVid.Visible = true;
-            //_wmpVid.URL = label3.Text;
-            //_wmpVid.Ctlcontrols.play();
             guna2Button6.Visible = true;
             guna2Button5.Visible = false;
         }
 
+        private void mp3ToWav(Byte[] _mp3ByteIn) {
+            using(var _retMs = new MemoryStream()) {
+                using(var _ms = new MemoryStream(_mp3ByteIn)) {
+                    using(Mp3FileReader _reader = new Mp3FileReader(_ms)) {
+                        var _Rs = new RawSourceWaveStream(_reader,new WaveFormat(16000,1));
+                        using(WaveStream PCMStream = WaveFormatConversionStream.CreatePcmStream(_Rs)) {
+                            WaveFileWriter.WriteWavFileToStream(_retMs,PCMStream);
+                            _mp3Byte = _retMs.ToArray();
+                            if (_mp3Byte != null) {
+                                using (MemoryStream _mp3Ms = new MemoryStream(_mp3Byte)) {
+                                    SoundPlayer player = new SoundPlayer(_mp3Ms);
+                                    _getSoundPlayer = player;
+                                    player.Play();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void guna2Button6_Click(object sender, EventArgs e) {
-            _wmpVid.Ctlcontrols.pause();
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
+            if(_getSoundPlayer != null) {
+                _getSoundPlayer.Stop();
+            }
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
+            if(_getSoundPlayer != null) {
+                _getSoundPlayer.Stop();
+            }
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
@@ -140,6 +104,30 @@ namespace FlowSERVER1 {
 
         private void label3_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            try {
+
+                String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                command = new MySqlCommand(_selectAud, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+
+                MySqlDataReader _AudReader = command.ExecuteReader();
+                if (_AudReader.Read()) {
+                    var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                    SaveFileDialog _dialog = new SaveFileDialog();
+                    _dialog.Filter = "Audio Files|*.mp3;*.wav";
+                    if(_dialog.ShowDialog() == DialogResult.OK) {
+                        File.WriteAllBytes(_dialog.FileName,_getByteAud);
+                    }
+                }
+                _AudReader.Close();
+            }
+            catch (Exception eq) {
+                MessageBox.Show("Failed to save this audio.", "Flowstorage");
+            }
         }
     }
 }

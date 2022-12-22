@@ -42,13 +42,20 @@ namespace FlowSERVER1 {
             label16.Text = joinedDate;
 
             chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
-            generateChart("Image","file_info");
-            generateChart("Text","file_info_expand");
-            generateChart("Video","file_info_vid");
-            generateChart("PDF","file_info_pdf");
-            generateChart("APK","file_info_apk");
-            generateChart("Exe","file_info_exe");
-            generateChart("GIF","file_info_gif");
+            generateChart("Image", "file_info");
+            generateChart("Text", "file_info_expand");
+            generateChart("Video", "file_info_vid");
+            generateChart("PDF", "file_info_pdf");
+            generateChart("APK", "file_info_apk");
+            generateChart("Exe", "file_info_exe");
+            generateChart("GIF", "file_info_gif");
+            generateChart("Document", "file_info_word");
+            generateChart("Presentation", "file_info_ptx");
+
+            /* The problem is say if you have the same 
+                file type that was uploaded twice then it will be seen as 
+                1,1 and not 2
+            @SUMMARY: File is numerically counted instead of summing the values*/
 
         }
         // @SUMMARY Total upload charts stats
@@ -58,7 +65,7 @@ namespace FlowSERVER1 {
             List<String> _datesValues = new List<string>();
             List<int> _totalRow = new List<int>();
 
-            String _countUpload = "SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM " + _tableName + " WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) >= 1";
+            String _countUpload = "SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM " + _tableName + " WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0"; //
             command = con.CreateCommand();
             command.CommandText = _countUpload;
             command.Parameters.AddWithValue("@username", label5.Text);
@@ -69,19 +76,17 @@ namespace FlowSERVER1 {
                 _datesValues.Add(_readRowUploadTexts.GetString("UPLOAD_DATE"));
             }
             _readRowUploadTexts.Close();
-
-            if(_totalRow.Count() >= 0) {
-                if(_tableName == "file_info") {
+            if (_totalRow.Count() >= 0) {
+                if (_tableName == "file_info") {
                     label26.Text = _totalRow.Count().ToString();
                 }
-                if(_tableName == "file_info_expand") {
+                if (_tableName == "file_info_expand") {
                     //label27.Text = _totalRow[0].ToString();
                 }
                 if (_tableName == "file_info_vid") {
                     //label28.Text = _totalRow[0].ToString();
                 }
             }
-
             for (int i = 0; i < _totalRow.Count(); i++) {
                 chart1.Series[_serName].Points.AddXY(_datesValues[i], _totalRow[i]);
             }
@@ -120,7 +125,6 @@ namespace FlowSERVER1 {
         }
 
         private void tabPage2_Click(object sender, EventArgs e) {
-
         }
 
         private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
@@ -132,6 +136,10 @@ namespace FlowSERVER1 {
         }
 
         private void tabPage1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel6_Paint(object sender, PaintEventArgs e) {
 
         }
     }

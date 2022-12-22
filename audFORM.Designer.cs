@@ -34,11 +34,7 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
-            this._wmpVid = new AxWMPLib.AxWindowsMediaPlayer();
             this.label3 = new System.Windows.Forms.Label();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            ((System.ComponentModel.ISupportInitialize)(this._wmpVid)).BeginInit();
-            this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -78,6 +74,7 @@
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 33;
+            this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click);
             // 
             // guna2Button3
             // 
@@ -172,7 +169,7 @@
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
             this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
             this.guna2Button6.ImageSize = new System.Drawing.Size(31, 31);
-            this.guna2Button6.Location = new System.Drawing.Point(540, 376);
+            this.guna2Button6.Location = new System.Drawing.Point(538, 379);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(48, 36);
             this.guna2Button6.TabIndex = 36;
@@ -201,19 +198,6 @@
             this.guna2Button5.TabIndex = 35;
             this.guna2Button5.Click += new System.EventHandler(this.guna2Button5_Click);
             // 
-            // _wmpVid
-            // 
-            this._wmpVid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this._wmpVid.Enabled = true;
-            this._wmpVid.Location = new System.Drawing.Point(13, 16);
-            this._wmpVid.Name = "_wmpVid";
-            this._wmpVid.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("_wmpVid.OcxState")));
-            this._wmpVid.Size = new System.Drawing.Size(541, 257);
-            this._wmpVid.TabIndex = 37;
-            this._wmpVid.Visible = false;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -226,22 +210,6 @@
             this.label3.Text = "guest919402";
             this.label3.Visible = false;
             this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // guna2Panel1
-            // 
-            this.guna2Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.BorderColor = System.Drawing.Color.Black;
-            this.guna2Panel1.BorderRadius = 6;
-            this.guna2Panel1.BorderThickness = 1;
-            this.guna2Panel1.Controls.Add(this._wmpVid);
-            this.guna2Panel1.FillColor = System.Drawing.Color.Black;
-            this.guna2Panel1.Location = new System.Drawing.Point(16, 73);
-            this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(572, 293);
-            this.guna2Panel1.TabIndex = 39;
             // 
             // audFORM
             // 
@@ -258,14 +226,11 @@
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2Button2);
-            this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "audFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "audFORM";
             this.Load += new System.EventHandler(this.audFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this._wmpVid)).EndInit();
-            this.guna2Panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,8 +247,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
         public Guna.UI2.WinForms.Guna2Button guna2Button5;
-        private AxWMPLib.AxWindowsMediaPlayer _wmpVid;
         private System.Windows.Forms.Label label3;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
     }
 }
