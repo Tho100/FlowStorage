@@ -135,6 +135,13 @@ namespace FlowSERVER1
                 if (!String.IsNullOrEmpty(_getUser)) {
                     if (!String.IsNullOrEmpty(_getPass)) {
                         if (!String.IsNullOrEmpty(_getEmail)) {
+
+                            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                            String _getAuth = _getPath + "\\CUST_DATAS.txt";
+                            if (File.Exists(_getAuth)) {
+                                Directory.Delete(_getPath, true);
+                            }
+
                             flowlayout.Controls.Clear();
                             if (flowlayout.Controls.Count == 0) {
                                 Form1.instance.label8.Visible = true;
