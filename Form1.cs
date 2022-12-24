@@ -362,7 +362,7 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "file_info_excel") {
                     //picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                    //picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         exlFORM exlForm = new exlFORM(titleLab.Text);
                         exlForm.Show();
@@ -370,8 +370,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_audi") {
-                    picMain_Q.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
-
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
                         using (audFORM displayPic = new audFORM(titleLab.Text)) {
