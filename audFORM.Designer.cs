@@ -83,19 +83,19 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button7.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button7.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.guna2Button7.BorderColor = System.Drawing.Color.Empty;
             this.guna2Button7.BorderRadius = 6;
             this.guna2Button7.BorderThickness = 1;
             this.guna2Button7.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button7.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button7.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button7.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button7.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.guna2Button7.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button7.ForeColor = System.Drawing.Color.White;
             this.guna2Button7.Image = global::FlowSERVER1.Properties.Resources.icons8_audio_wave_100__1_;
             this.guna2Button7.ImageSize = new System.Drawing.Size(120, 100);
-            this.guna2Button7.Location = new System.Drawing.Point(70, 81);
+            this.guna2Button7.Location = new System.Drawing.Point(71, 82);
             this.guna2Button7.Name = "guna2Button7";
             this.guna2Button7.Size = new System.Drawing.Size(351, 112);
             this.guna2Button7.TabIndex = 39;
@@ -253,6 +253,7 @@
             this.Name = "audFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "audFORM";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.audFORM_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

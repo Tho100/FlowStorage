@@ -104,89 +104,6 @@ namespace FlowSERVER1 {
                 setupRedundane();
                 this.Close();
                 try {
-         
-                   /* string countRowTxt = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowTxt, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-
-                    var totalRowTxt = command.ExecuteScalar();
-                    int intTotalRowTxt = Convert.ToInt32(totalRowTxt);
-
-                    string countRowExe = "SELECT COUNT(CUST_USERNAME) FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowExe, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-
-                    var totalRowExe = command.ExecuteScalar();
-                    int intTotalRowExe = Convert.ToInt32(totalRowExe);
-                    label4.Text = intTotalRowExe.ToString();
-
-                    string countRowVid = "SELECT COUNT(CUST_USERNAME) FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowVid, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-
-                    var totalRowVid = command.ExecuteScalar();
-                    int intTotalRowVid = Convert.ToInt32(totalRowVid);
-
-                    String countRowImg = "SELECT COUNT(CUST_USERNAME) FROM file_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowImg, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowImg = command.ExecuteScalar();
-                    var intRowImg = Convert.ToInt32(totalRowImg);
-                    //Form1.instance.label6.Text = intRow.ToString();
-
-                    string countRowExcel = "SELECT COUNT(CUST_USERNAME) FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowExcel, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowExcel = command.ExecuteScalar();
-                    int intTotalRowExcel = Convert.ToInt32(totalRowExcel);
-
-                    string countRowAudi = "SELECT COUNT(CUST_USERNAME) FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowAudi, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowAudi = command.ExecuteScalar();
-                    int intTotalRowAudi = Convert.ToInt32(totalRowAudi);
-
-                    string countRowGif = "SELECT COUNT(CUST_USERNAME) FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowGif, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowGif = command.ExecuteScalar();
-                    int intTotalRowGif = Convert.ToInt32(totalRowGif);
-
-                    string countRowApk = "SELECT COUNT(CUST_USERNAME) FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowApk, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowApk = command.ExecuteScalar();
-                    int intTotalRowApk = Convert.ToInt32(totalRowApk);
-
-                    string countRowFolder = "SELECT COUNT(CUST_USERNAME) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowFolder,con);
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowFold = command.ExecuteScalar();
-                    int inttotalRowFold = Convert.ToInt32(totalRowFold);
-
-                    string countRowDirectory = "SELECT COUNT(CUST_USERNAME) FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowDirectory,con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowDir = command.ExecuteScalar();
-                    int intTotalRowDir = Convert.ToInt32(totalRowDir);
-
-                    string countRowPdf = "SELECT COUNT(CUST_USERNAME) FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(countRowPdf,con);
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                    var totalRowPdf = command.ExecuteScalar();
-                    int intTotalRowPdf = Convert.ToInt32(totalRowPdf);*/
-
                     var _form = Form1.instance;
 
                     void clearRedundane() {
@@ -613,11 +530,26 @@ namespace FlowSERVER1 {
                             }
 
                             if (_tableName == "file_info_audi") {
-                                img.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
+                                picMain_Q.Image =  FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                                picMain_Q.Click += (sender_aud, e_aud) => {
+                                    Form bgBlur = new Form();
+                                    using (audFORM displayPic = new audFORM(titleLab.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
 
-                                picMain_Q.Click += (sender_Aud, e_Aud) => {
-                                    audFORM audForm = new audFORM(titleLab.Text);
-                                    audForm.Show();
+                                        displayPic.Owner = bgBlur;
+                                        displayPic.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
                                 };
                                 clearRedundane();
                             }

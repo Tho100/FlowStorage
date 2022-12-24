@@ -29,7 +29,6 @@ namespace FlowSERVER1
         public Form3(String sendTitle_)
         {
             InitializeComponent();
-            this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
             label1.Text = sendTitle_;
 
             var form1 = Form1.instance;
@@ -563,6 +562,7 @@ namespace FlowSERVER1
         public static int currImg = 0;
         public static int currTxt = 0;
         public static int currApk = 0;
+        public static int currAud = 0;
         public static int currExe = 0;
         public static int currPdf = 0;
         public static int currPtx = 0;

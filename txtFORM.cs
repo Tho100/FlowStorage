@@ -43,10 +43,9 @@ namespace FlowSERVER1 {
                 }
 
             } else if (getText == "" && tableName == "folder_upload_info") {
-                String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername AND FILE_NAME = @filename";
+                String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(retrieveImg, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
                 command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
                 command.Parameters.AddWithValue("@filename",fileName);
 

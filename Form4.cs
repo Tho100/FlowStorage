@@ -23,7 +23,6 @@ namespace FlowSERVER1
         public Form4() {
             InitializeComponent();
             this.Text = "Create New Directory Page";
-            this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
             instance = this;
         }
 

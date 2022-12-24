@@ -93,6 +93,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_audio_file_60 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-audio-file-60", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_audio_wave_100 {
             get {
                 object obj = ResourceManager.GetObject("icons8-audio-wave-100", resourceCulture);
@@ -186,6 +196,26 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_javascript_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-javascript-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_logout_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-logout-64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_logout_64__1_ {
+            get {
+                object obj = ResourceManager.GetObject("icons8-logout-64 (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

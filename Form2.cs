@@ -28,7 +28,6 @@ namespace FlowSERVER1
         {
             InitializeComponent();
             this.Text = "Login Page";
-            this.Icon = new Icon(@"C:\Users\USER\Documents\FlowStorage4.ico");
             instance = this;
         }
 
@@ -49,15 +48,11 @@ namespace FlowSERVER1
         public void setupTime() {
             var form = Form1.instance;
             try {
-                string[] morningKeys = { "start your day with a coffee?", "" };
-                var random = new Random();
-                var getKeyRand = random.Next(0, 1);
-                var getMorningKeys = morningKeys[getKeyRand];
                 DateTime now = DateTime.Now;
                 var hours = now.Hour;
                 String greeting = null;
                 if (hours >= 1 && hours <= 12) {
-                    greeting = "Good Morning " + form.label5.Text + " :) " + getMorningKeys;
+                    greeting = "Good Morning " + form.label5.Text + " :) ";
                     form.pictureBox2.Visible = true;
                     form.pictureBox1.Visible = false;
                     form.pictureBox3.Visible = false;
@@ -135,7 +130,6 @@ namespace FlowSERVER1
                 if (!String.IsNullOrEmpty(_getUser)) {
                     if (!String.IsNullOrEmpty(_getPass)) {
                         if (!String.IsNullOrEmpty(_getEmail)) {
-
                             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                             String _getAuth = _getPath + "\\CUST_DATAS.txt";
                             if (File.Exists(_getAuth)) {
@@ -159,15 +153,20 @@ namespace FlowSERVER1
 
                             String getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                            string query = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+                            String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+                            command = new MySqlCommand(_InsertUser, con);
+                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                            command.Parameters.AddWithValue("@CUST_PASSWORD", encryptionPass);
+                            command.Parameters.AddWithValue("@CREATED_DATE", getDate);
+                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                            command.ExecuteNonQuery();
 
-                            using (var cmd = new MySqlCommand(query, con)) {
-                                cmd.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                cmd.Parameters.AddWithValue("@CUST_PASSWORD", encryptionPass);
-                                cmd.Parameters.AddWithValue("@CREATED_DATE", getDate);
-                                cmd.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                cmd.ExecuteNonQuery();
-                            }
+                            String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                            command = new MySqlCommand(_InsertType, con);
+                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                            command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                            command.ExecuteNonQuery();
 
                             label5.Visible = false;
                             label4.Visible = false;

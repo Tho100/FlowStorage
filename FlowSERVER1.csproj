@@ -612,6 +612,9 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="open-delivered-box 1.ico" />
+    <None Include="Resources\icons8-audio-file-60.png" />
+    <None Include="Resources\icons8-logout-64 %281%29.png" />
+    <None Include="Resources\icons8-logout-64.png" />
     <None Include="Resources\icons8-audio-wave-100 %281%29.png" />
     <None Include="Resources\icons8-audio-wave-100.png" />
     <None Include="Resources\icons8-database-50.png" />
