@@ -40,15 +40,15 @@ namespace FlowSERVER1 {
             String _accType = _types[0];
             label6.Text = _accType;
             if(_accType == "Basic") {
-                label37.Text = "Limited to 10 files";
+                label37.Text = "Limited to 10";
             } else if (_accType == "Max") {
-                label37.Text = "Limited to 25 files";
+                label37.Text = "Limited to 25";
             }
             else if (_accType == "Express") {
-                label37.Text = "Limited to 40 files";
+                label37.Text = "Limited to 40";
             }
             else if (_accType == "Supreme") {
-                label37.Text = "Limited to 95 files";
+                label37.Text = "Limited to 95";
             }
 
             var countTotalFolders = Form1.instance.listBox1.Items.Count-1;
@@ -197,27 +197,34 @@ namespace FlowSERVER1 {
 
         }
 
-        private void _setupPayment(String TypeOf) {
+        private void _setupPayment(String TypeOf,String Pricing) {
             string url = "";
 
             string business = "nfrealyt@gmail.com";     
 //            string description = "Donation";            
             string country = "MY";                  
-            string currency = "MYR";            
+            string currency = "USD";            
 
-            url += "https://www.paypal.com/cgi-bin/webscr" +
-                "?cmd=" + "_donations" +
-                "&business=" + business +
-                "&lc=" + country +
-                "&item_name=" + TypeOf +
-                "&currency_code=" + currency +
-                "&bn=" + "PP%2dDonationsBF";
+            url += "https://www.paypal.com/cgi-bin/webscr/" + 
+                "?cmd=" + "_xclick" +
+                "&amount=" + Pricing + 
+                "&business=" + business + 
+                "&item_name=" + TypeOf;
+              
+            /* "?cmd=" + "_donations" +
+                    "&amount=245" + 
+                    "&business=" + business +
+                    "&lc=" + country +
+                    "&item_name=" + TypeOf +
+                    "&currency_code=" + currency +
+                    "&bn=" + "PP%2dDonationsBF";*/
 
             System.Diagnostics.Process.Start(url);
+            // https://www.paypal.com/paypalme/flowstoragepaypal //https://www.paypal.com/cgi-bin/webscr 
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            _setupPayment("Max account for Flowstorage");
+            _setupPayment("Max account for Flowstorage","2");
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -241,14 +248,18 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
-            _setupPayment("Supreme account for Flowstorage");
+            _setupPayment("Supreme account for Flowstorage","9.99");
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
-            _setupPayment("Express account for Flowstorage");
+            _setupPayment("Express account for Flowstorage","5");
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Panel10_Paint(object sender, PaintEventArgs e) {
 
         }
     }

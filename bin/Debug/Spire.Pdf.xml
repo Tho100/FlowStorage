@@ -17780,6 +17780,48 @@
             <param name="message">message </param>
             <param name="exception">original exception</param>
         </member>
+        <member name="T:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection">
+            <summary>
+            Represents a readonly collection of EffectData objects.
+            </summary>
+        </member>
+        <member name="P:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection.Count">
+            <summary>
+            Gets the number of image effects in a collection.
+            Read-only <see cref="T:System.Int32"/>.
+            </summary>
+        </member>
+        <member name="M:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection.GetEnumerator">
+            <summary>
+            Gets an enumerator for the entire collection.
+            </summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator"/> for the entire collection.</returns>
+        </member>
+        <member name="P:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection.Item(System.Int32)">
+            <summary>
+            Gets element by index.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection.CopyTo(System.Array,System.Int32)">
+            <summary>
+            Copies all elements from the collection into the specified array.
+            </summary>
+            <param name="array">Array to fill.</param>
+            <param name="index">Starting position in target array.</param>
+        </member>
+        <member name="P:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection.IsSynchronized">
+            <summary>
+            Gets a value indicating whether access to the collection is synchronized (thread-safe).
+            </summary>
+        </member>
+        <member name="P:Spire.Pdf.General.Paper.Presentation.Collections.EffectDataCollection.SyncRoot">
+            <summary>
+            Gets a synchronization root.
+            Readonly <see cref="T:System.Object"/>.
+            </summary>
+        </member>
         <member name="T:Spire.Pdf.General.Paper.Presentation.Collections.EmbedImageList">
             <summary>
             Summary description for Images.
@@ -30567,7 +30609,7 @@
             </summary>
             <param name="graphicsObject"></param>
         </member>
-        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.ClipRecognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject},Spire.Pdf.Conversion.LogicStructure.Base.ConvertType)">
+        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.ClipRecognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject},Spire.Pdf.Conversion.LogicStructure.ConvertType)">
             <summary>
             Initializes a new instance of the class.
             </summary>
@@ -30597,7 +30639,7 @@
             </summary>
             <param name="elementBase"></param>
         </member>
-        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.ClipRecognizer.ClipPath(Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject,Spire.Pdf.Conversion.LogicStructure.Base.ConvertType)">
+        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.ClipRecognizer.ClipPath(Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject,Spire.Pdf.Conversion.LogicStructure.ConvertType)">
             <summary>
             对Path路径进行剪切
             </summary>
@@ -31642,7 +31684,7 @@
             </summary>
             <param name="graphicsObject"></param>
         </member>
-        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.Recognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject},Spire.Pdf.Conversion.LogicStructure.Base.ConvertType)">
+        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.Recognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject},Spire.Pdf.Conversion.LogicStructure.ConvertType)">
             <summary>
             Initializes a new instance of the class.
             </summary>
@@ -31668,29 +31710,17 @@
             两根平行线之间相隔多少,就认为是同一根线的,设一个常数控制,合并为一根线
             </summary>
         </member>
-        <member name="F:Spire.Pdf.Conversion.LogicStructure.Base.StraightLinesRecognizer.m_toXlsx">
-            <summary>
-            only for to xlsx
-            </summary>
-        </member>
         <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.StraightLinesRecognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject})">
             <summary>
             Initializes a new instance of the class.
             </summary>
             <param name="graphicsObject"></param>
         </member>
-        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.StraightLinesRecognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject},Spire.Pdf.Conversion.LogicStructure.Base.ConvertType)">
+        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.StraightLinesRecognizer.#ctor(System.Collections.Generic.List{Spire.Pdf.Conversion.LogicStructure.Base.GraphicsObject},Spire.Pdf.Conversion.LogicStructure.ConvertType)">
             <summary>
             Initializes a new instance of the class.
             </summary>
             <param name="graphicsObject"></param>
-        </member>
-        <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.StraightLinesRecognizer.Recognize(System.Boolean)">
-            <summary>
-            Recognize all lines the current page,only for to xlsx
-            </summary>
-            <param name="toXlsx"></param>
-            <returns></returns>
         </member>
         <member name="M:Spire.Pdf.Conversion.LogicStructure.Base.StraightLinesRecognizer.Recognize">
             <summary>
@@ -34415,6 +34445,16 @@
             对图片做剪切,先把图片比列缩放到和剪贴范围的比例(100%)一致,再剪贴图片,图片会存在模糊情况
             </summary>
             <param name="imageObject"></param>
+        </member>
+        <member name="T:Spire.Pdf.Conversion.LogicStructure.ParagraphType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Spire.Pdf.Conversion.LogicStructure.ConvertType">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:Spire.Pdf.Conversion.OfdConverter">
             <summary>
@@ -42318,273 +42358,188 @@
             </param>
             <returns></returns>
         </member>
-        <member name="T:Spire.Pdf.Interchange.PdfXmpMetadata">
+        <member name="T:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata">
             <summary>
-            A metadata stream containing metadata for document.
+            A metadata stream containing metadata.
             </summary>
         </member>
-        <member name="F:Spire.Pdf.Interchange.PdfXmpMetadata.CUSTOM_PROPERTY_SPECIAL_CHAR_MAP">
-            <summary>
-            Special char mapping in custom property name. 
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Interchange.PdfXmpMetadata.ISO8601_DATE_FORMAT">
+        <member name="F:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.ISO8601_DATE_FORMAT">
             <summary>
             ISO8601 datetime format.
             </summary>
         </member>
-        <member name="F:Spire.Pdf.Interchange.PdfXmpMetadata.m_stream">
+        <member name="F:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.m_stream">
             <summary>
             The metadata stream.
             </summary>
         </member>
-        <member name="F:Spire.Pdf.Interchange.PdfXmpMetadata.m_xmpMeta">
+        <member name="F:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.m_xmpMeta">
             <summary>
             The xmp metadata structure.
             </summary>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.#ctor">
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.#ctor">
             <summary>
             A constructor for new metadata stream.
             </summary>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.#ctor(Spire.Pdf.Core.PdfStream)">
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.#ctor(Spire.Pdf.Core.PdfStream)">
             <summary>
             A constructor for a existing metadata stream.
             </summary>
             <param name="stream">A existing metadata stream.</param>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetAuthor(System.String)">
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.Parse(System.IO.Stream)">
             <summary>
-            Set author. If value is null, delete the property.
+            Parse the xmp metadata.
             </summary>
-            <param name="value">The author.</param>
+            <param name="stream">The xmp metadata stream.</param>
+            <returns>The PdfXmpMetadata.</returns>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetAuthor">
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.EscapeCustomPropertyName(System.String)">
             <summary>
-            Get author.
+            Escape the PDF name to the XMP name.
+            PDF defines an XMP namespace (pdfx:) dedicated to representing any user-defined keys 
+            present in the Info dictionary.The names of such properties can contain arbitrary Unicode
+            characters; XMP names, however, are constrained to contain only XML Name characters.
+            The following escape convention applies in mapping between the PDF names and the XMP names:
+            1.Characters that are in the Basic Multilingual plane but are not XML Name characters are represented by
+            the character U + 2182(roman numeral ten thousand), followed by four characters from among the
+            hexadecimal digits; these four characters spell out the Unicode code point of the character being escaped.
+            The hexadecimal digits are case-insensitive; that is any combination of a-f and A-F is allowed.
+            2.Characters having Unicode code points beyond the Basic Multilingual plane have their high, then low,
+            surrogate parts spelled out in this fashion by two consecutive five - character sequences.
             </summary>
+            <param name="name">The pdf name.</param>
+            <returns>the XMP name.</returns>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistAuthor">
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.UnescapeCustomPropertyName(System.String)">
             <summary>
-            Whether exist author property.
+            Unescape the PDF name to the XMP name.
+            PDF defines an XMP namespace (pdfx:) dedicated to representing any user-defined keys 
+            present in the Info dictionary.The names of such properties can contain arbitrary Unicode
+            characters; XMP names, however, are constrained to contain only XML Name characters.
+            The following escape convention applies in mapping between the PDF names and the XMP names:
+            1.Characters that are in the Basic Multilingual plane but are not XML Name characters are represented by
+            the character U + 2182(roman numeral ten thousand), followed by four characters from among the
+            hexadecimal digits; these four characters spell out the Unicode code point of the character being escaped.
+            The hexadecimal digits are case-insensitive; that is any combination of a-f and A-F is allowed.
+            2.Characters having Unicode code points beyond the Basic Multilingual plane have their high, then low,
+            surrogate parts spelled out in this fashion by two consecutive five - character sequences.
             </summary>
+            <param name="name">The pdf name.</param>
+            <returns>the XMP name.</returns>
+        </member>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.ExistProperty(System.String,System.String)">
+            <summary>Returns whether the property exists.</summary>
+            <param name="schemaNs">The namespace URI for the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
+            <param name="propName">The name of the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
             <returns>Returns true if the property exists.</returns>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetCreateDate(System.Nullable{System.DateTime})">
-            <summary>
-            Set create date.If value is null, delete the property.
-            </summary>
-            <param name="value">The create date.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetCreateDate(System.String)">
-            <summary>
-            Set create date.If value is null, delete the property.
-            </summary>
-            <param name="value">the date  in the format yyyy-MM-ddTHH:mm:sszzz</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetCreateDate">
-            <summary>
-            Get create date.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistCreateDate">
-            <summary>
-            Whether exist create date property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetCreator(System.String)">
-            <summary>
-            Set creator. If value is null, delete the property.
-            </summary>
-            <param name="value">The creator.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetCreator">
-            <summary>
-            Get creator.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistCreator">
-            <summary>
-            Whether exist creator property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetKeywords(System.String)">
-            <summary>
-            Set keywords. If value is null, delete the property.
-            </summary>
-            <param name="value">The keywords.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetKeywords">
-            <summary>
-            Get keywords.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistKeywords">
-            <summary>
-            Whether exist keywords property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetModifyDate(System.Nullable{System.DateTime})">
-            <summary>
-            Set modify date. If value is null, delete the property.
-            </summary>
-            <param name="value">The modify date.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetModifyDate(System.String)">
-            <summary>
-            Set modify date. If value is null, delete the property.
-            </summary>
-            <param name="value">the date  in the format yyyy-MM-ddTHH:mm:sszzz</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetModifyDate">
-            <summary>
-            Get modify date.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistModifyDate">
-            <summary>
-            Whether exist modify date property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetProducer(System.String)">
-            <summary>
-            Set producer. If value is null, delete the property.
-            </summary>
-            <param name="value">The producer</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetProducer">
-            <summary>
-            Get producer.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistProducer">
-            <summary>
-            Whether exist producer property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetSubject(System.String)">
-            <summary>
-            Set subject. If value is null, delete the property.
-            </summary>
-            <param name="value">The subject.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetSubject">
-            <summary>
-            Get subject.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistSubject">
-            <summary>
-            Whether exist subject property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetTitle(System.String)">
-            <summary>
-            Set title. If value is null, delete the property.
-            </summary>
-            <param name="value">The title.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetTitle">
-            <summary>
-            Get title.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistTitle">
-            <summary>
-            Whether exist title property.
-            </summary>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetCustomProperty(System.String,System.String)">
-            <summary>
-            Set custom property. If value is null, delete the property.
-            </summary>
-            <param name="name">The property name.</param>
-            <param name="value">The property value.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetCustomProperty(System.String)">
-            <summary>
-            Get custom property.
-            </summary>
-            <param name="name">The property name.</param>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ExistCustomProperty(System.String)">
-            <summary>
-            Whether xxist custom property.
-            </summary>
-            <param name="name">The property name.</param>
-            <returns>Returns true if the property exists.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetCustomProperties">
-            <summary>
-            Get all custom properties.
-            </summary>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.FindProperties(System.String)">
+            <summary>Get all custom properties.</summary>
             <returns>The custom properties.</returns>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetConformanceLevel(Spire.Pdf.PdfConformanceLevel)">
-            <summary>
-            Set pdf conformanceLevel.
-            </summary>
-            <param name="conformanceLevel">The pdf conformanceLevel.</param>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.DeleteProperty(System.String,System.String)">
+            <summary>Deletes the given XMP subtree rooted at the given property.</summary>
+            <remarks>It is not an error if the property does not exist.</remarks>
+            <param name="schemaNs">The namespace URI for the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
+            <param name="propName">The name of the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.GetConformanceLevel">
-            <summary>
-            Get pdf conformanceLevel.
-            </summary>
-            <returns>The pdf conformanceLevel.</returns>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.SetPropertyString(System.String,System.String,System.String)">
+            <seealso cref="!:SetProperty(string, string, object, PropertyOptions)"/>
+            <param name="schemaNs">The namespace URI</param>
+            <param name="propName">The name of the property</param>
+            <param name="propValue">the value for the property</param>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.SetPdfUA1Identification">
-            <summary>
-            Make pdf/UA identification.
-            </summary>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.GetPropertyString(System.String,System.String)">
+            <summary>Convenience method to retrieve the literal value of a property.</summary>
+            <remarks>Note that there is no <c>setPropertyString()</c>z, because <see cref="!:GetProperty"/> sets a string value.</remarks>
+            <param name="schemaNs">The namespace URI for the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
+            <param name="propName">The name of the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
+            <returns>Returns a <c>string</c> value or <c>null</c> if the property does not exist.</returns>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.UnescapeCustomProperty(System.String)">
-            <summary>
-            Unescape special char in the escaped property name.
-            </summary>
-            <param name="name">The escaped property name.</param>
-            <returns>The property name.</returns>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.SetPropertyDate(System.String,System.String,System.Nullable{System.DateTime})">
+            <seealso cref="!:SetProperty(string, string, object, PropertyOptions)"/>
+            <param name="schemaNs">The namespace URI</param>
+            <param name="propName">The name of the property</param>
+            <param name="propValue">the value for the property</param>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ProcessFirstCharcter(System.String)">
-            <summary>
-            The first character of an xml node name can only be a letter or a short underscore.
-            </summary>
-            <param name="name">The name</param>
-            <returns>Processed string</returns>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.GetPropertyDate(System.String,System.String)">
+            <summary>Convenience method to retrieve the literal value of a property.</summary>
+            <param name="schemaNs">The namespace URI for the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
+            <param name="propName">The name of the property. Has the same usage as in <see cref="!:GetProperty"/>.</param>
+            <returns>Returns a <c>IXmpDateTime</c> object or <c>null</c> if the property does not exist.</returns>
         </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.UnProcessFirstCharcter(System.String)">
-            <summary>
-            The first character of an xml node name can only be a letter or a short underscore.
-            </summary>
-            <param name="name">The name</param>
-            <returns>UnProcessed string</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.EscapeCustomProperty(System.String)">
-            <summary>
-            Escape special char in the property name.
-            </summary>
-            <param name="name">The property name.</param>
-            <returns>The escaped property name.</returns>
-        </member>
-        <member name="M:Spire.Pdf.Interchange.PdfXmpMetadata.ConvertXmpDateTime(Spire.Xmp.IXmpDateTime)">
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.ConvertXmpDateTime(Spire.Xmp.IXmpDateTime)">
             <summary>
             Convert xmp date time to .net DateTime
             </summary>
             <param name="xmpDateTime">The xmp date time.</param>
             <returns>The .net DateTime</returns>
         </member>
-        <member name="P:Spire.Pdf.Interchange.PdfXmpMetadata.Spire#Pdf#Interfaces#IPdfWrapper#Element">
+        <member name="P:Spire.Pdf.Interchange.Metadata.PdfXmpMetadata.Spire#Pdf#Interfaces#IPdfWrapper#Element">
             <summary>
             Gets the element.
             </summary>
             <value></value>
+        </member>
+        <member name="T:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace">
+            <summary>
+            The pdf xmp namespace.
+            </summary>
+        </member>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace.RegisterNamespace(System.String,System.String)">
+            <summary>Register a namespace URI with a suggested prefix.</summary>
+            <remarks>
+            It is not an error if the URI is already registered, no matter what the prefix is.
+            If the URI is not registered but the suggested prefix is in use, a unique prefix is
+            created from the suggested one. The actual registered prefix is always
+            returned. The function result tells if the registered prefix is the
+            suggested one.
+            <para />
+            Note: No checking is presently done on either the URI or the prefix.
+            </remarks>
+            <param name="namespaceUri">The URI for the namespace. Must be a valid XML URI.</param>
+            <param name="suggestedNamespacePrefix">
+            The suggested prefix to be used if the URI is not yet registered. Must be a valid XML name.
+            </param>
+            <returns>
+            Returns the registered prefix for this URI, is equal to the
+            suggestedPrefix if the namespace hasn't been registered before,
+            otherwise the existing prefix.
+            </returns>
+        </member>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace.ResetNamespaces">
+            <summary>Resets the schema registry to its original state (creates a new one).</summary>
+            <remarks>
+            Resets the schema registry to its original state (creates a new one).
+            Be careful this might break all existing XMPMeta-objects and should be used
+            only for testing purposes.
+            </remarks>
+        </member>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace.GetPredefinedNamespaces">
+            <summary>
+            Get predefined namespaces.
+            </summary>
+            <returns>The predefined namespaces.</returns>
+        </member>
+        <member name="P:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace.NamespaceUri">
+            <summary>
+            >The URI for the namespace. Must be a valid XML URI.
+            </summary>
+        </member>
+        <member name="P:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace.NamespacePrefix">
+            <summary>
+            The prefix for the namespace. Must be a valid XML name.
+            </summary>
+        </member>
+        <member name="M:Spire.Pdf.Interchange.Metadata.PdfXmpNamespace.#ctor(System.String,System.String)">
+            <summary>
+            Create an instance.
+            </summary>
+            <param name="namespaceUri">The URI for the namespace. Must be a valid XML URI.</param>
+            <param name="prefix">The prefix for the namespace. Must be a valid XML name.</param>
         </member>
         <member name="T:Spire.Pdf.Interchange.TaggedPdf.Standard.AutoGenerator">
             <summary>
@@ -44906,7 +44861,7 @@
         <member name="P:Spire.Pdf.Texts.PdfTextFindOptions.IsShowHiddenText">
             <summary>
             Whether is show hidden texts.
-            default vale: false.
+            default vale: true.
             </summary>
         </member>
         <member name="P:Spire.Pdf.Texts.PdfTextFindOptions.Parameter">
@@ -45353,7 +45308,7 @@
         <member name="P:Spire.Pdf.Texts.PdfTextExtractOptions.IsShowHiddenText">
             <summary>
             Whether is show hidden texts.
-            default vale: false.
+            default vale: true.
             </summary>
         </member>
         <member name="P:Spire.Pdf.Texts.PdfTextExtractOptions.ExtractArea">
@@ -45594,12 +45549,12 @@
             <param name="segment">The segment</param>
             <returns>If visible ,return true,or false</returns>
         </member>
-        <member name="F:Spire.Pdf.Texts.Comm.TextFindOptions.isShowHiddenText">
+        <member name="F:Spire.Pdf.Texts.Comm.TextOperationOptions.isShowHiddenText">
             <summary>
             Show hidden text?
             </summary>
         </member>
-        <member name="P:Spire.Pdf.Texts.Comm.TextFindOptions.IsShowHiddenText">
+        <member name="P:Spire.Pdf.Texts.Comm.TextOperationOptions.IsShowHiddenText">
             <summary>
             Whether is show hidden texts.
             default vale: false.
@@ -53821,6 +53776,11 @@
             Gets or sets the java script action to be performed before the document is saved.
             </summary>
             <value>A  object specifying the action to be executed before the document is saved. </value>
+        </member>
+        <member name="P:Spire.Pdf.PdfDocument.Metadata">
+            <summary>
+            Get or set the document metadata.
+            </summary>
         </member>
         <member name="P:Spire.Pdf.PdfDocument.Template">
             <summary>
@@ -70754,6 +70714,11 @@
             <param name="count"></param>
             <returns></returns>
         </member>
+        <member name="P:Spire.Pdf.PdfCatalog.Metadata">
+            <summary>
+            The document metadata.
+            </summary>
+        </member>
         <member name="T:Spire.Pdf.PdfNewDocument">
             <summary>
             Represents a logic to create Pdf document.
@@ -70898,11 +70863,6 @@
             Predefined properties in document info.
             </summary>
         </member>
-        <member name="F:Spire.Pdf.PdfDocumentInformation.m_metadata">
-            <summary>
-            The metadata in catalog.
-            </summary>
-        </member>
         <member name="P:Spire.Pdf.PdfDocumentInformation.CreationDate">
             <summary>
             Gets or sets the creation date.
@@ -70983,18 +70943,17 @@
             Make pdf/UA identification.
             </summary>
         </member>
+        <member name="M:Spire.Pdf.PdfDocumentInformation.GetMetadataConformanceLevel">
+            <summary>
+            Get pdf conformanceLevel.
+            </summary>
+            <returns>The pdf conformanceLevel.</returns>
+        </member>
         <member name="P:Spire.Pdf.PdfDocumentInformation.Spire#Pdf#Interfaces#IPdfWrapper#Element">
             <summary>
             Gets the element.
             </summary>
             <value></value>
-        </member>
-        <member name="M:Spire.Pdf.PdfDocumentInformation.Dictionary_BeginSave(System.Object,Spire.Pdf.Primitives.SavePdfPrimitiveEventArgs)">
-            <summary>
-            Trigger when pdf wrappered element saving.
-            </summary>
-            <param name="sender">The source of event.</param>
-            <param name="ars">The arguments of event.</param>
         </member>
         <member name="M:Spire.Pdf.PdfDocumentInformation.SyncMetadata">
             <summary>
@@ -74599,289 +74558,6 @@
             <summary>
             Cell borders are drawns in the cell's interior.
             </summary>
-        </member>
-        <member name="T:Spire.Pdf.Xmp.CustomMetadata">
-            <summary>
-            Represents custom Metadata.
-            </summary>
-        </member>
-        <member name="P:Spire.Pdf.Xmp.CustomMetadata.Item(System.String)">
-            <summary>
-            Sets the xmp property.
-            </summary>
-        </member>
-        <member name="P:Spire.Pdf.Xmp.CustomMetadata.SchemaType">
-            <summary>
-            Gets type of the schema.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.CustomMetadata.#ctor(Spire.Pdf.Xmp.XmpMetadata,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the  class.
-            </summary>
-            <param name="xmp">Parent XmpMetadata.</param>
-            <param name="xmlNamespace">The XML namespace.</param>
-            <param name="namespaceUri">The namespace URI.</param>
-        </member>
-        <member name="T:Spire.Pdf.Xmp.XmpStructureType">
-            <summary>
-            Enumerates types of the xmp structure.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpStructureType.Dimensions">
-            <summary>
-            A structure containing dimensions for a drawn object.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpStructureType.Font">
-            <summary>
-            A structure containing the characteristics of a font used in a document.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpStructureType.Colorant">
-            <summary>
-            A structure containing the characteristics of a Coloring (swatch) used in a document.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpStructureType.Thumbnail">
-            <summary>
-            A thumbnail image for a file.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpStructureType.Job">
-            <summary>
-            Job structure.
-            </summary>
-        </member>
-        <member name="T:Spire.Pdf.Xmp.XmpSchemaType">
-            <summary>
-            Enumerates types of the xmp schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.DublinCoreSchema">
-            <summary>
-            Dublin Core Schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.BasicSchema">
-            <summary>
-            Basic Schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.RightsManagementSchema">
-            <summary>
-            Rights Management Schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.BasicJobTicketSchema">
-            <summary>
-            Basic Job Ticket Schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.PagedTextSchema">
-            <summary>
-            Paged Text Schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.PDFSchema">
-            <summary>
-            Adobe PDF Schema.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpSchemaType.Custom">
-            <summary>
-            Custom schema.
-            </summary>
-        </member>
-        <member name="T:Spire.Pdf.Xmp.XmpArrayType">
-            <summary>
-            Types of the xmp arrays.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpArrayType.Unknown">
-            <summary>
-            Unknown array type.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpArrayType.Bag">
-            <summary>
-            Unordered array.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpArrayType.Seq">
-            <summary>
-            Ordered array.
-            </summary>
-        </member>
-        <member name="F:Spire.Pdf.Xmp.XmpArrayType.Alt">
-            <summary>
-            Alternative array.
-            </summary>
-        </member>
-        <member name="T:Spire.Pdf.Xmp.XmpEntityBase">
-            <summary>
-            Base class for the xmp entities.
-            </summary>
-        </member>
-        <member name="P:Spire.Pdf.Xmp.XmpEntityBase.XmlData">
-            <summary>
-            Gets Xml data of the entity.
-            </summary>
-        </member>
-        <member name="T:Spire.Pdf.Xmp.XmpMetadata">
-            <summary>
-            Represents XMP metadata of the document.
-            </summary>
-        </member>
-        <member name="P:Spire.Pdf.Xmp.XmpMetadata.XmlData">
-            <summary>
-            Gets XMP data in XML format.
-            </summary>
-        </member>
-        <member name="P:Spire.Pdf.Xmp.XmpMetadata.NamespaceManager">
-            <summary>
-            Gets namespace manager of the Xmp metadata.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.#ctor(Spire.Pdf.PdfDocumentInformation)">
-            <summary>
-            Initializes a new instance of the  class.
-            </summary>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.#ctor(System.Xml.XmlDocument)">
-            <summary>
-            Initializes a new instance of the  class.
-            </summary>
-            <param name="xmp">The XMP.</param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.Add(System.Xml.XmlElement)">
-            <summary>
-            Adds schema to the XMP in XML format.
-            </summary>
-            <param name="schema">XMP schema in XML format.</param>
-            <remarks>If XMP already contains such schema - there will be two equal schemas at the xmp.</remarks>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetTitle">
-            <summary>
-            Return title if exists; otherwise return null
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetSubject">
-            <summary>
-            Return subject if exists; otherwise return null
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetAuthor">
-            <summary>
-            Return author if exists; otherwise return null
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetProducer">
-            <summary>
-            Return producer if exists; otherwise return null
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetKeywords">
-            <summary>
-            return keywords if exists; otherwise return null
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetCustomProperty(System.String)">
-            <summary>
-            Return specified custom field value if exists; otherwise return null
-            </summary>
-            <param name="fieldName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetAllCustomProperties">
-            <summary>
-            Return all custom properties if exsit; otherwise return empty Dictionary
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetCreateDate">
-            <summary>
-            Return create date if exists; otherwise return default DateTime
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetCreator">
-            <summary>
-            Return creator if exists; otherwise return null
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.GetModifyDate">
-            <summary>
-            Return modify date if exists; otherwise return System.DateTime.MinValue
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetTitle(System.String)">
-            <summary>
-            Set title to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetSubject(System.String)">
-            <summary>
-            Set subject to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetAuthor(System.String)">
-            <summary>
-            Set subject to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetProducer(System.String)">
-            <summary>
-            Set producer to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetKeywords(System.String)">
-            <summary>
-            Set keywords to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetCustomProperty(System.String,System.String)">
-            <summary>
-            Set custom property to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="field"></param>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetCreateDate(System.DateTime)">
-            <summary>
-            Set title to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="dt"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetCreator(System.String)">
-            <summary>
-            Set Creator to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:Spire.Pdf.Xmp.XmpMetadata.SetModifyDate(System.DateTime)">
-            <summary>
-            Set ModifyDates to xmpmeta; if value is null, remove the node; if the node is null, create the node
-            </summary>
-            <param name="dt"></param>
-        </member>
-        <member name="P:Spire.Pdf.Xmp.XmpMetadata.Spire#Pdf#Interfaces#IPdfWrapper#Element">
-            <summary>
-            Gets the element.
-            </summary>
-            <value></value>
         </member>
         <member name="T:Spire.RichTextCore.RichText">
             <summary>
@@ -80936,48 +80612,6 @@
         <member name="T:Spire.Compression.CompressedStreamWriter.BlockType">
             <summary>
             Type of the block.
-            </summary>
-        </member>
-        <member name="T:Spire.Presentation.Collections.EffectDataCollection">
-            <summary>
-            Represents a readonly collection of EffectData objects.
-            </summary>
-        </member>
-        <member name="P:Spire.Presentation.Collections.EffectDataCollection.Count">
-            <summary>
-            Gets the number of image effects in a collection.
-            Read-only <see cref="T:System.Int32"/>.
-            </summary>
-        </member>
-        <member name="M:Spire.Presentation.Collections.EffectDataCollection.GetEnumerator">
-            <summary>
-            Gets an enumerator for the entire collection.
-            </summary>
-            <returns>An <see cref="T:System.Collections.IEnumerator"/> for the entire collection.</returns>
-        </member>
-        <member name="P:Spire.Presentation.Collections.EffectDataCollection.Item(System.Int32)">
-            <summary>
-            Gets element by index.
-            </summary>
-            <param name="index"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Spire.Presentation.Collections.EffectDataCollection.CopyTo(System.Array,System.Int32)">
-            <summary>
-            Copies all elements from the collection into the specified array.
-            </summary>
-            <param name="array">Array to fill.</param>
-            <param name="index">Starting position in target array.</param>
-        </member>
-        <member name="P:Spire.Presentation.Collections.EffectDataCollection.IsSynchronized">
-            <summary>
-            Gets a value indicating whether access to the collection is synchronized (thread-safe).
-            </summary>
-        </member>
-        <member name="P:Spire.Presentation.Collections.EffectDataCollection.SyncRoot">
-            <summary>
-            Gets a synchronization root.
-            Readonly <see cref="T:System.Object"/>.
             </summary>
         </member>
     </members>

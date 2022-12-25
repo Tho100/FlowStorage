@@ -95,6 +95,7 @@ namespace FlowSERVER1
 
             List<String> emailExists = new List<String>();
             List<String> usernameExists = new List<String>();
+            List<String> accTypeExists = new List<String>();
 
             MySqlDataReader emailReader = command.ExecuteReader();
             while (emailReader.Read()) {
@@ -113,7 +114,18 @@ namespace FlowSERVER1
             }
             usernameReader.Close();
 
-            if (emailExists.Count() >= 1 || usernameExists.Count() >= 1) {
+            String verifyAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+            command = con.CreateCommand();
+            command.CommandText = verifyAccType;
+            command.Parameters.AddWithValue("@username", _getUser);
+
+            MySqlDataReader accTypeReader = command.ExecuteReader();
+            while (accTypeReader.Read()) {
+                accTypeExists.Add(accTypeReader.GetString(0));
+            }
+            accTypeReader.Close();
+
+            if (emailExists.Count() >= 1 || usernameExists.Count() >= 1 || accTypeExists.Count() >= 1) {
                 if(emailExists.Count() >= 1) {
                     label5.Visible = true;
                     label5.Text = "Email already exists.";

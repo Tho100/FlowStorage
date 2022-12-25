@@ -40,15 +40,6 @@ namespace FlowSERVER1 {
                 instance = this;
                 setupLabel = label5;
 
-                int _countRow(String _tableName) {
-                    String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                    command = new MySqlCommand(_countRowTable, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    var _totalRow = command.ExecuteScalar();
-                    int totalRowInt = Convert.ToInt32(_totalRow);
-                    return totalRowInt;
-                }
-
                 String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                 String _getAuth = _getPath + "\\CUST_DATAS.txt";
                 if (File.Exists(_getAuth)) {
@@ -89,7 +80,7 @@ namespace FlowSERVER1 {
                     }
                 }
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                MessageBox.Show("Are you connected to the internet?", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -1186,7 +1177,7 @@ namespace FlowSERVER1 {
                         var encryptValue = EncryptionModel.Encrypt(keyVal.ToString(), "MAINKEY9999");
                         Task.Run(() => {
                             command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.Parameters["@CUST_FILE"].Value = encryptValue;
                             command.ExecuteNonQuery();
                         });
 
@@ -1757,7 +1748,7 @@ namespace FlowSERVER1 {
                     dateLabExl.Text = varDate;
 
                 }
-                else if (retrieved == ".mp3" || retrieved == ".mpeg" || retrieved == ".wav") {
+                else if (retrieved == ".mp3" || retrieved == ".wav") {
                     audCurr++;
                     Byte[] toByte_ = File.ReadAllBytes(open.FileName);
                     createPanelMain("file_info_audi", "PanAud", audCurr, toByte_);
@@ -1795,7 +1786,27 @@ namespace FlowSERVER1 {
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
             }
         }
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        public void DisplayError(String CurAcc) {
+            Form bgBlur = new Form();
+            using (upgradeFORM displayPic = new upgradeFORM(CurAcc)) {
+                bgBlur.StartPosition = FormStartPosition.Manual;
+                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                bgBlur.Opacity = .24d;
+                bgBlur.BackColor = Color.Black;
+                bgBlur.WindowState = FormWindowState.Maximized;
+                bgBlur.TopMost = true;
+                bgBlur.Location = this.Location;
+                bgBlur.StartPosition = FormStartPosition.Manual;
+                bgBlur.ShowInTaskbar = false;
+                bgBlur.Show();
+
+                displayPic.Owner = bgBlur;
+                displayPic.ShowDialog();
+
+                bgBlur.Dispose();
+            }
+        }
+        private void guna2Button2_Click(object sender, EventArgs e) {
             String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_getAccType, con);
             command.Parameters.AddWithValue("@username", label5.Text);
@@ -1810,11 +1821,12 @@ namespace FlowSERVER1 {
             String _accType = _types[0];
             int CurrentUploadCount = Convert.ToInt32(label4.Text);
             if (_accType == "Basic") {
-                if (CurrentUploadCount != 10) {
+                if (CurrentUploadCount != 5) {
                     _mainFileGenerator();
                 }
                 else {
-                    MessageBox.Show("You're limited to 10 files upload\nUpgrade your account now!\nCurrent account: Normal", "Flowstorage");
+                    DisplayError(_accType);
+
                 }
             }
 
@@ -1823,7 +1835,7 @@ namespace FlowSERVER1 {
                     _mainFileGenerator();
                 }
                 else {
-                    MessageBox.Show("You're limited to 25 files upload\nUpgrade your account now!\nCurrent account: Max", "Flowstorage");
+                   DisplayError(_accType);
                 }
             }
 
@@ -1832,7 +1844,7 @@ namespace FlowSERVER1 {
                     _mainFileGenerator();
                 }
                 else {
-                    MessageBox.Show("You're limited to 40 files upload\nUpgrade your account now!\nCurrent account: Express", "Flowstorage");
+                    DisplayError(_accType);
                 }
             }
 
@@ -1972,6 +1984,7 @@ namespace FlowSERVER1 {
 
             List<String> userExists = new List<String>();
             List<String> emailExists = new List<String>();
+            List<String> accTypeExists = new List<String>();
 
             MySqlDataReader userReader = command.ExecuteReader();
             while (userReader.Read()) {
@@ -1991,7 +2004,18 @@ namespace FlowSERVER1 {
             }
             emailReader.Close();
 
-            if(emailExists.Count() >= 1 || userExists.Count() >= 1) {
+            String verifyAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+            command = con.CreateCommand();
+            command.CommandText = verifyAccType;
+            command.Parameters.AddWithValue("@username", _getUser);
+
+            MySqlDataReader accTypeReader = command.ExecuteReader();
+            while (accTypeReader.Read()) {
+                accTypeExists.Add(accTypeReader.GetString(0));
+            }
+            accTypeReader.Close();
+
+            if (emailExists.Count() >= 1 || userExists.Count() >= 1 || accTypeExists.Count() >= 1) {
                 if(emailExists.Count() >= 1) {
                     label22.Visible = true;
                     label22.Text = "Email already exists.";
@@ -2559,7 +2583,7 @@ namespace FlowSERVER1 {
         }
 
         void _generateUserDirectory(String userName, String passUser, int rowLength) {
-            for (int i = 0; i < rowLength-rowLength+1; i++) {
+            for (int i = 0; i <rowLength; i++) {
                 int top = 275;
                 int h_p = 100;
 

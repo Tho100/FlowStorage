@@ -32,7 +32,7 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.pdfRenderer1 = new PdfiumViewer.PdfRenderer();
+            this.pdfDocumentViewer1 = new Spire.PdfViewer.Forms.PdfDocumentViewer();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -151,20 +151,26 @@
             this.guna2Button2.TabIndex = 30;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // pdfRenderer1
+            // pdfDocumentViewer1
             // 
-            this.pdfRenderer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pdfDocumentViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pdfRenderer1.Location = new System.Drawing.Point(17, 57);
-            this.pdfRenderer1.Name = "pdfRenderer1";
-            this.pdfRenderer1.Page = 0;
-            this.pdfRenderer1.Rotation = PdfiumViewer.PdfRotation.Rotate0;
-            this.pdfRenderer1.Size = new System.Drawing.Size(768, 447);
-            this.pdfRenderer1.TabIndex = 37;
-            this.pdfRenderer1.Text = "pdfRenderer1";
-            this.pdfRenderer1.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitHeight;
-            this.pdfRenderer1.Click += new System.EventHandler(this.pdfRenderer1_Click);
+            this.pdfDocumentViewer1.AutoScroll = true;
+            this.pdfDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.pdfDocumentViewer1.FormFillEnabled = false;
+            this.pdfDocumentViewer1.Location = new System.Drawing.Point(17, 62);
+            this.pdfDocumentViewer1.MultiPagesThreshold = 60;
+            this.pdfDocumentViewer1.Name = "pdfDocumentViewer1";
+            this.pdfDocumentViewer1.OnRenderPageExceptionEvent = null;
+            this.pdfDocumentViewer1.PageLayoutMode = Spire.PdfViewer.Forms.PageLayoutMode.SinglePageContinuous;
+            this.pdfDocumentViewer1.Size = new System.Drawing.Size(768, 441);
+            this.pdfDocumentViewer1.TabIndex = 38;
+            this.pdfDocumentViewer1.Text = "pdfDocumentViewer1";
+            this.pdfDocumentViewer1.Threshold = 60;
+            this.pdfDocumentViewer1.ViewerMode = Spire.PdfViewer.Forms.PdfViewerMode.PdfViewerMode.MultiPage;
+            this.pdfDocumentViewer1.ZoomFactor = 1F;
+            this.pdfDocumentViewer1.ZoomMode = Spire.PdfViewer.Forms.ZoomMode.Default;
             // 
             // pdfFORM
             // 
@@ -172,7 +178,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(797, 520);
-            this.Controls.Add(this.pdfRenderer1);
+            this.Controls.Add(this.pdfDocumentViewer1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.guna2Button3);
@@ -198,6 +204,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button1;
         private System.Windows.Forms.Label label1;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        private PdfiumViewer.PdfRenderer pdfRenderer1;
+        private Spire.PdfViewer.Forms.PdfDocumentViewer pdfDocumentViewer1;
     }
 }

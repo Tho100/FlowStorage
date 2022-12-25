@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wyBbLFqb8RXfMmPlKhWS7Ct+xnalXnGPRJMqM1iM5Ww=</dsig:DigestValue>
+        <dsig:DigestValue>qDmFGHqU3pLIFS9bl5djZgKJePgytvNgaccyGRKjCCQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FlowSERVER1.exe" size="707544">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FlowSERVER1.exe" size="717392">
       <assemblyIdentity name="FlowSERVER1" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0G6kX0zVO9vgjsVeZi6Qwn8lvJdBFj/mlJNMWyyB/5E=</dsig:DigestValue>
+        <dsig:DigestValue>Nnh3WWsNPXLOAvE1vI7p401kyZRi5tm15ogmL/IycAA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -218,7 +218,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>irygg4izv45wATXaDE9XcYOBz8Wagm2U2ri8hP9nNjA=</dsig:DigestValue>
+        <dsig:DigestValue>RgiB6720dzOLkxCntAuj2GJY+aHSF90Hdbl/sDjsg5Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -667,30 +667,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PdfiumViewer.dll" size="115712">
-      <assemblyIdentity name="PdfiumViewer" version="2.13.0.0" publicKeyToken="91E4789CFB0609E0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZfH8v0qDbPN6DoyjK63A+4G5OHAUzhQcwF5dpxFIa6g=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="nl\PdfiumViewer.resources.dll" size="4608">
-      <assemblyIdentity name="PdfiumViewer.resources" version="2.13.0.0" publicKeyToken="91E4789CFB0609E0" language="nl" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZCZVDasJn1Wllz3/QEmIpE2A0JcKuj8hT67j06OhlE4=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SkiaSharp.dll" size="801712">
       <assemblyIdentity name="SkiaSharp" version="2.88.0.0" publicKeyToken="0738EB9F132ED756" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -716,13 +692,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Barcode.dll" size="2153712">
-      <assemblyIdentity name="Spire.Barcode" version="6.8.0.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Spire.Barcode" version="6.12.1.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/7W/gZK2KvodXWDGomOO4t0U4pLXs2OViRKmt7xG5kI=</dsig:DigestValue>
+        <dsig:DigestValue>lLbSXe85F1YszGNUOImjsSHDJY839Nx0eo1luuuKN1k=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -734,7 +710,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pw/LMWSCuF8Xsj13+MZneaNDvcwCoqSzViFnRf3/S+Y=</dsig:DigestValue>
+        <dsig:DigestValue>wJ1PmvB5B2tmRlJ6OLEOsiD/+gFPqf4PelOenJouJgc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -746,19 +722,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ficBXTZJAcqPXjvqYe+PgEQZHn7p7zAtNyCA/m9Ni+I=</dsig:DigestValue>
+        <dsig:DigestValue>PZgjIpXsT3w67zFvOSHoztHuvPVV+FN3P+y5G/IsBUA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Doc.dll" size="13096688">
-      <assemblyIdentity name="Spire.Doc" version="10.11.9.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Spire.Doc" version="10.12.0.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hOnAxn2BXkucB00oM+SGDoti5+oKPot2mYTa+pQNsqg=</dsig:DigestValue>
+        <dsig:DigestValue>16CENuoyWq9PtrYykxT6UFwlk+4svnYonjrsCOBPzwM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -770,43 +746,43 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gfLAQXc6+0P1wKPd9d225pNQJMZoCAblM29aEVVwLag=</dsig:DigestValue>
+        <dsig:DigestValue>AWrhHNYNq6bheJHeeWPSZzwxIpuagvedXPy8Q9/xOAs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Email.dll" size="2774768">
-      <assemblyIdentity name="Spire.Email" version="5.11.10.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Spire.Email" version="5.12.13.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IG7/hEx/ankIEmma2vIyGI4FvglnPjj4my7f+yeLnI8=</dsig:DigestValue>
+        <dsig:DigestValue>6QJwLVYJCDll3pkasu+MFYOWWxrcDuIEERrXcqM6amI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.OfficeViewer.Forms.dll" size="240368">
-      <assemblyIdentity name="Spire.OfficeViewer.Forms" version="7.12.0.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Spire.OfficeViewer.Forms" version="7.12.4.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kIrS5493uD492msWvgwkptyxjlTpuSzh1FadeyeLZkI=</dsig:DigestValue>
+        <dsig:DigestValue>DgyzL0kAG2PmXPkrf5I3h1P9MmxxpdaHdBmB1MwUMuQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Pdf.dll" size="21460720">
-      <assemblyIdentity name="Spire.Pdf" version="8.11.10.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Pdf.dll" size="21395184">
+      <assemblyIdentity name="Spire.Pdf" version="8.12.5.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wRGlFjbcAEWdPT3zRAsPqCvFej5N581Ug15eiiBhYPc=</dsig:DigestValue>
+        <dsig:DigestValue>uYWLWiHUpsEn7h/NLiUuB5RI6x7FGkkJ0mU9lqpvDYQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -818,7 +794,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3GNmP/iANc2LQoSEf5hN5asA24sv3am0C0756mZu6iQ=</dsig:DigestValue>
+        <dsig:DigestValue>kt3mfVK7FjmpiKy31TCGbzCPNmn3BagEfUxAL6ZWI2M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -830,7 +806,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rNGGn5ngJb0VVNOA8OxuY+zAy9bfttZfLhEhbyPFqOI=</dsig:DigestValue>
+        <dsig:DigestValue>P0NAuWroM7W9JI3DTpj+wE1I2yx909qlrgxjdCkyT0Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -842,7 +818,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>I9S6bDIi6kQNgw5oavKXlTHwFGgRgVI4og3JfGZxyqk=</dsig:DigestValue>
+        <dsig:DigestValue>BUqrwfdvBSGogg+Gb1et5A+tiwkVMbmftZCAKpCK9Tg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -854,19 +830,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/5buO8KdNpNui2/k1J01UFCYruhGwpG/SPWnqPfI5/M=</dsig:DigestValue>
+        <dsig:DigestValue>g7hQ8HXrNG6BG20pXpCVJXI4MZo2pMP2GJVmzxonHtc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.XLS.dll" size="14935792">
-      <assemblyIdentity name="Spire.XLS" version="12.11.3.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.XLS.dll" size="14927600">
+      <assemblyIdentity name="Spire.XLS" version="12.12.1.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>38HLs1Wue4HtkJvfn1z5Nn9VrCjF/9UbP75nogIy+Wc=</dsig:DigestValue>
+        <dsig:DigestValue>dtmXFTX0zs4LmjOx6A5NRKJ4KveJE4kuhYFdVg+UpZ0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -883,14 +859,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Syncfusion.Compression.Portable.dll" size="470528">
-      <assemblyIdentity name="Syncfusion.Compression.Portable" version="20.3200.0.61" publicKeyToken="3D67ED1F87D44C89" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Syncfusion.Compression.Portable.dll" size="482304">
+      <assemblyIdentity name="Syncfusion.Compression.Portable" version="20.4200.0.38" publicKeyToken="3D67ED1F87D44C89" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0+z7GRZZS8gd+FYsaaZP/O0aPOOAb2+CwSTZ4FxGMaE=</dsig:DigestValue>
+        <dsig:DigestValue>m7NlLQZvu3cmW2G/XSAHWGOXyFENoVZhOBJvI55tnhQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -979,14 +955,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Syncfusion.Pdf.Portable.dll" size="4656128">
-      <assemblyIdentity name="Syncfusion.Pdf.Portable" version="20.3200.0.61" publicKeyToken="3D67ED1F87D44C89" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Syncfusion.Pdf.Portable.dll" size="4657152">
+      <assemblyIdentity name="Syncfusion.Pdf.Portable" version="20.4200.0.38" publicKeyToken="3D67ED1F87D44C89" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>jiMgktwEZTpYfALI8EgIzE9c4Frj4G1hMOcFqgvv6cE=</dsig:DigestValue>
+        <dsig:DigestValue>BHCEIzIfB2AOcc58XP0iTRgCiH+dePE2KxKY0oabmlU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1281,13 +1257,13 @@
       <dsig:DigestValue>DwS8qk5KyEfEa8Qn9X+IuvmOT0/lJZWe7fCBM1ibbSw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="FlowSERVER1.exe.config" size="1759">
+  <file name="FlowSERVER1.exe.config" size="2024">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Bap5eCMHe0Dns+vy5xeCqzX7VNXbBe9JPWIH4mzfqeU=</dsig:DigestValue>
+      <dsig:DigestValue>joDogP9x/cJ39cJ53oMk38AMJ9jl4s5aMX8vx+QIDC4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">
@@ -1344,15 +1320,6 @@
       <dsig:DigestValue>GsCpAJnBL4XahMknIQ2u1gmrp9Zt51VyMRm56obQKuE=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="x64\pdfium.dll" size="15807488">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>KlZXdUVx3P/lSQkI9G1YmMNKrgqpJrL/fPeiSPmAoeY=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="x86\libHarfBuzzSharp.dll" size="805776">
     <hash>
       <dsig:Transforms>
@@ -1369,15 +1336,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>jdyT73boaXiELONAi/EjkOjYuHN5EgmYWPLB9stYZAk=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="x86\pdfium.dll" size="13634048">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>jTAQhnQCckVMapLjyYQmYX+k7RERSYnwaRPCEnpKI+I=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
-using PdfiumViewer;
+//using PdfiumViewer;
 
 namespace FlowSERVER1 {
     public partial class pdfFORM : Form {
@@ -34,8 +34,9 @@ namespace FlowSERVER1 {
         }
         // @SUMMARY Load stream of bytes to pdf renderer
         public void LoadPdf(Stream stream) {
-            var _pdfDocumentSetup = PdfDocument.Load(stream);
-            pdfRenderer1.Load(_pdfDocumentSetup);
+            pdfDocumentViewer1.LoadFromStream(stream);
+            //var _pdfDocumentSetup = PdfDocument.Load(stream);
+            //pdfRenderer1.Load(_pdfDocumentSetup); // original control: pdfRenderer
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {

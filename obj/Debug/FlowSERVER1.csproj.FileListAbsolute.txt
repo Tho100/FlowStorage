@@ -83,7 +83,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Extension
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Extensions.Options.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Extensions.Primitives.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Newtonsoft.Json.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\PdfiumViewer.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Diagnostics.DiagnosticSource.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Threading.Tasks.Extensions.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.ValueTuple.dll
@@ -105,11 +104,9 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Extension
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Extensions.Options.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Extensions.Primitives.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Newtonsoft.Json.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\PdfiumViewer.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.ValueTuple.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\nl\PdfiumViewer.resources.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ptxFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Controls.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Rasterizer.dll
@@ -121,8 +118,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Win
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Windows.PDFViewer.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ionic.Zlib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\log4net.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x86\pdfium.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x64\pdfium.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.exe.manifest
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.application
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.msiFORM.resources
@@ -228,3 +223,5 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.Win32.Reg
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\NAudio.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Security.AccessControl.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.upgradeFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.DirErFORM.resources

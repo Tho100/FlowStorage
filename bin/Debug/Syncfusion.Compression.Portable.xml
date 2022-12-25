@@ -21010,5 +21010,434 @@
             Gets a <see cref="T:Syncfusion.Office.IOfficeMathBreaks"/> collection that represents the line breaks in an equation.Read-only.
             </summary>
         </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.None">
+            <summary> 
+            None. This is default style. 
+            </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.Heading1">
+             <summary>
+            Heading 1
+             </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.Heading2">
+            <summary>
+            Heading 2
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.Heading3">
+             <summary> 
+            Heading 3
+             </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.Heading4">
+             <summary>
+            Heading 4
+             </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.Heading5">
+            <summary> 
+            Heading 5 
+            </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.Heading6">
+            <summary> 
+            Heading 6 
+            </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdParagraphStyle.BlockQuote">
+            <summary>
+            Block quote 
+            </summary> 
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdSubSuperScript">
+            <summary>
+            Specifies type of the sub and super script.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdSubSuperScript.None">
+            <summary>
+            No subscript or superscript.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdSubSuperScript.SuperScript">
+            <summary>
+            Specifies superscript format.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MdSubSuperScript.SubScript">
+            <summary>
+            Specifies subscript format.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.ColumnAlignment">
+            <summary> 
+            Specifies type of alignment for table column. 
+            </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.ColumnAlignment.Left">
+            <summary> 
+            Left alignment 
+            </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.ColumnAlignment.Right">
+            <summary> 
+            Right alignment 
+            </summary> 
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.ColumnAlignment.Center">
+            <summary> 
+            Center alignment. 
+            </summary> 
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.IMdBlock">
+            <summary>
+            Represents an interface for Block in Markdown 
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.IMdInline">
+            <summary>
+            Represents an interface for inlline in Markdown.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MarkdownDocument">
+            <summary>
+            Represents a class to maintain Markdown document.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MarkdownDocument.Blocks">
+            <summary>
+            Gets or sets list of blocks in Markdown 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownDocument.AddMdParagraph">
+            <summary>
+            Adds the <see cref="T:Syncfusion.Office.Markdown.MdParagraph"/> to the Markdown.
+            </summary>
+            <returns>The reference to the newly created paragraph.</returns>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownDocument.AddMdThematicBreak">
+            <summary>
+            Adds the <see cref="T:Syncfusion.Office.Markdown.MdThematicBreak"/> to the Markdown.
+            </summary>
+            <returns>The reference to the newly created thematicbreak.</returns>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownDocument.AddMdCodeBlock">
+            <summary>
+            Adds the <see cref="T:Syncfusion.Office.Markdown.MdCodeBlock"/> to the Markdown.
+            </summary>
+            <returns>Returns new MdCodeBlock.</returns>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownDocument.AddMdTable">
+            <summary>
+            Adds the <see cref="T:Syncfusion.Office.Markdown.MdTable"/> to the Markdown.
+            </summary>
+            /// <returns>The reference to the newly created table.</returns>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownDocument.Dispose">
+            <summary>
+            Disposes the document.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MarkdownToTextConverter">
+            <summary>
+            Converts word document Markdown.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MarkdownToTextConverter.CrLf">
+            <summary>
+            Carriage return followed by line feed character: "\x000d\x000a" or "\r\n". 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Office.Markdown.MarkdownToTextConverter.SpaceChar">
+            <summary>
+            Space character
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownToTextConverter.WriteTable(Syncfusion.Office.Markdown.MdTable,System.String,System.String)">
+            <summary>
+            Iterates through MarkdownTable and writes the contents of table. 
+            </summary>
+            <returns>The contents of table</returns>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownToTextConverter.IterateInlineItems(System.Collections.Generic.List{Syncfusion.Office.Markdown.IMdInline},System.String)">
+            <summary>
+            Returns Inline Items.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MarkdownToTextConverter.ValidateDelimiters(System.String@,System.String@,System.String@,Syncfusion.Office.Markdown.MdTextRange)">
+            <summary>
+            Validate the opening and closing delimiters along with symbols
+            </summary>
+            <param name="m_text">Paragraph text</param>
+            <param name="emptySpace">Space to be add after delimiter</param>
+            <param name="text">Current textrange text</param>
+            <param name="nextSibiling">Next sibiling of current textrange</param>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdCodeBlock">
+            <summary>
+            Represents a code block in Markdown. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdCodeBlock.Lines">
+            <summary>
+            Gets or sets lines of code in code block.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdCodeBlock.IsFencedCode">
+            <summary>
+            Gets or sets a value indicating whether lines of code are indented or fenced code. Default it is true.  
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdCodeBlock.Close">
+            <summary>
+            Closes the code block.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdHyperlink">
+            <summary>
+            Represents a hyperlink in Markdown. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdHyperlink.Url">
+            <summary>
+            Gets or sets hyperlink
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdHyperlink.DisplayText">
+            <summary>
+            Gets or sets display text of hyperlink 
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdListFormat">
+            <summary>
+            Represents list format for a line in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdListFormat.IsNumbered">
+            <summary>
+            Gets or sets a value indicating whether line is numbered. Default it is false. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdListFormat.BulletedListMarker">
+            <summary>
+            Gets a value used for bulleted list marker in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdListFormat.NumberedListMarker">
+            <summary>
+            Gets a value used for Numbered List Marker in Markdown 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdListFormat.ListValue">
+            <summary>
+            Gets or sets a value used for representing the list including the nested list in Markdown
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdParagraph">
+            <summary>
+            Represents a line in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdParagraph.Inlines">
+            <summary>
+            Gets or sets list of inline items for a line. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdParagraph.StyleName">
+            <summary>
+            Gets or sets style for a line.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdParagraph.ListFormat">
+            <summary>
+            Gets or sets list format for a line. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdParagraph.TaskItemProperties">
+            <summary>
+            Gets or sets the task item properties of a line. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdParagraph.IsHorizontalRule">
+            <summary>
+            Gets or sets a value indicating horizontal rule in Markdown.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdParagraph.AddMdTextRange">
+            <summary>
+            Defines methods to add MdTextRange to Inlines in the markdown document.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdParagraph.AddMdHyperlink">
+            <summary>
+            Defines methods to add MdHyperlink to Inlines in the markdown document.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdParagraph.ApplyParagraphStyle(System.String,Syncfusion.Office.Markdown.MdParagraph)">
+            <summary>
+            Applies Paragraph style to MdParagraph.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdParagraph.GetCharForParaStyle(Syncfusion.Office.Markdown.MdParagraph,System.String)">
+            <summary>
+            Returns the character for Paragraph style.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdParagraph.Close">
+            <summary>
+            Closes the paragraph.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdPicture">
+            <summary>
+            Represents an image in a Markdown. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdPicture.AltText">
+            <summary>
+            Gets or sets alternate text for an image. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdPicture.ImageBytes">
+            <summary>
+            Gets or sets image bytes 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdPicture.ImageFormat">
+            <summary>
+            Gets or sets the image format
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdPicture.Url">
+            <summary>
+            Gets or sets the image url
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdPicture.Close">
+            <summary>
+            Closes the picture.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdTable">
+            <summary>
+            Represents a table in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTable.Rows">
+            <summary>
+            Get or sets the rows in table. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTable.ColumnAlignments">
+            <summary>
+            Gets or sets the alignments for each columns in table.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdTable.AddMdTableRow">
+            <summary>
+            Adds table row to rows collection.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdTableCell">
+            <summary>
+            Represents a table cell in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTableCell.Items">
+            <summary>
+            Gets or sets the collection of inline items to be preserved in cell.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdTableRow">
+            <summary>
+            Represents a table row in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTableRow.Cells">
+            <summary>
+            Gets or sets the collection of cells for the particular row.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.Markdown.MdTableRow.AddMdTableCell">
+            <summary>
+            Adds table cell to cells collection for the particular row.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdTaskProperties">
+            <summary>
+            Represents the properties for task item in Markdown. This property applies if a paragraph starts with checkbox.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTaskProperties.IsChecked">
+            <summary>
+            Gets or sets a value indicating whether task item is checked. Default is false. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTaskProperties.CheckedMarker">
+            <summary>
+            Gets or sets a string used for checked task item marker in Markdown 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTaskProperties.Uncheckedmarker">
+            <summary>
+            Gets or sets a string used for unchecked task item marker in Markdown 
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdTextRange">
+            <summary>
+            Represents a text with formatting in Markdown 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.Text">
+            <summary>
+            Gets or sets a text in a line. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.Bold">
+            <summary>
+            Gets or sets a value indicating whether text is bold or not. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.Italic">
+            <summary>
+            Gets or sets a value indicating whether text is italic or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.CodeSpan">
+            <summary>
+            Gets or sets a value indicating whether text is code spanned text. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.StrikeThrough">
+            <summary>
+            Gets or sets a value indicating whether text is formatted with strikethrough. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.IsHidden">
+            <summary>
+            Gets or sets a value indicating whether text is Hidden or not. 
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.SubSuperScriptType">
+            <summary>
+            Gets or sets the subscript or superscript for the text.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdTextRange.IsLineBreak">
+            <summary>
+            Gets or sets a value indicating LineBreak. 
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Office.Markdown.MdThematicBreak">
+            <summary>
+            Represents a thematic break or horizontal rule in Markdown.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.Markdown.MdThematicBreak.HorizontalRuleChar">
+            <summary>
+            Gets a string which is used to add horizontal rule in Markdown.
+            </summary>
+        </member>
     </members>
 </doc>

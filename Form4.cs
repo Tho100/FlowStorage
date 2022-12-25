@@ -193,38 +193,104 @@ namespace FlowSERVER1
                 MessageBox.Show(eq.Message);
             }
         }
+        public void DisplayError(String accType) {
+            Form bgBlur = new Form();
+            using (DirErFORM displayPic = new DirErFORM(accType)) {
+                bgBlur.StartPosition = FormStartPosition.Manual;
+                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                bgBlur.Opacity = .24d;
+                bgBlur.BackColor = Color.Black;
+                bgBlur.WindowState = FormWindowState.Maximized;
+                bgBlur.TopMost = true;
+                bgBlur.Location = this.Location;
+                bgBlur.StartPosition = FormStartPosition.Manual;
+                bgBlur.ShowInTaskbar = false;
+                bgBlur.Show();
+
+                displayPic.Owner = bgBlur;
+                displayPic.ShowDialog();
+
+                bgBlur.Dispose();
+            }
+        }
         public static int value_Dir = 0;
         public void guna2Button2_Click(object sender, EventArgs e) {
-            String _GetDirTitle = guna2TextBox1.Text;
-            if(_GetDirTitle != String.Empty) {
-                value_Dir++;
-                generateDir(value_Dir,_GetDirTitle);
-            } 
-            try {
+            var _getFilesCount = Form1.instance.label4.Text;
+            int TotalFiles = Convert.ToInt32(_getFilesCount);
 
-                var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+            String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_getAccType, con);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
-                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
-                command = new MySqlCommand(_insertValues,con);
-                command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
-                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-
-                command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
-
-                command.ExecuteNonQuery();
-
-            } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+            List<String> _types = new List<String>();
+            MySqlDataReader _readType = command.ExecuteReader();
+            while (_readType.Read()) {
+                _types.Add(_readType.GetString(0));
             }
+            _readType.Close();
+            String _accType = _types[0];
 
-            /*Form3 dir_page = new Form3();
-            dir_page.Text = "Directory: " + _GetDirTitle;
-            dir_page.label1.Text = _GetDirTitle;
-            dir_page.Show();
-            this.Close();*/
+            String _GetDirTitle = guna2TextBox1.Text;
+            if(_GetDirTitle != String.Empty) {        
+                try {
+
+                    String _countTotalDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username";
+                    command = new MySqlCommand(_countTotalDir,con);
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    var _getScalar = command.ExecuteScalar();
+                    int _getValue = Convert.ToInt32(_getScalar);
+
+                    if(_accType == "Supreme") {
+                        if(_getValue != 5) {
+
+                            value_Dir++;
+                            generateDir(value_Dir, _GetDirTitle);
+
+                            var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+                            String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                            command = new MySqlCommand(_insertValues,con);
+                            command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+
+                            command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                            command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                            command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
+                            command.ExecuteNonQuery();
+                        } else {
+                            DisplayError(_accType);
+                        }
+                    }
+
+                    if (_accType != "Supreme") {
+                        if (_getValue != 2) {
+                          
+                            value_Dir++;
+                            generateDir(value_Dir, _GetDirTitle);
+                            
+
+                            var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+                            String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                            command = new MySqlCommand(_insertValues, con);
+                            command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+
+                            command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                            command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                            command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
+                            command.ExecuteNonQuery();
+                        }
+                        else {
+                            DisplayError(_accType);
+                        }
+                    }
+
+                }
+                catch (Exception eq) {
+                    MessageBox.Show(eq.Message);
+                }
+            }
 
         }
         private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
