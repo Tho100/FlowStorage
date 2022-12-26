@@ -2688,7 +2688,13 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(_removeDirQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@dirname", titleLab.Text);
-                        command.ExecuteNonQuery();                     
+                        command.ExecuteNonQuery();
+
+                        String _removeDirUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
+                        command = new MySqlCommand(_removeDirUploadQuery, con);
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@dirname", titleLab.Text);
+                        command.ExecuteNonQuery();
 
                         panelPic_Q.Dispose();
                         if (flowLayoutPanel1.Controls.Count == 0) {

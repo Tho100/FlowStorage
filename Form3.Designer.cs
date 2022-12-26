@@ -43,7 +43,6 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
@@ -133,7 +132,7 @@
             this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(641, 28);
+            this.label1.Size = new System.Drawing.Size(771, 28);
             this.label1.TabIndex = 7;
             this.label1.Text = "Directory: ";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -214,7 +213,7 @@
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Panel1.Location = new System.Drawing.Point(11, 4);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(620, 72);
+            this.guna2Panel1.Size = new System.Drawing.Size(811, 72);
             this.guna2Panel1.TabIndex = 21;
             // 
             // label2
@@ -229,26 +228,6 @@
             this.label2.Text = "Directory";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // guna2Button12
-            // 
-            this.guna2Button12.Animated = true;
-            this.guna2Button12.BorderRadius = 10;
-            this.guna2Button12.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button12.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button12.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button12.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button12.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button12.ForeColor = System.Drawing.Color.LightGray;
-            this.guna2Button12.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button12.Image")));
-            this.guna2Button12.ImageSize = new System.Drawing.Size(27, 27);
-            this.guna2Button12.Location = new System.Drawing.Point(860, 15);
-            this.guna2Button12.Name = "guna2Button12";
-            this.guna2Button12.Size = new System.Drawing.Size(154, 47);
-            this.guna2Button12.TabIndex = 31;
-            this.guna2Button12.Text = "Upload Folder";
-            this.guna2Button12.TextOffset = new System.Drawing.Point(4, 0);
-            // 
             // guna2Button2
             // 
             this.guna2Button2.Animated = true;
@@ -262,7 +241,7 @@
             this.guna2Button2.ForeColor = System.Drawing.Color.LightGray;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
             this.guna2Button2.ImageSize = new System.Drawing.Size(26, 26);
-            this.guna2Button2.Location = new System.Drawing.Point(717, 16);
+            this.guna2Button2.Location = new System.Drawing.Point(891, 17);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(127, 47);
             this.guna2Button2.TabIndex = 30;
@@ -273,7 +252,7 @@
             // guna2VSeparator1
             // 
             this.guna2VSeparator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.guna2VSeparator1.Location = new System.Drawing.Point(674, 18);
+            this.guna2VSeparator1.Location = new System.Drawing.Point(841, 16);
             this.guna2VSeparator1.Name = "guna2VSeparator1";
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 47);
             this.guna2VSeparator1.TabIndex = 32;
@@ -308,7 +287,6 @@
             this.ClientSize = new System.Drawing.Size(1128, 603);
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.guna2VSeparator1);
-            this.Controls.Add(this.guna2Button12);
             this.Controls.Add(this.guna2Button2);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.guna2Panel3);
@@ -341,7 +319,6 @@
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         public System.Windows.Forms.Label label2;
-        private Guna.UI2.WinForms.Guna2Button guna2Button12;
         private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         public Guna.UI2.WinForms.Guna2Button guna2Button1;

@@ -347,7 +347,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if(typeValues[q] == ".pptx" || typeValues[q] == ".ppt") {
+                if(typeValues[q] == ".pptx") {
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
@@ -588,7 +588,7 @@ namespace FlowSERVER1
                 command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Icon(*.ico)|*.ico|Video files(*.mp4;*.webm;*.mov)|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php|Markup Languages|*.html;*.css;*.xml|APK Files|*.apk|MSI Files|*.msi";
+                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
                 if (open.ShowDialog() == DialogResult.OK) {
                     string get_ex = open.FileName;
                     string getName = open.SafeFileName;
@@ -1125,6 +1125,10 @@ namespace FlowSERVER1
         }
 
         private void guna2VSeparator1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button12_Click(object sender, EventArgs e) {
 
         }
     }
