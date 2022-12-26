@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Text;
 using System.Management;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace FlowSERVER1
 {
@@ -1040,9 +1041,11 @@ namespace FlowSERVER1
                         command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
                         createPanelMain("Docx", "DocPar", currDoc);
                     }
-                    if (command.ExecuteNonQuery() == 1) {
-                        clearRedundane();
-                    }
+                    Task.Run(() => {
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
+                    });
                 }
             }
             catch (Exception eq) {
@@ -1090,7 +1093,6 @@ namespace FlowSERVER1
                 }
                 else {
                     DisplayError(_accType);
-
                 }
             }
 

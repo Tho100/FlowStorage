@@ -777,15 +777,11 @@ namespace FlowSERVER1 {
             var picturebox3 = form.pictureBox3;
             var picturebox1 = form.pictureBox1;
             try {
-                string[] morningKeys = { "start your day with a coffee?", "" };
-                var random = new Random();
-                var getKeyRand = random.Next(0, 1);
-                var getMorningKeys = morningKeys[getKeyRand];
                 DateTime now = DateTime.Now;
                 var hours = now.Hour;
                 String greeting = null;
                 if (hours >= 1 && hours <= 12) {
-                    greeting = "Good Morning " + lab5.Text + " :) " + getMorningKeys;
+                    greeting = "Good Morning " + lab5.Text + " :) ";
                     picturebox2.Visible = true;
                     picturebox1.Visible = false;
                     picturebox3.Visible = false;
