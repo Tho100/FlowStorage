@@ -212,7 +212,6 @@ namespace FlowSERVER1 {
                             guna2Button6.Visible = true;
                         }
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
                     }
                 };
 
@@ -545,6 +544,7 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
             }
+            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
         public void _generateUserFold(List<String> _fileType,String _foldTitle, String parameterName, int currItem) {
             flowLayoutPanel1.Controls.Clear();
@@ -1545,7 +1545,7 @@ namespace FlowSERVER1 {
                 else if (retrieved == ".exe") {
                     exeCurr++;
                     Byte[] streamRead = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_exe", "PanExe", exeCurr, secondCompression(streamRead));
+                    createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
                 }
                 else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
                     vidCurr++;
@@ -2695,6 +2695,7 @@ namespace FlowSERVER1 {
                             label8.Visible = true;
                             guna2Button6.Visible = true;
                         }
+                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
                 };
 
@@ -2720,6 +2721,7 @@ namespace FlowSERVER1 {
                     }
                 };
             }
+            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
         private void guna2Panel16_Paint(object sender, PaintEventArgs e) {

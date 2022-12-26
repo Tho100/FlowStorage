@@ -26,33 +26,10 @@ namespace FlowSERVER1 {
 
             label5.Text = _accName;
 
-            String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_getAccType, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-
-            List<String> _types = new List<String>();
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _types.Add(_readType.GetString(0));
-            }
-            _readType.Close();
-
-            String _accType = _types[0];
-            label6.Text = _accType;
-            if(_accType == "Basic") {
-                label37.Text = "Limited to 10";
-            } else if (_accType == "Max") {
-                label37.Text = "Limited to 25";
-            }
-            else if (_accType == "Express") {
-                label37.Text = "Limited to 40";
-            }
-            else if (_accType == "Supreme") {
-                label37.Text = "Limited to 95";
-            }
-
-            var countTotalFolders = Form1.instance.listBox1.Items.Count-1;
-            label20.Text = countTotalFolders.ToString();
+            LeastMostUpload("file_info");
+            LeastMostUpload("file_info_expand");
+            getAccType();
+            countTotalAll();
 
             // @SUMMARY Retrieve account creation date and display the date on label
 
@@ -89,6 +66,49 @@ namespace FlowSERVER1 {
             @SUMMARY: File is numerically counted instead of summing the values*/
 
         }
+        public void getAccType() {
+            String GetAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(GetAccType, con);
+            command.Parameters.AddWithValue("@username", label5.Text);
+
+            List<String> _types = new List<String>();
+            MySqlDataReader _readType = command.ExecuteReader();
+            while (_readType.Read()) {
+                _types.Add(_readType.GetString(0));
+            }
+            _readType.Close();
+
+            String _accType = _types[0];
+            label6.Text = _accType;
+            if (_accType == "Basic") {
+                label37.Text = "Limited to 5";
+            }
+            else if (_accType == "Max") {
+                label37.Text = "Limited to 25";
+            }
+            else if (_accType == "Express") {
+                label37.Text = "Limited to 40";
+            }
+            else if (_accType == "Supreme") {
+                label37.Text = "Limited to 95";
+            }
+        }
+        public void LeastMostUpload(String _TabName) {
+
+  
+        }
+        public void countTotalAll() {
+            String CountDirQue = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(CountDirQue,con);
+            command.Parameters.AddWithValue("@username",label5.Text);
+            var _setupCount = command.ExecuteScalar();
+            int _totalDir = Convert.ToInt32(_setupCount);
+            label19.Text = _totalDir.ToString();
+
+            var countTotalFolders = Form1.instance.listBox1.Items.Count - 1;
+            label20.Text = countTotalFolders.ToString();
+        }
+
         // @SUMMARY Total upload charts stats
 
         public void generateChart(String _serName, String _tableName) {
