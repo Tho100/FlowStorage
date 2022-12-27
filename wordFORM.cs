@@ -14,14 +14,14 @@ namespace FlowSERVER1 {
     public partial class wordFORM : Form {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
-        public wordFORM(String _docName) {
+        public wordFORM(String _docName,String _Table) {
             InitializeComponent();
 
             label1.Text = _docName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             try {
-                String _getDocByte = "SELECT CUST_FILE FROM file_info_word WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = con.CreateCommand();
                 command.CommandText = _getDocByte;
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);

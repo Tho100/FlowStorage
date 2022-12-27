@@ -774,6 +774,7 @@
             this.label16.Size = new System.Drawing.Size(334, 40);
             this.label16.TabIndex = 0;
             this.label16.Text = "Sign up to Flowstorage";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label15
             // 

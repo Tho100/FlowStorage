@@ -473,7 +473,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text)) {
+                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"file_info_ptx")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -523,7 +523,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (wordFORM displayMsi = new wordFORM(titleLab.Text)) {
+                        using (wordFORM displayMsi = new wordFORM(titleLab.Text,"file_info_word")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1134,11 +1134,11 @@ namespace FlowSERVER1 {
                     };
 
                     if (nameTable == "file_info") {
-                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                        command.Parameters["@CUST_FILE"].Value = keyVal;
-                        command.ExecuteNonQuery();
-
-                        label4.Text = (Convert.ToInt32(label4.Text) + 1).ToString();
+                        Task.Run(() => {
+                            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                            command.Parameters["@CUST_FILE"].Value = keyVal;
+                            command.ExecuteNonQuery();
+                        });
 
                         textboxPic.Image = new Bitmap(open.FileName);
                         textboxPic.Click += (sender_f, e_f) => {
@@ -1403,7 +1403,7 @@ namespace FlowSERVER1 {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                         textboxPic.Click += (sender_ptx, e_ptx) => {
                             Form bgBlur = new Form();
-                            using (ptxFORM displayPtx = new ptxFORM(titleLab.Text)) {
+                            using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"file_info_ptx")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -1462,7 +1462,7 @@ namespace FlowSERVER1 {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                         textboxPic.Click += (sender_ptx, e_ptx) => {
                             Form bgBlur = new Form();
-                            using (wordFORM displayWord = new wordFORM(titleLab.Text)) {
+                            using (wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -2416,7 +2416,7 @@ namespace FlowSERVER1 {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             textboxExl.Click += (sender_pdf, e_pdf) => {
                                 Form bgBlur = new Form();
-                                using (wordFORM displayPic = new wordFORM(titleLab.Text)) {
+                                using (wordFORM displayPic = new wordFORM(titleLab.Text, "file_info_word")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2783,6 +2783,10 @@ namespace FlowSERVER1 {
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e) {
 
         }
     }

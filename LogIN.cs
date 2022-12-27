@@ -664,7 +664,7 @@ namespace FlowSERVER1 {
                                 picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                                 picMain_Q.Click += (sender_ptx, e_ptx) => {
                                     Form bgBlur = new Form();
-                                    using (wordFORM displayMsi = new wordFORM(titleLab.Text)) {
+                                    using (wordFORM displayMsi = new wordFORM(titleLab.Text,"file_info_word")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

@@ -62,5 +62,9 @@ namespace FlowSERVER1 {
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
         }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

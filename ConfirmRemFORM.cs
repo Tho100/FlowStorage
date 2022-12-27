@@ -66,6 +66,7 @@ namespace FlowSERVER1 {
                     remove_ItemsTab("upload_info_directory");
                     remove_ItemsTab("folder_upload_info");
                     remove_ItemsTab("file_info_msi");
+                    remove_ItemsTab("cust_type");
 
                     this.Close();
 

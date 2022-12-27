@@ -15,14 +15,14 @@ namespace FlowSERVER1 {
     public partial class ptxFORM : Form {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
-        public ptxFORM(String _Title) {
+        public ptxFORM(String _Title,String _Table) {
             InitializeComponent();
             label1.Text = _Title;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             try {
 
-                String _readPtxValues = "SELECT CUST_FILE FROM file_info_ptx WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
+                String _readPtxValues = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
                 command = new MySqlCommand(_readPtxValues, con);
                 command = con.CreateCommand();

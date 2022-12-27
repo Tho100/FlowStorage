@@ -193,10 +193,10 @@ namespace FlowSERVER1
 
                     MySqlDataAdapter da = new MySqlDataAdapter(command);
                     DataSet ds = new DataSet();
-
                     da.Fill(ds);
                     MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[q][0]);
-                    textboxPic.Image = new Bitmap(ms); 
+
+                    textboxPic.Image = new Bitmap(ms);  
                     textboxPic.Click += (sender_im, e_im) => {
                         var getImgName = (Guna2PictureBox)sender_im;
                         var getWidth = getImgName.Image.Width;
@@ -351,7 +351,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text)) {
+                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -434,7 +434,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (wordFORM displayDocx = new wordFORM(titleLab.Text)) {
+                        using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -863,7 +863,7 @@ namespace FlowSERVER1
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                             textboxPic.Click += (sender_pt, e_pt) => {
                                 Form bgBlur = new Form();
-                                using (ptxFORM displayPtx = new ptxFORM(titleLab.Text)) {
+                                using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -937,7 +937,7 @@ namespace FlowSERVER1
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             textboxPic.Click += (sender_pt, e_pt) => {
                                 Form bgBlur = new Form();
-                                using (wordFORM displayDocx = new wordFORM(titleLab.Text)) {
+                                using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -1041,11 +1041,9 @@ namespace FlowSERVER1
                         command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
                         createPanelMain("Docx", "DocPar", currDoc);
                     }
-                    Task.Run(() => {
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                    });
+                  if(command.ExecuteNonQuery() == 1) {
+                        clearRedundane();
+                    }
                 }
             }
             catch (Exception eq) {
@@ -1073,54 +1071,58 @@ namespace FlowSERVER1
             }
         }
         private void guna2Button2_Click_1(object sender, EventArgs e) {
+            try {
 
-            String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_getAccType, con);
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(_getAccType, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
-            List<String> _types = new List<String>();
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _types.Add(_readType.GetString(0));
-            }
-            _readType.Close();
+                List<String> _types = new List<String>();
+                MySqlDataReader _readType = command.ExecuteReader();
+                while (_readType.Read()) {
+                    _types.Add(_readType.GetString(0));
+                }
+                _readType.Close();
 
-            String _accType = _types[0];
-            int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
-            if (_accType == "Basic") {
-                if (CurrentUploadCount != 5) {
-                    _mainFileGenerator();
+                String _accType = _types[0];
+                int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
+                if (_accType == "Basic") {
+                    if (CurrentUploadCount != 5) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        DisplayError(_accType);
+                    }
                 }
-                else {
-                    DisplayError(_accType);
-                }
-            }
 
-            if (_accType == "Max") {
-                if (CurrentUploadCount != 25) {
-                    _mainFileGenerator();
+                if (_accType == "Max") {
+                    if (CurrentUploadCount != 25) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        DisplayError(_accType);
+                    }
                 }
-                else {
-                    DisplayError(_accType);
-                }
-            }
 
-            if (_accType == "Express") {
-                if (CurrentUploadCount != 40) {
-                    _mainFileGenerator();
+                if (_accType == "Express") {
+                    if (CurrentUploadCount != 40) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        DisplayError(_accType);
+                    }
                 }
-                else {
-                    DisplayError(_accType);
-                }
-            }
 
-            if (_accType == "Supreme") {
-                if (CurrentUploadCount != 95) {
-                    _mainFileGenerator();
+                if (_accType == "Supreme") {
+                    if (CurrentUploadCount != 95) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        MessageBox.Show("You're limited to 95 files upload\nCurrent account: Supreme", "Flowstorage");
+                    }
                 }
-                else {
-                    MessageBox.Show("You're limited to 95 files upload\nCurrent account: Supreme", "Flowstorage");
-                }
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message,"ON BASIC");
             }
         }
 
