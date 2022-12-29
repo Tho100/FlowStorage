@@ -453,6 +453,30 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if(typeValues[q] == ".mp3" || typeValues[q] == ".wav") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                    textboxPic.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        using (audFORM displayAudio = new audFORM(titleLab.Text,"upload_info_directory")) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayAudio.Owner = bgBlur;
+                            displayAudio.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
             }
         }
 
@@ -956,6 +980,30 @@ namespace FlowSERVER1
                                 }
                             };
                         }
+
+                        if (type_ == "Audio") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                            textboxPic.Click += (sender_Aud, e_Aud) => {
+                                Form bgBlur = new Form();
+                                using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory")) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
                     }
 
                     if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
@@ -1041,13 +1089,19 @@ namespace FlowSERVER1
                         command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
                         createPanelMain("Docx", "DocPar", currDoc);
                     }
+                    if(retrieved == ".mp3" || retrieved == ".wav") {
+                        currAud++;
+                        Byte[] _readAudiBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
+                        createPanelMain("Audio","AudPar",currAud);
+                    }
                   if(command.ExecuteNonQuery() == 1) {
                         clearRedundane();
                     }
                 }
             }
             catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                //MessageBox.Show(eq.Message);
             }
         }
         public void DisplayError(String CurAcc) {

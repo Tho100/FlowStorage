@@ -533,7 +533,7 @@ namespace FlowSERVER1 {
                                 picMain_Q.Image =  FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                 picMain_Q.Click += (sender_aud, e_aud) => {
                                     Form bgBlur = new Form();
-                                    using (audFORM displayPic = new audFORM(titleLab.Text)) {
+                                    using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

@@ -11,10 +11,12 @@ namespace FlowSERVER1 {
     public partial class audFORM : Form {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
-        public audFORM(String titleName) {
+        public static String _TabName = "";
+        public audFORM(String titleName,String _TableName) {
             InitializeComponent();
             label1.Text = titleName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            _TabName = _TableName;
         }
         SoundPlayer _getSoundPlayer = null;
         Byte[] _mp3Byte = null;
@@ -23,7 +25,7 @@ namespace FlowSERVER1 {
 
                 String _audType = label1.Text.Substring(label1.Text.Length-3);
 
-                String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(_selectAud, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", label1.Text);

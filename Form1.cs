@@ -363,7 +363,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
-                        using (audFORM displayPic = new audFORM(titleLab.Text)) {
+                        using (audFORM displayPic = new audFORM(titleLab.Text,"file_info_audi")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -791,7 +791,7 @@ namespace FlowSERVER1 {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     img.Click += (sender_aud, e_aud) => {
                         Form bgBlur = new Form();
-                        using (audFORM displayPic = new audFORM(titleLab.Text)) {
+                        using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1283,10 +1283,10 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_FILE"].Value = keyVal;
                             command.ExecuteNonQuery();
                         });
-                        textboxPic.Image = Image.FromFile(@"C:\users\USER\Downloads\icons8-audio-file-52.png");
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                         textboxPic.Click += (sender_ex, e_ex) => {
                             Form bgBlur = new Form();
-                            using (audFORM displayPic = new audFORM(titleLab.Text)) {
+                            using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -2787,6 +2787,10 @@ namespace FlowSERVER1 {
         }
 
         private void label16_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2GradientPanel1_Paint_1(object sender, PaintEventArgs e) {
 
         }
     }

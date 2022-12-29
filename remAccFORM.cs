@@ -20,6 +20,8 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static remAccFORM instance;
+        public List<int> _TotalUploadToday = new List<int>();
+        public List<String> _TotalUploadDirectoryToday = new List<String>();
         public remAccFORM(String _accName) {
             InitializeComponent();
             instance = this;
@@ -60,12 +62,56 @@ namespace FlowSERVER1 {
             generateChart("Presentation", "file_info_ptx");
             generateChart("Audio","file_info_audi");
 
+            TotalUploadFileTodayCount("file_info");
+            TotalUploadFileTodayCount("file_info_pdf");
+            TotalUploadFileTodayCount("file_info_expand");
+            TotalUploadFileTodayCount("file_info_exe");
+            TotalUploadFileTodayCount("file_info_word");
+            TotalUploadFileTodayCount("file_info_ptx");
+            TotalUploadFileTodayCount("file_info_gif");
+            TotalUploadFileTodayCount("file_info_audi");
+            TotalUploadFileTodayCount("file_info_vid");
+            TotalUploadDirectoryTodayCount();
+
+            var _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
+            label26.Text = _totalUploadTodayCount.ToString();
+
             /* The problem is say if you have the same 
                 file type that was uploaded twice then it will be seen as 
                 1,1 and not 2
             @SUMMARY: File is numerically counted instead of summing the values*/
 
         }
+
+        public void TotalUploadFileTodayCount(String _TableName) {
+            String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
+            String _QueryCount = "SELECT COUNT(CUST_USERNAME) FROM " + _TableName + " WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+            command = new MySqlCommand(_QueryCount,con);
+            command.Parameters.AddWithValue("@date",_CurDate);
+            command.Parameters.AddWithValue("@username",label5.Text);
+
+            var _totalCount = command.ExecuteScalar();
+            int _toInt = Convert.ToInt32(_totalCount);
+            _TotalUploadToday.Add(_toInt);
+        }
+
+        public void TotalUploadDirectoryTodayCount() {
+            String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
+            String _QueryCount = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+            command = new MySqlCommand(_QueryCount, con);
+            command.Parameters.AddWithValue("@date", _CurDate);
+            command.Parameters.AddWithValue("@username", label5.Text);
+
+            MySqlDataReader _ReadDir = command.ExecuteReader();
+            while(_ReadDir.Read()) {    
+                _TotalUploadDirectoryToday.Add(_ReadDir.GetString(0));
+            }
+            _ReadDir.Close();
+
+            List<String> _DistinctDir = _TotalUploadDirectoryToday.Distinct().ToList();
+            label30.Text = _DistinctDir.Count().ToString();
+        }
+
         public void getAccType() {
             String GetAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(GetAccType, con);
@@ -127,12 +173,16 @@ namespace FlowSERVER1 {
                 _datesValues.Add(_readRowUploadTexts.GetString("UPLOAD_DATE"));
             }
             _readRowUploadTexts.Close();
+
+            List<int> _fileUploadValues = new List<int>();
             if (_totalRow.Count() >= 0) {
                 if (_tableName == "file_info") {
-                    label26.Text = _totalRow.Count().ToString();
+                    //label26.Text = _totalRow.Count().ToString();
+                    _fileUploadValues.Add(_totalRow.Count());
                 }
                 if (_tableName == "file_info_expand") {
                     //label27.Text = _totalRow[0].ToString();
+                    _fileUploadValues.Add(_totalRow.Count());
                 }
                 if (_tableName == "file_info_vid") {
                     //label28.Text = _totalRow[0].ToString();
@@ -280,6 +330,70 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Panel10_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label34_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Separator6_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label30_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label29_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Separator4_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Separator5_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label26_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label27_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label28_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label31_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label28_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void label27_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel3_Paint_2(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label29_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void label30_Click_1(object sender, EventArgs e) {
 
         }
     }
