@@ -80,7 +80,7 @@ namespace FlowSERVER1 {
                     }
                 }
             } catch (Exception eq) {
-                MessageBox.Show("Are you connected to the internet?", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                //MessageBox.Show("Are you connected to the internet?", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -1972,7 +1972,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button11_Click(object sender, EventArgs e) {
 
-            Control flowlayout = Form1.instance.flowLayoutPanel1;
+            Control flowlayout = flowLayoutPanel1;
             String _getUser = guna2TextBox1.Text;
             String _getPass = guna2TextBox2.Text;
             String _getEmail = guna2TextBox3.Text;
