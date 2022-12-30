@@ -84,7 +84,11 @@ namespace FlowSERVER1 {
             guna2Button5.Visible = true;
             if(_getSoundPlayer != null) {
                 _getSoundPlayer.Stop();
-                _mp3WaveOut.Stop();
+                timer1.Stop();
+                timer2.Stop();
+            }
+            if (_mp3WaveOut != null) {
+                _mp3WaveOut.Pause();
                 timer1.Stop();
                 timer2.Stop();
             }
@@ -94,7 +98,11 @@ namespace FlowSERVER1 {
             this.Close();
             if(_getSoundPlayer != null) {
                 _getSoundPlayer.Stop();
-                _mp3WaveOut.Stop();
+                timer1.Stop();
+                timer2.Stop();
+            }
+            if (_mp3WaveOut != null) {
+                _mp3WaveOut.Pause();
                 timer1.Stop();
                 timer2.Stop();
             }
