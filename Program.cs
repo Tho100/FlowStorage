@@ -14,6 +14,7 @@ namespace FlowSERVER1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new splashFORM());
             Application.Run(new Form1());
         }
     }

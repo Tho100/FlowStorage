@@ -226,3 +226,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Security.Pri
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.upgradeFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.DirErFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Drawing.Common.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.splashFORM.resources

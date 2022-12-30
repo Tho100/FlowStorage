@@ -125,7 +125,7 @@ namespace FlowSERVER1
                 remButTxt.BorderRadius = 6;
                 remButTxt.BorderThickness = 1;
                 remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                remButTxt.Image = Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
                 remButTxt.Visible = true;
                 remButTxt.Location = new Point(189, 218);
                 remButTxt.BringToFront();

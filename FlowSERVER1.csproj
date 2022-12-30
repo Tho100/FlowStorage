@@ -521,6 +521,12 @@
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="SineGen.cs" />
+    <Compile Include="splashFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="splashFORM.Designer.cs">
+      <DependentUpon>splashFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="txtFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -605,6 +611,9 @@
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="splashFORM.resx">
+      <DependentUpon>splashFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="txtFORM.resx">
       <DependentUpon>txtFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -637,6 +646,7 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="open-delivered-box 1.ico" />
+    <None Include="Resources\Untitled %2826%29.png" />
     <None Include="Resources\icons8-voice-50.png" />
     <None Include="Resources\icons8-audio-wave-100 %281%29 4.png" />
     <None Include="Resources\Untitled %2837%29.png" />

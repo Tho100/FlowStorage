@@ -14,6 +14,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
+using System.Threading;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
@@ -26,12 +27,14 @@ namespace FlowSERVER1 {
         }
 
         public void setupAutoLogin(String _custPass, String _custUsername) {
-            String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            Directory.CreateDirectory(setupDir);
-            using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
-                _performWrite.WriteLine(_custUsername);
-                _performWrite.WriteLine(_custPass);
-            }
+            Task.Run(() =>{
+                String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                Directory.CreateDirectory(setupDir);
+                using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(_custUsername);
+                    _performWrite.WriteLine(_custPass);
+                }
+            });
         }
 
         String decryptMainKey;
