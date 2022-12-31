@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // guna2Button3
@@ -87,7 +88,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(12, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(428, 21);
+            this.label1.Size = new System.Drawing.Size(393, 21);
             this.label1.TabIndex = 21;
             this.label1.Text = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -155,7 +156,7 @@
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
             this.label2.Location = new System.Drawing.Point(12, 36);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(428, 17);
+            this.label2.Size = new System.Drawing.Size(393, 17);
             this.label2.TabIndex = 28;
             this.label2.Text = "Uploaded By urmom";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -176,7 +177,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(460, 17);
+            this.guna2Button4.Location = new System.Drawing.Point(416, 17);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 29;
@@ -199,12 +200,36 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
+            // guna2Button8
+            // 
+            this.guna2Button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button8.Animated = true;
+            this.guna2Button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.guna2Button8.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.guna2Button8.BorderRadius = 6;
+            this.guna2Button8.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button8.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button8.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button8.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button8.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button8.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.guna2Button8.ForeColor = System.Drawing.Color.White;
+            this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
+            this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
+            this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
+            this.guna2Button8.Location = new System.Drawing.Point(460, 17);
+            this.guna2Button8.Name = "guna2Button8";
+            this.guna2Button8.Size = new System.Drawing.Size(38, 31);
+            this.guna2Button8.TabIndex = 51;
+            this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
+            // 
             // txtFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(598, 425);
+            this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.label2);
@@ -214,6 +239,7 @@
             this.Controls.Add(this.guna2Button2);
             this.Controls.Add(this.guna2textbox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "txtFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "txtFORM";
@@ -234,5 +260,6 @@
         private System.Windows.Forms.Label label2;
         public Guna.UI2.WinForms.Guna2Button guna2Button4;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        public Guna.UI2.WinForms.Guna2Button guna2Button8;
     }
 }

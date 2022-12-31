@@ -91,5 +91,14 @@ namespace FlowSERVER1 {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
         }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            Application.OpenForms
+              .OfType<Form>()
+              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .ToList()
+              .ForEach(form => form.Hide());
+        }
     }
 }

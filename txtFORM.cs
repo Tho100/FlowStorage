@@ -278,6 +278,7 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
             SaveFileDialog _OpenDialog = new SaveFileDialog();
+            _OpenDialog.FileName = label1.Text;
             _OpenDialog.Filter = "Files|*" + FileExt_;
             try {
                 if(_OpenDialog.ShowDialog() == DialogResult.OK) {
@@ -298,6 +299,15 @@ namespace FlowSERVER1 {
 
         private void label2_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            Application.OpenForms
+              .OfType<Form>()
+              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .ToList()
+              .ForEach(form => form.Hide());
         }
     }
 }

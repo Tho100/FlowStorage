@@ -38,29 +38,31 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             try {
                 
+                timer1.Start();
+                timer2.Start();
                 String _audType = label1.Text.Substring(label1.Text.Length-3);
 
-                String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                command = new MySqlCommand(_selectAud, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                Task.Run(() => {
+                    String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(_selectAud, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
 
-                MySqlDataReader _AudReader = command.ExecuteReader();
-                if(_AudReader.Read()) {
-                    var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                    timer1.Start();
-                    timer2.Start();
-                    if (_audType == "wav") {
-                        using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
-                            SoundPlayer player = new SoundPlayer(_ms);
-                            _getSoundPlayer = player;
-                            player.Play();
+                    MySqlDataReader _AudReader = command.ExecuteReader();
+                    if(_AudReader.Read()) {
+                        var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                        if (_audType == "wav") {
+                            using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
+                                SoundPlayer player = new SoundPlayer(_ms);
+                                _getSoundPlayer = player;
+                                player.Play();
+                            }
+                        } else if (_audType == "mp3") {
+                            mp3ToWav(_getByteAud);
                         }
-                    } else if (_audType == "mp3") {
-                        mp3ToWav(_getByteAud);
                     }
-                }
-                _AudReader.Close();
+                    _AudReader.Close();
+                });
             }
             catch (Exception eq) {
                 MessageBox.Show("Failed to play this audio.","Flowstorage");
@@ -229,6 +231,15 @@ namespace FlowSERVER1 {
                 }
                 await Task.Delay(80);
             }
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            Application.OpenForms
+              .OfType<Form>()
+              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .ToList()
+              .ForEach(form => form.Hide());
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
+using System.Linq;
 //using PdfiumViewer;
 
 namespace FlowSERVER1 {
@@ -94,6 +95,15 @@ namespace FlowSERVER1 {
 
         private void pdfRenderer1_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            Application.OpenForms
+              .OfType<Form>()
+              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .ToList()
+              .ForEach(form => form.Hide());
         }
     }
 }

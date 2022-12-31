@@ -51,10 +51,14 @@ namespace FlowSERVER1 {
         
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog() {Filter = @"PNG|.*png|JPG|.*jpg|JPEG|.*jpeg"}) {
-                    if(saveFileDialog.ShowDialog() == DialogResult.OK) {
-                        guna2PictureBox1.Image.Save(saveFileDialog.FileName);
-                    }    
+                String _Ext = label1.Text.Substring(label1.Text.Length-3);
+                String setupExt = "" + _Ext + "|." + _Ext;
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = setupExt + "|JPG|.*jpg|JPEG|.*jpeg";
+                saveFileDialog.FileName = label1.Text;
+                if(saveFileDialog.ShowDialog() == DialogResult.OK) {
+                    guna2PictureBox1.Image.Save(saveFileDialog.FileName);
+                   
                 }
             } catch (Exception eq) {
                 MessageBox.Show("An error occurred while trying to save image\nMake sure you connected to the internet.","Flow Storage System");

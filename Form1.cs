@@ -284,6 +284,7 @@ namespace FlowSERVER1 {
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.WindowState = FormWindowState.Maximized;
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
@@ -358,8 +359,9 @@ namespace FlowSERVER1 {
                         exlForm.Show();
                     };
                 }
-
                 if (_tableName == "file_info_audi") {
+                    var _getWidth = this.Width;
+                    var _getHeight = this.Height;
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
@@ -369,6 +371,7 @@ namespace FlowSERVER1 {
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
                             bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
                             bgBlur.StartPosition = FormStartPosition.Manual;
@@ -453,6 +456,7 @@ namespace FlowSERVER1 {
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.WindowState = FormWindowState.Maximized;
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
@@ -478,6 +482,7 @@ namespace FlowSERVER1 {
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.WindowState = FormWindowState.Maximized;
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
@@ -530,6 +535,7 @@ namespace FlowSERVER1 {
                             bgBlur.BackColor = Color.Black;
                             bgBlur.WindowState = FormWindowState.Maximized;
                             bgBlur.TopMost = true;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.Location = this.Location;
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.ShowInTaskbar = false;
@@ -767,6 +773,7 @@ namespace FlowSERVER1 {
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.WindowState = FormWindowState.Maximized;
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
@@ -788,8 +795,11 @@ namespace FlowSERVER1 {
                 }
 
                 if(typeValues[i] == ".wav" || typeValues[i] == ".mp3") {
+                    var _getWidth = this.Width;
+                    var _getHeight = this.Height;
                     img.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     img.Click += (sender_aud, e_aud) => {
+                        
                         Form bgBlur = new Form();
                         using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
@@ -797,6 +807,7 @@ namespace FlowSERVER1 {
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
                             bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
                             bgBlur.StartPosition = FormStartPosition.Manual;
@@ -868,6 +879,7 @@ namespace FlowSERVER1 {
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
                             bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
                             bgBlur.WindowState = FormWindowState.Maximized;
                             bgBlur.TopMost = true;
                             bgBlur.Location = this.Location;
@@ -1212,6 +1224,7 @@ namespace FlowSERVER1 {
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
                                 bgBlur.BackColor = Color.Black;
+                                bgBlur.Name = "bgBlurForm";
                                 bgBlur.WindowState = FormWindowState.Maximized;
                                 bgBlur.TopMost = true;
                                 bgBlur.Location = this.Location;
@@ -1283,6 +1296,8 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_FILE"].Value = keyVal;
                             command.ExecuteNonQuery();
                         });
+                        var _getWidth = this.Width;
+                        var _getHeight = this.Height;
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                         textboxPic.Click += (sender_ex, e_ex) => {
                             Form bgBlur = new Form();
@@ -1291,6 +1306,8 @@ namespace FlowSERVER1 {
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
                                 bgBlur.BackColor = Color.Black;
+                                //bgBlur.Size = new Size(_getWidth,_getHeight);
+                                bgBlur.Name = "bgBlurForm";
                                 bgBlur.WindowState = FormWindowState.Maximized;
                                 bgBlur.TopMost = true;
                                 bgBlur.Location = this.Location;
@@ -1381,6 +1398,7 @@ namespace FlowSERVER1 {
                                 bgBlur.BackColor = Color.Black;
                                 bgBlur.WindowState = FormWindowState.Maximized;
                                 bgBlur.TopMost = true;
+                                bgBlur.Name = "bgBlurForm";
                                 bgBlur.Location = this.Location;
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.ShowInTaskbar = false;
@@ -1410,6 +1428,7 @@ namespace FlowSERVER1 {
                                 bgBlur.BackColor = Color.Black;
                                 bgBlur.WindowState = FormWindowState.Maximized;
                                 bgBlur.TopMost = true;
+                                bgBlur.Name = "bgBlurForm";
                                 bgBlur.Location = this.Location;
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.ShowInTaskbar = false;
@@ -1469,6 +1488,7 @@ namespace FlowSERVER1 {
                                 bgBlur.BackColor = Color.Black;
                                 bgBlur.WindowState = FormWindowState.Maximized;
                                 bgBlur.TopMost = true;
+                                bgBlur.Name = "bgBlurForm";
                                 bgBlur.Location = this.Location;
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.ShowInTaskbar = false;
@@ -2334,6 +2354,7 @@ namespace FlowSERVER1 {
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
                                     bgBlur.BackColor = Color.Black;
+                                    bgBlur.Name = "bgBlurForm";
                                     bgBlur.WindowState = FormWindowState.Maximized;
                                     bgBlur.TopMost = true;
                                     bgBlur.Location = this.Location;
@@ -2391,6 +2412,7 @@ namespace FlowSERVER1 {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
+                                    bgBlur.Name = "bgBlurForm";
                                     bgBlur.BackColor = Color.Black;
                                     bgBlur.WindowState = FormWindowState.Maximized;
                                     bgBlur.TopMost = true;
@@ -2423,6 +2445,7 @@ namespace FlowSERVER1 {
                                     bgBlur.BackColor = Color.Black;
                                     bgBlur.WindowState = FormWindowState.Maximized;
                                     bgBlur.TopMost = true;
+                                    bgBlur.Name = "bgBlurForm";
                                     bgBlur.Location = this.Location;
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.ShowInTaskbar = false;

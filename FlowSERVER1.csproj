@@ -604,6 +604,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ptxFORM.resx">
       <DependentUpon>ptxFORM.cs</DependentUpon>
@@ -646,6 +647,7 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="open-delivered-box 1.ico" />
+    <None Include="Resources\icons8-subtract-30.png" />
     <None Include="Resources\Untitled %2826%29.png" />
     <None Include="Resources\icons8-voice-50.png" />
     <None Include="Resources\icons8-audio-wave-100 %281%29 4.png" />
@@ -656,7 +658,6 @@
     <None Include="Resources\icons8-logout-64 %281%29.png" />
     <None Include="Resources\icons8-logout-64.png" />
     <None Include="Resources\icons8-audio-wave-100 %281%29.png" />
-    <None Include="Resources\icons8-audio-wave-100.png" />
     <None Include="Resources\icons8-database-50.png" />
     <None Include="Resources\icons8-microsoft-word-60.png" />
     <None Include="Resources\icons8-software-installer-32.png" />

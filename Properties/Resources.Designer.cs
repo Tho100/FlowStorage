@@ -103,16 +103,6 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_audio_wave_100 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-audio-wave-100", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icons8_audio_wave_100__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-audio-wave-100 (1)", resourceCulture);
@@ -286,6 +276,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_software_installer_32 {
             get {
                 object obj = ResourceManager.GetObject("icons8-software-installer-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_subtract_30 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-subtract-30", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
