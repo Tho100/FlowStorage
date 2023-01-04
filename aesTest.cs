@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.IO;
 
 namespace FlowSERVER1 {
-    public static class EncryptionModel {
+    public class aesTest {
         private static int _iterations = 2;
         private static int _keySize = 256;
 

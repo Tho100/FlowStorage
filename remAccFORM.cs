@@ -27,6 +27,9 @@ namespace FlowSERVER1 {
             instance = this;
 
             label5.Text = _accName;
+            this.ShowInTaskbar = false;
+
+            try {
 
             LeastMostUpload("file_info");
             LeastMostUpload("file_info_expand");
@@ -76,10 +79,30 @@ namespace FlowSERVER1 {
             var _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
             label26.Text = _totalUploadTodayCount.ToString();
 
-            /* The problem is say if you have the same 
-                file type that was uploaded twice then it will be seen as 
-                1,1 and not 2
-            @SUMMARY: File is numerically counted instead of summing the values*/
+                /* The problem is say if you have the same 
+                    file type that was uploaded twice then it will be seen as 
+                    1,1 and not 2
+                @SUMMARY: File is numerically counted instead of summing the values*/
+            } catch (Exception) {
+                Form bgBlur = new Form();
+                using (waitFORM displayWait = new waitFORM()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayWait.Owner = bgBlur;
+                    displayWait.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
+            }
 
         }
 
@@ -127,7 +150,7 @@ namespace FlowSERVER1 {
             String _accType = _types[0];
             label6.Text = _accType;
             if (_accType == "Basic") {
-                label37.Text = "Limited to 5";
+                label37.Text = "Limited to 10";
             }
             else if (_accType == "Max") {
                 label37.Text = "Limited to 25";
@@ -144,6 +167,7 @@ namespace FlowSERVER1 {
   
         }
         public void countTotalAll() {
+    
             String CountDirQue = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(CountDirQue,con);
             command.Parameters.AddWithValue("@username",label5.Text);
@@ -175,19 +199,6 @@ namespace FlowSERVER1 {
             _readRowUploadTexts.Close();
 
             List<int> _fileUploadValues = new List<int>();
-            if (_totalRow.Count() >= 0) {
-                if (_tableName == "file_info") {
-                    //label26.Text = _totalRow.Count().ToString();
-                    _fileUploadValues.Add(_totalRow.Count());
-                }
-                if (_tableName == "file_info_expand") {
-                    //label27.Text = _totalRow[0].ToString();
-                    _fileUploadValues.Add(_totalRow.Count());
-                }
-                if (_tableName == "file_info_vid") {
-                    //label28.Text = _totalRow[0].ToString();
-                }
-            }
             for (int i = 0; i < _totalRow.Count(); i++) {
                 chart1.Series[_serName].Points.AddXY(_datesValues[i], _totalRow[i]);
             }

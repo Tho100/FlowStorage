@@ -488,6 +488,7 @@
             this.label4.ForeColor = System.Drawing.Color.DarkGray;
             this.label4.Location = new System.Drawing.Point(45, 30);
             this.label4.Name = "label4";
+            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label4.Size = new System.Drawing.Size(23, 25);
             this.label4.TabIndex = 21;
             this.label4.Text = "0";
@@ -501,7 +502,7 @@
             this.guna2Panel5.Controls.Add(this.label6);
             this.guna2Panel5.Controls.Add(this.label7);
             this.guna2Panel5.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.guna2Panel5.Location = new System.Drawing.Point(1098, 11);
+            this.guna2Panel5.Location = new System.Drawing.Point(648, 18);
             this.guna2Panel5.Name = "guna2Panel5";
             this.guna2Panel5.Size = new System.Drawing.Size(122, 70);
             this.guna2Panel5.TabIndex = 24;
@@ -593,7 +594,7 @@
             this.guna2CircleButton1.Location = new System.Drawing.Point(-47, 592);
             this.guna2CircleButton1.Name = "guna2CircleButton1";
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(648, 144);
+            this.guna2CircleButton1.Size = new System.Drawing.Size(648, 185);
             this.guna2CircleButton1.TabIndex = 45;
             // 
             // label20
@@ -933,14 +934,14 @@
             this.guna2Panel17.Controls.Add(this.label26);
             this.guna2Panel17.Controls.Add(this.label27);
             this.guna2Panel17.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.guna2Panel17.Location = new System.Drawing.Point(858, 12);
+            this.guna2Panel17.Location = new System.Drawing.Point(848, 11);
             this.guna2Panel17.Name = "guna2Panel17";
-            this.guna2Panel17.Size = new System.Drawing.Size(292, 69);
+            this.guna2Panel17.Size = new System.Drawing.Size(302, 69);
             this.guna2Panel17.TabIndex = 25;
             // 
             // guna2Button19
             // 
-            this.guna2Button19.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button19.Animated = true;
             this.guna2Button19.BorderColor = System.Drawing.Color.Empty;
             this.guna2Button19.BorderRadius = 10;
@@ -953,7 +954,7 @@
             this.guna2Button19.ForeColor = System.Drawing.Color.White;
             this.guna2Button19.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button19.Image")));
             this.guna2Button19.ImageOffset = new System.Drawing.Point(0, 13);
-            this.guna2Button19.Location = new System.Drawing.Point(293, 8);
+            this.guna2Button19.Location = new System.Drawing.Point(269, 8);
             this.guna2Button19.Name = "guna2Button19";
             this.guna2Button19.Size = new System.Drawing.Size(25, 24);
             this.guna2Button19.TabIndex = 35;

@@ -26,7 +26,6 @@ namespace FlowSERVER1
 
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
-
         public Form3(String sendTitle_)
         {
             InitializeComponent();
@@ -42,19 +41,16 @@ namespace FlowSERVER1
             command.Parameters.AddWithValue("@password", form1.label3.Text);
             command.Parameters.AddWithValue("@dirname", label1.Text);
 
+            List<String> _TypeValues = new List<String>();
             MySqlDataReader _readType = command.ExecuteReader();
-
-            List<string> typesValues = new List<string>();
-
             while (_readType.Read()) {
-                typesValues.Add(_readType.GetString(0));// Append ToAr;
+                _TypeValues.Add(_readType.GetString(0));// Append ToAr;
             }
             _readType.Close();
 
-            List<String> mainTypes = typesValues.Distinct().ToList();
-            var currMainLength = typesValues.Count;
-
-            generateUserDirectory(typesValues,label1.Text,"DIRPAR",typesValues.Count);
+            List<String> mainTypes = _TypeValues.Distinct().ToList();
+            var currMainLength = _TypeValues.Count;
+            generateUserDirectory(_TypeValues, label1.Text, "DIRPAR", _TypeValues.Count);
 
             if (flowLayoutPanel1.Controls.Count == 0) {
                 label8.Visible = true;
@@ -600,6 +596,8 @@ namespace FlowSERVER1
                 String varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 var form1 = Form1.instance;
 
+                // INSERT VALUE ORINNGANLLY HERE
+
                 String _insertValues = "INSERT INTO upload_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_FILE_PATH,FILE_EXT,CUST_THUMB) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_FILE_PATH,@FILE_EXT,@CUST_THUMB)";
                 command = new MySqlCommand(_insertValues, con);
                 command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
@@ -625,12 +623,6 @@ namespace FlowSERVER1
                     }
 
                     void createPanelMain(String type_, String parameterName, int itemCurr) {
-                        command.Parameters["@DIR_NAME"].Value = label1.Text;
-                        command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                        command.Parameters["@FILE_EXT"].Value = retrieved;
 
                         int top = 275;
                         int h_p = 100;
@@ -1006,6 +998,14 @@ namespace FlowSERVER1
                         }
                     }
 
+
+                    command.Parameters["@DIR_NAME"].Value = label1.Text;
+                    command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
+                    command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
+                    command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                    command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                    command.Parameters["@FILE_EXT"].Value = retrieved;
+
                     if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
                         currImg++;
                         var getImg = new Bitmap(open.FileName);
@@ -1016,6 +1016,9 @@ namespace FlowSERVER1
                                 getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                                 var setupImg = ms.ToArray();
                                 command.Parameters["@CUST_FILE"].Value = setupImg;
+                                if (command.ExecuteNonQuery() == 1) {
+                                    clearRedundane();
+                                }
                                 createPanelMain("Image", "ImagePar", currImg);
                             }
                         }
@@ -1026,6 +1029,9 @@ namespace FlowSERVER1
                                 retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                 dataIco = msIco.ToArray();
                                 command.Parameters["@CUST_FILE"].Value = dataIco;
+                                if (command.ExecuteNonQuery() == 1) {
+                                    clearRedundane();
+                                }
                                 createPanelMain("Image", "IcoPar", currImg);
                             }
                         }
@@ -1035,33 +1041,56 @@ namespace FlowSERVER1
                         currTxt++;
                         var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(open.FileName), "TXTCONTS");
                         var _readText = File.ReadAllText(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
+                        command.Parameters["@CUST_FILE"].Value = _encryptConts;
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }// Receive text
                         createPanelMain("Texts", "TextPar", currTxt);
                     }
 
                     if (retrieved == ".apk") {
                         currApk++;
                         Byte[] _readApkBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readApkBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readApkBytes;
+                        });
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Apk", "ApkPar", currApk);
                     }
 
                     if (retrieved == ".exe") {
                         currExe++;
                         Byte[] _readExeBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readExeBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readExeBytes;
+                        });
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Exe", "ExePar", currExe);
                     }
                     if (retrieved == ".pdf") {
                         currPdf++;
                         Byte[] _readPdfBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
+                        });
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Pdf", "PdfPar", currPdf);
                     }
                     if (retrieved == ".pptx" || retrieved == ".ppt") {
                         currPtx++;
                         Byte[] _readPtxBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
+                        });
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Ptx", "PtxPar", currPtx);
                     }
                     if (retrieved == ".gif") {
@@ -1075,28 +1104,43 @@ namespace FlowSERVER1
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                             command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                         }
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Gif", "GifPar", currGif);
                     }
                     if (retrieved == ".msi") {
                         currMsi++;
                         Byte[] _readMsiBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
+                        });
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Msi", "MsiPar", currMsi);
                     }
                     if (retrieved == ".docx") {
                         currDoc++;
                         Byte[] _readDocxBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
+                        });
+                        if (command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Docx", "DocPar", currDoc);
                     }
                     if(retrieved == ".mp3" || retrieved == ".wav") {
                         currAud++;
                         Byte[] _readAudiBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
+                        Task.Run(() => {
+                            command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
+                        });
+                        if(command.ExecuteNonQuery() == 1) {
+                            clearRedundane();
+                        }
                         createPanelMain("Audio","AudPar",currAud);
-                    }
-                  if(command.ExecuteNonQuery() == 1) {
-                        clearRedundane();
                     }
                 }
             }
@@ -1141,7 +1185,7 @@ namespace FlowSERVER1
                 String _accType = _types[0];
                 int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
                 if (_accType == "Basic") {
-                    if (CurrentUploadCount != 5) {
+                    if (CurrentUploadCount != 10) {
                         _mainFileGenerator();
                     }
                     else {
@@ -1176,7 +1220,7 @@ namespace FlowSERVER1
                     }
                 }
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message,"ON BASIC");
+                MessageBox.Show("Failed to upload a file.","Flowstorage");
             }
         }
 

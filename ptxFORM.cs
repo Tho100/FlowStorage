@@ -75,6 +75,7 @@ namespace FlowSERVER1 {
                         File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
                     }
                 }
+                _ptxReader.Close();
 
             }
             catch (Exception eq) {

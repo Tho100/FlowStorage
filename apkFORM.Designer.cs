@@ -32,9 +32,7 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // guna2Button4
@@ -53,7 +51,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(398, 12);
+            this.guna2Button4.Location = new System.Drawing.Point(382, 12);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 33;
@@ -75,7 +73,7 @@
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
             this.guna2Button3.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button3.Location = new System.Drawing.Point(442, 12);
+            this.guna2Button3.Location = new System.Drawing.Point(426, 12);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(38, 31);
             this.guna2Button3.TabIndex = 32;
@@ -98,7 +96,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button1.Location = new System.Drawing.Point(442, 12);
+            this.guna2Button1.Location = new System.Drawing.Point(426, 12);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 31);
             this.guna2Button1.TabIndex = 31;
@@ -119,7 +117,7 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(486, 12);
+            this.guna2Button2.Location = new System.Drawing.Point(470, 12);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 30;
@@ -152,45 +150,24 @@
             this.label1.Text = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label5.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label5.Location = new System.Drawing.Point(29, 137);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(128, 17);
-            this.label5.TabIndex = 38;
-            this.label5.Text = "File Size: Unknown";
-            // 
             // label4
             // 
-            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(12, 79);
+            this.label4.Location = new System.Drawing.Point(137, 88);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(126, 17);
-            this.label4.TabIndex = 37;
-            this.label4.Text = "APK File Details";
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label3.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label3.Location = new System.Drawing.Point(29, 109);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(107, 17);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "File type: APK";
+            this.label4.Size = new System.Drawing.Size(249, 32);
+            this.label4.TabIndex = 47;
+            this.label4.Text = "(Preview is not available)";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // apkFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(536, 193);
-            this.Controls.Add(this.label5);
+            this.ClientSize = new System.Drawing.Size(520, 174);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2Button4);
@@ -216,8 +193,6 @@
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
     }
 }

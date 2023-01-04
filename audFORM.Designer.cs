@@ -34,6 +34,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -46,7 +47,6 @@
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
@@ -148,6 +148,28 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(268, 45);
             this.guna2Panel1.TabIndex = 49;
+            // 
+            // guna2Button7
+            // 
+            this.guna2Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button7.Animated = true;
+            this.guna2Button7.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button7.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button7.BorderRadius = 6;
+            this.guna2Button7.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button7.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button7.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button7.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button7.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button7.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.guna2Button7.ForeColor = System.Drawing.Color.White;
+            this.guna2Button7.Image = global::FlowSERVER1.Properties.Resources.icons8_voice_50;
+            this.guna2Button7.ImageSize = new System.Drawing.Size(24, 24);
+            this.guna2Button7.Location = new System.Drawing.Point(11, 4);
+            this.guna2Button7.Name = "guna2Button7";
+            this.guna2Button7.Size = new System.Drawing.Size(32, 36);
+            this.guna2Button7.TabIndex = 48;
+            this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click_1);
             // 
             // timer2
             // 
@@ -362,28 +384,6 @@
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 29;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
-            // 
-            // guna2Button7
-            // 
-            this.guna2Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button7.Animated = true;
-            this.guna2Button7.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button7.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button7.BorderRadius = 6;
-            this.guna2Button7.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button7.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button7.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button7.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button7.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button7.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button7.ForeColor = System.Drawing.Color.White;
-            this.guna2Button7.Image = global::FlowSERVER1.Properties.Resources.icons8_voice_50;
-            this.guna2Button7.ImageSize = new System.Drawing.Size(24, 24);
-            this.guna2Button7.Location = new System.Drawing.Point(11, 4);
-            this.guna2Button7.Name = "guna2Button7";
-            this.guna2Button7.Size = new System.Drawing.Size(32, 36);
-            this.guna2Button7.TabIndex = 48;
-            this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click_1);
             // 
             // audFORM
             // 

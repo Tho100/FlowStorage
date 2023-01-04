@@ -288,7 +288,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Basic") {
-                        if(Convert.ToInt32(_getFilesCount) != 5) {
+                        if(Convert.ToInt32(_getFilesCount) != 10) {
                             if (_getValue != 2) {
                           
                                 value_Dir++;

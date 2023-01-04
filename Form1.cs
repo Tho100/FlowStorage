@@ -21,15 +21,14 @@ using System.Web;
 using System.Net.Http;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace FlowSERVER1 {
     public partial class Form1 : Form {
         public static Form1 instance;
         public Label setupLabel;
-
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
-
         public Form1() {
             InitializeComponent();
 
@@ -80,7 +79,7 @@ namespace FlowSERVER1 {
                     }
                 }
             } catch (Exception eq) {
-                //MessageBox.Show("Are you connected to the internet?", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Are you connected to the internet?", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -989,6 +988,9 @@ namespace FlowSERVER1 {
         int ptxCurr = 0;
         int msiCurr = 0;
         int docxCurr = 0;
+
+        //Byte[] _MsiBytesUpdate = null;
+        //Byte[] _ExeBytesUpdate = null;
         private void _mainFileGenerator() {
             void deletionMethod(String fileName, String getDB) {
                 String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
@@ -1564,8 +1566,12 @@ namespace FlowSERVER1 {
                 }
                 else if (retrieved == ".exe") {
                     exeCurr++;
+                    /*Task.Run(() => {
+                        _ExeBytesUpdate = streamRead;
+                    });*/
                     Byte[] streamRead = File.ReadAllBytes(open.FileName);
                     createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
+                
                 }
                 else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
                     vidCurr++;
@@ -1796,7 +1802,7 @@ namespace FlowSERVER1 {
                 else if (retrieved == ".msi") {
                     msiCurr++;
                     Byte[] readMsiBytes = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_msi", "PanMsi", msiCurr, secondCompression(readMsiBytes));
+                    createPanelMain("file_info_msi", "PanMsi", msiCurr, readMsiBytes);
                 }
                 else if (retrieved == ".docx") {
                     docxCurr++;
@@ -1827,56 +1833,74 @@ namespace FlowSERVER1 {
             }
         }
         private void guna2Button2_Click(object sender, EventArgs e) {
-            String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_getAccType, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
+            try {
+                List<String> _types = new List<String>();
+                String _getAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(_getAccType, con);
+                command.Parameters.AddWithValue("@username", label5.Text);
 
-            List<String> _types = new List<String>();
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _types.Add(_readType.GetString(0));
+                MySqlDataReader readAccType = command.ExecuteReader();
+                while (readAccType.Read()) {
+                    _types.Add(readAccType.GetString(0));
+                }
+                readAccType.Close();
+                String _accType = _types[0];
+                int CurrentUploadCount = Convert.ToInt32(label4.Text);
+                if (_accType == "Basic") {
+                    if (CurrentUploadCount != 10) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        DisplayError(_accType);
+                    }
+                }
+
+                if (_accType == "Max") {
+                    if (CurrentUploadCount != 25) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                       DisplayError(_accType);
+                    }
+                }
+
+                if (_accType == "Express") {
+                    if (CurrentUploadCount != 40) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        DisplayError(_accType);
+                    }
+                }
+
+                if (_accType == "Supreme") {
+                    if (CurrentUploadCount != 95) {
+                        _mainFileGenerator();
+                    }
+                    else {
+                        MessageBox.Show("You're limited to 95 files upload\nCurrent account: Supreme", "Flowstorage");
+                    }
+                }
+            } catch (Exception) {
+                Form bgBlur = new Form();
+                using (waitFORM displayWait = new waitFORM()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayWait.Owner = bgBlur;
+                    displayWait.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
             }
-            _readType.Close();
-
-            String _accType = _types[0];
-            int CurrentUploadCount = Convert.ToInt32(label4.Text);
-            if (_accType == "Basic") {
-                if (CurrentUploadCount != 5) {
-                    _mainFileGenerator();
-                }
-                else {
-                    DisplayError(_accType);
-
-                }
-            }
-
-            if (_accType == "Max") {
-                if (CurrentUploadCount != 25) {
-                    _mainFileGenerator();
-                }
-                else {
-                   DisplayError(_accType);
-                }
-            }
-
-            if (_accType == "Express") {
-                if (CurrentUploadCount != 40) {
-                    _mainFileGenerator();
-                }
-                else {
-                    DisplayError(_accType);
-                }
-            }
-
-            if (_accType == "Supreme") {
-                if (CurrentUploadCount != 95) {
-                    _mainFileGenerator();
-                }
-                else {
-                    MessageBox.Show("You're limited to 95 files upload\nCurrent account: Supreme", "Flowstorage");
-                }
-            }
-           
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e) {
@@ -2065,17 +2089,22 @@ namespace FlowSERVER1 {
                                         label.Location = new Point(3, 27);
                                     }
 
-                                    var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
+                                    /*var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
                                     setupLabel.Text = _getUser;
                                     label3.Text = encryptPassVal;
-                                    encryptedPassKey = encryptPassVal;
+                                    encryptedPassKey = encryptPassVal*/
+
+                                    var _encryptPassVal = EncryptionModel.Encrypt(_getPass,"ABHABH24");
+                                    label3.Text = _encryptPassVal;
+
+                                    label5.Text = _getUser;
 
                                     String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
                                     String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
                                     command = new MySqlCommand(_InsertUser,con);
                                     command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                    command.Parameters.AddWithValue("@CUST_PASSWORD", encryptPassVal);
+                                    command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
                                     command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
                                     command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
                                     command.ExecuteNonQuery();
@@ -2183,12 +2212,16 @@ namespace FlowSERVER1 {
                     int _IntCurr = 0;
                     foreach (var _Files in Directory.EnumerateFiles(_getDirPath,"*")) {
                         String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                        command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
-                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@CUST_FILE_PATH"].Value = Path.GetFileName(_Files);
-                        command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                        Task StartInserting = new Task(delegate {
+                            command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
+                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                            command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                            command.Parameters["@CUST_FILE_PATH"].Value = Path.GetFileName(_Files);
+                            command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
+                            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                        });
+                        StartInserting.Start();
+
                         _IntCurr++;
                         int top = 275;
                         int h_p = 100;
@@ -2326,9 +2359,10 @@ namespace FlowSERVER1 {
                                 }
 
                             };
+
                             if (command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
-                            } 
+                             }
                         }
                         if(_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js") {
                             // TXTCONTS = TEXT CONTENTS
@@ -2438,7 +2472,7 @@ namespace FlowSERVER1 {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             textboxExl.Click += (sender_pdf, e_pdf) => {
                                 Form bgBlur = new Form();
-                                using (wordFORM displayPic = new wordFORM(titleLab.Text, "file_info_word")) {
+                                using (wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2459,6 +2493,66 @@ namespace FlowSERVER1 {
                             };
                             if (command.ExecuteNonQuery() == 1) {
                                 clearRedundane();
+                            }
+                        }
+
+                        if (_extTypes == ".pptx") {
+                            Byte[] readPtxBytes = File.ReadAllBytes(_Files);
+                            command.Parameters["@CUST_FILE"].Value = readPtxBytes;
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                            textboxExl.Click += (sender_pdf, e_pdf) => {
+                                Form bgBlur = new Form();
+                                using (ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info")) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Name = "bgBlurForm";
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                            if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+
+                            if (_extTypes == ".mp3" || _extTypes == ".wav") {
+                                Byte[] readAudBytes = File.ReadAllBytes(_Files);
+                                command.Parameters["@CUST_FILE"].Value = readAudBytes;
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                                textboxExl.Click += (sender_pdf, e_pdf) => {
+                                    Form bgBlur = new Form();
+                                    using (audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info")) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Name = "bgBlurForm";
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayPic.Owner = bgBlur;
+                                        displayPic.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
+                                };
+                                if (command.ExecuteNonQuery() == 1) {
+                                    clearRedundane();
+                                }
                             }
                         }
                     }
@@ -2553,6 +2647,7 @@ namespace FlowSERVER1 {
                 guna2Button19.Visible = true;
                 flowLayoutPanel1.Controls.Clear();
 
+                List<string> typesValues = new List<string>();
                 String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(getFileType,con);
                 command = con.CreateCommand();
@@ -2561,13 +2656,11 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@password",label3.Text);
                 command.Parameters.AddWithValue("@foldername", _selectedFolder);
                 MySqlDataReader _readType = command.ExecuteReader();
-
-                List<string> typesValues = new List<string>();
-
                 while (_readType.Read()) {
                     typesValues.Add(_readType.GetString(0));// Append ToAr;
                 }  
                 _readType.Close();
+
                 List<String> mainTypes = typesValues.Distinct().ToList();
                 var currMainLength = typesValues.Count;
                 _generateUserFold(typesValues,_selectedFolder,"TESTING",currMainLength); // fold_naem parname filetype curr

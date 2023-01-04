@@ -18,51 +18,49 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TabName = "";
-        private Random _setRand;
         public audFORM(String titleName,String _TableName) {
             InitializeComponent();
             label1.Text = titleName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
             _TabName = _TableName;
-            _setRand = new Random();
             timer1.Stop();
             timer2.Stop();
-
             guna2TrackBar1.ValueChanged += new EventHandler(this.guna2TrackBar1_ValueChanged);
-
         }
 
         SoundPlayer _getSoundPlayer = null;
         WaveOut _mp3WaveOut = null;
 
-        private void guna2Button5_Click(object sender, EventArgs e) {
+        private void guna2Button5_Click(object sender, EventArgs e) {                
+            timer1.Start();
+            timer2.Start();
             try {
-                
-                timer1.Start();
-                timer2.Start();
                 String _audType = label1.Text.Substring(label1.Text.Length-3);
+                if(_mp3WaveOut != null) {
+                    _mp3WaveOut.Resume();
+                } else {
+                    Task.Run(() => {
+                        String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                        command = new MySqlCommand(_selectAud, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", label1.Text);
 
-                Task.Run(() => {
-                    String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = new MySqlCommand(_selectAud, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-
-                    MySqlDataReader _AudReader = command.ExecuteReader();
-                    if(_AudReader.Read()) {
-                        var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                        if (_audType == "wav") {
-                            using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
-                                SoundPlayer player = new SoundPlayer(_ms);
-                                _getSoundPlayer = player;
-                                player.Play();
+                        MySqlDataReader _AudReader = command.ExecuteReader();
+                        if(_AudReader.Read()) {
+                            var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                            if (_audType == "wav") {
+                                using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
+                                    SoundPlayer player = new SoundPlayer(_ms);
+                                    _getSoundPlayer = player;
+                                    player.Play();
+                                }
+                            } else if (_audType == "mp3") {
+                                mp3ToWav(_getByteAud);
                             }
-                        } else if (_audType == "mp3") {
-                            mp3ToWav(_getByteAud);
                         }
-                    }
-                    _AudReader.Close();
-                });
+                        _AudReader.Close();
+                    });
+                }
             }
             catch (Exception eq) {
                 MessageBox.Show("Failed to play this audio.","Flowstorage");
@@ -104,7 +102,7 @@ namespace FlowSERVER1 {
                 timer2.Stop();
             }
             if (_mp3WaveOut != null) {
-                _mp3WaveOut.Pause();
+                _mp3WaveOut.Stop();
                 timer1.Stop();
                 timer2.Stop();
             }
