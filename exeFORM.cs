@@ -56,6 +56,7 @@ namespace FlowSERVER1 {
         private void setupDialog(Byte[] _getExeValues) {
             SaveFileDialog _OpenDialog = new SaveFileDialog();
             _OpenDialog.Filter = "Exe|*.exe";
+            _OpenDialog.FileName = label1.Text;
             if (_OpenDialog.ShowDialog() == DialogResult.OK) {
                 File.WriteAllBytes(_OpenDialog.FileName, _getExeValues);
             }

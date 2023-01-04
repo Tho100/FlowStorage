@@ -1570,13 +1570,13 @@ namespace FlowSERVER1 {
                         _ExeBytesUpdate = streamRead;
                     });*/
                     Byte[] streamRead = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
+                    createPanelMain("file_info_exe", "PanExe", exeCurr, ReadFile(open.FileName));
                 
                 }
                 else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
                     vidCurr++;
                     Byte[] streamReadVid = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_vid", "PanVid", vidCurr, streamReadVid);
+                    createPanelMain("file_info_vid", "PanVid", vidCurr, ReadFile(open.FileName));
                 }
                 else if (retrieved == ".xlsx" || retrieved == ".csv") {
                     //String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + open.FileName + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
@@ -1777,7 +1777,7 @@ namespace FlowSERVER1 {
                 else if (retrieved == ".mp3" || retrieved == ".wav") {
                     audCurr++;
                     Byte[] toByte_ = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_audi", "PanAud", audCurr, toByte_);
+                    createPanelMain("file_info_audi", "PanAud", audCurr, ReadFile(open.FileName));
                 }
                 else if (retrieved == ".gif") {
                     gifCurr++;
@@ -1802,7 +1802,7 @@ namespace FlowSERVER1 {
                 else if (retrieved == ".msi") {
                     msiCurr++;
                     Byte[] readMsiBytes = File.ReadAllBytes(open.FileName);
-                    createPanelMain("file_info_msi", "PanMsi", msiCurr, readMsiBytes);
+                    createPanelMain("file_info_msi", "PanMsi", msiCurr, ReadFile(open.FileName));
                 }
                 else if (retrieved == ".docx") {
                     docxCurr++;
@@ -1812,6 +1812,26 @@ namespace FlowSERVER1 {
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
             }
         }
+
+        public static byte[] ReadFile(String filePath) {
+            byte[] buffer;
+            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            try {
+                int length = (int)fileStream.Length;  // get file length
+                buffer = new byte[length];            // create buffer
+                int count;                            // actual number of bytes read
+                int sum = 0;                          // total number of bytes read
+
+                // read until Read method returns 0 (end of the stream has been reached)
+                while ((count = fileStream.Read(buffer, sum, length - sum)) > 0)
+                    sum += count;  // sum is a buffer offset for next reading
+            }
+            finally {
+                fileStream.Close();
+            }
+            return buffer;
+        }
+
         public void DisplayError(String CurAcc) {
             Form bgBlur = new Form();
             using (upgradeFORM displayPic = new upgradeFORM(CurAcc)) {

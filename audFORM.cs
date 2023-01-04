@@ -63,7 +63,25 @@ namespace FlowSERVER1 {
                 }
             }
             catch (Exception eq) {
-                MessageBox.Show("Failed to play this audio.","Flowstorage");
+                //MessageBox.Show("Failed to play this audio.","Flowstorage");
+                Form bgBlur = new Form();
+                using (waitFORM displayWait = new waitFORM()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayWait.Owner = bgBlur;
+                    displayWait.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
             }
             guna2Button6.Visible = true;
             guna2Button5.Visible = false;
@@ -232,12 +250,28 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button8_Click(object sender, EventArgs e) {
-            this.WindowState = FormWindowState.Minimized;
-            Application.OpenForms
-              .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
-              .ToList()
-              .ForEach(form => form.Hide());
+            if(_TabName == "upload_info_directory") {
+                this.WindowState = FormWindowState.Minimized;
+                Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, ""))
+                    .ToList()
+                    .ForEach(form => form.Hide());
+                Application.OpenForms
+                  .OfType<Form>()
+                  .Where(form => String.Equals(form.Name, "Form3"))
+                  .ToList()
+                  .ForEach(form => form.Hide());
+                this.TopMost = false;
+            }
+            else {
+                this.WindowState = FormWindowState.Minimized;
+                Application.OpenForms
+                  .OfType<Form>()
+                  .Where(form => String.Equals(form.Name, "bgBlurForm"))
+                  .ToList()
+                  .ForEach(form => form.Hide());
+            }
         }
     }
 }

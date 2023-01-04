@@ -33,24 +33,45 @@ namespace FlowSERVER1
 
             var form1 = Form1.instance;
 
-            String getFilesType = "SELECT FILE_EXT FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @dirname";
-            command = new MySqlCommand(getFilesType,con);
-            command = con.CreateCommand();
-            command.CommandText = getFilesType;
-            command.Parameters.AddWithValue("@username",form1.label5.Text);
-            command.Parameters.AddWithValue("@password", form1.label3.Text);
-            command.Parameters.AddWithValue("@dirname", label1.Text);
+            try {
 
-            List<String> _TypeValues = new List<String>();
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _TypeValues.Add(_readType.GetString(0));// Append ToAr;
+                String getFilesType = "SELECT FILE_EXT FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @dirname";
+                command = new MySqlCommand(getFilesType,con);
+                command = con.CreateCommand();
+                command.CommandText = getFilesType;
+                command.Parameters.AddWithValue("@username",form1.label5.Text);
+                command.Parameters.AddWithValue("@password", form1.label3.Text);
+                command.Parameters.AddWithValue("@dirname", label1.Text);
+
+                List<String> _TypeValues = new List<String>();
+                MySqlDataReader _readType = command.ExecuteReader();
+                while (_readType.Read()) {
+                    _TypeValues.Add(_readType.GetString(0));// Append ToAr;
+                }
+                _readType.Close();
+                List<String> mainTypes = _TypeValues.Distinct().ToList();
+                var currMainLength = _TypeValues.Count;
+                generateUserDirectory(_TypeValues, label1.Text, "DIRPAR", _TypeValues.Count);
+            } catch (Exception) {
+                Form bgBlur = new Form();
+                using (waitFORM displayWait = new waitFORM()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayWait.Owner = bgBlur;
+                    displayWait.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
             }
-            _readType.Close();
-
-            List<String> mainTypes = _TypeValues.Distinct().ToList();
-            var currMainLength = _TypeValues.Count;
-            generateUserDirectory(_TypeValues, label1.Text, "DIRPAR", _TypeValues.Count);
 
             if (flowLayoutPanel1.Controls.Count == 0) {
                 label8.Visible = true;
@@ -591,561 +612,549 @@ namespace FlowSERVER1
         public static int currMsi = 0;
         public static int currDoc = 0;
         public void _mainFileGenerator() {
-            try {
 
-                String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                var form1 = Form1.instance;
+            String varDate = DateTime.Now.ToString("dd/MM/yyyy");
+            var form1 = Form1.instance;
 
-                // INSERT VALUE ORINNGANLLY HERE
+            // INSERT VALUE ORINNGANLLY HERE
 
-                String _insertValues = "INSERT INTO upload_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_FILE_PATH,FILE_EXT,CUST_THUMB) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_FILE_PATH,@FILE_EXT,@CUST_THUMB)";
-                command = new MySqlCommand(_insertValues, con);
-                command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-                command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+            String _insertValues = "INSERT INTO upload_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_FILE_PATH,FILE_EXT,CUST_THUMB) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_FILE_PATH,@FILE_EXT,@CUST_THUMB)";
+            command = new MySqlCommand(_insertValues, con);
+            command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+            command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
 
-                OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
-                if (open.ShowDialog() == DialogResult.OK) {
-                    string get_ex = open.FileName;
-                    string getName = open.SafeFileName;
-                    string retrieved = System.IO.Path.GetExtension(get_ex);
-                    string retrievedName = System.IO.Path.GetFileNameWithoutExtension(open.FileName);
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+            if (open.ShowDialog() == DialogResult.OK) {
+                string get_ex = open.FileName;
+                string getName = open.SafeFileName;
+                string retrieved = System.IO.Path.GetExtension(get_ex);
+                string retrievedName = System.IO.Path.GetFileNameWithoutExtension(open.FileName);
 
-                    void clearRedundane() {
-                        guna2Button6.Visible = false;
-                        label8.Visible = false;
-                    }
+                void clearRedundane() {
+                    guna2Button6.Visible = false;
+                    label8.Visible = false;
+                }
 
-                    void createPanelMain(String type_, String parameterName, int itemCurr) {
+                void createPanelMain(String type_, String parameterName, int itemCurr) {
 
-                        int top = 275;
-                        int h_p = 100;
-                        var panelTxt = new Guna2Panel() {
-                            Name = parameterName + itemCurr,
-                            Width = 240,
-                            Height = 262,
-                            BorderRadius = 8,
-                            FillColor = ColorTranslator.FromHtml("#121212"),
-                            BackColor = Color.Transparent,
-                            Location = new Point(600, top)
-                        };
+                    int top = 275;
+                    int h_p = 100;
+                    var panelTxt = new Guna2Panel() {
+                        Name = parameterName + itemCurr,
+                        Width = 240,
+                        Height = 262,
+                        BorderRadius = 8,
+                        FillColor = ColorTranslator.FromHtml("#121212"),
+                        BackColor = Color.Transparent,
+                        Location = new Point(600, top)
+                    };
 
-                        top += h_p;
-                        flowLayoutPanel1.Controls.Add(panelTxt);
-                        var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + itemCurr]);
+                    top += h_p;
+                    flowLayoutPanel1.Controls.Add(panelTxt);
+                    var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + itemCurr]);
 
-                        var textboxPic = new Guna2PictureBox();
-                        mainPanelTxt.Controls.Add(textboxPic);
-                        textboxPic.Name = "TxtBox" + itemCurr;
-                        textboxPic.Width = 240;
-                        textboxPic.Height = 164;
-                        textboxPic.BorderRadius = 8;
-                        textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
-                        textboxPic.Enabled = true;
-                        textboxPic.Visible = true;
+                    var textboxPic = new Guna2PictureBox();
+                    mainPanelTxt.Controls.Add(textboxPic);
+                    textboxPic.Name = "TxtBox" + itemCurr;
+                    textboxPic.Width = 240;
+                    textboxPic.Height = 164;
+                    textboxPic.BorderRadius = 8;
+                    textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
+                    textboxPic.Enabled = true;
+                    textboxPic.Visible = true;
 
-                        Label titleLab = new Label();
-                        mainPanelTxt.Controls.Add(titleLab);
-                        titleLab.Name = "LabVidUp" + itemCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                        titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                        titleLab.ForeColor = Color.Gainsboro;
-                        titleLab.Visible = true;
-                        titleLab.Enabled = true;
-                        titleLab.Location = new Point(12, 182);
-                        titleLab.Width = 220;
-                        titleLab.Height = 30;
-                        titleLab.Text = getName;
+                    Label titleLab = new Label();
+                    mainPanelTxt.Controls.Add(titleLab);
+                    titleLab.Name = "LabVidUp" + itemCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                    titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                    titleLab.ForeColor = Color.Gainsboro;
+                    titleLab.Visible = true;
+                    titleLab.Enabled = true;
+                    titleLab.Location = new Point(12, 182);
+                    titleLab.Width = 220;
+                    titleLab.Height = 30;
+                    titleLab.Text = getName;
 
-                        Guna2Button remButTxt = new Guna2Button();
-                        mainPanelTxt.Controls.Add(remButTxt);
-                        remButTxt.Name = "RemTxtBut" + itemCurr;
-                        remButTxt.Width = 39;
-                        remButTxt.Height = 35;
-                        remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
-                        remButTxt.BorderRadius = 6;
-                        remButTxt.BorderThickness = 1;
-                        remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                        remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                        remButTxt.Visible = true;
-                        remButTxt.Location = new Point(189, 218);
-                        remButTxt.BringToFront();
+                    Guna2Button remButTxt = new Guna2Button();
+                    mainPanelTxt.Controls.Add(remButTxt);
+                    remButTxt.Name = "RemTxtBut" + itemCurr;
+                    remButTxt.Width = 39;
+                    remButTxt.Height = 35;
+                    remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
+                    remButTxt.BorderRadius = 6;
+                    remButTxt.BorderThickness = 1;
+                    remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
+                    remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                    remButTxt.Visible = true;
+                    remButTxt.Location = new Point(189, 218);
+                    remButTxt.BringToFront();
 
-                        remButTxt.Click += (sender_im, e_im) => {
-                            var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (verifyDialog == DialogResult.Yes) {
-                                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                                command = new MySqlCommand(noSafeUpdate, con);
-                                command.ExecuteNonQuery();
+                    remButTxt.Click += (sender_im, e_im) => {
+                        var titleFile = titleLab.Text;
+                        DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (verifyDialog == DialogResult.Yes) {
+                            String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                            command = new MySqlCommand(noSafeUpdate, con);
+                            command.ExecuteNonQuery();
 
-                                String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-                                command = new MySqlCommand(removeQuery, con);
-                                command.Parameters.AddWithValue("@username", form1.label5.Text);
-                                command.Parameters.AddWithValue("@password", form1.label3.Text);
-                                command.Parameters.AddWithValue("@filename", titleFile);
-                                command.ExecuteNonQuery();
+                            String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                            command = new MySqlCommand(removeQuery, con);
+                            command.Parameters.AddWithValue("@username", form1.label5.Text);
+                            command.Parameters.AddWithValue("@password", form1.label3.Text);
+                            command.Parameters.AddWithValue("@filename", titleFile);
+                            command.ExecuteNonQuery();
 
-                                mainPanelTxt.Dispose();
-                                if (flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
-                                }
+                            mainPanelTxt.Dispose();
+                            if (flowLayoutPanel1.Controls.Count == 0) {
+                                label8.Visible = true;
+                                guna2Button6.Visible = true;
+                            }
+                        }
+                    };
+
+                    Label dateLabTxt = new Label();
+                    mainPanelTxt.Controls.Add(dateLabTxt);
+                    dateLabTxt.Name = "LabTxtUp" + itemCurr;
+                    dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                    dateLabTxt.ForeColor = Color.DarkGray;
+                    dateLabTxt.Visible = true;
+                    dateLabTxt.Enabled = true;
+                    dateLabTxt.Location = new Point(12, 208);
+                    dateLabTxt.Width = 1000;
+                    dateLabTxt.Text = varDate;
+
+                    textboxPic.MouseHover += (_senderM, _ev) => {
+                        panelTxt.ShadowDecoration.Enabled = true;
+                        panelTxt.ShadowDecoration.BorderRadius = 8;
+                    };
+
+                    textboxPic.MouseLeave += (_senderQ, _evQ) => {
+                        panelTxt.ShadowDecoration.Enabled = false;
+                    };
+
+                    if (type_ == "Image") {
+                        textboxPic.Image = new Bitmap(open.FileName);
+                        textboxPic.Click += (sender_im, e_im) => {
+                            var getImgName = (Guna2PictureBox)sender_im;
+                            var getWidth = getImgName.Image.Width;
+                            var getHeight = getImgName.Image.Height;
+                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                            Form bgBlur = new Form();
+                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPic.Owner = bgBlur;
+                                displayPic.ShowDialog();
+
+                                bgBlur.Dispose();
                             }
                         };
+                    }
 
-                        Label dateLabTxt = new Label();
-                        mainPanelTxt.Controls.Add(dateLabTxt);
-                        dateLabTxt.Name = "LabTxtUp" + itemCurr;
-                        dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                        dateLabTxt.ForeColor = Color.DarkGray;
-                        dateLabTxt.Visible = true;
-                        dateLabTxt.Enabled = true;
-                        dateLabTxt.Location = new Point(12, 208);
-                        dateLabTxt.Width = 1000;
-                        dateLabTxt.Text = varDate;
+                    if (type_ == "Texts") {
+                        if (retrieved == ".py") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                        }
+                        else if (retrieved == ".txt") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                        }
+                        else if (retrieved == ".html") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                        }
+                        else if (retrieved == ".css") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                        }
+                        else if (retrieved == ".js") {
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
+                        }
+                        textboxPic.Click += (sender_t, e_t) => {
+                            String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
+                            command = new MySqlCommand(retrieveContents, con);
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
+                            command.Parameters.AddWithValue("@filename", titleLab.Text);
+                            command.Parameters.AddWithValue("@foldername", label1.Text);
 
-                        textboxPic.MouseHover += (_senderM, _ev) => {
-                            panelTxt.ShadowDecoration.Enabled = true;
-                            panelTxt.ShadowDecoration.BorderRadius = 8;
+                            List<String> _contentValues = new List<String>();
+                            MySqlDataReader _readContents = command.ExecuteReader();
+                            while (_readContents.Read()) {
+                                _contentValues.Add(_readContents.GetString(0));
+                            }
+                            _readContents.Close();
+
+                            var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS");
+
+                            Form bgBlur = new Form();
+                            using (txtFORM displayPic = new txtFORM(_theContents, "upload_info_directory", titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPic.Owner = bgBlur;
+                                displayPic.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
                         };
+                    }
 
-                        textboxPic.MouseLeave += (_senderQ, _evQ) => {
-                            panelTxt.ShadowDecoration.Enabled = false;
+                    if (type_ == "Apk") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                        textboxPic.Click += (sender_ap, e_ap) => {
+                            Form bgBlur = new Form();
+                            using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPic.Owner = bgBlur;
+                                displayPic.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
                         };
-
-                        if (type_ == "Image") {
-                            textboxPic.Image = new Bitmap(open.FileName);
-                            textboxPic.Click += (sender_im, e_im) => {
-                                var getImgName = (Guna2PictureBox)sender_im;
-                                var getWidth = getImgName.Image.Width;
-                                var getHeight = getImgName.Image.Height;
-                                Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                                Form bgBlur = new Form();
-                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPic.Owner = bgBlur;
-                                    displayPic.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Texts") {
-                            if (retrieved == ".py") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
-                            }
-                            else if (retrieved == ".txt") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
-                            }
-                            else if (retrieved == ".html") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
-                            }
-                            else if (retrieved == ".css") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
-                            }
-                            else if (retrieved == ".js") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                            }
-                            textboxPic.Click += (sender_t, e_t) => {
-                                String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
-                                command = new MySqlCommand(retrieveContents, con);
-                                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
-                                command.Parameters.AddWithValue("@filename", titleLab.Text);
-                                command.Parameters.AddWithValue("@foldername", label1.Text);
-
-                                List<String> _contentValues = new List<String>();
-                                MySqlDataReader _readContents = command.ExecuteReader();
-                                while (_readContents.Read()) {
-                                    _contentValues.Add(_readContents.GetString(0));
-                                }
-                                _readContents.Close();
-
-                                var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS");
-
-                                Form bgBlur = new Form();
-                                using (txtFORM displayPic = new txtFORM(_theContents, "upload_info_directory", titleLab.Text)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPic.Owner = bgBlur;
-                                    displayPic.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Apk") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
-                            textboxPic.Click += (sender_ap, e_ap) => {
-                                Form bgBlur = new Form();
-                                using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPic.Owner = bgBlur;
-                                    displayPic.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Exe") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
-                            textboxPic.Click += (sender_ex, e_ex) => {
-                                Form bgBlur = new Form();
-                                using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayExe.Owner = bgBlur;
-                                    displayExe.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Pdf") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
-                            textboxPic.Click += (sender_pd, e_pd) => {
-                                Form bgBlur = new Form();
-                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory")) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPdf.Owner = bgBlur;
-                                    displayPdf.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                            clearRedundane();
-                        }
-
-                        if (type_ == "Ptx") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-                            textboxPic.Click += (sender_pt, e_pt) => {
-                                Form bgBlur = new Form();
-                                using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory")) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPtx.Owner = bgBlur;
-                                    displayPtx.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Gif") {
-                            ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
-                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                            textboxPic.Image = toBitMap;
-                            textboxPic.Click += (sender_pt, e_pt) => {
-                                Form bgBlur = new Form();
-                                using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayGif.Owner = bgBlur;
-                                    displayGif.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Msi") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
-                            textboxPic.Click += (sender_pt, e_pt) => {
-                                Form bgBlur = new Form();
-                                using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayMsi.Owner = bgBlur;
-                                    displayMsi.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Docx") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
-                            textboxPic.Click += (sender_pt, e_pt) => {
-                                Form bgBlur = new Form();
-                                using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory")) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayDocx.Owner = bgBlur;
-                                    displayDocx.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
-
-                        if (type_ == "Audio") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-                            textboxPic.Click += (sender_Aud, e_Aud) => {
-                                Form bgBlur = new Form();
-                                using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory")) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPic.Owner = bgBlur;
-                                    displayPic.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
-                            };
-                        }
                     }
 
+                    if (type_ == "Exe") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                        textboxPic.Click += (sender_ex, e_ex) => {
+                            Form bgBlur = new Form();
+                            using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
 
-                    command.Parameters["@DIR_NAME"].Value = label1.Text;
-                    command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
-                    command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
-                    command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                    command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                    command.Parameters["@FILE_EXT"].Value = retrieved;
+                                displayExe.Owner = bgBlur;
+                                displayExe.ShowDialog();
 
-                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
-                        currImg++;
-                        var getImg = new Bitmap(open.FileName);
-                        var imgWidth = getImg.Width;
-                        var imgHeight = getImg.Height;
-                        if (retrieved != ".ico") {
-                            using (MemoryStream ms = new MemoryStream()) {
-                                getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                                var setupImg = ms.ToArray();
-                                command.Parameters["@CUST_FILE"].Value = setupImg;
-                                if (command.ExecuteNonQuery() == 1) {
-                                    clearRedundane();
-                                }
-                                createPanelMain("Image", "ImagePar", currImg);
+                                bgBlur.Dispose();
                             }
-                        }
-                        else {
-                            Image retrieveIcon = Image.FromFile(open.FileName);
-                            byte[] dataIco;
-                            using (MemoryStream msIco = new MemoryStream()) {
-                                retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                dataIco = msIco.ToArray();
-                                command.Parameters["@CUST_FILE"].Value = dataIco;
-                                if (command.ExecuteNonQuery() == 1) {
-                                    clearRedundane();
-                                }
-                                createPanelMain("Image", "IcoPar", currImg);
+                        };
+                    }
+
+                    if (type_ == "Pdf") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                        textboxPic.Click += (sender_pd, e_pd) => {
+                            Form bgBlur = new Form();
+                            using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory")) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPdf.Owner = bgBlur;
+                                displayPdf.ShowDialog();
+
+                                bgBlur.Dispose();
                             }
-                        }
+                        };
+                        clearRedundane();
                     }
 
-                    if (retrieved == ".txt" || retrieved == ".py" || retrieved == ".html" || retrieved == ".css") {
-                        currTxt++;
-                        var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(open.FileName), "TXTCONTS");
-                        var _readText = File.ReadAllText(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _encryptConts;
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }// Receive text
-                        createPanelMain("Texts", "TextPar", currTxt);
+                    if (type_ == "Ptx") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                        textboxPic.Click += (sender_pt, e_pt) => {
+                            Form bgBlur = new Form();
+                            using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory")) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPtx.Owner = bgBlur;
+                                displayPtx.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
                     }
 
-                    if (retrieved == ".apk") {
-                        currApk++;
-                        Byte[] _readApkBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readApkBytes;
-                        });
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Apk", "ApkPar", currApk);
-                    }
-
-                    if (retrieved == ".exe") {
-                        currExe++;
-                        Byte[] _readExeBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readExeBytes;
-                        });
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Exe", "ExePar", currExe);
-                    }
-                    if (retrieved == ".pdf") {
-                        currPdf++;
-                        Byte[] _readPdfBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
-                        });
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Pdf", "PdfPar", currPdf);
-                    }
-                    if (retrieved == ".pptx" || retrieved == ".ppt") {
-                        currPtx++;
-                        Byte[] _readPtxBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
-                        });
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Ptx", "PtxPar", currPtx);
-                    }
-                    if (retrieved == ".gif") {
-                        currGif++;
-                        Byte[] _readGifBytes = File.ReadAllBytes(open.FileName);
-                        command.Parameters["@CUST_FILE"].Value = _readGifBytes;
-
+                    if (type_ == "Gif") {
                         ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                        using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                            command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
-                        }
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Gif", "GifPar", currGif);
+                        textboxPic.Image = toBitMap;
+                        textboxPic.Click += (sender_pt, e_pt) => {
+                            Form bgBlur = new Form();
+                            using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayGif.Owner = bgBlur;
+                                displayGif.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
                     }
-                    if (retrieved == ".msi") {
-                        currMsi++;
-                        Byte[] _readMsiBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
-                        });
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Msi", "MsiPar", currMsi);
+
+                    if (type_ == "Msi") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                        textboxPic.Click += (sender_pt, e_pt) => {
+                            Form bgBlur = new Form();
+                            using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayMsi.Owner = bgBlur;
+                                displayMsi.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
                     }
-                    if (retrieved == ".docx") {
-                        currDoc++;
-                        Byte[] _readDocxBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
-                        });
-                        if (command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Docx", "DocPar", currDoc);
+
+                    if (type_ == "Docx") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                        textboxPic.Click += (sender_pt, e_pt) => {
+                            Form bgBlur = new Form();
+                            using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory")) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayDocx.Owner = bgBlur;
+                                displayDocx.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
                     }
-                    if(retrieved == ".mp3" || retrieved == ".wav") {
-                        currAud++;
-                        Byte[] _readAudiBytes = File.ReadAllBytes(open.FileName);
-                        Task.Run(() => {
-                            command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
-                        });
-                        if(command.ExecuteNonQuery() == 1) {
-                            clearRedundane();
-                        }
-                        createPanelMain("Audio","AudPar",currAud);
+
+                    if (type_ == "Audio") {
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                        textboxPic.Click += (sender_Aud, e_Aud) => {
+                            Form bgBlur = new Form();
+                            using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory")) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayPic.Owner = bgBlur;
+                                displayPic.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
+                        };
                     }
                 }
-            }
-            catch (Exception eq) {
-                //MessageBox.Show(eq.Message);
+
+
+                command.Parameters["@DIR_NAME"].Value = label1.Text;
+                command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
+                command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
+                command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                command.Parameters["@FILE_EXT"].Value = retrieved;
+
+                if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
+                    currImg++;
+                    var getImg = new Bitmap(open.FileName);
+                    var imgWidth = getImg.Width;
+                    var imgHeight = getImg.Height;
+                    if (retrieved != ".ico") {
+                        using (MemoryStream ms = new MemoryStream()) {
+                            getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                            var setupImg = ms.ToArray();
+                            command.Parameters["@CUST_FILE"].Value = setupImg;
+                            if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+                            createPanelMain("Image", "ImagePar", currImg);
+                        }
+                    }
+                    else {
+                        Image retrieveIcon = Image.FromFile(open.FileName);
+                        byte[] dataIco;
+                        using (MemoryStream msIco = new MemoryStream()) {
+                            retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
+                            dataIco = msIco.ToArray();
+                            command.Parameters["@CUST_FILE"].Value = dataIco;
+                            if (command.ExecuteNonQuery() == 1) {
+                                clearRedundane();
+                            }
+                            createPanelMain("Image", "IcoPar", currImg);
+                        }
+                    }
+                }
+
+                if (retrieved == ".txt" || retrieved == ".py" || retrieved == ".html" || retrieved == ".css") {
+                    currTxt++;
+                    var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(open.FileName), "TXTCONTS");
+                    var _readText = File.ReadAllText(open.FileName);
+                    command.Parameters["@CUST_FILE"].Value = _encryptConts;
+                    if (command.ExecuteNonQuery() == 1) {
+                        clearRedundane();
+                    }// Receive text
+                    createPanelMain("Texts", "TextPar", currTxt);
+                }
+
+                if (retrieved == ".apk") {
+                    currApk++;
+                    Byte[] _readApkBytes = File.ReadAllBytes(open.FileName);
+                    Task.Run(() => {
+                        command.Parameters["@CUST_FILE"].Value = ReadFile(open.FileName); 
+                        command.ExecuteNonQuery();
+                    });
+                    clearRedundane();
+                    createPanelMain("Apk", "ApkPar", currApk);
+                }
+
+                if (retrieved == ".exe") {
+                    currExe++;
+                    //Byte[] _readExeBytes = File.ReadAllBytes(open.FileName);
+                    Task.Run(() => {
+                        command.Parameters["@CUST_FILE"].Value = ReadFile(open.FileName);
+                        command.ExecuteNonQuery();
+                    });
+                    clearRedundane();
+                    createPanelMain("Exe", "ExePar", currExe);
+                }
+                if (retrieved == ".pdf") {
+                    currPdf++;
+                    Byte[] _readPdfBytes = File.ReadAllBytes(open.FileName);
+                    Task.Run(() => {
+                        command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
+                        command.ExecuteNonQuery();
+                    });                        
+                    clearRedundane();
+                    createPanelMain("Pdf", "PdfPar", currPdf);
+                }
+                if (retrieved == ".pptx" || retrieved == ".ppt") {
+                    currPtx++;
+                    Byte[] _readPtxBytes = File.ReadAllBytes(open.FileName);
+                    Task.Run(() => {
+                        command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
+                        command.ExecuteNonQuery();
+                    });
+                    clearRedundane();
+                    createPanelMain("Ptx", "PtxPar", currPtx);
+                }
+                if (retrieved == ".gif") {
+                    currGif++;
+                    Byte[] _readGifBytes = File.ReadAllBytes(open.FileName);
+                    command.Parameters["@CUST_FILE"].Value = _readGifBytes;
+
+                    ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                    Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                    using (var stream = new MemoryStream()) {
+                        toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                        command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                    }
+                    if (command.ExecuteNonQuery() == 1) {
+                        clearRedundane();
+                    }
+                    createPanelMain("Gif", "GifPar", currGif);
+                }
+                if (retrieved == ".msi") {
+                    currMsi++;
+                    Byte[] _readMsiBytes = File.ReadAllBytes(open.FileName);
+                    Task.Run(() => {
+                        command.Parameters["@CUST_FILE"].Value = ReadFile(open.FileName);
+                        command.ExecuteNonQuery();
+                    });
+                    clearRedundane();
+                    createPanelMain("Msi", "MsiPar", currMsi);
+                }
+                if (retrieved == ".docx") {
+                    currDoc++;
+                    Byte[] _readDocxBytes = File.ReadAllBytes(open.FileName);
+                    Task.Run(() => {
+                        command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
+                        command.ExecuteNonQuery();
+                    });
+                    clearRedundane();
+                    createPanelMain("Docx", "DocPar", currDoc);
+                }
+                if(retrieved == ".mp3" || retrieved == ".wav") {
+                    currAud++;
+                    Task.Run(() => {
+                        Byte[] _readAudiBytes = File.ReadAllBytes(open.FileName);
+                        command.Parameters["@CUST_FILE"].Value = ReadFile(open.FileName); 
+                        command.ExecuteNonQuery();
+                    });
+                    clearRedundane();
+                    createPanelMain("Audio","AudPar",currAud);
+                }
             }
         }
         public void DisplayError(String CurAcc) {
@@ -1167,6 +1176,24 @@ namespace FlowSERVER1
 
                 bgBlur.Dispose();
             }
+        }
+        public static byte[] ReadFile(String filePath) {
+            byte[] buffer;
+            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            try {
+                int length = (int)fileStream.Length;  // get file length
+                buffer = new byte[length];            // create buffer
+                int count;                            // actual number of bytes read
+                int sum = 0;                          // total number of bytes read
+
+                // read until Read method returns 0 (end of the stream has been reached)
+                while ((count = fileStream.Read(buffer, sum, length - sum)) > 0)
+                    sum += count;  // sum is a buffer offset for next reading
+            }
+            finally {
+                fileStream.Close();
+            }
+            return buffer;
         }
         private void guna2Button2_Click_1(object sender, EventArgs e) {
             try {
@@ -1220,7 +1247,24 @@ namespace FlowSERVER1
                     }
                 }
             } catch (Exception eq) {
-                MessageBox.Show("Failed to upload a file.","Flowstorage");
+                Form bgBlur = new Form();
+                using (waitFORM displayWait = new waitFORM()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayWait.Owner = bgBlur;
+                    displayWait.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
             }
         }
 

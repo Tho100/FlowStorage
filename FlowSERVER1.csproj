@@ -521,7 +521,6 @@
     <Compile Include="remAccFORM.Designer.cs">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="SineGen.cs" />
     <Compile Include="splashFORM.cs">
       <SubType>Form</SubType>
     </Compile>
