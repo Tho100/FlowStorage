@@ -58,6 +58,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label24 = new System.Windows.Forms.Label();
             this.guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.label20 = new System.Windows.Forms.Label();
@@ -539,6 +540,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.guna2Panel7.Controls.Add(this.label24);
             this.guna2Panel7.Controls.Add(this.guna2GradientPanel1);
             this.guna2Panel7.Controls.Add(this.label21);
             this.guna2Panel7.Controls.Add(this.label22);
@@ -561,6 +563,19 @@
             this.guna2Panel7.Size = new System.Drawing.Size(1642, 829);
             this.guna2Panel7.TabIndex = 28;
             this.guna2Panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.Transparent;
+            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.Color.DarkGray;
+            this.label24.Location = new System.Drawing.Point(697, 46);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(158, 20);
+            this.label24.TabIndex = 45;
+            this.label24.Text = "Register your account";
+            this.label24.Visible = false;
             // 
             // guna2GradientPanel1
             // 
@@ -681,9 +696,9 @@
             this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.label22.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label22.Location = new System.Drawing.Point(634, 361);
+            this.label22.Location = new System.Drawing.Point(634, 359);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(240, 20);
+            this.label22.Size = new System.Drawing.Size(338, 20);
             this.label22.TabIndex = 43;
             this.label22.Text = "Please add email";
             this.label22.Visible = false;
@@ -709,7 +724,7 @@
             this.guna2TextBox3.Name = "guna2TextBox3";
             this.guna2TextBox3.PasswordChar = '\0';
             this.guna2TextBox3.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox3.PlaceholderText = "Enter your email";
+            this.guna2TextBox3.PlaceholderText = "Enter your email address";
             this.guna2TextBox3.SelectedText = "";
             this.guna2TextBox3.Size = new System.Drawing.Size(504, 47);
             this.guna2TextBox3.TabIndex = 42;
@@ -1147,6 +1162,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         public System.Windows.Forms.Label label17;
         private Guna.UI2.WinForms.Guna2Button guna2Button9;
+        public System.Windows.Forms.Label label24;
     }
 }
 

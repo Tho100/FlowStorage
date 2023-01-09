@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
-            var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "ABHABH24");
+            var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "0123456789085746");
 
             if(tableName == "upload_info_directory" & getText != "") {
                 richTextBox1.Text = getText;
@@ -56,7 +56,7 @@ namespace FlowSERVER1 {
                     textValues_.Add(_ReadTexts.GetString(0));
                 }
                 _ReadTexts.Close();
-                var getMainText = EncryptionModel.Decrypt(textValues_[0],"TXTCONTS");
+                var getMainText = EncryptionModel.Decrypt(textValues_[0], "TXTCONTS01947265");
                 richTextBox1.Text = getMainText;
                 if (FileExt_ == ".py") {
                     pythonSyntax();
@@ -72,18 +72,16 @@ namespace FlowSERVER1 {
                 }
             } else if (tableName == "file_info_expand"){
 
-                string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(countRow, con);
                 command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password", EncryptionModel.Decrypt(Form1.instance.label3.Text, "ABHABH24"));
 
                 var rowTotal = command.ExecuteScalar();
                 var intTotalRow = Convert.ToInt32(rowTotal);
 
-                string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(getTxtQue,con);
                 command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password",Form1.instance.label3.Text);
                 command.Parameters.AddWithValue("@filename",label1.Text);
             
                 List<string> textValuesF = new List<string>();
@@ -94,7 +92,7 @@ namespace FlowSERVER1 {
                 }
                 txtReader.Close();
 
-                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0],"MAINKEY9999");
+                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0], "TXTCONTS01947265");
                 richTextBox1.Text = decryptValueKey;
                 if (FileExt_ == ".py") {
                     pythonSyntax();

@@ -14,6 +14,10 @@ using System.Net.Http;
 using System.Web;
 using System.Net;
 using System.Globalization;
+using Ubiety.Dns.Core;
+using Stripe.Infrastructure;
+using Stripe.Checkout;
+//using Stripe;
 
 namespace FlowSERVER1 {
     public partial class remAccFORM : Form {
@@ -21,70 +25,85 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static remAccFORM instance;
         public List<int> _TotalUploadToday = new List<int>();
+        public List<int> _TotalUploadOvertime = new List<int>();
         public List<String> _TotalUploadDirectoryToday = new List<String>();
+        private static readonly HttpClient client = new HttpClient();
         public remAccFORM(String _accName) {
             InitializeComponent();
             instance = this;
-
             label5.Text = _accName;
             this.ShowInTaskbar = false;
+            this.Text = "Settings";
 
             try {
+                LeastMostUpload("file_info");
+                LeastMostUpload("file_info_expand");
+                getAccType();
+                countTotalAll();
 
-            LeastMostUpload("file_info");
-            LeastMostUpload("file_info_expand");
-            getAccType();
-            countTotalAll();
+                // @SUMMARY Retrieve account creation date and display the date on label
 
-            // @SUMMARY Retrieve account creation date and display the date on label
-
-            String _getJoinDate = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
-            command = con.CreateCommand();
-            command.CommandText = _getJoinDate;
-            command.Parameters.AddWithValue("@username",label5.Text);
+                String _getJoinDate = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
+                command = con.CreateCommand();
+                command.CommandText = _getJoinDate;
+                command.Parameters.AddWithValue("@username",label5.Text);
             
-            List<String> _JoinedDateValues = new List<String>();
+                List<String> _JoinedDateValues = new List<String>();
 
-            MySqlDataReader _readDate = command.ExecuteReader();
-            while(_readDate.Read()) {
-                _JoinedDateValues.Add(_readDate.GetString(0));
-            }
-            _readDate.Close();
-            var joinedDate = _JoinedDateValues[0];
-            label16.Text = joinedDate;
+                MySqlDataReader _readDate = command.ExecuteReader();
+                while(_readDate.Read()) {
+                    _JoinedDateValues.Add(_readDate.GetString(0));
+                }
+                _readDate.Close();
+                var joinedDate = _JoinedDateValues[0];
+                label16.Text = joinedDate;
 
-            chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
-            generateChart("Image", "file_info");
-            generateChart("Text", "file_info_expand");
-            generateChart("Video", "file_info_vid");
-            generateChart("PDF", "file_info_pdf");
-            generateChart("APK", "file_info_apk");
-            generateChart("Exe", "file_info_exe");
-            generateChart("GIF", "file_info_gif");
-            generateChart("Document", "file_info_word");
-            generateChart("Presentation", "file_info_ptx");
-            generateChart("Audio","file_info_audi");
+                chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
+                generateChart("Image", "file_info");
+                generateChart("Text", "file_info_expand");
+                generateChart("Video", "file_info_vid");
+                generateChart("PDF", "file_info_pdf");
+                generateChart("APK", "file_info_apk");
+                generateChart("Exe", "file_info_exe");
+                generateChart("GIF", "file_info_gif");
+                generateChart("Document", "file_info_word");
+                generateChart("Presentation", "file_info_ptx");
+                generateChart("Audio","file_info_audi");
 
-            TotalUploadFileTodayCount("file_info");
-            TotalUploadFileTodayCount("file_info_pdf");
-            TotalUploadFileTodayCount("file_info_expand");
-            TotalUploadFileTodayCount("file_info_exe");
-            TotalUploadFileTodayCount("file_info_word");
-            TotalUploadFileTodayCount("file_info_ptx");
-            TotalUploadFileTodayCount("file_info_gif");
-            TotalUploadFileTodayCount("file_info_audi");
-            TotalUploadFileTodayCount("file_info_vid");
-            TotalUploadDirectoryTodayCount();
+                TotalUploadFileTodayCount("file_info");
+                TotalUploadFileTodayCount("file_info_pdf");
+                TotalUploadFileTodayCount("file_info_expand");
+                TotalUploadFileTodayCount("file_info_exe");
+                TotalUploadFileTodayCount("file_info_word");
+                TotalUploadFileTodayCount("file_info_ptx");
+                TotalUploadFileTodayCount("file_info_gif");
+                TotalUploadFileTodayCount("file_info_audi");
+                TotalUploadFileTodayCount("file_info_vid");
+                TotalUploadDirectoryTodayCount();
 
-            var _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
-            label26.Text = _totalUploadTodayCount.ToString();
+                var _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
+                label26.Text = _totalUploadTodayCount.ToString();
+
+
+                TotalUploadFile("file_info");
+                TotalUploadFile("file_info_pdf");
+                TotalUploadFile("file_info_expand");
+                TotalUploadFile("file_info_exe");
+                TotalUploadFile("file_info_word");
+                TotalUploadFile("file_info_ptx");
+                TotalUploadFile("file_info_gif");
+                TotalUploadFile("file_info_audi");
+                TotalUploadFile("file_info_vid");
+
+                var _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
+                label12.Text = _totalUploadOvertime.ToString();
 
                 /* The problem is say if you have the same 
                     file type that was uploaded twice then it will be seen as 
                     1,1 and not 2
                 @SUMMARY: File is numerically counted instead of summing the values*/
             } catch (Exception) {
-                Form bgBlur = new Form();
+                /*Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -101,11 +120,21 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }
+                }*/
             }
 
         }
 
+
+        public void TotalUploadFile(String _tableName) {
+            String _CountQue = "SELECT COUNT(*) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_CountQue,con);
+            command.Parameters.AddWithValue("@username",label5.Text);
+
+            var totalCount = command.ExecuteScalar();
+            int intTotalCount = Convert.ToInt32(totalCount);
+            _TotalUploadOvertime.Add(intTotalCount);
+        }
         public void TotalUploadFileTodayCount(String _TableName) {
             String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
             String _QueryCount = "SELECT COUNT(CUST_USERNAME) FROM " + _TableName + " WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
@@ -278,34 +307,114 @@ namespace FlowSERVER1 {
 
         }
 
-        private void _setupPayment(String TypeOf,String Pricing) {
-            string url = "";
+        private async void _setupPayment(String TypeOf,double Pricing) {
+          
+            Task.Run(() => {
+                // ADD CUSTOMER
+                Stripe.StripeConfiguration.SetApiKey("sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN");
+                var options = new Stripe.CustomerCreateOptions {
+                    Email = Form1.instance.label24.Text
+                };
 
-            string business = "nfrealyt@gmail.com";     
-//            string description = "Donation";            
-            string country = "MY";                  
-            string currency = "USD";            
+                var service = new Stripe.CustomerService();
+                Stripe.Customer customer = service.Create(options);
+                var emailCust = customer.Email;
+                //
 
-            url += "https://www.paypal.com/cgi-bin/webscr/" + 
+                // START PAYMENT
+
+                var servicePayment = new Stripe.PaymentIntentService();
+                var optionpayments = new Stripe.PaymentIntentCreateOptions {
+                    Amount = 1,
+                    SetupFutureUsage = "off_session",
+                    Currency = "USD",
+                };
+                var paymentIntent = servicePayment.Create(optionpayments);
+                System.Diagnostics.Process.Start(paymentIntent.ToString());
+            });
+ /*
+                var myCharge = new Stripe.ChargeCreateOptions();
+                // always set these properties
+                myCharge.Amount = 1;
+                myCharge.Currency = "USD";
+                myCharge.ReceiptEmail = "nfrealyt@gmail.com";
+                myCharge.Description = "Sample Charge";
+                myCharge.Source = "pk_test_51MO4YYF2lxRV33xseOZm26PlyARkh28Qw3aUPX6Xkc5diqY8aHSBFQIDW3QHFdLHJtA8csgKgWPsrVj6jEW9DmoU00i4y5mv4n";
+                myCharge.Capture = true;
+                var chargeService = new Stripe.ChargeService();
+                Stripe.Charge stripeCharge = chargeService.Create(myCharge);*/
+
+                // Newly created customer is returned
+                //var CustEmail = customer.Email;
+                //MessageBox.Show(CustEmail);
+            
+
+
+
+
+            /*string url = "";
+            string business = "nfrealyt@gmail.com";
+            //            string description = "Donation";            
+            string country = "MY";
+            string currency = "USD";
+
+            url += "https://www.paypal.com/cgi-bin/webscr/" +
                 "?cmd=" + "_xclick" +
-                "&amount=" + Pricing + 
-                "&business=" + business + 
+                "&amount=" + Pricing +
+                "&business=" + business +
                 "&item_name=" + TypeOf;
-              
-            /* "?cmd=" + "_donations" +
-                    "&amount=245" + 
-                    "&business=" + business +
-                    "&lc=" + country +
-                    "&item_name=" + TypeOf +
-                    "&currency_code=" + currency +
-                    "&bn=" + "PP%2dDonationsBF";*/
+            paypalFORM _showPayment = new paypalFORM(url,TypeOf);
+            _showPayment.Show();*/
 
-            System.Diagnostics.Process.Start(url);
+
+            // System.Diagnostics.Process.Start(url);
+            /*
+            var values = new Dictionary<string, string>
+                {
+                    { "thing1", "hello" },
+                    { "thing2", "world" }
+                };
+
+            var content = new FormUrlEncodedContent(values);
+
+            var response = await client.PostAsync("http://www.example.com/recepticle.aspx", content);
+
+            var responseString = await response.Content.ReadAsStringAsync();*/
+
+            /* "?cmd=" + "_donations" +
+               "&amount=245" + 
+               "&business=" + business +
+               "&lc=" + country +
+               "&item_name=" + TypeOf +
+               "&currency_code=" + currency +
+               "&bn=" + "PP%2dDonationsBF";*/
+
+            /*var config = new PayPalConfiguration(PayPalEnvironment.NoNetwork,"UTZE2PQSX5A6C") {
+                AcceptCreditCards = true,
+                MerchantName = "Flowstorage",
+                Language = "eng",
+            };
+            CrossPayPalManager.Init(config);
+            var Result = await CrossPayPalManager.Current.Buy(new PayPalItem(TypeOf,new Decimal (Pricing),"USD"),new decimal(0));
+            if(Result.Status == PayPalStatus.Cancelled) {
+                MessageBox.Show("USER CANCELLED");
+            } else if (Result.Status == PayPalStatus.Error) {
+                MessageBox.Show("ERROR");
+            }
+            else if (Result.Status == PayPalStatus.Successful) {
+                MessageBox.Show("SUCCEED");
+            }
+            */
+            // var CustClient = new HttpClient {BaseAddress = new Uri("https://www.paypal.com/cgi-bin/webscr/?cmd=_xclick&amount=2&business=nfrealyt@gmail.com&item_name=Max%20account%20for%20Flowstorage") };
+            // CustClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(ApiConstant))
+
             // https://www.paypal.com/paypalme/flowstoragepaypal //https://www.paypal.com/cgi-bin/webscr 
         }
 
+
+
         private void guna2Button5_Click(object sender, EventArgs e) {
-            _setupPayment("Max account for Flowstorage","2");
+            _setupPayment("Max account for Flowstorage",2);
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -329,11 +438,11 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
-            _setupPayment("Supreme account for Flowstorage","9.99");
+            _setupPayment("Supreme account for Flowstorage",9.99);
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
-            _setupPayment("Express account for Flowstorage","5");
+            _setupPayment("Express account for Flowstorage",5);
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -405,6 +514,14 @@ namespace FlowSERVER1 {
         }
 
         private void label30_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel9_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Panel5_Paint(object sender, PaintEventArgs e) {
 
         }
     }

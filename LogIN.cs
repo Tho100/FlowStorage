@@ -15,12 +15,15 @@ using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static LogIN instance;
+        public static String decryptMainKey;
+        public static String encryptionKeyVal;
         public LogIN() {
             InitializeComponent();
             instance = this;
@@ -37,8 +40,6 @@ namespace FlowSERVER1 {
             });
         }
 
-        String decryptMainKey;
-        String encryptionKeyVal;
         String custUsername;
         public void loadUserData() {
 
@@ -95,9 +96,14 @@ namespace FlowSERVER1 {
             }
             userReader.Close();
 
+            //MessageBox.Show(passValuesKey_[0]);
+
             if(passValuesKey_.Count > 0) {
-                decryptMainKey = EncryptionModel.Decrypt(passValuesKey_[0], "ABHABH24");
                 encryptionKeyVal = passValuesKey_[0];
+                decryptMainKey = EncryptionModel.Decrypt(encryptionKeyVal, "0123456789085746");
+
+            } else {
+                label4.Visible = true;
             }
 
             ///////////////////

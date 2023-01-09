@@ -159,7 +159,7 @@ namespace FlowSERVER1
                                 label.Location = new Point(3, 27);
                             }
 
-                            var encryptionPass = EncryptionModel.Encrypt(_getPass, "ABHABH24");
+                            var encryptionPass = EncryptionModel.Encrypt(_getPass, "0123456789085746");
                             Form1.instance.setupLabel.Text = _getUser;
                             Form1.instance.label3.Text = encryptionPass;
 

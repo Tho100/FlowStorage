@@ -67,6 +67,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AuthorizeNet.dll" size="149504">
+      <assemblyIdentity name="AuthorizeNet" version="0.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>aD/ZsBZL5QR+UYlVbgj7ViE3yXK9SoU3XBGypMXm23I=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AxInterop.WMPLib.dll" size="53760">
       <assemblyIdentity name="AxInterop.WMPLib" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -103,6 +115,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BraintreeHttp-Dotnet.dll" size="17920">
+      <assemblyIdentity name="BraintreeHttp-Dotnet" version="0.3.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>1hVZojc9LzuLcYnlr1ZATscksgI1bhkf/hjzJnJtrJE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExcelDataReader.dll" size="178176">
       <assemblyIdentity name="ExcelDataReader" version="3.7.0.0" publicKeyToken="93517DBE6A4012FA" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -115,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FlowSERVER1.exe" size="1396816">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FlowSERVER1.exe" size="1522256">
       <assemblyIdentity name="FlowSERVER1" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WhKccw3wBZ/4+L92wye61EIWG5vof/FuhirCDmxmNG8=</dsig:DigestValue>
+        <dsig:DigestValue>zB7dHTWmKApru6IanUUUjkz/f2W2gyrIGqoPWDtBaIA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -218,7 +242,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qJ5+B5yeVCQ82a3yO+TsGned6mUMmlvXksBv/g5/NQk=</dsig:DigestValue>
+        <dsig:DigestValue>SOVK5Brx8L0GJp6QcgCQUbW76qYj2CysLYu2ivaoylY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -691,6 +715,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Source.dll" size="93184">
+      <assemblyIdentity name="Source" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>YKTQefG5xJiK+vC+AvHmjxwmc6HN8XdlfGIWeelB74M=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Barcode.dll" size="2153712">
       <assemblyIdentity name="Spire.Barcode" version="6.12.1.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -843,6 +879,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>dtmXFTX0zs4LmjOx6A5NRKJ4KveJE4kuhYFdVg+UpZ0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Stripe.net.dll" size="2206720">
+      <assemblyIdentity name="Stripe.net" version="41.5.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>UJ6AbW9GZ+a4Q/3gkH9ruJPQfU7q7X1Y2evlfI7MYQ0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1231,6 +1279,42 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Core.dll" size="713296">
+      <assemblyIdentity name="Xamarin.Forms.Core" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>x9jM3ZgdRKHmdmhormxzWIMwGobrXWRktNhC+BROezg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Platform.dll" size="12376">
+      <assemblyIdentity name="Xamarin.Forms.Platform" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>CLFpL69CNE8FFQN+CNgGGPOaoH9cVR650hzvEjcknls=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Xaml.dll" size="94288">
+      <assemblyIdentity name="Xamarin.Forms.Xaml" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>PyH8kz7vowmoDpltAJDeeJySj7nNhsAP9greE5J1xzI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ZstdNet.dll" size="28672">
       <assemblyIdentity name="ZstdNet" version="1.4.5.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -1269,13 +1353,13 @@
       <dsig:DigestValue>DwS8qk5KyEfEa8Qn9X+IuvmOT0/lJZWe7fCBM1ibbSw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="FlowSERVER1.exe.config" size="2024">
+  <file name="FlowSERVER1.exe.config" size="3016">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>joDogP9x/cJ39cJ53oMk38AMJ9jl4s5aMX8vx+QIDC4=</dsig:DigestValue>
+      <dsig:DigestValue>9W3CPy5H5Ejn4lhSPvpfeVGZocsUZ7765oEFR/UIIUk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">

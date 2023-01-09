@@ -269,7 +269,7 @@ namespace FlowSERVER1
                         }
                         _readContents.Close();
 
-                        var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS");
+                        var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS01947265");
 
                         Form bgBlur = new Form();
                         using (txtFORM displayPic = new txtFORM(_theContents, "upload_info_directory", titleLab.Text)) {
@@ -1059,7 +1059,7 @@ namespace FlowSERVER1
 
                 if (retrieved == ".txt" || retrieved == ".py" || retrieved == ".html" || retrieved == ".css") {
                     currTxt++;
-                    var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(open.FileName), "TXTCONTS");
+                    var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(open.FileName), "TXTCONTS01947265");
                     var _readText = File.ReadAllText(open.FileName);
                     command.Parameters["@CUST_FILE"].Value = _encryptConts;
                     if (command.ExecuteNonQuery() == 1) {

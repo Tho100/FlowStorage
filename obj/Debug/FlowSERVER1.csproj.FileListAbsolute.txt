@@ -228,3 +228,17 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.DirErFO
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Drawing.Common.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.splashFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.waitFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\BraintreeHttp-Dotnet.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Source.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Core.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Platform.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Core.pdb
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Core.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.pdb
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\XamlC.stamp
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AuthorizeNet.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AuthorizeNet.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Stripe.net.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Stripe.net.xml

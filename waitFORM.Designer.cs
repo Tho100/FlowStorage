@@ -57,11 +57,12 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.LightGray;
-            this.label4.Location = new System.Drawing.Point(133, 116);
+            this.label4.Location = new System.Drawing.Point(127, 116);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(156, 17);
+            this.label4.Size = new System.Drawing.Size(269, 34);
             this.label4.TabIndex = 43;
-            this.label4.Text = "(This won\'t take so long)";
+            this.label4.Text = "* Please restart flowstorage if this message\r\n  keeps showing up for long period " +
+    "of time";
             // 
             // label2
             // 
@@ -113,6 +114,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "waitFORM";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.waitFORM_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -134,7 +134,7 @@
             this.guna2TextBox1.Location = new System.Drawing.Point(93, 60);
             this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.guna2TextBox1.Name = "guna2TextBox1";
-            this.guna2TextBox1.PasswordChar = '\0';
+            this.guna2TextBox1.PasswordChar = '*';
             this.guna2TextBox1.PlaceholderText = "";
             this.guna2TextBox1.SelectedText = "";
             this.guna2TextBox1.Size = new System.Drawing.Size(285, 44);

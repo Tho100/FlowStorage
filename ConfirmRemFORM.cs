@@ -43,7 +43,7 @@ namespace FlowSERVER1 {
                 }
                 readerPass_.Close();
 
-                var decryptPass = EncryptionModel.Decrypt(passValues_[0],"ABHABH24");
+                var decryptPass = EncryptionModel.Decrypt(passValues_[0], "0123456789085746");
                 var encryptedPass = passValues_[0];
 
                 if(guna2TextBox1.Text == decryptPass) {

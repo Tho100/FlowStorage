@@ -8,10 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
         public static vidFORM instance;
+        public static MySqlCommand command = ConnectionModel.command;
+        public static MySqlConnection con = ConnectionModel.con;
         public vidFORM(Image getThumb, int width, int height, String getTitle,String path) {
             InitializeComponent();
             instance = this;
@@ -53,14 +56,26 @@ namespace FlowSERVER1 {
         // Play
         private void guna2Button5_Click(object sender, EventArgs e) {
             try {
+                /*
                 _wmpVid.uiMode = "none";
                 _wmpVid.Visible = true;
                 _wmpVid.URL = label3.Text;
-                _wmpVid.Ctlcontrols.play();
+                _wmpVid.Ctlcontrols.play();*/
+                String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(Select_VidByte, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                List<Byte> _ByteValues = new List<Byte>();
+                MySqlDataReader _ReadBytes = command.ExecuteReader();
+                if (_ReadBytes.Read()) {
+                    var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                }
+
+                
                 guna2Button6.Visible = true;
                 guna2Button5.Visible = false;
             } catch (Exception eq) {
-                //
+                MessageBox.Show("Failed to play this video.", "Flowstorage");
             }
         }
 
@@ -80,6 +95,28 @@ namespace FlowSERVER1 {
 
         private void pictureBox1_Click_2(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            try {
+                String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(Select_VidByte,con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                
+                List<Byte> _ByteValues = new List<Byte>();
+                MySqlDataReader _ReadBytes = command.ExecuteReader();
+                if(_ReadBytes.Read()) {
+                    var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                    SaveFileDialog _fileDialog = new SaveFileDialog();
+                    _fileDialog.FileName = label1.Text;
+                    if(_fileDialog.ShowDialog() == DialogResult.OK) {
+                        File.WriteAllBytes(_fileDialog.FileName,_retrieveBytesValue);
+                    }
+                }
+
+            } catch (Exception) {
+                MessageBox.Show("Failed to download this video.","Flowstorage");
+            }
         }
     }
 }
