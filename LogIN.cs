@@ -577,7 +577,7 @@ namespace FlowSERVER1 {
 
                                 picMain_Q.Click += (sender_gi, ex_gi) => {
                                     Form bgBlur = new Form();
-                                    using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                                    using (gifFORM displayGif = new gifFORM(titleLab.Text,"file_info_gif")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

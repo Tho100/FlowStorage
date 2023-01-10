@@ -399,7 +399,7 @@ namespace FlowSERVER1 {
 
                     picMain_Q.Click += (sender_gi, ex_gi) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayPic = new gifFORM(titleLab.Text)) {
+                        using (gifFORM displayPic = new gifFORM(titleLab.Text,"file_info_gif")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1331,7 +1331,7 @@ namespace FlowSERVER1 {
 
                         textboxPic.Click += (sender_gi, e_gi) => {
                             Form bgBlur = new Form();
-                            using (gifFORM displayPic = new gifFORM(titleLab.Text)) {
+                            using (gifFORM displayPic = new gifFORM(titleLab.Text,"file_info_gif")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;

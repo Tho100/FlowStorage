@@ -28,10 +28,24 @@ namespace FlowSERVER1 {
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
 
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
-            var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "0123456789085746");
+            //var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "0123456789085746");
+            //TXTCONTS01947265
+            if (tableName == "upload_info_directory" & getText == "") {
+                string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                command = new MySqlCommand(getTxtQue, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@dirname",Form3.instance.label1.Text);
+                List<string> textValuesF = new List<string>();
 
-            if(tableName == "upload_info_directory" & getText != "") {
-                richTextBox1.Text = getText;
+                MySqlDataReader txtReader = command.ExecuteReader();
+                while (txtReader.Read()) {
+                    textValuesF.Add(txtReader.GetString(0));
+                }
+                txtReader.Close();
+
+                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0], "TXTCONTS01947265");
+                richTextBox1.Text = decryptValueKey;
                 if (FileExt_ == ".py") {
                     pythonSyntax();
                 }

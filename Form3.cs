@@ -26,9 +26,12 @@ namespace FlowSERVER1
 
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
+        public static Form3 instance;
         public Form3(String sendTitle_)
         {
             InitializeComponent();
+            instance = this;
+
             label1.Text = sendTitle_;
 
             var form1 = Form1.instance;
@@ -72,6 +75,7 @@ namespace FlowSERVER1
                     bgBlur.Dispose();
                 }
             }
+            
 
             if (flowLayoutPanel1.Controls.Count == 0) {
                 label8.Visible = true;
@@ -269,10 +273,10 @@ namespace FlowSERVER1
                         }
                         _readContents.Close();
 
-                        var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS01947265");
-
+                        //var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS01947265");
+                        //_theContents, "upload_info_directory", titleLab.Text
                         Form bgBlur = new Form();
-                        using (txtFORM displayPic = new txtFORM(_theContents, "upload_info_directory", titleLab.Text)) {
+                        using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -399,11 +403,11 @@ namespace FlowSERVER1
                     MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
                     DataSet ds_Read = new DataSet();
                     da_Read.Fill(ds_Read);
-                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[q]["CUST_THUMB"]);
+                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[q-1]["CUST_THUMB"]);
                     textboxPic.Image = new Bitmap(ms);
                     textboxPic.Click += (sender_gif, e_gif) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -799,10 +803,10 @@ namespace FlowSERVER1
                             }
                             _readContents.Close();
 
-                            var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS");
+                          //  var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS01947265");
 
                             Form bgBlur = new Form();
-                            using (txtFORM displayPic = new txtFORM(_theContents, "upload_info_directory", titleLab.Text)) {
+                            using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text)) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -925,7 +929,7 @@ namespace FlowSERVER1
                         textboxPic.Image = toBitMap;
                         textboxPic.Click += (sender_pt, e_pt) => {
                             Form bgBlur = new Form();
-                            using (gifFORM displayGif = new gifFORM(titleLab.Text)) {
+                            using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;

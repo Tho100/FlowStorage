@@ -103,7 +103,7 @@ namespace FlowSERVER1 {
                     1,1 and not 2
                 @SUMMARY: File is numerically counted instead of summing the values*/
             } catch (Exception) {
-                /*Form bgBlur = new Form();
+                Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -120,7 +120,7 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }*/
+                }
             }
 
         }

@@ -139,67 +139,85 @@ namespace FlowSERVER1
                 label5.Visible = false;
                 label4.Visible = false;
                 label7.Visible = false;
-                if (!String.IsNullOrEmpty(_getUser)) {
-                    if (!String.IsNullOrEmpty(_getPass)) {
-                        if (!String.IsNullOrEmpty(_getEmail)) {
-                            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-                            String _getAuth = _getPath + "\\CUST_DATAS.txt";
-                            if (File.Exists(_getAuth)) {
-                                Directory.Delete(_getPath, true);
+                if(_getEmail.Contains("@gmail.com")) {
+                    if(_getUser.Length <= 20) {
+                        if(_getPass.Length > 5) {
+                            if (!String.IsNullOrEmpty(_getUser)) {
+                                if (!String.IsNullOrEmpty(_getPass)) {
+                                    if (!String.IsNullOrEmpty(_getEmail)) {
+                                        String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                                        String _getAuth = _getPath + "\\CUST_DATAS.txt";
+                                        if (File.Exists(_getAuth)) {
+                                            Directory.Delete(_getPath, true);
+                                        }
+
+                                        flowlayout.Controls.Clear();
+                                        if (flowlayout.Controls.Count == 0) {
+                                            Form1.instance.label8.Visible = true;
+                                            Form1.instance.guna2Button6.Visible = true;
+                                        }
+                                        if (Form1.instance.setupLabel.Text.Length > 14) {
+                                            var label = Form1.instance.setupLabel;
+                                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                            label.Location = new Point(3, 27);
+                                        }
+
+                                        var encryptionPass = EncryptionModel.Encrypt(_getPass, "0123456789085746");
+                                        Form1.instance.setupLabel.Text = _getUser;
+                                        Form1.instance.label3.Text = encryptionPass;
+
+                                        String getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                                        String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+                                        command = new MySqlCommand(_InsertUser, con);
+                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                        command.Parameters.AddWithValue("@CUST_PASSWORD", encryptionPass);
+                                        command.Parameters.AddWithValue("@CREATED_DATE", getDate);
+                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                        command.ExecuteNonQuery();
+
+                                        String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                        command = new MySqlCommand(_InsertType, con);
+                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                        command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                                        command.ExecuteNonQuery();
+
+                                        label5.Visible = false;
+                                        label4.Visible = false;
+                                        Form1.instance.label5.Text = _getUser;
+                                        Form1.instance.listBox1.Items.Clear();
+                                        Form1.instance.listBox1.Items.Add("Home");
+                                        Form1.instance.listBox1.SelectedIndex = 0;
+                                        setupTime();
+
+                                        this.Close();
+                                    }
+                                    else {
+                                        label5.Visible = true;
+                                        label5.Text = "Please enter your email.";
+                                    }                                     
+                                }
+                                else {
+                                    label4.Visible = true;
+                                    label4.Text = "Please add a username.";
+                                }
                             }
-
-                            flowlayout.Controls.Clear();
-                            if (flowlayout.Controls.Count == 0) {
-                                Form1.instance.label8.Visible = true;
-                                Form1.instance.guna2Button6.Visible = true;
+                            else {
+                                label7.Visible = true;
+                                label7.Text = "Please add a password.";
                             }
-                            if (Form1.instance.setupLabel.Text.Length > 14) {
-                                var label = Form1.instance.setupLabel;
-                                label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                label.Location = new Point(3, 27);
-                            }
-
-                            var encryptionPass = EncryptionModel.Encrypt(_getPass, "0123456789085746");
-                            Form1.instance.setupLabel.Text = _getUser;
-                            Form1.instance.label3.Text = encryptionPass;
-
-                            String getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                            String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
-                            command = new MySqlCommand(_InsertUser, con);
-                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                            command.Parameters.AddWithValue("@CUST_PASSWORD", encryptionPass);
-                            command.Parameters.AddWithValue("@CREATED_DATE", getDate);
-                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                            command.ExecuteNonQuery();
-
-                            String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                            command = new MySqlCommand(_InsertType, con);
-                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                            command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                            command.ExecuteNonQuery();
-
-                            label5.Visible = false;
-                            label4.Visible = false;
-                            Form1.instance.label5.Text = _getUser;
-                            Form1.instance.listBox1.Items.Clear();
-                            Form1.instance.listBox1.Items.Add("Home");
-                            Form1.instance.listBox1.SelectedIndex = 0;
-                            setupTime();
-
-                            this.Close();
+                        } else {
+                            label7.Visible = true;
+                            label7.Text = "Password must be longer than 5 characters.";
                         }
-                        else {
-                            label5.Visible = true;
-                        }
-                    }
-                    else {
+                    } else {
                         label4.Visible = true;
+                        label4.Text = "Username character length limit is 20.";
                     }
-                }
-                else {
-                    label7.Visible = true;
+                } else {
+                    label5.Visible = true;
+                    label5.Text = "Email entered is not valid.";
                 }
             }
         }
@@ -238,6 +256,10 @@ namespace FlowSERVER1
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
+            this.Close();
+        }
+
+        private void guna2Button5_Click_1(object sender, EventArgs e) {
             this.Close();
         }
     }
