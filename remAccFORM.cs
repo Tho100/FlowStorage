@@ -313,7 +313,8 @@ namespace FlowSERVER1 {
                 // ADD CUSTOMER
                 Stripe.StripeConfiguration.SetApiKey("sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN");
                 var options = new Stripe.CustomerCreateOptions {
-                    Email = Form1.instance.label24.Text
+                    Email = Form1.instance.label24.Text,
+                    Name = Form1.instance.label5.Text
                 };
 
                 var service = new Stripe.CustomerService();

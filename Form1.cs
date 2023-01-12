@@ -79,7 +79,7 @@ namespace FlowSERVER1 {
                     }
                 }
             } catch (Exception eq) {
-                MessageBox.Show("Are you connected to the internet?", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 

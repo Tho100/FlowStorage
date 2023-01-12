@@ -15,11 +15,12 @@ namespace FlowSERVER1 {
     public partial class ptxFORM : Form {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
+        public static String _TableName;
         public ptxFORM(String _Title,String _Table) {
             InitializeComponent();
             label1.Text = _Title;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-
+            _TableName = _Table;
             try {
 
                 String _readPtxValues = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
@@ -58,7 +59,7 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
 
-                String _readPtxValues = "SELECT CUST_FILE FROM file_info_ptx WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
+                String _readPtxValues = "SELECT CUST_FILE FROM " + _TableName + "  WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
                 command = new MySqlCommand(_readPtxValues, con);
                 command = con.CreateCommand();
@@ -71,6 +72,7 @@ namespace FlowSERVER1 {
                     var get_apkValues = (byte[])_ptxReader["CUST_FILE"];
                     SaveFileDialog _OpenDialog = new SaveFileDialog();
                     _OpenDialog.Filter = "PowerPoint|*.pptx;*.ppt";
+                    _OpenDialog.FileName = label1.Text;
                     if (_OpenDialog.ShowDialog() == DialogResult.OK) {
                         File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
                     }

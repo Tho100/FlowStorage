@@ -25,7 +25,6 @@ namespace FlowSERVER1 {
             _TabName = _TableName;
             timer1.Stop();
             timer2.Stop();
-            guna2TrackBar1.ValueChanged += new EventHandler(this.guna2TrackBar1_ValueChanged);
         }
 
         SoundPlayer _getSoundPlayer = null;
@@ -153,7 +152,7 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
 
-                String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(_selectAud, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", label1.Text);
@@ -228,9 +227,6 @@ namespace FlowSERVER1 {
 
         }
 
-        public void guna2TrackBar1_ValueChanged(object sender, EventArgs e) {
-            label4.Text = guna2TrackBar1.Value.ToString() + "%";
-        }
         int pic2YUpdate = 58;
         private async void timer2_Tick(object sender, EventArgs e) {
             int pic2X = guna2PictureBox3.Location.X;

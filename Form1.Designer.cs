@@ -60,7 +60,6 @@
             this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
             this.label24 = new System.Windows.Forms.Label();
             this.guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.label20 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
@@ -581,7 +580,6 @@
             // 
             this.guna2GradientPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.guna2GradientPanel1.Controls.Add(this.guna2CircleButton1);
             this.guna2GradientPanel1.Controls.Add(this.label20);
             this.guna2GradientPanel1.Controls.Add(this.label18);
             this.guna2GradientPanel1.Controls.Add(this.guna2Panel1);
@@ -593,49 +591,31 @@
             this.guna2GradientPanel1.TabIndex = 44;
             this.guna2GradientPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint_1);
             // 
-            // guna2CircleButton1
-            // 
-            this.guna2CircleButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.guna2CircleButton1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2CircleButton1.BorderColor = System.Drawing.Color.WhiteSmoke;
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.WhiteSmoke;
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.SystemColors.Window;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(-47, 592);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(648, 185);
-            this.guna2CircleButton1.TabIndex = 45;
-            // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label20.Location = new System.Drawing.Point(107, 328);
+            this.label20.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label20.Location = new System.Drawing.Point(115, 370);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(346, 60);
+            this.label20.Size = new System.Drawing.Size(336, 92);
             this.label20.TabIndex = 40;
-            this.label20.Text = "Store your files on cloud && \r\naccess them everywhere with ease.";
+            this.label20.Text = "Flowstorage is a file hosting service \r\nthat ease you to access files / photos \r\n" +
+    "from your mobile phone or computer.\r\n\r\n";
             this.label20.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.BackColor = System.Drawing.Color.Transparent;
-            this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(123, 276);
+            this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.label18.Location = new System.Drawing.Point(62, 251);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(319, 37);
+            this.label18.Size = new System.Drawing.Size(456, 90);
             this.label18.TabIndex = 39;
-            this.label18.Text = "Welcome to Flowstorage";
+            this.label18.Text = "Flow your favorites photos \r\nand important files anywhere.";
             this.label18.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // guna2Panel1
@@ -800,11 +780,11 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.Silver;
-            this.label15.Location = new System.Drawing.Point(756, 614);
+            this.label15.Location = new System.Drawing.Point(756, 619);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(317, 20);
+            this.label15.Size = new System.Drawing.Size(296, 20);
             this.label15.TabIndex = 0;
-            this.label15.Text = "Your password is safely stored by encryption.";
+            this.label15.Text = "Your password is safely stored by hashing.";
             this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // label23
@@ -1156,7 +1136,6 @@
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Guna.UI2.WinForms.Guna2GradientPanel guna2GradientPanel1;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label18;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;

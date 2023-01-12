@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using LibVLCSharp.Shared.MediaPlayerElement;
+using LibVLCSharp.WinForms;
+using LibVLCSharp.Shared;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
@@ -61,26 +64,37 @@ namespace FlowSERVER1 {
                 _wmpVid.Visible = true;
                 _wmpVid.URL = label3.Text;
                 _wmpVid.Ctlcontrols.play();*/
+                //vlcControl1.Visible = true;
+            
                 String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(Select_VidByte, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
                 List<Byte> _ByteValues = new List<Byte>();
                 MySqlDataReader _ReadBytes = command.ExecuteReader();
-                if (_ReadBytes.Read()) {
+                if(_ReadBytes.Read()) {
                     var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                    Stream _toStream = new MemoryStream(_retrieveBytesValue);
+                    //vlcControl1.Play(new (_toStream));
+                    var libvlc = new LibVLC("--input-repeat=2");
+                    var media = new Media(libvlc,new StreamMediaInput(_toStream));
+                    var mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.Play();
+                   // vlcControl1.Play(mediaPlayer);
+                    //videoView1.MediaPlayer.Play(media);
+                    //mediaPlayer.Play();
+                    //videoView1.MediaPlayer.Play(mediaPlayer);//videoView1.MediaPlayer.Play()
                 }
-
-                
+               
                 guna2Button6.Visible = true;
                 guna2Button5.Visible = false;
             } catch (Exception eq) {
-                MessageBox.Show("Failed to play this video.", "Flowstorage");
+                MessageBox.Show(eq.Message, "Flowstorage");
             }
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
-            _wmpVid.Ctlcontrols.pause();
+           // _wmpVid.Ctlcontrols.pause();
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
         }
@@ -117,6 +131,14 @@ namespace FlowSERVER1 {
             } catch (Exception) {
                 MessageBox.Show("Failed to download this video.","Flowstorage");
             }
+        }
+
+        private void videoView1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void vlcControl1_Click(object sender, EventArgs e) {
+
         }
     }
 }

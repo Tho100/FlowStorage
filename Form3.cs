@@ -393,17 +393,15 @@ namespace FlowSERVER1
                 }
 
                 if(typeValues[q] == ".gif") {
-
                     String getGifThumb = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(getGifThumb, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@dirname", label1.Text);
                     command.Parameters.AddWithValue("@filename",titleLab.Text);
-
                     MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
                     DataSet ds_Read = new DataSet();
                     da_Read.Fill(ds_Read);
-                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[q-1]["CUST_THUMB"]);
+                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[0]["CUST_THUMB"]);
                     textboxPic.Image = new Bitmap(ms);
                     textboxPic.Click += (sender_gif, e_gif) => {
                         Form bgBlur = new Form();

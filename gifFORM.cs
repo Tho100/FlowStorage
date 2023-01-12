@@ -47,7 +47,6 @@ namespace FlowSERVER1 {
                     command.CommandText = _readGifFiles;
                     command.Parameters.AddWithValue("@username", _form.label5.Text);
                     command.Parameters.AddWithValue("@filepath", _titleName);
-                    MessageBox.Show("Title name: " + _titleName,"Dir name: " + label1.Text);
 
                     MySqlDataReader _readByteValues = command.ExecuteReader();
                     if (_readByteValues.Read()) {
@@ -100,6 +99,7 @@ namespace FlowSERVER1 {
                     var get_apkValues = (byte[])_gifReader["CUST_FILE"];
                     SaveFileDialog _OpenDialog = new SaveFileDialog();
                     _OpenDialog.Filter = "Gif|*.gif";
+                    _OpenDialog.FileName = label1.Text;
                     if (_OpenDialog.ShowDialog() == DialogResult.OK) {
                         File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
                     }

@@ -14,11 +14,13 @@ namespace FlowSERVER1 {
     public partial class wordFORM : Form {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
+        public static String _TableName;
         public wordFORM(String _docName,String _Table) {
             InitializeComponent();
 
             label1.Text = _docName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            _TableName = _Table;
 
             try {
                 String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
@@ -58,7 +60,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                String _retrieveBytes = "SELECT CUST_FILE FROM file_info_word WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = con.CreateCommand();
                 command.CommandText = _retrieveBytes;
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -69,6 +71,7 @@ namespace FlowSERVER1 {
                     var _getBytes = (byte[])_byteReader["CUST_FILE"];
                     SaveFileDialog _dialog = new SaveFileDialog();
                     _dialog.Filter = "Word Document|*.docx";
+                    _dialog.FileName = label1.Text;
                     if (_dialog.ShowDialog() == DialogResult.OK) {
                         File.WriteAllBytes(_dialog.FileName, _getBytes);
                     }

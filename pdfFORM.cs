@@ -9,10 +9,12 @@ namespace FlowSERVER1 {
     public partial class pdfFORM : Form {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
+        public static String _TableName;
         public pdfFORM(String _FileTitle, String _tableName) {
             InitializeComponent();
             label1.Text = _FileTitle;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            _TableName = _tableName;
 
             String _getPdfBytes = "SELECT CUST_FILE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(_getPdfBytes,con);
@@ -62,7 +64,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            String _getPdfBytes = "SELECT CUST_FILE FROM file_info_pdf WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            String _getPdfBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(_getPdfBytes, con);
             command = con.CreateCommand();
             command.CommandText = _getPdfBytes;
@@ -73,6 +75,7 @@ namespace FlowSERVER1 {
             if (_readBytes.Read()) {
                 SaveFileDialog _openDialog = new SaveFileDialog();
                 _openDialog.Filter = "Acrobat Files|*.pdf";
+                _openDialog.FileName = label1.Text;
                 if(_openDialog.ShowDialog() == DialogResult.OK) {
                     var _getBytes = (byte[])_readBytes["CUST_FILE"];
                     File.WriteAllBytes(_openDialog.FileName,_getBytes);
