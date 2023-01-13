@@ -300,7 +300,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     textboxPic.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text)) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text,"upload_info_directory")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -828,7 +828,7 @@ namespace FlowSERVER1
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                         textboxPic.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
-                            using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text)) {
+                            using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text,"upload_info_directory")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;

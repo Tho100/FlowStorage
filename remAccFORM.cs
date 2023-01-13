@@ -30,13 +30,15 @@ namespace FlowSERVER1 {
         public List<int> _TotalUploadToday = new List<int>();
         public List<int> _TotalUploadOvertime = new List<int>();
         public List<String> _TotalUploadDirectoryToday = new List<String>();
-        private static readonly HttpClient client = new HttpClient();
         public static String _selectedAcc;
         public remAccFORM(String _accName) {
             InitializeComponent();
             instance = this;
             label5.Text = _accName;
             this.Text = "Settings";
+
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.guna2Button11, "Item upload indicate how many file/directory you can upload.");
 
             try {
                 LeastMostUpload("file_info");
@@ -613,7 +615,9 @@ namespace FlowSERVER1 {
                 // @ ERROR OCCURS WHEN BUYER IS A GUEST ACCOUNT
             }
             catch (Exception eq) {
-                MessageBox.Show("Failed to proceed with " + _selectedAcc + " account setup.\n\n Please ensure that your Flowstorage email is the same as your email on payment.", "Flowstorage");
+                noPayment _showFailed = new noPayment();
+                _showFailed.Show();
+                //MessageBox.Show("Failed to proceed with " + _selectedAcc + " account setup.\n\n Please ensure that your Flowstorage email is the same as your email on payment.", "Flowstorage");
             }
         }
 

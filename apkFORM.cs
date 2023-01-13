@@ -15,10 +15,12 @@ namespace FlowSERVER1 {
     public partial class apkFORM : Form {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
-        public apkFORM(String _titleFile, String _userName) {
+        public static String _TableName;
+        public apkFORM(String _titleFile, String _userName,String _tabName) {
             InitializeComponent();
             label1.Text = _titleFile;
             label2.Text = "Uploaded by " + _userName;
+            _TableName = _tabName;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
@@ -61,7 +63,7 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
 
-                String _readApkFiles = "SELECT CUST_FILE FROM file_info_apk WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
+                String _readApkFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
                 command = new MySqlCommand(_readApkFiles,con);
                 command = con.CreateCommand();
@@ -74,6 +76,7 @@ namespace FlowSERVER1 {
                     var get_apkValues = (byte[])_apkReader["CUST_FILE"];
                     SaveFileDialog _OpenDialog = new SaveFileDialog();
                     _OpenDialog.Filter = "APK|*.apk";
+                    _OpenDialog.FileName = label1.Text;
                     if(_OpenDialog.ShowDialog() == DialogResult.OK) {
                         File.WriteAllBytes(_OpenDialog.FileName,get_apkValues);
                     }

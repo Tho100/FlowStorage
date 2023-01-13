@@ -520,6 +520,12 @@
     <Compile Include="msiFORM.Designer.cs">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="noPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="noPayment.Designer.cs">
+      <DependentUpon>noPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="pdfFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -639,6 +645,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="noPayment.resx">
+      <DependentUpon>noPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pdfFORM.resx">
       <DependentUpon>pdfFORM.cs</DependentUpon>

@@ -424,7 +424,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text,label5.Text)) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text,label5.Text,"file_info_apk")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -823,7 +823,7 @@ namespace FlowSERVER1 {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -847,7 +847,7 @@ namespace FlowSERVER1 {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1024,9 +1024,11 @@ namespace FlowSERVER1 {
 
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+           // open.Multiselect = true;
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
             if (open.ShowDialog() == DialogResult.OK) {
-
+            //    foreach(var _selectedItems in open.FileNames) {
+                        
                 void clearRedundane() {
                     label8.Visible = false;
                     guna2Button6.Visible = false;
@@ -1062,14 +1064,16 @@ namespace FlowSERVER1 {
                     command.ExecuteNonQuery();
                 }
 
+
                 string get_ex = open.FileName;
                 string getName = open.SafeFileName;
-                string retrieved = System.IO.Path.GetExtension(get_ex);
-                string retrievedName = System.IO.Path.GetFileNameWithoutExtension(open.FileName);
+                string retrieved = Path.GetExtension(get_ex);
+                string retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
 
                 void createPanelMain(String nameTable, String panName, int itemCurr, Object keyVal) {
 
-                     //increaseSizeMethod();
+                        //increaseSizeMethod();
+
 
                     String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
                     command = new MySqlCommand(insertTxtQuery, con);
@@ -1152,7 +1156,7 @@ namespace FlowSERVER1 {
                             command.ExecuteNonQuery();
                         });
 
-                        textboxPic.Image = new Bitmap(open.FileName);
+                        textboxPic.Image = new Bitmap(open.FileName);//new Bitmap(_selectedItems);//
                         textboxPic.Click += (sender_f, e_f) => {
                             var getImgName = (Guna2PictureBox)sender_f;
                             var getWidth = getImgName.Image.Width;
@@ -1361,7 +1365,7 @@ namespace FlowSERVER1 {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                         textboxPic.Click += (sender_gi, e_gi) => {
                             Form bgBlur = new Form();
-                            using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                            using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -2034,143 +2038,148 @@ namespace FlowSERVER1 {
 
         private void guna2Button11_Click(object sender, EventArgs e) {
 
-            Control flowlayout = flowLayoutPanel1;
-            String _getUser = guna2TextBox1.Text;
-            String _getPass = guna2TextBox2.Text;
-            String _getEmail = guna2TextBox3.Text;
+            try {
 
-            String verfiyUserQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
-            command = con.CreateCommand();
-            command.CommandText = verfiyUserQue;
-            command.Parameters.AddWithValue("@username", _getUser);
+                Control flowlayout = flowLayoutPanel1;
+                String _getUser = guna2TextBox1.Text;
+                String _getPass = guna2TextBox2.Text;
+                String _getEmail = guna2TextBox3.Text;
 
-            List<String> userExists = new List<String>();
-            List<String> emailExists = new List<String>();
-            List<String> accTypeExists = new List<String>();
+                String verfiyUserQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+                command = con.CreateCommand();
+                command.CommandText = verfiyUserQue;
+                command.Parameters.AddWithValue("@username", _getUser);
 
-            MySqlDataReader userReader = command.ExecuteReader();
-            while (userReader.Read()) {
-                userExists.Add(userReader.GetString(0));
-            }
+                List<String> userExists = new List<String>();
+                List<String> emailExists = new List<String>();
+                List<String> accTypeExists = new List<String>();
 
-            userReader.Close();
+                MySqlDataReader userReader = command.ExecuteReader();
+                while (userReader.Read()) {
+                    userExists.Add(userReader.GetString(0));
+                }
 
-            String verifyEmailQue = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
-            command = con.CreateCommand();
-            command.CommandText = verifyEmailQue;
-            command.Parameters.AddWithValue("@email",_getEmail);
+                userReader.Close();
+
+                String verifyEmailQue = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
+                command = con.CreateCommand();
+                command.CommandText = verifyEmailQue;
+                command.Parameters.AddWithValue("@email",_getEmail);
             
-            MySqlDataReader emailReader = command.ExecuteReader();
-            while(emailReader.Read()) {
-                emailExists.Add(emailReader.GetString(0));
-            }
-            emailReader.Close();
-
-            String verifyAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-            command = con.CreateCommand();
-            command.CommandText = verifyAccType;
-            command.Parameters.AddWithValue("@username", _getUser);
-
-            MySqlDataReader accTypeReader = command.ExecuteReader();
-            while (accTypeReader.Read()) {
-                accTypeExists.Add(accTypeReader.GetString(0));
-            }
-            accTypeReader.Close();
-
-            if (emailExists.Count() >= 1 || userExists.Count() >= 1 || accTypeExists.Count() >= 1) {
-                if(emailExists.Count() >= 1) {
-                    label22.Visible = true;
-                    label22.Text = "Email already exists.";
+                MySqlDataReader emailReader = command.ExecuteReader();
+                while(emailReader.Read()) {
+                    emailExists.Add(emailReader.GetString(0));
                 }
-                if(userExists.Count() >= 1) {
-                    label11.Visible = true;
-                    label11.Text = "Username is taken.";
+                emailReader.Close();
+
+                String verifyAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+                command = con.CreateCommand();
+                command.CommandText = verifyAccType;
+                command.Parameters.AddWithValue("@username", _getUser);
+
+                MySqlDataReader accTypeReader = command.ExecuteReader();
+                while (accTypeReader.Read()) {
+                    accTypeExists.Add(accTypeReader.GetString(0));
                 }
-            }
-            else {
-                label22.Visible = false;
-                label12.Visible = false;
-                label11.Visible = false;
-                if(_getEmail.Contains("@gmail.com")) {
-                    if(_getUser.Length <= 20) {
-                        if(_getPass.Length > 5) {
-                            if (!String.IsNullOrEmpty(_getEmail)) {
-                                if (!String.IsNullOrEmpty(_getPass)) {
-                                    if (!String.IsNullOrEmpty(_getUser)) {
-                                        flowlayout.Controls.Clear();
-                                        if (flowlayout.Controls.Count == 0) {
-                                            Form1.instance.label8.Visible = true;
-                                            Form1.instance.guna2Button6.Visible = true;
+                accTypeReader.Close();
+
+                if (emailExists.Count() >= 1 || userExists.Count() >= 1 || accTypeExists.Count() >= 1) {
+                    if(emailExists.Count() >= 1) {
+                        label22.Visible = true;
+                        label22.Text = "Email already exists.";
+                    }
+                    if(userExists.Count() >= 1) {
+                        label11.Visible = true;
+                        label11.Text = "Username is taken.";
+                    }
+                }
+                else {
+                    label22.Visible = false;
+                    label12.Visible = false;
+                    label11.Visible = false;
+                    if(_getEmail.Contains("@gmail.com")) {
+                        if(_getUser.Length <= 20) {
+                            if(_getPass.Length > 5) {
+                                if (!String.IsNullOrEmpty(_getEmail)) {
+                                    if (!String.IsNullOrEmpty(_getPass)) {
+                                        if (!String.IsNullOrEmpty(_getUser)) {
+                                            flowlayout.Controls.Clear();
+                                            if (flowlayout.Controls.Count == 0) {
+                                                Form1.instance.label8.Visible = true;
+                                                Form1.instance.guna2Button6.Visible = true;
+                                            }
+                                            if (Form1.instance.setupLabel.Text.Length > 14) {
+                                                var label = Form1.instance.setupLabel;
+                                                label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                                label.Location = new Point(3, 27);
+                                            }
+
+                                            /*var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
+                                            setupLabel.Text = _getUser;
+                                            label3.Text = encryptPassVal;
+                                            encryptedPassKey = encryptPassVal*/
+
+                                            var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
+                                            label3.Text = _encryptPassVal;
+                                            label5.Text = _getUser;
+                                            label24.Text = _getEmail;
+
+                                            String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                                            String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
+                                            command = new MySqlCommand(_InsertUser,con);
+                                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                            command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
+                                            command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                            command.ExecuteNonQuery();
+
+                                            String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                            command = new MySqlCommand(_InsertType, con);
+                                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                            command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                                            command.ExecuteNonQuery();
+
+                                            label11.Visible = false;
+                                            label12.Visible = false;
+                                            guna2Panel7.Visible = false;
+                                            guna2TextBox1.Text = String.Empty;
+                                            guna2TextBox2.Text = String.Empty;
+                                            guna2TextBox3.Text = String.Empty;
+                                            setupTime();
+
+                                            listBox1.Items.Add("Home");
+                                            listBox1.SelectedIndex = 0;
                                         }
-                                        if (Form1.instance.setupLabel.Text.Length > 14) {
-                                            var label = Form1.instance.setupLabel;
-                                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                            label.Location = new Point(3, 27);
+                                        else {
+                                            label11.Visible = true;
                                         }
-
-                                        /*var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
-                                        setupLabel.Text = _getUser;
-                                        label3.Text = encryptPassVal;
-                                        encryptedPassKey = encryptPassVal*/
-
-                                        var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
-                                        label3.Text = _encryptPassVal;
-                                        label5.Text = _getUser;
-                                        label24.Text = _getEmail;
-
-                                        String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                                        String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
-                                        command = new MySqlCommand(_InsertUser,con);
-                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                        command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
-                                        command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                        command.ExecuteNonQuery();
-
-                                        String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                                        command = new MySqlCommand(_InsertType, con);
-                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                        command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                                        command.ExecuteNonQuery();
-
-                                        label11.Visible = false;
-                                        label12.Visible = false;
-                                        guna2Panel7.Visible = false;
-                                        guna2TextBox1.Text = String.Empty;
-                                        guna2TextBox2.Text = String.Empty;
-                                        guna2TextBox3.Text = String.Empty;
-                                        setupTime();
-
-                                        listBox1.Items.Add("Home");
-                                        listBox1.SelectedIndex = 0;
                                     }
                                     else {
-                                        label11.Visible = true;
+                                        label12.Visible = true;
                                     }
                                 }
                                 else {
-                                    label12.Visible = true;
+                                    label22.Visible = true;
+                                    label22.Text = "Please add your email";
                                 }
-                            }
-                            else {
-                                label22.Visible = true;
-                                label22.Text = "Please add your email";
-                            }
                             
+                            } else {
+                                label12.Visible = true;
+                                label12.Text = "Password must be longer than 5 characters.";
+                            }
                         } else {
-                            label12.Visible = true;
-                            label12.Text = "Password must be longer than 5 characters.";
+                            label11.Visible = true;
+                            label11.Text = "Username character length limit is 20.";
                         }
                     } else {
-                        label11.Visible = true;
-                        label11.Text = "Username character length limit is 20.";
+                        label22.Visible = true;
+                        label22.Text = "Entered email is not valid.";
                     }
-                } else {
-                    label22.Visible = true;
-                    label22.Text = "Entered email is not valid.";
                 }
+            } catch (Exception) {
+                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -2439,7 +2448,7 @@ namespace FlowSERVER1 {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                             textboxExl.Click += (sender_ap, e_ap) => {
                                 Form bgBlur = new Form();
-                                using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                                using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;

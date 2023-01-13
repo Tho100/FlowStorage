@@ -24,19 +24,19 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(remAccFORM));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series23 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series24 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series25 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series26 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series27 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series28 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series29 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series30 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
@@ -44,10 +44,13 @@
             this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
+            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.label22 = new System.Windows.Forms.Label();
+            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label57 = new System.Windows.Forms.Label();
@@ -89,11 +92,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label17 = new System.Windows.Forms.Label();
             this.guna2GradientPanel3 = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.label55 = new System.Windows.Forms.Label();
             this.guna2Panel10 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
             this.label56 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
@@ -103,6 +108,7 @@
             this.guna2GradientPanel2 = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.label49 = new System.Windows.Forms.Label();
             this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
             this.label51 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
@@ -120,11 +126,6 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2TabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.guna2Panel7.SuspendLayout();
@@ -257,6 +258,32 @@
             this.label36.TabIndex = 23;
             this.label36.Text = "Logout my acount";
             // 
+            // guna2Button4
+            // 
+            this.guna2Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button4.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button4.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button4.BorderRadius = 5;
+            this.guna2Button4.BorderThickness = 1;
+            this.guna2Button4.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button4.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button4.ForeColor = System.Drawing.Color.Firebrick;
+            this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
+            this.guna2Button4.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button4.ImageOffset = new System.Drawing.Point(-18, 1);
+            this.guna2Button4.ImageSize = new System.Drawing.Size(35, 35);
+            this.guna2Button4.Location = new System.Drawing.Point(839, 26);
+            this.guna2Button4.Name = "guna2Button4";
+            this.guna2Button4.Size = new System.Drawing.Size(111, 30);
+            this.guna2Button4.TabIndex = 0;
+            this.guna2Button4.Text = "Logout";
+            this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click);
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -267,6 +294,26 @@
             this.label22.Size = new System.Drawing.Size(90, 30);
             this.label22.TabIndex = 31;
             this.label22.Text = "Settings";
+            // 
+            // guna2Button3
+            // 
+            this.guna2Button3.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button3.BorderRadius = 5;
+            this.guna2Button3.BorderThickness = 1;
+            this.guna2Button3.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button3.ForeColor = System.Drawing.Color.GhostWhite;
+            this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
+            this.guna2Button3.Location = new System.Drawing.Point(10, 15);
+            this.guna2Button3.Name = "guna2Button3";
+            this.guna2Button3.Size = new System.Drawing.Size(36, 30);
+            this.guna2Button3.TabIndex = 30;
+            this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
             // 
             // label4
             // 
@@ -299,6 +346,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel2.BorderRadius = 5;
             this.guna2Panel2.BorderThickness = 1;
+            this.guna2Panel2.Controls.Add(this.guna2Button11);
             this.guna2Panel2.Controls.Add(this.richTextBox2);
             this.guna2Panel2.Controls.Add(this.richTextBox1);
             this.guna2Panel2.Controls.Add(this.label57);
@@ -315,6 +363,25 @@
             this.guna2Panel2.Size = new System.Drawing.Size(990, 261);
             this.guna2Panel2.TabIndex = 26;
             this.guna2Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint);
+            // 
+            // guna2Button11
+            // 
+            this.guna2Button11.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(15)))), ((int)(((byte)(153)))));
+            this.guna2Button11.BorderRadius = 10;
+            this.guna2Button11.BorderThickness = 2;
+            this.guna2Button11.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button11.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button11.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button11.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button11.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button11.ForeColor = System.Drawing.Color.White;
+            this.guna2Button11.Location = new System.Drawing.Point(121, 87);
+            this.guna2Button11.Name = "guna2Button11";
+            this.guna2Button11.Size = new System.Drawing.Size(28, 24);
+            this.guna2Button11.TabIndex = 39;
+            this.guna2Button11.Text = "?";
             // 
             // richTextBox2
             // 
@@ -341,9 +408,10 @@
             this.label57.ForeColor = System.Drawing.Color.DarkGray;
             this.label57.Location = new System.Drawing.Point(20, 116);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(720, 24);
+            this.label57.Size = new System.Drawing.Size(313, 24);
             this.label57.TabIndex = 37;
             this.label57.Text = "(Item is the file && directory you uploaded)";
+            this.label57.Visible = false;
             // 
             // guna2Separator7
             // 
@@ -714,66 +782,66 @@
             // 
             this.chart1.BackColor = System.Drawing.Color.Empty;
             this.chart1.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(8, 16);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             this.chart1.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))))};
-            series11.ChartArea = "ChartArea1";
-            series11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            series11.Legend = "Legend1";
-            series11.Name = "Image";
-            series11.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series12.ChartArea = "ChartArea1";
-            series12.Color = System.Drawing.Color.MediumPurple;
-            series12.Legend = "Legend1";
-            series12.Name = "Text";
-            series12.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series13.ChartArea = "ChartArea1";
-            series13.Legend = "Legend1";
-            series13.Name = "Video";
-            series13.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series14.ChartArea = "ChartArea1";
-            series14.Legend = "Legend1";
-            series14.Name = "Exe";
-            series14.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series15.ChartArea = "ChartArea1";
-            series15.Legend = "Legend1";
-            series15.Name = "PDF";
-            series15.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series16.ChartArea = "ChartArea1";
-            series16.Legend = "Legend1";
-            series16.Name = "APK";
-            series16.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series17.ChartArea = "ChartArea1";
-            series17.Legend = "Legend1";
-            series17.Name = "GIF";
-            series17.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series18.ChartArea = "ChartArea1";
-            series18.Legend = "Legend1";
-            series18.Name = "Document";
-            series18.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series19.ChartArea = "ChartArea1";
-            series19.Legend = "Legend1";
-            series19.Name = "Presentation";
-            series19.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series20.ChartArea = "ChartArea1";
-            series20.Legend = "Legend1";
-            series20.Name = "Audio";
-            this.chart1.Series.Add(series11);
-            this.chart1.Series.Add(series12);
-            this.chart1.Series.Add(series13);
-            this.chart1.Series.Add(series14);
-            this.chart1.Series.Add(series15);
-            this.chart1.Series.Add(series16);
-            this.chart1.Series.Add(series17);
-            this.chart1.Series.Add(series18);
-            this.chart1.Series.Add(series19);
-            this.chart1.Series.Add(series20);
+            series21.ChartArea = "ChartArea1";
+            series21.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            series21.Legend = "Legend1";
+            series21.Name = "Image";
+            series21.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series22.ChartArea = "ChartArea1";
+            series22.Color = System.Drawing.Color.MediumPurple;
+            series22.Legend = "Legend1";
+            series22.Name = "Text";
+            series22.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series23.ChartArea = "ChartArea1";
+            series23.Legend = "Legend1";
+            series23.Name = "Video";
+            series23.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series24.ChartArea = "ChartArea1";
+            series24.Legend = "Legend1";
+            series24.Name = "Exe";
+            series24.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series25.ChartArea = "ChartArea1";
+            series25.Legend = "Legend1";
+            series25.Name = "PDF";
+            series25.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series26.ChartArea = "ChartArea1";
+            series26.Legend = "Legend1";
+            series26.Name = "APK";
+            series26.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series27.ChartArea = "ChartArea1";
+            series27.Legend = "Legend1";
+            series27.Name = "GIF";
+            series27.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series28.ChartArea = "ChartArea1";
+            series28.Legend = "Legend1";
+            series28.Name = "Document";
+            series28.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series29.ChartArea = "ChartArea1";
+            series29.Legend = "Legend1";
+            series29.Name = "Presentation";
+            series29.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series30.ChartArea = "ChartArea1";
+            series30.Legend = "Legend1";
+            series30.Name = "Audio";
+            this.chart1.Series.Add(series21);
+            this.chart1.Series.Add(series22);
+            this.chart1.Series.Add(series23);
+            this.chart1.Series.Add(series24);
+            this.chart1.Series.Add(series25);
+            this.chart1.Series.Add(series26);
+            this.chart1.Series.Add(series27);
+            this.chart1.Series.Add(series28);
+            this.chart1.Series.Add(series29);
+            this.chart1.Series.Add(series30);
             this.chart1.Size = new System.Drawing.Size(571, 404);
             this.chart1.TabIndex = 31;
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -904,6 +972,26 @@
             this.label10.TabIndex = 30;
             this.label10.Text = "Statistics";
             // 
+            // guna2Button2
+            // 
+            this.guna2Button2.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button2.BorderRadius = 5;
+            this.guna2Button2.BorderThickness = 1;
+            this.guna2Button2.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button2.ForeColor = System.Drawing.Color.GhostWhite;
+            this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
+            this.guna2Button2.Location = new System.Drawing.Point(10, 15);
+            this.guna2Button2.Name = "guna2Button2";
+            this.guna2Button2.Size = new System.Drawing.Size(36, 30);
+            this.guna2Button2.TabIndex = 1;
+            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
@@ -974,6 +1062,27 @@
             this.guna2Panel10.Size = new System.Drawing.Size(276, 458);
             this.guna2Panel10.TabIndex = 4;
             this.guna2Panel10.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel10_Paint);
+            // 
+            // guna2Button10
+            // 
+            this.guna2Button10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button10.BorderRadius = 4;
+            this.guna2Button10.BorderThickness = 1;
+            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button10.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Button10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.guna2Button10.ForeColor = System.Drawing.Color.White;
+            this.guna2Button10.Location = new System.Drawing.Point(71, 417);
+            this.guna2Button10.Name = "guna2Button10";
+            this.guna2Button10.Size = new System.Drawing.Size(141, 26);
+            this.guna2Button10.TabIndex = 13;
+            this.guna2Button10.Text = "Use this account";
+            this.guna2Button10.TextOffset = new System.Drawing.Point(0, -1);
+            this.guna2Button10.Visible = false;
+            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
             // 
             // label56
             // 
@@ -1095,6 +1204,27 @@
             this.guna2Panel9.Size = new System.Drawing.Size(276, 458);
             this.guna2Panel9.TabIndex = 2;
             this.guna2Panel9.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel9_Paint);
+            // 
+            // guna2Button9
+            // 
+            this.guna2Button9.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(54)))), ((int)(((byte)(158)))));
+            this.guna2Button9.BorderRadius = 4;
+            this.guna2Button9.BorderThickness = 1;
+            this.guna2Button9.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button9.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button9.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button9.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button9.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Button9.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.guna2Button9.ForeColor = System.Drawing.Color.White;
+            this.guna2Button9.Location = new System.Drawing.Point(73, 417);
+            this.guna2Button9.Name = "guna2Button9";
+            this.guna2Button9.Size = new System.Drawing.Size(141, 26);
+            this.guna2Button9.TabIndex = 7;
+            this.guna2Button9.Text = "Use this account";
+            this.guna2Button9.TextOffset = new System.Drawing.Point(0, -1);
+            this.guna2Button9.Visible = false;
+            this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
             // 
             // label51
             // 
@@ -1324,114 +1454,6 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // guna2Button9
-            // 
-            this.guna2Button9.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(54)))), ((int)(((byte)(158)))));
-            this.guna2Button9.BorderRadius = 4;
-            this.guna2Button9.BorderThickness = 1;
-            this.guna2Button9.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button9.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button9.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button9.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button9.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button9.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.guna2Button9.ForeColor = System.Drawing.Color.White;
-            this.guna2Button9.Location = new System.Drawing.Point(73, 417);
-            this.guna2Button9.Name = "guna2Button9";
-            this.guna2Button9.Size = new System.Drawing.Size(141, 26);
-            this.guna2Button9.TabIndex = 7;
-            this.guna2Button9.Text = "Use this account";
-            this.guna2Button9.TextOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button9.Visible = false;
-            this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
-            // 
-            // guna2Button10
-            // 
-            this.guna2Button10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button10.BorderRadius = 4;
-            this.guna2Button10.BorderThickness = 1;
-            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button10.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.guna2Button10.ForeColor = System.Drawing.Color.White;
-            this.guna2Button10.Location = new System.Drawing.Point(71, 417);
-            this.guna2Button10.Name = "guna2Button10";
-            this.guna2Button10.Size = new System.Drawing.Size(141, 26);
-            this.guna2Button10.TabIndex = 13;
-            this.guna2Button10.Text = "Use this account";
-            this.guna2Button10.TextOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button10.Visible = false;
-            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
-            // 
-            // guna2Button4
-            // 
-            this.guna2Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button4.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button4.BorderRadius = 5;
-            this.guna2Button4.BorderThickness = 1;
-            this.guna2Button4.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button4.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button4.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
-            this.guna2Button4.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button4.ImageOffset = new System.Drawing.Point(-18, 1);
-            this.guna2Button4.ImageSize = new System.Drawing.Size(35, 35);
-            this.guna2Button4.Location = new System.Drawing.Point(839, 26);
-            this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.Size = new System.Drawing.Size(111, 30);
-            this.guna2Button4.TabIndex = 0;
-            this.guna2Button4.Text = "Logout";
-            this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click);
-            // 
-            // guna2Button3
-            // 
-            this.guna2Button3.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button3.BorderRadius = 5;
-            this.guna2Button3.BorderThickness = 1;
-            this.guna2Button3.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button3.ForeColor = System.Drawing.Color.GhostWhite;
-            this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
-            this.guna2Button3.Location = new System.Drawing.Point(10, 15);
-            this.guna2Button3.Name = "guna2Button3";
-            this.guna2Button3.Size = new System.Drawing.Size(36, 30);
-            this.guna2Button3.TabIndex = 30;
-            this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
-            // 
-            // guna2Button2
-            // 
-            this.guna2Button2.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button2.BorderRadius = 5;
-            this.guna2Button2.BorderThickness = 1;
-            this.guna2Button2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button2.ForeColor = System.Drawing.Color.GhostWhite;
-            this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(10, 15);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(36, 30);
-            this.guna2Button2.TabIndex = 1;
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
-            // 
             // remAccFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1569,5 +1591,6 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button8;
         private Guna.UI2.WinForms.Guna2Button guna2Button9;
         private Guna.UI2.WinForms.Guna2Button guna2Button10;
+        private Guna.UI2.WinForms.Guna2Button guna2Button11;
     }
 }

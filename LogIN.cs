@@ -601,7 +601,7 @@ namespace FlowSERVER1 {
                                 picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                                 picMain_Q.Click += (sender_ap, ex_ap) => {
                                     Form bgBlur = new Form();
-                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text)) {
+                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -761,7 +761,7 @@ namespace FlowSERVER1 {
                     }     
                 }
                 catch (Exception eq) {
-                    MessageBox.Show(eq.Message);
+                    //
                 }
             } else {
                 label4.Visible = true;
