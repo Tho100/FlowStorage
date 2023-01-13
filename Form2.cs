@@ -27,7 +27,6 @@ namespace FlowSERVER1
         public Form2()
         {
             InitializeComponent();
-            this.Text = "Login Page";
             instance = this;
         }
 
@@ -72,7 +71,7 @@ namespace FlowSERVER1
                 else if (hours >= 21 && hours <= 24) {
                     greeting = "Good Night " + form.label5.Text + " :)";
                     form.pictureBox1.Visible = true;
-                    form.pictureBox2.Visible = false;
+                    form.pictureBox2.Visible = false;       
                     form.pictureBox3.Visible = false;
                 }
                 form.label1.Text = greeting;
@@ -195,17 +194,17 @@ namespace FlowSERVER1
                                     }
                                     else {
                                         label5.Visible = true;
-                                        label5.Text = "Please enter your email.";
+                                        label4.Text = "Please enter your email.";
                                     }                                     
                                 }
                                 else {
                                     label4.Visible = true;
-                                    label4.Text = "Please add a username.";
+                                    label4.Text = "Please add a password.";
                                 }
                             }
                             else {
                                 label7.Visible = true;
-                                label7.Text = "Please add a password.";
+                                label7.Text = "Please add a username.";
                             }
                         } else {
                             label7.Visible = true;
@@ -261,6 +260,10 @@ namespace FlowSERVER1
 
         private void guna2Button5_Click_1(object sender, EventArgs e) {
             this.Close();
+        }
+
+        private void guna2TextBox3_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

@@ -292,9 +292,10 @@
             this.Controls.Add(this.guna2Panel3);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form3";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form3";
+            this.Text = "Directory";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form3_Load);
             this.panel2.ResumeLayout(false);

@@ -253,6 +253,26 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_partying_face_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-partying-face-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_partying_face_96 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-partying-face-96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_pdf_60__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-pdf-60 (1)", resourceCulture);

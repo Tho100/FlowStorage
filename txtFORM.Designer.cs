@@ -242,7 +242,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "txtFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "txtFORM";
+            this.Text = "Text Viewer";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.txtFORM_Load);
             this.ResumeLayout(false);

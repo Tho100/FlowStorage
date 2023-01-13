@@ -16,7 +16,10 @@ using System.Net;
 using System.Globalization;
 using Ubiety.Dns.Core;
 using Stripe.Infrastructure;
+using System.Text.RegularExpressions;
 using Stripe.Checkout;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 //using Stripe;
 
 namespace FlowSERVER1 {
@@ -28,11 +31,11 @@ namespace FlowSERVER1 {
         public List<int> _TotalUploadOvertime = new List<int>();
         public List<String> _TotalUploadDirectoryToday = new List<String>();
         private static readonly HttpClient client = new HttpClient();
+        public static String _selectedAcc;
         public remAccFORM(String _accName) {
             InitializeComponent();
             instance = this;
             label5.Text = _accName;
-            this.ShowInTaskbar = false;
             this.Text = "Settings";
 
             try {
@@ -183,12 +186,18 @@ namespace FlowSERVER1 {
             }
             else if (_accType == "Max") {
                 label37.Text = "Limited to 25";
+                guna2Button5.Enabled = false;
             }
             else if (_accType == "Express") {
                 label37.Text = "Limited to 40";
+                guna2Button5.Enabled = false;
+                guna2Button6.Enabled = false;
             }
             else if (_accType == "Supreme") {
                 label37.Text = "Limited to 95";
+                guna2Button5.Enabled = false;
+                guna2Button6.Enabled = false;
+                guna2Button7.Enabled = false;
             }
         }
         public void LeastMostUpload(String _TabName) {
@@ -273,6 +282,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
+            
+ //           richTextBox2.Text = JsonConvert.DeserializeObject<Stripe.Customer>(customers).Email;// yes.ToString();
+            //}
+
             this.Close();
         }
 
@@ -415,7 +428,10 @@ namespace FlowSERVER1 {
 
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            _setupPayment("Max account for Flowstorage",2);
+            //_setupPayment("Max account for Flowstorage",2);
+            _selectedAcc = "Max";
+            guna2Button8.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/test_eVa9Du9Hb9SndCoeUU"); // Test mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -439,11 +455,15 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
-            _setupPayment("Supreme account for Flowstorage",9.99);
+            _selectedAcc = "Supreme";
+            guna2Button10.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/test_dR63f69Hbc0v55S5km"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
-            _setupPayment("Express account for Flowstorage",5);
+            _selectedAcc = "Express";
+            guna2Button9.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/test_7sI02U4mR1lR69W001"); // Test mode
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -524,6 +544,89 @@ namespace FlowSERVER1 {
 
         private void guna2Panel5_Paint(object sender, PaintEventArgs e) {
 
+        }
+
+        private void guna2Panel8_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        void setupAccount() {
+            try {
+                Stripe.StripeConfiguration.SetApiKey("sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN");
+                var options = new Stripe.CustomerListOptions {
+                    Limit = 1
+                };
+                var service = new Stripe.CustomerService();
+                Stripe.StripeList<Stripe.Customer> customers = service.List(options);
+
+                List<String> CustUserValues = new List<String>();
+                String _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(_selectCustEmail, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                MySqlDataReader _readEmail = command.ExecuteReader();
+                if (_readEmail.Read()) {
+                    CustUserValues.Add(_readEmail.GetString(0));
+                }
+                _readEmail.Close();
+
+                foreach (var item in customers) {
+                    richTextBox2.Text = item.ToString();
+                }
+                String testing = richTextBox2.Text;
+                var f = testing.IndexOf(CustUserValues[0]) + Environment.NewLine;
+                var fq = testing.Substring(testing.IndexOf(CustUserValues[0]));
+                var result = Regex.Match(fq, @"^([\w\-]+)");
+                if (result.Value + "@gmail.com" == CustUserValues[0]) {
+                    String _deleteOld = "DELETE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+                    command = new MySqlCommand(_deleteOld, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.ExecuteNonQuery();
+
+                    String _insertNew = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
+                    command = new MySqlCommand(_insertNew, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@email", CustUserValues[0]);
+                    command.Parameters.AddWithValue("@type", _selectedAcc);
+                    if (command.ExecuteNonQuery() == 1) {
+                        successPay _showSucceeded = new successPay(_selectedAcc);
+                        _showSucceeded.Show();
+                        label6.Text = _selectedAcc;
+                        if(_selectedAcc == "Supreme") {
+                            guna2Button6.Enabled = false;
+                            guna2Button7.Enabled = false;
+                            guna2Button5.Enabled = false;
+                            guna2Button10.Visible = false;
+                        } else if (_selectedAcc == "Express") {
+                            guna2Button6.Enabled = false;
+                            guna2Button5.Enabled = false;
+                            guna2Button9.Visible = false;
+                        } else if (_selectedAcc == "Max") {
+                            guna2Button5.Enabled = false;
+                            guna2Button8.Visible = false;
+                        }
+                    } // @ IF PAYMENT IS DONE THEN REMOVE THE CUSTOMER FROM DASHBOARD
+                }
+                else {
+                    MessageBox.Show("You have not made any payment yet.", result.Value);
+                }
+
+                // @ ERROR OCCURS WHEN BUYER IS A GUEST ACCOUNT
+            }
+            catch (Exception eq) {
+                MessageBox.Show("Failed to proceed with " + _selectedAcc + " account setup.\n\n Please ensure that your Flowstorage email is the same as your email on payment.", "Flowstorage");
+            }
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            setupAccount();
+        }
+
+        private void guna2Button9_Click(object sender, EventArgs e) {
+            setupAccount();
+        }
+
+        private void guna2Button10_Click(object sender, EventArgs e) {
+            setupAccount();
         }
     }
 }

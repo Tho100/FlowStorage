@@ -595,11 +595,11 @@
             // 
             this.label20.AutoSize = true;
             this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label20.Location = new System.Drawing.Point(115, 370);
+            this.label20.Location = new System.Drawing.Point(115, 361);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(336, 92);
+            this.label20.Size = new System.Drawing.Size(335, 100);
             this.label20.TabIndex = 40;
             this.label20.Text = "Flowstorage is a file hosting service \r\nthat ease you to access files / photos \r\n" +
     "from your mobile phone or computer.\r\n\r\n";
@@ -611,7 +611,7 @@
             this.label18.BackColor = System.Drawing.Color.Transparent;
             this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.label18.Location = new System.Drawing.Point(62, 251);
+            this.label18.Location = new System.Drawing.Point(62, 242);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(456, 90);
             this.label18.TabIndex = 39;

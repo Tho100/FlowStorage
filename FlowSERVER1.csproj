@@ -443,7 +443,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="aesTest.cs" />
     <Compile Include="apkFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -569,6 +568,12 @@
     <Compile Include="splashFORM.Designer.cs">
       <DependentUpon>splashFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="successPay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="successPay.Designer.cs">
+      <DependentUpon>successPay.cs</DependentUpon>
+    </Compile>
     <Compile Include="txtFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -663,6 +668,9 @@
     <EmbeddedResource Include="splashFORM.resx">
       <DependentUpon>splashFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="successPay.resx">
+      <DependentUpon>successPay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="txtFORM.resx">
       <DependentUpon>txtFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -698,6 +706,8 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-partying-face-96.png" />
+    <None Include="Resources\icons8-partying-face-48.png" />
     <None Include="Resources\icons8-subtract-30.png" />
     <None Include="Resources\Untitled %2826%29.png" />
     <None Include="Resources\icons8-voice-50.png" />
