@@ -12,7 +12,7 @@ namespace FlowSERVER1 {
     public partial class DirErFORM : Form {
         public DirErFORM(String curAcc) {
             InitializeComponent();
-            label3.Text = "Current Account: " + curAcc;
+           // label3.Text = "Current Account: " + curAcc;
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
@@ -25,6 +25,10 @@ namespace FlowSERVER1 {
 
         private void label8_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button2_Click_1(object sender, EventArgs e) {
+            this.Close();
         }
     }
 }
