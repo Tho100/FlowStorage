@@ -552,14 +552,48 @@ namespace FlowSERVER1 {
 
         }
 
+        void setupRedundane(String _selectedAcc) {
+            if (_selectedAcc == "Supreme") {
+                guna2Button6.Enabled = false;
+                guna2Button7.Enabled = false;
+                guna2Button5.Enabled = false;
+                guna2Button10.Visible = false;
+                label37.Text = "Limited to 95";
+            }
+            else if (_selectedAcc == "Express") {
+                guna2Button6.Enabled = false;
+                guna2Button5.Enabled = false;
+                guna2Button9.Visible = false;
+                label37.Text = "Limited to 40";
+            }
+            else if (_selectedAcc == "Max") {
+                guna2Button5.Enabled = false;
+                guna2Button8.Visible = false;
+                label37.Text = "Limited to 25";
+            }
+        }
+
         void setupAccount() {
             try {
                 Stripe.StripeConfiguration.SetApiKey("sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN");
-                var options = new Stripe.CustomerListOptions {
-                    Limit = 1
-                };
                 var service = new Stripe.CustomerService();
-                Stripe.StripeList<Stripe.Customer> customers = service.List(options);
+                var customers = service.List();
+
+                String lastId = null;
+                String LastEmail = null;
+
+                // Enumerate the first page of the list
+                foreach (Stripe.Customer customer in customers) {
+                    lastId = customer.Id;
+                    LastEmail = customer.Email;
+                }
+
+
+     //           var options = new Stripe.CustomerListOptions {
+   //                 Limit = 1
+ //               };
+                //var service = new Stripe.CustomerService();
+//                Stripe.StripeList<Stripe.Customer> customers = service.List(options);
 
                 List<String> CustUserValues = new List<String>();
                 String _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
@@ -571,47 +605,46 @@ namespace FlowSERVER1 {
                 }
                 _readEmail.Close();
 
-                foreach (var item in customers) {
+               /* foreach (var item in customers) {
                     richTextBox2.Text = item.ToString();
                 }
                 String testing = richTextBox2.Text;
                 var f = testing.IndexOf(CustUserValues[0]) + Environment.NewLine;
                 var fq = testing.Substring(testing.IndexOf(CustUserValues[0]));
-                var result = Regex.Match(fq, @"^([\w\-]+)");
-                if (result.Value + "@gmail.com" == CustUserValues[0]) {
-                    String _deleteOld = "DELETE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(_deleteOld, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.ExecuteNonQuery();
-
+                var result = Regex.Match(fq, @"^([\w\-]+)");*/ 
+                if (LastEmail == CustUserValues[0]) {
                     String _insertNew = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
                     command = new MySqlCommand(_insertNew, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
                     if (command.ExecuteNonQuery() == 1) {
+                        String _deleteOld = "DELETE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+                        command = new MySqlCommand(_deleteOld, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.ExecuteNonQuery();
+
+                        String _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
+                        command = new MySqlCommand(_insertPayment, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@email", CustUserValues[0]);
+                        command.Parameters.AddWithValue("@type", _selectedAcc);
+                        command.Parameters.AddWithValue("@id", lastId);
+                        command.ExecuteNonQuery();
+
+                        // @ IF PAYMENT IS DONE THEN REMOVE THE CUSTOMER FROM DASHBOARD
+                        var delService = new Stripe.CustomerService();
+                        delService.Delete(lastId);
+
                         successPay _showSucceeded = new successPay(_selectedAcc);
                         _showSucceeded.Show();
                         label6.Text = _selectedAcc;
-                        if(_selectedAcc == "Supreme") {
-                            guna2Button6.Enabled = false;
-                            guna2Button7.Enabled = false;
-                            guna2Button5.Enabled = false;
-                            guna2Button10.Visible = false;
-                        } else if (_selectedAcc == "Express") {
-                            guna2Button6.Enabled = false;
-                            guna2Button5.Enabled = false;
-                            guna2Button9.Visible = false;
-                        } else if (_selectedAcc == "Max") {
-                            guna2Button5.Enabled = false;
-                            guna2Button8.Visible = false;
-                        }
-                    } // @ IF PAYMENT IS DONE THEN REMOVE THE CUSTOMER FROM DASHBOARD
+                        setupRedundane(_selectedAcc);
+                    }
+                } else {
+                    noPayment _showFailed = new noPayment();
+                    _showFailed.Show();
                 }
-                else {
-                    MessageBox.Show("You have not made any payment yet.", result.Value);
-                }
-
                 // @ ERROR OCCURS WHEN BUYER IS A GUEST ACCOUNT
             }
             catch (Exception eq) {
