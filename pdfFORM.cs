@@ -10,25 +10,49 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TableName;
-        public pdfFORM(String _FileTitle, String _tableName) {
+        public static String _DirName;
+        public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName) {
             InitializeComponent();
             label1.Text = _FileTitle;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
             _TableName = _tableName;
+            _DirName = _DirectoryName;
 
-            String _getPdfBytes = "SELECT CUST_FILE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(_getPdfBytes,con);
-            command = con.CreateCommand();
-            command.CommandText = _getPdfBytes;
-            command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", label1.Text);
+            try {
 
-            MySqlDataReader _readBytes = command.ExecuteReader();
-            if(_readBytes.Read()) { 
-                var getPdfValues = (byte[])_readBytes["CUST_FILE"];
-                setupPdf(getPdfValues);
+                if(_tableName == "file_info_pdf") {
+                    String _getPdfBytes = "SELECT CUST_FILE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(_getPdfBytes,con);
+                    command = con.CreateCommand();
+                    command.CommandText = _getPdfBytes;
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+
+                    MySqlDataReader _readBytes = command.ExecuteReader();
+                    if(_readBytes.Read()) { 
+                        var getPdfValues = (byte[])_readBytes["CUST_FILE"];
+                        setupPdf(getPdfValues);
+                    }
+                    _readBytes.Close(); 
+                } else if (_tableName == "upload_info_directory") {
+                    String _getPdfBytes = "SELECT CUST_FILE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command = new MySqlCommand(_getPdfBytes, con);
+                    command = con.CreateCommand();
+                    command.CommandText = _getPdfBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", _DirName);
+
+                    MySqlDataReader _readBytes = command.ExecuteReader();
+                    if (_readBytes.Read()) {
+                        var getPdfValues = (byte[])_readBytes["CUST_FILE"];
+                        setupPdf(getPdfValues);
+                    }
+                    _readBytes.Close();
+                }
+            } catch (Exception eq) {
+                MessageBox.Show("Failed to load this file.","Flowstorage");
             }
-            _readBytes.Close();
         }
         // @SUMMARY Convert bytes of PDF file to stream
         public void setupPdf(byte[] pdfBytes) {
@@ -64,24 +88,50 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            String _getPdfBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(_getPdfBytes, con);
-            command = con.CreateCommand();
-            command.CommandText = _getPdfBytes;
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", label1.Text);
+            try {
+                if(_TableName == "file_info_pdf") {
+                    String _getPdfBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(_getPdfBytes, con);
+                    command = con.CreateCommand();
+                    command.CommandText = _getPdfBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
 
-            MySqlDataReader _readBytes = command.ExecuteReader();
-            if (_readBytes.Read()) {
-                SaveFileDialog _openDialog = new SaveFileDialog();
-                _openDialog.Filter = "Acrobat Files|*.pdf";
-                _openDialog.FileName = label1.Text;
-                if(_openDialog.ShowDialog() == DialogResult.OK) {
-                    var _getBytes = (byte[])_readBytes["CUST_FILE"];
-                    File.WriteAllBytes(_openDialog.FileName,_getBytes);
+                    MySqlDataReader _readBytes = command.ExecuteReader();
+                    if (_readBytes.Read()) {
+                        SaveFileDialog _openDialog = new SaveFileDialog();
+                        _openDialog.Filter = "Acrobat Files|*.pdf";
+                        _openDialog.FileName = label1.Text;
+                        if(_openDialog.ShowDialog() == DialogResult.OK) {
+                            var _getBytes = (byte[])_readBytes["CUST_FILE"];
+                            File.WriteAllBytes(_openDialog.FileName,_getBytes);
+                        }
+                    }
+                    _readBytes.Close();
+                } else if (_TableName == "upload_info_directory") {
+                    String _getPdfBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command = new MySqlCommand(_getPdfBytes, con);
+                    command = con.CreateCommand();
+                    command.CommandText = _getPdfBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", _DirName);
+
+                    MySqlDataReader _readBytes = command.ExecuteReader();
+                    if (_readBytes.Read()) {
+                        SaveFileDialog _openDialog = new SaveFileDialog();
+                        _openDialog.Filter = "Acrobat Files|*.pdf";
+                        _openDialog.FileName = label1.Text;
+                        if (_openDialog.ShowDialog() == DialogResult.OK) {
+                            var _getBytes = (byte[])_readBytes["CUST_FILE"];
+                            File.WriteAllBytes(_openDialog.FileName, _getBytes);
+                        }
+                    }
+                    _readBytes.Close();
                 }
+            } catch (Exception eq) {
+                MessageBox.Show("Failed to download this file.","Flowstorage");
             }
-            _readBytes.Close();
         }
 
         private void label1_Click(object sender, EventArgs e) {

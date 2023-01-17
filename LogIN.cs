@@ -551,7 +551,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image =  FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                             picMain_Q.Click += (sender_aud, e_aud) => {
                                 Form bgBlur = new Form();
-                                using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi")) {
+                                using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -634,7 +634,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                             picMain_Q.Click += (sender_pd, e_pd) => {
                                 Form bgBlur = new Form();
-                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf")) {
+                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -682,7 +682,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             picMain_Q.Click += (sender_ptx, e_ptx) => {
                                 Form bgBlur = new Form();
-                                using (wordFORM displayMsi = new wordFORM(titleLab.Text,"file_info_word")) {
+                                using (wordFORM displayMsi = new wordFORM(titleLab.Text,"file_info_word","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;

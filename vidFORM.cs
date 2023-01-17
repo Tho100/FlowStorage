@@ -95,7 +95,7 @@ namespace FlowSERVER1 {
                             _mp.Play();
                         }
                         _ReadBytes.Close();
-                    } else {
+                    } else if (_TableName == "file_info_vid"){
                         String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(Select_VidByte, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -121,16 +121,10 @@ namespace FlowSERVER1 {
 
                 guna2Button5.Visible = false;
                 guna2Button6.Visible = true;
-            } catch (Exception) {
-                MessageBox.Show("Failed to play this file.","Flowstorage");
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                //MessageBox.Show("Failed to play this file.","Flowstorage");
             }
-        }
-        private void pictureBox1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void pictureBox1_Click_1(object sender, EventArgs e) {
-
         }
 
         private void pictureBox1_Click_2(object sender, EventArgs e) {

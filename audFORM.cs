@@ -18,11 +18,13 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TabName = "";
-        public audFORM(String titleName,String _TableName) {
+        public static String _DirName = "";
+        public audFORM(String titleName,String _TableName,String _DirectoryName) {
             InitializeComponent();
             label1.Text = titleName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
             _TabName = _TableName;
+            _DirName = _DirectoryName;
             timer1.Stop();
             timer2.Stop();
         }
@@ -38,14 +40,14 @@ namespace FlowSERVER1 {
                 if(_mp3WaveOut != null) {
                     _mp3WaveOut.Resume();
                 } else {
-                    Task.Run(() => {
-                        String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    if(_TabName == "file_info_audi") {
+                        String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(_selectAud, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", label1.Text);
 
                         MySqlDataReader _AudReader = command.ExecuteReader();
-                        if(_AudReader.Read()) {
+                        if (_AudReader.Read()) {
                             var _getByteAud = (byte[])_AudReader["CUST_FILE"];
                             if (_audType == "wav") {
                                 using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
@@ -53,12 +55,35 @@ namespace FlowSERVER1 {
                                     _getSoundPlayer = player;
                                     player.Play();
                                 }
-                            } else if (_audType == "mp3") {
+                            }
+                            else if (_audType == "mp3") {
                                 mp3ToWav(_getByteAud);
                             }
                         }
                         _AudReader.Close();
-                    });
+                    } else if (_TabName == "upload_info_directory") {
+                        String _selectAud = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                        command = new MySqlCommand(_selectAud, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", label1.Text);
+                        command.Parameters.AddWithValue("@dirname", _DirName);
+
+                        MySqlDataReader _AudReader = command.ExecuteReader();
+                        if (_AudReader.Read()) {
+                            var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                            if (_audType == "wav") {
+                                using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
+                                    SoundPlayer player = new SoundPlayer(_ms);
+                                    _getSoundPlayer = player;
+                                    player.Play();
+                                }
+                            }
+                            else if (_audType == "mp3") {
+                                mp3ToWav(_getByteAud);
+                            }
+                        }
+                        _AudReader.Close();
+                    }
                 }
             }
             catch (Exception eq) {
@@ -81,6 +106,7 @@ namespace FlowSERVER1 {
 
                     bgBlur.Dispose();
                 }
+                MessageBox.Show(eq.Message);
             }
             guna2Button6.Visible = true;
             guna2Button5.Visible = false;
@@ -151,23 +177,42 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
+                if(_TabName == "file_info_audi") {                
+                    String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(_selectAud, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
 
-                String _selectAud = "SELECT CUST_FILE FROM " + _TabName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                command = new MySqlCommand(_selectAud, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
-
-                MySqlDataReader _AudReader = command.ExecuteReader();
-                if (_AudReader.Read()) {
-                    var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                    SaveFileDialog _dialog = new SaveFileDialog();
-                    _dialog.Filter = "Audio Files|*.mp3;*.wav";
-                    _dialog.FileName = label1.Text;
-                    if(_dialog.ShowDialog() == DialogResult.OK) {
-                        File.WriteAllBytes(_dialog.FileName,_getByteAud);
+                    MySqlDataReader _AudReader = command.ExecuteReader();
+                    if (_AudReader.Read()) {
+                        var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                        SaveFileDialog _dialog = new SaveFileDialog();
+                        _dialog.Filter = "Audio Files|*.mp3;*.wav";
+                        _dialog.FileName = label1.Text;
+                        if(_dialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_dialog.FileName,_getByteAud);
+                        }
                     }
+                    _AudReader.Close();
+                } else if (_TabName == "upload_info_directory") {
+                    String _selectAud = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command = new MySqlCommand(_selectAud, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+                    command.Parameters.AddWithValue("@dirname",_DirName);
+
+                    MySqlDataReader _AudReader = command.ExecuteReader();
+                    if (_AudReader.Read()) {
+                        var _getByteAud = (byte[])_AudReader["CUST_FILE"];
+                        SaveFileDialog _dialog = new SaveFileDialog();
+                        _dialog.Filter = "Audio Files|*.mp3;*.wav";
+                        _dialog.FileName = label1.Text;
+                        if (_dialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_dialog.FileName, _getByteAud);
+                        }
+                    }
+                    _AudReader.Close();
                 }
-                _AudReader.Close();
             }
             catch (Exception eq) {
                 MessageBox.Show("Failed to save this audio.", "Flowstorage");

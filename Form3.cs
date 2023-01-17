@@ -346,7 +346,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     textboxPic.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
-                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"upload_info_directory")) {
+                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -370,7 +370,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory")) {
+                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -490,7 +490,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory")) {
+                        using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -514,7 +514,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (audFORM displayAudio = new audFORM(titleLab.Text,"upload_info_directory")) {
+                        using (audFORM displayAudio = new audFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -985,7 +985,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                                 textboxPic.Click += (sender_pd, e_pd) => {
                                     Form bgBlur = new Form();
-                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory")) {
+                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory",label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1010,7 +1010,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory")) {
+                                    using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1084,7 +1084,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory")) {
+                                    using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1108,7 +1108,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                 textboxPic.Click += (sender_Aud, e_Aud) => {
                                     Form bgBlur = new Form();
-                                    using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory")) {
+                                    using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1180,8 +1180,9 @@ namespace FlowSERVER1
 
                                     command.Parameters["@CUST_FILE"].Value = setupImg;
                                     command.ExecuteNonQuery();
-                                    clearRedundane();
+                                    command.Dispose();
 
+                                    clearRedundane();
                                     createPanelMain("Image", "ImagePar", currImg);
                                 }
                             }
@@ -1195,8 +1196,9 @@ namespace FlowSERVER1
                                     Application.DoEvents();
                                     command.Parameters["@CUST_FILE"].Value = dataIco;
                                     command.ExecuteNonQuery();
-                                    clearRedundane();
+                                    command.Dispose();
 
+                                    clearRedundane();
                                     createPanelMain("Image", "IcoPar", currImg);
                                 }
                             }
@@ -1210,6 +1212,7 @@ namespace FlowSERVER1
                             Application.DoEvents();
                             command.Parameters["@CUST_FILE"].Value = _encryptConts;
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Texts", "TextPar", currTxt);
@@ -1222,6 +1225,7 @@ namespace FlowSERVER1
                             Byte[] _readApkBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readApkBytes; 
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Apk", "ApkPar", currApk);
@@ -1234,7 +1238,8 @@ namespace FlowSERVER1
                             Byte[] _readExeBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readExeBytes;//ReadFile(open.FileName);
                             command.ExecuteNonQuery();
-                        
+                            command.Dispose();
+
                             clearRedundane();
                             createPanelMain("Exe", "ExePar", currExe);
                         }
@@ -1245,7 +1250,8 @@ namespace FlowSERVER1
                             Byte[] _readPdfBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
                             command.ExecuteNonQuery();
-                        
+                            command.Dispose();
+
                             clearRedundane();
                             createPanelMain("Pdf", "PdfPar", currPdf);
                         }
@@ -1262,6 +1268,7 @@ namespace FlowSERVER1
                                 command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                             }
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Vid", "VidPar", currVid);
@@ -1273,6 +1280,7 @@ namespace FlowSERVER1
                             Byte[] _readPtxBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Ptx", "PtxPar", currPtx);
@@ -1291,6 +1299,8 @@ namespace FlowSERVER1
                                 command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                             }
                             command.ExecuteNonQuery();
+                            command.Dispose();
+
                             clearRedundane();
                             createPanelMain("Gif", "GifPar", currGif);
                         }
@@ -1301,6 +1311,7 @@ namespace FlowSERVER1
                             Byte[] _readMsiBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Msi", "MsiPar", currMsi);
@@ -1312,6 +1323,7 @@ namespace FlowSERVER1
                             Byte[] _readDocxBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Docx", "DocPar", currDoc);
@@ -1323,6 +1335,7 @@ namespace FlowSERVER1
                             Byte[] _readAudiBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
                             command.ExecuteNonQuery();
+                            command.Dispose();
 
                             clearRedundane();
                             createPanelMain("Audio","AudPar",currAud);
