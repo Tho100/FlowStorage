@@ -40,14 +40,22 @@ namespace FlowSERVER1 {
                 if(_mp3WaveOut != null) {
                     _mp3WaveOut.Resume();
                 } else {
-                    if(_TabName == "file_info_audi") {
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving audio data.");
+                    ShowAlert.Show();
+                    Application.DoEvents();
+                    if (_TabName == "file_info_audi") {
                         String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(_selectAud, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", label1.Text);
-
+                        Application.DoEvents();
                         MySqlDataReader _AudReader = command.ExecuteReader();
                         if (_AudReader.Read()) {
+                            Application.OpenForms
+                             .OfType<Form>()
+                             .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                             .ToList()
+                             .ForEach(form => form.Close());
                             var _getByteAud = (byte[])_AudReader["CUST_FILE"];
                             if (_audType == "wav") {
                                 using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
@@ -68,8 +76,14 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@filename", label1.Text);
                         command.Parameters.AddWithValue("@dirname", _DirName);
 
+                        Application.DoEvents();
                         MySqlDataReader _AudReader = command.ExecuteReader();
                         if (_AudReader.Read()) {
+                            Application.OpenForms
+                             .OfType<Form>()
+                             .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                             .ToList()
+                             .ForEach(form => form.Close());
                             var _getByteAud = (byte[])_AudReader["CUST_FILE"];
                             if (_audType == "wav") {
                                 using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
@@ -177,7 +191,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                if(_TabName == "file_info_audi") {                
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving audio data.");
+                ShowAlert.Show();
+                Application.DoEvents();
+                if(_TabName == "file_info_audi") {
                     String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(_selectAud, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -185,6 +202,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _AudReader = command.ExecuteReader();
                     if (_AudReader.Read()) {
+                        Application.OpenForms
+                       .OfType<Form>()
+                       .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                       .ToList()
+                       .ForEach(form => form.Close());
                         var _getByteAud = (byte[])_AudReader["CUST_FILE"];
                         SaveFileDialog _dialog = new SaveFileDialog();
                         _dialog.Filter = "Audio Files|*.mp3;*.wav";
@@ -194,6 +216,7 @@ namespace FlowSERVER1 {
                         }
                     }
                     _AudReader.Close();
+
                 } else if (_TabName == "upload_info_directory") {
                     String _selectAud = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     command = new MySqlCommand(_selectAud, con);
@@ -203,6 +226,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _AudReader = command.ExecuteReader();
                     if (_AudReader.Read()) {
+                        Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                        .ToList()
+                        .ForEach(form => form.Close());
                         var _getByteAud = (byte[])_AudReader["CUST_FILE"];
                         SaveFileDialog _dialog = new SaveFileDialog();
                         _dialog.Filter = "Audio Files|*.mp3;*.wav";

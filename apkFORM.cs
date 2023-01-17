@@ -16,11 +16,13 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TableName;
-        public apkFORM(String _titleFile, String _userName,String _tabName) {
+        public static String _DirName;
+        public apkFORM(String _titleFile, String _userName,String _tabName, String _dirName) {
             InitializeComponent();
             label1.Text = _titleFile;
             label2.Text = "Uploaded by " + _userName;
             _TableName = _tabName;
+            _DirName = _dirName;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
@@ -62,26 +64,61 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.");
+                ShowAlert.Show();
+                Application.DoEvents();
+                if (_TableName == "file_info_apk") {
+                    String _readApkFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
-                String _readApkFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
+                    command = new MySqlCommand(_readApkFiles,con);
+                    command = con.CreateCommand();
+                    command.CommandText = _readApkFiles;
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filetitle",label1.Text);
 
-                command = new MySqlCommand(_readApkFiles,con);
-                command = con.CreateCommand();
-                command.CommandText = _readApkFiles;
-                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filetitle",label1.Text);
-
-                MySqlDataReader _apkReader = command.ExecuteReader();
-                if(_apkReader.Read()) {
-                    var get_apkValues = (byte[])_apkReader["CUST_FILE"];
-                    SaveFileDialog _OpenDialog = new SaveFileDialog();
-                    _OpenDialog.Filter = "APK|*.apk";
-                    _OpenDialog.FileName = label1.Text;
-                    if(_OpenDialog.ShowDialog() == DialogResult.OK) {
-                        File.WriteAllBytes(_OpenDialog.FileName,get_apkValues);
+                    MySqlDataReader _apkReader = command.ExecuteReader();
+                    if(_apkReader.Read()) {
+                        Application.OpenForms
+                     .OfType<Form>()
+                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                     .ToList()
+                     .ForEach(form => form.Close());
+                        var get_apkValues = (byte[])_apkReader["CUST_FILE"];
+                        SaveFileDialog _OpenDialog = new SaveFileDialog();
+                        _OpenDialog.Filter = "APK|*.apk";
+                        _OpenDialog.FileName = label1.Text;
+                        if(_OpenDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_OpenDialog.FileName,get_apkValues);
+                        }
                     }
+                    _apkReader.Close();
+                } else if (_TableName == "upload_info_directory") {
+                    String _readApkFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle AND DIR_NAME = @dirname";
+
+                    command = new MySqlCommand(_readApkFiles, con);
+                    command = con.CreateCommand();
+                    command.CommandText = _readApkFiles;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filetitle", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", _DirName);
+
+                    MySqlDataReader _apkReader = command.ExecuteReader();
+                    if (_apkReader.Read()) {
+                        Application.OpenForms
+                     .OfType<Form>()
+                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                     .ToList()
+                     .ForEach(form => form.Close());
+                        var get_apkValues = (byte[])_apkReader["CUST_FILE"];
+                        SaveFileDialog _OpenDialog = new SaveFileDialog();
+                        _OpenDialog.Filter = "APK|*.apk";
+                        _OpenDialog.FileName = label1.Text;
+                        if (_OpenDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
+                        }
+                    }
+                    _apkReader.Close();
                 }
-                _apkReader.Close();
                      
                 //var get_apkValues = apkValues[0];
                 //MemoryStream _msApk = new MemoryStream(apkValues[0]);

@@ -89,7 +89,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                if(_TableName == "file_info_pdf") {
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your portable document.");
+                ShowAlert.Show();
+                Application.DoEvents();
+                if (_TableName == "file_info_pdf") {
                     String _getPdfBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(_getPdfBytes, con);
                     command = con.CreateCommand();
@@ -99,6 +102,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _readBytes = command.ExecuteReader();
                     if (_readBytes.Read()) {
+                        Application.OpenForms
+                       .OfType<Form>()
+                       .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                       .ToList()
+                       .ForEach(form => form.Close());
                         SaveFileDialog _openDialog = new SaveFileDialog();
                         _openDialog.Filter = "Acrobat Files|*.pdf";
                         _openDialog.FileName = label1.Text;
@@ -119,6 +127,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _readBytes = command.ExecuteReader();
                     if (_readBytes.Read()) {
+                        Application.OpenForms
+                       .OfType<Form>()
+                       .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                       .ToList()
+                       .ForEach(form => form.Close());
                         SaveFileDialog _openDialog = new SaveFileDialog();
                         _openDialog.Filter = "Acrobat Files|*.pdf";
                         _openDialog.FileName = label1.Text;

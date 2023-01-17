@@ -25,7 +25,10 @@ namespace FlowSERVER1 {
             _TableName = _Table;
             _DirectoryName = _Directory;
             try {
-                if(_TableName == "file_info_ptx") {
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your presentation.");
+                ShowAlert.Show();
+                Application.DoEvents();
+                if (_TableName == "file_info_ptx") {
                     String _readPtxValues = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
                     command = new MySqlCommand(_readPtxValues, con);
@@ -36,6 +39,11 @@ namespace FlowSERVER1 {
                 
                     MySqlDataReader _ptxReader = command.ExecuteReader();
                     if (_ptxReader.Read()) {
+                        Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
                         var get_ptxValues = (byte[])_ptxReader["CUST_FILE"];
                         setupPtx(get_ptxValues);
                     }
@@ -52,6 +60,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _ptxReader = command.ExecuteReader();
                     if (_ptxReader.Read()) {
+                        Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
                         var get_ptxValues = (byte[])_ptxReader["CUST_FILE"];
                         setupPtx(get_ptxValues);
                     }
@@ -78,7 +91,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                if(_TableName == "file_info_ptx") {
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your presentation.");
+                ShowAlert.Show();
+                Application.DoEvents();
+                if (_TableName == "file_info_ptx") {
                     String _readPtxValues = "SELECT CUST_FILE FROM " + _TableName + "  WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
 
                     command = new MySqlCommand(_readPtxValues, con);
@@ -89,6 +105,11 @@ namespace FlowSERVER1 {
                 
                     MySqlDataReader _ptxReader = command.ExecuteReader();
                     if (_ptxReader.Read()) {
+                        Application.OpenForms
+                       .OfType<Form>()
+                       .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                       .ToList()
+                       .ForEach(form => form.Close());
                         var get_apkValues = (byte[])_ptxReader["CUST_FILE"];
                         SaveFileDialog _OpenDialog = new SaveFileDialog();
                         _OpenDialog.Filter = "PowerPoint|*.pptx;*.ppt";
@@ -100,7 +121,6 @@ namespace FlowSERVER1 {
                     _ptxReader.Close();
                 } else {
                     String _readPtxValues = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle AND DIR_NAME = @dirname";
-
                     command = new MySqlCommand(_readPtxValues, con);
                     command = con.CreateCommand();
                     command.CommandText = _readPtxValues;
@@ -110,8 +130,18 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _ptxReader = command.ExecuteReader();
                     if (_ptxReader.Read()) {
-                        var get_ptxValues = (byte[])_ptxReader["CUST_FILE"];
-                        setupPtx(get_ptxValues);
+                        Application.OpenForms
+                         .OfType<Form>()
+                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                         .ToList()
+                         .ForEach(form => form.Close());
+                        var get_apkValues = (byte[])_ptxReader["CUST_FILE"];
+                        SaveFileDialog _OpenDialog = new SaveFileDialog();
+                        _OpenDialog.Filter = "PowerPoint|*.pptx;*.ppt";
+                        _OpenDialog.FileName = label1.Text;
+                        if (_OpenDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
+                        }
                     }
                     _ptxReader.Close();
                 }

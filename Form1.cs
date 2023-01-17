@@ -427,7 +427,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -826,7 +826,7 @@ namespace FlowSERVER1 {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -850,7 +850,7 @@ namespace FlowSERVER1 {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1441,7 +1441,7 @@ namespace FlowSERVER1 {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                                 textboxPic.Click += (sender_gi, e_gi) => {
                                     Form bgBlur = new Form();
-                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
+                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1862,15 +1862,6 @@ namespace FlowSERVER1 {
                 String _accType = _types[0];
                 int CurrentUploadCount = Convert.ToInt32(label4.Text);
                 if (_accType == "Basic") {
-                    if (CurrentUploadCount != 10) {
-                        _mainFileGenerator(10, _accType);
-                    }
-                    else {
-                        DisplayError(_accType);
-                    }
-                }
-
-                if (_accType == "Max") {
                     if (CurrentUploadCount != 25) {
                         _mainFileGenerator(25, _accType);
                     }
@@ -1879,9 +1870,18 @@ namespace FlowSERVER1 {
                     }
                 }
 
+                if (_accType == "Max") {
+                    if (CurrentUploadCount != 50) {
+                        _mainFileGenerator(50, _accType);
+                    }
+                    else {
+                        DisplayError(_accType);
+                    }
+                }
+
                 if (_accType == "Express") {
-                    if (CurrentUploadCount != 40) {
-                        _mainFileGenerator(40, _accType);
+                    if (CurrentUploadCount != 85) {
+                        _mainFileGenerator(85, _accType);
                     }
                     else {
                         DisplayError(_accType);
@@ -1889,8 +1889,8 @@ namespace FlowSERVER1 {
                 }
 
                 if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 95) {
-                        _mainFileGenerator(95, _accType);
+                    if (CurrentUploadCount != 170) {
+                        _mainFileGenerator(170, _accType);
                     }
                     else {
                         DisplayError(_accType);
@@ -2093,7 +2093,7 @@ namespace FlowSERVER1 {
                     label22.Visible = false;
                     label12.Visible = false;
                     label11.Visible = false;
-                    if (_getEmail.Contains("@gmail.com")) {
+                    if (_getEmail.Contains("@gmail.com") || _getEmail.Contains("@email.com")) {
                         if (_getUser.Length <= 20) {
                             if (_getPass.Length > 5) {
                                 if (!String.IsNullOrEmpty(_getEmail)) {
@@ -2452,7 +2452,7 @@ namespace FlowSERVER1 {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                             textboxExl.Click += (sender_ap, e_ap) => {
                                 Form bgBlur = new Form();
-                                using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk")) {
+                                using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2788,13 +2788,11 @@ namespace FlowSERVER1 {
                 directoryLab.Width = 75;
                 directoryLab.Text = "Directory";
 
-                String getTitleQue = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                String getTitleQue = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(getTitleQue, con);
                 command = con.CreateCommand();
                 command.CommandText = getTitleQue;
-
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
 
                 MySqlDataReader titleReader = command.ExecuteReader();
                 while (titleReader.Read()) {
@@ -2876,6 +2874,9 @@ namespace FlowSERVER1 {
 
                 picMain_Q.Image = FlowSERVER1.Properties.Resources.icon1;
                 picMain_Q.Click += (sender_dir, ev_dir) => {
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
+                    ShowAlert.Show();
+
                     Form bgBlur = new Form();
                     using (Form3 displayDirectory = new Form3(titleLab.Text)) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
@@ -2894,6 +2895,11 @@ namespace FlowSERVER1 {
 
                         bgBlur.Dispose();
                     }
+                    Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
                 };
             }
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();

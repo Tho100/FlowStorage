@@ -568,6 +568,12 @@
     <Compile Include="remAccFORM.Designer.cs">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="RetrievalAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RetrievalAlert.Designer.cs">
+      <DependentUpon>RetrievalAlert.cs</DependentUpon>
+    </Compile>
     <Compile Include="splashFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -673,6 +679,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RetrievalAlert.resx">
+      <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="splashFORM.resx">
       <DependentUpon>splashFORM.cs</DependentUpon>

@@ -78,6 +78,9 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your document.");
+                ShowAlert.Show();
+                Application.DoEvents();
                 if(_TableName == "file_info_word") {
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = con.CreateCommand();
@@ -87,6 +90,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
+                        Application.OpenForms
+                          .OfType<Form>()
+                          .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                          .ToList()
+                          .ForEach(form => form.Close());
                         var _getBytes = (byte[])_byteReader["CUST_FILE"];
                         SaveFileDialog _dialog = new SaveFileDialog();
                         _dialog.Filter = "Word Document|*.docx";
@@ -106,6 +114,11 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
+                        Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                        .ToList()
+                        .ForEach(form => form.Close());
                         var _getBytes = (byte[])_byteReader["CUST_FILE"];
                         SaveFileDialog _dialog = new SaveFileDialog();
                         _dialog.Filter = "Word Document|*.docx";

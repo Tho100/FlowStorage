@@ -47,6 +47,8 @@ namespace FlowSERVER1
                 command.Parameters.AddWithValue("@dirname", label1.Text);
 
                 List<String> _TypeValues = new List<String>();
+
+                Application.DoEvents();
                 MySqlDataReader _readType = command.ExecuteReader();
                 while (_readType.Read()) {
                     _TypeValues.Add(_readType.GetString(0));// Append ToAr;
@@ -211,6 +213,7 @@ namespace FlowSERVER1
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
                     command.Parameters.AddWithValue("@foldername", _dirTitle);
 
+                    Application.DoEvents();
                     MySqlDataAdapter da = new MySqlDataAdapter(command);
                     DataSet ds = new DataSet();
                     da.Fill(ds);
@@ -298,7 +301,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     textboxPic.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text,"upload_info_directory")) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text,"upload_info_directory","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -937,7 +940,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                                 textboxPic.Click += (sender_ap, e_ap) => {
                                     Form bgBlur = new Form();
-                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text,"upload_info_directory")) {
+                                    using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text,"upload_info_directory",label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1383,7 +1386,7 @@ namespace FlowSERVER1
             return buffer;
         }
         private void guna2Button2_Click_1(object sender, EventArgs e) {
-          //  try {
+            try {
 
                 String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(_getAccType, con);
@@ -1399,7 +1402,7 @@ namespace FlowSERVER1
                 String _accType = _types[0];
                 int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
                 if (_accType == "Basic") {
-                    if (CurrentUploadCount != 10) {
+                    if (CurrentUploadCount != 25) {
                         _mainFileGenerator("Basic");
                     }
                     else {
@@ -1408,7 +1411,7 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Max") {
-                    if (CurrentUploadCount != 25) {
+                    if (CurrentUploadCount != 50) {
                         _mainFileGenerator("Max");
                     }
                     else {
@@ -1417,7 +1420,7 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Express") {
-                    if (CurrentUploadCount != 40) {
+                    if (CurrentUploadCount != 85) {
                         _mainFileGenerator("Express");
                     }
                     else {
@@ -1426,14 +1429,14 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 95) {
+                    if (CurrentUploadCount != 170) {
                         _mainFileGenerator("Supreme");
                     }
                     else {
                         DisplayError(_accType);
                     }
                 }
-          /* } catch (Exception eq) {
+           } catch (Exception eq) {
                 MessageBox.Show(eq.Message);
                 Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
@@ -1452,8 +1455,8 @@ namespace FlowSERVER1
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }*/
-            //}
+                }
+            }
         }
 
         private void guna2VSeparator1_Click(object sender, EventArgs e) {

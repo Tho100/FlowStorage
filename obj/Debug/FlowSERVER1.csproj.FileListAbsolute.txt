@@ -1375,3 +1375,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Vlc.DotNet.Core.Int
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Vlc.DotNet.Forms.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.successPay.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.noPayment.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.RetrievalAlert.resources
