@@ -11,7 +11,7 @@ namespace FlowSERVER1 {
         public static string _MAINDB = "flowserver_db"; // epiz_33067528_information | flowserver_db
         public static string _USER = "root"; // epiz_33067528 | root
         public static string _PASSWORD = "nfreal-yt10";
-        public static int _MAINPORT = 13000;
+        public static int _MAINPORT = 16017;
         public static string _FULLCONNECTION = "SERVER=" + _SERVER + ";" + "Port=" + _MAINPORT + ";" + "DATABASE=" + _MAINDB + ";" + "UID=" + _USER + ";" + "PASSWORD=" + _PASSWORD + ";";
         public static MySqlConnection con = new MySqlConnection(_FULLCONNECTION);
         public static MySqlCommand command;

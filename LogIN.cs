@@ -517,10 +517,9 @@ namespace FlowSERVER1 {
 
                         if (_tableName == "file_info_vid") {
                                 
-                            String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            String getImgQue = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username";
                             command = new MySqlCommand(getImgQue, con);
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                             MySqlDataAdapter da = new MySqlDataAdapter(command);
                             DataSet ds = new DataSet();
@@ -534,7 +533,7 @@ namespace FlowSERVER1 {
                                 var getWidth = getImgName.Image.Width;
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
-                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "DDD");
+                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info_vid", "null");
                                 vidFormShow.Show();
                             };
                             clearRedundane();

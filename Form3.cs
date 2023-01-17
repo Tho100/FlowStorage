@@ -206,10 +206,9 @@ namespace FlowSERVER1
                 };
 
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp")  {
-                    String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername";
+                    String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @foldername";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
-                    command.Parameters.AddWithValue("@password", form1.label3.Text);
                     command.Parameters.AddWithValue("@foldername", _dirTitle);
 
                     MySqlDataAdapter da = new MySqlDataAdapter(command);
@@ -259,10 +258,9 @@ namespace FlowSERVER1
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
                     }
                     textboxPic.Click += (sender_t, e_t) => {
-                        String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
+                        String retrieveContents = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @foldername AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(retrieveContents, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
                         command.Parameters.AddWithValue("@filename", titleLab.Text);
                         command.Parameters.AddWithValue("@foldername", label1.Text);
 
@@ -425,7 +423,46 @@ namespace FlowSERVER1
                     };
                 }
 
-                if(typeValues[q] == ".msi") {
+                if (typeValues[q] == ".mp4" || typeValues[q] == ".mov" || typeValues[q] == ".webm" || typeValues[q] == ".avi" || typeValues[q] == ".wmv") {
+                    String getImgQue = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(getImgQue, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@dirname",label1.Text);
+                    command.Parameters.AddWithValue("@filename",titleLab.Text);
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(command);
+                    DataSet ds = new DataSet();
+
+                    da.Fill(ds);
+                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[0]["CUST_THUMB"]);
+                    textboxPic.Image = new Bitmap(ms);
+                    textboxPic.Click += (sender_vid, e_vid) => {
+                        var getImgName = (Guna2PictureBox)sender_vid;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        Form bgBlur = new Form();
+                        using (vidFORM displayVid = new vidFORM(defaultImage, getWidth,getHeight,titleLab.Text,"upload_info_directory",label1.Text)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayVid.Owner = bgBlur;
+                            displayVid.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
+                if (typeValues[q] == ".msi") {
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
@@ -503,7 +540,7 @@ namespace FlowSERVER1
         {
 
         }
-
+        
         private void Form3_Load(object sender, EventArgs e) {
             //Form4 get_dir_title = new Form4();
             //string dir_title = get_dir_title.guna2TextBox1.Text;
@@ -654,6 +691,7 @@ namespace FlowSERVER1
         public static int currGif = 0;
         public static int currMsi = 0;
         public static int currDoc = 0;
+        public static int currVid = 0;
         public void _mainFileGenerator(String _AccountTypeStr_) {
 
             String varDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -662,7 +700,7 @@ namespace FlowSERVER1
             // INSERT VALUE ORINNGANLLY HERE
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.avi;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
             List<String> _filValues = new List<string>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
@@ -1089,6 +1127,36 @@ namespace FlowSERVER1
                                     }
                                 };
                             }
+
+                            if (type_ == "Vid") {
+                                ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                                Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                                textboxPic.Image = toBitMap;
+                                textboxPic.Click += (sender_vid, e_vid) => {
+                                    var getImgName = (Guna2PictureBox)sender_vid;
+                                    var getWidth = getImgName.Image.Width;
+                                    var getHeight = getImgName.Image.Height;
+                                    Bitmap defaultImg = new Bitmap(getImgName.Image);
+                                    Form bgBlur = new Form();
+                                    using (vidFORM displayPic = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName,label1.Text)) {
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                        bgBlur.Opacity = .24d;
+                                        bgBlur.BackColor = Color.Black;
+                                        bgBlur.WindowState = FormWindowState.Maximized;
+                                        bgBlur.TopMost = true;
+                                        bgBlur.Location = this.Location;
+                                        bgBlur.StartPosition = FormStartPosition.Manual;
+                                        bgBlur.ShowInTaskbar = false;
+                                        bgBlur.Show();
+
+                                        displayPic.Owner = bgBlur;
+                                        displayPic.ShowDialog();
+
+                                        bgBlur.Dispose();
+                                    }
+                                };
+                            }
                         }
 
 
@@ -1101,7 +1169,7 @@ namespace FlowSERVER1
 
                         if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
                             currImg++;
-                            var getImg = new Bitmap(open.FileName);
+                            var getImg = new Bitmap(selectedItems);
                             var imgWidth = getImg.Width;
                             var imgHeight = getImg.Height;
                             if (retrieved != ".ico") {
@@ -1151,8 +1219,8 @@ namespace FlowSERVER1
                             currApk++;
 
                             Application.DoEvents();
-                            Byte[] _readApkBytes = File.ReadAllBytes(open.FileName);
-                            command.Parameters["@CUST_FILE"].Value = ReadFile(open.FileName); 
+                            Byte[] _readApkBytes = File.ReadAllBytes(selectedItems);
+                            command.Parameters["@CUST_FILE"].Value = _readApkBytes; 
                             command.ExecuteNonQuery();
 
                             clearRedundane();
@@ -1163,7 +1231,7 @@ namespace FlowSERVER1
                             currExe++;
 
                             Application.DoEvents();
-                            Byte[] _readExeBytes = File.ReadAllBytes(open.FileName);
+                            Byte[] _readExeBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readExeBytes;//ReadFile(open.FileName);
                             command.ExecuteNonQuery();
                         
@@ -1174,12 +1242,29 @@ namespace FlowSERVER1
                             currPdf++;
 
                             Application.DoEvents();
-                            Byte[] _readPdfBytes = File.ReadAllBytes(open.FileName);
+                            Byte[] _readPdfBytes = File.ReadAllBytes(selectedItems);
                             command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
                             command.ExecuteNonQuery();
                         
                             clearRedundane();
                             createPanelMain("Pdf", "PdfPar", currPdf);
+                        }
+                        if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
+                            currVid++;
+
+                            Application.DoEvents();
+                            Byte[] _readVidBytes = File.ReadAllBytes(selectedItems);
+                            command.Parameters["@CUST_FILE"].Value = _readVidBytes;
+                            ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                            using (var stream = new MemoryStream()) {
+                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                            }
+                            command.ExecuteNonQuery();
+
+                            clearRedundane();
+                            createPanelMain("Vid", "VidPar", currVid);
                         }
                         if (retrieved == ".pptx" || retrieved == ".ppt") {
                             currPtx++;

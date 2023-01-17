@@ -346,7 +346,7 @@ namespace FlowSERVER1 {
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "DDD");
+                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid","null");
                         vidFormShow.Show();
                     };
                     clearRedundane();
@@ -976,7 +976,7 @@ namespace FlowSERVER1 {
             create_dir.Show();
         }
 
-        private int getUserType() {
+        private int getUserDirCount() {
             String _typeAcc = "";
             int _intAllowed = 0;
             List<String> _emailValues = new List<string>();
@@ -1064,7 +1064,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
             //var _getDirPath = open.FileName;
@@ -1111,9 +1111,8 @@ namespace FlowSERVER1 {
                         }
                         command.ExecuteNonQuery();
                     }
-                    // @ PROBLEM IS USER CANNOT UPLOAD MULTIPLES FILES THAT HAS DIFFERENT EXTENSION OR ELSE IT WILL THROWS AN EXCEPTION
+                    
                     if (_filValues.Count() + curFilesCount > AccountType_) {
-                        //MessageBox.Show("YOUVE REACHED THE LIKMIT");
                         Form bgBlur = new Form();
                         using (upgradeFORM displayUpgrade = new upgradeFORM(_AccountTypeStr_)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
@@ -1365,7 +1364,7 @@ namespace FlowSERVER1 {
                                     var getHeight = getImgName.Image.Height;
                                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                    vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, open.FileName);
+                                    vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "file_info_vid","null");
                                     vidShow.Show();
                                 };
                                 clearRedundane();
@@ -1649,16 +1648,16 @@ namespace FlowSERVER1 {
                         }
                         else if (retrieved == ".exe") {
                             exeCurr++;
-                            Byte[] streamRead = File.ReadAllBytes(open.FileName);
+                            Byte[] streamRead = File.ReadAllBytes(selectedItems);
                             Application.DoEvents();
-                            createPanelMain("file_info_exe", "PanExe", exeCurr, ReadFile(open.FileName));
+                            createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
 
                         }
-                        else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi") {
+                        else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
                             vidCurr++;
-                            Byte[] streamReadVid = File.ReadAllBytes(open.FileName);
+                            Byte[] streamReadVid = File.ReadAllBytes(selectedItems);
                             Application.DoEvents();
-                            createPanelMain("file_info_vid", "PanVid", vidCurr, ReadFile(open.FileName));
+                            createPanelMain("file_info_vid", "PanVid", vidCurr, streamReadVid);
                         }
                         else if (retrieved == ".xlsx" || retrieved == ".csv") {
 
@@ -1794,7 +1793,7 @@ namespace FlowSERVER1 {
                             msiCurr++;
                             Byte[] readMsiBytes = File.ReadAllBytes(selectedItems);
                             Application.DoEvents();
-                            createPanelMain("file_info_msi", "PanMsi", msiCurr, ReadFile(open.FileName));
+                            createPanelMain("file_info_msi", "PanMsi", msiCurr, readMsiBytes);
                         }
                         else if (retrieved == ".docx") {
                             docxCurr++;
@@ -2649,7 +2648,7 @@ namespace FlowSERVER1 {
                 // LOAD VID
                 if (_countRow("file_info_vid") > 0) {
                     Application.DoEvents();
-                    _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
+                    _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_vid"));
                 }
                 if (_countRow("file_info_excel") > 0) {
                     _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));

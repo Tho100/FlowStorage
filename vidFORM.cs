@@ -21,15 +21,19 @@ namespace FlowSERVER1 {
 
         public LibVLC _libVLC;
         public MediaPlayer _mp;
+        public static String _TableName;
+        public static String _DirName;
 
-        public vidFORM(Image getThumb, int width, int height, String getTitle,String path) {
+        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName) {
             InitializeComponent();
             instance = this;
             var setupImage = resizeImage(getThumb, new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = getTitle;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-            label3.Text = path;
+            label3.Text = tableName;
+            _TableName = tableName;
+            _DirName = dirName;
         }
 
         public static Image resizeImage(Image userImg, Size size) {
@@ -46,6 +50,9 @@ namespace FlowSERVER1 {
 
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
+            if(_mp != null) {
+                _mp.Stop();
+            } 
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
@@ -63,54 +70,61 @@ namespace FlowSERVER1 {
         // Play
         private void guna2Button5_Click(object sender, EventArgs e) {
             try {
-                /*
-                _wmpVid.uiMode = "none";
-                _wmpVid.Visible = true;
-                _wmpVid.URL = label3.Text;
-                _wmpVid.Ctlcontrols.play();*/
-                //vlcControl1.Visible = true;
-            
-                String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(Select_VidByte, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-
-                List<Byte> _ByteValues = new List<Byte>();
-                MySqlDataReader _ReadBytes = command.ExecuteReader();
-                if(_ReadBytes.Read()) {
-                    var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
-                    Stream _toStream = new MemoryStream(_retrieveBytesValue);
-                    _libVLC = new LibVLC();
-                    _mp = new MediaPlayer(_libVLC);
+                if(_mp != null) {
                     videoView1.MediaPlayer = _mp;
                     _mp.Play();
-                    //_mp.Play(new Media(_libVLC, _toStream, FromType.FromLocation));
+                } else {
+                    if(_TableName == "upload_info_directory") {
+                        String Select_VidByte = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
+                        command = new MySqlCommand(Select_VidByte, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@dirname",_DirName);
+                        command.Parameters.AddWithValue("@filename",label1.Text);
 
-                    //Load += Form1_Load;
+                        guna2PictureBox1.Visible = false;
+                        videoView1.Visible = true;
+                        List<Byte> _ByteValues = new List<Byte>();
+                        MySqlDataReader _ReadBytes = command.ExecuteReader();
+                        if (_ReadBytes.Read()) {
+                            var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                            Stream _toStream = new MemoryStream(_retrieveBytesValue);
+                            _libVLC = new LibVLC();
+                            var media = new Media(_libVLC, new StreamMediaInput(_toStream));
+                            _mp = new MediaPlayer(media);
+                            videoView1.MediaPlayer = _mp;
+                            _mp.Play();
+                        }
+                        _ReadBytes.Close();
+                    } else {
+                        String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                        command = new MySqlCommand(Select_VidByte, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename",label1.Text);
 
-                    //vlcControl1.Play(new (_toStream));
-                    /* var libvlc = new LibVLC("--input-repeat=2");
-                     var media = new Media(libvlc,new StreamMediaInput(_toStream));
-                     var mediaPlayer = new MediaPlayer(media);
-                     mediaPlayer.Play();*/
-                    // vlcControl1.Play(mediaPlayer);
-                    //videoView1.MediaPlayer.Play(media);
-                    //mediaPlayer.Play();
-                    //videoView1.MediaPlayer.Play(mediaPlayer);//videoView1.MediaPlayer.Play()
+                        guna2PictureBox1.Visible = false;
+                        videoView1.Visible = true;
+                        List<Byte> _ByteValues = new List<Byte>();
+                        MySqlDataReader _ReadBytes = command.ExecuteReader();
+                        if (_ReadBytes.Read()) {
+                            var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                            Stream _toStream = new MemoryStream(_retrieveBytesValue);
+                            _libVLC = new LibVLC();
+                            var media = new Media(_libVLC, new StreamMediaInput(_toStream));
+                            _mp = new MediaPlayer(media);
+                            videoView1.MediaPlayer = _mp;
+                            _mp.Play();
+                        }
+                        _ReadBytes.Close();
+                    }
+                   
                 }
 
-                guna2Button6.Visible = true;
                 guna2Button5.Visible = false;
-            } catch (Exception eq) {
-                MessageBox.Show(eq.Message, "Flowstorage");
+                guna2Button6.Visible = true;
+            } catch (Exception) {
+                MessageBox.Show("Failed to play this file.","Flowstorage");
             }
         }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-           // _wmpVid.Ctlcontrols.pause();
-            guna2Button6.Visible = false;
-            guna2Button5.Visible = true;
-        }
-
         private void pictureBox1_Click(object sender, EventArgs e) {
 
         }
@@ -125,19 +139,41 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(Select_VidByte,con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                
-                List<Byte> _ByteValues = new List<Byte>();
-                MySqlDataReader _ReadBytes = command.ExecuteReader();
-                if(_ReadBytes.Read()) {
-                    var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
-                    SaveFileDialog _fileDialog = new SaveFileDialog();
-                    _fileDialog.FileName = label1.Text;
-                    if(_fileDialog.ShowDialog() == DialogResult.OK) {
-                        File.WriteAllBytes(_fileDialog.FileName,_retrieveBytesValue);
+                if(_TableName == "upload_info_directory") {
+                    String Select_VidByte = "SELECT CUST_FILE FROM " + _TableName + "  WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command = new MySqlCommand(Select_VidByte,con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+                    command.Parameters.AddWithValue("@dirname",_DirName);
+
+                    List<Byte> _ByteValues = new List<Byte>();
+                    MySqlDataReader _ReadBytes = command.ExecuteReader();
+                    if(_ReadBytes.Read()) {
+                        var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                        SaveFileDialog _fileDialog = new SaveFileDialog();
+                        _fileDialog.FileName = label1.Text;
+                        if(_fileDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_fileDialog.FileName,_retrieveBytesValue);
+                        }
                     }
+                    _ReadBytes.Close();
+                } else {
+                    String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(Select_VidByte, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+
+                    List<Byte> _ByteValues = new List<Byte>();
+                    MySqlDataReader _ReadBytes = command.ExecuteReader();
+                    if (_ReadBytes.Read()) {
+                        var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
+                        SaveFileDialog _fileDialog = new SaveFileDialog();
+                        _fileDialog.FileName = label1.Text;
+                        if (_fileDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_fileDialog.FileName, _retrieveBytesValue);
+                        }
+                    }
+                    _ReadBytes.Close();
                 }
 
             } catch (Exception) {
@@ -155,6 +191,18 @@ namespace FlowSERVER1 {
 
         private void videoView1_Click_1(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button6_Click_1(object sender, EventArgs e) {
+            if(_mp != null) {
+                _mp.Pause();
+                guna2Button5.Visible = true;
+                guna2Button6.Visible = false;
+            }
         }
     }
 }
