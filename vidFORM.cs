@@ -18,6 +18,10 @@ namespace FlowSERVER1 {
         public static vidFORM instance;
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
+
+        public LibVLC _libVLC;
+        public MediaPlayer _mp;
+
         public vidFORM(Image getThumb, int width, int height, String getTitle,String path) {
             InitializeComponent();
             instance = this;
@@ -75,17 +79,25 @@ namespace FlowSERVER1 {
                 if(_ReadBytes.Read()) {
                     var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
                     Stream _toStream = new MemoryStream(_retrieveBytesValue);
+                    _libVLC = new LibVLC();
+                    _mp = new MediaPlayer(_libVLC);
+                    videoView1.MediaPlayer = _mp;
+                    _mp.Play();
+                    //_mp.Play(new Media(_libVLC, _toStream, FromType.FromLocation));
+
+                    //Load += Form1_Load;
+
                     //vlcControl1.Play(new (_toStream));
-                    var libvlc = new LibVLC("--input-repeat=2");
-                    var media = new Media(libvlc,new StreamMediaInput(_toStream));
-                    var mediaPlayer = new MediaPlayer(media);
-                    mediaPlayer.Play();
-                   // vlcControl1.Play(mediaPlayer);
+                    /* var libvlc = new LibVLC("--input-repeat=2");
+                     var media = new Media(libvlc,new StreamMediaInput(_toStream));
+                     var mediaPlayer = new MediaPlayer(media);
+                     mediaPlayer.Play();*/
+                    // vlcControl1.Play(mediaPlayer);
                     //videoView1.MediaPlayer.Play(media);
                     //mediaPlayer.Play();
                     //videoView1.MediaPlayer.Play(mediaPlayer);//videoView1.MediaPlayer.Play()
                 }
-               
+
                 guna2Button6.Visible = true;
                 guna2Button5.Visible = false;
             } catch (Exception eq) {
@@ -138,6 +150,10 @@ namespace FlowSERVER1 {
         }
 
         private void vlcControl1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void videoView1_Click_1(object sender, EventArgs e) {
 
         }
     }

@@ -665,5 +665,9 @@ namespace FlowSERVER1 {
         private void guna2Button10_Click(object sender, EventArgs e) {
             setupAccount();
         }
+
+        private void guna2Panel7_Paint_1(object sender, PaintEventArgs e) {
+
+        }
     }
 }

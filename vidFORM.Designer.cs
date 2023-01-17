@@ -37,10 +37,10 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.vlcControl1 = new Vlc.DotNet.Forms.VlcControl();
+            this.videoView1 = new LibVLCSharp.WinForms.VideoView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vlcControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -110,7 +110,7 @@
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
             this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
             this.guna2Button6.ImageSize = new System.Drawing.Size(31, 31);
-            this.guna2Button6.Location = new System.Drawing.Point(682, 422);
+            this.guna2Button6.Location = new System.Drawing.Point(604, 411);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(48, 36);
             this.guna2Button6.TabIndex = 32;
@@ -241,17 +241,16 @@
             this.guna2PictureBox1.TabStop = false;
             this.guna2PictureBox1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
-            // vlcControl1
+            // videoView1
             // 
-            this.vlcControl1.BackColor = System.Drawing.Color.Black;
-            this.vlcControl1.Location = new System.Drawing.Point(12, 67);
-            this.vlcControl1.Name = "vlcControl1";
-            this.vlcControl1.Size = new System.Drawing.Size(718, 349);
-            this.vlcControl1.Spu = -1;
-            this.vlcControl1.TabIndex = 34;
-            this.vlcControl1.Text = "vlcControl1";
-            this.vlcControl1.VlcLibDirectory = null;
-            this.vlcControl1.VlcMediaplayerOptions = null;
+            this.videoView1.BackColor = System.Drawing.Color.Black;
+            this.videoView1.Location = new System.Drawing.Point(12, 67);
+            this.videoView1.MediaPlayer = null;
+            this.videoView1.Name = "videoView1";
+            this.videoView1.Size = new System.Drawing.Size(718, 338);
+            this.videoView1.TabIndex = 35;
+            this.videoView1.Text = "videoView1";
+            this.videoView1.Click += new System.EventHandler(this.videoView1_Click_1);
             // 
             // vidFORM
             // 
@@ -259,7 +258,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(742, 470);
-            this.Controls.Add(this.vlcControl1);
+            this.Controls.Add(this.videoView1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.guna2Button6);
             this.Controls.Add(this.label3);
@@ -278,7 +277,7 @@
             this.Load += new System.EventHandler(this.vidFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vlcControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +297,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
-        private Vlc.DotNet.Forms.VlcControl vlcControl1;
+        private LibVLCSharp.WinForms.VideoView videoView1;
     }
 }
