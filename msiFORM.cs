@@ -14,10 +14,14 @@ namespace FlowSERVER1 {
     public partial class msiFORM : Form {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
-        public msiFORM(String _fileName) {
+        public static String _TableName;
+        public static String _DirectoryName;
+        public msiFORM(String _fileName,String tabName, String dirName) {
             InitializeComponent();
             label1.Text = _fileName;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            _TableName = tabName;
+            _DirectoryName = dirName;
         }
 
         private void msiFORM_Load(object sender, EventArgs e) {
@@ -30,22 +34,56 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                String _selectMsiBytes = "SELECT CUST_FILE FROM file_info_msi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                command = con.CreateCommand();
-                command.CommandText = _selectMsiBytes;
-                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
+                ShowAlert.Show();
+                Application.DoEvents();
 
-                MySqlDataReader _readBytes = command.ExecuteReader();
-                if(_readBytes.Read()) {
-                    var _getMsiBytes = (byte[])_readBytes["CUST_FILE"];
-                    SaveFileDialog _openDialog = new SaveFileDialog();
-                    _openDialog.Filter = "MSI|*.msi";
-                    if(_openDialog.ShowDialog() == DialogResult.OK) {
-                        File.WriteAllBytes(_openDialog.FileName,_getMsiBytes);
+                if (_TableName == "file_info_msi") {
+                    String _selectMsiBytes = "SELECT CUST_FILE FROM file_info_msi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = con.CreateCommand();
+                    command.CommandText = _selectMsiBytes;
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+
+                    MySqlDataReader _readBytes = command.ExecuteReader();
+                    if(_readBytes.Read()) {
+                        Application.OpenForms
+                 .OfType<Form>()
+                 .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                 .ToList()
+                 .ForEach(form => form.Close());
+                        var _getMsiBytes = (byte[])_readBytes["CUST_FILE"];
+                        SaveFileDialog _openDialog = new SaveFileDialog();
+                        _openDialog.Filter = "MSI|*.msi";
+                        if(_openDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_openDialog.FileName,_getMsiBytes);
+                        }
                     }
+                    _readBytes.Close();
+                } else if(_TableName == "upload_info_directory") {
+                    String _selectMsiBytes = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command = con.CreateCommand();
+                    command.CommandText = _selectMsiBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", _DirectoryName);
+
+                    MySqlDataReader _readBytes = command.ExecuteReader();
+                    if (_readBytes.Read()) {
+                        Application.OpenForms
+                 .OfType<Form>()
+                 .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                 .ToList()
+                 .ForEach(form => form.Close());
+                        var _getMsiBytes = (byte[])_readBytes["CUST_FILE"];
+                        SaveFileDialog _openDialog = new SaveFileDialog();
+                        _openDialog.Filter = "MSI|*.msi";
+                        if (_openDialog.ShowDialog() == DialogResult.OK) {
+                            File.WriteAllBytes(_openDialog.FileName, _getMsiBytes);
+                        }
+                    }
+                    _readBytes.Close();
                 }
-                _readBytes.Close();
             } catch (Exception eq) {
                 MessageBox.Show("Failed to save this file.","Flowstorage");
             }

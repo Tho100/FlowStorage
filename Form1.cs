@@ -307,7 +307,7 @@ namespace FlowSERVER1 {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
-                        using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                        using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -504,7 +504,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -899,7 +899,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1331,7 +1331,7 @@ namespace FlowSERVER1 {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                                 textboxPic.Click += (sender_ex, e_ex) => {
                                     Form bgBlur = new Form();
-                                    using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                                    using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1497,6 +1497,7 @@ namespace FlowSERVER1 {
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = keyVal;
                                 command.ExecuteNonQuery();
+                                command.Dispose();
 
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1526,11 +1527,12 @@ namespace FlowSERVER1 {
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = keyVal;
                                 command.ExecuteNonQuery();
+                                command.Dispose();
 
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                                 textboxPic.Click += (sender_ptx, e_ptx) => {
                                     Form bgBlur = new Form();
-                                    using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                    using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1555,6 +1557,8 @@ namespace FlowSERVER1 {
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = keyVal;
                                 command.ExecuteNonQuery();
+                                command.Dispose();
+
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                                 textboxPic.Click += (sender_ptx, e_ptx) => {
                                     Form bgBlur = new Form();
@@ -2876,8 +2880,9 @@ namespace FlowSERVER1 {
                 picMain_Q.Click += (sender_dir, ev_dir) => {
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
                     ShowAlert.Show();
-
-                    Form bgBlur = new Form();
+                    Form3 displayDirectory = new Form3(titleLab.Text);
+                    displayDirectory.Show();
+                    /*Form bgBlur = new Form();
                     using (Form3 displayDirectory = new Form3(titleLab.Text)) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
                         bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -2894,7 +2899,7 @@ namespace FlowSERVER1 {
                         displayDirectory.ShowDialog();
 
                         bgBlur.Dispose();
-                    }
+                    }*/
                     Application.OpenForms
                     .OfType<Form>()
                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))

@@ -325,7 +325,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                     textboxPic.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
-                        using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -469,7 +469,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -964,7 +964,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                                 textboxPic.Click += (sender_ex, e_ex) => {
                                     Form bgBlur = new Form();
-                                    using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                                    using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1063,7 +1063,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                    using (msiFORM displayMsi = new msiFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

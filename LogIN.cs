@@ -494,7 +494,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                             picMain_Q.Click += (sender_ex, e_ex) => {
                                 Form bgBlur = new Form();
-                                using (exeFORM displayExe = new exeFORM(titleLab.Text)) {
+                                using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -658,7 +658,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                             picMain_Q.Click += (sender_ptx, e_ptx) => {
                                 Form bgBlur = new Form();
-                                using (msiFORM displayMsi = new msiFORM(titleLab.Text)) {
+                                using (msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
