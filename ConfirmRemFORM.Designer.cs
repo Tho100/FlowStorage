@@ -184,7 +184,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ConfirmRemFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ConfirmRemFORM";
+            this.Text = "Delete Account";
             this.guna2Panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

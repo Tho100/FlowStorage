@@ -240,7 +240,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -402,7 +402,7 @@ namespace FlowSERVER1 {
 
                     picMain_Q.Click += (sender_gi, ex_gi) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif")) {
+                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -556,6 +556,7 @@ namespace FlowSERVER1 {
         public void _generateUserFold(List<String> _fileType, String _foldTitle, String parameterName, int currItem) {
             flowLayoutPanel1.Controls.Clear();
             List<String> typeValues = new List<String>(_fileType);
+            Application.DoEvents();
             for (int i = 0; i < currItem; i++) {
                 int top = 275;
                 int h_p = 100;
@@ -579,13 +580,12 @@ namespace FlowSERVER1 {
                 List<string> dateValues = new List<string>();
                 List<string> titleValues = new List<string>();
 
-                String getUpDate = "SELECT UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                String getUpDate = "SELECT UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(getUpDate, con);
                 command = con.CreateCommand();
                 command.CommandText = getUpDate;
 
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
                 command.Parameters.AddWithValue("@foldername", _foldTitle);
                 MySqlDataReader readerDate = command.ExecuteReader();
 
@@ -604,13 +604,12 @@ namespace FlowSERVER1 {
                 dateLab.Location = new Point(12, 208);
                 dateLab.Text = dateValues[i];
 
-                String getTitleQue = "SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                String getTitleQue = "SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(getTitleQue, con);
                 command = con.CreateCommand();
                 command.CommandText = getTitleQue;
 
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
                 command.Parameters.AddWithValue("@foldername", _foldTitle);
 
                 MySqlDataReader titleReader = command.ExecuteReader();
@@ -669,10 +668,9 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
+                        String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@password", label3.Text);
                         command.Parameters.AddWithValue("@filename", titleFile);
                         command.Parameters.AddWithValue("@foldername", _foldTitle);
                         command.ExecuteNonQuery();
@@ -691,10 +689,10 @@ namespace FlowSERVER1 {
                 label8.Visible = false;
                 var img = ((Guna2PictureBox)panelF.Controls["imgf" + i]);
                 if (typeValues[i] == ".png" || typeValues[i] == ".jpeg" || typeValues[i] == ".jpg" || typeValues[i] == ".bmp") {
-                    String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                    Application.DoEvents();
+                    String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
                     command.Parameters.AddWithValue("@foldername", _foldTitle);
 
                     MySqlDataAdapter da = new MySqlDataAdapter(command);
@@ -712,7 +710,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -790,18 +788,59 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
 
+                if(typeValues[i] == ".mp4" || typeValues[i] == ".mov" || typeValues[i] == ".webm" || typeValues[i] == ".avi" || typeValues[i] == ".wmv") {
+                    Application.DoEvents();
+                    String getImgQue = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(getImgQue, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@foldtitle", _foldTitle);
+                    command.Parameters.AddWithValue("@filename", titleLab.Text);
+
+                    MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
+                    DataSet ds_Read = new DataSet();
+                    da_Read.Fill(ds_Read);
+                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[0]["CUST_THUMB"]);
+
+                    img.Image = new Bitmap(ms);
+                    img.Click += (sender_vid, e_vid) => {
+                        var getImgName = (Guna2PictureBox)sender_vid;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+                        Bitmap defaultImg = new Bitmap(getImgName.Image);
+                        Form bgBlur = new Form();
+                        using (vidFORM displayVid = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text, "folder_upload_info", _foldTitle)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.Name = "bgBlurForm";
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayVid.Owner = bgBlur;
+                            displayVid.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
                 if (typeValues[i] == ".xlsx") {
                     //
                 }
 
                 if (typeValues[i] == ".wav" || typeValues[i] == ".mp3") {
+                    Application.DoEvents();
                     var _getWidth = this.Width;
                     var _getHeight = this.Height;
                     img.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     img.Click += (sender_aud, e_aud) => {
-
                         Form bgBlur = new Form();
-                        using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null")) {
+                        using (audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _foldTitle)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -823,6 +862,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[i] == ".apk") {
+                    Application.DoEvents();
                     img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
                         Form bgBlur = new Form();
@@ -871,10 +911,11 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[i] == ".pdf") {
+                    Application.DoEvents();
                     img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     img.Click += (sender_pdf, e_pdf) => {
                         Form bgBlur = new Form();
-                        using (pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info","null")) {
+                        using (pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info",_foldTitle)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -895,11 +936,63 @@ namespace FlowSERVER1 {
                     };
                 }
 
+                if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
+                    Application.DoEvents();
+                    img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                    img.Click += (sender_pdf, e_pdf) => {
+                        Form bgBlur = new Form();
+                        using (wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayDoc.Owner = bgBlur;
+                            displayDoc.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
+                if (typeValues[i] == ".pptx" || typeValues[i] == ".ppt") {
+                    Application.DoEvents();
+                    img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                    img.Click += (sender_pdf, e_pdf) => {
+                        Form bgBlur = new Form();
+                        using (wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.Name = "bgBlurForm";
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayDoc.Owner = bgBlur;
+                            displayDoc.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
                 if (typeValues[i] == ".msi") {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "folder_upload_info", _foldTitle)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -1239,7 +1332,7 @@ namespace FlowSERVER1 {
                                     //displayPic.Show();
 
                                     Form bgBlur = new Form();
-                                    using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName)) {
+                                    using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1412,7 +1505,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Click += (sender_gi, e_gi) => {
                                     Form bgBlur = new Form();
-                                    using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif")) {
+                                    using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif","null")) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -2235,7 +2328,7 @@ namespace FlowSERVER1 {
                     listBox1.Items.Add(_getDirTitle);
                     flowLayoutPanel1.Controls.Clear();
 
-                    String insertFoldQue_ = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_PASSWORD,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_PASSWORD,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH)";
+                    String insertFoldQue_ = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_PASSWORD,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_PASSWORD,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
                     command = new MySqlCommand(insertFoldQue_, con);
 
                     command.Parameters.Add("@FOLDER_TITLE", MySqlDbType.Text);
@@ -2245,21 +2338,22 @@ namespace FlowSERVER1 {
                     command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.Text);
                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                     command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                    command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
 
                     String[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
 
                     int _IntCurr = 0;
                     foreach (var _Files in Directory.EnumerateFiles(_getDirPath, "*")) {
                         String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                        Task StartInserting = new Task(delegate {
-                            command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
-                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                            command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                            command.Parameters["@CUST_FILE_PATH"].Value = Path.GetFileName(_Files);
-                            command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
-                            command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                        });
-                        StartInserting.Start();
+//                        Task StartInserting = new Task(delegate {
+                        command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
+                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                        command.Parameters["@CUST_FILE_PATH"].Value = Path.GetFileName(_Files);
+                        command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
+                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                     //   });
+  //                      StartInserting.Start();
 
                         _IntCurr++;
                         int top = 275;
@@ -2369,7 +2463,10 @@ namespace FlowSERVER1 {
                             using (MemoryStream _ms = new MemoryStream()) {
                                 _imgContent.Save(_ms, System.Drawing.Imaging.ImageFormat.Png);
                                 var _setupImg = _ms.ToArray();
+                                Application.DoEvents();
                                 command.Parameters["@CUST_FILE"].Value = _setupImg;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
                             }
                             textboxExl.Image = _imgContent;
                             textboxExl.Click += (sender_f, e_f) => {
@@ -2379,7 +2476,7 @@ namespace FlowSERVER1 {
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                                 Form bgBlur = new Form();
-                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text)) {
+                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2398,10 +2495,6 @@ namespace FlowSERVER1 {
                                 }
 
                             };
-
-                            if (command.ExecuteNonQuery() == 1) {
-                                clearRedundane();
-                            }
                         }
                         if (_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js") {
                             // TXTCONTS = TEXT CONTENTS
@@ -2445,14 +2538,17 @@ namespace FlowSERVER1 {
                                 }
 
                             };
+                            Application.DoEvents();
                             command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
-                            if (command.ExecuteNonQuery() == 1) {
-                                clearRedundane();
-                            }
+                            command.ExecuteNonQuery();
+                            command.Dispose();
                         }
                         if (_extTypes == ".apk") {
                             Byte[] _readApkBytes = File.ReadAllBytes(_Files);
+                            Application.DoEvents();
                             command.Parameters["@CUST_FILE"].Value = _readApkBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                             textboxExl.Click += (sender_ap, e_ap) => {
                                 Form bgBlur = new Form();
@@ -2474,17 +2570,98 @@ namespace FlowSERVER1 {
                                     bgBlur.Dispose();
                                 }
                             };
-                            if (command.ExecuteNonQuery() == 1) {
-                                clearRedundane();
-                            }
                         }
+                        if(_extTypes == ".mp4" || _extTypes == ".mov" || _extTypes == ".webm" || _extTypes == ".avi" || _extTypes == ".wmv") {
+                            ShellFile shellFile = ShellFile.FromFilePath(_Files);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                            using (var stream = new MemoryStream()) {
+                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                            }
+                            Byte[] _readVidBytes = File.ReadAllBytes(_Files);
+
+                            Application.DoEvents();
+                            command.Parameters["@CUST_FILE"].Value = _readVidBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+
+                            textboxExl.Click += (sender_vid, e_vid) => {
+                                var getImgName = (Guna2PictureBox)sender_vid;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImage = new Bitmap(getImgName.Image);
+                                Form bgBlur = new Form();
+                                using (vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "folder_upload_info", _selectedFolder)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayVid.Owner = bgBlur;
+                                    displayVid.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                         }
+
+                        if (_extTypes == ".gif") {
+                            ShellFile shellFile = ShellFile.FromFilePath(_Files);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                            using (var stream = new MemoryStream()) {
+                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                            }
+                            Byte[] _readGifBytes = File.ReadAllBytes(_Files);
+
+                            Application.DoEvents();
+                            command.Parameters["@CUST_FILE"].Value = _readGifBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+
+                            textboxExl.Click += (sender_vid, e_vid) => {
+                                var getImgName = (Guna2PictureBox)sender_vid;
+                                var getWidth = getImgName.Image.Width;
+                                var getHeight = getImgName.Image.Height;
+                                Bitmap defaultImage = new Bitmap(getImgName.Image);
+                                Form bgBlur = new Form();
+                                using (gifFORM displayVid = new gifFORM(titleLab.Text, "folder_upload_info", _selectedFolder)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
+
+                                    displayVid.Owner = bgBlur;
+                                    displayVid.ShowDialog();
+
+                                    bgBlur.Dispose();
+                                }
+                            };
+                        }
+
                         if (_extTypes == ".pdf") {
                             Byte[] readPdfBytes = File.ReadAllBytes(_Files);
+                            Application.DoEvents();
                             command.Parameters["@CUST_FILE"].Value = readPdfBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                             textboxExl.Click += (sender_pdf, e_pdf) => {
                                 Form bgBlur = new Form();
-                                using (pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info","null")) {
+                                using (pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info",_selectedFolder)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2503,18 +2680,19 @@ namespace FlowSERVER1 {
                                     bgBlur.Dispose();
                                 }
                             };
-                            if (command.ExecuteNonQuery() == 1) {
-                                clearRedundane();
-                            }
                         }
 
-                        if (_extTypes == ".docx") {
+                        if (_extTypes == ".docx" || _extTypes == ".doc") {
                             Byte[] readWordBytes = File.ReadAllBytes(_Files);
+                            Application.DoEvents();
                             command.Parameters["@CUST_FILE"].Value = readWordBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             textboxExl.Click += (sender_pdf, e_pdf) => {
                                 Form bgBlur = new Form();
-                                using (wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info","null")) {
+                                using (wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info",_selectedFolder)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2533,18 +2711,19 @@ namespace FlowSERVER1 {
                                     bgBlur.Dispose();
                                 }
                             };
-                            if (command.ExecuteNonQuery() == 1) {
-                                clearRedundane();
-                            }
                         }
 
-                        if (_extTypes == ".pptx") {
+                        if (_extTypes == ".pptx" || _extTypes == ".ppt") {
                             Byte[] readPtxBytes = File.ReadAllBytes(_Files);
+                            Application.DoEvents();
                             command.Parameters["@CUST_FILE"].Value = readPtxBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                             textboxExl.Click += (sender_pdf, e_pdf) => {
                                 Form bgBlur = new Form();
-                                using (ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info","null")) {
+                                using (ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info",_selectedFolder)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -2563,41 +2742,40 @@ namespace FlowSERVER1 {
                                     bgBlur.Dispose();
                                 }
                             };
-                            if (command.ExecuteNonQuery() == 1) {
-                                clearRedundane();
-                            }
+                        }
 
-                            if (_extTypes == ".mp3" || _extTypes == ".wav") {
-                                Byte[] readAudBytes = File.ReadAllBytes(_Files);
-                                command.Parameters["@CUST_FILE"].Value = readAudBytes;
-                                textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-                                textboxExl.Click += (sender_pdf, e_pdf) => {
-                                    Form bgBlur = new Form();
-                                    using (audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info","null")) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Name = "bgBlurForm";
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
+                        if (_extTypes == ".mp3" || _extTypes == ".wav") {
+                            Byte[] readAudBytes = File.ReadAllBytes(_Files);
+                            Application.DoEvents();
+                            command.Parameters["@CUST_FILE"].Value = readAudBytes;
+                            command.ExecuteNonQuery();
+                            command.Dispose();
 
-                                        displayPic.Owner = bgBlur;
-                                        displayPic.ShowDialog();
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                            textboxExl.Click += (sender_pdf, e_pdf) => {
+                                Form bgBlur = new Form();
+                                using (audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info",_selectedFolder)) {
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                    bgBlur.Opacity = .24d;
+                                    bgBlur.BackColor = Color.Black;
+                                    bgBlur.WindowState = FormWindowState.Maximized;
+                                    bgBlur.TopMost = true;
+                                    bgBlur.Name = "bgBlurForm";
+                                    bgBlur.Location = this.Location;
+                                    bgBlur.StartPosition = FormStartPosition.Manual;
+                                    bgBlur.ShowInTaskbar = false;
+                                    bgBlur.Show();
 
-                                        bgBlur.Dispose();
-                                    }
-                                };
-                                if (command.ExecuteNonQuery() == 1) {
-                                    clearRedundane();
+                                    displayPic.Owner = bgBlur;
+                                    displayPic.ShowDialog();
+
+                                    bgBlur.Dispose();
                                 }
-                            }
+                            };
                         }
                     }
+                    clearRedundane();
                     var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
                     listBox1.SelectedIndex = _dirPosition;
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
@@ -2704,12 +2882,11 @@ namespace FlowSERVER1 {
                 flowLayoutPanel1.Controls.Clear();
 
                 List<string> typesValues = new List<string>();
-                String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND FOLDER_TITLE = @foldername";
+                String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 command = new MySqlCommand(getFileType, con);
                 command = con.CreateCommand();
                 command.CommandText = getFileType;
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
                 command.Parameters.AddWithValue("@foldername", _selectedFolder);
                 MySqlDataReader _readType = command.ExecuteReader();
                 while (_readType.Read()) {
@@ -2975,6 +3152,10 @@ namespace FlowSERVER1 {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label22_Click(object sender, EventArgs e) {
 
         }
     }

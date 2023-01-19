@@ -293,6 +293,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_rename_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-rename-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_software_installer_32 {
             get {
                 object obj = ResourceManager.GetObject("icons8-software-installer-32", resourceCulture);

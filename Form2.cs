@@ -254,16 +254,12 @@ namespace FlowSERVER1
             guna2TextBox2.PasswordChar = '*';
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Button5_Click_1(object sender, EventArgs e) {
-            this.Close();
-        }
-
         private void guna2TextBox3_TextChanged(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+            this.Close();
         }
     }
 }

@@ -184,19 +184,19 @@ namespace FlowSERVER1 {
             String _accType = _types[0];
             label6.Text = _accType;
             if (_accType == "Basic") {
-                label37.Text = "Limited to 10";
+                label37.Text = "Limited to 25";
             }
             else if (_accType == "Max") {
-                label37.Text = "Limited to 25";
+                label37.Text = "Limited to 50";
                 guna2Button5.Enabled = false;
             }
             else if (_accType == "Express") {
-                label37.Text = "Limited to 40";
+                label37.Text = "Limited to 85";
                 guna2Button5.Enabled = false;
                 guna2Button6.Enabled = false;
             }
             else if (_accType == "Supreme") {
-                label37.Text = "Limited to 95";
+                label37.Text = "Limited to 170";
                 guna2Button5.Enabled = false;
                 guna2Button6.Enabled = false;
                 guna2Button7.Enabled = false;
@@ -558,18 +558,18 @@ namespace FlowSERVER1 {
                 guna2Button7.Enabled = false;
                 guna2Button5.Enabled = false;
                 guna2Button10.Visible = false;
-                label37.Text = "Limited to 95";
+                label37.Text = "Limited to 170";
             }
             else if (_selectedAcc == "Express") {
                 guna2Button6.Enabled = false;
                 guna2Button5.Enabled = false;
                 guna2Button9.Visible = false;
-                label37.Text = "Limited to 40";
+                label37.Text = "Limited to 85";
             }
             else if (_selectedAcc == "Max") {
                 guna2Button5.Enabled = false;
                 guna2Button8.Visible = false;
-                label37.Text = "Limited to 25";
+                label37.Text = "Limited to 50";
             }
         }
 
@@ -668,6 +668,11 @@ namespace FlowSERVER1 {
 
         private void guna2Panel7_Paint_1(object sender, PaintEventArgs e) {
 
+        }
+
+        private void guna2Button13_Click(object sender, EventArgs e) {
+            chagneUserForm _ShowUsernameChangerForm = new chagneUserForm(label5.Text);
+            _ShowUsernameChangerForm.Show();
         }
     }
 }

@@ -26,7 +26,8 @@ namespace FlowSERVER1 {
 
             try {
                 if(_TableName == "file_info_word") {
-                    String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    setupDocx(LoaderModel.LoadFile("file_info_word","null",label1.Text));
+                    /*String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = con.CreateCommand();
                     command.CommandText = _getDocByte;
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -35,33 +36,74 @@ namespace FlowSERVER1 {
                     MySqlDataReader _readerBytes = command.ExecuteReader();
                     if (_readerBytes.Read()) {
                         var _getBytes = (byte[])_readerBytes["CUST_FILE"];
-                        setupDocx(_getBytes);
+                        if(_getBytes != null) {
+                            setupDocx(_getBytes);
+                        }
                     }
-                    _readerBytes.Close();
+                    _readerBytes.Close();*/
                 } else if (_TableName == "upload_info_directory") {
-                    String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
+                    /*  String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                      command = con.CreateCommand();
+                      command.CommandText = _getDocByte;
+                      command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                      command.Parameters.AddWithValue("@filename", label1.Text);
+                      command.Parameters.AddWithValue("@dirname", _DirectoryName);
+
+                      MySqlDataReader _readerBytes = command.ExecuteReader();
+                      if (_readerBytes.Read()) {
+                          var _getBytes = (byte[])_readerBytes["CUST_FILE"];
+                          if (_getBytes != null) {
+                              setupDocx(_getBytes);
+                          }
+                      }
+                      _readerBytes.Close();*/
+                }
+                else if (_TableName == "folder_upload_info") {
+                    setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
+                    /*String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     command = con.CreateCommand();
                     command.CommandText = _getDocByte;
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@filename", label1.Text);
-                    command.Parameters.AddWithValue("@dirname", _DirectoryName);
+                    command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
 
                     MySqlDataReader _readerBytes = command.ExecuteReader();
                     if (_readerBytes.Read()) {
                         var _getBytes = (byte[])_readerBytes["CUST_FILE"];
-                        setupDocx(_getBytes);
+                        if (_getBytes != null) {
+                            setupDocx(_getBytes);
+                        }
                     }
-                    _readerBytes.Close();
+                    _readerBytes.Close();*/
                 }
             }
-            catch (Exception eq) {
-                MessageBox.Show("Failed to load this document.", "Flowstorage");
+            catch (Exception) {
+                Form bgBlur = new Form();
+                using (errorLoad displayError = new errorLoad()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayError.Owner = bgBlur;
+                    displayError.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
             }
         }
 
         public void setupDocx(Byte[] _getByte) {
             var _getStream = new MemoryStream(_getByte);
             loadDocx(_getStream);
+            
         }
 
         public void loadDocx(Stream _getStream) {
@@ -77,61 +119,12 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your document.");
-                ShowAlert.Show();
-                Application.DoEvents();
-                if(_TableName == "file_info_word") {
-                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-
-                    MySqlDataReader _byteReader = command.ExecuteReader();
-                    if (_byteReader.Read()) {
-                        Application.OpenForms
-                          .OfType<Form>()
-                          .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                          .ToList()
-                          .ForEach(form => form.Close());
-                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
-                        SaveFileDialog _dialog = new SaveFileDialog();
-                        _dialog.Filter = "Word Document|*.docx";
-                        _dialog.FileName = label1.Text;
-                        if (_dialog.ShowDialog() == DialogResult.OK) {
-                            File.WriteAllBytes(_dialog.FileName, _getBytes);
-                        }
-                    }
-                    _byteReader.Close();
-                } else if (_TableName == "upload_info_directory") {
-                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-                    command.Parameters.AddWithValue("@dirname", _DirectoryName);
-
-                    MySqlDataReader _byteReader = command.ExecuteReader();
-                    if (_byteReader.Read()) {
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
-                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
-                        SaveFileDialog _dialog = new SaveFileDialog();
-                        _dialog.Filter = "Word Document|*.docx";
-                        _dialog.FileName = label1.Text;
-                        if (_dialog.ShowDialog() == DialogResult.OK) {
-                            File.WriteAllBytes(_dialog.FileName, _getBytes);
-                        }
-                    }
-                    _byteReader.Close();
-                }
-            }
-            catch (Exception eq) {
-                MessageBox.Show("Failed to download this file.", "Flowstorage");
+            if(_TableName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text,"upload_info_directory",_DirectoryName);
+            } else if (_TableName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirectoryName);
+            } else if (_TableName == "file_info_word") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_word", _DirectoryName);
             }
         }
 

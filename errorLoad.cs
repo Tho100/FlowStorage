@@ -9,23 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
-    public partial class successPay : Form {
-        public static successPay instance;
-        public successPay(String _accType) {
+    public partial class errorLoad : Form {
+        public errorLoad() {
             InitializeComponent();
-            instance = this;
-            label1.Text = _accType;
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
+            this.Text = "Please Restart";
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
+            Application.Restart();
+            Environment.Exit(0);
         }
 
-        private void successPay_Load(object sender, EventArgs e) {
+        private void errorLoad_Load(object sender, EventArgs e) {
 
         }
     }

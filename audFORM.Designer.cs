@@ -345,7 +345,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "audFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Audio Viewer";
+            this.Text = "Audio Player";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.audFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).EndInit();

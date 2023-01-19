@@ -16,49 +16,49 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
-        public gifFORM(String _titleName,String _tableName) {
+        public static String _Directory;
+        public gifFORM(String _titleName,String _tableName, String _directoryName) {
             InitializeComponent();
             var _form = Form1.instance;
             instance = this;
             label2.Text = "Uploaded By " + _form.label5.Text;
             label1.Text = _titleName;
             _TableName = _tableName;
+            _Directory = _directoryName;
 
             try {
-
-                if(_TableName == "file_info_gif") {
-                    String _readGifFiles = "SELECT CUST_FILE FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
-                    command = con.CreateCommand();
-                    command.CommandText = _readGifFiles;
-                    command.Parameters.AddWithValue("@username",_form.label5.Text);
-                    command.Parameters.AddWithValue("@filepath",_titleName);
-
-                    MySqlDataReader _readByteValues = command.ExecuteReader();
-                    if(_readByteValues.Read()) {
-                        var _byteValues = (byte[])_readByteValues["CUST_FILE"];
-                        MemoryStream _memStream = new MemoryStream(_byteValues);
+                if(_TableName == "file_info_gif") {                  
+                    MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("upload_info_directory", _directoryName, label1.Text));
+                    guna2PictureBox1.Image = Image.FromStream(_memStream);
+                    guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                } else if (_TableName == "upload_info_directory") {
+                        MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("upload_info_directory",_directoryName,label1.Text));
                         guna2PictureBox1.Image = Image.FromStream(_memStream);
                         guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                    } 
-                    _readByteValues.Close();
-                } else if (_TableName == "upload_info_directory") {
-                    String _readGifFiles = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
-                    command = con.CreateCommand();
-                    command.CommandText = _readGifFiles;
-                    command.Parameters.AddWithValue("@username", _form.label5.Text);
-                    command.Parameters.AddWithValue("@filepath", _titleName);
-
-                    MySqlDataReader _readByteValues = command.ExecuteReader();
-                    if (_readByteValues.Read()) {
-                        var _byteValues = (byte[])_readByteValues["CUST_FILE"];
-                        MemoryStream _memStream = new MemoryStream(_byteValues);
+                } else if (_TableName == "folder_upload_info") {
+                        MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("folder_upload_info",_directoryName,label1.Text));
                         guna2PictureBox1.Image = Image.FromStream(_memStream);
                         guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     }
-                    _readByteValues.Close();
+            } catch (Exception) {
+                Form bgBlur = new Form();
+                using (errorLoad displayError = new errorLoad()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayError.Owner = bgBlur;
+                    displayError.ShowDialog();
+
+                    bgBlur.Dispose();
                 }
-            } catch (Exception eq) {
-                MessageBox.Show("Failed to play the file.","Flowstorage");
             }
         }
 
@@ -84,29 +84,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            try {
-
-                String _readGifFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
-
-                command = new MySqlCommand(_readGifFiles, con);
-                command = con.CreateCommand();
-                command.CommandText = _readGifFiles;
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filetitle", label1.Text);
-
-                MySqlDataReader _gifReader = command.ExecuteReader();
-                if (_gifReader.Read()) {
-                    var get_apkValues = (byte[])_gifReader["CUST_FILE"];
-                    SaveFileDialog _OpenDialog = new SaveFileDialog();
-                    _OpenDialog.Filter = "Gif|*.gif";
-                    _OpenDialog.FileName = label1.Text;
-                    if (_OpenDialog.ShowDialog() == DialogResult.OK) {
-                        File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
-                    }
-                }
-                _gifReader.Close();
-            } catch (Exception eq) {
-                MessageBox.Show("Failed to download this file.","Flowstorage");
+            if (_TableName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _Directory);
+            }
+            else if (_TableName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _Directory);
+            }
+            else if (_TableName == "file_info_exe") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_exe", _Directory);
             }
         }
 

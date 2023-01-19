@@ -55,7 +55,6 @@ namespace FlowSERVER1
 
         public void generateDir(int currMain, String getDirTitle) {
             try {
-
                 var flowlayout = Form1.instance.flowLayoutPanel1;
                 int top = 275;
                 int h_p = 100;
@@ -160,37 +159,20 @@ namespace FlowSERVER1
                 };
 
                 picBanner.Click += (sender_f, e_f) => {
-                    Form backgrounDblur = new Form();
-                    try {
-                      using(Form3 dirForm = new Form3(dirName.Text)) {
-                            backgrounDblur.StartPosition = FormStartPosition.Manual;
-                            backgrounDblur.FormBorderStyle = FormBorderStyle.None;
-                            backgrounDblur.Opacity = .28d;
-                            backgrounDblur.BackColor = Color.Black;
-                            backgrounDblur.WindowState = FormWindowState.Maximized;
-                            backgrounDblur.TopMost = true;
-                            backgrounDblur.Location = this.Location;
-                            backgrounDblur.StartPosition = FormStartPosition.Manual;
-                            backgrounDblur.ShowInTaskbar = false;
-                            backgrounDblur.Show();
-
-                            dirForm.Owner = backgrounDblur;
-
-                            dirForm.ShowDialog();
-
-                            backgrounDblur.Dispose();
-                        }
-                    } catch (Exception eq) {
-                        //
-                    }
-
-                    //Form3 dirForm = new Form3(dirName.Text);
-                    //dirForm.Show();
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
+                    ShowAlert.Show();
+                    Form3 displayDirectory = new Form3(getDirTitle);
+                    displayDirectory.Show();
+                    Application.OpenForms
+                   .OfType<Form>()
+                   .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                   .ToList()
+                   .ForEach(form => form.Close());
                 };
                 clearRedundane();
                 this.Close();
-            } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+            } catch (Exception) {
+                MessageBox.Show("Are you conneted to the internet?","Flowstorage: An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
         public void DisplayError(String accType) {
@@ -263,7 +245,7 @@ namespace FlowSERVER1
                     int _getValue = Convert.ToInt32(_getScalar);
 
                     if(_accType == "Supreme") {
-                        if(Convert.ToInt32(_getFilesCount) != 95) {
+                        if(Convert.ToInt32(_getFilesCount) != 170) {
                             if(_getValue != 5) {
 
                                 value_Dir++;
@@ -288,7 +270,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Basic") {
-                        if(Convert.ToInt32(_getFilesCount) != 10) {
+                        if(Convert.ToInt32(_getFilesCount) != 25) {
                             if (_getValue != 2) {
                           
                                 value_Dir++;
@@ -316,7 +298,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Max") {
-                        if (Convert.ToInt32(_getFilesCount) != 25) {
+                        if (Convert.ToInt32(_getFilesCount) != 50) {
                             if (_getValue != 2) {
 
                                 value_Dir++;
@@ -344,7 +326,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Express") {
-                        if (Convert.ToInt32(_getFilesCount) != 40) {
+                        if (Convert.ToInt32(_getFilesCount) != 85) {
                             if (_getValue != 2) {
 
                                 value_Dir++;

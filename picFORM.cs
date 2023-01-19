@@ -11,13 +11,17 @@ using System.Windows.Forms;
 namespace FlowSERVER1 {
     public partial class picFORM : Form {
         public static picFORM instance;
-        public picFORM(Image userImage, int width, int height,string title) {
+        private static String TableName;
+        private static String Directoryname;
+        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName) {
             InitializeComponent();
             instance = this;
             var setupImage = resizeUserImage(userImage,new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = title;
             label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            TableName = _TableName;
+            Directoryname = _DirectoryName;
 
             ToolTip saveTip = new ToolTip();
             saveTip.SetToolTip(this.guna2Button4,"Download Image");
@@ -50,18 +54,14 @@ namespace FlowSERVER1 {
         }
         
         private void guna2Button4_Click(object sender, EventArgs e) {
-            try {
-                String _Ext = label1.Text.Substring(label1.Text.Length-3);
-                String setupExt = "" + _Ext + "|." + _Ext;
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = setupExt + "|JPG|.*jpg|JPEG|.*jpeg";
-                saveFileDialog.FileName = label1.Text;
-                if(saveFileDialog.ShowDialog() == DialogResult.OK) {
-                    guna2PictureBox1.Image.Save(saveFileDialog.FileName);
-                   
-                }
-            } catch (Exception eq) {
-                MessageBox.Show("An error occurred while trying to save image\nMake sure you connected to the internet.","Flow Storage System");
+            if (TableName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", Directoryname);
+            }
+            else if (TableName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", Directoryname);
+            }
+            else if (TableName == "file_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info", Directoryname);
             }
         }
 

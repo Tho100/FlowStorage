@@ -71,7 +71,7 @@
             this.Name = "RetrievalAlert";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "RetrievalAlert";
+            this.Text = "Retrieving your data..";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.RetrievalAlert_Load);
             this.ResumeLayout(false);

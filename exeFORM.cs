@@ -66,54 +66,14 @@ namespace FlowSERVER1 {
             }
         }
         private void guna2Button4_Click(object sender, EventArgs e) {
-            try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
-                ShowAlert.Show();
-                Application.DoEvents();
-                if (_TableName == "file_info_exe") {
-                    String _readExeBytes = "SELECT CUST_FILE FROM file_info_exe WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
-                    command = new MySqlCommand(_readExeBytes,con);
-                    command = con.CreateCommand();
-                    command.CommandText = _readExeBytes;
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filetitle", label1.Text);
-            
-                    MySqlDataReader _exeReader = command.ExecuteReader();
-                    if(_exeReader.Read()) {
-                        Application.OpenForms
-                      .OfType<Form>()
-                      .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                      .ToList()
-                      .ForEach(form => form.Close());
-                        var _getExeValues = (byte[])_exeReader["CUST_FILE"];
-                        GlobalByte = _getExeValues;
-                    }
-                    _exeReader.Close();
-                    setupDialog(GlobalByte);
-                } else if (_TableName == "upload_info_directory") {
-                    String _readExeBytes = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle AND DIR_NAME = @dirname";
-                    command = new MySqlCommand(_readExeBytes, con);
-                    command = con.CreateCommand();
-                    command.CommandText = _readExeBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filetitle", label1.Text);
-                    command.Parameters.AddWithValue("@dirname", _DirectoryName);
-
-                    MySqlDataReader _exeReader = command.ExecuteReader();
-                    if (_exeReader.Read()) {
-                        Application.OpenForms
-                      .OfType<Form>()
-                      .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                      .ToList()
-                      .ForEach(form => form.Close());
-                        var _getExeValues = (byte[])_exeReader["CUST_FILE"];
-                        GlobalByte = _getExeValues;
-                    }
-                    _exeReader.Close();
-                    setupDialog(GlobalByte);
-                }
-            } catch (Exception eq) {
-                MessageBox.Show("Failed to download this file.","Flowstorage");
+            if (_TableName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirectoryName);
+            }
+            else if (_TableName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirectoryName);
+            }
+            else if (_TableName == "file_info_exe") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_exe", _DirectoryName);
             }
         }
 

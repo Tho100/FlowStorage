@@ -677,6 +677,7 @@
             this.label22.TabIndex = 43;
             this.label22.Text = "Please add email";
             this.label22.Visible = false;
+            this.label22.Click += new System.EventHandler(this.label22_Click);
             // 
             // guna2TextBox3
             // 

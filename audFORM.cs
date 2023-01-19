@@ -32,6 +32,19 @@ namespace FlowSERVER1 {
         SoundPlayer _getSoundPlayer = null;
         WaveOut _mp3WaveOut = null;
 
+        private void setupPlayer(String _audType, Byte[] _getByteAud) {
+            if (_audType == "wav") {
+                using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
+                    SoundPlayer player = new SoundPlayer(_ms);
+                    _getSoundPlayer = player;
+                    player.Play();
+                }
+            }
+            else if (_audType == "mp3") {
+                mp3ToWav(_getByteAud);
+            }
+        }
+
         private void guna2Button5_Click(object sender, EventArgs e) {                
             timer1.Start();
             timer2.Start();
@@ -44,59 +57,12 @@ namespace FlowSERVER1 {
                     ShowAlert.Show();
                     Application.DoEvents();
                     if (_TabName == "file_info_audi") {
-                        String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(_selectAud, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", label1.Text);
-                        Application.DoEvents();
-                        MySqlDataReader _AudReader = command.ExecuteReader();
-                        if (_AudReader.Read()) {
-                            Application.OpenForms
-                             .OfType<Form>()
-                             .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                             .ToList()
-                             .ForEach(form => form.Close());
-                            var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                            if (_audType == "wav") {
-                                using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
-                                    SoundPlayer player = new SoundPlayer(_ms);
-                                    _getSoundPlayer = player;
-                                    player.Play();
-                                }
-                            }
-                            else if (_audType == "mp3") {
-                                mp3ToWav(_getByteAud);
-                            }
-                        }
-                        _AudReader.Close();
+                        setupPlayer(_audType,LoaderModel.LoadFile("file_info_audi",_DirName,label1.Text));
                     } else if (_TabName == "upload_info_directory") {
-                        String _selectAud = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                        command = new MySqlCommand(_selectAud, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", label1.Text);
-                        command.Parameters.AddWithValue("@dirname", _DirName);
-
-                        Application.DoEvents();
-                        MySqlDataReader _AudReader = command.ExecuteReader();
-                        if (_AudReader.Read()) {
-                            Application.OpenForms
-                             .OfType<Form>()
-                             .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                             .ToList()
-                             .ForEach(form => form.Close());
-                            var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                            if (_audType == "wav") {
-                                using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
-                                    SoundPlayer player = new SoundPlayer(_ms);
-                                    _getSoundPlayer = player;
-                                    player.Play();
-                                }
-                            }
-                            else if (_audType == "mp3") {
-                                mp3ToWav(_getByteAud);
-                            }
-                        }
-                        _AudReader.Close();
+                        setupPlayer(_audType, LoaderModel.LoadFile("upload_info_directory", _DirName, label1.Text));
+                    }
+                    else if (_TabName == "folder_upload_info") {
+                        setupPlayer(_audType, LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
                     }
                 }
             }
@@ -190,60 +156,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving audio data.");
-                ShowAlert.Show();
-                Application.DoEvents();
-                if(_TabName == "file_info_audi") {
-                    String _selectAud = "SELECT CUST_FILE FROM file_info_audi WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = new MySqlCommand(_selectAud, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-
-                    MySqlDataReader _AudReader = command.ExecuteReader();
-                    if (_AudReader.Read()) {
-                        Application.OpenForms
-                       .OfType<Form>()
-                       .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                       .ToList()
-                       .ForEach(form => form.Close());
-                        var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                        SaveFileDialog _dialog = new SaveFileDialog();
-                        _dialog.Filter = "Audio Files|*.mp3;*.wav";
-                        _dialog.FileName = label1.Text;
-                        if(_dialog.ShowDialog() == DialogResult.OK) {
-                            File.WriteAllBytes(_dialog.FileName,_getByteAud);
-                        }
-                    }
-                    _AudReader.Close();
-
-                } else if (_TabName == "upload_info_directory") {
-                    String _selectAud = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                    command = new MySqlCommand(_selectAud, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-                    command.Parameters.AddWithValue("@dirname",_DirName);
-
-                    MySqlDataReader _AudReader = command.ExecuteReader();
-                    if (_AudReader.Read()) {
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
-                        var _getByteAud = (byte[])_AudReader["CUST_FILE"];
-                        SaveFileDialog _dialog = new SaveFileDialog();
-                        _dialog.Filter = "Audio Files|*.mp3;*.wav";
-                        _dialog.FileName = label1.Text;
-                        if (_dialog.ShowDialog() == DialogResult.OK) {
-                            File.WriteAllBytes(_dialog.FileName, _getByteAud);
-                        }
-                    }
-                    _AudReader.Close();
-                }
+            if (_TabName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirName);
             }
-            catch (Exception eq) {
-                MessageBox.Show("Failed to save this audio.", "Flowstorage");
+            else if (_TabName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirName);
+            }
+            else if (_TabName == "file_info_aud") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_aud", _DirName);
             }
         }
 

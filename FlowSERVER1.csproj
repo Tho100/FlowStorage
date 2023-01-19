@@ -458,6 +458,12 @@
     <Compile Include="Button_WOC.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="chagneUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chagneUserForm.Designer.cs">
+      <DependentUpon>chagneUserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConfirmRemFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -472,6 +478,12 @@
       <DependentUpon>DirErFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="EncryptionModel.cs" />
+    <Compile Include="errorLoad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="errorLoad.Designer.cs">
+      <DependentUpon>errorLoad.cs</DependentUpon>
+    </Compile>
     <Compile Include="exeFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -514,6 +526,7 @@
     <Compile Include="gifFORM.Designer.cs">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoaderModel.cs" />
     <Compile Include="msiFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -574,11 +587,18 @@
     <Compile Include="RetrievalAlert.Designer.cs">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="SaverModel.cs" />
     <Compile Include="splashFORM.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="splashFORM.Designer.cs">
       <DependentUpon>splashFORM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="successChangeUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="successChangeUser.Designer.cs">
+      <DependentUpon>successChangeUser.cs</DependentUpon>
     </Compile>
     <Compile Include="successPay.cs">
       <SubType>Form</SubType>
@@ -622,11 +642,17 @@
     <EmbeddedResource Include="audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="chagneUserForm.resx">
+      <DependentUpon>chagneUserForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfirmRemFORM.resx">
       <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DirErFORM.resx">
       <DependentUpon>DirErFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="errorLoad.resx">
+      <DependentUpon>errorLoad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="exeFORM.resx">
       <DependentUpon>exeFORM.cs</DependentUpon>
@@ -686,6 +712,9 @@
     <EmbeddedResource Include="splashFORM.resx">
       <DependentUpon>splashFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="successChangeUser.resx">
+      <DependentUpon>successChangeUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="successPay.resx">
       <DependentUpon>successPay.cs</DependentUpon>
     </EmbeddedResource>
@@ -724,6 +753,7 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-rename-48.png" />
     <None Include="Resources\icons8-partying-face-96.png" />
     <None Include="Resources\icons8-partying-face-48.png" />
     <None Include="Resources\icons8-subtract-30.png" />

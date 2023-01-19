@@ -288,24 +288,15 @@ namespace FlowSERVER1 {
 
                         picMain_Q.Image = FlowSERVER1.Properties.Resources.icon1;
                         picMain_Q.Click += (sender_dir, ev_dir) => {
-                            Form bgBlur = new Form();
-                            using (Form3 displayDirectory = new Form3(titleLab.Text)) {
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                bgBlur.Opacity = .24d;
-                                bgBlur.BackColor = Color.Black;
-                                bgBlur.WindowState = FormWindowState.Maximized;
-                                bgBlur.TopMost = true;
-                                bgBlur.Location = this.Location;
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.ShowInTaskbar = false;
-                                bgBlur.Show();
-
-                                displayDirectory.Owner = bgBlur;
-                                displayDirectory.ShowDialog();
-
-                                bgBlur.Dispose();
-                            }
+                            RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
+                            ShowAlert.Show();
+                            Form3 displayDirectory = new Form3(titleLab.Text);
+                            displayDirectory.Show();
+                            Application.OpenForms
+                               .OfType<Form>()
+                               .Where(getForm => String.Equals(getForm.Name, "RetrievalAlert"))
+                               .ToList()
+                               .ForEach(getForm => getForm.Close());
                         };
                     }
                 }
@@ -463,7 +454,7 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text);
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null");
                                 displayPic.Show();
 
                             };
@@ -586,7 +577,7 @@ namespace FlowSERVER1 {
 
                             picMain_Q.Click += (sender_gi, ex_gi) => {
                                 Form bgBlur = new Form();
-                                using (gifFORM displayGif = new gifFORM(titleLab.Text,"file_info_gif")) {
+                                using (gifFORM displayGif = new gifFORM(titleLab.Text,"file_info_gif","null")) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -783,7 +774,7 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
                 loadUserData();
-            } catch (Exception) {
+            } catch (Exception eq) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -857,7 +848,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) {
+        private void guna2Button4_Click_1(object sender, EventArgs e) {
             this.Close();
         }
     }

@@ -227,7 +227,7 @@ namespace FlowSERVER1
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -406,7 +406,7 @@ namespace FlowSERVER1
                     textboxPic.Image = new Bitmap(ms);
                     textboxPic.Click += (sender_gif, e_gif) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory")) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -862,7 +862,7 @@ namespace FlowSERVER1
                                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                                     Form bgBlur = new Form();
-                                    using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName)) {
+                                    using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "upload_info_directory", label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1039,7 +1039,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = toBitMap;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory")) {
+                                    using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

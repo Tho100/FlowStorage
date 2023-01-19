@@ -16,7 +16,11 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
+            Application.OpenForms
+                              .OfType<Form>()
+                              .Where(form => String.Equals(form.Name, "upgradeFORM"))
+                              .ToList()
+                              .ForEach(form => form.Close());
         }
 
         private void upgradeFORM_Load(object sender, EventArgs e) {

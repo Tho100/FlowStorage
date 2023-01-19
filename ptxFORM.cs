@@ -29,50 +29,48 @@ namespace FlowSERVER1 {
                 ShowAlert.Show();
                 Application.DoEvents();
                 if (_TableName == "file_info_ptx") {
-                    String _readPtxValues = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
-
-                    command = new MySqlCommand(_readPtxValues, con);
-                    command = con.CreateCommand();
-                    command.CommandText = _readPtxValues;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filetitle", label1.Text);
-                
-                    MySqlDataReader _ptxReader = command.ExecuteReader();
-                    if (_ptxReader.Read()) {
-                        Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
-                        var get_ptxValues = (byte[])_ptxReader["CUST_FILE"];
-                        setupPtx(get_ptxValues);
-                    }
-                    _ptxReader.Close();
-                } else {
-                    String _readPtxValues = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle AND DIR_NAME = @dirname";
-
-                    command = new MySqlCommand(_readPtxValues, con);
-                    command = con.CreateCommand();
-                    command.CommandText = _readPtxValues;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filetitle", label1.Text);
-                    command.Parameters.AddWithValue("@dirname", _Directory);
-
-                    MySqlDataReader _ptxReader = command.ExecuteReader();
-                    if (_ptxReader.Read()) {
-                        Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
-                        var get_ptxValues = (byte[])_ptxReader["CUST_FILE"];
-                        setupPtx(get_ptxValues);
-                    }
-                    _ptxReader.Close();
+                    Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                        .ToList()
+                        .ForEach(form => form.Close());
+                    setupPtx(LoaderModel.LoadFile("file_info_ptx",_DirectoryName,label1.Text));
+                    
+                } else if (_TableName == "upload_info_directory") {
+                    Application.OpenForms
+                          .OfType<Form>()
+                          .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                          .ToList()
+                          .ForEach(form => form.Close());
+                    setupPtx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
                 }
-            }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                else if (_TableName == "folder_upload_info") {
+                    Application.OpenForms
+                            .OfType<Form>()
+                            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                            .ToList()
+                            .ForEach(form => form.Close());
+                    setupPtx(LoaderModel.LoadFile("folder_upload_info", _DirectoryName, label1.Text));
+                }
+            }  catch (Exception) {
+                Form bgBlur = new Form();
+                using (errorLoad displayError = new errorLoad()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
+
+                    displayError.Owner = bgBlur;
+                    displayError.ShowDialog();
+
+                    bgBlur.Dispose();
+                }
             }
         }
 
@@ -90,66 +88,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your presentation.");
-                ShowAlert.Show();
-                Application.DoEvents();
-                if (_TableName == "file_info_ptx") {
-                    String _readPtxValues = "SELECT CUST_FILE FROM " + _TableName + "  WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle";
-
-                    command = new MySqlCommand(_readPtxValues, con);
-                    command = con.CreateCommand();
-                    command.CommandText = _readPtxValues;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filetitle", label1.Text);
-                
-                    MySqlDataReader _ptxReader = command.ExecuteReader();
-                    if (_ptxReader.Read()) {
-                        Application.OpenForms
-                       .OfType<Form>()
-                       .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                       .ToList()
-                       .ForEach(form => form.Close());
-                        var get_apkValues = (byte[])_ptxReader["CUST_FILE"];
-                        SaveFileDialog _OpenDialog = new SaveFileDialog();
-                        _OpenDialog.Filter = "PowerPoint|*.pptx;*.ppt";
-                        _OpenDialog.FileName = label1.Text;
-                        if (_OpenDialog.ShowDialog() == DialogResult.OK) {
-                            File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
-                        }
-                    }
-                    _ptxReader.Close();
-                } else {
-                    String _readPtxValues = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filetitle AND DIR_NAME = @dirname";
-                    command = new MySqlCommand(_readPtxValues, con);
-                    command = con.CreateCommand();
-                    command.CommandText = _readPtxValues;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filetitle", label1.Text);
-                    command.Parameters.AddWithValue("@dirname", _DirectoryName);
-
-                    MySqlDataReader _ptxReader = command.ExecuteReader();
-                    if (_ptxReader.Read()) {
-                        Application.OpenForms
-                         .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                         .ToList()
-                         .ForEach(form => form.Close());
-                        var get_apkValues = (byte[])_ptxReader["CUST_FILE"];
-                        SaveFileDialog _OpenDialog = new SaveFileDialog();
-                        _OpenDialog.Filter = "PowerPoint|*.pptx;*.ppt";
-                        _OpenDialog.FileName = label1.Text;
-                        if (_OpenDialog.ShowDialog() == DialogResult.OK) {
-                            File.WriteAllBytes(_OpenDialog.FileName, get_apkValues);
-                        }
-                    }
-                    _ptxReader.Close();
-                }
-
+            if (_TableName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirectoryName);
             }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //MessageBox.Show("Failed to download this file.","Flowstorage");
+            else if (_TableName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirectoryName);
+            }
+            else if (_TableName == "file_info_ptx") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_ptx", _DirectoryName);
             }
         }
 

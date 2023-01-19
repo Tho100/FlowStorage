@@ -182,7 +182,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "exeFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "exeFORM";
+            this.Text = "EXE";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.exeFORM_Load);
             this.ResumeLayout(false);

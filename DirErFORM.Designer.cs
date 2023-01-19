@@ -135,7 +135,7 @@
             this.Name = "DirErFORM";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DirErFORM";
+            this.Text = "Upgrade Now!";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.DirErFORM_Load);
             this.ResumeLayout(false);

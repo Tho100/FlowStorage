@@ -122,10 +122,13 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "successPay";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "successPay";
+            this.Text = "Account Upgraded!";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.successPay_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

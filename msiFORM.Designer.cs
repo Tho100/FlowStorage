@@ -182,7 +182,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "msiFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "msiFORM";
+            this.Text = "MSI";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.msiFORM_Load);
             this.ResumeLayout(false);
