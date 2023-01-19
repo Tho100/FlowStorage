@@ -126,6 +126,7 @@ namespace FlowSERVER1 {
                                 }
                                 else {
                                     label4.Text = "Password is incorrect.";
+                                    label4.Visible = true;
                                 }
                             }
                         } else {

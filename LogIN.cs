@@ -22,8 +22,9 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
         public static LogIN instance;
-        public static String decryptMainKey;
-        public static String encryptionKeyVal;
+        private static String decryptMainKey;
+        private static String encryptionKeyVal;
+        private static String pinDecryptionKey;
         public LogIN() {
             InitializeComponent();
             instance = this;
@@ -57,6 +58,7 @@ namespace FlowSERVER1 {
             var lab8 = form.label8;
             var _getEmail = guna2TextBox1.Text;
             var _getPass = guna2TextBox2.Text;
+            var _getPin = guna2TextBox4.Text;
 
             void setupRedundane() {
 
@@ -114,9 +116,25 @@ namespace FlowSERVER1 {
                 label4.Visible = true;
             }
 
+            List<String> pinValuesKey_ = new List<String>();
+            String selectpinQue = "SELECT CUST_PIN FROM information WHERE CUST_EMAIL = @email";
+            command = con.CreateCommand();
+            command.CommandText = selectpinQue;
+            command.Parameters.AddWithValue("@email", _getEmail);
+
+            MySqlDataReader pinReader = command.ExecuteReader();
+            while (pinReader.Read()) {
+                pinValuesKey_.Add(pinReader.GetString(0));
+            }
+            pinReader.Close();
+
+            if(pinValuesKey_.Count > 0) {
+                pinDecryptionKey = EncryptionModel.Decrypt(pinValuesKey_[0], "0123456789085746");
+            }
+
             ///////////////////
 
-            if (_getPass == decryptMainKey) {
+            if (_getPass == decryptMainKey && _getPin == pinDecryptionKey) {
                 Form1.instance.label3.Text = encryptionKeyVal;
                 setupRedundane();
                 this.Close();

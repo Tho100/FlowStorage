@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
 
             try {
                 if(_TableName == "file_info_gif") {                  
-                    MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("upload_info_directory", _directoryName, label1.Text));
+                    MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("file_info_gif", _directoryName, label1.Text));
                     guna2PictureBox1.Image = Image.FromStream(_memStream);
                     guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 } else if (_TableName == "upload_info_directory") {
@@ -40,7 +40,7 @@ namespace FlowSERVER1 {
                         guna2PictureBox1.Image = Image.FromStream(_memStream);
                         guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     }
-            } catch (Exception) {
+            } catch (Exception eq) {
                 Form bgBlur = new Form();
                 using (errorLoad displayError = new errorLoad()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
@@ -90,8 +90,8 @@ namespace FlowSERVER1 {
             else if (_TableName == "folder_upload_info") {
                 SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _Directory);
             }
-            else if (_TableName == "file_info_exe") {
-                SaverModel.SaveSelectedFile(label1.Text, "file_info_exe", _Directory);
+            else if (_TableName == "file_info_gif") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_gif", _Directory);
             }
         }
 

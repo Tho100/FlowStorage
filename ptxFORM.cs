@@ -28,28 +28,13 @@ namespace FlowSERVER1 {
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your presentation.");
                 ShowAlert.Show();
                 Application.DoEvents();
-                if (_TableName == "file_info_ptx") {
-                    Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                if (_TableName == "file_info_ptx") {   
                     setupPtx(LoaderModel.LoadFile("file_info_ptx",_DirectoryName,label1.Text));
                     
                 } else if (_TableName == "upload_info_directory") {
-                    Application.OpenForms
-                          .OfType<Form>()
-                          .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                          .ToList()
-                          .ForEach(form => form.Close());
                     setupPtx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
                 }
-                else if (_TableName == "folder_upload_info") {
-                    Application.OpenForms
-                            .OfType<Form>()
-                            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                            .ToList()
-                            .ForEach(form => form.Close());
+                else if (_TableName == "folder_upload_info") { 
                     setupPtx(LoaderModel.LoadFile("folder_upload_info", _DirectoryName, label1.Text));
                 }
             }  catch (Exception) {

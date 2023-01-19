@@ -26,56 +26,15 @@ namespace FlowSERVER1 {
 
             try {
                 if(_TableName == "file_info_word") {
+                    /*
+                     * @ Load doc data from LoaderModel class
+                     */
                     setupDocx(LoaderModel.LoadFile("file_info_word","null",label1.Text));
-                    /*String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = con.CreateCommand();
-                    command.CommandText = _getDocByte;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-
-                    MySqlDataReader _readerBytes = command.ExecuteReader();
-                    if (_readerBytes.Read()) {
-                        var _getBytes = (byte[])_readerBytes["CUST_FILE"];
-                        if(_getBytes != null) {
-                            setupDocx(_getBytes);
-                        }
-                    }
-                    _readerBytes.Close();*/
                 } else if (_TableName == "upload_info_directory") {
                     setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
-                    /*  String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                      command = con.CreateCommand();
-                      command.CommandText = _getDocByte;
-                      command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                      command.Parameters.AddWithValue("@filename", label1.Text);
-                      command.Parameters.AddWithValue("@dirname", _DirectoryName);
-
-                      MySqlDataReader _readerBytes = command.ExecuteReader();
-                      if (_readerBytes.Read()) {
-                          var _getBytes = (byte[])_readerBytes["CUST_FILE"];
-                          if (_getBytes != null) {
-                              setupDocx(_getBytes);
-                          }
-                      }
-                      _readerBytes.Close();*/
                 }
                 else if (_TableName == "folder_upload_info") {
                     setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
-                    /*String _getDocByte = "SELECT CUST_FILE FROM " + _Table + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
-                    command = con.CreateCommand();
-                    command.CommandText = _getDocByte;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-                    command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
-
-                    MySqlDataReader _readerBytes = command.ExecuteReader();
-                    if (_readerBytes.Read()) {
-                        var _getBytes = (byte[])_readerBytes["CUST_FILE"];
-                        if (_getBytes != null) {
-                            setupDocx(_getBytes);
-                        }
-                    }
-                    _readerBytes.Close();*/
                 }
             }
             catch (Exception) {

@@ -110,13 +110,12 @@ namespace FlowSERVER1 {
                 List<string> dateValues = new List<string>();
                 List<string> titleValues = new List<string>();
 
-                String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(getUpDate, con);
                 command = con.CreateCommand();
                 command.CommandText = getUpDate;
 
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
                 MySqlDataReader readerDate = command.ExecuteReader();
 
                 while (readerDate.Read()) {
@@ -134,13 +133,12 @@ namespace FlowSERVER1 {
                 dateLab.Location = new Point(12, 208);
                 dateLab.Text = dateValues[i];
 
-                String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(getTitleQue, con);
                 command = con.CreateCommand();
                 command.CommandText = getTitleQue;
 
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
 
                 MySqlDataReader titleReader = command.ExecuteReader();
                 while (titleReader.Read()) {
@@ -199,10 +197,9 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                        String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@password", label3.Text);
                         command.Parameters.AddWithValue("@filename", titleFile);
                         command.ExecuteNonQuery();
 
@@ -221,10 +218,9 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "file_info") {
 
-                    String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
 
                     MySqlDataAdapter da = new MySqlDataAdapter(command);
                     DataSet ds = new DataSet();
@@ -389,10 +385,9 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_gif") {
-                    String getImgQue = "SELECT CUST_THUMB FROM file_info_gif WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    String getImgQue = "SELECT CUST_THUMB FROM file_info_gif WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(getImgQue, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@password", label3.Text);
 
                     MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
                     DataSet ds_Read = new DataSet();
@@ -689,17 +684,18 @@ namespace FlowSERVER1 {
                 label8.Visible = false;
                 var img = ((Guna2PictureBox)panelF.Controls["imgf" + i]);
                 if (typeValues[i] == ".png" || typeValues[i] == ".jpeg" || typeValues[i] == ".jpg" || typeValues[i] == ".bmp") {
-                    Application.DoEvents();
-                    String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+                 //   Application.DoEvents();
+                    String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@foldername", _foldTitle);
+                    command.Parameters.AddWithValue("@filename", titleLab.Text);
 
                     MySqlDataAdapter da = new MySqlDataAdapter(command);
                     DataSet ds = new DataSet();
 
                     da.Fill(ds);
-                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
+                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[0]["CUST_FILE"]);
 
                     img.Image = new Bitmap(ms);
 
@@ -710,7 +706,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info","null")) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"folder_upload_info","null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -789,7 +785,7 @@ namespace FlowSERVER1 {
                 }
 
                 if(typeValues[i] == ".mp4" || typeValues[i] == ".mov" || typeValues[i] == ".webm" || typeValues[i] == ".avi" || typeValues[i] == ".wmv") {
-                    Application.DoEvents();
+                //    Application.DoEvents();
                     String getImgQue = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND CUST_FILE_PATH = @filename";
                     command = new MySqlCommand(getImgQue, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -829,12 +825,53 @@ namespace FlowSERVER1 {
                     };
                 }
 
+                if (typeValues[i] == ".gif") {
+                 //   Application.DoEvents();
+                    String getImgQue = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(getImgQue, con);
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@foldtitle", _foldTitle);
+                    command.Parameters.AddWithValue("@filename", titleLab.Text);
+
+                    MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
+                    DataSet ds_Read = new DataSet();
+                    da_Read.Fill(ds_Read);
+                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[0]["CUST_THUMB"]);
+
+                    img.Image = new Bitmap(ms);
+                    img.Click += (sender_vid, e_vid) => {
+                        var getImgName = (Guna2PictureBox)sender_vid;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+                        Bitmap defaultImg = new Bitmap(getImgName.Image);
+                        Form bgBlur = new Form();
+                        using (vidFORM displayVid = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "folder_upload_info", _foldTitle)) {
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                            bgBlur.Opacity = .24d;
+                            bgBlur.BackColor = Color.Black;
+                            bgBlur.WindowState = FormWindowState.Maximized;
+                            bgBlur.Name = "bgBlurForm";
+                            bgBlur.TopMost = true;
+                            bgBlur.Location = this.Location;
+                            bgBlur.StartPosition = FormStartPosition.Manual;
+                            bgBlur.ShowInTaskbar = false;
+                            bgBlur.Show();
+
+                            displayVid.Owner = bgBlur;
+                            displayVid.ShowDialog();
+
+                            bgBlur.Dispose();
+                        }
+                    };
+                }
+
                 if (typeValues[i] == ".xlsx") {
                     //
                 }
 
                 if (typeValues[i] == ".wav" || typeValues[i] == ".mp3") {
-                    Application.DoEvents();
+                    //Application.DoEvents();
                     var _getWidth = this.Width;
                     var _getHeight = this.Height;
                     img.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
@@ -911,7 +948,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[i] == ".pdf") {
-                    Application.DoEvents();
+                //    Application.DoEvents();
                     img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     img.Click += (sender_pdf, e_pdf) => {
                         Form bgBlur = new Form();
@@ -937,7 +974,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
-                    Application.DoEvents();
+               //     Application.DoEvents();
                     img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     img.Click += (sender_pdf, e_pdf) => {
                         Form bgBlur = new Form();
@@ -963,7 +1000,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[i] == ".pptx" || typeValues[i] == ".ppt") {
-                    Application.DoEvents();
+         //          Application.DoEvents();
                     img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     img.Click += (sender_pdf, e_pdf) => {
                         Form bgBlur = new Form();
@@ -1122,17 +1159,16 @@ namespace FlowSERVER1 {
         int ptxCurr = 0;
         int msiCurr = 0;
         int docxCurr = 0;
-
+        int progressionUpload = 0;
         private async void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
             void deletionMethod(String fileName, String getDB) {
                 String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
                 command = new MySqlCommand(offSqlUpdates, con);
                 command.ExecuteNonQuery();
 
-                String removeQuery = "DELETE FROM " + getDB + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                String removeQuery = "DELETE FROM " + getDB + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(removeQuery, con);
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@password", label3.Text);
                 command.Parameters.AddWithValue("@filename", fileName);
 
                 command.ExecuteNonQuery();
@@ -1174,36 +1210,6 @@ namespace FlowSERVER1 {
                         label8.Visible = false;
                         guna2Button6.Visible = false;
                     }
-
-                    void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
-
-                        String insertThumbQue = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB)";
-                        command = new MySqlCommand(insertThumbQue, con);
-
-                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-
-                        command.Parameters["@CUST_FILE_PATH"].Value = getNamePath;
-                        command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
-                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-
-                        command.Parameters["@CUST_FILE"].Value = keyValMain;
-
-                        ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
-                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-
-                        using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                            command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
-                        }
-                        command.ExecuteNonQuery();
-                    }
                     
                     if (_filValues.Count() + curFilesCount > AccountType_) {
                         Form bgBlur = new Form();
@@ -1233,6 +1239,36 @@ namespace FlowSERVER1 {
                         string getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
                         string retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
                         string retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
+
+                        void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
+
+                            String insertThumbQue = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB)";
+                            command = new MySqlCommand(insertThumbQue, con);
+
+                            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
+                            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+
+                            command.Parameters["@CUST_FILE_PATH"].Value = getNamePath;
+                            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+                            command.Parameters["@CUST_PASSWORD"].Value = label3.Text;
+                            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
+                            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                            command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+
+                            command.Parameters["@CUST_FILE"].Value = keyValMain;
+
+                            ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
+                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+
+                            using (var stream = new MemoryStream()) {
+                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                            }
+                            command.ExecuteNonQuery();
+                        }
 
                         void createPanelMain(String nameTable, String panName, int itemCurr, Object keyVal) {
                             String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
@@ -1310,26 +1346,22 @@ namespace FlowSERVER1 {
                                 panelTxt.ShadowDecoration.Enabled = false;
                             };
 
-                            if (nameTable == "file_info") {
-                                //                                Task.Run(() => {
-                              
+                            UploadAlrt ShowUploadAlert = new UploadAlrt(getName);
+                            ShowUploadAlert.Show();
+                            Application.DoEvents();
+
+                            if (nameTable == "file_info") {            
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = keyVal;
                                 command.ExecuteNonQuery();
                                 command.Dispose();
 
-                                //command.Dispose();
-                                //                              });
-
-                                textboxPic.Image = new Bitmap(selectedItems);//new Bitmap(open.FileName);//
+                                textboxPic.Image = new Bitmap(selectedItems);
                                 textboxPic.Click += (sender_f, e_f) => {
                                     var getImgName = (Guna2PictureBox)sender_f;
                                     var getWidth = getImgName.Image.Width;
                                     var getHeight = getImgName.Image.Height;
                                     Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                                    //picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName);
-                                    //displayPic.Show();
 
                                     Form bgBlur = new Form();
                                     using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null")) {
@@ -1676,6 +1708,12 @@ namespace FlowSERVER1 {
                                 };
                                 clearRedundane();
                             }
+
+                            Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                .ToList()
+                                .ForEach(form => form.Close());
 
                             ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                             remButTxt.Click += (sender_tx, e_tx) => {
@@ -2137,6 +2175,7 @@ namespace FlowSERVER1 {
                 String _getUser = guna2TextBox1.Text;
                 String _getPass = guna2TextBox2.Text;
                 String _getEmail = guna2TextBox3.Text;
+                String _getPin = guna2TextBox4.Text;
 
                 String verfiyUserQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
                 command = con.CreateCommand();
@@ -2190,92 +2229,100 @@ namespace FlowSERVER1 {
                     label22.Visible = false;
                     label12.Visible = false;
                     label11.Visible = false;
-                    if (_getEmail.Contains("@gmail.com") || _getEmail.Contains("@email.com")) {
-                        if (_getUser.Length <= 20) {
-                            if (_getPass.Length > 5) {
-                                if (!String.IsNullOrEmpty(_getEmail)) {
-                                    if (!String.IsNullOrEmpty(_getPass)) {
-                                        if (!String.IsNullOrEmpty(_getUser)) {
-                                            flowlayout.Controls.Clear();
-                                            if (flowlayout.Controls.Count == 0) {
-                                                Form1.instance.label8.Visible = true;
-                                                Form1.instance.guna2Button6.Visible = true;
+                    if(!String.IsNullOrEmpty(_getPin)) {
+                    if(_getPin.Length == 3) {
+                        if (_getEmail.Contains("@gmail.com") || _getEmail.Contains("@email.com")) {
+                            if (_getUser.Length <= 20) {
+                                if (_getPass.Length > 5) {
+                                    if (!String.IsNullOrEmpty(_getEmail)) {
+                                        if (!String.IsNullOrEmpty(_getPass)) {
+                                            if (!String.IsNullOrEmpty(_getUser)) {
+                                                flowlayout.Controls.Clear();
+                                                if (flowlayout.Controls.Count == 0) {
+                                                    Form1.instance.label8.Visible = true;
+                                                    Form1.instance.guna2Button6.Visible = true;
+                                                }
+                                                if (Form1.instance.setupLabel.Text.Length > 14) {
+                                                    var label = Form1.instance.setupLabel;
+                                                    label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                                    label.Location = new Point(3, 27);
+                                                }
+
+                                                var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
+                                                label3.Text = _encryptPassVal;
+                                                label5.Text = _getUser;
+                                                label24.Text = _getEmail;
+
+                                                var _encryptPinVal = EncryptionModel.Encrypt(_getPin, "0123456789085746");
+
+                                                String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                                                String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN)";
+                                                command = new MySqlCommand(_InsertUser, con);
+                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
+                                                command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                                                command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                                command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
+                                                command.ExecuteNonQuery();
+
+                                                String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                                command = new MySqlCommand(_InsertType, con);
+                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                                command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                                                command.ExecuteNonQuery();
+
+                                                label11.Visible = false;
+                                                label12.Visible = false;
+                                                guna2Panel7.Visible = false;
+                                                guna2TextBox1.Text = String.Empty;
+                                                guna2TextBox2.Text = String.Empty;
+                                                guna2TextBox3.Text = String.Empty;
+                                                setupTime();
+
+                                                listBox1.Items.Add("Home");
+                                                listBox1.SelectedIndex = 0;
                                             }
-                                            if (Form1.instance.setupLabel.Text.Length > 14) {
-                                                var label = Form1.instance.setupLabel;
-                                                label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                                label.Location = new Point(3, 27);
+                                            else {
+                                                label11.Visible = true;
                                             }
-
-                                            /*var encryptPassVal = EncryptionModel.Encrypt(_getPass, "ABHABH24");//EncryptionModel.Encrypt(label3.Text,"ABHABH24");
-                                            setupLabel.Text = _getUser;
-                                            label3.Text = encryptPassVal;
-                                            encryptedPassKey = encryptPassVal*/
-
-                                            var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
-                                            label3.Text = _encryptPassVal;
-                                            label5.Text = _getUser;
-                                            label24.Text = _getEmail;
-
-                                            String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                                            String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL)";
-                                            command = new MySqlCommand(_InsertUser, con);
-                                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                            command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
-                                            command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                            command.ExecuteNonQuery();
-
-                                            String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                                            command = new MySqlCommand(_InsertType, con);
-                                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                            command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                                            command.ExecuteNonQuery();
-
-                                            label11.Visible = false;
-                                            label12.Visible = false;
-                                            guna2Panel7.Visible = false;
-                                            guna2TextBox1.Text = String.Empty;
-                                            guna2TextBox2.Text = String.Empty;
-                                            guna2TextBox3.Text = String.Empty;
-                                            setupTime();
-
-                                            listBox1.Items.Add("Home");
-                                            listBox1.SelectedIndex = 0;
                                         }
                                         else {
-                                            label11.Visible = true;
+                                            label12.Visible = true;
                                         }
                                     }
                                     else {
-                                        label12.Visible = true;
+                                        label22.Visible = true;
+                                        label22.Text = "Please add your email";
                                     }
+
                                 }
                                 else {
-                                    label22.Visible = true;
-                                    label22.Text = "Please add your email";
+                                    label12.Visible = true;
+                                    label12.Text = "Password must be longer than 5 characters.";
                                 }
-
                             }
                             else {
-                                label12.Visible = true;
-                                label12.Text = "Password must be longer than 5 characters.";
+                                label11.Visible = true;
+                                label11.Text = "Username character length limit is 20.";
                             }
                         }
                         else {
-                            label11.Visible = true;
-                            label11.Text = "Username character length limit is 20.";
+                            label22.Visible = true;
+                            label22.Text = "Entered email is not valid.";
                         }
-                    }
-                    else {
-                        label22.Visible = true;
-                        label22.Text = "Entered email is not valid.";
+                    } else {
+                        label30.Visible = true;
+                        label30.Text = "PIN Number must have 3 digits.";
+                        }
+                    } else {
+                        label30.Visible = true;
+                        label30.Text = "Please add a PIN number.";
                     }
                 }
             }
-            catch (Exception) {
+            catch (Exception eq) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -3059,24 +3106,6 @@ namespace FlowSERVER1 {
                     ShowAlert.Show();
                     Form3 displayDirectory = new Form3(titleLab.Text);
                     displayDirectory.Show();
-                    /*Form bgBlur = new Form();
-                    using (Form3 displayDirectory = new Form3(titleLab.Text)) {
-                        bgBlur.StartPosition = FormStartPosition.Manual;
-                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                        bgBlur.Opacity = .24d;
-                        bgBlur.BackColor = Color.Black;
-                        bgBlur.WindowState = FormWindowState.Maximized;
-                        bgBlur.TopMost = true;
-                        bgBlur.Location = this.Location;
-                        bgBlur.StartPosition = FormStartPosition.Manual;
-                        bgBlur.ShowInTaskbar = false;
-                        bgBlur.Show();
-
-                        displayDirectory.Owner = bgBlur;
-                        displayDirectory.ShowDialog();
-
-                        bgBlur.Dispose();
-                    }*/
                     Application.OpenForms
                     .OfType<Form>()
                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
@@ -3157,6 +3186,12 @@ namespace FlowSERVER1 {
 
         private void label22_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
+            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox4.Text, "[^0-9]")) {
+                guna2TextBox4.Text = guna2TextBox4.Text.Remove(guna2TextBox4.Text.Length - 1);
+            }
         }
     }
 }

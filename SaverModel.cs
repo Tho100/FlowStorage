@@ -16,6 +16,11 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static String _getExt;
         private static void _openDialog(String _FileTitle, Byte[] _getBytes) {
+            Application.OpenForms
+                     .OfType<Form>()
+                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                     .ToList()
+                     .ForEach(form => form.Close());
             SaveFileDialog _dialog = new SaveFileDialog();
             _dialog.Filter = "|*." + _getExt;
             _dialog.FileName = _FileTitle;
@@ -26,12 +31,11 @@ namespace FlowSERVER1 {
 
         public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName) {
             _getExt = _FileTitle.Split('.').Last();
-
             try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your document.");
-                ShowAlert.Show();
-                Application.DoEvents();
-                if(_TableName == "upload_info_directory") {
+                if (_TableName == "upload_info_directory") {
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
+                    ShowAlert.Show();
+                    Application.DoEvents();
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -41,16 +45,14 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
                         var _getBytes = (byte[])_byteReader["CUST_FILE"];
                         _openDialog(_FileTitle,_getBytes);
                     }
                     _byteReader.Close();
                 } else if (_TableName == "folder_upload_info") {
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
+                    ShowAlert.Show();
+                    Application.DoEvents();
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -60,16 +62,15 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
                         var _getBytes = (byte[])_byteReader["CUST_FILE"];
                         _openDialog(_FileTitle, _getBytes);
                     }
                     _byteReader.Close();
                 } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory") {
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
+                    ShowAlert.Show();
+                    Application.DoEvents();
+
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -77,12 +78,7 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@filename", _FileTitle);
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
-                    if (_byteReader.Read()) {
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                    if (_byteReader.Read()) {   
                         var _getBytes = (byte[])_byteReader["CUST_FILE"];
                         _openDialog( _FileTitle, _getBytes);
                     }

@@ -526,6 +526,12 @@
     <Compile Include="gifFORM.Designer.cs">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="keyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="keyForm.Designer.cs">
+      <DependentUpon>keyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoaderModel.cs" />
     <Compile Include="msiFORM.cs">
       <SubType>Form</SubType>
@@ -618,6 +624,12 @@
     <Compile Include="upgradeFORM.Designer.cs">
       <DependentUpon>upgradeFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="UploadAlrt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UploadAlrt.Designer.cs">
+      <DependentUpon>UploadAlrt.cs</DependentUpon>
+    </Compile>
     <Compile Include="vidFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -675,6 +687,9 @@
     <EmbeddedResource Include="gifFORM.resx">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="keyForm.resx">
+      <DependentUpon>keyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -723,6 +738,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="upgradeFORM.resx">
       <DependentUpon>upgradeFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UploadAlrt.resx">
+      <DependentUpon>UploadAlrt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vidFORM.resx">
       <DependentUpon>vidFORM.cs</DependentUpon>
