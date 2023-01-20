@@ -20,11 +20,11 @@ namespace FlowSERVER1 {
         public static Byte[] GlobalByte;
         public static String _TableName;
         public static String _DirectoryName;
-        public exeFORM(String getTitle,String tableName, String directoryName) {
+        public exeFORM(String getTitle,String tableName, String directoryName, String _UploaderUsername) {
             InitializeComponent();
             label1.Text = getTitle;
             instance = this;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + _UploaderUsername;
             _TableName = tableName;
             _DirectoryName = directoryName;
         }
@@ -74,6 +74,9 @@ namespace FlowSERVER1 {
             }
             else if (_TableName == "file_info_exe") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_exe", _DirectoryName);
+            }
+            else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
             }
         }
 

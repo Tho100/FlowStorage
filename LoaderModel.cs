@@ -16,7 +16,7 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static Byte[] universalBytes;
         public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName) {
-            if (_TableName != "upload_info_directory" && _TableName != "folder_upload_info") {
+            if (_TableName != "upload_info_directory" && _TableName != "folder_upload_info" && _TableName != "cust_sharing") {
                 String _readGifFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
                 command = con.CreateCommand();
                 command.CommandText = _readGifFiles;
@@ -64,6 +64,25 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filepath", _FileName);
                 command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
+
+                MySqlDataReader _readByteValues = command.ExecuteReader();
+                if (_readByteValues.Read()) {
+                    Application.OpenForms
+                           .OfType<Form>()
+                           .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                           .ToList()
+                           .ForEach(form => form.Close());
+                    var _byteValues = (byte[])_readByteValues["CUST_FILE"];
+                    universalBytes = _byteValues;
+                    //MemoryStream _memStream = new MemoryStream(_byteValues);
+                }
+                _readByteValues.Close();
+            } else if (_TableName == "cust_sharing") {
+                String _readGifFiles = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
+                command = con.CreateCommand();
+                command.CommandText = _readGifFiles;
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filepath", _FileName);
 
                 MySqlDataReader _readByteValues = command.ExecuteReader();
                 if (_readByteValues.Read()) {

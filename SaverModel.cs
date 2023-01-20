@@ -12,9 +12,9 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class SaverModel {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static String _getExt;
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+        private static String _getExt;
         private static void _openDialog(String _FileTitle, Byte[] _getBytes) {
             Application.OpenForms
                      .OfType<Form>()
@@ -66,7 +66,7 @@ namespace FlowSERVER1 {
                         _openDialog(_FileTitle, _getBytes);
                     }
                     _byteReader.Close();
-                } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory") {
+                } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory" && _TableName != "cust_sharing") {
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
                     ShowAlert.Show();
                     Application.DoEvents();
@@ -83,10 +83,27 @@ namespace FlowSERVER1 {
                         _openDialog( _FileTitle, _getBytes);
                     }
                     _byteReader.Close();
+                } else if (_TableName == "cust_sharing") {
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
+                    ShowAlert.Show();
+                    Application.DoEvents();
+
+                    String _retrieveBytes = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    command = con.CreateCommand();
+                    command.CommandText = _retrieveBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", _FileTitle);
+
+                    MySqlDataReader _byteReader = command.ExecuteReader();
+                    if (_byteReader.Read()) {
+                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
+                        _openDialog(_FileTitle, _getBytes);
+                    }
+                    _byteReader.Close();
                 }
             }
             catch (Exception eq) {
-                MessageBox.Show("Failed to download this file.", "Flowstorage");
+                MessageBox.Show("Failed to download this file.", "Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
     }

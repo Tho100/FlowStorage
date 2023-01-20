@@ -18,10 +18,10 @@ namespace FlowSERVER1 {
         public static String _TableName;
         public static String _DirectoryName;
 
-        public ptxFORM(String _Title,String _Table, String _Directory) {
+        public ptxFORM(String _Title,String _Table, String _Directory,String _UploaderName) {
             InitializeComponent();
             label1.Text = _Title;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + _UploaderName;
             _TableName = _Table;
             _DirectoryName = _Directory;
             try {
@@ -37,8 +37,12 @@ namespace FlowSERVER1 {
                 else if (_TableName == "folder_upload_info") { 
                     setupPtx(LoaderModel.LoadFile("folder_upload_info", _DirectoryName, label1.Text));
                 }
-            }  catch (Exception) {
-                Form bgBlur = new Form();
+                else if (_TableName == "cust_sharing") {
+                    setupPtx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
+                }
+            }  catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+               /* Form bgBlur = new Form();
                 using (errorLoad displayError = new errorLoad()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -55,7 +59,7 @@ namespace FlowSERVER1 {
                     displayError.ShowDialog();
 
                     bgBlur.Dispose();
-                }
+                }*/
             }
         }
 

@@ -320,6 +320,7 @@ namespace FlowSERVER1 {
                 }
 
                 void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+                    Application.DoEvents();
                     for (int i = 0; i < currItem; i++) {
                         int top = 275;
                         int h_p = 100;
@@ -472,7 +473,7 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null");
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null",Form1.instance.label5.Text);
                                 displayPic.Show();
 
                             };
@@ -493,7 +494,7 @@ namespace FlowSERVER1 {
                                 img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                             }
                             picMain_Q.Click += (sender_t, e_t) => {
-                                txtFORM txtFormShow = new txtFORM("LOLOL","file_info_expand", titleLab.Text);
+                                txtFORM txtFormShow = new txtFORM("LOLOL","file_info_expand", titleLab.Text,"null",Form1.instance.label5.Text);
                                 txtFormShow.Show();
                             };
                             clearRedundane();
@@ -503,7 +504,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                             picMain_Q.Click += (sender_ex, e_ex) => {
                                 Form bgBlur = new Form();
-                                using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null")) {
+                                using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",Form1.instance.label5.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -542,7 +543,7 @@ namespace FlowSERVER1 {
                                 var getWidth = getImgName.Image.Width;
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
-                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info_vid", "null");
+                                vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info_vid", "null",Form1.instance.label5.Text);
                                 vidFormShow.Show();
                             };
                             clearRedundane();
@@ -560,7 +561,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image =  FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                             picMain_Q.Click += (sender_aud, e_aud) => {
                                 Form bgBlur = new Form();
-                                using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null")) {
+                                using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null",Form1.instance.label5.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -582,10 +583,9 @@ namespace FlowSERVER1 {
                         }
 
                         if (_tableName == "file_info_gif") {
-                            String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                            String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                             command = new MySqlCommand(getImgQue, con);
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                             MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
                             DataSet ds_Read = new DataSet();
@@ -595,7 +595,7 @@ namespace FlowSERVER1 {
 
                             picMain_Q.Click += (sender_gi, ex_gi) => {
                                 Form bgBlur = new Form();
-                                using (gifFORM displayGif = new gifFORM(titleLab.Text,"file_info_gif","null")) {
+                                using (gifFORM displayGif = new gifFORM(titleLab.Text,"file_info_gif","null",Form1.instance.label5.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -643,7 +643,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                             picMain_Q.Click += (sender_pd, e_pd) => {
                                 Form bgBlur = new Form();
-                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf","null")) {
+                                using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"file_info_pdf","null",Form1.instance.label5.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -691,7 +691,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             picMain_Q.Click += (sender_ptx, e_ptx) => {
                                 Form bgBlur = new Form();
-                                using (wordFORM displayMsi = new wordFORM(titleLab.Text,"file_info_word","null")) {
+                                using (wordFORM displayMsi = new wordFORM(titleLab.Text,"file_info_word","null",Form1.instance.label5.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -724,45 +724,58 @@ namespace FlowSERVER1 {
 
                 // LOAD IMG
                 if (_countRow("file_info") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
                 }
                 // LOAD .TXT
                 if (_countRow("file_info_expand") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
                 }
                 // LOAD EXE
                 if (_countRow("file_info_exe") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
                 }
                 // LOAD VID
                 if (_countRow("file_info_vid") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
                 }
                 if (_countRow("file_info_excel") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
                 }
                 if (_countRow("file_info_audi") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
                 }
                 if (_countRow("file_info_gif") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
                 }
                 if (_countRow("file_info_apk") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
                 }
                 if (_countRow("file_info_pdf") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
                 }
                 if (_countRow("file_info_ptx") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
                 }
                 if(_countRow("file_info_msi") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_msi","msiFile",_countRow("file_info_msi"));
                 }
                 if(_countRow("file_info_word") > 0) {
+                    Application.DoEvents();
                     _generateUserFiles("file_info_word","docFile",_countRow("file_info_word"));
                 }
                 if (_countRow("file_info_directory") > 0) {
+                    Application.DoEvents();
                     _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
                 }
                 //if(inttotalRowFold > 0) {

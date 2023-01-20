@@ -12,10 +12,10 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TableName;
         public static String _DirName;
-        public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName) {
+        public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName) {
             InitializeComponent();
             label1.Text = _FileTitle;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + _UploaderName;
             _TableName = _tableName;
             _DirName = _DirectoryName;
 
@@ -26,6 +26,9 @@ namespace FlowSERVER1 {
                     setupPdf(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
                 } else if (_tableName == "folder_upload_info") {
                     setupPdf(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
+                }
+                else if (_tableName == "cust_sharing") {
+                    setupPdf(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
                 }
             } catch (Exception) {
                 Form bgBlur = new Form();
@@ -93,6 +96,9 @@ namespace FlowSERVER1 {
             }
             else if (_TableName == "file_info_pdf") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_pdf", _DirName);
+            }
+            else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
             }
         }
 

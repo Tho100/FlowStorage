@@ -13,13 +13,13 @@ namespace FlowSERVER1 {
         public static picFORM instance;
         private static String TableName;
         private static String Directoryname;
-        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName) {
+        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName) {
             InitializeComponent();
             instance = this;
             var setupImage = resizeUserImage(userImage,new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = title;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + _UploaderName;
             TableName = _TableName;
             Directoryname = _DirectoryName;
 
@@ -62,10 +62,16 @@ namespace FlowSERVER1 {
             }
             else if (TableName == "file_info") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info", Directoryname);
+            } else if (TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", Directoryname);
             }
         }
 
         private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e) {
 
         }
     }

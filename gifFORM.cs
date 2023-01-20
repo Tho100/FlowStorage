@@ -17,11 +17,11 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
         public static String _Directory;
-        public gifFORM(String _titleName,String _tableName, String _directoryName) {
+        public gifFORM(String _titleName,String _tableName, String _directoryName,String _uploaderName) {
             InitializeComponent();
             var _form = Form1.instance;
             instance = this;
-            label2.Text = "Uploaded By " + _form.label5.Text;
+            label2.Text = "Uploaded By " + _uploaderName;
             label1.Text = _titleName;
             _TableName = _tableName;
             _Directory = _directoryName;
@@ -37,6 +37,11 @@ namespace FlowSERVER1 {
                         guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 } else if (_TableName == "folder_upload_info") {
                         MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("folder_upload_info",_directoryName,label1.Text));
+                        guna2PictureBox1.Image = Image.FromStream(_memStream);
+                        guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    else if (_TableName == "cust_sharing") {
+                        MemoryStream _memStream = new MemoryStream(LoaderModel.LoadFile("cust_sharing", _directoryName, label1.Text));
                         guna2PictureBox1.Image = Image.FromStream(_memStream);
                         guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     }
@@ -92,6 +97,9 @@ namespace FlowSERVER1 {
             }
             else if (_TableName == "file_info_gif") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_gif", _Directory);
+            }
+            else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _Directory);
             }
         }
 

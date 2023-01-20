@@ -227,7 +227,7 @@ namespace FlowSERVER1
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", label1.Text)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -277,7 +277,7 @@ namespace FlowSERVER1
                         //var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS01947265");
                         //_theContents, "upload_info_directory", titleLab.Text
                         Form bgBlur = new Form();
-                        using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text)) {
+                        using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text,label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -325,7 +325,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                     textboxPic.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
-                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
+                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -349,7 +349,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     textboxPic.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
-                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -373,7 +373,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -406,7 +406,7 @@ namespace FlowSERVER1
                     textboxPic.Image = new Bitmap(ms);
                     textboxPic.Click += (sender_gif, e_gif) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -445,7 +445,7 @@ namespace FlowSERVER1
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
                         Form bgBlur = new Form();
-                        using (vidFORM displayVid = new vidFORM(defaultImage, getWidth,getHeight,titleLab.Text,"upload_info_directory",label1.Text)) {
+                        using (vidFORM displayVid = new vidFORM(defaultImage, getWidth,getHeight,titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -493,7 +493,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                        using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -517,7 +517,7 @@ namespace FlowSERVER1
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     textboxPic.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        using (audFORM displayAudio = new audFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                        using (audFORM displayAudio = new audFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -862,7 +862,7 @@ namespace FlowSERVER1
                                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                                     Form bgBlur = new Form();
-                                    using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "upload_info_directory", label1.Text)) {
+                                    using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "upload_info_directory", label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -916,7 +916,7 @@ namespace FlowSERVER1
                                   //  var _theContents = EncryptionModel.Decrypt(_contentValues[0], "TXTCONTS01947265");
 
                                     Form bgBlur = new Form();
-                                    using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text)) {
+                                    using (txtFORM displayPic = new txtFORM("","upload_info_directory", titleLab.Text,label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -964,7 +964,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                                 textboxPic.Click += (sender_ex, e_ex) => {
                                     Form bgBlur = new Form();
-                                    using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
+                                    using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -988,7 +988,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                                 textboxPic.Click += (sender_pd, e_pd) => {
                                     Form bgBlur = new Form();
-                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory",label1.Text)) {
+                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory",label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1013,7 +1013,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                                    using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1039,7 +1039,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = toBitMap;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                                    using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1087,7 +1087,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text)) {
+                                    using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1111,7 +1111,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                 textboxPic.Click += (sender_Aud, e_Aud) => {
                                     Form bgBlur = new Form();
-                                    using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
+                                    using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;
@@ -1141,7 +1141,7 @@ namespace FlowSERVER1
                                     var getHeight = getImgName.Image.Height;
                                     Bitmap defaultImg = new Bitmap(getImgName.Image);
                                     Form bgBlur = new Form();
-                                    using (vidFORM displayPic = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName,label1.Text)) {
+                                    using (vidFORM displayPic = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName,label1.Text,form1.label5.Text)) {
                                         bgBlur.StartPosition = FormStartPosition.Manual;
                                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                                         bgBlur.Opacity = .24d;

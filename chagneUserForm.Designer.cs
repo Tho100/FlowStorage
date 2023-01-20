@@ -247,7 +247,7 @@
             this.guna2TextBox1.Name = "guna2TextBox1";
             this.guna2TextBox1.PasswordChar = '\0';
             this.guna2TextBox1.PlaceholderForeColor = System.Drawing.Color.DimGray;
-            this.guna2TextBox1.PlaceholderText = "Enter your new username";
+            this.guna2TextBox1.PlaceholderText = "Enter a new username";
             this.guna2TextBox1.SelectedText = "";
             this.guna2TextBox1.Size = new System.Drawing.Size(294, 44);
             this.guna2TextBox1.TabIndex = 16;

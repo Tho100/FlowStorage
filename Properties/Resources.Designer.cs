@@ -303,6 +303,26 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_share_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-share-64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_share_641 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-share-641", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_software_installer_32 {
             get {
                 object obj = ResourceManager.GetObject("icons8-software-installer-32", resourceCulture);
@@ -326,6 +346,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_txt_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-txt-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_update_left_rotation_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-update-left-rotation-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

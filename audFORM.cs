@@ -19,10 +19,10 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TabName = "";
         public static String _DirName = "";
-        public audFORM(String titleName,String _TableName,String _DirectoryName) {
+        public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName) {
             InitializeComponent();
             label1.Text = titleName;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + _UploaderName;
             _TabName = _TableName;
             _DirName = _DirectoryName;
             timer1.Stop();
@@ -63,6 +63,8 @@ namespace FlowSERVER1 {
                     }
                     else if (_TabName == "folder_upload_info") {
                         setupPlayer(_audType, LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
+                    } else if (_TabName == "cust_sharing") {
+                        setupPlayer(_audType, LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text));
                     }
                 }
             }
@@ -164,6 +166,9 @@ namespace FlowSERVER1 {
             }
             else if (_TabName == "file_info_aud") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_aud", _DirName);
+            }
+            else if (_TabName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
             }
         }
 

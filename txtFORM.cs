@@ -21,12 +21,11 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
 
-        public txtFORM(String getText,String tableName,String fileName) {
+        public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername) {
             InitializeComponent();
             instance = this;
             label1.Text = fileName;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-
+            label2.Text = "Uploaded By " + _UploaderUsername;
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
             //var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "0123456789085746");
             //TXTCONTS01947265
@@ -118,6 +117,34 @@ namespace FlowSERVER1 {
                     cssSyntax();
                 }
                 if(FileExt_ == ".js") {
+                    jsSyntax();
+                }
+            } else if (tableName == "cust_sharing") {
+                string getTxtQue = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                command = new MySqlCommand(getTxtQue, con);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+
+                List<string> textValuesF = new List<string>();
+
+                MySqlDataReader txtReader = command.ExecuteReader();
+                while (txtReader.Read()) {
+                    textValuesF.Add(txtReader.GetString(0));
+                }
+                txtReader.Close();
+
+                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0], "TXTCONTS01947265");
+                richTextBox1.Text = decryptValueKey;
+                if (FileExt_ == ".py") {
+                    pythonSyntax();
+                }
+                if (FileExt_ == ".html") {
+                    htmlSyntax();
+                }
+                if (FileExt_ == ".css") {
+                    cssSyntax();
+                }
+                if (FileExt_ == ".js") {
                     jsSyntax();
                 }
             }

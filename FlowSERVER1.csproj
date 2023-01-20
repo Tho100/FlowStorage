@@ -594,6 +594,12 @@
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="SaverModel.cs" />
+    <Compile Include="sharingFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sharingFORM.Designer.cs">
+      <DependentUpon>sharingFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="splashFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -611,6 +617,12 @@
     </Compile>
     <Compile Include="successPay.Designer.cs">
       <DependentUpon>successPay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="sucessShare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sucessShare.Designer.cs">
+      <DependentUpon>sucessShare.cs</DependentUpon>
     </Compile>
     <Compile Include="txtFORM.cs">
       <SubType>Form</SubType>
@@ -724,6 +736,9 @@
     <EmbeddedResource Include="RetrievalAlert.resx">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="sharingFORM.resx">
+      <DependentUpon>sharingFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="splashFORM.resx">
       <DependentUpon>splashFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -732,6 +747,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="successPay.resx">
       <DependentUpon>successPay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sucessShare.resx">
+      <DependentUpon>sucessShare.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="txtFORM.resx">
       <DependentUpon>txtFORM.cs</DependentUpon>
@@ -771,6 +789,9 @@
     <Content Include="excelIcon.png" />
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-share-641.png" />
+    <None Include="Resources\icons8-update-left-rotation-24.png" />
+    <None Include="Resources\icons8-share-64.png" />
     <None Include="Resources\icons8-rename-48.png" />
     <None Include="Resources\icons8-partying-face-96.png" />
     <None Include="Resources\icons8-partying-face-48.png" />

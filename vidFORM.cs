@@ -19,21 +19,23 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
 
-        public LibVLC _libVLC;
-        public MediaPlayer _mp;
-        public static String _TableName;
-        public static String _DirName;
+        private LibVLC _libVLC;
+        private MediaPlayer _mp;
+        private static String _TableName;
+        private static String _DirName;
+        private static String _UploaderName;
 
-        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName) {
+        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName) {
             InitializeComponent();
             instance = this;
             var setupImage = resizeImage(getThumb, new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = getTitle;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + uploaderName;
             label3.Text = tableName;
             _TableName = tableName;
             _DirName = dirName;
+            _UploaderName = uploaderName;
         }
 
         public static Image resizeImage(Image userImg, Size size) {
@@ -84,79 +86,24 @@ namespace FlowSERVER1 {
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving video data..");
                     ShowAlert.Show();
                     Application.DoEvents();
+                    guna2PictureBox1.Visible = false;
+                    videoView1.Visible = true;
                     if (_TableName == "upload_info_directory") {
-                        String Select_VidByte = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(Select_VidByte, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname",_DirName);
-                        command.Parameters.AddWithValue("@filename",label1.Text);
-
-                        guna2PictureBox1.Visible = false;
-                        videoView1.Visible = true;
-                        List<Byte> _ByteValues = new List<Byte>();
-                        MySqlDataReader _ReadBytes = command.ExecuteReader();
-                        if (_ReadBytes.Read()) {
-                            Application.OpenForms
-                          .OfType<Form>()
-                          .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                          .ToList()
-                          .ForEach(form => form.Close());
-                            var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
-                            setupPlayer(_retrieveBytesValue);
-
-                        }
-                        _ReadBytes.Close();
-                    } else if (_TableName == "file_info_vid"){
-                        String Select_VidByte = "SELECT CUST_FILE FROM file_info_vid WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(Select_VidByte, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename",label1.Text);
-
-                        guna2PictureBox1.Visible = false;
-                        videoView1.Visible = true;
-                        List<Byte> _ByteValues = new List<Byte>();
-                        MySqlDataReader _ReadBytes = command.ExecuteReader();
-                        if (_ReadBytes.Read()) {
-                            Application.OpenForms
-                           .OfType<Form>()
-                           .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                           .ToList()
-                           .ForEach(form => form.Close());
-                            var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
-                            setupPlayer(_retrieveBytesValue);
-                        }
-                        _ReadBytes.Close();
+                        setupPlayer(LoaderModel.LoadFile("upload_info_directory",_DirName,label1.Text));
                     }
-                    else if (_TableName == "folder_upload_info") {
-                        String Select_VidByte = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
-                        command = new MySqlCommand(Select_VidByte, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", label1.Text);
-                        command.Parameters.AddWithValue("@foldtitle", _DirName);
-
-                        guna2PictureBox1.Visible = false;
-                        videoView1.Visible = true;
-                        List<Byte> _ByteValues = new List<Byte>();
-                        MySqlDataReader _ReadBytes = command.ExecuteReader();
-                        if (_ReadBytes.Read()) {
-                            Application.OpenForms
-                           .OfType<Form>()
-                           .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                           .ToList()
-                           .ForEach(form => form.Close());
-                            var _retrieveBytesValue = (byte[])_ReadBytes["CUST_FILE"];
-                            setupPlayer(_retrieveBytesValue);
-                        }
-                        _ReadBytes.Close();
+                     else if (_TableName == "file_info_vid"){
+                        setupPlayer(LoaderModel.LoadFile("file_info_vid", _DirName, label1.Text));
+                    } else if (_TableName == "folder_upload_info") {
+                        setupPlayer(LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
+                    } else if (_TableName == "cust_sharing") {
+                        setupPlayer(LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text));
                     }
-
                 }
 
                 guna2Button5.Visible = false;
                 guna2Button6.Visible = true;
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //MessageBox.Show("Failed to play this file.","Flowstorage");
+                MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -173,6 +120,9 @@ namespace FlowSERVER1 {
             }
             else if (_TableName == "file_info_vid") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_vid", _DirName);
+            }
+            else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
             }
         }
 

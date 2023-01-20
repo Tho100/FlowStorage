@@ -17,24 +17,26 @@ namespace FlowSERVER1 {
         public static String _TableName;
         public static String _DirectoryName;
 
-        public wordFORM(String _docName,String _Table, String _Directory) {
+        public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName) {
             InitializeComponent();
             label1.Text = _docName;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = "Uploaded By " + _UploaderName;
             _TableName = _Table;
             _DirectoryName = _Directory;
 
             try {
+                /*
+                * @ Load doc data from LoaderModel class
+                */
                 if(_TableName == "file_info_word") {
-                    /*
-                     * @ Load doc data from LoaderModel class
-                     */
                     setupDocx(LoaderModel.LoadFile("file_info_word","null",label1.Text));
                 } else if (_TableName == "upload_info_directory") {
                     setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
                 }
                 else if (_TableName == "folder_upload_info") {
                     setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
+                } else if (_TableName == "cust_sharing") {
+                    setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
                 }
             }
             catch (Exception) {
@@ -84,6 +86,9 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirectoryName);
             } else if (_TableName == "file_info_word") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_word", _DirectoryName);
+            } else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
+
             }
         }
 

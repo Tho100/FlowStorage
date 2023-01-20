@@ -62,6 +62,7 @@
             this.label2.Size = new System.Drawing.Size(435, 17);
             this.label2.TabIndex = 28;
             this.label2.Text = "Uploaded By urmom";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // guna2Button4
             // 
