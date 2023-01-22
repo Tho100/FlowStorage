@@ -1651,9 +1651,10 @@ namespace FlowSERVER1 {
                             if (nameTable == "file_info_msi") {
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = keyVal;
+                                command.CommandTimeout = 3;
                                 command.ExecuteNonQuery();
                                 command.Dispose();
-
+                           
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                                 textboxPic.Click += (sender_ptx, e_ptx) => {
                                     Form bgBlur = new Form();
@@ -1743,198 +1744,223 @@ namespace FlowSERVER1 {
                             dateLabTxt.Width = 1000;
                             dateLabTxt.Text = varDate;
                         }
-
-                        if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".svg") {
-                            curr++;
-                            //MessageBox.Show(getName);
-                            //DirErFORM _showerror = new DirErFORM("Basoic");
-                            //_showerror.Show();
-                            //Task.Delay(5000);
-                            var getImg = new Bitmap(selectedItems);//new Bitmap(open.FileName);
-                            var imgWidth = getImg.Width;
-                            var imgHeight = getImg.Height;
-                            if (retrieved != ".ico") {
-                                using (MemoryStream ms = new MemoryStream()) {
-                                    getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                                    var setupImg = ms.ToArray();
-                                    Application.DoEvents();
-                                    createPanelMain("file_info", "PanImg", curr, setupImg);
+                        try {
+                            if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".svg") {
+                                curr++;
+                                //MessageBox.Show(getName);
+                                //DirErFORM _showerror = new DirErFORM("Basoic");
+                                //_showerror.Show();
+                                //Task.Delay(5000);
+                                var getImg = new Bitmap(selectedItems);//new Bitmap(open.FileName);
+                                var imgWidth = getImg.Width;
+                                var imgHeight = getImg.Height;
+                                if (retrieved != ".ico") {
+                                    using (MemoryStream ms = new MemoryStream()) {
+                                        getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                                        var setupImg = ms.ToArray();
+                                        Application.DoEvents();
+                                        createPanelMain("file_info", "PanImg", curr, setupImg);
+                                    }
+                                }
+                                else {
+                                    Image retrieveIcon = Image.FromFile(selectedItems);//Image.FromFile(open.FileName);
+                                    byte[] dataIco;
+                                    using (MemoryStream msIco = new MemoryStream()) {
+                                        retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
+                                        dataIco = msIco.ToArray();
+                                        Application.DoEvents();
+                                        createPanelMain("file_info", "PanImg", curr, dataIco);
+                                    }
                                 }
                             }
-                            else {
-                                Image retrieveIcon = Image.FromFile(selectedItems);//Image.FromFile(open.FileName);
-                                byte[] dataIco;
-                                using (MemoryStream msIco = new MemoryStream()) {
-                                    retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                    dataIco = msIco.ToArray();
-                                    Application.DoEvents();
-                                    createPanelMain("file_info", "PanImg", curr, dataIco);
+                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js") {
+                                txtCurr++;
+                                String nonLine = "";
+                                using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
+                                    nonLine = ReadFileTxt.ReadToEnd();
                                 }
+                                Application.DoEvents();
+                                createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
                             }
-                        }
-                        else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js") {
-                            txtCurr++;
-                            String nonLine = "";
-                            using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
-                                nonLine = ReadFileTxt.ReadToEnd();
+                            else if (retrieved == ".exe") {
+                                exeCurr++;
+                                Byte[] streamRead = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
+
                             }
-                            Application.DoEvents();
-                            createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
-                        }
-                        else if (retrieved == ".exe") {
-                            exeCurr++;
-                            Byte[] streamRead = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
+                            else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
+                                vidCurr++;
+                                Byte[] streamReadVid = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_vid", "PanVid", vidCurr, streamReadVid);
+                            }
+                            else if (retrieved == ".xlsx" || retrieved == ".csv") {
 
-                        }
-                        else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
-                            vidCurr++;
-                            Byte[] streamReadVid = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_vid", "PanVid", vidCurr, streamReadVid);
-                        }
-                        else if (retrieved == ".xlsx" || retrieved == ".csv") {
+                                exlCurr++;
+                                int top = 275;
+                                int h_p = 100;
+                                var panelVid = new Guna2Panel() {
+                                    Name = "PanExl" + exlCurr,
+                                    Width = 240,
+                                    Height = 262,
+                                    BorderRadius = 8,
+                                    FillColor = ColorTranslator.FromHtml("#121212"),
+                                    BackColor = Color.Transparent,
+                                    Location = new Point(600, top)
+                                };
 
-                            exlCurr++;
-                            int top = 275;
-                            int h_p = 100;
-                            var panelVid = new Guna2Panel() {
-                                Name = "PanExl" + exlCurr,
-                                Width = 240,
-                                Height = 262,
-                                BorderRadius = 8,
-                                FillColor = ColorTranslator.FromHtml("#121212"),
-                                BackColor = Color.Transparent,
-                                Location = new Point(600, top)
-                            };
+                                top += h_p;
+                                flowLayoutPanel1.Controls.Add(panelVid);
+                                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExl" + exlCurr]);
 
-                            top += h_p;
-                            flowLayoutPanel1.Controls.Add(panelVid);
-                            var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExl" + exlCurr]);
+                                Label titleLab = new Label();
+                                mainPanelTxt.Controls.Add(titleLab);
+                                titleLab.Name = "LabExlUp" + exlCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                                titleLab.ForeColor = Color.Gainsboro;
+                                titleLab.Visible = true;
+                                titleLab.Enabled = true;
+                                titleLab.Location = new Point(12, 182);
+                                titleLab.Width = 220;
+                                titleLab.Height = 30;
+                                titleLab.Text = getName;
 
-                            Label titleLab = new Label();
-                            mainPanelTxt.Controls.Add(titleLab);
-                            titleLab.Name = "LabExlUp" + exlCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                            titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                            titleLab.ForeColor = Color.Gainsboro;
-                            titleLab.Visible = true;
-                            titleLab.Enabled = true;
-                            titleLab.Location = new Point(12, 182);
-                            titleLab.Width = 220;
-                            titleLab.Height = 30;
-                            titleLab.Text = getName;
+                                // LOAD THUMBNAIL
 
-                            // LOAD THUMBNAIL
+                                var textboxExl = new Guna2PictureBox();
+                                mainPanelTxt.Controls.Add(textboxExl);
+                                textboxExl.Name = "ExeExl" + exlCurr;
+                                textboxExl.Width = 240;
+                                textboxExl.Height = 164;
+                                textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
+                                textboxExl.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
+                                textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
+                                textboxExl.BorderRadius = 8;
+                                textboxExl.Enabled = true;
+                                textboxExl.Visible = true;
 
-                            var textboxExl = new Guna2PictureBox();
-                            mainPanelTxt.Controls.Add(textboxExl);
-                            textboxExl.Name = "ExeExl" + exlCurr;
-                            textboxExl.Width = 240;
-                            textboxExl.Height = 164;
-                            textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
-                            textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
-                            textboxExl.BorderRadius = 8;
-                            textboxExl.Enabled = true;
-                            textboxExl.Visible = true;
+                                textboxExl.MouseHover += (_senderM, _ev) => {
+                                    mainPanelTxt.ShadowDecoration.Enabled = true;
+                                    mainPanelTxt.ShadowDecoration.BorderRadius = 8;
+                                };
 
-                            textboxExl.MouseHover += (_senderM, _ev) => {
-                                mainPanelTxt.ShadowDecoration.Enabled = true;
-                                mainPanelTxt.ShadowDecoration.BorderRadius = 8;
-                            };
+                                textboxExl.MouseLeave += (_senderQ, _evQ) => {
+                                    mainPanelTxt.ShadowDecoration.Enabled = false;
+                                };
 
-                            textboxExl.MouseLeave += (_senderQ, _evQ) => {
-                                mainPanelTxt.ShadowDecoration.Enabled = false;
-                            };
+                                textboxExl.Click += (sender_eq, e_eq) => {
+                                    exlFORM exlForm = new exlFORM(titleLab.Text);
+                                    exlForm.Show();
+                                };
 
-                            textboxExl.Click += (sender_eq, e_eq) => {
-                                exlFORM exlForm = new exlFORM(titleLab.Text);
-                                exlForm.Show();
-                            };
+                                Guna2Button remButExl = new Guna2Button();
+                                mainPanelTxt.Controls.Add(remButExl);
+                                remButExl.Name = "RemExlBut" + exlCurr;
+                                remButExl.Width = 39;
+                                remButExl.Height = 35;
+                                remButExl.FillColor = ColorTranslator.FromHtml("#4713BF");
+                                remButExl.BorderRadius = 6;
+                                remButExl.BorderThickness = 1;
+                                remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
+                                remButExl.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                                remButExl.Visible = true;
+                                remButExl.Location = new Point(189, 218);
 
-                            Guna2Button remButExl = new Guna2Button();
-                            mainPanelTxt.Controls.Add(remButExl);
-                            remButExl.Name = "RemExlBut" + exlCurr;
-                            remButExl.Width = 39;
-                            remButExl.Height = 35;
-                            remButExl.FillColor = ColorTranslator.FromHtml("#4713BF");
-                            remButExl.BorderRadius = 6;
-                            remButExl.BorderThickness = 1;
-                            remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
-                            remButExl.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                            remButExl.Visible = true;
-                            remButExl.Location = new Point(189, 218);
+                                remButExl.Click += (sender_vid, e_vid) => {
+                                    var titleFile = titleLab.Text;
+                                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                    if (verifyDialog == DialogResult.Yes) {
+                                        deletionMethod(titleFile, "file_info_excel");
+                                        panelVid.Dispose();
+                                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
-                            remButExl.Click += (sender_vid, e_vid) => {
-                                var titleFile = titleLab.Text;
-                                DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                                if (verifyDialog == DialogResult.Yes) {
-                                    deletionMethod(titleFile, "file_info_excel");
-                                    panelVid.Dispose();
-                                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                                    }
 
-                                }
+                                    if (flowLayoutPanel1.Controls.Count == 0) {
+                                        label8.Visible = true;
+                                        guna2Button6.Visible = true;
+                                    }
+                                };
 
-                                if (flowLayoutPanel1.Controls.Count == 0) {
-                                    label8.Visible = true;
-                                    guna2Button6.Visible = true;
-                                }
-                            };
+                                Label dateLabExl = new Label();
+                                mainPanelTxt.Controls.Add(dateLabExl);
+                                dateLabExl.Name = "LabExlUp" + exlCurr;
+                                dateLabExl.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+                                dateLabExl.ForeColor = Color.DarkGray;
+                                dateLabExl.Visible = true;
+                                dateLabExl.Enabled = true;
+                                dateLabExl.Location = new Point(12, 208);
+                                dateLabExl.Width = 1000;
+                                dateLabExl.Text = varDate;
 
-                            Label dateLabExl = new Label();
-                            mainPanelTxt.Controls.Add(dateLabExl);
-                            dateLabExl.Name = "LabExlUp" + exlCurr;
-                            dateLabExl.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                            dateLabExl.ForeColor = Color.DarkGray;
-                            dateLabExl.Visible = true;
-                            dateLabExl.Enabled = true;
-                            dateLabExl.Location = new Point(12, 208);
-                            dateLabExl.Width = 1000;
-                            dateLabExl.Text = varDate;
+                            }
+                            else if (retrieved == ".mp3" || retrieved == ".wav") {
+                                audCurr++;
+                                Byte[] toByte_ = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_audi", "PanAud", audCurr, toByte_); // ReadFile(open.FileName)
+                            }
+                            else if (retrieved == ".gif") {
+                                gifCurr++;
+                                Byte[] toByteGif_ = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_gif", "PanGif", gifCurr, toByteGif_);
+                            }
+                            else if (retrieved == ".apk") {
+                                apkCurr++;
+                                Byte[] readApkBytes = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_apk", "PanApk", apkCurr, readApkBytes);
+                            }
+                            else if (retrieved == ".pdf") {
+                                pdfCurr++;
+                                Byte[] readPdfBytes = File.ReadAllBytes(selectedItems);//File.ReadAllBytes(open.FileName);
+                                Application.DoEvents();
+                                createPanelMain("file_info_pdf", "PanPdf", pdfCurr, readPdfBytes);
+                            }
+                            else if (retrieved == ".pptx" || retrieved == ".ppt") {
+                                ptxCurr++;
+                                Byte[] readPtxBytes = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_ptx", "PanPtx", ptxCurr, readPtxBytes);
+                            }
+                            else if (retrieved == ".msi") {
+                                msiCurr++;
+                                Byte[] readMsiBytes = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_msi", "PanMsi", msiCurr, readMsiBytes);
+                            }
+                            else if (retrieved == ".docx") {
+                                docxCurr++;
+                                Byte[] readDocxBytes = File.ReadAllBytes(selectedItems);
+                                Application.DoEvents();
+                                createPanelMain("file_info_word", "PanDoc", docxCurr, readDocxBytes);
+                            }
+                        } catch (Exception) {
+                            Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                .ToList()
+                                .ForEach(form => form.Close());
+                            Form bgBlur = new Form();
+                            using (errorLoad displayErr = new errorLoad()) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
 
-                        }
-                        else if (retrieved == ".mp3" || retrieved == ".wav") {
-                            audCurr++;
-                            Byte[] toByte_ = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_audi", "PanAud", audCurr, toByte_); // ReadFile(open.FileName)
-                        }
-                        else if (retrieved == ".gif") {
-                            gifCurr++;
-                            Byte[] toByteGif_ = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_gif", "PanGif", gifCurr, toByteGif_);
-                        }
-                        else if (retrieved == ".apk") {
-                            apkCurr++;
-                            Byte[] readApkBytes = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_apk", "PanApk", apkCurr, secondCompression(readApkBytes));
-                        }
-                        else if (retrieved == ".pdf") {
-                            pdfCurr++;
-                            Byte[] readPdfBytes = File.ReadAllBytes(selectedItems);//File.ReadAllBytes(open.FileName);
-                            Application.DoEvents();
-                            createPanelMain("file_info_pdf", "PanPdf", pdfCurr, readPdfBytes);
-                        }
-                        else if (retrieved == ".pptx" || retrieved == ".ppt") {
-                            ptxCurr++;
-                            Byte[] readPtxBytes = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_ptx", "PanPtx", ptxCurr, readPtxBytes);
-                        }
-                        else if (retrieved == ".msi") {
-                            msiCurr++;
-                            Byte[] readMsiBytes = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_msi", "PanMsi", msiCurr, readMsiBytes);
-                        }
-                        else if (retrieved == ".docx") {
-                            docxCurr++;
-                            Byte[] readDocxBytes = File.ReadAllBytes(selectedItems);
-                            Application.DoEvents();
-                            createPanelMain("file_info_word", "PanDoc", docxCurr, readDocxBytes);
+                                displayErr.Owner = bgBlur;
+                                displayErr.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
                         }
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }

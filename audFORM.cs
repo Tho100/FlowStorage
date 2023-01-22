@@ -25,8 +25,7 @@ namespace FlowSERVER1 {
             label2.Text = "Uploaded By " + _UploaderName;
             _TabName = _TableName;
             _DirName = _DirectoryName;
-            timer1.Stop();
-            timer2.Stop();
+            pictureBox3.Enabled = false;
         }
 
         SoundPlayer _getSoundPlayer = null;
@@ -46,24 +45,28 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {                
-            timer1.Start();
-            timer2.Start();
             try {
                 String _audType = label1.Text.Substring(label1.Text.Length-3);
                 if(_mp3WaveOut != null) {
                     _mp3WaveOut.Resume();
-                } else {
+                    pictureBox3.Enabled = true;
+                }
+                else {
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving audio data.");
                     ShowAlert.Show();
                     Application.DoEvents();
                     if (_TabName == "file_info_audi") {
+                        pictureBox3.Enabled = true;
                         setupPlayer(_audType,LoaderModel.LoadFile("file_info_audi",_DirName,label1.Text));
                     } else if (_TabName == "upload_info_directory") {
+                        pictureBox3.Enabled = true;
                         setupPlayer(_audType, LoaderModel.LoadFile("upload_info_directory", _DirName, label1.Text));
                     }
                     else if (_TabName == "folder_upload_info") {
+                        pictureBox3.Enabled = true;
                         setupPlayer(_audType, LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
                     } else if (_TabName == "cust_sharing") {
+                        pictureBox3.Enabled = true;
                         setupPlayer(_audType, LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text));
                     }
                 }
@@ -107,15 +110,12 @@ namespace FlowSERVER1 {
         private void guna2Button6_Click(object sender, EventArgs e) {
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
+            pictureBox3.Enabled = false;
             if(_getSoundPlayer != null) {
                 _getSoundPlayer.Stop();
-                timer1.Stop();
-                timer2.Stop();
             }
             if (_mp3WaveOut != null) {
                 _mp3WaveOut.Pause();
-                timer1.Stop();
-                timer2.Stop();
             }
         }
 
@@ -123,30 +123,10 @@ namespace FlowSERVER1 {
             this.Close();
             if(_getSoundPlayer != null) {
                 _getSoundPlayer.Stop();
-                timer1.Stop();
-                timer2.Stop();
             }
             if (_mp3WaveOut != null) {
                 _mp3WaveOut.Stop();
-                timer1.Stop();
-                timer2.Stop();
             }
-        }
-
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            this.WindowState = FormWindowState.Normal;
-            guna2Button1.Visible = true;
-            guna2Button3.Visible = false;
-            label1.AutoSize = false;
-            label2.AutoSize = false;
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            this.WindowState = FormWindowState.Maximized;
-            guna2Button1.Visible = false;
-            guna2Button3.Visible = true;
-            label1.AutoSize = true;
-            label2.AutoSize = true;
         }
 
         private void audFORM_Load(object sender, EventArgs e) {
@@ -187,30 +167,7 @@ namespace FlowSERVER1 {
         int pic1YUpdate = 72;
         private async void timer1_Tick(object sender, EventArgs e) {
             // 267, 80: wave2
-            // 46, 69: wave1
-            int pic1X = guna2PictureBox1.Location.X;
-            int pic1Y = guna2PictureBox1.Location.Y;
-
-            for(int i=0; i<=500; i++) {
-                if(pic1YUpdate == 72) {
-                    guna2PictureBox1.Location = new Point(pic1X, pic1YUpdate);
-                    pic1YUpdate = pic1Y;
-                } else if (pic1YUpdate == pic1Y) {
-                    guna2PictureBox1.Location = new Point(pic1X, pic1Y);
-                    pic1YUpdate = 72;
-                }
-              await Task.Delay(80);
-            }
-            /*
-            if(pic1YUpdate == pic1Y) {
-                guna2PictureBox1.Location = new Point(pic1X, pic1Y);
-                pic1YUpdate = 15;
-            }*/
-
-
-            //int yUp = _setRand.Next(pic1X, 110);
-            //int yDown = _setRand.Next(pic1X, pic1Y);
-
+     
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
@@ -227,20 +184,7 @@ namespace FlowSERVER1 {
 
         int pic2YUpdate = 58;
         private async void timer2_Tick(object sender, EventArgs e) {
-            int pic2X = guna2PictureBox3.Location.X;
-            int pic2Y = guna2PictureBox3.Location.Y;
-
-            for (int i = 0; i <= 500; i++) {
-                if (pic2YUpdate == 58) {
-                    guna2PictureBox3.Location = new Point(pic2X, pic2YUpdate);
-                    pic2YUpdate = pic2Y;
-                }
-                else if (pic2YUpdate == pic2Y) {
-                    guna2PictureBox3.Location = new Point(pic2X, pic2Y);
-                    pic2YUpdate = 58;
-                }
-                await Task.Delay(80);
-            }
+          
         }
 
         private void guna2Button8_Click(object sender, EventArgs e) {

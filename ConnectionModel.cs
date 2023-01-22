@@ -9,9 +9,9 @@ namespace FlowSERVER1 {
     public class ConnectionModel {
         public static string _SERVER = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
         public static string _MAINDB = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string _USER = "root"; // epiz_33067528 | root
+        public static string _USER = "0015connectionlover"; // epiz_33067528 | root
         public static string _PASSWORD = "nfreal-yt10";
-        public static int _MAINPORT = 11761;
+        public static int _MAINPORT = 19113;
         public static string _FULLCONNECTION = "SERVER=" + _SERVER + ";" + "Port=" + _MAINPORT + ";" + "DATABASE=" + _MAINDB + ";" + "UID=" + _USER + ";" + "PASSWORD=" + _PASSWORD + ";";
         public static MySqlConnection con = new MySqlConnection(_FULLCONNECTION);
         public static MySqlCommand command;

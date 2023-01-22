@@ -73,6 +73,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap giphy__1_ {
+            get {
+                object obj = ResourceManager.GetObject("giphy (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon1 {
             get {
                 object obj = ResourceManager.GetObject("icon1", resourceCulture);
@@ -96,26 +106,6 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_audio_file_60 {
             get {
                 object obj = ResourceManager.GetObject("icons8-audio-file-60", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_audio_wave_100__1_ {
-            get {
-                object obj = ResourceManager.GetObject("icons8-audio-wave-100 (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_audio_wave_100__1__4 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-audio-wave-100 (1) 4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -376,26 +366,6 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap Untitled__26_ {
             get {
                 object obj = ResourceManager.GetObject("Untitled (26)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Untitled__36_ {
-            get {
-                object obj = ResourceManager.GetObject("Untitled (36)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Untitled__37_ {
-            get {
-                object obj = ResourceManager.GetObject("Untitled (37)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
