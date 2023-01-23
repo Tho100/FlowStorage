@@ -1110,24 +1110,8 @@ namespace FlowSERVER1
                             if (type_ == "Audio") {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                 textboxPic.Click += (sender_Aud, e_Aud) => {
-                                    Form bgBlur = new Form();
-                                    using (audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayPic.Owner = bgBlur;
-                                        displayPic.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                   audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text);
+                                    displayPic.Show();
                                 };
                             }
 
@@ -1163,185 +1147,223 @@ namespace FlowSERVER1
                         }
 
 
-                        command.Parameters["@DIR_NAME"].Value = label1.Text;
-                        command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
-                        command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                        command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                        command.Parameters["@FILE_EXT"].Value = retrieved;
+                        try {
 
-                        if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
-                            currImg++;
-                            var getImg = new Bitmap(selectedItems);
-                            var imgWidth = getImg.Width;
-                            var imgHeight = getImg.Height;
-                            if (retrieved != ".ico") {
-                                using (MemoryStream ms = new MemoryStream()) {
-                                    getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                                    var setupImg = ms.ToArray();
-                                    Application.DoEvents();
+                            command.Parameters["@DIR_NAME"].Value = label1.Text;
+                            command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
+                            command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
+                            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+                            command.Parameters["@FILE_EXT"].Value = retrieved;
 
-                                    command.Parameters["@CUST_FILE"].Value = setupImg;
-                                    command.ExecuteNonQuery();
-                                    command.Dispose();
+                            UploadAlrt ShowUploadAlert = new UploadAlrt(getName);
+                            ShowUploadAlert.Show();
+                            Application.DoEvents();
 
-                                    clearRedundane();
-                                    createPanelMain("Image", "ImagePar", currImg);
+                            if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".webm") {
+                                currImg++;
+                                var getImg = new Bitmap(selectedItems);
+                                var imgWidth = getImg.Width;
+                                var imgHeight = getImg.Height;
+                                if (retrieved != ".ico") {
+                                    using (MemoryStream ms = new MemoryStream()) {
+                                        getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                                        var setupImg = ms.ToArray();
+                                        Application.DoEvents();
+
+                                        command.Parameters["@CUST_FILE"].Value = setupImg;
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+
+                                        clearRedundane();
+                                        createPanelMain("Image", "ImagePar", currImg);
+                                    }
+                                }
+                                else {
+                                    Image retrieveIcon = Image.FromFile(open.FileName);
+                                    byte[] dataIco;
+                                    using (MemoryStream msIco = new MemoryStream()) {
+                                        retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
+                                        dataIco = msIco.ToArray();
+
+                                        Application.DoEvents();
+                                        command.Parameters["@CUST_FILE"].Value = dataIco;
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+
+                                        clearRedundane();
+                                        createPanelMain("Image", "IcoPar", currImg);
+                                    }
                                 }
                             }
-                            else {
-                                Image retrieveIcon = Image.FromFile(open.FileName);
-                                byte[] dataIco;
-                                using (MemoryStream msIco = new MemoryStream()) {
-                                    retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                    dataIco = msIco.ToArray();
 
-                                    Application.DoEvents();
-                                    command.Parameters["@CUST_FILE"].Value = dataIco;
-                                    command.ExecuteNonQuery();
-                                    command.Dispose();
+                            if (retrieved == ".txt" || retrieved == ".py" || retrieved == ".html" || retrieved == ".css") {
+                                currTxt++;
 
-                                    clearRedundane();
-                                    createPanelMain("Image", "IcoPar", currImg);
+                                var _encryptConts = EncryptionModel.EncryptText(File.ReadAllText(selectedItems));
+                                var _readText = File.ReadAllText(selectedItems);
+                                Application.DoEvents();
+                                command.Parameters["@CUST_FILE"].Value = _encryptConts;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                clearRedundane();
+                                createPanelMain("Texts", "TextPar", currTxt);
+                            }
+
+                            if (retrieved == ".apk") {
+                                currApk++;
+
+                                Application.DoEvents();
+                                Byte[] _readApkBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readApkBytes; 
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                clearRedundane();
+                                createPanelMain("Apk", "ApkPar", currApk);
+                            }
+
+                            if (retrieved == ".exe") {
+                                currExe++;
+
+                                Application.DoEvents();
+                                Byte[] _readExeBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readExeBytes;//ReadFile(open.FileName);
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                clearRedundane();
+                                createPanelMain("Exe", "ExePar", currExe);
+                            }
+                            if (retrieved == ".pdf") {
+                                currPdf++;
+
+                                Application.DoEvents();
+                                Byte[] _readPdfBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                clearRedundane();
+                                createPanelMain("Pdf", "PdfPar", currPdf);
+                            }
+                            if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
+                                currVid++;
+
+                                Application.DoEvents();
+                                Byte[] _readVidBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readVidBytes;
+                                ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
+                                Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                                using (var stream = new MemoryStream()) {
+                                    toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                    command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                                 }
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                clearRedundane();
+                                createPanelMain("Vid", "VidPar", currVid);
                             }
-                        }
+                            if (retrieved == ".pptx" || retrieved == ".ppt") {
+                                currPtx++;
 
-                        if (retrieved == ".txt" || retrieved == ".py" || retrieved == ".html" || retrieved == ".css") {
-                            currTxt++;
+                                Application.DoEvents();
+                                Byte[] _readPtxBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
 
-                            var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(selectedItems), "TXTCONTS01947265");
-                            var _readText = File.ReadAllText(selectedItems);
-                            Application.DoEvents();
-                            command.Parameters["@CUST_FILE"].Value = _encryptConts;
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-
-                            clearRedundane();
-                            createPanelMain("Texts", "TextPar", currTxt);
-                        }
-
-                        if (retrieved == ".apk") {
-                            currApk++;
-
-                            Application.DoEvents();
-                            Byte[] _readApkBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readApkBytes; 
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-
-                            clearRedundane();
-                            createPanelMain("Apk", "ApkPar", currApk);
-                        }
-
-                        if (retrieved == ".exe") {
-                            currExe++;
-
-                            Application.DoEvents();
-                            Byte[] _readExeBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readExeBytes;//ReadFile(open.FileName);
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-
-                            clearRedundane();
-                            createPanelMain("Exe", "ExePar", currExe);
-                        }
-                        if (retrieved == ".pdf") {
-                            currPdf++;
-
-                            Application.DoEvents();
-                            Byte[] _readPdfBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readPdfBytes;
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-
-                            clearRedundane();
-                            createPanelMain("Pdf", "PdfPar", currPdf);
-                        }
-                        if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
-                            currVid++;
-
-                            Application.DoEvents();
-                            Byte[] _readVidBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readVidBytes;
-                            ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
-                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                            using (var stream = new MemoryStream()) {
-                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                                clearRedundane();
+                                createPanelMain("Ptx", "PtxPar", currPtx);
                             }
-                            command.ExecuteNonQuery();
-                            command.Dispose();
+                            if (retrieved == ".gif") {
+                                currGif++;
 
-                            clearRedundane();
-                            createPanelMain("Vid", "VidPar", currVid);
-                        }
-                        if (retrieved == ".pptx" || retrieved == ".ppt") {
-                            currPtx++;
+                                Application.DoEvents();
+                                Byte[] _readGifBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readGifBytes;
 
-                            Application.DoEvents();
-                            Byte[] _readPtxBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readPtxBytes;
-                            command.ExecuteNonQuery();
-                            command.Dispose();
+                                ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
+                                Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                                using (var stream = new MemoryStream()) {
+                                    toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                    command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                                }
+                                command.ExecuteNonQuery();
+                                command.Dispose();
 
-                            clearRedundane();
-                            createPanelMain("Ptx", "PtxPar", currPtx);
-                        }
-                        if (retrieved == ".gif") {
-                            currGif++;
-
-                            Application.DoEvents();
-                            Byte[] _readGifBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readGifBytes;
-
-                            ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
-                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                            using (var stream = new MemoryStream()) {
-                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                                clearRedundane();
+                                createPanelMain("Gif", "GifPar", currGif);
                             }
-                            command.ExecuteNonQuery();
-                            command.Dispose();
+                            if (retrieved == ".msi") {
+                                currMsi++;
 
-                            clearRedundane();
-                            createPanelMain("Gif", "GifPar", currGif);
-                        }
-                        if (retrieved == ".msi") {
-                            currMsi++;
+                                Application.DoEvents();
+                                Byte[] _readMsiBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
 
-                            Application.DoEvents();
-                            Byte[] _readMsiBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readMsiBytes;
-                            command.ExecuteNonQuery();
-                            command.Dispose();
+                                clearRedundane();
+                                createPanelMain("Msi", "MsiPar", currMsi);
+                            }
+                            if (retrieved == ".docx") {
+                                currDoc++;
 
-                            clearRedundane();
-                            createPanelMain("Msi", "MsiPar", currMsi);
-                        }
-                        if (retrieved == ".docx") {
-                            currDoc++;
+                                Application.DoEvents();
+                                Byte[] _readDocxBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
 
-                            Application.DoEvents();
-                            Byte[] _readDocxBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readDocxBytes;
-                            command.ExecuteNonQuery();
-                            command.Dispose();
+                                clearRedundane();
+                                createPanelMain("Docx", "DocPar", currDoc);
+                            }
+                            if(retrieved == ".mp3" || retrieved == ".wav") {
+                                currAud++;
 
-                            clearRedundane();
-                            createPanelMain("Docx", "DocPar", currDoc);
-                        }
-                        if(retrieved == ".mp3" || retrieved == ".wav") {
-                            currAud++;
+                                Application.DoEvents();
+                                Byte[] _readAudiBytes = File.ReadAllBytes(selectedItems);
+                                command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
 
-                            Application.DoEvents();
-                            Byte[] _readAudiBytes = File.ReadAllBytes(selectedItems);
-                            command.Parameters["@CUST_FILE"].Value = _readAudiBytes;
-                            command.ExecuteNonQuery();
-                            command.Dispose();
+                                clearRedundane();
+                                createPanelMain("Audio","AudPar",currAud);
+                            }
 
-                            clearRedundane();
-                            createPanelMain("Audio","AudPar",currAud);
+                            Application.OpenForms
+                              .OfType<Form>()
+                              .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                              .ToList()
+                              .ForEach(form => form.Close());
+
+                        } catch (Exception) {
+                            Application.OpenForms
+                               .OfType<Form>()
+                               .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                               .ToList()
+                               .ForEach(form => form.Close());
+                            Form bgBlur = new Form();
+                            using (errorLoad displayErr = new errorLoad()) {
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                bgBlur.Opacity = .24d;
+                                bgBlur.BackColor = Color.Black;
+                                bgBlur.WindowState = FormWindowState.Maximized;
+                                bgBlur.TopMost = true;
+                                bgBlur.Location = this.Location;
+                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                bgBlur.ShowInTaskbar = false;
+                                bgBlur.Show();
+
+                                displayErr.Owner = bgBlur;
+                                displayErr.ShowDialog();
+
+                                bgBlur.Dispose();
+                            }
                         }
                     }
                 }

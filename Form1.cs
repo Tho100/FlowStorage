@@ -1387,15 +1387,11 @@ namespace FlowSERVER1 {
                             }
 
                             if (nameTable == "file_info_expand") {
-                                var encryptValue = EncryptionModel.Encrypt(keyVal.ToString(), "TXTCONTS01947265");
-                                // Task.Run(() => {
+                                var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = encryptValue;
                                 command.ExecuteNonQuery();
                                 command.Dispose();
-                                //    command.Dispose();
-
-                                //});
 
                                 var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                                 if (_extTypes == ".py") {
@@ -2350,7 +2346,8 @@ namespace FlowSERVER1 {
                 }
             }
             catch (Exception eq) {
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(eq.Message);
+                //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -3219,6 +3216,14 @@ namespace FlowSERVER1 {
             if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox4.Text, "[^0-9]")) {
                 guna2TextBox4.Text = guna2TextBox4.Text.Remove(guna2TextBox4.Text.Length - 1);
             }
+        }
+
+        private void guna2TextBox2_TextChanged_1(object sender, EventArgs e) {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e) {
+
         }
     }
 }

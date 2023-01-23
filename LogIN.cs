@@ -106,12 +106,9 @@ namespace FlowSERVER1 {
             }
             userReader.Close();
 
-            //MessageBox.Show(passValuesKey_[0]);
-
             if(passValuesKey_.Count > 0) {
                 encryptionKeyVal = passValuesKey_[0];
                 decryptMainKey = EncryptionModel.Decrypt(encryptionKeyVal, "0123456789085746");
-
             } else {
                 label4.Visible = true;
             }
@@ -806,7 +803,8 @@ namespace FlowSERVER1 {
             try {
                 loadUserData();
             } catch (Exception eq) {
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(eq.Message);
+                //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void setupTime() {

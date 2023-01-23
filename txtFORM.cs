@@ -43,7 +43,7 @@ namespace FlowSERVER1 {
                 }
                 txtReader.Close();
 
-                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0], "TXTCONTS01947265");
+                var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]);
                 richTextBox1.Text = decryptValueKey;
                 if (FileExt_ == ".py") {
                     pythonSyntax();
@@ -69,7 +69,7 @@ namespace FlowSERVER1 {
                     textValues_.Add(_ReadTexts.GetString(0));
                 }
                 _ReadTexts.Close();
-                var getMainText = EncryptionModel.Decrypt(textValues_[0], "TXTCONTS01947265");
+                var getMainText = EncryptionModel.DecryptText(textValues_[0]);
                 richTextBox1.Text = getMainText;
                 if (FileExt_ == ".py") {
                     pythonSyntax();
@@ -105,7 +105,7 @@ namespace FlowSERVER1 {
                 }
                 txtReader.Close();
 
-                var decryptValueKey = EncryptionModel.Decrypt(textValuesF[0], "TXTCONTS01947265");
+                var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]);
                 richTextBox1.Text = decryptValueKey;
                 if (FileExt_ == ".py") {
                     pythonSyntax();

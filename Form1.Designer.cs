@@ -854,6 +854,7 @@
             this.label11.TabIndex = 20;
             this.label11.Text = "Please add username";
             this.label11.Visible = false;
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // label12
             // 
@@ -892,6 +893,7 @@
             this.guna2TextBox2.SelectedText = "";
             this.guna2TextBox2.Size = new System.Drawing.Size(350, 47);
             this.guna2TextBox2.TabIndex = 17;
+            this.guna2TextBox2.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged_1);
             // 
             // guna2TextBox1
             // 
