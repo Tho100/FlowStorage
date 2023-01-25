@@ -8,10 +8,8 @@ using System.Drawing;
 
 namespace FlowSERVER1 {
     public partial class pdfFORM : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static String _TableName;
-        public static String _DirName;
+        private static String _TableName;
+        private static String _DirName;
         public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName) {
             InitializeComponent();
             label1.Text = _FileTitle;

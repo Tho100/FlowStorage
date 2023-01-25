@@ -182,7 +182,6 @@
             this.Name = "apkFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "APK";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.apkFORM_Load);
             this.ResumeLayout(false);
 

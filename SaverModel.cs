@@ -32,6 +32,7 @@ namespace FlowSERVER1 {
         public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName) {
             _getExt = _FileTitle.Split('.').Last();
             try {
+                List<String> _base64Encoded = new List<string>();
                 if (_TableName == "upload_info_directory") {
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
                     ShowAlert.Show();
@@ -45,7 +46,8 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
-                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
+                        _base64Encoded.Add(_byteReader.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
                         _openDialog(_FileTitle,_getBytes);
                     }
                     _byteReader.Close();
@@ -62,7 +64,8 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
-                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
+                        _base64Encoded.Add(_byteReader.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
                         _openDialog(_FileTitle, _getBytes);
                     }
                     _byteReader.Close();
@@ -70,7 +73,6 @@ namespace FlowSERVER1 {
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.");
                     ShowAlert.Show();
                     Application.DoEvents();
-
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -78,8 +80,9 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@filename", _FileTitle);
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
-                    if (_byteReader.Read()) {   
-                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
+                    if (_byteReader.Read()) {
+                        _base64Encoded.Add(_byteReader.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
                         _openDialog( _FileTitle, _getBytes);
                     }
                     _byteReader.Close();
@@ -96,7 +99,8 @@ namespace FlowSERVER1 {
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
                     if (_byteReader.Read()) {
-                        var _getBytes = (byte[])_byteReader["CUST_FILE"];
+                        _base64Encoded.Add(_byteReader.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
                         _openDialog(_FileTitle, _getBytes);
                     }
                     _byteReader.Close();

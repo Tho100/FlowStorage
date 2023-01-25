@@ -183,7 +183,6 @@
             this.Name = "exeFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EXE";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.exeFORM_Load);
             this.ResumeLayout(false);
 

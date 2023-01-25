@@ -209,7 +209,6 @@
             this.Name = "wordFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Word Document Viewer";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.wordFORM_Load);
             this.ResumeLayout(false);
 

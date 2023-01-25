@@ -16,6 +16,7 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static Byte[] universalBytes;
         public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName) {
+            List<String> _base64Encoded = new List<string>();
             if (_TableName != "upload_info_directory" && _TableName != "folder_upload_info" && _TableName != "cust_sharing") {
                 String _readGifFiles = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
                 command = con.CreateCommand();
@@ -30,9 +31,10 @@ namespace FlowSERVER1 {
                            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                            .ToList()
                            .ForEach(form => form.Close());
-                    var _byteValues = (byte[])_readByteValues["CUST_FILE"];
-                    universalBytes = _byteValues;
-                    //MemoryStream _memStream = new MemoryStream(_byteValues);
+
+                    _base64Encoded.Add(_readByteValues.GetString(0));
+                    var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                    universalBytes = _getBytes;
                 }
                 _readByteValues.Close();
             }
@@ -51,9 +53,9 @@ namespace FlowSERVER1 {
                            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                            .ToList()
                            .ForEach(form => form.Close());
-                    var _byteValues = (byte[])_readByteValues["CUST_FILE"];
-                     universalBytes =_byteValues;
-                    //MemoryStream _memStream = new MemoryStream(_byteValues);
+                    _base64Encoded.Add(_readByteValues.GetString(0));
+                    var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                    universalBytes = _getBytes;
                 }
                 _readByteValues.Close();
             }
@@ -72,9 +74,9 @@ namespace FlowSERVER1 {
                            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                            .ToList()
                            .ForEach(form => form.Close());
-                    var _byteValues = (byte[])_readByteValues["CUST_FILE"];
-                    universalBytes = _byteValues;
-                    //MemoryStream _memStream = new MemoryStream(_byteValues);
+                    _base64Encoded.Add(_readByteValues.GetString(0));
+                    var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                    universalBytes = _getBytes;
                 }
                 _readByteValues.Close();
             } else if (_TableName == "cust_sharing") {
@@ -91,9 +93,9 @@ namespace FlowSERVER1 {
                            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                            .ToList()
                            .ForEach(form => form.Close());
-                    var _byteValues = (byte[])_readByteValues["CUST_FILE"];
-                    universalBytes = _byteValues;
-                    //MemoryStream _memStream = new MemoryStream(_byteValues);
+                    _base64Encoded.Add(_readByteValues.GetString(0));
+                    var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                    universalBytes = _getBytes;
                 }
                 _readByteValues.Close();
             }

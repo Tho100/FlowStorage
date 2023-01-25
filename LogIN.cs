@@ -106,7 +106,7 @@ namespace FlowSERVER1 {
             }
             userReader.Close();
 
-            if(passValuesKey_.Count > 0) {
+            if (passValuesKey_.Count > 0) {
                 encryptionKeyVal = passValuesKey_[0];
                 decryptMainKey = EncryptionModel.Decrypt(encryptionKeyVal, "0123456789085746");
             } else {
@@ -451,12 +451,6 @@ namespace FlowSERVER1 {
                         var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
                         if (_tableName == "file_info") {
-
-                            String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
-                            command = new MySqlCommand(retrieveImg, con);
-                            command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            command.Parameters.AddWithValue("@password", encryptionKeyVal);
-
                             MySqlDataAdapter da = new MySqlDataAdapter(command);
                             DataSet ds = new DataSet();
 

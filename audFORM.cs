@@ -144,8 +144,8 @@ namespace FlowSERVER1 {
             else if (_TabName == "folder_upload_info") {
                 SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirName);
             }
-            else if (_TabName == "file_info_aud") {
-                SaverModel.SaveSelectedFile(label1.Text, "file_info_aud", _DirName);
+            else if (_TabName == "file_info_audi") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_audi", _DirName);
             }
             else if (_TabName == "cust_sharing") {
                 SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);

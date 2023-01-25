@@ -97,9 +97,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.Image = global::FlowSERVER1.Properties.Resources.giphy__1_;
-            this.pictureBox3.Location = new System.Drawing.Point(-23, 81);
+            this.pictureBox3.Location = new System.Drawing.Point(-21, 81);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(585, 153);
+            this.pictureBox3.Size = new System.Drawing.Size(582, 150);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 53;
             this.pictureBox3.TabStop = false;
@@ -236,7 +236,6 @@
             this.Name = "audFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audio Player";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.audFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);

@@ -106,8 +106,10 @@ namespace FlowSERVER1 {
                                 ShowUploadAlert.Show();
                                 Application.DoEvents();
 
-                                if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
+                                    Byte[] _readBytes = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(_readBytes);
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;//File.ReadAllBytes(_FilePath);
                                     command.ExecuteNonQuery();
                                 } else if (_retrieved == ".docx" || _retrieved == ".doc") {
                                     command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
@@ -343,17 +345,22 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
 
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp") {
+                    List<String> _base64Encoded = new List<string>();
                     String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
 
                     Application.DoEvents();
-                    MySqlDataAdapter da = new MySqlDataAdapter(command);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[q][0]);
+                    MySqlDataReader _readBase64 = command.ExecuteReader();
+                    while (_readBase64.Read()) {
+                        _base64Encoded.Add(_readBase64.GetString(0));
+                    }
+                    _readBase64.Close();
 
-                    textboxPic.Image = new Bitmap(ms);
+                    var _getBytes = Convert.FromBase64String(_base64Encoded[q]);
+                    MemoryStream _toMs = new MemoryStream(_getBytes);
+
+                    textboxPic.Image = new Bitmap(_toMs);
                     textboxPic.Click += (sender_im, e_im) => {
                         var getImgName = (Guna2PictureBox)sender_im;
                         var getWidth = getImgName.Image.Width;

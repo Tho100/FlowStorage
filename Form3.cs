@@ -208,18 +208,22 @@ namespace FlowSERVER1
                 };
 
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp")  {
-                    String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @foldername";
+                    List<String> _base64Encoded = new List<string>();
+                    String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                     command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-                    command.Parameters.AddWithValue("@foldername", _dirTitle);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@dirname", _dirTitle);
 
-                    Application.DoEvents();
-                    MySqlDataAdapter da = new MySqlDataAdapter(command);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[q][0]);
+                    MySqlDataReader _readBase64 = command.ExecuteReader();
+                    while (_readBase64.Read()) {
+                        _base64Encoded.Add(_readBase64.GetString(0));
+                    }
+                    _readBase64.Close();
 
-                    textboxPic.Image = new Bitmap(ms);  
+                    var _getBytes = Convert.FromBase64String(_base64Encoded[q]);
+                    MemoryStream _toMs = new MemoryStream(_getBytes);
+
+                    textboxPic.Image = new Bitmap(_toMs);
                     textboxPic.Click += (sender_im, e_im) => {
                         var getImgName = (Guna2PictureBox)sender_im;
                         var getWidth = getImgName.Image.Width;
@@ -1166,18 +1170,16 @@ namespace FlowSERVER1
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
                                 if (retrieved != ".ico") {
-                                    using (MemoryStream ms = new MemoryStream()) {
-                                        getImg.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                                        var setupImg = ms.ToArray();
-                                        Application.DoEvents();
+                                    Byte[] _getByteImg = File.ReadAllBytes(selectedItems);
+                                    String _tempToBase64 = Convert.ToBase64String(_getByteImg);
+                                    Application.DoEvents();
 
-                                        command.Parameters["@CUST_FILE"].Value = setupImg;
-                                        command.ExecuteNonQuery();
-                                        command.Dispose();
+                                    command.Parameters["@CUST_FILE"].Value = _tempToBase64;
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
 
-                                        clearRedundane();
-                                        createPanelMain("Image", "ImagePar", currImg);
-                                    }
+                                    clearRedundane();
+                                    createPanelMain("Image", "ImagePar", currImg);
                                 }
                                 else {
                                     Image retrieveIcon = Image.FromFile(open.FileName);
@@ -1185,9 +1187,10 @@ namespace FlowSERVER1
                                     using (MemoryStream msIco = new MemoryStream()) {
                                         retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                         dataIco = msIco.ToArray();
+                                        String _tempToBase64 = Convert.ToBase64String(dataIco);
 
                                         Application.DoEvents();
-                                        command.Parameters["@CUST_FILE"].Value = dataIco;
+                                        command.Parameters["@CUST_FILE"].Value = _tempToBase64;
                                         command.ExecuteNonQuery();
                                         command.Dispose();
 

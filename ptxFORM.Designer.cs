@@ -206,7 +206,6 @@
             this.Name = "ptxFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Powerpoint Viewer";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.ptxFORM_Load);
             this.ResumeLayout(false);
 
