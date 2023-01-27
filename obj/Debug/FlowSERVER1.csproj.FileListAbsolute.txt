@@ -108,16 +108,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Diagnostics.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.ValueTuple.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ptxFORM.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Controls.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Rasterizer.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Apitron.PDF.Controls.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\BitMiracle.LibJpeg.NET.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.PDFPrinter.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Windows.PDFBookmarks.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Gnostice.PDFOne.Windows.PDFViewer.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ionic.Zlib.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\log4net.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.exe.manifest
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\FlowSERVER1.application
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.msiFORM.resources
@@ -129,7 +119,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Doc.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.DocViewer.Forms.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Doc.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.DocViewer.Forms.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exe.licenses
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libHarfBuzzSharp.dylib
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x86\libHarfBuzzSharp.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\x64\libHarfBuzzSharp.dll
@@ -144,7 +133,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\SkiaSharp.HarfBuzz.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.Compression.Portable.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.Licensing.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.OfficeChart.Portable.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.Pdf.Portable.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.SkiaSharpHelper.Portable.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Text.Encoding.CodePages.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\HarfBuzzSharp.pdb
@@ -155,7 +143,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\SkiaSharp.HarfBuzz.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\SkiaSharp.HarfBuzz.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.Compression.Portable.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.OfficeChart.Portable.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.Pdf.Portable.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Syncfusion.SkiaSharpHelper.Portable.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Barcode.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.DataExport.dll
@@ -1391,3 +1378,10 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DocumentFormat.Open
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ExcelNumberFormat.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\SixLabors.Fonts.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.IO.Packaging.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Pdf.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Spreadsheet.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.XLS.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.mshtml.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Pdf.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Spreadsheet.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.XLS.xml

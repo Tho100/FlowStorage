@@ -124,5 +124,9 @@ namespace FlowSERVER1 {
               .ToList()
               .ForEach(form => form.Hide());
         }
+
+        private void pdfDocumentViewer1_Click_1(object sender, EventArgs e) {
+
+        }
     }
 }

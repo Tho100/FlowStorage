@@ -3610,6 +3610,11 @@
             Gets or sets a value indicating whether this instance is showing place holder.
             </summary>       
         </member>
+        <member name="P:Spire.Doc.Documents.SDTProperties.Appearance">
+            <summary>
+            Gets or sets a value for the border appearance type.
+            </summary>
+        </member>
         <member name="M:Spire.Doc.Documents.SDTProperties.UpdataBoundContent(Spire.Doc.Document)">
             <summary>
             Updates structured documnet tag content with bound data.
@@ -15269,6 +15274,12 @@
         <member name="P:Spire.Doc.PasswordErrorException.Message">
             <summary>
             Gets the message that describes the current exception.
+            </summary>
+        </member>
+        <member name="P:Spire.Doc.ToPdfParameterList.MimicWPSLayout">
+            <summary>
+            Gets or sets a value indicating whether to mimic the layout of WPS Application.
+            The default value is false.
             </summary>
         </member>
         <member name="P:Spire.Doc.ToPdfParameterList.UpdateFields">

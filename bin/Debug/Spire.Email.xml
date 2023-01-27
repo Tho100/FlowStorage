@@ -3745,6 +3745,26 @@
             Initializes a new instance of the Pop3MessageInfoCollection class.
             </summary>
         </member>
+        <member name="T:Spire.Email.Smtp.ConnectionProtocols">
+            <summary>
+            Connection Protocols
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Smtp.ConnectionProtocols.None">
+            <summary>
+            Default Connection Protocol
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Smtp.ConnectionProtocols.Ssl">
+            <summary>
+            Ssl Connection Protocol
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Smtp.ConnectionProtocols.StartTls">
+            <summary>
+            StartTls Connection Protocol
+            </summary>
+        </member>
         <member name="T:Spire.Email.Smtp.SmtpClient">
             <summary>
             Represents component for access smtp servers
@@ -3767,7 +3787,7 @@
             <param name="host">URL of host</param>
             <param name="port">The tcp port number</param>
         </member>
-        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.String,System.String,Spire.Email.IMap.ConnectionProtocols)">
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.String,System.String,Spire.Email.Smtp.ConnectionProtocols)">
             <summary>
             Initializes the internal structures of the created object
             </summary>
@@ -3776,7 +3796,7 @@
             <param name="password">The password</param>
             <param name="connectionProtocols">Connection Protocols</param>
         </member>
-        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.Int32,System.String,System.String,Spire.Email.IMap.ConnectionProtocols)">
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.Int32,System.String,System.String,Spire.Email.Smtp.ConnectionProtocols)">
             <summary>
             Initializes the internal structures of the created object
             </summary>
@@ -3796,7 +3816,7 @@
             <param name="userName">Username to login to the SMTP server</param>
             <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
         </member>
-        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.UInt16,System.Boolean,System.String,System.String,Spire.Email.IMap.ConnectionProtocols)">
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.UInt16,System.Boolean,System.String,System.String,Spire.Email.Smtp.ConnectionProtocols)">
             <summary>
             Initializes the internal structures of the created object
             </summary>

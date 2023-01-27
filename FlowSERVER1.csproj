@@ -81,17 +81,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Apitron.PDF.Controls, Version=1.0.169.0, Culture=neutral, PublicKeyToken=6e759dbb0039406e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Apitron.PDF.Controls.1.0.169\lib\net472\Apitron.PDF.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Apitron.PDF.Rasterizer, Version=3.0.169.0, Culture=neutral, PublicKeyToken=6e759dbb0039406e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Apitron.PDF.Controls.1.0.169\lib\net472\Apitron.PDF.Rasterizer.dll</HintPath>
-    </Reference>
     <Reference Include="AuthorizeNet, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AuthorizeNet.2.0.3\lib\AuthorizeNet.dll</HintPath>
-    </Reference>
-    <Reference Include="BitMiracle.LibJpeg.NET, Version=1.5.324.0, Culture=neutral, PublicKeyToken=53879b3e20e7a7d6, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\BitMiracle.LibJpeg.NET.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
@@ -114,18 +105,6 @@
     <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
-    <Reference Include="Gnostice.PDFOne, Version=22.1.6.1856, Culture=neutral, PublicKeyToken=c91dc0d609de7d5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\Gnostice.PDFOne.dll</HintPath>
-    </Reference>
-    <Reference Include="Gnostice.PDFOne.PDFPrinter, Version=22.1.6.1856, Culture=neutral, PublicKeyToken=c91dc0d609de7d5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\Gnostice.PDFOne.PDFPrinter.dll</HintPath>
-    </Reference>
-    <Reference Include="Gnostice.PDFOne.Windows.PDFBookmarks, Version=22.1.6.1856, Culture=neutral, PublicKeyToken=c91dc0d609de7d5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\Gnostice.PDFOne.Windows.PDFBookmarks.dll</HintPath>
-    </Reference>
-    <Reference Include="Gnostice.PDFOne.Windows.PDFViewer, Version=22.1.6.1856, Culture=neutral, PublicKeyToken=c91dc0d609de7d5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\Gnostice.PDFOne.Windows.PDFViewer.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Protobuf, Version=3.19.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.19.4\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -134,9 +113,6 @@
     </Reference>
     <Reference Include="HarfBuzzSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\HarfBuzzSharp.2.8.2.2\lib\net462\HarfBuzzSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zlib, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\Ionic.Zlib.dll</HintPath>
     </Reference>
     <Reference Include="Irony, Version=1.0.11.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=MSIL">
       <HintPath>..\packages\Irony.NetCore.1.0.11\lib\net461\Irony.dll</HintPath>
@@ -185,9 +161,6 @@
     </Reference>
     <Reference Include="LibVLCSharp.WinForms, Version=3.6.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LibVLCSharp.WinForms.3.6.7\lib\net40\LibVLCSharp.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFOne.NET.22.1.6\lib\net40\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -268,34 +241,43 @@
       <HintPath>..\packages\PayPal.2.0.0-rc2\lib\netstandard2.0\Source.dll</HintPath>
     </Reference>
     <Reference Include="Spire.Barcode, Version=6.12.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.Barcode.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.Barcode.dll</HintPath>
     </Reference>
     <Reference Include="Spire.DataExport, Version=4.8.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.DataExport.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.DataExport.dll</HintPath>
     </Reference>
     <Reference Include="Spire.DataExport.ResourceMgr, Version=2.1.0.0, Culture=neutral, PublicKeyToken=4bc1500157862925, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.DataExport.ResourceMgr.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.DataExport.ResourceMgr.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Doc, Version=10.12.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.Doc.dll</HintPath>
+    <Reference Include="Spire.Doc, Version=10.12.4.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.Doc.dll</HintPath>
     </Reference>
     <Reference Include="Spire.DocViewer.Forms, Version=7.10.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.DocViewer.Forms.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.DocViewer.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Email, Version=5.12.13.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.Email.dll</HintPath>
+    <Reference Include="Spire.Email, Version=5.12.19.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.Email.dll</HintPath>
     </Reference>
     <Reference Include="Spire.OfficeViewer.Forms, Version=7.12.4.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.OfficeViewer.Forms.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.OfficeViewer.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=8.12.7.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="Spire.PdfViewer.Asp, Version=7.10.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.PdfViewer.Asp.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.PdfViewer.Asp.dll</HintPath>
     </Reference>
     <Reference Include="Spire.PdfViewer.Forms, Version=7.10.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.PdfViewer.Forms.dll</HintPath>
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.PdfViewer.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Presentation, Version=7.11.2.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.7.12.4\lib\net40\Spire.Presentation.dll</HintPath>
+    <Reference Include="Spire.Presentation, Version=7.12.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Spreadsheet, Version=6.12.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=12.12.3.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.Office.8.1.1\lib\net40\Spire.XLS.dll</HintPath>
     </Reference>
     <Reference Include="Stripe.net, Version=41.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stripe.net.41.5.0-beta.1\lib\net461\Stripe.net.dll</HintPath>
@@ -326,9 +308,6 @@
     </Reference>
     <Reference Include="Syncfusion.OfficeChart.Portable, Version=20.3200.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.OfficeChart.Net.Core.20.3.0.61\lib\netstandard2.0\Syncfusion.OfficeChart.Portable.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Pdf.Portable, Version=20.4200.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Pdf.Net.Core.20.4.0.38\lib\netstandard2.0\Syncfusion.Pdf.Portable.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfInput.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.SfInput.WinForms.20.4.0.38\lib\net46\Syncfusion.SfInput.WinForms.dll</HintPath>
@@ -746,7 +725,6 @@
     <EmbeddedResource Include="LogIN.resx">
       <DependentUpon>LogIN.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
