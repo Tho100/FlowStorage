@@ -340,16 +340,13 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_excel") {
-                    //picMain_Q.Image = Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
-                    //picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.excelIcon;
                     picMain_Q.Click += (sender_vq, e_vq) => {
-                        exlFORM exlForm = new exlFORM(titleLab.Text);
+                        exlFORM exlForm = new exlFORM(titleLab.Text,"file_info_excel","null",label5.Text);
                         exlForm.Show();
                     };
                 }
                 if (_tableName == "file_info_audi") {
-                    var _getWidth = this.Width;
-                    var _getHeight = this.Height;
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
@@ -786,8 +783,13 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                if (typeValues[i] == ".xlsx") {
-                    //
+                if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls" || typeValues[i] == ".csv") {
+                    img.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                    img.Click += (sender_aud, e_aud) => {
+                        Form bgBlur = new Form();
+                        exlFORM displayExl = new exlFORM(titleLab.Text, "folder_upload_info", _foldTitle, label5.Text);
+                        displayExl.Show();
+                    };
                 }
 
                 if (typeValues[i] == ".wav" || typeValues[i] == ".mp3") {
@@ -1113,7 +1115,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.csv|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
             //var _getDirPath = open.FileName;
@@ -1411,40 +1413,35 @@ namespace FlowSERVER1 {
                                 clearRedundane();
                             }
                             if (nameTable == "file_info_audi") {
-                                //   Task.Run(() => {
                                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                                 command.Parameters["@CUST_FILE"].Value = keyVal;
                                 command.ExecuteNonQuery();
                                 command.Dispose();
 
-                                // });
                                 var _getWidth = this.Width;
                                 var _getHeight = this.Height;
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                 textboxPic.Click += (sender_ex, e_ex) => {
-                                    Form bgBlur = new Form();
-                                    using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null",label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        //bgBlur.Size = new Size(_getWidth,_getHeight);
-                                        bgBlur.Name = "bgBlurForm";
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayPic.Owner = bgBlur;
-                                        displayPic.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null",label5.Text);
+                                    displayPic.Show();
                                 };
                                 clearRedundane();
                             }
+
+                            if (nameTable == "file_info_excel") {
+                                command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                                command.Parameters["@CUST_FILE"].Value = keyVal;
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                                textboxPic.Click += (sender_ex, e_ex) => {
+                                    exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", label5.Text);
+                                    displayPic.Show();
+                                };
+                                clearRedundane();
+                            }
+
                             if (nameTable == "file_info_gif") {
                                 containThumbUpload(nameTable, getName, keyVal);
                                 ShellFile shellFile = ShellFile.FromFilePath(open.FileName);
@@ -1702,108 +1699,16 @@ namespace FlowSERVER1 {
                             else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
                                 vidCurr++;
                                 Byte[] streamReadVid = File.ReadAllBytes(selectedItems);
+                                var _toBase64 = Convert.ToBase64String(streamReadVid);
                                 Application.DoEvents();
-                                createPanelMain("file_info_vid", "PanVid", vidCurr, streamReadVid);
+                                createPanelMain("file_info_vid", "PanVid", vidCurr, _toBase64);
                             }
-                            else if (retrieved == ".xlsx" || retrieved == ".csv") {
-
+                            else if (retrieved == ".xlsx" || retrieved == ".xls" || retrieved == ".csv") {
                                 exlCurr++;
-                                int top = 275;
-                                int h_p = 100;
-                                var panelVid = new Guna2Panel() {
-                                    Name = "PanExl" + exlCurr,
-                                    Width = 240,
-                                    Height = 262,
-                                    BorderRadius = 8,
-                                    FillColor = ColorTranslator.FromHtml("#121212"),
-                                    BackColor = Color.Transparent,
-                                    Location = new Point(600, top)
-                                };
-
-                                top += h_p;
-                                flowLayoutPanel1.Controls.Add(panelVid);
-                                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExl" + exlCurr]);
-
-                                Label titleLab = new Label();
-                                mainPanelTxt.Controls.Add(titleLab);
-                                titleLab.Name = "LabExlUp" + exlCurr;//Segoe UI Semibold, 11.25pt, style=Bold
-                                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                                titleLab.ForeColor = Color.Gainsboro;
-                                titleLab.Visible = true;
-                                titleLab.Enabled = true;
-                                titleLab.Location = new Point(12, 182);
-                                titleLab.Width = 220;
-                                titleLab.Height = 30;
-                                titleLab.Text = getName;
-
-                                // LOAD THUMBNAIL
-
-                                var textboxExl = new Guna2PictureBox();
-                                mainPanelTxt.Controls.Add(textboxExl);
-                                textboxExl.Name = "ExeExl" + exlCurr;
-                                textboxExl.Width = 240;
-                                textboxExl.Height = 164;
-                                textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
-                                textboxExl.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\Users\USER\Downloads\excelIcon.png");
-                                textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
-                                textboxExl.BorderRadius = 8;
-                                textboxExl.Enabled = true;
-                                textboxExl.Visible = true;
-
-                                textboxExl.MouseHover += (_senderM, _ev) => {
-                                    mainPanelTxt.ShadowDecoration.Enabled = true;
-                                    mainPanelTxt.ShadowDecoration.BorderRadius = 8;
-                                };
-
-                                textboxExl.MouseLeave += (_senderQ, _evQ) => {
-                                    mainPanelTxt.ShadowDecoration.Enabled = false;
-                                };
-
-                                textboxExl.Click += (sender_eq, e_eq) => {
-                                    exlFORM exlForm = new exlFORM(titleLab.Text);
-                                    exlForm.Show();
-                                };
-
-                                Guna2Button remButExl = new Guna2Button();
-                                mainPanelTxt.Controls.Add(remButExl);
-                                remButExl.Name = "RemExlBut" + exlCurr;
-                                remButExl.Width = 39;
-                                remButExl.Height = 35;
-                                remButExl.FillColor = ColorTranslator.FromHtml("#4713BF");
-                                remButExl.BorderRadius = 6;
-                                remButExl.BorderThickness = 1;
-                                remButExl.BorderColor = ColorTranslator.FromHtml("#232323");
-                                remButExl.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
-                                remButExl.Visible = true;
-                                remButExl.Location = new Point(189, 218);
-
-                                remButExl.Click += (sender_vid, e_vid) => {
-                                    var titleFile = titleLab.Text;
-                                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                                    if (verifyDialog == DialogResult.Yes) {
-                                        deletionMethod(titleFile, "file_info_excel");
-                                        panelVid.Dispose();
-                                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-                                    }
-
-                                    if (flowLayoutPanel1.Controls.Count == 0) {
-                                        label8.Visible = true;
-                                        guna2Button6.Visible = true;
-                                    }
-                                };
-
-                                Label dateLabExl = new Label();
-                                mainPanelTxt.Controls.Add(dateLabExl);
-                                dateLabExl.Name = "LabExlUp" + exlCurr;
-                                dateLabExl.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                                dateLabExl.ForeColor = Color.DarkGray;
-                                dateLabExl.Visible = true;
-                                dateLabExl.Enabled = true;
-                                dateLabExl.Location = new Point(12, 208);
-                                dateLabExl.Width = 1000;
-                                dateLabExl.Text = varDate;
-
+                                Byte[] _toByte = File.ReadAllBytes(selectedItems);
+                                var _toBase64 = Convert.ToBase64String(_toByte);
+                                Application.DoEvents();
+                                createPanelMain("file_info_excel","PanExl",exlCurr,_toBase64);
                             }
                             else if (retrieved == ".mp3" || retrieved == ".wav") {
                                 audCurr++;
@@ -2235,7 +2140,7 @@ namespace FlowSERVER1 {
                                                 command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
                                                 command.ExecuteNonQuery();
 
-                                                setupEmailSender();
+                                           //     setupEmailSender();
 
                                                 label11.Visible = false;
                                                 label12.Visible = false;

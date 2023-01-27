@@ -13,209 +13,96 @@ using MySql.Data.MySqlClient;
 using MySql.Data;
 using System.IO;
 using System.Xml;
+using ExcelDataReader;
+using ClosedXML.Excel;
 
 namespace FlowSERVER1 {
     public partial class exlFORM : Form {
+
         public static exlFORM instance;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public exlFORM(String title) {
+        private static String DirectoryName;
+        private static String TableName;
+
+        private static List<String> _sheetValues = new List<String>();
+        private static int _currentSheetIndex = 1;
+        private static int _changedIndex = 0;
+
+        public exlFORM(String titleName, String _TableName, String _DirectoryName, String _UploaderName) {
             InitializeComponent();
+
             instance = this;
-            label1.Text = title;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
-            
-            var form1 = Form1.instance;
-        
-            /*
-            String selectSheets_Name = "SELECT SHEET_NAME FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(selectSheets_Name,con);
-            command.Parameters.AddWithValue("@username",form1.label5.Text);
-            command.Parameters.AddWithValue("@password", form1.label3.Text);
-            command.Parameters.AddWithValue("@filename", title);
+            label2.Text = "Uploaded By " + _UploaderName;
+            label1.Text = titleName;
+            DirectoryName = _DirectoryName;
+            TableName = _TableName;
 
-            List<String> sheetName_Values = new List<String>();
-
-            MySqlDataReader readerSheets_ = command.ExecuteReader();
-            while(readerSheets_.Read()) {
-                sheetName_Values.Add(readerSheets_.GetString(0));
-            }
-            readerSheets_.Close();
-
-            List<String> fixedSheetNames = sheetName_Values.Distinct().ToList();
-            foreach(var sheetNameValues in fixedSheetNames) {
-                guna2ComboBox1.Items.Add(sheetNameValues);
-            }
-            guna2ComboBox1.SelectedIndex = 0;*/
-
-
-
-            /*try {
-
-                string server = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-                string db = "flowserver_db"; // epiz_33067528_information | flowserver_db
-                string username = "root"; // epiz_33067528 | root
-                string password = "nfreal-yt10";
-                int mainPort_ = 11433;
-                string constring = "SERVER=" + server + ";" + "Port=" + mainPort_ + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                con.Open();
-                
-                String selectXml = "SELECT CUST_FILE FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @path";
-                command = new MySqlCommand(selectXml,con);
-                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password",Form1.instance.label3.Text);
-                command.Parameters.AddWithValue("@path",label1.Text);
-
-                List<string> xmlValues = new List<string>();
-
-                MySqlDataReader readXml = command.ExecuteReader();
-                while(readXml.Read()) {
-                    xmlValues.Add(readXml.GetString(0));    
-                }
-                readXml.Close();
-
-                StringReader mainReader = new StringReader(xmlValues[0]);
-                DataSet dataset = new DataSet();
-                dataset.ReadXml(mainReader);
-
-                guna2DataGridView1.DataSource = dataset.Tables[0];
-
-                String selectSheetName = "SELECT CUST_FILE_PATH FROM file_info_excel WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE = @fileval";
-                command = new MySqlCommand(selectSheetName,con);
-                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@password", Form1.instance.label3.Text);
-                command.Parameters.AddWithValue("@fileval",xmlValues);
-                
-
-                List<string> sheetNames = new List<string>();
-                MySqlDataReader readSheets = command.ExecuteReader();
-                while(readSheets.Read()) {
-                    sheetNames.Add(readSheets.GetString(0));
-                }
-                readSheets.Close();
-                foreach(var item in sheetNames) {
-                    MessageBox.Show(item);
-                }
-                MessageBox.Show(sheetNames.Count().ToString());
-            }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-            }*/
-
-
-
-
-
-
-            /*
-            StringReader mainReader = new StringReader(getXML);
-            DataSet dataset = new DataSet();
-            dataset.ReadXml(mainReader);
-
-            guna2DataGridView1.DataSource = dataset.Tables[0];*/
-
-            /*
-            
-            String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
-            OleDbConnection conExl = new OleDbConnection(pathExl);
-            conExl.Open();
-            DataTable Sheets = conExl.GetOleDbSchemaTable(OleDbSchemaGuid.Tables,null);
-            
-            List<string> sheetsValues = new List<string>();
-
-            for (int i = 0; i < Sheets.Rows.Count; i++) {
-                string worksheets = Sheets.Rows[i]["TABLE_NAME"].ToString();
-                string sqlQuery = String.Format("SELECT * FROM [{0}]", worksheets);
-                sheetsValues.Add(sqlQuery);
-            }
-
-            foreach (var item in sheetsValues) {
-                var output = String.Join(";", Regex.Matches(item, @"\[(.+?)\$")
-                                                    .Cast<Match>()
-                                                    .Select(m => m.Groups[1].Value));
-                guna2ComboBox1.Items.Add(output);
-            }
-
-            var firstSheetDefault = guna2ComboBox1.Items[0];
-            guna2ComboBox1.SelectedIndex = 0;
-            guna2ComboBox1.SelectedItem = firstSheetDefault;
-            
-            OleDbDataAdapter adptCon = new OleDbDataAdapter("select * from ["+guna2ComboBox1.SelectedItem+"$]", conExl);
-            DataTable mainTable = new DataTable();
-            adptCon.Fill(mainTable);
-
-            guna2DataGridView1.DataSource = mainTable;*/
-            /*
             try {
-                string server = "localhost";
-                string db = "flowserver_db";
-                string username = "root";
-                string password = "nfreal-yt10";
-                string constring = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + username + ";" + "PASSWORD=" + password + ";";
-
-                MySqlConnection con = new MySqlConnection(constring);
-                MySqlCommand command;
-
-                DataTable dt = getDVGTable(guna2DataGridView1);
-                DataSet ds = new DataSet();
-                ds.Tables.Add(dt);
-               
-                StringWriter sm = new StringWriter();
-                ds.WriteXml(sm);
-                string resultXML = sm.ToString();
-
-                
-                                         command.Parameters.Add("@CUST_FILE_TXT", MySqlDbType.LongText);
-                                string varDate = DateTime.Now.ToString("dd/MM/yyyy");
-
-                        command.Parameters["@CUST_FILE_TXT_NAME"].Value = getName;
-                
-                String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-
-                //con.Open();
-
-                String insertXML = "INSERT INTO file_info_excel(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE)";
-                command = new MySqlCommand(insertXML,con);
-                command.Parameters.Add("@CUST_FILE_PATH",MySqlDbType.Text);
-                command.Parameters.Add("@CUST_USERNAME",MySqlDbType.Text);
-                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
-                command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar,255);
-                command.Parameters.Add("@CUST_FILE", MySqlDbType.LongText);
-
-                command.Parameters["@CUST_FILE_PATH"].Value = Path;
-                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
-                command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                command.Parameters["@CUST_FILE"].Value = resultXML;
-                //command.ExecuteNonQuery();
-
-                // !SELECT * FROM file_info_excel!
-                // NOT INSERT INTO file_info_excel
+                if(_TableName == "file_info_excel") {
+                    generateSheet(LoaderModel.LoadFile("file_info_excel",DirectoryName,titleName));
+                } else if (_TableName == "upload_info_directory") {
+                    generateSheet(LoaderModel.LoadFile("upload_info_directory", DirectoryName, titleName));
+                } else if (_TableName == "folder_upload_info") {
+                    generateSheet(LoaderModel.LoadFile("folder_upload_info", DirectoryName, titleName));
+                } else if (_TableName == "cust_sharing") {
+                    generateSheet(LoaderModel.LoadFile("cust_sharing", DirectoryName, titleName));
+                }
             }
             catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-            }*/
-
+                MessageBox.Show(eq.Message,"Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                //MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
         }
 
-        public DataTable getDVGTable(DataGridView dvg) {
-            var dt = new DataTable();
-            foreach(DataGridViewColumn column in dvg.Columns) {
-                if(column.Visible) {
-                    dt.Columns.Add();
+        // GET INDEX OF SELECTED SHEET
+        private void generateSheet(Byte[] _getByte) {
+            MemoryStream _toStream = new MemoryStream(_getByte);
+            using (XLWorkbook workBook = new XLWorkbook(_toStream)) {
+
+                foreach (var _getSheetsName in workBook.Worksheets) {
+                    _sheetValues.Add(_getSheetsName.Name);
+                    guna2ComboBox1.Items.Add(_getSheetsName);
+                }
+                //for(int i=0; i<_sheetValues.Count; i++) {
+                //guna2ComboBox1.Items.Add(_sheetValues[i]);
+                // }
+                //Read the first Sheet from Excel file.
+                //guna2ComboBox1.SelectedIndex = _currentSheetIndex - 1;
+                guna2ComboBox1.SelectedIndex = _changedIndex;
+                guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
+                _currentSheetIndex = _changedIndex+1;
+                IXLWorksheet workSheet = workBook.Worksheet(_currentSheetIndex);
+
+                //Create a new DataTable.
+                DataTable dt = new DataTable();
+
+                //Loop through the Worksheet rows.
+                bool firstRow = true;
+                foreach (IXLRow row in workSheet.Rows()) {
+                    //Use the first row to add columns to DataTable.
+                    if (firstRow) {
+                        foreach (IXLCell cell in row.Cells()) {
+                            dt.Columns.Add(cell.Value.ToString());
+                        }
+                        firstRow = false;
+                    }
+                    else {
+                        //Add rows to DataTable.
+                        dt.Rows.Add();
+                        int i = 0;
+                        foreach (IXLCell cell in row.Cells()) {
+                            dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
+                            i++;
+                        }
+                    }
+
+                    dataGridView1.DataSource = dt;
                 }
             }
-            object[] cellValues = new object[dvg.Columns.Count];
-            foreach(DataGridViewRow row in dvg.Rows) {
-                for(int i=0; i<row.Cells.Count; i++) {
-                    cellValues[i] = row.Cells[i].Value;
-                }
-                dt.Rows.Add(cellValues);
-            }
-            return dt;
+        }
+
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+            //_currentSheetIndex = guna2ComboBox1.SelectedIndex;
+            _changedIndex = guna2ComboBox1.SelectedIndex;
         }
 
         private void Form5_Load(object sender, EventArgs e) {
@@ -240,19 +127,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            /*String pathExl = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + label4.Text + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";";
-            OleDbConnection conExl = new OleDbConnection(pathExl);
-            conExl.Open();
-            DataTable Sheets = conExl.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-
-            OleDbDataAdapter adptCon = new OleDbDataAdapter("select * from [" + guna2ComboBox1.SelectedItem + "$]", conExl);
-            DataTable mainTable = new DataTable();
-            adptCon.Fill(mainTable);
-
-            guna2DataGridView1.DataSource = mainTable;*/
-        }
-
         private void label3_Click(object sender, EventArgs e) {
 
         }
@@ -268,6 +142,32 @@ namespace FlowSERVER1 {
         }
 
         private void spreadsheet1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            this.TopMost = false;
+            if(TableName == "file_info_excel") {
+                SaverModel.SaveSelectedFile(label1.Text,"file_info_excel",DirectoryName);
+            } else if (TableName == "upload_info_directory") {
+                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", DirectoryName);
+            } else if (TableName == "folder_upload_info") {
+                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", DirectoryName);
+            }
+            else if (TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", DirectoryName);
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+
+        }
+
+        private void spreadsheet1_Load_1(object sender, EventArgs e) {
+
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e) {
 
         }
     }

@@ -541,9 +541,9 @@ namespace FlowSERVER1 {
                         }
 
                         if (_tableName == "file_info_excel") {
-                            img.Image = FlowSERVER1.Properties.Resources.excelIcon;//Image.FromFile(@"C:\USERS\USER\Downloads\excelicon.png");
+                            img.Image = FlowSERVER1.Properties.Resources.excelIcon;
                             picMain_Q.Click += (sender_vq, e_vq) => {
-                                exlFORM exlForm = new exlFORM(titleLab.Text);
+                                exlFORM exlForm = new exlFORM(titleLab.Text,"file_info_excel","null",Form1.instance.label5.Text);
                                 exlForm.Show();
                             };
                         }

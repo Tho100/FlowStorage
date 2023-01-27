@@ -540,6 +540,15 @@ namespace FlowSERVER1
                         }
                     };
                 }
+
+                if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls" || typeValues[q] == ".csv") {
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                    textboxPic.Click += (sender_pt, e_pt) => {
+                        Form bgBlur = new Form();
+                        exlFORM displayExl = new exlFORM(titleLab.Text, "upload_info_directory", label1.Text, form1.label5.Text);
+                        displayExl.Show();
+                    };
+                }
             }
         }
 
@@ -699,6 +708,7 @@ namespace FlowSERVER1
         public static int currMsi = 0;
         public static int currDoc = 0;
         public static int currVid = 0;
+        public static int currExl = 0;
         public void _mainFileGenerator(String _AccountTypeStr_) {
 
             String varDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -1148,8 +1158,15 @@ namespace FlowSERVER1
                                     }
                                 };
                             }
-                        }
 
+                            if (type_ == "Exl") {
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                                textboxPic.Click += (sender_vid, e_vid) => {
+                                    exlFORM displayExl = new exlFORM(titleLab.Text, open.FileName, label1.Text, form1.label5.Text);
+                                    displayExl.Show();
+                                };
+                            }
+                        }
 
                         try {
 
@@ -1239,6 +1256,22 @@ namespace FlowSERVER1
                                 clearRedundane();
                                 createPanelMain("Exe", "ExePar", currExe);
                             }
+
+
+                            if (retrieved == ".xlsx" || retrieved == ".xls" || retrieved == ".csv") {
+                                currExl++;
+
+                                Application.DoEvents();
+                                Byte[] _readXlsBytes = File.ReadAllBytes(selectedItems);
+                                var _toBase64 = Convert.ToBase64String(_readXlsBytes);
+                                command.Parameters["@CUST_FILE"].Value = _toBase64;//ReadFile(open.FileName);
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+
+                                clearRedundane();
+                                createPanelMain("Xls", "XlsPar", currExl);
+                            }
+
                             if (retrieved == ".pdf") {
                                 currPdf++;
 

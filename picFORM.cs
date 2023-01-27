@@ -36,6 +36,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
+            this.TopMost = true;
             this.Close();
         }
 

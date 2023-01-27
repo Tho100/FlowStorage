@@ -112,29 +112,36 @@ namespace FlowSERVER1 {
                                     command.Parameters["@CUST_FILE"].Value = _toBase64;//File.ReadAllBytes(_FilePath);
                                     command.ExecuteNonQuery();
                                 } else if (_retrieved == ".docx" || _retrieved == ".doc") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
-                                } else if (_retrieved == ".pdf") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
-                                    command.ExecuteNonQuery();
-                                } else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                            } else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
                                 }
                                 else if (_retrieved == ".exe") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
                                 }
                                 else if (_retrieved == ".mp3" || _retrieved == ".wav") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
                                 }
                                 else if (_retrieved == ".pdf") {
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
                                 }
                                 else if (_retrieved == ".apk") {
                                     command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    command.ExecuteNonQuery();
+                                }
+                                else if (_retrieved == ".xlsx" || _retrieved == ".csv" || _retrieved == ".xls") {
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
                                 }
                                 else if (_retrieved == ".gif") {
@@ -144,7 +151,8 @@ namespace FlowSERVER1 {
                                         toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                                         command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                                     }
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
                                 }
                                 else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js") {
@@ -162,9 +170,10 @@ namespace FlowSERVER1 {
                                         toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                                         command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
                                     }
-                                    command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                    command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
-                                }
+                            }
                                 Application.OpenForms
                                    .OfType<Form>()
                                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
@@ -518,6 +527,18 @@ namespace FlowSERVER1 {
                             bgBlur.Dispose();
                         }
                     };
+                }
+
+                if (typeValues[q] == ".xlsx" || typeValues[q] == ".csv" || typeValues[q] == ".xls") {
+                    String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
+                    command = new MySqlCommand(retrieveImg, con);
+                    command.Parameters.AddWithValue("@username", form1.label5.Text);
+
+                    textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                    textboxPic.Click += (sender_im, e_im) => {
+                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        displayXls.Show();
+                    };        
                 }
 
                 if (typeValues[q] == ".wav" || typeValues[q] == ".mp3") {
