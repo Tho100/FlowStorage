@@ -1385,3 +1385,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Microsoft.mshtml.dl
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Pdf.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.Spreadsheet.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Spire.XLS.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.cancelFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.LoadAlertFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.exe.licenses

@@ -236,6 +236,7 @@
             this.Name = "audFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audio Player";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.audFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);

@@ -4,12 +4,25 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Linq;
 using System.Drawing;
-//using PdfiumViewer;
 
 namespace FlowSERVER1 {
+
+    /// <summary>
+    /// PDF Viewer form
+    /// </summary>
+    /// 
     public partial class pdfFORM : Form {
         private static String _TableName;
         private static String _DirName;
+
+        /// <summary>
+        /// Load file based on table name 
+        /// </summary>
+        /// <param name="_FileTitle"></param>
+        /// <param name="_tableName"></param>
+        /// <param name="_DirectoryName"></param>
+        /// <param name="_UploaderName"></param>
+        
         public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName) {
             InitializeComponent();
             label1.Text = _FileTitle;
@@ -18,7 +31,12 @@ namespace FlowSERVER1 {
             _DirName = _DirectoryName;
 
             try {
-                if(_tableName == "file_info_pdf") {
+
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your portable document.");
+                ShowAlert.Show();
+                Application.DoEvents();
+
+                if (_tableName == "file_info_pdf") {
                     setupPdf(LoaderModel.LoadFile("file_info_pdf", _DirectoryName, label1.Text));
                 } else if (_tableName == "upload_info_directory") {
                     setupPdf(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
@@ -84,7 +102,11 @@ namespace FlowSERVER1 {
         private void pdfFORM_Load(object sender, EventArgs e) {
 
         }
-
+        /// <summary>
+        /// Save file 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             if (_TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirName);

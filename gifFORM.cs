@@ -11,12 +11,26 @@ using MySql.Data.MySqlClient;
 using System.IO;
 
 namespace FlowSERVER1 {
+    /// <summary>
+    /// GIF viewer form
+    /// </summary>
     public partial class gifFORM : Form {
         public static gifFORM instance;
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
         public static String _Directory;
+
+        /// <summary>
+        /// 
+        /// Load GIF based on table name
+        /// 
+        /// </summary>
+        /// <param name="_titleName"></param>
+        /// <param name="_tableName"></param>
+        /// <param name="_directoryName"></param>
+        /// <param name="_uploaderName"></param>
+
         public gifFORM(String _titleName,String _tableName, String _directoryName,String _uploaderName) {
             InitializeComponent();
             var _form = Form1.instance;

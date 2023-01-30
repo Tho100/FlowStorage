@@ -1002,23 +1002,8 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                                 textboxPic.Click += (sender_pd, e_pd) => {
                                     Form bgBlur = new Form();
-                                    using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory",label1.Text,form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayPdf.Owner = bgBlur;
-                                        displayPdf.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory",label1.Text,form1.label5.Text);
+                                    displayPdf.ShowDialog();
                                 };
                                 clearRedundane();
                             }
@@ -1027,23 +1012,8 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayPtx.Owner = bgBlur;
-                                        displayPtx.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    ptxFORM displayPtx = new ptxFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text);
+                                    displayPtx.ShowDialog();
                                 };
                             }
 
@@ -1053,23 +1023,8 @@ namespace FlowSERVER1
                                 textboxPic.Image = toBitMap;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayGif.Owner = bgBlur;
-                                        displayGif.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    gifFORM displayGif = new gifFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text);
+                                    displayGif.ShowDialog();
                                 };
                             }
 
@@ -1101,23 +1056,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                                 textboxPic.Click += (sender_pt, e_pt) => {
                                     Form bgBlur = new Form();
-                                    using (wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayDocx.Owner = bgBlur;
-                                        displayDocx.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    wordFORM displayDocx = new wordFORM(titleLab.Text,"upload_info_directory",label1.Text,form1.label5.Text); 
                                 };
                             }
 
@@ -1125,7 +1064,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                 textboxPic.Click += (sender_Aud, e_Aud) => {
                                    audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", label1.Text,form1.label5.Text);
-                                    displayPic.Show();
+                                    displayPic.ShowDialog();
                                 };
                             }
 
@@ -1138,24 +1077,8 @@ namespace FlowSERVER1
                                     var getWidth = getImgName.Image.Width;
                                     var getHeight = getImgName.Image.Height;
                                     Bitmap defaultImg = new Bitmap(getImgName.Image);
-                                    Form bgBlur = new Form();
-                                    using (vidFORM displayPic = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName,label1.Text,form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayPic.Owner = bgBlur;
-                                        displayPic.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    vidFORM displayPic = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text,open.FileName,label1.Text,form1.label5.Text);
+                                    displayPic.ShowDialog();
                                 };
                             }
 
@@ -1163,7 +1086,7 @@ namespace FlowSERVER1
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                                 textboxPic.Click += (sender_vid, e_vid) => {
                                     exlFORM displayExl = new exlFORM(titleLab.Text, open.FileName, label1.Text, form1.label5.Text);
-                                    displayExl.Show();
+                                    displayExl.ShowDialog();
                                 };
                             }
                         }
@@ -1177,7 +1100,7 @@ namespace FlowSERVER1
                             command.Parameters["@CUST_FILE_PATH"].Value = getName;
                             command.Parameters["@FILE_EXT"].Value = retrieved;
 
-                            UploadAlrt ShowUploadAlert = new UploadAlrt(getName);
+                            UploadAlrt ShowUploadAlert = new UploadAlrt(getName,form1.label5.Text);
                             ShowUploadAlert.Show();
                             Application.DoEvents();
 

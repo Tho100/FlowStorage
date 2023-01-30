@@ -12,11 +12,24 @@ using System.IO;
 using System.Globalization;
 
 namespace FlowSERVER1 {
+
+    /// <summary>
+    /// Presentation viewer form
+    /// </summary>
     public partial class ptxFORM : Form {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
         public static String _DirectoryName;
+
+        /// <summary>
+        /// Load file based on table name
+        /// </summary>
+        /// <param name="_Title"></param>
+        /// <param name="_Table"></param>
+        /// <param name="_Directory"></param>
+        /// <param name="_UploaderName"></param>
+
 
         public ptxFORM(String _Title,String _Table, String _Directory,String _UploaderName) {
             InitializeComponent();
@@ -40,9 +53,8 @@ namespace FlowSERVER1 {
                 else if (_TableName == "cust_sharing") {
                     setupPtx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
                 }
-            }  catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-               /* Form bgBlur = new Form();
+            }  catch (Exception) {
+                Form bgBlur = new Form();
                 using (errorLoad displayError = new errorLoad()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -59,7 +71,7 @@ namespace FlowSERVER1 {
                     displayError.ShowDialog();
 
                     bgBlur.Dispose();
-                }*/
+                }
             }
         }
 
@@ -85,6 +97,8 @@ namespace FlowSERVER1 {
             }
             else if (_TableName == "file_info_ptx") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_ptx", _DirectoryName);
+            } else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
             }
         }
 

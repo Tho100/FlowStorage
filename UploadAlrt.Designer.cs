@@ -29,6 +29,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -68,19 +69,40 @@
             this.label2.TabIndex = 58;
             this.label2.Text = "On Progress: ";
             // 
+            // guna2Button10
+            // 
+            this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button10.Animated = true;
+            this.guna2Button10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.guna2Button10.BorderRadius = 7;
+            this.guna2Button10.BorderThickness = 2;
+            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button10.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button10.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button10.Location = new System.Drawing.Point(477, 85);
+            this.guna2Button10.Name = "guna2Button10";
+            this.guna2Button10.Size = new System.Drawing.Size(75, 25);
+            this.guna2Button10.TabIndex = 59;
+            this.guna2Button10.Text = "Cancel";
+            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
+            // 
             // UploadAlrt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(564, 104);
+            this.ClientSize = new System.Drawing.Size(564, 122);
+            this.Controls.Add(this.guna2Button10);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label9);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UploadAlrt";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Uploading File";
             this.TopMost = true;
@@ -96,5 +118,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        public Guna.UI2.WinForms.Guna2Button guna2Button10;
     }
 }

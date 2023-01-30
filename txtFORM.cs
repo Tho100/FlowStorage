@@ -15,11 +15,26 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
+
+    /// <summary>
+    /// Load user text file 
+    /// </summary>
+
     public partial class txtFORM : Form {
         public static txtFORM instance;
-
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
+
+        /// <summary>
+        /// 
+        /// Retrieve text data based on table name 
+        /// 
+        /// </summary>
+        /// <param name="getText"></param>
+        /// <param name="tableName"></param>
+        /// <param name="fileName"></param>
+        /// <param name="_directory"></param>
+        /// <param name="_UploaderUsername"></param>
 
         public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername) {
             InitializeComponent();
@@ -27,8 +42,7 @@ namespace FlowSERVER1 {
             label1.Text = fileName;
             label2.Text = "Uploaded By " + _UploaderUsername;
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
-            //var decryptPassKey = EncryptionModel.Decrypt(Form1.instance.label3.Text, "0123456789085746");
-            //TXTCONTS01947265
+
             if (tableName == "upload_info_directory" & getText == "") {
                 string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                 command = new MySqlCommand(getTxtQue, con);
@@ -149,6 +163,10 @@ namespace FlowSERVER1 {
                 }
             }
         }
+
+        /// <summary>
+        /// Syntax colorizer (py,js,html,css)
+        /// </summary>
 
         public void pythonSyntax() {
             Color _blueRGB = Color.FromArgb(49, 100, 169);
@@ -313,7 +331,11 @@ namespace FlowSERVER1 {
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
 
         }
-
+        /// <summary>
+        /// Retrieve text from TextBox and save
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
             SaveFileDialog _OpenDialog = new SaveFileDialog();

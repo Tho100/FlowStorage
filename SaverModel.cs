@@ -11,10 +11,25 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
+
+    /// <summary>
+    /// Download file class
+    /// </summary>
+
     public partial class SaverModel {
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
         private static String _getExt;
+
+        /// <summary>
+        /// 
+        /// Retrieve data (byte) from references and save them
+        /// by opening SaveFileDialog
+        /// 
+        /// </summary>
+        /// <param name="_FileTitle"></param>
+        /// <param name="_getBytes"></param>
+
         private static void _openDialog(String _FileTitle, Byte[] _getBytes) {
             Application.OpenForms
                      .OfType<Form>()

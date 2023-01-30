@@ -17,6 +17,16 @@ namespace FlowSERVER1 {
         public static String _TableName;
         public static String _DirectoryName;
 
+        /// <summary>
+        /// 
+        /// Load user docx,doc, document based on table name
+        /// 
+        /// </summary>
+        /// <param name="_docName"></param>
+        /// <param name="_Table"></param>
+        /// <param name="_Directory"></param>
+        /// <param name="_UploaderName"></param>
+
         public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName) {
             InitializeComponent();
             label1.Text = _docName;
@@ -25,10 +35,12 @@ namespace FlowSERVER1 {
             _DirectoryName = _Directory;
 
             try {
-                /*
-                * @ Load doc data from LoaderModel class
-                */
-                if(_TableName == "file_info_word") {
+
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your document.");
+                ShowAlert.Show();
+                Application.DoEvents();
+
+                if (_TableName == "file_info_word") {
                     setupDocx(LoaderModel.LoadFile("file_info_word","null",label1.Text));
                 } else if (_TableName == "upload_info_directory") {
                     setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
@@ -78,7 +90,11 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
         }
-
+        /// <summary>
+        /// Download file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             if(_TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text,"upload_info_directory",_DirectoryName);
@@ -111,6 +127,10 @@ namespace FlowSERVER1 {
               .Where(form => String.Equals(form.Name, "bgBlurForm"))
               .ToList()
               .ForEach(form => form.Hide());
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
         }
     }
 }

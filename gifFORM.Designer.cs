@@ -197,6 +197,7 @@
             this.Name = "gifFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GIF Viewer";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.gifFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);

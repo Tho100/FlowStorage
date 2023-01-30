@@ -74,6 +74,7 @@ namespace FlowSERVER1 {
                 generateChart("Document", "file_info_word");
                 generateChart("Presentation", "file_info_ptx");
                 generateChart("Audio","file_info_audi");
+                generateChart("Excel","file_info_excel");
 
                 TotalUploadFileTodayCount("file_info");
                 TotalUploadFileTodayCount("file_info_pdf");
@@ -84,6 +85,7 @@ namespace FlowSERVER1 {
                 TotalUploadFileTodayCount("file_info_gif");
                 TotalUploadFileTodayCount("file_info_audi");
                 TotalUploadFileTodayCount("file_info_vid");
+                TotalUploadFileTodayCount("file_info_excel");
                 TotalUploadDirectoryTodayCount();
 
                 var _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
@@ -99,6 +101,7 @@ namespace FlowSERVER1 {
                 TotalUploadFile("file_info_gif");
                 TotalUploadFile("file_info_audi");
                 TotalUploadFile("file_info_vid");
+                TotalUploadFile("file_info_excel");
 
                 var _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
                 label12.Text = _totalUploadOvertime.ToString();
@@ -673,6 +676,14 @@ namespace FlowSERVER1 {
         private void guna2Button13_Click(object sender, EventArgs e) {
             chagneUserForm _ShowUsernameChangerForm = new chagneUserForm(label5.Text);
             _ShowUsernameChangerForm.Show();
+        }
+
+        private void label9_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label31_Click_1(object sender, EventArgs e) {
+
         }
     }
 }

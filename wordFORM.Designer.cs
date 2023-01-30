@@ -128,6 +128,7 @@
             this.label1.Size = new System.Drawing.Size(430, 21);
             this.label1.TabIndex = 37;
             this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // guna2Button2
             // 
@@ -209,6 +210,7 @@
             this.Name = "wordFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Word Document Viewer";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.wordFORM_Load);
             this.ResumeLayout(false);
 

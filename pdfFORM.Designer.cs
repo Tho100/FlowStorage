@@ -177,6 +177,9 @@
             // 
             // pdfDocumentViewer1
             // 
+            this.pdfDocumentViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pdfDocumentViewer1.AutoScroll = true;
             this.pdfDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
             this.pdfDocumentViewer1.FormFillEnabled = false;
@@ -213,6 +216,7 @@
             this.Name = "pdfFORM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PDF Document";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.pdfFORM_Load);
             this.ResumeLayout(false);
 

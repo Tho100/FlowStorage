@@ -102,7 +102,7 @@ namespace FlowSERVER1 {
                                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
                                 command.Parameters["@FILE_EXT"].Value = _retrieved;
 
-                                UploadAlrt ShowUploadAlert = new UploadAlrt(_FileName);
+                                UploadAlrt ShowUploadAlert = new UploadAlrt(_FileName,Form1.instance.label5.Text);
                                 ShowUploadAlert.Show();
                                 Application.DoEvents();
 
@@ -410,23 +410,8 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPtx.Owner = bgBlur;
-                            displayPtx.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername);
+                        displayPtx.Show();
                     };
                 }
 
@@ -443,23 +428,8 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPtx.Owner = bgBlur;
-                            displayPtx.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername);
+                        displayPtx.Show();
                     };
                 }
 
@@ -509,23 +479,8 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayDoc.Owner = bgBlur;
-                            displayDoc.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername);
+                        displayDoc.Show();
                     };
                 }
 
@@ -554,23 +509,8 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayAud.Owner = bgBlur;
-                            displayAud.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text,UploaderUsername);
+                        displayAud.Show();
                     };
                 }
 
@@ -592,23 +532,8 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (vidFORM displayAud = new vidFORM(defaultImage,getWidth,getHeight,titleLab.Text, "cust_sharing", label1.Text, UploaderUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayAud.Owner = bgBlur;
-                            displayAud.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        vidFORM displayAud = new vidFORM(defaultImage,getWidth,getHeight,titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        displayAud.Show();
                     };
                 }
 

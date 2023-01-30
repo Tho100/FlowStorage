@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
+    /// <summary>
+    /// 
+    /// Alert user when no payment has made yet when the user clicked the "Use this account" button
+    /// 
+    /// </summary>
     public partial class noPayment : Form {
         public noPayment() {
             InitializeComponent();

@@ -17,19 +17,33 @@ using ExcelDataReader;
 using ClosedXML.Excel;
 
 namespace FlowSERVER1 {
+
+    /// <summary>
+    /// Excel viewer form
+    /// </summary>
+    
     public partial class exlFORM : Form {
 
         public static exlFORM instance;
         private static String DirectoryName;
         private static String TableName;
 
-        private static List<String> _sheetValues = new List<String>();
         private static int _currentSheetIndex = 1;
         private static int _changedIndex = 0;
+        private static Byte[] _sheetsByte;
 
+        /// <summary>
+        /// 
+        /// Load user excel workbook sheet based on table name 
+        /// 
+        /// </summary>
+        /// <param name="titleName"></param>
+        /// <param name="_TableName"></param>
+        /// <param name="_DirectoryName"></param>
+        /// <param name="_UploaderName"></param>
+        
         public exlFORM(String titleName, String _TableName, String _DirectoryName, String _UploaderName) {
             InitializeComponent();
-
             instance = this;
             label2.Text = "Uploaded By " + _UploaderName;
             label1.Text = titleName;
@@ -37,14 +51,24 @@ namespace FlowSERVER1 {
             TableName = _TableName;
 
             try {
-                if(_TableName == "file_info_excel") {
+
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your workbook.");
+                ShowAlert.Show();
+                Application.DoEvents();
+
+                if (_TableName == "file_info_excel") {
                     generateSheet(LoaderModel.LoadFile("file_info_excel",DirectoryName,titleName));
-                } else if (_TableName == "upload_info_directory") {
+                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
+                }
+                else if (_TableName == "upload_info_directory") {
                     generateSheet(LoaderModel.LoadFile("upload_info_directory", DirectoryName, titleName));
+                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 } else if (_TableName == "folder_upload_info") {
                     generateSheet(LoaderModel.LoadFile("folder_upload_info", DirectoryName, titleName));
+                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 } else if (_TableName == "cust_sharing") {
                     generateSheet(LoaderModel.LoadFile("cust_sharing", DirectoryName, titleName));
+                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 }
             }
             catch (Exception eq) {
@@ -52,33 +76,37 @@ namespace FlowSERVER1 {
                 //MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
+       
 
-        // GET INDEX OF SELECTED SHEET
+        /// <summary>
+        /// Essential variable to prevent sheetname duplication
+        /// </summary>
+        
+        int onlyOnceVarible = 0; 
+
+        /// <summary>
+        /// Start generating workbook sheets
+        /// </summary>
+        /// <param name=""></param>
         private void generateSheet(Byte[] _getByte) {
+            onlyOnceVarible++;
             MemoryStream _toStream = new MemoryStream(_getByte);
             using (XLWorkbook workBook = new XLWorkbook(_toStream)) {
 
                 foreach (var _getSheetsName in workBook.Worksheets) {
-                    _sheetValues.Add(_getSheetsName.Name);
-                    guna2ComboBox1.Items.Add(_getSheetsName);
+                    if(onlyOnceVarible == 1) {
+                        guna2ComboBox1.Items.Add(_getSheetsName);
+                    }
                 }
-                //for(int i=0; i<_sheetValues.Count; i++) {
-                //guna2ComboBox1.Items.Add(_sheetValues[i]);
-                // }
-                //Read the first Sheet from Excel file.
-                //guna2ComboBox1.SelectedIndex = _currentSheetIndex - 1;
                 guna2ComboBox1.SelectedIndex = _changedIndex;
                 guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
                 _currentSheetIndex = _changedIndex+1;
                 IXLWorksheet workSheet = workBook.Worksheet(_currentSheetIndex);
 
-                //Create a new DataTable.
                 DataTable dt = new DataTable();
 
-                //Loop through the Worksheet rows.
                 bool firstRow = true;
                 foreach (IXLRow row in workSheet.Rows()) {
-                    //Use the first row to add columns to DataTable.
                     if (firstRow) {
                         foreach (IXLCell cell in row.Cells()) {
                             dt.Columns.Add(cell.Value.ToString());
@@ -86,7 +114,6 @@ namespace FlowSERVER1 {
                         firstRow = false;
                     }
                     else {
-                        //Add rows to DataTable.
                         dt.Rows.Add();
                         int i = 0;
                         foreach (IXLCell cell in row.Cells()) {
@@ -100,15 +127,20 @@ namespace FlowSERVER1 {
             }
         }
 
+        /// <summary>
+        /// Change workbook sheet on combobox selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            //_currentSheetIndex = guna2ComboBox1.SelectedIndex;
             _changedIndex = guna2ComboBox1.SelectedIndex;
+            generateSheet(_sheetsByte);
         }
 
         private void Form5_Load(object sender, EventArgs e) {
 
         }
-
+        
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Normal;
             guna2Button1.Visible = true;
@@ -168,6 +200,10 @@ namespace FlowSERVER1 {
         }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e) {
+
+        }
+
+        private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e) {
 
         }
     }

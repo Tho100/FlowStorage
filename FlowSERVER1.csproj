@@ -466,6 +466,12 @@
     <Compile Include="Button_WOC.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cancelFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cancelFORM.Designer.cs">
+      <DependentUpon>cancelFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="chagneUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -539,6 +545,12 @@
     </Compile>
     <Compile Include="keyForm.Designer.cs">
       <DependentUpon>keyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadAlertFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadAlertFORM.Designer.cs">
+      <DependentUpon>LoadAlertFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="LoaderModel.cs" />
     <Compile Include="msiFORM.cs">
@@ -674,6 +686,9 @@
     <EmbeddedResource Include="audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cancelFORM.resx">
+      <DependentUpon>cancelFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="chagneUserForm.resx">
       <DependentUpon>chagneUserForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -710,6 +725,9 @@
     <EmbeddedResource Include="keyForm.resx">
       <DependentUpon>keyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LoadAlertFORM.resx">
+      <DependentUpon>LoadAlertFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -725,6 +743,7 @@
     <EmbeddedResource Include="LogIN.resx">
       <DependentUpon>LogIN.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
@@ -795,6 +814,10 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\giphy %2810%29.gif" />
+    <None Include="Resources\giphy %289%29.gif" />
+    <None Include="Resources\giphy %288%29.gif" />
+    <None Include="Resources\giphy %287%29.gif" />
     <None Include="Resources\excelIcon.png" />
     <None Include="Resources\giphy %281%29.gif" />
     <None Include="Resources\icons8-share-641.png" />
