@@ -48,5 +48,6 @@
 
 #### Windows Files
 
-- .xlsx
-- .doc
+- .xlsx, .xls, .csv
+- .docx, .doc
+- .pptx, .ppt
