@@ -32,6 +32,9 @@
 #### Text Files
 - .txt
 
+#### Installer 
+- .msi
+- .exe
 
 #### Audio Files
 - .mp3 
