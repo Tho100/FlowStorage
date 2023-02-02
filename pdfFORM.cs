@@ -108,6 +108,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
+            this.TopMost = false;
             if (_TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirName);
             }

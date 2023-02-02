@@ -23,8 +23,10 @@ namespace FlowSERVER1 {
         private static String _getExt;
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
+        public static sharingFORM instance;
         public sharingFORM() {
             InitializeComponent();
+            instance = this;
         }
 
         private void sharingFORM_Load(object sender, EventArgs e) {
@@ -78,7 +80,7 @@ namespace FlowSERVER1 {
                 
             }
         }
-
+        private static String _controlName = null;
         private void guna2Button2_Click(object sender, EventArgs e) {
                 if(guna2TextBox1.Text != Form1.instance.label5.Text) {
                     if(guna2TextBox1.Text != String.Empty) {
@@ -102,7 +104,7 @@ namespace FlowSERVER1 {
                                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
                                 command.Parameters["@FILE_EXT"].Value = _retrieved;
 
-                                UploadAlrt ShowUploadAlert = new UploadAlrt(_FileName,Form1.instance.label5.Text);
+                                UploadAlrt ShowUploadAlert = new UploadAlrt(_FileName,Form1.instance.label5.Text,"cust_sharing",_controlName,"null");
                                 ShowUploadAlert.Show();
                                 Application.DoEvents();
 
@@ -259,6 +261,7 @@ namespace FlowSERVER1 {
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelTxt);
                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + q]);
+                _controlName = parameterName + q;
 
                 var textboxPic = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxPic);
