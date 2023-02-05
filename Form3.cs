@@ -36,7 +36,7 @@ namespace FlowSERVER1
         {
             InitializeComponent();
             instance = this;
-
+            this.Text = "Directory: " + sendTitle_;
             label1.Text = sendTitle_;
 
             var form1 = Form1.instance;
@@ -143,10 +143,9 @@ namespace FlowSERVER1
                         showRedundane();
                     }
                     else {
-//                      clearRedundane();
+                   //   clearRedundane();
                     }
                 } catch (Exception eq) {
-                //MessageBox.Show(eq.Message);
                     Form bgBlur = new Form();
                     using (waitFORM displayWait = new waitFORM()) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
@@ -427,7 +426,7 @@ namespace FlowSERVER1
                         exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text, Form1.instance.label5.Text);
                         displayExe.Show();
                     };
-                    //clearRedundane();
+                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_vid") {
@@ -447,6 +446,8 @@ namespace FlowSERVER1
 
                     var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
                     MemoryStream _toMs = new MemoryStream(_getBytes);
+
+                    img.Image = new Bitmap(_toMs);
 
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         var getImgName = (Guna2PictureBox)sender_vq;
@@ -627,47 +628,6 @@ namespace FlowSERVER1
 
         }
 
-
-        private int getUserType() {
-            String _typeAcc = "";
-            int _intAllowed = 0;
-            List<String> _emailValues = new List<string>();
-            List<String> _typeValues = new List<string>();
-
-            String _queSelectEm = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_queSelectEm, con);
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            MySqlDataReader _readEmail = command.ExecuteReader();
-            if (_readEmail.Read()) {
-                _emailValues.Add(_readEmail.GetString(0));
-            }
-            _readEmail.Close();
-
-            String _queSelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_EMAIL = @email";
-            command = new MySqlCommand(_queSelectType, con);
-            command.Parameters.AddWithValue("@email", _emailValues[0]);
-            MySqlDataReader _ReadType = command.ExecuteReader();
-            if (_ReadType.Read()) {
-                _typeValues.Add(_ReadType.GetString(0));
-            }
-            _ReadType.Close();
-            _typeAcc = _typeValues[0];
-
-            if (_typeAcc == "Basic") {
-                _intAllowed = 10;
-            }
-            else if (_typeAcc == "Max") {
-                _intAllowed = 25;
-            }
-            else if (_typeAcc == "Express") {
-                _intAllowed = 40;
-            }
-            else if (_typeAcc == "Supreme") {
-                _intAllowed = 95;
-            }
-            return _intAllowed;
-        }
-
         private void guna2Button6_Click(object sender, EventArgs e) {
 
         }
@@ -757,12 +717,28 @@ namespace FlowSERVER1
                         //clearRedundane();
                     }
                     else {
+
+                        Application.DoEvents();
+
                         string get_ex = open.FileName;
                         string getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
                         string retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
                         string retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
                         var fileSizeInbMB = 0.0;
+
+                        Application.OpenForms
+                          .OfType<Form>()
+                          .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                          .ToList()
+                          .ForEach(form => form.Close());
+
                         void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
+
+                            Application.OpenForms
+                              .OfType<Form>()
+                              .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                              .ToList()
+                              .ForEach(form => form.Close());
 
                             String insertThumbQue = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
                             command = new MySqlCommand(insertThumbQue, con);
@@ -791,12 +767,27 @@ namespace FlowSERVER1
 
                             using (var stream = new MemoryStream()) {
                                 toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                                var tobase64 = Convert.ToBase64String(stream.ToArray());
+                                command.Parameters["@CUST_THUMB"].Value = tobase64;
                             }
+                            Application.OpenForms
+                              .OfType<Form>()
+                              .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                              .ToList()
+                              .ForEach(form => form.Close());
                             command.ExecuteNonQuery();
+                            Application.OpenForms
+                                 .OfType<Form>()
+                                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                 .ToList()
+                                 .ForEach(form => form.Close());
                         }
 
+
                         void createPanelMain(String nameTable, String panName, int itemCurr, Object keyVal) {
+
+                            Application.DoEvents();
+
                             String insertTxtQuery = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
                             command = new MySqlCommand(insertTxtQuery, con);
 
@@ -823,6 +814,12 @@ namespace FlowSERVER1
                                 command.Parameters["@CUST_FILE"].Value = setValue;
                                 command.ExecuteNonQuery();
                                 command.Dispose();
+
+                                Application.OpenForms
+                                 .OfType<Form>()
+                                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                 .ToList()
+                                 .ForEach(form => form.Close());
                             }
 
                             int top = 275;
@@ -889,8 +886,6 @@ namespace FlowSERVER1
                             var _setupUploadAlertThread = new Thread(() => new UploadAlrt(getName, form1.label5.Text, "upload_info_directory", panName + itemCurr,label1.Text).ShowDialog());
                             _setupUploadAlertThread.Start();
 
-//                            MessageBox.Show(selectedItems);
-
                             if (nameTable == "file_info") {
                                 startSending(keyVal);
                                 textboxPic.Image = new Bitmap(selectedItems);
@@ -925,9 +920,10 @@ namespace FlowSERVER1
 
                             if (nameTable == "file_info_expand") {
                                 var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
-                                command.Parameters["@CUST_FILE"].Value = encryptValue;
-                                command.ExecuteNonQuery();
-                                command.Dispose();
+                                startSending(encryptValue);
+                                //command.Parameters["@CUST_FILE"].Value = encryptValue;
+                                //command.ExecuteNonQuery();
+                                //command.Dispose();
 
                                 var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                                 if (_extTypes == ".py") {
@@ -947,11 +943,6 @@ namespace FlowSERVER1
                                 }
 
                                 String nonLine = "";
-                                // using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
-                                //     nonLine = ReadFileTxt.ReadToEnd();
-                                // }
-
-                                //var filePath = open.SafeFileName;
                                 var filePath = getName;
 
                                 textboxPic.Click += (sender_t, e_t) => {
@@ -1045,33 +1036,17 @@ namespace FlowSERVER1
                             }
 
                             if (nameTable == "file_info_gif") {
-                                containThumbUpload(nameTable, getName, keyVal);
-                                ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
-                                Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                                textboxPic.Image = toBitMap;
+                                startSending(keyVal);
+                                textboxPic.Image = new Bitmap(selectedItems);
 
                                 textboxPic.Click += (sender_gi, e_gi) => {
                                     Form bgBlur = new Form();
-                                    using (gifFORM displayPic = new gifFORM(titleLab.Text, "upload_info_directory", label1.Text, form1.label5.Text)) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.ShowDialog();
-
-                                        displayPic.Owner = bgBlur;
-                                        displayPic.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
+                                    gifFORM displayPic = new gifFORM(titleLab.Text, "upload_info_directory", label1.Text, form1.label5.Text);
+                                    displayPic.Show();
                                 };
                                 clearRedundane();
                             }
+
                             if (nameTable == "file_info_apk") {
                                 startSending(keyVal);
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
@@ -1183,6 +1158,12 @@ namespace FlowSERVER1
                             dateLabTxt.Location = new Point(12, 208);
                             dateLabTxt.Width = 1000;
                             dateLabTxt.Text = varDate;
+
+                            Application.OpenForms
+                         .OfType<Form>()
+                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                         .ToList()
+                         .ForEach(form => form.Close());
                         }
 
                         try {
@@ -1195,7 +1176,6 @@ namespace FlowSERVER1
                                     Application.DoEvents();
                                     Byte[] _getByteImg = File.ReadAllBytes(selectedItems);
                                     fileSizeInbMB = (_getByteImg.Length/1024f)*1024f;
-                                    MessageBox.Show(fileSizeInbMB.ToString());
                                     String _tempToBase64 = Convert.ToBase64String(_getByteImg);
                                     createPanelMain("file_info", "PanImg", curr, _tempToBase64);
                                 }
@@ -1295,41 +1275,86 @@ namespace FlowSERVER1
                             .Where(form => String.Equals(form.Name, "UploadAlrt"))
                             .ToList()
                             .ForEach(form => form.Close());
-
                         }
+
                         catch (Exception eq) {
-                            MessageBox.Show(eq.Message);
-                            /*
 
-                            Application.DoEvents();
-                            Thread showCancellationForm = new Thread(() => new cancelFORM(getName).ShowDialog());
-                            showCancellationForm.Start();
-
-                            con.Open();
-
-                            FileDeletion("file_info_audi",getName);
-                            FileDeletion("file_info_msi",getName);
-                            FileDeletion("file_info_vid", getName);
-                            FileDeletion("file_info_gif", getName);
-                            FileDeletion("file_info", getName);
-                            FileDeletion("file_info_pdf", getName);
-                            FileDeletion("file_info_excel", getName);
-                            FileDeletion("file_info_ptx", getName);
-                            FileDeletion("file_info_word", getName);
+                           /* Application.DoEvents();
 
                             Application.OpenForms
-                                .OfType<Form>()
-                                .Where(form => String.Equals(form.Name, "cancelFORM"))
-                                .ToList()
-                                .ForEach(form => form.Close());
-                          */
+                             .OfType<Form>()
+                             .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                             .ToList()
+                             .ForEach(form => form.Close());
+
+                            Thread waitForm = new Thread(() => new cancelFORM(getName).ShowDialog());
+                            waitForm.Start();
+
+                            if (con.State == ConnectionState.Closed) {
+                                con.Open();
+                            }
+
+                            Application.OpenForms
+                             .OfType<Form>()
+                             .Where(form => String.Equals(form.Name, "cancelFORM"))
+                             .ToList()
+                             .ForEach(form => form.Close());
+
+                            var FileExt = retrieved;
+                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".msi") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".mp3" || FileExt == ".wav") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".docx" || FileExt == ".doc") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".pdf") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".gif") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".exe") {
+                                FileDeletionDirectory(getName);
+                            }
+
+                            Application.DoEvents();*/
                         }
+
+                        Application.OpenForms
+                         .OfType<Form>()
+                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                         .ToList()
+                         .ForEach(form => form.Close());
                     }
-                    //  MessageBox.Show(_filValues.Count().ToString());
                 }
             }
-
         }
+
+        /// <summary>
+        /// File deletion function for directory
+        /// </summary>
+        private void FileDeletionDirectory(String _FileName) {
+            Application.DoEvents();
+            String fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
+            command = new MySqlCommand(fileDeletionQuery, con);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            command.Parameters.AddWithValue("@filename", _FileName);
+            command.Parameters.AddWithValue("@dirname", label1.Text);
+            command.ExecuteNonQuery();
+        }
+
         public void DisplayError(String CurAcc) {
             Form bgBlur = new Form();
             using (upgradeFORM displayPic = new upgradeFORM(CurAcc)) {
@@ -1420,6 +1445,11 @@ namespace FlowSERVER1
                     }
                 }
            } catch (Exception eq) {
+                Application.OpenForms
+                     .OfType<Form>()
+                     .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                     .ToList()
+                     .ForEach(form => form.Close());
                 MessageBox.Show(eq.Message);
                 Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {

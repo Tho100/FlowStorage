@@ -64,7 +64,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.");
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
                 ShowAlert.Show();
                 Application.DoEvents();
                 if (_TableName == "file_info_apk") {
@@ -79,7 +79,7 @@ namespace FlowSERVER1 {
                     SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
                 }
             } catch (Exception eq) {
-                MessageBox.Show("Failed to download this file.","Flowstorage");
+                MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
             }
         }
     }

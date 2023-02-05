@@ -52,7 +52,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your workbook.");
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your workbook.","Loader");
                 ShowAlert.Show();
                 Application.DoEvents();
 

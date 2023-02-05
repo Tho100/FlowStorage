@@ -2,6 +2,10 @@
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
+using System.Threading;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace FlowSERVER1 {
 
@@ -20,7 +24,15 @@ namespace FlowSERVER1 {
         /// ease cancellation operation
         /// 
         /// </summary>
-        
+
+        /*public static string _SERVER = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+        public static string _MAINDB = "flowserver_db"; // epiz_33067528_information | flowserver_db
+        public static string _USER = "0015connectionlover"; // epiz_33067528 | root
+        public static string _PASSWORD = "nfreal-yt10";
+        public static int _MAINPORT = 18056;
+        public static string _FULLCONNECTION = "SERVER=" + _SERVER + ";" + "Port=" + _MAINPORT + ";" + "DATABASE=" + _MAINDB + ";" + "UID=" + _USER + ";" + "PASSWORD=" + _PASSWORD + ";";
+        public static MySqlConnection con = new MySqlConnection(_FULLCONNECTION);*/
+
         public static UploadAlrt instance;
         public static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
@@ -45,116 +57,235 @@ namespace FlowSERVER1 {
         private void UploadAlrt_Load(object sender, EventArgs e) {
 
         }
-       /// <summary>
-       /// File deletion function for normal file
-       /// </summary>
-       /// <param name="_tableName"></param>
-        private void FileDeletionNormal(String _tableName) {
+        /// <summary>
+        /// File deletion for normal file
+        /// </summary>
+        /// <param name="FileName"></param>
+        /// <param name="TableName"></param>
+        private void FileDeletionNormal(String FileName, String TableName) {
             Application.DoEvents();
-            String fileDeletionQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(fileDeletionQuery,con);
-            command.Parameters.AddWithValue("@username",UploaderName);
+            String fileDeletionQuery = "DELETE FROM " + TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            command = new MySqlCommand(fileDeletionQuery, con);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@filename", FileName);
             command.ExecuteNonQuery();
         }
         /// <summary>
         /// File deletion function for directory
         /// </summary>
-        private void FileDeletionDirectory() {
+        private void FileDeletionDirectory(String _FileName) {
             Application.DoEvents();
             String fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", UploaderName);
-            command.Parameters.AddWithValue("@filename", FileName);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            command.Parameters.AddWithValue("@filename", _FileName);
             command.Parameters.AddWithValue("@dirname", DirectoryName);
+            command.ExecuteNonQuery();
+        }
+        /// <summary>
+        /// File deletion for folder
+        /// </summary>
+        /// <param name="_FileName"></param>
+        /// <param name="_FoldName"></param>
+        private void FileDeletionFolder(String _FileName, String _FoldName) {
+            Application.DoEvents();
+            String fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
+            command = new MySqlCommand(fileDeletionQuery, con);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            command.Parameters.AddWithValue("@filename", _FileName);
+            command.Parameters.AddWithValue("@foldtitle", _FoldName);
             command.ExecuteNonQuery();
         }
         /// <summary>
         /// 
         /// (Button) Delete file that has been cancelled on upload and
-        /// remove them from database based on table name
+        /// remove them from database based on table name 
+        /// (deletion will be executes on Form1 catch section)
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button10_Click(object sender, EventArgs e) {
-            
-            Application.DoEvents();
 
-            if(TableName == "null") {
-                Control foundControl = null;
-                foreach(Control _getControls in Form1.instance.flowLayoutPanel1.Controls) {
-                    if(_getControls.Name == ControlName) {
-                        foundControl = _getControls; 
-                        break;
+            try {
+
+                Application.DoEvents();
+
+                label9.Text = "Cancelling Operation...";
+                if(con.State == System.Data.ConnectionState.Open) {
+
+                    // @ Close connection before turning it back on for file deletion
+                    con.Close();
+
+                    if(con.State == System.Data.ConnectionState.Closed) {
+
+                        // @ This will shows a form that alert user about the file upload 
+                        // cancellation
+                        Thread waitForm = new Thread(() => new cancelFORM(FileName).ShowDialog());
+                        waitForm.Start();
+
+                        // @ Turn connection back on to delete the cancelled file
+                        con.Open();
+
+                        Application.OpenForms
+                         .OfType<Form>()
+                         .Where(form => String.Equals(form.Name, "cancelFORM"))
+                         .ToList()
+                         .ForEach(form => form.Close());
+
+                        var FileExt = FileName.Substring(FileName.Length-4);
+                        var getName = FileName;
+                        if(TableName == "null") {
+                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                                FileDeletionNormal(FileName, "file_info");
+                            }
+                            else if (FileExt == ".msi") {
+                                FileDeletionNormal(FileName, "file_info_msi");
+                            }
+                            else if (FileExt == ".mp3" || FileExt == ".wav") {
+                                FileDeletionNormal(getName, "file_info_audi");
+                            }
+                            else if (FileExt == ".docx" || FileExt == ".doc") {
+                                FileDeletionNormal(getName, "file_info_word");
+                            }
+                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
+                                FileDeletionNormal(getName, "file_info_ptx");
+                            }
+                            else if (FileExt == ".pdf") {
+                                FileDeletionNormal(getName, "file_info_pdf");
+                            }
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                                FileDeletionNormal(getName, "file_info_expand");
+                            }
+                            else if (FileExt == ".gif") {
+                                FileDeletionNormal(getName, "file_info_gif");
+                            }
+                            else if (FileExt == ".exe") {
+                                FileDeletionNormal(getName, "file_info_exe");
+                            }
+                        } else if (TableName == "upload_info_directory") {
+                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".msi") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".mp3" || FileExt == ".wav") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".docx" || FileExt == ".doc") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".pdf") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".gif") {
+                                FileDeletionDirectory(getName);
+                            }
+                            else if (FileExt == ".exe") {
+                                FileDeletionDirectory(getName);
+                            }
+                        } else if (TableName == "folder_upload_info") {
+                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                                FileDeletionFolder(getName, "file_info");
+                            }
+                            else if (FileExt == ".msi") {
+                                FileDeletionFolder(getName, "file_info_msi");
+                            }
+                            else if (FileExt == ".mp3" || FileExt == ".wav") {
+                                FileDeletionFolder(getName, "file_info_audi");
+                            }
+                            else if (FileExt == ".docx" || FileExt == ".doc") {
+                                FileDeletionFolder(getName, "file_info_word");
+                            }
+                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
+                                FileDeletionFolder(getName, "file_info_ptx");
+                            }
+                            else if (FileExt == ".pdf") {
+                                FileDeletionFolder(getName, "file_info_pdf");
+                            }
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                                FileDeletionFolder(getName, "file_info_expand");
+                            }
+                            else if (FileExt == ".gif") {
+                                FileDeletionFolder(getName, "file_info_gif");
+                            }
+                            else if (FileExt == ".exe") {
+                                FileDeletionFolder(getName, "file_info_exe");
+                            }
+                        }
                     }
                 }
 
-                if (foundControl != null) {
-                    Form1.instance.flowLayoutPanel1.Controls.Remove(foundControl);
-                    foundControl.Dispose();
-                }
+                Application.DoEvents();
 
-                if(FileExt == "png" || FileExt == "jpeg" || FileExt == "jpg" || FileExt == "bmp") {
-                    FileDeletionNormal("file_info");
-                } else if (FileExt == "msi") {
-                    FileDeletionNormal("file_info_msi");
-                } else if (FileExt == "mp3" || FileExt == "wav") {
-                    FileDeletionNormal("file_info_audi");
-                } else if (FileExt == "docx" || FileExt == "doc") {
-                    FileDeletionNormal("file_info_word");
-                } else if (FileExt == "pptx" || FileExt == "ppt") {
-                    FileDeletionNormal("file_info_ptx");
-                } else if (FileExt == "pdf") {
-                    FileDeletionNormal("file_info_pdf");
-                } else if (FileExt == "txt" || FileExt == "py" || FileExt == "html" || FileExt == "js" || FileExt == "css") {
-                    FileDeletionNormal("file_info_expand");
-                } else if (FileExt == "gif") {
-                    FileDeletionNormal("file_info_gif");
-                }
+                if (TableName == "null") {
+
+                    Control foundControl = null;
+                    foreach(Control _getControls in Form1.instance.flowLayoutPanel1.Controls) {
+                        if(_getControls.Name == ControlName) {
+                            foundControl = _getControls; 
+                            break;
+                        }
+                    }
+
+                    if (foundControl != null) {
+                        Form1.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        foundControl.Dispose();
+                    }
                 
-                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                if(Form1.instance.flowLayoutPanel1.Controls.Count == 0) {
-                    Form1.instance.guna2Button6.Visible = true;
-                    Form1.instance.label8.Visible = true;
-                }
+                    if(Form1.instance.flowLayoutPanel1.Controls.Count == 0) {
+                        Form1.instance.guna2Button6.Visible = true;
+                        Form1.instance.label8.Visible = true;
+                    }
 
-            } else if (TableName == "upload_info_directory") {
-                Control foundControl = null;
-                foreach (Control _getControls in Form3.instance.flowLayoutPanel1.Controls) {
-                    if (_getControls.Name == ControlName) {
-                        foundControl = _getControls;
-                        break;
+                } else if (TableName == "upload_info_directory") {
+                    Control foundControl = null;
+                    foreach (Control _getControls in Form3.instance.flowLayoutPanel1.Controls) {
+                        if (_getControls.Name == ControlName) {
+                            foundControl = _getControls;
+                            break;
+                        }
+                    }
+
+                    if (foundControl != null) {
+                        Form3.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        foundControl.Dispose();
+                    }
+
+                    if (Form3.instance.flowLayoutPanel1.Controls.Count == 0) {
+                        Form3.instance.guna2Button6.Visible = true;
+                        Form3.instance.label8.Visible = true;
+                    }
+
+                } else if (TableName == "folder_upload_info") {
+                    Control foundControl = null;
+                    foreach (Control _getControls in sharingFORM.instance.flowLayoutPanel1.Controls) {
+                        if (_getControls.Name == ControlName) {
+                            foundControl = _getControls;
+                            break;
+                        }
+                    }
+
+                    if (foundControl != null) {
+                        sharingFORM.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        foundControl.Dispose();
                     }
                 }
 
-                if (foundControl != null) {
-                    Form3.instance.flowLayoutPanel1.Controls.Remove(foundControl);
-                    foundControl.Dispose();
-                }
+                Application.DoEvents();
 
-                FileDeletionDirectory();
-                if (Form3.instance.flowLayoutPanel1.Controls.Count == 0) {
-                    Form3.instance.guna2Button6.Visible = true;
-                    Form3.instance.label8.Visible = true;
-                }
-
-            } else if (TableName == "cust_sharing") {
-                Control foundControl = null;
-                foreach (Control _getControls in sharingFORM.instance.flowLayoutPanel1.Controls) {
-                    if (_getControls.Name == ControlName) {
-                        foundControl = _getControls;
-                        break;
-                    }
-                }
-
-                if (foundControl != null) {
-                    sharingFORM.instance.flowLayoutPanel1.Controls.Remove(foundControl);
-                    foundControl.Dispose();
-                }
+            } catch (Exception) {
+                MessageBox.Show("Cancellation failed, file is already uploaded.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
-
             this.Close();
         }
     }

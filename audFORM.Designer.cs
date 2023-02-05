@@ -256,6 +256,6 @@
         private System.Windows.Forms.Label label3;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        public System.Windows.Forms.PictureBox pictureBox3;
     }
 }

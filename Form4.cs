@@ -159,7 +159,7 @@ namespace FlowSERVER1
                 };
 
                 picBanner.Click += (sender_f, e_f) => {
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.","Loader");
                     ShowAlert.Show();
                     Form3 displayDirectory = new Form3(getDirTitle);
                     displayDirectory.Show();

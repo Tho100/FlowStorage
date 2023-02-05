@@ -152,13 +152,12 @@ namespace FlowSERVER1 {
 
                     List<String> titleValues = new List<String>();
 
-                    String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                    String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(getTitles,con);
                     command = con.CreateCommand();
                     command.CommandText = getTitles;
-
                     command.Parameters.AddWithValue("@username",userName);
-                    command.Parameters.AddWithValue("@password",encryptionKeyVal);
+
                     MySqlDataReader fold_Reader = command.ExecuteReader();
                     while(fold_Reader.Read()) {
                         titleValues.Add(fold_Reader.GetString(0));
@@ -197,15 +196,13 @@ namespace FlowSERVER1 {
                         List<string> dateValues = new List<string>();
                         List<string> titleValues = new List<string>();
 
-                        String getUpDate = "SELECT UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        String getUpDate = "SELECT UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
                         command = new MySqlCommand(getUpDate, con);
                         command = con.CreateCommand();
                         command.CommandText = getUpDate;
-
                         command.Parameters.AddWithValue("@username", userName);
-                        command.Parameters.AddWithValue("@password", encryptionKeyVal);
-                        MySqlDataReader readerDate = command.ExecuteReader();
 
+                        MySqlDataReader readerDate = command.ExecuteReader();
                         while (readerDate.Read()) {
                             dateValues.Add(readerDate.GetString(0));
                         }
@@ -221,13 +218,11 @@ namespace FlowSERVER1 {
                         dateLab.Location = new Point(12, 208);
                         dateLab.Text = dateValues[i];
 
-                        String getTitleQue = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        String getTitleQue = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
                         command = new MySqlCommand(getTitleQue, con);
                         command = con.CreateCommand();
                         command.CommandText = getTitleQue;
-
                         command.Parameters.AddWithValue("@username", userName);
-                        command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                         MySqlDataReader titleReader = command.ExecuteReader();
                         while (titleReader.Read()) {
@@ -286,10 +281,9 @@ namespace FlowSERVER1 {
                                 command = new MySqlCommand(noSafeUpdate, con);
                                 command.ExecuteNonQuery();
 
-                                String removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                String removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                                 command = new MySqlCommand(removeQuery, con);
                                 command.Parameters.AddWithValue("@username", userName);
-                                command.Parameters.AddWithValue("@password", encryptionKeyVal);
                                 command.Parameters.AddWithValue("@filename", titleFile);
                                 command.ExecuteNonQuery();
 
@@ -303,7 +297,7 @@ namespace FlowSERVER1 {
 
                         picMain_Q.Image = FlowSERVER1.Properties.Resources.icon1;
                         picMain_Q.Click += (sender_dir, ev_dir) => {
-                            RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.");
+                            RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader");
                             ShowAlert.Show();
                             Form3 displayDirectory = new Form3(titleLab.Text);
                             displayDirectory.Show();
@@ -342,13 +336,12 @@ namespace FlowSERVER1 {
                         List<string> dateValues = new List<string>();
                         List<string> titleValues = new List<string>();
 
-                        String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                         command = new MySqlCommand(getUpDate, con);
                         command = con.CreateCommand();
                         command.CommandText = getUpDate;
 
                         command.Parameters.AddWithValue("@username", _form.label5.Text);
-                        command.Parameters.AddWithValue("@password", encryptionKeyVal);
                         MySqlDataReader readerDate = command.ExecuteReader();
 
                         while (readerDate.Read()) {
@@ -366,13 +359,12 @@ namespace FlowSERVER1 {
                         dateLab.Location = new Point(12, 208);
                         dateLab.Text = dateValues[i];
 
-                        String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password";
+                        String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                         command = new MySqlCommand(getTitleQue, con);
                         command = con.CreateCommand();
                         command.CommandText = getTitleQue;
 
                         command.Parameters.AddWithValue("@username", _form.label5.Text);
-                        command.Parameters.AddWithValue("@password", encryptionKeyVal);
 
                         MySqlDataReader titleReader = command.ExecuteReader();
                         while (titleReader.Read()) {
@@ -431,10 +423,9 @@ namespace FlowSERVER1 {
                                 command = new MySqlCommand(noSafeUpdate, con);
                                 command.ExecuteNonQuery();
 
-                                String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_PASSWORD = @password AND CUST_FILE_PATH = @filename";
+                                String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                                 command = new MySqlCommand(removeQuery, con);
                                 command.Parameters.AddWithValue("@username", _form.label5.Text);
-                                command.Parameters.AddWithValue("@password", encryptionKeyVal);
                                 command.Parameters.AddWithValue("@filename", titleFile);
                                 command.ExecuteNonQuery();
 
@@ -798,8 +789,7 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
                 loadUserData();
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void setupTime() {

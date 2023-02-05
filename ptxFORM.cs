@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Globalization;
+using System.Threading;
 
 namespace FlowSERVER1 {
 
@@ -23,7 +24,9 @@ namespace FlowSERVER1 {
         public static String _DirectoryName;
 
         /// <summary>
+        /// 
         /// Load file based on table name
+        /// 
         /// </summary>
         /// <param name="_Title"></param>
         /// <param name="_Table"></param>
@@ -37,13 +40,15 @@ namespace FlowSERVER1 {
             label2.Text = "Uploaded By " + _UploaderName;
             _TableName = _Table;
             _DirectoryName = _Directory;
+
             try {
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your presentation.");
-                ShowAlert.Show();
+
+                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader").ShowDialog());
+                ShowAlert.Start();
                 Application.DoEvents();
+
                 if (_TableName == "file_info_ptx") {   
                     setupPtx(LoaderModel.LoadFile("file_info_ptx",_DirectoryName,label1.Text));
-                    
                 } else if (_TableName == "upload_info_directory") {
                     setupPtx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
                 }
@@ -89,6 +94,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
+            this.TopMost = false;
             if (_TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirectoryName);
             }
@@ -100,6 +106,7 @@ namespace FlowSERVER1 {
             } else if (_TableName == "cust_sharing") {
                 SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
             }
+            this.TopMost = true;
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {

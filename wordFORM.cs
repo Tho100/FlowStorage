@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
+using System.Threading;
 
 namespace FlowSERVER1 {
     public partial class wordFORM : Form {
@@ -36,8 +37,8 @@ namespace FlowSERVER1 {
 
             try {
 
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your document.");
-                ShowAlert.Show();
+                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog());
+                ShowAlert.Start();
                 Application.DoEvents();
 
                 if (_TableName == "file_info_word") {
@@ -96,6 +97,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
+            this.TopMost = false;
             if(_TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text,"upload_info_directory",_DirectoryName);
             } else if (_TableName == "folder_upload_info") {
@@ -104,8 +106,8 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_word", _DirectoryName);
             } else if (_TableName == "cust_sharing") {
                 SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
-
             }
+            this.TopMost = true;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {

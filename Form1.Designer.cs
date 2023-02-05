@@ -385,11 +385,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 14);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1047, 507);
             this.flowLayoutPanel1.TabIndex = 16;
+            this.flowLayoutPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flowLayoutPanel1_Scroll);
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // label1
@@ -1003,9 +1004,9 @@
             this.label27.ForeColor = System.Drawing.Color.LightGray;
             this.label27.Location = new System.Drawing.Point(7, 6);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(65, 17);
+            this.label27.Size = new System.Drawing.Size(47, 17);
             this.label27.TabIndex = 20;
-            this.label27.Text = "Directory";
+            this.label27.Text = "Folder";
             // 
             // label5
             // 

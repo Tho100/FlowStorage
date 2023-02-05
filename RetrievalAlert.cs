@@ -10,9 +10,14 @@ using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class RetrievalAlert : Form {
-        public RetrievalAlert(String alertMessage) {
+        public static RetrievalAlert instance;
+        private static String OriginFrom = "";
+        public RetrievalAlert(String alertMessage,String _orignFrom) {
             InitializeComponent();
             label8.Text = alertMessage;
+            OriginFrom = _orignFrom;
+            instance = this;
+            
         }
 
         private void RetrievalAlert_Load(object sender, EventArgs e) {
@@ -20,7 +25,13 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {
-
+            label8.Text = "Cancelling operation...";
+            if(OriginFrom == "Saver") {
+                SaverModel.stopFileRetrieval = true;
+            } else if (OriginFrom == "Loader") {
+                label8.Text = "Failed to cancel the operation.";
+                //LoaderModel.stopFileRetrievalLoad = true;
+            }
         }
     }
 }

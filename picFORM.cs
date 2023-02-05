@@ -55,6 +55,7 @@ namespace FlowSERVER1 {
         }
         
         private void guna2Button4_Click(object sender, EventArgs e) {
+            this.TopMost = false;
             if (TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", Directoryname);
             }
@@ -66,6 +67,7 @@ namespace FlowSERVER1 {
             } else if (TableName == "cust_sharing") {
                 SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", Directoryname);
             }
+            this.TopMost = true;
         }
 
         private void label1_Click(object sender, EventArgs e) {

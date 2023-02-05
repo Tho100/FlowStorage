@@ -19,6 +19,7 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TabName = "";
         public static String _DirName = "";
+        public static audFORM instance;
         public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName) {
             InitializeComponent();
             label1.Text = titleName;
@@ -26,6 +27,7 @@ namespace FlowSERVER1 {
             _TabName = _TableName;
             _DirName = _DirectoryName;
             pictureBox3.Enabled = false;
+            instance = this;
         }
 
         SoundPlayer _getSoundPlayer = null;
@@ -52,8 +54,8 @@ namespace FlowSERVER1 {
                     pictureBox3.Enabled = true;
                 }
                 else {
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving audio data.");
-                    ShowAlert.Show();
+                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.","Loader").ShowDialog());
+                    ShowAlert.Start();
                     Application.DoEvents();
                     if (_TabName == "file_info_audi") {
                         pictureBox3.Enabled = true;
@@ -69,11 +71,15 @@ namespace FlowSERVER1 {
                         pictureBox3.Enabled = true;
                         setupPlayer(_audType, LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text));
                     }
+
+                    if (LoaderModel.stopFileRetrievalLoad == true) {
+                        pictureBox3.Enabled = false;
+                    }
                 }
             }
             catch (Exception eq) {
                 //MessageBox.Show("Failed to play this audio.","Flowstorage");
-                Form bgBlur = new Form();
+                /*Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -90,7 +96,7 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }
+                }*/
                 MessageBox.Show(eq.Message);
             }
             guna2Button6.Visible = true;
@@ -138,6 +144,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
+            this.TopMost = false;
             if (_TabName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirName);
             }
@@ -150,6 +157,7 @@ namespace FlowSERVER1 {
             else if (_TabName == "cust_sharing") {
                 SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
             }
+            this.TopMost = true;
         }
 
         private void zedGraphControl1_Load(object sender, EventArgs e) {

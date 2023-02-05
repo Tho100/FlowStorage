@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Linq;
 using System.Drawing;
+using System.Threading;
 
 namespace FlowSERVER1 {
 
@@ -32,8 +33,8 @@ namespace FlowSERVER1 {
 
             try {
 
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your portable document.");
-                ShowAlert.Show();
+                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").ShowDialog());
+                ShowAlert.Start();
                 Application.DoEvents();
 
                 if (_tableName == "file_info_pdf") {
@@ -121,6 +122,7 @@ namespace FlowSERVER1 {
             else if (_TableName == "cust_sharing") {
                 SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
             }
+            this.TopMost = true;
         }
 
         private void label1_Click(object sender, EventArgs e) {

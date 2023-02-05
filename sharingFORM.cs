@@ -194,6 +194,17 @@ namespace FlowSERVER1 {
                 }
         }
 
+
+        private void FileDeletionSharing(String FileName, String DirectoryName) {
+            Application.DoEvents();
+            String fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
+            command = new MySqlCommand(fileDeletionQuery, con);
+            command.Parameters.AddWithValue("@username", label5.Text);
+            command.Parameters.AddWithValue("@filename", FileName);
+            command.Parameters.AddWithValue("@dirname", DirectoryName);
+            command.ExecuteNonQuery();
+        }
+
         private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
 
         }

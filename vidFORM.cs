@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 using LibVLCSharp.Shared.MediaPlayerElement;
 using LibVLCSharp.WinForms;
 using LibVLCSharp.Shared;
+using System.Threading;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
@@ -83,9 +84,11 @@ namespace FlowSERVER1 {
                     videoView1.MediaPlayer = _mp;
                     _mp.Play();
                 } else {
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving video data..");
-                    ShowAlert.Show();
+
+                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..","Loader").ShowDialog());
+                    ShowAlert.Start();
                     Application.DoEvents();
+
                     guna2PictureBox1.Visible = false;
                     videoView1.Visible = true;
                     if (_TableName == "upload_info_directory") {
