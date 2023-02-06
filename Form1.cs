@@ -112,6 +112,8 @@ namespace FlowSERVER1 {
         }
 
         public void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+            
+            Application.DoEvents();
 
             for (int i = 0; i < currItem; i++) {
                 int top = 275;
@@ -477,6 +479,8 @@ namespace FlowSERVER1 {
                 }
             }
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+            Application.DoEvents();
         }
         public void _generateUserFold(List<String> _fileType, String _foldTitle, String parameterName, int currItem) {
 
@@ -1870,8 +1874,19 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
+
+            Thread _showRetrievalAlert = new Thread(() => new settingsAlert().ShowDialog());
+            _showRetrievalAlert.Start();
+
             remAccFORM _RemAccShow = new remAccFORM(label5.Text);
             _RemAccShow.Show();
+
+            Application.OpenForms
+            .OfType<Form>()
+            .Where(form => String.Equals(form.Name, "settingsAlert"))
+            .ToList()
+            .ForEach(form => form.Close());
+
         }
 
         private void label4_Click(object sender, EventArgs e) {
@@ -2074,7 +2089,7 @@ namespace FlowSERVER1 {
                                                 command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
                                                 command.ExecuteNonQuery();
 
-                                                String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                                String _InsertType = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
                                                 command = new MySqlCommand(_InsertType, con);
                                                 command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
                                                 command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
@@ -2133,8 +2148,8 @@ namespace FlowSERVER1 {
                 }
             }
             catch (Exception eq) {
-                MessageBox.Show("Are you connected to the internet?","Flowstorage: An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Question);
-                //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              //  MessageBox.Show(eq.Message);
+                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

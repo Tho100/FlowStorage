@@ -614,6 +614,12 @@
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="SaverModel.cs" />
+    <Compile Include="settingsAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settingsAlert.Designer.cs">
+      <DependentUpon>settingsAlert.cs</DependentUpon>
+    </Compile>
     <Compile Include="sharingFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -761,6 +767,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RetrievalAlert.resx">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settingsAlert.resx">
+      <DependentUpon>settingsAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sharingFORM.resx">
       <DependentUpon>sharingFORM.cs</DependentUpon>

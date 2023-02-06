@@ -28,8 +28,8 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,16 +61,6 @@
             this.label9.TabIndex = 53;
             this.label9.Text = "Please wait...";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.giphy__10_;
-            this.pictureBox1.Location = new System.Drawing.Point(462, 15);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 55;
-            this.pictureBox1.TabStop = false;
-            // 
             // guna2Button10
             // 
             this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -91,6 +81,16 @@
             this.guna2Button10.TabIndex = 60;
             this.guna2Button10.Text = "Cancel";
             this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.giphy__10_;
+            this.pictureBox1.Location = new System.Drawing.Point(465, 15);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(26, 26);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 55;
+            this.pictureBox1.TabStop = false;
             // 
             // RetrievalAlert
             // 

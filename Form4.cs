@@ -222,7 +222,7 @@ namespace FlowSERVER1
             var _getFilesCount = Form1.instance.label4.Text;
             int TotalFiles = Convert.ToInt32(_getFilesCount);
 
-            String _getAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+            String _getAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_getAccType, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 

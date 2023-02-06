@@ -23,14 +23,20 @@ using Newtonsoft.Json;
 //using Stripe;
 
 namespace FlowSERVER1 {
+    /// <summary>
+    /// Settings form class
+    /// </summary>
     public partial class remAccFORM : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
+
         public static remAccFORM instance;
-        public List<int> _TotalUploadToday = new List<int>();
-        public List<int> _TotalUploadOvertime = new List<int>();
-        public List<String> _TotalUploadDirectoryToday = new List<String>();
         public static String _selectedAcc;
+
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+        private List<int> _TotalUploadToday = new List<int>();
+        private List<int> _TotalUploadOvertime = new List<int>();
+        private List<String> _TotalUploadDirectoryToday = new List<String>();
+
         public remAccFORM(String _accName) {
             InitializeComponent();
             instance = this;
@@ -46,6 +52,9 @@ namespace FlowSERVER1 {
             ToolTip1.SetToolTip(this.guna2Button11, "Item upload indicate how many file/directory you can upload.");
 
             try {
+
+                Application.DoEvents();
+
                 LeastMostUpload("file_info");
                 LeastMostUpload("file_info_expand");
                 getAccType();
@@ -111,11 +120,11 @@ namespace FlowSERVER1 {
                 var _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
                 label12.Text = _totalUploadOvertime.ToString();
 
-                /* The problem is say if you have the same 
-                    file type that was uploaded twice then it will be seen as 
-                    1,1 and not 2
-                @SUMMARY: File is numerically counted instead of summing the values*/
-            } catch (Exception) {
+                Application.DoEvents();
+
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                /*
                 Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
@@ -133,12 +142,16 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }
+                */
             }
 
         }
 
-
+        /// <summary>
+        /// This function will tells user how many files
+        /// they have uploaded (in total)
+        /// </summary>
+        /// <param name="_tableName"></param>
         public void TotalUploadFile(String _tableName) {
             String _CountQue = "SELECT COUNT(*) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_CountQue,con);
@@ -148,6 +161,12 @@ namespace FlowSERVER1 {
             int intTotalCount = Convert.ToInt32(totalCount);
             _TotalUploadOvertime.Add(intTotalCount);
         }
+
+        /// <summary>
+        /// This function will tells user the number of 
+        /// files they've uploaded a day
+        /// </summary>
+        /// <param name="_TableName"></param>
         public void TotalUploadFileTodayCount(String _TableName) {
             String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
             String _QueryCount = "SELECT COUNT(CUST_USERNAME) FROM " + _TableName + " WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
@@ -159,7 +178,10 @@ namespace FlowSERVER1 {
             int _toInt = Convert.ToInt32(_totalCount);
             _TotalUploadToday.Add(_toInt);
         }
-
+        /// <summary>
+        /// This function will tells user the number
+        /// of directory they have created a day
+        /// </summary>
         public void TotalUploadDirectoryTodayCount() {
             String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
             String _QueryCount = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
@@ -178,7 +200,7 @@ namespace FlowSERVER1 {
         }
 
         public void getAccType() {
-            String GetAccType = "SELECT ACC_TYPE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+            String GetAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(GetAccType, con);
             command.Parameters.AddWithValue("@username", label5.Text);
 
@@ -227,7 +249,14 @@ namespace FlowSERVER1 {
             label20.Text = countTotalFolders.ToString();
         }
 
-        // @SUMMARY Total upload charts stats
+        
+        /// <summary>
+        /// This will generates statistical chart
+        /// that tells user how many files they've
+        /// uploaded by date
+        /// </summary>
+        /// <param name="_serName"></param>
+        /// <param name="_tableName"></param>
 
         public void generateChart(String _serName, String _tableName) {
 
@@ -621,13 +650,13 @@ namespace FlowSERVER1 {
                 var fq = testing.Substring(testing.IndexOf(CustUserValues[0]));
                 var result = Regex.Match(fq, @"^([\w\-]+)");*/ 
                 if (LastEmail == CustUserValues[0]) {
-                    String _insertNew = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
+                    String _insertNew = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
                     command = new MySqlCommand(_insertNew, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
                     if (command.ExecuteNonQuery() == 1) {
-                        String _deleteOld = "DELETE FROM CUST_TYPE WHERE CUST_USERNAME = @username";
+                        String _deleteOld = "DELETE FROM cust_type WHERE CUST_USERNAME = @username";
                         command = new MySqlCommand(_deleteOld, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.ExecuteNonQuery();

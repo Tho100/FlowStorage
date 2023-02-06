@@ -182,7 +182,7 @@ namespace FlowSERVER1
                                                 command.Parameters.AddWithValue("@CUST_PIN", encryptionPin);
                                                 command.ExecuteNonQuery();
 
-                                                String _InsertType = "INSERT INTO CUST_TYPE(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                                String _InsertType = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
                                                 command = new MySqlCommand(_InsertType, con);
                                                 command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
                                                 command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);

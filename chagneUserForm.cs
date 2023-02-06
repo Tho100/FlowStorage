@@ -69,7 +69,6 @@ namespace FlowSERVER1 {
             String _passValuesString = _passValues[0];
             String _decryptIt = EncryptionModel.Decrypt(_passValuesString, "0123456789085746");
             return _decryptIt;
-            //return _usernameValues.Count();
         }
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
@@ -131,18 +130,18 @@ namespace FlowSERVER1 {
                             }
                         } else {
                             label4.Text = "Please enter your password.";
-                            label4.Visible = true;
+
+                        label4.Visible = true;                            label4.Visible = true;
                         }
                     } else {
                         label4.Text = "Please enter a username.";
-                        label4.Visible = true;
                     }
                 } else {
                     label4.Text = "Please enter a new username.";
                     label4.Visible = true;
                 }
             } catch (Exception) {
-                //
+                MessageBox.Show("There's a problem while attempting to change your username.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 

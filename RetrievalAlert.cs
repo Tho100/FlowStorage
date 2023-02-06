@@ -17,6 +17,11 @@ namespace FlowSERVER1 {
             label8.Text = alertMessage;
             OriginFrom = _orignFrom;
             instance = this;
+            if(_orignFrom == "login") {
+                guna2Button10.Visible = false;
+            } else {
+                guna2Button10.Visible = true;
+            }
             
         }
 

@@ -42,15 +42,12 @@ namespace FlowSERVER1 {
         }
 
         String custUsername;
-
-        public Bitmap stringToImage(string inputString) {
-            byte[] imageBytes = Encoding.UTF8.GetBytes(inputString);
-            using (MemoryStream ms = new MemoryStream(imageBytes)) {
-                return new Bitmap(ms);
-            }
-        }
-
+        /// <summary>
+        /// Load user files as soon they loggin-ed
+        /// </summary>
         public void loadUserData() {
+
+            Application.DoEvents();
 
             var form = Form1.instance;
             var flowlayout = form.flowLayoutPanel1;
@@ -93,48 +90,42 @@ namespace FlowSERVER1 {
             }
 
             //////////////////// DECRYPTION AND ENCRYPTION
-   
-            List<String> passValuesKey_ = new List<String>();
-            String selectPasswordQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_EMAIL = @email";
-            command = con.CreateCommand();
-            command.CommandText = selectPasswordQue;
-            command.Parameters.AddWithValue("@email", _getEmail);
 
-            MySqlDataReader userReader = command.ExecuteReader();
-            while (userReader.Read()) {
-                passValuesKey_.Add(userReader.GetString(0));
+
+            String returnValues(String _WhichColumn) {
+
+                List<string> _concludeValue = new List<string>();
+
+                String checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_EMAIL = @email";
+                command = new MySqlCommand(checkPassword_Query, con);
+                command = ConnectionModel.con.CreateCommand();
+                command.CommandText = checkPassword_Query;
+                command.Parameters.AddWithValue("@email", _getEmail);
+                MySqlDataReader readerPass_ = command.ExecuteReader();
+
+                while (readerPass_.Read()) {
+                    _concludeValue.Add(readerPass_.GetString(0));
+                }
+                readerPass_.Close();
+                return _concludeValue[0];
             }
-            userReader.Close();
 
-            if (passValuesKey_.Count > 0) {
-                encryptionKeyVal = passValuesKey_[0];
-                decryptMainKey = EncryptionModel.Decrypt(encryptionKeyVal, "0123456789085746");
-            } else {
-                label4.Visible = true;
-            }
-
-            List<String> pinValuesKey_ = new List<String>();
-            String selectpinQue = "SELECT CUST_PIN FROM information WHERE CUST_EMAIL = @email";
-            command = con.CreateCommand();
-            command.CommandText = selectpinQue;
-            command.Parameters.AddWithValue("@email", _getEmail);
-
-            MySqlDataReader pinReader = command.ExecuteReader();
-            while (pinReader.Read()) {
-                pinValuesKey_.Add(pinReader.GetString(0));
-            }
-            pinReader.Close();
-
-            if(pinValuesKey_.Count > 0) {
-                pinDecryptionKey = EncryptionModel.Decrypt(pinValuesKey_[0], "0123456789085746");
-            }
+            var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
+            var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
+            decryptMainKey = decryptPass;
+            pinDecryptionKey = decryptPin;
 
             ///////////////////
 
             if (_getPass == decryptMainKey && _getPin == pinDecryptionKey) {
+
                 Form1.instance.label3.Text = encryptionKeyVal;
                 setupRedundane();
                 this.Close();
+
+                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your files...","login").ShowDialog());
+                _retrievalAlertForm.Start();
+
                 var _form = Form1.instance;
                 _form.guna2TextBox1.Text = String.Empty;
                 _form.guna2TextBox2.Text = String.Empty;
@@ -763,10 +754,15 @@ namespace FlowSERVER1 {
                 //if(inttotalRowFold > 0) {
                 //_generateUserDirectory(user,pass,intTotalRowDir);
                 _generateUserFolder(custUsername,_getPass);
-                    
-                //}
 
-                //Form1.instance.label4.Text = (intTotalRowExcel + intTotalRowExe + intTotalRowTxt + intTotalRowVid + intRowImg).ToString();
+                Application.DoEvents();
+
+                Application.OpenForms
+                    .OfType<Form>()
+                    .Where(FormsQ => String.Equals(FormsQ.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(FormsQ => FormsQ.Close());
+
                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                 if (guna2CheckBox2.Checked == true) {
@@ -789,7 +785,8 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
                 loadUserData();
             } catch (Exception eq) {
-               MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show(eq.Message);
+                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void setupTime() {

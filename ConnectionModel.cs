@@ -7,11 +7,11 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public class ConnectionModel {
-        public static string _SERVER = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
+        public static string _SERVER = "flowmainserver-db-0.c3zgkh2qsi2m.us-east-1.rds.amazonaws.com"; // 185.27.134.144 | localhost
         public static string _MAINDB = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string _USER = "0015connectionlover"; // epiz_33067528 | root
+        public static string _USER = "henrydavis_00"; // epiz_33067528 | root
         public static string _PASSWORD = "nfreal-yt10";
-        public static int _MAINPORT = 13234;
+        public static int _MAINPORT = 3306;
         public static string _FULLCONNECTION = "SERVER=" + _SERVER + ";" + "Port=" + _MAINPORT + ";" + "DATABASE=" + _MAINDB + ";" + "UID=" + _USER + ";" + "PASSWORD=" + _PASSWORD + ";";
         public static MySqlConnection con = new MySqlConnection(_FULLCONNECTION);
         public static MySqlCommand command;
