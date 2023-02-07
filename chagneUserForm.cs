@@ -40,6 +40,16 @@ namespace FlowSERVER1 {
             command.ExecuteNonQuery();
            
         }
+
+        private void setupChangeUsernameSharing(String _setUsername) {
+
+            String updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + _setUsername + "' WHERE CUST_FROM = @username";
+            command = new MySqlCommand(updateQuery, con);
+            command.Parameters.AddWithValue("@username", CurrentUsername);
+            command.ExecuteNonQuery();
+
+        }
+
         private int verifyIfNotExists(String _newUsername) {
             List<String> _usernameValues = new List<string>();
             String getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
@@ -103,6 +113,7 @@ namespace FlowSERVER1 {
 
                                     setupChangeUsername("upload_info_directory", NewUsername);
                                     setupChangeUsername("folder_upload_info", NewUsername);
+                                    setupChangeUsernameSharing(NewUsername);
 
                                     Form bgBlur = new Form();
                                     using (successChangeUser displayDirectory = new successChangeUser(_getNewUsername,CurrentUsername)) {

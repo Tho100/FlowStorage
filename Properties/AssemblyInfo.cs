@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FlowSERVER1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Flowstorage")]
+[assembly: AssemblyDescription("File hosting for Windows 10 and above.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Crivlet Sdn Bhd")]
 [assembly: AssemblyProduct("FlowSERVER1")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]

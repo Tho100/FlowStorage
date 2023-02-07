@@ -753,24 +753,8 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImg = new Bitmap(getImgName.Image);
                         Form bgBlur = new Form();
-                        using (vidFORM displayVid = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text, "folder_upload_info", _foldTitle,label5.Text)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.Name = "bgBlurForm";
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayVid.Owner = bgBlur;
-                            displayVid.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        vidFORM displayVid = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text, "folder_upload_info", _foldTitle,label5.Text);
+                        displayVid.Show();
                     };
                 }
 
@@ -1824,8 +1808,7 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-            catch (Exception eq) {
-                /// MessageBox.Show(eq.Message);
+            catch (Exception) {
                 Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
@@ -2147,8 +2130,7 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-            catch (Exception eq) {
-              //  MessageBox.Show(eq.Message);
+            catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -2560,61 +2542,8 @@ namespace FlowSERVER1 {
                         .ToList()
                         .ForEach(form => form.Close());
 
-                    } catch (Exception eq) {
-
-                      /*  Application.DoEvents();
-
-                        var FileExt = _extTypes;
-                        var getName = titleLab.Text;
-
-                        Application.OpenForms
-                         .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                         .ToList()
-                         .ForEach(form => form.Close());
-
-                        Thread waitForm = new Thread(() => new cancelFORM(getName).ShowDialog());
-                        waitForm.Start();
-
-                        if (con.State == ConnectionState.Closed) {
-                            con.Open();
-                        }
-
-                        Application.OpenForms
-                         .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "cancelFORM"))
-                         .ToList()
-                         .ForEach(form => form.Close());
-
-                        if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
-                            FileDeletionFolder(titleLab.Text, "file_info");
-                        }
-                        else if (FileExt == ".msi") {
-                            FileDeletionFolder(getName, "file_info_msi");
-                        }
-                        else if (FileExt == ".mp3" || FileExt == ".wav") {
-                            FileDeletionFolder(getName, "file_info_audi");
-                        }
-                        else if (FileExt == ".docx" || FileExt == ".doc") {
-                            FileDeletionFolder(getName, "file_info_word");
-                        }
-                        else if (FileExt == ".pptx" || FileExt == ".ppt") {
-                            FileDeletionFolder(getName, "file_info_ptx");
-                        }
-                        else if (FileExt == ".pdf") {
-                            FileDeletionFolder(getName, "file_info_pdf");
-                        }
-                        else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
-                            FileDeletionFolder(getName, "file_info_expand");
-                        }
-                        else if (FileExt == ".gif") {
-                            FileDeletionFolder(getName, "file_info_gif");
-                        }
-                        else if (FileExt == ".exe") {
-                            FileDeletionFolder(getName, "file_info_exe");
-                        }
-
-                        Application.DoEvents();*/
+                    } catch (Exception) {
+                        MessageBox.Show("An error ocurred.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     }
 
                     clearRedundane();
@@ -2623,16 +2552,6 @@ namespace FlowSERVER1 {
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 }
             }
-        }
-
-        private void FileDeletionFolder(String _FileName, String _FoldName) {
-            Application.DoEvents();
-            String fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-            command.Parameters.AddWithValue("@filename", _FileName);
-            command.Parameters.AddWithValue("@foldtitle", _FoldName);
-            command.ExecuteNonQuery();
         }
 
         private void label25_Click(object sender, EventArgs e) {
@@ -2757,29 +2676,37 @@ namespace FlowSERVER1 {
             }
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
-
+        /// <summary>
+        /// This function will delete user folder if 
+        /// Garbage (delete folder) button is clicked
+        /// </summary>
+        /// <param name="foldName"></param>
         public void _removeFoldFunc(String foldName) {
 
-            String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-            command = new MySqlCommand(removeFoldQue, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-            command.Parameters.AddWithValue("@foldername", foldName);
-            command.ExecuteNonQuery();
+            DialogResult verifyDeletion = MessageBox.Show("Delete " + foldName + " folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (verifyDeletion == DialogResult.Yes) {
 
-            listBox1.Items.Remove(foldName);
-            foreach (var _DupeItem in listBox1.Items) {
-                if (_DupeItem.ToString() == foldName) {
-                    listBox1.Items.Remove(_DupeItem.ToString());
+                String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+                command = new MySqlCommand(removeFoldQue, con);
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@foldername", foldName);
+                command.ExecuteNonQuery();
+
+                listBox1.Items.Remove(foldName);
+                foreach (var _DupeItem in listBox1.Items) {
+                    if (_DupeItem.ToString() == foldName) {
+                        listBox1.Items.Remove(_DupeItem.ToString());
+                    }
                 }
-            }
 
-            int indexSelected = listBox1.Items.IndexOf("Home");
-            listBox1.SelectedIndex = indexSelected;
-            Application.OpenForms
-                 .OfType<Form>()
-                 .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                 .ToList()
-                 .ForEach(form => form.Close());
+                int indexSelected = listBox1.Items.IndexOf("Home");
+                listBox1.SelectedIndex = indexSelected;
+                Application.OpenForms
+                     .OfType<Form>()
+                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                     .ToList()
+                     .ForEach(form => form.Close());
+            }
         }
 
         // REMOVE DIR BUT
