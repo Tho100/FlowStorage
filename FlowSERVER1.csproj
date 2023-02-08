@@ -662,6 +662,12 @@
     <Compile Include="upgradeFORM.Designer.cs">
       <DependentUpon>upgradeFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpgradeFormFold.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpgradeFormFold.Designer.cs">
+      <DependentUpon>UpgradeFormFold.cs</DependentUpon>
+    </Compile>
     <Compile Include="UploadAlrt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -791,6 +797,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="upgradeFORM.resx">
       <DependentUpon>upgradeFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradeFormFold.resx">
+      <DependentUpon>UpgradeFormFold.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UploadAlrt.resx">
       <DependentUpon>UploadAlrt.cs</DependentUpon>

@@ -63,7 +63,7 @@
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(273, 48);
             this.guna2Button2.TabIndex = 15;
-            this.guna2Button2.Text = "Log In";
+            this.guna2Button2.Text = "Sign In";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
@@ -151,12 +151,13 @@
             this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.guna2TextBox4.MaxLength = 3;
             this.guna2TextBox4.Name = "guna2TextBox4";
-            this.guna2TextBox4.PasswordChar = '\0';
+            this.guna2TextBox4.PasswordChar = '*';
             this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.guna2TextBox4.PlaceholderText = "";
             this.guna2TextBox4.SelectedText = "";
             this.guna2TextBox4.Size = new System.Drawing.Size(89, 44);
             this.guna2TextBox4.TabIndex = 47;
+            this.guna2TextBox4.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
             // guna2Button4
             // 
@@ -338,9 +339,9 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(22, 18);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(191, 25);
+            this.label5.Size = new System.Drawing.Size(203, 25);
             this.label5.TabIndex = 6;
-            this.label5.Text = "Login to Flowstorage";
+            this.label5.Text = "Sign In to Flowstorage";
             // 
             // LogIN
             // 
@@ -354,7 +355,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LogIN";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login";
+            this.Text = "Sign In";
             this.Load += new System.EventHandler(this.LogIN_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();

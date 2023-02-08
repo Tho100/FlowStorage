@@ -139,7 +139,8 @@ namespace FlowSERVER1 {
                     _readByteValues.Close();
                 }
             } catch (Exception) {
-                MessageBox.Show("OPERATION WAS CANCELLED");
+                
+                //MessageBox.Show("OPERATION WAS CANCELLED");
             }
             return universalBytes;
         }

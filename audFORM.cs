@@ -77,28 +77,12 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-            catch (Exception eq) {
-                //MessageBox.Show("Failed to play this audio.","Flowstorage");
-                /*Form bgBlur = new Form();
-                using (waitFORM displayWait = new waitFORM()) {
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                    bgBlur.Opacity = .24d;
-                    bgBlur.BackColor = Color.Black;
-                    bgBlur.WindowState = FormWindowState.Maximized;
-                    bgBlur.TopMost = true;
-                    bgBlur.Location = this.Location;
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.ShowInTaskbar = false;
-                    bgBlur.Show();
-
-                    displayWait.Owner = bgBlur;
-                    displayWait.ShowDialog();
-
-                    bgBlur.Dispose();
-                }*/
-                MessageBox.Show(eq.Message);
+            catch (Exception) {
+                pictureBox3.Enabled = false;
+                guna2Button6.Visible = false;
+                guna2Button5.Visible = true;
             }
+
             guna2Button6.Visible = true;
             guna2Button5.Visible = false;
         }
@@ -171,13 +155,6 @@ namespace FlowSERVER1 {
         private void chart1_Click(object sender, EventArgs e) {
 
         }
-        bool isUp = false;
-        int pic1YUpdate = 72;
-        private async void timer1_Tick(object sender, EventArgs e) {
-            // 267, 80: wave2
-     
-        }
-
         private void guna2Button7_Click(object sender, EventArgs e) {
 
         }
@@ -188,11 +165,6 @@ namespace FlowSERVER1 {
 
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
 
-        }
-
-        int pic2YUpdate = 58;
-        private async void timer2_Tick(object sender, EventArgs e) {
-          
         }
 
         private void guna2Button8_Click(object sender, EventArgs e) {

@@ -146,7 +146,7 @@ namespace FlowSERVER1
                    //   clearRedundane();
                     }
                 } catch (Exception eq) {
-                    Form bgBlur = new Form();
+                    /*Form bgBlur = new Form();
                     using (waitFORM displayWait = new waitFORM()) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
                         bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -163,7 +163,7 @@ namespace FlowSERVER1
                         displayWait.ShowDialog();
 
                         bgBlur.Dispose();
-                    }
+                    }*/
               }
             
 
@@ -1410,8 +1410,8 @@ namespace FlowSERVER1
                 String _accType = _types[0];
                 int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
                 if (_accType == "Basic") {
-                    if (CurrentUploadCount != 25) {
-                        _mainFileGenerator(25,"Basic");
+                    if (CurrentUploadCount != 12) {
+                        _mainFileGenerator(12,"Basic");
                     }
                     else {
                         DisplayError(_accType);
@@ -1419,8 +1419,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Max") {
-                    if (CurrentUploadCount != 50) {
-                        _mainFileGenerator(50,"Max");
+                    if (CurrentUploadCount != 30) {
+                        _mainFileGenerator(30,"Max");
                     }
                     else {
                         DisplayError(_accType);

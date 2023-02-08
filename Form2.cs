@@ -142,7 +142,7 @@ namespace FlowSERVER1
                 label7.Visible = false;
                 if(_getPin != String.Empty) {
                     if(_getPin.Length == 3) {
-                        if(_getEmail.Contains("@gmail.com")) {
+                        if(_getEmail.Contains("@gmail.com") || _getEmail.Contains("@email.com")) {
                             if(_getUser.Length <= 20) {
                                 if(_getPass.Length > 5) {
                                     if (!String.IsNullOrEmpty(_getUser)) {

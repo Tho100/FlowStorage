@@ -123,8 +123,8 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
 
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                /*
+                //MessageBox.Show(eq.Message);
+                
                 Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
@@ -142,7 +142,8 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                */
+                }
+                
             }
 
         }
@@ -214,10 +215,10 @@ namespace FlowSERVER1 {
             String _accType = _types[0];
             label6.Text = _accType;
             if (_accType == "Basic") {
-                label37.Text = "Limited to 25";
+                label37.Text = "Limited to 12";
             }
             else if (_accType == "Max") {
-                label37.Text = "Limited to 50";
+                label37.Text = "Limited to 30";
                 guna2Button5.Enabled = false;
             }
             else if (_accType == "Express") {
@@ -606,7 +607,7 @@ namespace FlowSERVER1 {
             else if (_selectedAcc == "Max") {
                 guna2Button5.Enabled = false;
                 guna2Button8.Visible = false;
-                label37.Text = "Limited to 50";
+                label37.Text = "Limited to 30";
             }
         }
 

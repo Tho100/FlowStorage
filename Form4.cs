@@ -270,7 +270,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Basic") {
-                        if(Convert.ToInt32(_getFilesCount) != 25) {
+                        if(Convert.ToInt32(_getFilesCount) != 12) {
                             if (_getValue != 2) {
                           
                                 value_Dir++;
@@ -298,7 +298,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Max") {
-                        if (Convert.ToInt32(_getFilesCount) != 50) {
+                        if (Convert.ToInt32(_getFilesCount) != 30) {
                             if (_getValue != 2) {
 
                                 value_Dir++;

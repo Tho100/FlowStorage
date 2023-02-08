@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace FlowSERVER1 {
     public partial class RetrievalAlert : Form {
         public static RetrievalAlert instance;
         private static String OriginFrom = "";
+        private static MySqlConnection con = ConnectionModel.con;
         public RetrievalAlert(String alertMessage,String _orignFrom) {
             InitializeComponent();
             label8.Text = alertMessage;
@@ -34,8 +37,41 @@ namespace FlowSERVER1 {
             if(OriginFrom == "Saver") {
                 SaverModel.stopFileRetrieval = true;
             } else if (OriginFrom == "Loader") {
-                label8.Text = "Failed to cancel the operation.";
-                //LoaderModel.stopFileRetrievalLoad = true;
+                if(label8.Text == "Flowstorage is retrieving your directory files.") {
+                    label8.Text = "Failed to cancel the operation.";
+                } else {
+
+                    try {
+
+                        Application.DoEvents();
+
+                        label9.Text = "Cancelling Operation...";
+                        if (con.State == System.Data.ConnectionState.Open) {
+
+                            // @ Close connection before turning it back on for retrieval cancellation
+                            con.Close();
+
+                            if (con.State == System.Data.ConnectionState.Closed) {
+
+                                // @ Turn connection back on 
+                                con.Open();
+                            }
+                        }
+                    } catch (Exception) {
+                        con.Close();
+                        if(con.State == System.Data.ConnectionState.Closed) {
+                            con.Open();
+                        }
+                    }
+
+                    Application.OpenForms
+                               .OfType<Form>()
+                               .Where(form => String.Equals(form.Name, "Form3"))
+                               .ToList()
+                               .ForEach(form => form.Close());
+
+                    this.Close();
+                }
             }
         }
     }

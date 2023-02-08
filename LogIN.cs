@@ -92,9 +92,10 @@ namespace FlowSERVER1 {
             //////////////////// DECRYPTION AND ENCRYPTION
 
 
+            String _valueToReturn = "";
             String returnValues(String _WhichColumn) {
 
-                List<string> _concludeValue = new List<string>();
+                List<String> _concludeValue = new List<String>();
 
                 String checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_EMAIL = @email";
                 command = new MySqlCommand(checkPassword_Query, con);
@@ -107,13 +108,20 @@ namespace FlowSERVER1 {
                     _concludeValue.Add(readerPass_.GetString(0));
                 }
                 readerPass_.Close();
-                return _concludeValue[0];
+                if(_concludeValue[0] != "") {
+                    _valueToReturn = _concludeValue[0];
+                } 
+                return _valueToReturn;
             }
-
-            var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
-            var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
-            decryptMainKey = decryptPass;
-            pinDecryptionKey = decryptPin;
+            
+            if(_valueToReturn != "") {
+                var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
+                var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
+                decryptMainKey = decryptPass;
+                pinDecryptionKey = decryptPin;
+            } else {
+                label4.Visible = true;
+            }
 
             ///////////////////
 
@@ -123,7 +131,7 @@ namespace FlowSERVER1 {
                 setupRedundane();
                 this.Close();
 
-                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your files...","login").ShowDialog());
+                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Attempting to connect to your account...","login").ShowDialog());
                 _retrievalAlertForm.Start();
 
                 var _form = Form1.instance;
@@ -751,8 +759,7 @@ namespace FlowSERVER1 {
                     Application.DoEvents();
                     _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
                 }
-                //if(inttotalRowFold > 0) {
-                //_generateUserDirectory(user,pass,intTotalRowDir);
+          
                 _generateUserFolder(custUsername,_getPass);
 
                 Application.DoEvents();
@@ -781,13 +788,18 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            try {
+          //  try {
+
                 Application.DoEvents();
+
                 loadUserData();
-            } catch (Exception eq) {
-                //MessageBox.Show(eq.Message);
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+
+                Application.DoEvents();
+
+        //    } catch (Exception eq) {
+        //        MessageBox.Show(eq.Message);
+                //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
         }
         public void setupTime() {
             var form = Form1.instance;
@@ -861,6 +873,12 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click_1(object sender, EventArgs e) {
             this.Close();
+        }
+
+        private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
+            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox4.Text, "[^0-9]")) {
+                guna2TextBox4.Text = guna2TextBox4.Text.Remove(guna2TextBox4.Text.Length - 1);
+            }
         }
     }
 }

@@ -1389,3 +1389,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.exe.man
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.application
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.exe
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.pdb
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.UpgradeFormFold.resources

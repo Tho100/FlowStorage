@@ -12,7 +12,7 @@ namespace FlowSERVER1 {
     public partial class cancelFORM : Form {
         public cancelFORM(String _fileName) {
             InitializeComponent();
-            label8.Text = "Uploading " + _fileName + " was cancelled.";
+            //label8.Text = "Uploading " + _fileName + " was cancelled.";
         }
 
         private void cancelFORM_Load(object sender, EventArgs e) {

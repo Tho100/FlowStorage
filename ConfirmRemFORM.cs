@@ -107,7 +107,9 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-
+            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox2.Text, "[^0-9]")) {
+                guna2TextBox2.Text = guna2TextBox2.Text.Remove(guna2TextBox2.Text.Length - 1);
+            }
         }
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e) {

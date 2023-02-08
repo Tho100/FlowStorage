@@ -87,7 +87,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(257, 40);
             this.label2.TabIndex = 24;
-            this.label2.Text = "it looks like you\'ve reached the max \r\namount of files you can upload";
+            this.label2.Text = "It looks like you\'ve reached the max \r\namount of files you can upload";
             // 
             // label3
             // 

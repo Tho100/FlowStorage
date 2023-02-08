@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Diagnostics;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
+using System.Threading;
 
 namespace FlowSERVER1 {
     public partial class sharingFORM : Form {
@@ -82,6 +83,7 @@ namespace FlowSERVER1 {
         }
         private static String _controlName = null;
         private void guna2Button2_Click(object sender, EventArgs e) {
+            try {
                 if(guna2TextBox1.Text != Form1.instance.label5.Text) {
                     if(guna2TextBox1.Text != String.Empty) {
                         if(guna2TextBox2.Text != String.Empty) {
@@ -104,8 +106,11 @@ namespace FlowSERVER1 {
                                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
                                 command.Parameters["@FILE_EXT"].Value = _retrieved;
 
-                                UploadAlrt ShowUploadAlert = new UploadAlrt(_FileName,Form1.instance.label5.Text,"cust_sharing",_controlName,"null");
-                                ShowUploadAlert.Show();
+                                //UploadAlrt ShowUploadAlert = new UploadAlrt(_FileName,Form1.instance.label5.Text,"cust_sharing",_controlName,guna2TextBox1.Text);
+                                //ShowUploadAlert.Show();
+                                Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text).ShowDialog());
+                                showUploadAlert.Start();
+
                                 Application.DoEvents();
 
                                 if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
@@ -117,7 +122,7 @@ namespace FlowSERVER1 {
                                     var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                                     command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
-                            } else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
+                                } else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
                                     var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                                     command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
@@ -151,7 +156,8 @@ namespace FlowSERVER1 {
                                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                                     using (var stream = new MemoryStream()) {
                                         toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                        command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                                        var toBase64String = Convert.ToBase64String(stream.ToArray());
+                                        command.Parameters["@CUST_THUMB"].Value = toBase64String;
                                     }
                                     var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                                     command.Parameters["@CUST_FILE"].Value = _toBase64;
@@ -170,20 +176,25 @@ namespace FlowSERVER1 {
                                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                                     using (var stream = new MemoryStream()) {
                                         toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                        command.Parameters["@CUST_THUMB"].Value = stream.ToArray();// To load: Bitmap -> Byte array
+                                        var toBase64Str = Convert.ToBase64String(stream.ToArray());
+                                        command.Parameters["@CUST_THUMB"].Value = toBase64Str;// To load: Bitmap -> Byte array
                                     }
                                     var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                                     command.Parameters["@CUST_FILE"].Value = _toBase64;
                                     command.ExecuteNonQuery();
-                            }
+                                }
+
                                 Application.OpenForms
-                                   .OfType<Form>()
-                                   .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                   .ToList()
-                                   .ForEach(form => form.Close());
+                                    .OfType<Form>()
+                                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                    .ToList()
+                                    .ForEach(form => form.Close());
 
                                 sucessShare _showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text,guna2TextBox1.Text);
                                 _showSuccessfullyTransaction.Show();
+
+                                Application.DoEvents();
+
                             } else {
                                 MessageBox.Show("User '"+ guna2TextBox1.Text + "' not found.","Sharing Failed",MessageBoxButtons.OK,MessageBoxIcon.Information);
                             }
@@ -192,17 +203,9 @@ namespace FlowSERVER1 {
                 } else {
                     MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-        }
-
-
-        private void FileDeletionSharing(String FileName, String DirectoryName) {
-            Application.DoEvents();
-            String fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-            command.Parameters.AddWithValue("@filename", FileName);
-            command.Parameters.AddWithValue("@dirname", DirectoryName);
-            command.ExecuteNonQuery();
+            } catch (Exception) {
+                //
+            }
         }
 
         private void guna2Panel2_Paint(object sender, PaintEventArgs e) {

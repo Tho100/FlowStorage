@@ -52,6 +52,7 @@ namespace FlowSERVER1 {
             FileName = _fileName;
             DirectoryName = _dirName;
             FileExt = _fileName.Substring(_fileName.Length-3);
+            guna2TextBox1.Text = label1.Text;
         }
 
         private void UploadAlrt_Load(object sender, EventArgs e) {
@@ -94,6 +95,17 @@ namespace FlowSERVER1 {
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@filename", _FileName);
             command.Parameters.AddWithValue("@foldtitle", _FoldName);
+            command.ExecuteNonQuery();
+        }
+        /// <summary>
+        /// File deletion function for sharing
+        /// </summary>
+        private void FileDeletionSharing(String _CustTo,String _FileName) {
+            Application.DoEvents();
+            String fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+            command = new MySqlCommand(fileDeletionQuery, con);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            command.Parameters.AddWithValue("@filename", _FileName);
             command.ExecuteNonQuery();
         }
         /// <summary>
@@ -219,6 +231,9 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".exe") {
                                 FileDeletionFolder(getName, "file_info_exe");
                             }
+                        } else if (TableName == "cust_sharing") {
+                            // @ Note: Directory name refer to receiver name
+                            FileDeletionSharing(DirectoryName,getName);
                         }
                     }
                 }
@@ -287,6 +302,22 @@ namespace FlowSERVER1 {
                 MessageBox.Show("Cancellation failed, file is already uploaded.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             this.Close();
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+           
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+        }
+
+        private void guna2Button2_Click(object sender, EventArgs e) {
+            this.TopMost = false; 
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void label9_Click(object sender, EventArgs e) {
+
         }
     }
 }
