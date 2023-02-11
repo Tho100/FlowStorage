@@ -37,7 +37,7 @@ namespace FlowSERVER1 {
             if(OriginFrom == "Saver") {
                 SaverModel.stopFileRetrieval = true;
             } else if (OriginFrom == "Loader") {
-                if(label8.Text == "Flowstorage is retrieving your directory files.") {
+                if(label8.Text == "Flowstorage is retrieving your directory files." || label8.Text == "Flowstorage is retrieving your folder files." || label8.Text == "Flowstorage is retrieving your shared files...") {
                     label8.Text = "Failed to cancel the operation.";
                 } else {
 
@@ -53,7 +53,8 @@ namespace FlowSERVER1 {
 
                             if (con.State == System.Data.ConnectionState.Closed) {
 
-                                // @ Turn connection back on 
+                                // @ Turn connection back on so that the user can 
+                                // reuse the application properly
                                 con.Open();
                             }
                         }

@@ -78,6 +78,8 @@
             this.label27 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.label31 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -99,6 +101,7 @@
             this.guna2GradientPanel1.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel17.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -374,6 +377,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.guna2Panel7.Controls.Add(this.pictureBox4);
+            this.guna2Panel7.Controls.Add(this.label31);
             this.guna2Panel7.Controls.Add(this.label30);
             this.guna2Panel7.Controls.Add(this.label15);
             this.guna2Panel7.Controls.Add(this.guna2TextBox4);
@@ -823,6 +828,30 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged_1);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted_1);
             // 
+            // label31
+            // 
+            this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label31.AutoSize = true;
+            this.label31.BackColor = System.Drawing.Color.Transparent;
+            this.label31.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.Color.LightGray;
+            this.label31.Location = new System.Drawing.Point(774, 625);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(270, 17);
+            this.label31.TabIndex = 49;
+            this.label31.Text = "Your data is securely protected by hashing.";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox4.Image = global::FlowSERVER1.Properties.Resources.icons8_password_52;
+            this.pictureBox4.Location = new System.Drawing.Point(740, 618);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(26, 27);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 50;
+            this.pictureBox4.TabStop = false;
+            // 
             // guna2Button9
             // 
             this.guna2Button9.BackColor = System.Drawing.Color.Transparent;
@@ -1102,6 +1131,7 @@
             this.guna2Panel1.PerformLayout();
             this.guna2Panel17.ResumeLayout(false);
             this.guna2Panel17.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -1173,6 +1203,8 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label30;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }
 

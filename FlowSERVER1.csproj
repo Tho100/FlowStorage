@@ -832,6 +832,8 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-database-50 %281%29.png" />
+    <None Include="Resources\icons8-password-52.png" />
     <None Include="Resources\giphy %2810%29.gif" />
     <None Include="Resources\giphy %289%29.gif" />
     <None Include="Resources\giphy %288%29.gif" />
@@ -843,7 +845,6 @@
     <None Include="Resources\icons8-share-64.png" />
     <None Include="Resources\icons8-rename-48.png" />
     <None Include="Resources\icons8-partying-face-96.png" />
-    <None Include="Resources\icons8-partying-face-48.png" />
     <None Include="Resources\icons8-subtract-30.png" />
     <None Include="Resources\Untitled %2826%29.png" />
     <None Include="Resources\icons8-voice-50.png" />

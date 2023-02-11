@@ -81,13 +81,44 @@ namespace FlowSERVER1
                         _generateUserFiles("file_info", "imgFileBmp", _countRow(".bmp"));
                     }
 
+                    //
+                    // LOAD TEXT
+                    //
+
                     if (_countRow(".txt") > 0) {
                         Application.DoEvents();
                         _extName = ".txt";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".txt"));
                     }
-                    // LOAD EXE
-                    if (_countRow(".exe") > 0) {
+
+                    if (_countRow(".js") > 0) {
+                        Application.DoEvents();
+                        _extName = ".js";
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".js"));
+                    }
+                    if (_countRow(".sql") > 0) {
+                        Application.DoEvents();
+                        _extName = ".sql";
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".sql"));
+                    }
+                    if (_countRow(".py") > 0) {
+                        Application.DoEvents();
+                        _extName = ".py";
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".py"));
+                    }
+                    if (_countRow(".html") > 0) {
+                        Application.DoEvents();
+                        _extName = ".html";
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".html"));
+                    }
+                    if (_countRow(".css") > 0) {
+                        Application.DoEvents();
+                        _extName = ".css";
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".css"));
+                    }
+                    ////
+                // LOAD EXE
+                if (_countRow(".exe") > 0) {
                         Application.DoEvents();
                         _extName = ".exe";
                         _generateUserFiles("file_info_exe", "exeFile", _countRow(".exe"));
@@ -394,6 +425,9 @@ namespace FlowSERVER1
                     }
                     else if (_extTypes == ".js") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
+                    }
+                    else if (_extTypes == ".sql") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
                         Form bgBlur = new Form();
@@ -740,19 +774,17 @@ namespace FlowSERVER1
                               .ToList()
                               .ForEach(form => form.Close());
 
-                            String insertThumbQue = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
+                            String insertThumbQue = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
                             command = new MySqlCommand(insertThumbQue, con);
 
                             command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
                             command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
                             command.Parameters.Add("@FILE_EXT", MySqlDbType.LongText);
                             command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
                             command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
 
                             command.Parameters["@CUST_FILE_PATH"].Value = getNamePath;
                             command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
-                            command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;
                             command.Parameters["@FILE_EXT"].Value = retrieved;
                             command.Parameters["@UPLOAD_DATE"].Value = varDate;
                             command.Parameters["@DIR_NAME"].Value = label1.Text;
@@ -788,12 +820,11 @@ namespace FlowSERVER1
 
                             Application.DoEvents();
 
-                            String insertTxtQuery = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,CUST_PASSWORD,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@CUST_PASSWORD,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
+                            String insertTxtQuery = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
                             command = new MySqlCommand(insertTxtQuery, con);
 
                             command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
                             command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                            command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
                             command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
                             command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                             command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
@@ -802,7 +833,6 @@ namespace FlowSERVER1
 
                             command.Parameters["@CUST_FILE_PATH"].Value = getName;
                             command.Parameters["@CUST_USERNAME"].Value = form1.label5.Text;
-                            command.Parameters["@CUST_PASSWORD"].Value = form1.label3.Text;//EncryptionModel.Encrypt(label3.Text,"ABHABH24");//label3.Text;
                             command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
                             command.Parameters["@FILE_EXT"].Value = retrieved;
@@ -940,6 +970,9 @@ namespace FlowSERVER1
                                 }
                                 else if (_extTypes == ".js") {
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
+                                }
+                                else if (_extTypes == ".sql") {
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                                 }
 
                                 String nonLine = "";
@@ -1190,7 +1223,7 @@ namespace FlowSERVER1
                                     }
                                 }
                             }
-                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js") {
+                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql") {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
@@ -1277,59 +1310,8 @@ namespace FlowSERVER1
                             .ForEach(form => form.Close());
                         }
 
-                        catch (Exception eq) {
-
-                           /* Application.DoEvents();
-
-                            Application.OpenForms
-                             .OfType<Form>()
-                             .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                             .ToList()
-                             .ForEach(form => form.Close());
-
-                            Thread waitForm = new Thread(() => new cancelFORM(getName).ShowDialog());
-                            waitForm.Start();
-
-                            if (con.State == ConnectionState.Closed) {
-                                con.Open();
-                            }
-
-                            Application.OpenForms
-                             .OfType<Form>()
-                             .Where(form => String.Equals(form.Name, "cancelFORM"))
-                             .ToList()
-                             .ForEach(form => form.Close());
-
-                            var FileExt = retrieved;
-                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".msi") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".mp3" || FileExt == ".wav") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".docx" || FileExt == ".doc") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".pdf") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".gif") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".exe") {
-                                FileDeletionDirectory(getName);
-                            }
-
-                            Application.DoEvents();*/
+                        catch (Exception ) {
+                            //
                         }
 
                         Application.OpenForms
@@ -1340,19 +1322,6 @@ namespace FlowSERVER1
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// File deletion function for directory
-        /// </summary>
-        private void FileDeletionDirectory(String _FileName) {
-            Application.DoEvents();
-            String fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", _FileName);
-            command.Parameters.AddWithValue("@dirname", label1.Text);
-            command.ExecuteNonQuery();
         }
 
         public void DisplayError(String CurAcc) {

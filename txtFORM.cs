@@ -99,13 +99,6 @@ namespace FlowSERVER1 {
                 }
             } else if (tableName == "file_info_expand"){
 
-                string countRow = "SELECT COUNT(CUST_FILE) FROM file_info_expand WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(countRow, con);
-                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-
-                var rowTotal = command.ExecuteScalar();
-                var intTotalRow = Convert.ToInt32(rowTotal);
-
                 string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(getTxtQue,con);
                 command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
@@ -119,8 +112,8 @@ namespace FlowSERVER1 {
                 }
                 txtReader.Close();
 
-                var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]);
-                richTextBox1.Text = decryptValueKey;
+                var decryptTextValues = EncryptionModel.DecryptText(textValuesF[0]);
+                richTextBox1.Text = decryptTextValues;
                 if (FileExt_ == ".py") {
                     pythonSyntax();
                 }

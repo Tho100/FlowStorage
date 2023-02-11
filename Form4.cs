@@ -253,15 +253,13 @@ namespace FlowSERVER1
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                 command = new MySqlCommand(_insertValues,con);
                                 command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
                                 command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
 
                                 command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
                                 command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
                                 command.ExecuteNonQuery();
                             } else {
                                 DisplayError(_accType);
@@ -278,15 +276,13 @@ namespace FlowSERVER1
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                 command = new MySqlCommand(_insertValues, con);
                                 command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
                                 command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
 
                                 command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
                                 command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
                                 command.ExecuteNonQuery();
                             }
                             else {
@@ -306,15 +302,13 @@ namespace FlowSERVER1
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                 command = new MySqlCommand(_insertValues, con);
                                 command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
                                 command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
 
                                 command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
                                 command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
                                 command.ExecuteNonQuery();
                             }
                             else {
@@ -334,15 +328,13 @@ namespace FlowSERVER1
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME,CUST_PASSWORD) VALUES (@DIR_NAME,@CUST_USERNAME,@CUST_PASSWORD)";
+                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                 command = new MySqlCommand(_insertValues, con);
                                 command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
                                 command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_PASSWORD", MySqlDbType.Text);
 
                                 command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
                                 command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.Parameters["@CUST_PASSWORD"].Value = Form1.instance.label3.Text;
                                 command.ExecuteNonQuery();
                             }
                             else {
@@ -354,8 +346,8 @@ namespace FlowSERVER1
                         }
                     } 
                 }
-                catch (Exception eq) {
-                    MessageBox.Show(eq.Message);
+                catch (Exception) {
+                    //
                 }
             }
 

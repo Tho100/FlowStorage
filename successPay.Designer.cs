@@ -29,8 +29,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -73,22 +74,6 @@
             this.label1.Text = "Max";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // guna2Button1
-            // 
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_partying_face_96;
-            this.guna2Button1.ImageSize = new System.Drawing.Size(105, 105);
-            this.guna2Button1.Location = new System.Drawing.Point(12, 12);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(110, 120);
-            this.guna2Button1.TabIndex = 53;
-            // 
             // guna2Button2
             // 
             this.guna2Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -110,13 +95,23 @@
             this.guna2Button2.TabIndex = 46;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
+            // guna2PictureBox1
+            // 
+            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_partying_face_96;
+            this.guna2PictureBox1.ImageRotate = 0F;
+            this.guna2PictureBox1.Location = new System.Drawing.Point(20, 21);
+            this.guna2PictureBox1.Name = "guna2PictureBox1";
+            this.guna2PictureBox1.Size = new System.Drawing.Size(111, 100);
+            this.guna2PictureBox1.TabIndex = 54;
+            this.guna2PictureBox1.TabStop = false;
+            // 
             // successPay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ClientSize = new System.Drawing.Size(481, 145);
-            this.Controls.Add(this.guna2Button1);
+            this.Controls.Add(this.guna2PictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
@@ -129,6 +124,7 @@
             this.Text = "Account Upgraded!";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.successPay_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +137,6 @@
         private System.Windows.Forms.Label label9;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label label1;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
     }
 }

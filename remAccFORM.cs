@@ -55,8 +55,7 @@ namespace FlowSERVER1 {
 
                 Application.DoEvents();
 
-                LeastMostUpload("file_info");
-                LeastMostUpload("file_info_expand");
+                setupRedundane(label6.Text);
                 getAccType();
                 countTotalAll();
 
@@ -123,9 +122,9 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
 
             } catch (Exception eq) {
-                //MessageBox.Show(eq.Message);
+                MessageBox.Show(eq.Message);
                 
-                Form bgBlur = new Form();
+                /*Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -142,7 +141,7 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }
+                }*/
                 
             }
 
@@ -232,10 +231,6 @@ namespace FlowSERVER1 {
                 guna2Button6.Enabled = false;
                 guna2Button7.Enabled = false;
             }
-        }
-        public void LeastMostUpload(String _TabName) {
-
-  
         }
         public void countTotalAll() {
     
@@ -360,110 +355,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void _setupPayment(String TypeOf,double Pricing) {
-          
-            Task.Run(() => {
-                // ADD CUSTOMER
-                Stripe.StripeConfiguration.SetApiKey("sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN");
-                var options = new Stripe.CustomerCreateOptions {
-                    Email = Form1.instance.label24.Text,
-                    Name = Form1.instance.label5.Text
-                };
-
-                var service = new Stripe.CustomerService();
-                Stripe.Customer customer = service.Create(options);
-                var emailCust = customer.Email;
-                //
-
-                // START PAYMENT
-
-                var servicePayment = new Stripe.PaymentIntentService();
-                var optionpayments = new Stripe.PaymentIntentCreateOptions {
-                    Amount = 1,
-                    SetupFutureUsage = "off_session",
-                    Currency = "USD",
-                };
-                var paymentIntent = servicePayment.Create(optionpayments);
-                System.Diagnostics.Process.Start(paymentIntent.ToString());
-            });
- /*
-                var myCharge = new Stripe.ChargeCreateOptions();
-                // always set these properties
-                myCharge.Amount = 1;
-                myCharge.Currency = "USD";
-                myCharge.ReceiptEmail = "nfrealyt@gmail.com";
-                myCharge.Description = "Sample Charge";
-                myCharge.Source = "pk_test_51MO4YYF2lxRV33xseOZm26PlyARkh28Qw3aUPX6Xkc5diqY8aHSBFQIDW3QHFdLHJtA8csgKgWPsrVj6jEW9DmoU00i4y5mv4n";
-                myCharge.Capture = true;
-                var chargeService = new Stripe.ChargeService();
-                Stripe.Charge stripeCharge = chargeService.Create(myCharge);*/
-
-                // Newly created customer is returned
-                //var CustEmail = customer.Email;
-                //MessageBox.Show(CustEmail);
-            
-
-
-
-
-            /*string url = "";
-            string business = "nfrealyt@gmail.com";
-            //            string description = "Donation";            
-            string country = "MY";
-            string currency = "USD";
-
-            url += "https://www.paypal.com/cgi-bin/webscr/" +
-                "?cmd=" + "_xclick" +
-                "&amount=" + Pricing +
-                "&business=" + business +
-                "&item_name=" + TypeOf;
-            paypalFORM _showPayment = new paypalFORM(url,TypeOf);
-            _showPayment.Show();*/
-
-
-            // System.Diagnostics.Process.Start(url);
-            /*
-            var values = new Dictionary<string, string>
-                {
-                    { "thing1", "hello" },
-                    { "thing2", "world" }
-                };
-
-            var content = new FormUrlEncodedContent(values);
-
-            var response = await client.PostAsync("http://www.example.com/recepticle.aspx", content);
-
-            var responseString = await response.Content.ReadAsStringAsync();*/
-
-            /* "?cmd=" + "_donations" +
-               "&amount=245" + 
-               "&business=" + business +
-               "&lc=" + country +
-               "&item_name=" + TypeOf +
-               "&currency_code=" + currency +
-               "&bn=" + "PP%2dDonationsBF";*/
-
-            /*var config = new PayPalConfiguration(PayPalEnvironment.NoNetwork,"UTZE2PQSX5A6C") {
-                AcceptCreditCards = true,
-                MerchantName = "Flowstorage",
-                Language = "eng",
-            };
-            CrossPayPalManager.Init(config);
-            var Result = await CrossPayPalManager.Current.Buy(new PayPalItem(TypeOf,new Decimal (Pricing),"USD"),new decimal(0));
-            if(Result.Status == PayPalStatus.Cancelled) {
-                MessageBox.Show("USER CANCELLED");
-            } else if (Result.Status == PayPalStatus.Error) {
-                MessageBox.Show("ERROR");
-            }
-            else if (Result.Status == PayPalStatus.Successful) {
-                MessageBox.Show("SUCCEED");
-            }
-            */
-            // var CustClient = new HttpClient {BaseAddress = new Uri("https://www.paypal.com/cgi-bin/webscr/?cmd=_xclick&amount=2&business=nfrealyt@gmail.com&item_name=Max%20account%20for%20Flowstorage") };
-            // CustClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(ApiConstant))
-
-            // https://www.paypal.com/paypalme/flowstoragepaypal //https://www.paypal.com/cgi-bin/webscr 
-        }
+       
 
 
 
@@ -471,7 +363,7 @@ namespace FlowSERVER1 {
             //_setupPayment("Max account for Flowstorage",2);
             _selectedAcc = "Max";
             guna2Button8.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/test_eVa9Du9Hb9SndCoeUU"); // Test mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/bIY9AEfERf5O2OI4gj"); // Live mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -497,13 +389,13 @@ namespace FlowSERVER1 {
         private void guna2Button7_Click(object sender, EventArgs e) {
             _selectedAcc = "Supreme";
             guna2Button10.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/test_dR63f69Hbc0v55S5km"); // Test mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEeUY0JX8Hq4WQ5ko"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             _selectedAcc = "Express";
             guna2Button9.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/test_7sI02U4mR1lR69W001"); // Test mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/bIY9AE9gtf5O9d6bIK"); // Live mode
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -643,6 +535,8 @@ namespace FlowSERVER1 {
                 }
                 _readEmail.Close();
 
+                MessageBox.Show(CustUserValues[0],LastEmail);
+
                /* foreach (var item in customers) {
                     richTextBox2.Text = item.ToString();
                 }
@@ -651,16 +545,26 @@ namespace FlowSERVER1 {
                 var fq = testing.Substring(testing.IndexOf(CustUserValues[0]));
                 var result = Regex.Match(fq, @"^([\w\-]+)");*/ 
                 if (LastEmail == CustUserValues[0]) {
-                    String _insertNew = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
+                    ///String _insertNew = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
+                    //command = new MySqlCommand(_insertNew, con);
+                    //command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    //command.Parameters.AddWithValue("@email", CustUserValues[0]);
+                    //command.Parameters.AddWithValue("@type", _selectedAcc);
+                    String _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     command = new MySqlCommand(_insertNew, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
                     if (command.ExecuteNonQuery() == 1) {
-                        String _deleteOld = "DELETE FROM cust_type WHERE CUST_USERNAME = @username";
+                        //   String _deleteOld = "DELETE FROM cust_type WHERE CUST_USERNAME = @username";
+                        //   command = new MySqlCommand(_deleteOld, con);
+                        //   command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        //   command.ExecuteNonQuery();
+
+                        /*String _deleteOld = "UPDATE FROM cust_type WHERE CUST_USERNAME = @username";
                         command = new MySqlCommand(_deleteOld, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();*/
 
                         String _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
                         command = new MySqlCommand(_insertPayment, con);

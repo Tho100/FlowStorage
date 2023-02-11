@@ -113,15 +113,19 @@ namespace FlowSERVER1 {
                 } 
                 return _valueToReturn;
             }
-            
-            if(_valueToReturn != "") {
-                var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
-                var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
-                decryptMainKey = decryptPass;
-                pinDecryptionKey = decryptPin;
-            } else {
+           
+            try {
+
+                if(EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746") != "") {
+                    decryptMainKey = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
+                    if(EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746") != "") {
+                        pinDecryptionKey = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
+                    }
+                }
+            } catch (Exception) {
                 label4.Visible = true;
             }
+         
 
             ///////////////////
 
@@ -474,6 +478,9 @@ namespace FlowSERVER1 {
                             } else if (_extTypes == ".css") {
                                 img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                             }
+                            else if (_extTypes == ".sql") {
+                                img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+                            }
                             picMain_Q.Click += (sender_t, e_t) => {
                                 txtFORM txtFormShow = new txtFORM("LOLOL","file_info_expand", titleLab.Text,"null",Form1.instance.label5.Text);
                                 txtFormShow.Show();
@@ -788,7 +795,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-          //  try {
+            try {
 
                 Application.DoEvents();
 
@@ -796,10 +803,10 @@ namespace FlowSERVER1 {
 
                 Application.DoEvents();
 
-        //    } catch (Exception eq) {
-        //        MessageBox.Show(eq.Message);
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
                 //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
+            }
         }
         public void setupTime() {
             var form = Form1.instance;

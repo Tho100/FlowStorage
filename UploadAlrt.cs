@@ -166,7 +166,7 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".pdf") {
                                 FileDeletionNormal(getName, "file_info_pdf");
                             }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
                                 FileDeletionNormal(getName, "file_info_expand");
                             }
                             else if (FileExt == ".gif") {
@@ -194,7 +194,7 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".pdf") {
                                 FileDeletionDirectory(getName);
                             }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
                                 FileDeletionDirectory(getName);
                             }
                             else if (FileExt == ".gif") {
@@ -222,7 +222,7 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".pdf") {
                                 FileDeletionFolder(getName, "file_info_pdf");
                             }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css") {
+                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
                                 FileDeletionFolder(getName, "file_info_expand");
                             }
                             else if (FileExt == ".gif") {
@@ -304,10 +304,6 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private void guna2Button8_Click(object sender, EventArgs e) {
-           
-        }
-
         private void guna2Button1_Click(object sender, EventArgs e) {
         }
 
@@ -318,6 +314,11 @@ namespace FlowSERVER1 {
 
         private void label9_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            this.TopMost = false;
         }
     }
 }
