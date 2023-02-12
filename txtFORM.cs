@@ -165,6 +165,8 @@ namespace FlowSERVER1 {
             Color _blueRGB = Color.FromArgb(49, 100, 169);
             Color _purpleRGB = Color.FromArgb(142, 94, 175);
             Color _yellowRGB = Color.FromArgb(250, 195, 4);
+            Color _brownRGB = Color.FromArgb(133, 31, 0);
+            Color _Gray = Color.Gray;
 
             ColorizePattern("def", _blueRGB);
             ColorizePattern("class", _blueRGB);
@@ -175,11 +177,15 @@ namespace FlowSERVER1 {
             ColorizePattern("if", _purpleRGB);
             ColorizePattern("break", _purpleRGB);
             ColorizePattern("return", _purpleRGB);
-
+           
             ColorizePattern("input", _yellowRGB);
             ColorizePattern("print", _yellowRGB);
             ColorizePattern("\\)", Color.Yellow);
             ColorizePattern("\\(", Color.Yellow);
+
+            ColorizePattern("'",_brownRGB);
+            ColorizePattern("//", _Gray);
+
         }
 
         public void jsSyntax() {

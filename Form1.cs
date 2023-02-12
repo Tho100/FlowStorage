@@ -1855,10 +1855,21 @@ namespace FlowSERVER1 {
 
         }
 
+        private int countSharing() {
+            String queryCountShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+            command = new MySqlCommand(queryCountShared,con);
+            command.Parameters.AddWithValue("@username",label5.Text);
+            var _getValueInt = command.ExecuteScalar();
+            int _convertValInt = Convert.ToInt32(_getValueInt);
+            return _convertValInt;
+        }
+
         private void guna2Button7_Click(object sender, EventArgs e) {
 
-            Thread _showRetrieval = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your shared files...", "Loader").ShowDialog());
-            _showRetrieval.Start();
+            if(countSharing() > 0) {
+                Thread _showRetrieval = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your shared files...", "Loader").ShowDialog());
+                _showRetrieval.Start();
+            }
 
             sharingFORM _ShowSharing = new sharingFORM();
             _ShowSharing.Show();

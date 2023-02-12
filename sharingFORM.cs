@@ -44,6 +44,7 @@ namespace FlowSERVER1 {
             List<String> _TypeValues = new List<String>();
 
             Application.DoEvents();
+
             MySqlDataReader _readType = command.ExecuteReader();
             while (_readType.Read()) {
                 _TypeValues.Add(_readType.GetString(0));// Append ToAr;
@@ -83,134 +84,180 @@ namespace FlowSERVER1 {
                 _getExt = getEx;
                 _retrieved = retrieved;
                 guna2TextBox2.Text = getName;
-                
             }
         }
+
+        private int accountType(String _receiverUsername) {
+
+            int _allowedReturn = 12;
+            String _accType = "";
+
+            String _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_getAccountTypeQue,con);
+            command.Parameters.AddWithValue("@username",_receiverUsername);
+            
+            MySqlDataReader _readAccType = command.ExecuteReader();
+            if(_readAccType.Read()) {
+                _accType = _readAccType.GetString(0);
+            }
+            _readAccType.Close();
+            if(_accType == "Max") {
+                _allowedReturn = 30;
+            } else if (_accType == "Express") {
+                _allowedReturn = 50;
+            } else if (_accType == "Supreme") {
+                _allowedReturn = 170;
+            } else if (_accType == "Basic") {
+                _allowedReturn = 12;
+            }
+            return _allowedReturn;
+        }
+
+        private int countReceiverShared(String _receiverUsername) {
+            String _countFileShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+            command = new MySqlCommand(_countFileShared, con);
+            command.Parameters.AddWithValue("@username", _receiverUsername);
+
+            var _getValue = command.ExecuteScalar();
+            int _toInt = Convert.ToInt32(_getValue);
+            return _toInt;
+            
+        }
+
         private static String _controlName = null;
         private static String _currentFileName = "";
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
+
                 if(guna2TextBox1.Text != Form1.instance.label5.Text) {
                     if(guna2TextBox1.Text != String.Empty) {
                         if(guna2TextBox2.Text != String.Empty) {
                             if(userIsExists(guna2TextBox1.Text) > 0) {
-                                if(_currentFileName != guna2TextBox2.Text) {
 
-                                    Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text).ShowDialog());
-                                    showUploadAlert.Start();
+                                int _accType = accountType(guna2TextBox1.Text);
+                                int _countReceiverFile = countReceiverShared(guna2TextBox1.Text);
 
-                                    String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                    String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
-                                    command = new MySqlCommand(insertQuery, con);
+                                if (_accType != _countReceiverFile) {
+                                    if(_currentFileName != guna2TextBox2.Text) {
 
-                                    command.Parameters.Add("@CUST_TO", MySqlDbType.Text);
-                                    command.Parameters.Add("@CUST_FROM", MySqlDbType.Text);
-                                    command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-                                    command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                                    command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
-                                    command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                                    command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                                        Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text).ShowDialog());
+                                        showUploadAlert.Start();
 
-                                    command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
-                                    command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
-                                    command.Parameters["@CUST_FILE_PATH"].Value = _FileName;
-                                    command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                                    command.Parameters["@FILE_EXT"].Value = _retrieved;
+                                        String varDate = DateTime.Now.ToString("dd/MM/yyyy");
+                                        String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
+                                        command = new MySqlCommand(insertQuery, con);
+
+                                        command.Parameters.Add("@CUST_TO", MySqlDbType.Text);
+                                        command.Parameters.Add("@CUST_FROM", MySqlDbType.Text);
+                                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+                                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+                                        command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
+                                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+                                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+
+                                        command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
+                                        command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
+                                        command.Parameters["@CUST_FILE_PATH"].Value = _FileName;
+                                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
+                                        command.Parameters["@FILE_EXT"].Value = _retrieved;
                                 
-                                    Application.DoEvents();
+                                        Application.DoEvents();
 
-                                    _currentFileName = guna2TextBox2.Text;
+                                        _currentFileName = guna2TextBox2.Text;
 
-                                    if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
-                                        Byte[] _readBytes = File.ReadAllBytes(_FilePath);
-                                        var _toBase64 = Convert.ToBase64String(_readBytes);
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;//File.ReadAllBytes(_FilePath);
-                                        command.ExecuteNonQuery();
-                                    } else if (_retrieved == ".docx" || _retrieved == ".doc") {
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    } else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".exe") {
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".mp3" || _retrieved == ".wav") {
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".pdf") {
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".apk") {
-                                        command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".xlsx" || _retrieved == ".csv" || _retrieved == ".xls") {
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".gif") {
-                                        ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
-                                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                                        using (var stream = new MemoryStream()) {
-                                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                            var toBase64String = Convert.ToBase64String(stream.ToArray());
-                                            command.Parameters["@CUST_THUMB"].Value = toBase64String;
+                                        if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
+                                            Byte[] _readBytes = File.ReadAllBytes(_FilePath);
+                                            var _toBase64 = Convert.ToBase64String(_readBytes);
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;//File.ReadAllBytes(_FilePath);
+                                            command.ExecuteNonQuery();
+                                        } else if (_retrieved == ".docx" || _retrieved == ".doc") {
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
+                                        } else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
                                         }
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
-                                    else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql") {
-                                        var nonLine = "";
-                                        using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
-                                            nonLine = ReadFileTxt.ReadToEnd();
+                                        else if (_retrieved == ".exe") {
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
                                         }
-                                        var encryptValue = EncryptionModel.Encrypt(nonLine.ToString(), "TXTCONTS01947265");
-                                        command.Parameters["@CUST_FILE"].Value = encryptValue;
-                                        command.ExecuteNonQuery();
-                                    } else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
-                                        ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
-                                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                                        using (var stream = new MemoryStream()) {
-                                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                            var toBase64Str = Convert.ToBase64String(stream.ToArray());
-                                            command.Parameters["@CUST_THUMB"].Value = toBase64Str;// To load: Bitmap -> Byte array
+                                        else if (_retrieved == ".mp3" || _retrieved == ".wav") {
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
                                         }
-                                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                                        command.ExecuteNonQuery();
-                                    }
+                                        else if (_retrieved == ".pdf") {
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
+                                        }
+                                        else if (_retrieved == ".apk") {
+                                            command.Parameters["@CUST_FILE"].Value = File.ReadAllBytes(_FilePath);
+                                            command.ExecuteNonQuery();
+                                        }
+                                        else if (_retrieved == ".xlsx" || _retrieved == ".csv" || _retrieved == ".xls") {
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
+                                        }
+                                        else if (_retrieved == ".gif") {
+                                            ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
+                                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                                            using (var stream = new MemoryStream()) {
+                                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                                var toBase64String = Convert.ToBase64String(stream.ToArray());
+                                                command.Parameters["@CUST_THUMB"].Value = toBase64String;
+                                            }
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
+                                        }
+                                        else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql") {
+                                            var nonLine = "";
+                                            using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
+                                                nonLine = ReadFileTxt.ReadToEnd();
+                                            }
+                                            var encryptValue = EncryptionModel.Encrypt(nonLine.ToString(), "TXTCONTS01947265");
+                                            command.Parameters["@CUST_FILE"].Value = encryptValue;
+                                            command.ExecuteNonQuery();
+                                        } else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
+                                            ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
+                                            Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                                            using (var stream = new MemoryStream()) {
+                                                toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                                var toBase64Str = Convert.ToBase64String(stream.ToArray());
+                                                command.Parameters["@CUST_THUMB"].Value = toBase64Str;// To load: Bitmap -> Byte array
+                                            }
+                                            var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
+                                            command.Parameters["@CUST_FILE"].Value = _toBase64;
+                                            command.ExecuteNonQuery();
+                                        }
 
-                                    Application.OpenForms
+                                        Application.OpenForms
+                                            .OfType<Form>()
+                                            .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                            .ToList()
+                                            .ForEach(form => form.Close());
+
+                                        sucessShare _showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text,guna2TextBox1.Text);
+                                        _showSuccessfullyTransaction.Show();
+
+                                        Application.OpenForms
                                         .OfType<Form>()
                                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
                                         .ToList()
                                         .ForEach(form => form.Close());
 
-                                    sucessShare _showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text,guna2TextBox1.Text);
-                                    _showSuccessfullyTransaction.Show();
+                                        Application.DoEvents();
 
-                                    Application.OpenForms
-                                    .OfType<Form>()
-                                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                    .ToList()
-                                    .ForEach(form => form.Close());
-
-                                    Application.DoEvents();
-
+                                    } else {
+                                        MessageBox.Show("File is already sent.","Sharing Failed",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                    }
                                 } else {
-                                    MessageBox.Show("File is already sent.","Sharing Failed",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                    MessageBox.Show("The receiver has reached the limit amount of files they can received.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
                             else {
@@ -222,18 +269,8 @@ namespace FlowSERVER1 {
                     MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             } catch (Exception) {
-                Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                MessageBox.Show("An unknown error occurred.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
-
-            Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                        .ToList()
-                        .ForEach(form => form.Close());
         }
 
         private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
@@ -289,6 +326,7 @@ namespace FlowSERVER1 {
             var UploaderUsername = uploaderName();
             String varDate = DateTime.Now.ToString("dd/MM/yyyy");
             flowLayoutPanel1.Controls.Clear();
+
             List<String> typeValues = new List<String>(_extTypes);
             for (int q = 0; q < itemCurr; q++) {
                 int top = 275;
@@ -722,6 +760,8 @@ namespace FlowSERVER1 {
                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                    .ToList()
                    .ForEach(form => form.Close());
+
+                label6.Text = "Files Count: " + flowLayoutPanel1.Controls.Count.ToString();
 
                 if (flowLayoutPanel1.Controls.Count > 0) {
                     label5.Visible = false;

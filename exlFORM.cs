@@ -206,5 +206,10 @@ namespace FlowSERVER1 {
         private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e) {
 
         }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            this.TopMost = false;
+        }
     }
 }

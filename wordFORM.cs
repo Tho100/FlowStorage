@@ -124,11 +124,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button8_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
-            Application.OpenForms
-              .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
-              .ToList()
-              .ForEach(form => form.Hide());
+            this.TopMost = false;
         }
 
         private void label1_Click(object sender, EventArgs e) {
