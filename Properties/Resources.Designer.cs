@@ -173,6 +173,26 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_closed_eye_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-closed-eye-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_closed_eye_241 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-closed-eye-241", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_css_filetype_48__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-css-filetype-48 (1)", resourceCulture);
@@ -216,6 +236,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_exe_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-exe-96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_eye_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-eye-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

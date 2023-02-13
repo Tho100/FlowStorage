@@ -999,6 +999,41 @@ namespace FlowSERVER1 {
             return _intAllowed;
         }
 
+        private static IEnumerable<byte[]> ReadChunks(string path) {
+            var lengthBytes = new byte[sizeof(int)];
+
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                int n = fs.Read(lengthBytes, 0, sizeof(int));  // Read block size.
+
+                if (n == 0)      // End of file.
+                    yield break;
+
+                if (n != sizeof(int))
+                    throw new InvalidOperationException("Invalid header");
+
+                int blockLength = BitConverter.ToInt32(lengthBytes, 0);
+                var buffer = new byte[blockLength];
+                n = fs.Read(buffer, 0, blockLength);
+
+                if (n != blockLength)
+                    throw new InvalidOperationException("Missing data");
+
+                yield return buffer;
+            }
+        }
+
+        private Byte[] convertFileToByte(String _filePath) {
+
+            Byte[] fileData = null;
+
+            using (FileStream fs = File.OpenRead(_filePath)) {
+                using (BinaryReader binaryReader = new BinaryReader(fs)) {
+                    fileData = binaryReader.ReadBytes((int)fs.Length);
+                }
+            }
+            return fileData;
+        }
+
         // Add File  
         int curr = 0;
         int txtCurr = 0;
@@ -1110,7 +1145,7 @@ namespace FlowSERVER1 {
 
                             Application.DoEvents();
 
-                            if(fileSizeInMB <= 8000) {
+                            if(fileSizeInMB < 8000) {
 
                                 String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
                                 command = new MySqlCommand(insertTxtQuery, con);
@@ -1135,7 +1170,6 @@ namespace FlowSERVER1 {
                                      .Where(form => String.Equals(form.Name, "UploadAlrt"))
                                      .ToList()
                                      .ForEach(form => form.Close());
-                                    // MessageBox.Show(stopFileTransaction.ToString());
                                 }
 
                                 int top = 275;
@@ -1199,7 +1233,7 @@ namespace FlowSERVER1 {
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
 
-                                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(getName,label5.Text,"null", panName + itemCurr,"null").ShowDialog());
+                                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(getName,label5.Text,"null", panName + itemCurr,"null",_fileSize: fileSizeInMB).ShowDialog());
                                 _setupUploadAlertThread.Start();
 
                                 if (nameTable == "file_info") {
@@ -1475,12 +1509,7 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
 
-
-                                Application.OpenForms
-                                   .OfType<Form>()
-                                   .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                   .ToList()
-                                   .ForEach(form => form.Close());
+                                ////////
 
                                 ////////////////// WON'T INSERT IF THESE TWO CODES REPLACED TO ANOTHER PLACE //////////////////
                                 remButTxt.Click += (sender_tx, e_tx) => {
@@ -1511,7 +1540,7 @@ namespace FlowSERVER1 {
                                 dateLabTxt.Text = varDate;
 
                             } else {
-                                MessageBox.Show("File is too large, max file size is 12GB.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                MessageBox.Show("File is too large, max file size is 8GB.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                             }
                         }
 
@@ -1525,6 +1554,7 @@ namespace FlowSERVER1 {
                                 if (retrieved != ".ico") {
                                     Application.DoEvents();
                                     Byte[] _getByteImg = File.ReadAllBytes(selectedItems);
+                                    fileSizeInMB = (_getByteImg.Length / 1024) / 1024;
                                     String _tempToBase64 = Convert.ToBase64String(_getByteImg); 
                                     createPanelMain("file_info", "PanImg", curr, _tempToBase64);
                                 }
@@ -1544,16 +1574,21 @@ namespace FlowSERVER1 {
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
                                     nonLine = ReadFileTxt.ReadToEnd();
-
                                 }
                                 Application.DoEvents();
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
                             }
                             else if (retrieved == ".exe") {
                                 exeCurr++;
-                                Byte[] streamRead = File.ReadAllBytes(selectedItems);
+                                /*Byte[] streamRead = File.ReadAllBytes(selectedItems);
+                                var _toBase64 = Convert.ToBase64String(streamRead);
+                                fileSizeInMB = (streamRead.Length / 1024) / 1024;*/
+                                var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
+                                fileSizeInMB = (convertFileToByte(selectedItems).Length/1024)/1024;
+                                //var _readFile = ReadChunks(selectedItems);
+
                                 Application.DoEvents();
-                                createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
+                                createPanelMain("file_info_exe", "PanExe", exeCurr, _toBase64);
 
                             }
                             else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
@@ -1614,9 +1649,11 @@ namespace FlowSERVER1 {
                             }
                             else if (retrieved == ".msi") {
                                 msiCurr++;
-                                Byte[] readMsiBytes = File.ReadAllBytes(selectedItems);
+                                /*Byte[] readMsiBytes = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(readMsiBytes);
-                                fileSizeInMB = (readMsiBytes.Length / 1024) / 1024;
+                                fileSizeInMB = (readMsiBytes.Length / 1024) / 1024;*/
+                                var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
+                                fileSizeInMB = (convertFileToByte(selectedItems).Length / 1024) / 1024;
                                 Application.DoEvents();
                                 createPanelMain("file_info_msi", "PanMsi", msiCurr, _toBase64);
                             }
@@ -2020,6 +2057,7 @@ namespace FlowSERVER1 {
 
                                                 label11.Visible = false;
                                                 label12.Visible = false;
+                                                label30.Visible = false;
                                                 guna2Panel7.Visible = false;
                                                 guna2TextBox1.Text = String.Empty;
                                                 guna2TextBox2.Text = String.Empty;
@@ -2111,6 +2149,8 @@ namespace FlowSERVER1 {
             }
 
             int _IntCurr = 0;
+            long fileSizeInMB = 0;
+
             foreach (var _Files in Directory.EnumerateFiles(_getDirPath, "*")) {
 
                 String insertFoldQue_ = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
@@ -2123,7 +2163,6 @@ namespace FlowSERVER1 {
                 command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
                 command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
                 command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-
 
                 String varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
@@ -2245,7 +2284,7 @@ namespace FlowSERVER1 {
 
                 _titleText = titleLab.Text;
 
-                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(titleLab.Text, label5.Text, "folder_upload_info", "PanExlFold" + _IntCurr, _getDirTitle).ShowDialog());
+                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(titleLab.Text, label5.Text, "folder_upload_info", "PanExlFold" + _IntCurr, _getDirTitle,_fileSize: 0101).ShowDialog());
                 _setupUploadAlertThread.Start();
 
                 var _extTypes = Path.GetExtension(_Files);

@@ -887,5 +887,45 @@ namespace FlowSERVER1 {
                 guna2TextBox4.Text = guna2TextBox4.Text.Remove(guna2TextBox4.Text.Length - 1);
             }
         }
+
+        private void guna2CircleButton1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label3_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            
+        }
     }
 }

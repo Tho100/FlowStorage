@@ -159,5 +159,17 @@ namespace FlowSERVER1 {
         private void guna2TextBox3_TextChanged(object sender, EventArgs e) {
 
         }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            guna2Button5.Visible = false;
+            guna2Button6.Visible = true;
+            guna2TextBox2.PasswordChar = '\0';
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+            guna2Button6.Visible = false;
+            guna2Button5.Visible = true;
+            guna2TextBox2.PasswordChar = '*';
+        }
     }
 }

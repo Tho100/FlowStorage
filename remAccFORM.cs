@@ -122,9 +122,9 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
 
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+                //MessageBox.Show(eq.Message);
                 
-                /*Form bgBlur = new Form();
+                Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -141,7 +141,7 @@ namespace FlowSERVER1 {
                     displayWait.ShowDialog();
 
                     bgBlur.Dispose();
-                }*/
+                }
                 
             }
 
@@ -623,6 +623,15 @@ namespace FlowSERVER1 {
 
         private void label31_Click_1(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Panel11_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button12_Click(object sender, EventArgs e) {
+            resPasFORM _showChangePassForm = new resPasFORM(label5.Text);
+            _showChangePassForm.Show();
         }
     }
 }

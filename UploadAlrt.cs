@@ -25,14 +25,6 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
 
-        /*public static string _SERVER = "0.tcp.ap.ngrok.io"; // 185.27.134.144 | localhost
-        public static string _MAINDB = "flowserver_db"; // epiz_33067528_information | flowserver_db
-        public static string _USER = "0015connectionlover"; // epiz_33067528 | root
-        public static string _PASSWORD = "nfreal-yt10";
-        public static int _MAINPORT = 18056;
-        public static string _FULLCONNECTION = "SERVER=" + _SERVER + ";" + "Port=" + _MAINPORT + ";" + "DATABASE=" + _MAINDB + ";" + "UID=" + _USER + ";" + "PASSWORD=" + _PASSWORD + ";";
-        public static MySqlConnection con = new MySqlConnection(_FULLCONNECTION);*/
-
         public static UploadAlrt instance;
         public static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
@@ -42,7 +34,7 @@ namespace FlowSERVER1 {
         private static String FileName;
         private static String DirectoryName;
         private static String FileExt;
-        public UploadAlrt(String _fileName,String _uploaderName,String _tableName,String _controlName,String _dirName) {
+        public UploadAlrt(String _fileName,String _uploaderName,String _tableName,String _controlName,String _dirName, long _fileSize = 0) {
             InitializeComponent();
             instance = this;
             label1.Text = _fileName;
@@ -53,6 +45,13 @@ namespace FlowSERVER1 {
             DirectoryName = _dirName;
             FileExt = _fileName.Substring(_fileName.Length-3);
             guna2TextBox1.Text = label1.Text;
+
+            if(_fileSize != 101) {
+                label3.Text = _fileSize.ToString() + "MB";
+                label3.Visible = true;
+            } else {
+                label3.Visible = false;
+            }
         }
 
         private void UploadAlrt_Load(object sender, EventArgs e) {
@@ -319,6 +318,10 @@ namespace FlowSERVER1 {
         private void guna2Button8_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
             this.TopMost = false;
+        }
+
+        private void label3_Click(object sender, EventArgs e) {
+
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -434,15 +433,6 @@
       <HintPath>..\packages\Vlc.DotNet.Forms.3.1.0\lib\net45\Vlc.DotNet.Forms.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.3.4.0.1029999\lib\netstandard2.0\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.3.4.0.1029999\lib\netstandard2.0\Xamarin.Forms.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.3.4.0.1029999\lib\netstandard2.0\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
     <Reference Include="XLParser, Version=1.5.2.0, Culture=neutral, PublicKeyToken=63397e1e46bb91b4, processorArchitecture=MSIL">
       <HintPath>..\packages\XLParser.1.5.2\lib\net461\XLParser.dll</HintPath>
     </Reference>
@@ -607,6 +597,12 @@
     <Compile Include="remAccFORM.Designer.cs">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="resPasFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="resPasFORM.Designer.cs">
+      <DependentUpon>resPasFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="RetrievalAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -643,6 +639,12 @@
     </Compile>
     <Compile Include="successPay.Designer.cs">
       <DependentUpon>successPay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="successResPas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="successResPas.Designer.cs">
+      <DependentUpon>successResPas.cs</DependentUpon>
     </Compile>
     <Compile Include="sucessShare.cs">
       <SubType>Form</SubType>
@@ -771,6 +773,9 @@
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="resPasFORM.resx">
+      <DependentUpon>resPasFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RetrievalAlert.resx">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </EmbeddedResource>
@@ -788,6 +793,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="successPay.resx">
       <DependentUpon>successPay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="successResPas.resx">
+      <DependentUpon>successResPas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sucessShare.resx">
       <DependentUpon>sucessShare.cs</DependentUpon>
@@ -832,6 +840,9 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-closed-eye-241.png" />
+    <None Include="Resources\icons8-eye-24.png" />
+    <None Include="Resources\icons8-closed-eye-24.png" />
     <None Include="Resources\icons8-database-50 %281%29.png" />
     <None Include="Resources\icons8-password-52.png" />
     <None Include="Resources\giphy %2810%29.gif" />
@@ -912,8 +923,6 @@
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
     <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.macOS.2.88.2\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.macOS.2.88.2\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
     <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.2\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.Win32.2.88.2\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.props'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.targets'))" />
     <Error Condition="!Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.18\build\VideoLAN.LibVLC.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VideoLAN.LibVLC.Windows.3.0.18\build\VideoLAN.LibVLC.Windows.targets'))" />
   </Target>
   <Import Project="..\packages\HarfBuzzSharp.NativeAssets.macOS.2.8.2.2\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets" Condition="Exists('..\packages\HarfBuzzSharp.NativeAssets.macOS.2.8.2.2\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets')" />
@@ -921,6 +930,5 @@
   <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\SkiaSharp.NativeAssets.macOS.2.88.2\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.macOS.2.88.2\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
   <Import Project="..\packages\SkiaSharp.NativeAssets.Win32.2.88.2\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.2\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
-  <Import Project="..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.3.4.0.1029999\build\Xamarin.Forms.targets')" />
   <Import Project="..\packages\VideoLAN.LibVLC.Windows.3.0.18\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.18\build\VideoLAN.LibVLC.Windows.targets')" />
 </Project>

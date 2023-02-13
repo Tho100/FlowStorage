@@ -35,6 +35,7 @@
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -189,12 +190,25 @@
             this.guna2Button8.TabIndex = 66;
             this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
             // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.LightGray;
+            this.label3.Location = new System.Drawing.Point(345, 85);
+            this.label3.Name = "label3";
+            this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label3.Size = new System.Drawing.Size(83, 19);
+            this.label3.TabIndex = 67;
+            this.label3.Text = "140MB";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
             // UploadAlrt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ClientSize = new System.Drawing.Size(557, 185);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.guna2TextBox1);
@@ -229,5 +243,6 @@
         public Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private System.Windows.Forms.Label label3;
     }
 }
