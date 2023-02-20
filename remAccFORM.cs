@@ -43,7 +43,6 @@ namespace FlowSERVER1 {
             InitializeComponent();
             instance = this;
             label5.Text = _accName;
-            this.Text = "Settings";
 
             chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
             chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
@@ -66,43 +65,49 @@ namespace FlowSERVER1 {
                 if (CurrentLang == "US") {
                     guna2Button19.Text = "Default";
                     guna2Button19.Enabled = false;
-                    guna2Button19.ForeColor = Color.Gainsboro;//Color.FromArgb(55, 0, 179);
+                    guna2Button19.ForeColor = Color.Gainsboro;
                 }
 
                 if (CurrentLang == "MY") {
                     guna2Button18.Text = "Default";
                     guna2Button18.Enabled = false;
-                    guna2Button18.ForeColor = Color.Gainsboro;//Color.FromArgb(55, 0, 179);
+                    guna2Button18.ForeColor = Color.Gainsboro;
                 }
 
                 if (CurrentLang == "JAP") {
                     guna2Button17.Text = "Default";
                     guna2Button17.Enabled = false;
-                    guna2Button17.ForeColor = Color.Gainsboro; //.FromArgb(55, 0, 179);
+                    guna2Button17.ForeColor = Color.Gainsboro;
                 }
 
                 if (CurrentLang == "GER") {
                     guna2Button15.Text = "Default";
                     guna2Button15.Enabled = false;
-                    guna2Button15.ForeColor = Color.Gainsboro; //.FromArgb(55, 0, 179);
+                    guna2Button15.ForeColor = Color.Gainsboro; 
                 }
 
                 if (CurrentLang == "ESP") {
                     guna2Button16.Text = "Default";
                     guna2Button16.Enabled = false;
-                    guna2Button16.ForeColor = Color.Gainsboro; //.FromArgb(55, 0, 179);
+                    guna2Button16.ForeColor = Color.Gainsboro;
                 }
 
                 if (CurrentLang == "FRE") {
                     guna2Button20.Text = "Default";
                     guna2Button20.Enabled = false;
-                    guna2Button20.ForeColor = Color.Gainsboro; //.FromArgb(55, 0, 179);
+                    guna2Button20.ForeColor = Color.Gainsboro; 
                 }
 
                 if (CurrentLang == "CHI") {
                     guna2Button22.Text = "Default";
                     guna2Button22.Enabled = false;
-                    guna2Button22.ForeColor = Color.Gainsboro; //.FromArgb(55, 0, 179);
+                    guna2Button22.ForeColor = Color.Gainsboro; 
+                }
+
+                if (CurrentLang == "POR") {
+                    guna2Button21.Text = "Default";
+                    guna2Button21.Enabled = false;
+                    guna2Button21.ForeColor = Color.Gainsboro; 
                 }
 
                 // @SUMMARY Retrieve account creation date and display the date on label
@@ -441,7 +446,7 @@ namespace FlowSERVER1 {
                     Form1.instance.guna2Panel7.Visible = true;
                     Form1.instance.listBox1.Items.Clear();
                 }
-            } catch (Exception eq) {
+            } catch (Exception) {
                 MessageBox.Show("There's a problem while attempting to logout your account.","Flowstorage");
             }
         }
@@ -599,6 +604,7 @@ namespace FlowSERVER1 {
         }
 
         void setupAccount() {
+
             try {
 
                 var _setupApiKey = ConfigurationManager.ConnectionStrings["APISETUP"].ConnectionString;
@@ -771,6 +777,9 @@ namespace FlowSERVER1 {
                 else if (NewLang == "ESP") {
                     greeting = "Buen día " + lab5.Text + " :)";
                 }
+                else if (NewLang == "FRE") {
+                    greeting = "Bonjour " + lab5.Text + " :)";
+                }
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
                 picturebox3.Visible = false;
@@ -790,6 +799,9 @@ namespace FlowSERVER1 {
                 }
                 else if (NewLang == "ESP") {
                     greeting = "Buenas tardes " + lab5.Text + " :)";
+                }
+                else if (NewLang == "FRE") {
+                    greeting = "Bon après-midi " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -812,6 +824,9 @@ namespace FlowSERVER1 {
                     else if (NewLang == "ESP") {
                         greeting = "buenas tardes " + lab5.Text + " :)";
                     }
+                    else if (NewLang == "FRE") {
+                        greeting = "bonne soirée " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (NewLang == "US") {
@@ -826,6 +841,9 @@ namespace FlowSERVER1 {
                     }
                     else if (NewLang == "ESP") {
                         greeting = "Buenas terdes " + lab5.Text + " :)";
+                    }
+                    else if (NewLang == "FRE") {
+                        greeting = "bonne soirée " + lab5.Text + " :)";
                     }
                 }
 
@@ -848,6 +866,9 @@ namespace FlowSERVER1 {
                 }
                 else if (NewLang == "ESP") {
                     greeting = "Buenas noches " + lab5.Text + " :)";
+                }
+                else if (NewLang == "FRE") {
+                    greeting = "bonne nuit " + lab5.Text + " :)";
                 }
                 picturebox1.Visible = true;
                 picturebox2.Visible = false;
@@ -893,7 +914,7 @@ namespace FlowSERVER1 {
                 guna2Button12.Text = "Ubah";
                 guna2Button13.Text = "Ubah";
                 guna2Button4.Text = "Log-Keluar";
-                guna2Button4.TextOffset = new Point(9,0);
+                guna2Button4.TextOffset = new Point(4,0);
                 guna2Button11.Location = new Point(140, 61);
                 guna2Button1.Text = "Padam Akaun";
 
@@ -1121,6 +1142,59 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button3.Text = "Añadir cuenta";
                 Form_1.guna2Button5.Text = "Ajustes";
             }
+
+            if (_custLang == "FRE") {
+                label21.Text = "Paramètres";
+                tabPage4.Text = "Langages";
+                tabPage3.Text = "Améliorer";
+                tabPage2.Text = "Statistiques";
+                tabPage1.Text = "Compte";
+                label4.Text = "Nom d'utilisateur";
+                label7.Text = "Type de compte";
+                label38.Text = "Téléchargement de l'article";
+
+                label58.Text = "Changer mon nom d'utilisateur";
+                label33.Text = "Le nom d'utilisateur de votre compte Flowstorage sera modifié, mais vos données resteront";
+
+                label18.Text = "Changer mon mot de passe";
+                label8.Text = "Modifier le mot de passe de votre compte Flowstorage";
+
+                label36.Text = "Déconnecter mon compte";
+                label35.Text = "Flowstorage will not automatically login your account on startup";
+
+                label2.Text = "Supprimer mon compte";
+                label3.Text = "Votre compte Flowstorage ainsi que vos données seront supprimés";
+
+                label22.Text = "Paramètres";
+                label1.Text = "Paramètres";
+
+                label13.Text = "Nombre de fichiers";
+                label9.Text = "Nombre de répertoires";
+                label11.Text = "Nombre de dossiers";
+                label31.Text = "Téléchargement total aujourd'hui";
+                label28.Text = "Déposer";
+                label29.Text = "Annuaire";
+                label15.Text = "Date de création du compte";
+
+                guna2Button12.Text = "Changement";
+                guna2Button13.Text = "Changement";
+                guna2Button4.Text = "Se déconnecter";
+                guna2Button4.TextOffset = new Point(-3, 0);
+                guna2Button11.Location = new Point(230, 61);
+                guna2Button1.Text = "Supprimer le compte";
+
+                Form_1.label10.Text = "Télécharger";
+                Form_1.label2.Text = "Nombre d'éléments";
+                Form_1.guna2Button2.Text = "Téléverser un fichier";
+                Form_1.guna2Button12.Text = "Télécharger le dossier";
+                Form_1.guna2Button1.Text = "Créer le répertoire";
+                Form_1.guna2Button7.Text = "Partage de fichiers";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essentiel";
+                Form_1.label29.Text = "Autres";
+                Form_1.guna2Button3.Text = "Ajouter un compte";
+                Form_1.guna2Button5.Text = "Paramètres";
+            }
         }
 
         private void getCurrentLang() {
@@ -1153,10 +1227,14 @@ namespace FlowSERVER1 {
                 guna2Button19.Enabled = false;
                 updateLang("US");
                 setupUILanguage("US");
-                
+
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button18.Enabled = true;
+
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
 
                 guna2Button17.Text = "Set as default";
                 guna2Button17.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1166,9 +1244,13 @@ namespace FlowSERVER1 {
                 guna2Button15.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button15.Enabled = true;
 
-                guna2Button16.Text = "Set as default";
-                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
-                guna2Button16.Enabled = true;
+                guna2Button20.Text = "Set as default";
+                guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button20.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
             }
 
             if (_custLang == "MY") {
@@ -1178,21 +1260,29 @@ namespace FlowSERVER1 {
                 updateLang("MY");
                 setupUILanguage("MY");
 
-                guna2Button17.Text = "Set as default";
-                guna2Button17.ForeColor = Color.FromArgb(55, 0, 179);
-                guna2Button17.Enabled = true;
-
                 guna2Button19.Text = "Set as default";
                 guna2Button19.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button19.Enabled = true;
+
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
+
+                guna2Button17.Text = "Set as default";
+                guna2Button17.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button17.Enabled = true;
 
                 guna2Button15.Text = "Set as default";
                 guna2Button15.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button15.Enabled = true;
 
-                guna2Button16.Text = "Set as default";
-                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
-                guna2Button16.Enabled = true;
+                guna2Button20.Text = "Set as default";
+                guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button20.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
             } 
 
             if(_custLang == "JAP") {
@@ -1210,13 +1300,21 @@ namespace FlowSERVER1 {
                 guna2Button19.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button19.Enabled = true;
 
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
+
                 guna2Button15.Text = "Set as default";
                 guna2Button15.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button15.Enabled = true;
 
-                guna2Button16.Text = "Set as default";
-                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
-                guna2Button16.Enabled = true;
+                guna2Button20.Text = "Set as default";
+                guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button20.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
             }
 
             if(_custLang == "GER") {
@@ -1230,17 +1328,25 @@ namespace FlowSERVER1 {
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button18.Enabled = true;
 
-                guna2Button16.Text = "Set as default";
-                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
-                guna2Button16.Enabled = true;
-
                 guna2Button19.Text = "Set as default";
                 guna2Button19.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button19.Enabled = true;
 
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
+
                 guna2Button17.Text = "Set as default";
                 guna2Button17.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button17.Enabled = true;
+
+                guna2Button20.Text = "Set as default";
+                guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button20.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
 
             }
 
@@ -1266,6 +1372,14 @@ namespace FlowSERVER1 {
                 guna2Button15.Text = "Set as default";
                 guna2Button15.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button15.Enabled = true;
+
+                guna2Button20.Text = "Set as default";
+                guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button20.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
             }
 
             if (_custLang == "FRE") {
@@ -1290,6 +1404,14 @@ namespace FlowSERVER1 {
                 guna2Button15.Text = "Set as default";
                 guna2Button15.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button15.Enabled = true;
+
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
             }
 
             if (_custLang == "POR") {
@@ -1306,6 +1428,10 @@ namespace FlowSERVER1 {
                 guna2Button19.Text = "Set as default";
                 guna2Button19.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button19.Enabled = true;
+
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
 
                 guna2Button17.Text = "Set as default";
                 guna2Button17.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1335,6 +1461,10 @@ namespace FlowSERVER1 {
                 guna2Button19.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button19.Enabled = true;
 
+                guna2Button16.Text = "Set as default";
+                guna2Button16.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button16.Enabled = true;
+
                 guna2Button17.Text = "Set as default";
                 guna2Button17.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button17.Enabled = true;
@@ -1346,6 +1476,10 @@ namespace FlowSERVER1 {
                 guna2Button20.Text = "Set as default";
                 guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button20.Enabled = true;
+
+                guna2Button21.Text = "Set as default";
+                guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button21.Enabled = true;
             }
 
         }

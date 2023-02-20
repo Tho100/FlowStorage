@@ -928,6 +928,9 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "ESP") {
                     greeting = "Buen día " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "FRE") {
+                    greeting = "Bonjour " + lab5.Text + " :)";
+                }
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
                 picturebox3.Visible = false;
@@ -947,6 +950,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "ESP") {
                     greeting = "Buenas tardes " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "FRE") {
+                    greeting = "Bon après-midi " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -970,6 +976,9 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "ESP") {
                         greeting = "buenas tardes " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "FRE") {
+                        greeting = "bonne soirée " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -986,6 +995,9 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "ESP") {
                         greeting = "Buenas terdes " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "FRE") {
+                        greeting = "bonne soirée " + lab5.Text + " :)";
                     }
                 }
 
@@ -1008,6 +1020,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "ESP") {
                     greeting = "Buenas noches " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "FRE") {
+                    greeting = "bonne nuit " + lab5.Text + " :)";
                 }
                 picturebox1.Visible = true;
                 picturebox2.Visible = false;

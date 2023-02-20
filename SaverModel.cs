@@ -161,13 +161,12 @@ namespace FlowSERVER1 {
                     _byteReader.Close();
                 }
             }
-            catch (Exception eq) {
+            catch (Exception) {
                 Application.OpenForms
                          .OfType<Form>()
                          .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                          .ToList()
                          .ForEach(form => form.Close());
-                //MessageBox.Show("Failed to download this file.", "Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
     }

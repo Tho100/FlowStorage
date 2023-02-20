@@ -344,7 +344,7 @@ namespace FlowSERVER1 {
                 if(_OpenDialog.ShowDialog() == DialogResult.OK) {
                     File.WriteAllText(_OpenDialog.FileName,guna2textbox1.Text);
                 }
-            } catch (Exception eq) {
+            } catch (Exception) {
                 MessageBox.Show("An error occurred while attempting to save file.","Flow Storage",
                     MessageBoxButtons.OK,MessageBoxIcon.Information);
             }

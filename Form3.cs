@@ -176,8 +176,8 @@ namespace FlowSERVER1
                     else {
                    //   clearRedundane();
                     }
-                } catch (Exception eq) {
-                    /*Form bgBlur = new Form();
+                } catch (Exception) {
+                    Form bgBlur = new Form();
                     using (waitFORM displayWait = new waitFORM()) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
                         bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -194,7 +194,7 @@ namespace FlowSERVER1
                         displayWait.ShowDialog();
 
                         bgBlur.Dispose();
-                    }*/
+                    }
               }
             
 
@@ -683,7 +683,7 @@ namespace FlowSERVER1
         int msiCurr = 0;
         int docxCurr = 0;
         int progressionUpload = 0;
-        private async void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
+        private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
             var form1 = Form1.instance;
             void deletionMethod(String fileName, String getDB) {
                 String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
@@ -703,54 +703,50 @@ namespace FlowSERVER1
                 }
             }
 
-            /*void increaseSizeMethod() {
-                String setupPacketMax = "SET GLOBAL max_allowed_packet=2000000000000000000;"; // +5
-                command = new MySqlCommand(setupPacketMax, con);
-                command.ExecuteNonQuery();
-            }*/
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.csv|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
-            //var _getDirPath = open.FileName;
-            //int _countFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.TopDirectoryOnly).Length;
-            //var _getDirTitle = new DirectoryInfo(_getDirPath).Name;
-            //String[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
-            // @ PROBLEM: User won't be able to upload a new file when the amount of selected files exceeded the limit
+        
             List<String> _filValues = new List<String>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
             if (open.ShowDialog() == DialogResult.OK) {
-                foreach (var selectedItems in open.FileNames) {
-                    _filValues.Add(Path.GetFileName(selectedItems));
-                    void clearRedundane() {
-                        label8.Visible = false;
-                        guna2Button6.Visible = false;
-                    }
+                foreach(var selectedFileIterate in open.FileNames) {
+                    _filValues.Add(Path.GetFileName(selectedFileIterate));
+                }
 
-                    if (_filValues.Count() + curFilesCount > AccountType_) {
-                        Form bgBlur = new Form();
-                        using (upgradeFORM displayUpgrade = new upgradeFORM(_AccountTypeStr_)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            //bgBlur.Size = new Size(_getWidth,_getHeight);
-                            bgBlur.Name = "bgBlurForm";
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
+                if (_filValues.Count() + curFilesCount > AccountType_) {
+                    Form bgBlur = new Form();
+                    using (upgradeFORM displayUpgrade = new upgradeFORM(_AccountTypeStr_)) {
+                        bgBlur.StartPosition = FormStartPosition.Manual;
+                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                        bgBlur.Opacity = .24d;
+                        bgBlur.BackColor = Color.Black;
+                        //bgBlur.Size = new Size(_getWidth,_getHeight);
+                        bgBlur.Name = "bgBlurForm";
+                        bgBlur.WindowState = FormWindowState.Maximized;
+                        bgBlur.TopMost = true;
+                        bgBlur.Location = this.Location;
+                        bgBlur.StartPosition = FormStartPosition.Manual;
+                        bgBlur.ShowInTaskbar = false;
+                        bgBlur.Show();
 
-                            displayUpgrade.Owner = bgBlur;
-                            displayUpgrade.ShowDialog();
+                        displayUpgrade.Owner = bgBlur;
+                        displayUpgrade.ShowDialog();
 
-                            bgBlur.Dispose();
-                        };
-                        //clearRedundane();
-                    }
-                    else {
+                        bgBlur.Dispose();
+                    };
+
+                    _filValues.Clear();
+
+                } else {
+
+                    foreach (var selectedItems in open.FileNames) {
+                        _filValues.Add(Path.GetFileName(selectedItems));
+                        void clearRedundane() {
+                            label8.Visible = false;
+                            guna2Button6.Visible = false;
+                        }
 
                         Application.DoEvents();
 
@@ -1420,13 +1416,14 @@ namespace FlowSERVER1
                         DisplayError(_accType);
                     }
                 }
-           } catch (Exception eq) {
+           } catch (Exception) {
+
                 Application.OpenForms
                      .OfType<Form>()
                      .Where(form => String.Equals(form.Name, "UploadAlrt"))
                      .ToList()
                      .ForEach(form => form.Close());
-                MessageBox.Show(eq.Message);
+
                 Form bgBlur = new Form();
                 using (waitFORM displayWait = new waitFORM()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;

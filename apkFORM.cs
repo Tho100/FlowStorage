@@ -78,7 +78,7 @@ namespace FlowSERVER1 {
                 else if (_TableName == "cust_sharing") {
                     SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
                 }
-            } catch (Exception eq) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
             }
         }

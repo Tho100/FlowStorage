@@ -105,7 +105,7 @@ namespace FlowSERVER1 {
 
                 guna2Button5.Visible = false;
                 guna2Button6.Visible = true;
-            } catch (Exception eq) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }

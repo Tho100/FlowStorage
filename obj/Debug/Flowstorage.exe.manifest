@@ -158,7 +158,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>J/EPoQpV81zWaAcGGQR0UOXO8qJI6DM+JMT0fhX6itQ=</dsig:DigestValue>
+        <dsig:DigestValue>2QxvHjfTU8UgtswUv8GGDZSs5LPjpVDY5FbYUBFVJzE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Kan/QDvzUE2Tnb+DEuV8/SmOAKTf/JO7oL+gNGp5obo=</dsig:DigestValue>
+        <dsig:DigestValue>4u1aUnIw778PdElpstJDnCRvggL1ITlZC8AE01n5j3M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1044,7 +1044,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>kvsDbN8Yd/Prh04VEKARNJCbFBfTlY3L7NQ5spv13qw=</dsig:DigestValue>
+      <dsig:DigestValue>BzqnEmbuH0HFaCuFXavFvq7QQbwrjQa/4dbA7ckZgHE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">

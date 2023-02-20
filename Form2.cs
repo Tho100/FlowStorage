@@ -43,8 +43,6 @@ namespace FlowSERVER1
         private void textBox3_TextChanged(object sender, EventArgs e) {
 
         }
-        int one = 0;
-        int two = 0;
         public void setupTime() {
             var form = Form1.instance;
             try {
@@ -78,7 +76,7 @@ namespace FlowSERVER1
                 form.label1.Text = greeting;
             }
             catch (Exception) {
-                MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC");
+                MessageBox.Show("Oh no! unable to retrieve the time :(( sooo sadd :CCCC","You discovered Easter egg!! wow!!!");
             }
         }
 
@@ -195,6 +193,12 @@ namespace FlowSERVER1
                                                 command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
                                                 command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
                                                 command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                                                command.ExecuteNonQuery();
+
+                                                String _InsertLang = "INSERT INTO lang_info(CUST_USERNAME,CUST_LANG) VALUES(@CUST_USERNAME,@CUST_LANG)";
+                                                command = new MySqlCommand(_InsertLang, con);
+                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                command.Parameters.AddWithValue("@CUST_LANG", "US");
                                                 command.ExecuteNonQuery();
 
                                                 label5.Visible = false;

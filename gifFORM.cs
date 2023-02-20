@@ -59,7 +59,7 @@ namespace FlowSERVER1 {
                         guna2PictureBox1.Image = Image.FromStream(_memStream);
                         guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     }
-            } catch (Exception eq) {
+            } catch (Exception) {
                 Form bgBlur = new Form();
                 using (errorLoad displayError = new errorLoad()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;

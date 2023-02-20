@@ -190,6 +190,20 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button3.Text = "Añadir cuenta";
                 Form_1.guna2Button5.Text = "Ajustes";
             }
+
+            if(_custLang == "FRE") {
+                Form_1.label10.Text = "Télécharger";
+                Form_1.label2.Text = "Nombre d'éléments";
+                Form_1.guna2Button2.Text = "Téléverser un fichier";
+                Form_1.guna2Button12.Text = "Télécharger le dossier";
+                Form_1.guna2Button1.Text = "Créer le répertoire";
+                Form_1.guna2Button7.Text = "Partage de fichiers";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essentiel";
+                Form_1.label29.Text = "Autres";
+                Form_1.guna2Button3.Text = "Ajouter un compte";
+                Form_1.guna2Button5.Text = "Paramètres";
+            }
         }
 
         private void getCurrentLang() {
@@ -1035,6 +1049,9 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "ESP") {
                     greeting = "Buen día " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "FRE") {
+                    greeting = "Bonjour " + lab5.Text + " :)";
+                }
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
                 picturebox3.Visible = false;
@@ -1054,6 +1071,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "ESP") {
                     greeting = "Buenas tardes " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "FRE") {
+                    greeting = "Bon après-midi " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -1077,6 +1097,9 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "ESP") {
                         greeting = "buenas tardes " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "FRE") {
+                        greeting = "bonne soirée " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -1093,6 +1116,9 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "ESP") {
                         greeting = "Buenas terdes " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "FRE") {
+                        greeting = "bonne soirée " + lab5.Text + " :)";
                     }
                 }
 
@@ -1115,6 +1141,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "ESP") {
                     greeting = "Buenas noches " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "FRE") {
+                    greeting = "bonne nuit " + lab5.Text + " :)";
                 }
                 picturebox1.Visible = true;
                 picturebox2.Visible = false;
@@ -1227,7 +1256,7 @@ namespace FlowSERVER1 {
         private int searchCurr = 0;
         private string searchPan = "";
         private Control titlePanelSearch;
-        private async void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
+        private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
             
             void deletionMethod(String fileName, String getDB) {
                 String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
@@ -1250,39 +1279,46 @@ namespace FlowSERVER1 {
             open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;*.psd|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
             string varDate = DateTime.Now.ToString("dd/MM/yyyy");
-          
+
             List<String> _filValues = new List<String>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
-            if (open.ShowDialog() == DialogResult.OK) {
-                foreach (var selectedItems in open.FileNames) {
-                    _filValues.Add(Path.GetFileName(selectedItems));
-                    void clearRedundane() {
-                        label8.Visible = false;
-                        guna2Button6.Visible = false;
-                    }
-                    
-                    if (_filValues.Count() + curFilesCount > AccountType_) {
-                        Form bgBlur = new Form();
-                        using (upgradeFORM displayUpgrade = new upgradeFORM(_AccountTypeStr_)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.Name = "bgBlurForm";
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
+            if (open.ShowDialog() == DialogResult.OK) { // _filValues.Add(Path.GetFileName(selectedItems));
+                foreach (var iterateItemsFiles in open.FileNames) {
+                    _filValues.Add(Path.GetFileName(iterateItemsFiles));
+                }
 
-                            displayUpgrade.Owner = bgBlur;
-                            displayUpgrade.ShowDialog();
+                if (_filValues.Count() + curFilesCount > AccountType_) {
+                    Form bgBlur = new Form();
+                    using (upgradeFORM displayUpgrade = new upgradeFORM(_AccountTypeStr_)) {
+                        bgBlur.StartPosition = FormStartPosition.Manual;
+                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                        bgBlur.Opacity = .24d;
+                        bgBlur.BackColor = Color.Black;
+                        bgBlur.Name = "bgBlurForm";
+                        bgBlur.WindowState = FormWindowState.Maximized;
+                        bgBlur.TopMost = true;
+                        bgBlur.Location = this.Location;
+                        bgBlur.StartPosition = FormStartPosition.Manual;
+                        bgBlur.ShowInTaskbar = false;
+                        bgBlur.Show();
 
-                            bgBlur.Dispose();
-                        };
-                    }
-                    else {
+                        displayUpgrade.Owner = bgBlur;
+                        displayUpgrade.ShowDialog();
+
+                        bgBlur.Dispose();
+                    };
+
+                    _filValues.Clear();
+
+                } else {
+
+                    foreach (var selectedItems in open.FileNames) {
+                        _filValues.Add(Path.GetFileName(selectedItems));
+
+                        void clearRedundane() {
+                            label8.Visible = false;
+                            guna2Button6.Visible = false;
+                        }
 
                         Application.DoEvents();
 
@@ -1476,12 +1512,6 @@ namespace FlowSERVER1 {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                                     }
 
-                                    String nonLine = "";
-                                    // using (StreamReader ReadFileTxt = new StreamReader(open.FileName)) {
-                                    //     nonLine = ReadFileTxt.ReadToEnd();
-                                    // }
-
-                                    //var filePath = open.SafeFileName;
                                     var filePath = getName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
@@ -1830,7 +1860,7 @@ namespace FlowSERVER1 {
                             .ToList()
                             .ForEach(form => form.Close());
                            
-                        } catch (Exception eq) {
+                        } catch (Exception) {
                             Application.OpenForms
                             .OfType<Form>()
                             .Where(form => String.Equals(form.Name, "UploadAlrt"))
@@ -2096,26 +2126,6 @@ namespace FlowSERVER1 {
 
         }
 
-        NetworkCredential _login;
-        SmtpClient _client;
-        MailMessage _Message;
-        private void setupEmailSender() {
-            using (MailMessage mail = new MailMessage()) {
-                mail.From = new MailAddress("nfrealyt@gmail.com");
-                mail.To.Add("urmomacc123@gmail.com");
-                mail.Subject = "Hello World";
-                mail.Body = "<h1>Hello</h1>";
-                mail.IsBodyHtml = true;
-
-                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)) {
-                    smtp.Credentials = new NetworkCredential("nfrealyt@gmail.com", "mainpassword-3141");
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                }
-            }
-
-        }
-
         private static bool validateEmailUser(String _custEmail) {
             string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
@@ -2324,6 +2334,15 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// 
+        /// Insert and generate file panel
+        /// from dialog for folder
+        /// 
+        /// </summary>
+        /// <param name="_getDirPath"></param>
+        /// <param name="_getDirTitle"></param>
+        /// <param name="_TitleValues"></param>
         private void folderDialog(String _getDirPath,String _getDirTitle,String[] _TitleValues) {
 
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
@@ -2714,6 +2733,14 @@ namespace FlowSERVER1 {
         }
 
         // FOLDER
+
+        /// <summary>
+        /// 
+        /// Open FileDialog and ask user
+        /// to select file and send those file 
+        /// metadata into DB and generate panel file on folderDialog
+        /// 
+        /// </summary>
         private String _titleText;
         private String _controlName;
         private void guna2Button12_Click(object sender, EventArgs e) {
@@ -2730,8 +2757,6 @@ namespace FlowSERVER1 {
 
                 if(!(listBox1.Items.Contains(_getDirTitle))) {
 
-                    flowLayoutPanel1.Controls.Clear();
-
                     String[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
                     int _numberOfFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.AllDirectories).Length;
 
@@ -2739,33 +2764,41 @@ namespace FlowSERVER1 {
 
                     if (_accType == "Basic") {
                         if (_numberOfFiles <= 12) {
+                            flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath,_getDirTitle,_TitleValues);
                             var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
                             listBox1.SelectedIndex = _dirPosition;
                         }
                         else {
+                            listBox1.SelectedIndex = 0;
                             DisplayErrorFolder(_accType);
                         }
                     }
 
                     if (_accType == "Max") {
                         if (_numberOfFiles <= 30) {
+                            flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
                         }
                         else {
+                            listBox1.SelectedIndex = 0;
                             DisplayErrorFolder(_accType);
                         }
                     }
 
                     if (_accType == "Express") {
                         if (_numberOfFiles <= 85) {
+                            flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
+                            var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
+                            listBox1.SelectedIndex = _dirPosition;
                         }
                         else {
                             DisplayErrorFolder(_accType);
+                            listBox1.SelectedItem = "Home";
                         }
                     }
 
@@ -2778,6 +2811,7 @@ namespace FlowSERVER1 {
                         }
                         else {
                             DisplayErrorFolder(_accType);
+                            listBox1.SelectedItem = "Home";
                         }
                     }
                 } else {
