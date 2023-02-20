@@ -1,0 +1,4236 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Spire.PdfViewer.Forms</name>
+    </assembly>
+    <members>
+        <member name="T:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationFlags">
+            <summary>
+            A set of flags specifying how the annotation is presented visually on page.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationUpdatedHandler">
+            <summary>
+            Field's annotation updated event handler.
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Annotations.ListFieldAnnotationUpdatedHandler">
+            <summary>
+            Field's annotation updated event handler.
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel">
+            <summary>
+            Represent field's Annotation.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.Field">
+            <summary>
+            Field which annotation is associated.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.Dictionary">
+            <summary>
+            Field annotation dictionary.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.PageIndex">
+            <summary>
+            Page index which annotation is associated.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.Rect">
+            <summary>
+            The location of annotation on the page in default user space units.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.F">
+            <summary>
+            A set of flags specifying how the annotation is presented visually on page.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.ViewRect">
+            <summary>
+            The location of annotation on the page in view's default graphics space units.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.UniqueID">
+            <summary>
+            Unique ID
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.#ctor(Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel,System.Int32,Spire.Pdf.Primitives.PdfDictionary)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="field">Field which annotation is associated.</param>
+            <param name="pageIndex">Page index which annotation is associated.</param>
+            <param name="dic">Field annotation dictionary.</param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.Index">
+            <summary>
+            searches for the specified object from Field and returns the index 
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel">
+            <summary>
+            Represent the list CheckBox field of form.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel.m_checked">
+            <summary>
+            whether checked
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel.m_defaultIndex">
+            <summary>
+            CheckBox item index
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel.Checked">
+            <summary>
+            Get or Set CheckBox checked
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel.DefaultIndex">
+            <summary>
+            Gets the default index.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel.#ctor(Spire.Pdf.Widget.PdfCheckBoxWidgetFieldWidget,Spire.Pdf.Widget.PdfPageCollection)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="checkBoxField">Represent text field in pdf.</param>
+            <param name="pages">All pages in pdf document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.CheckBoxFieldModel.Fill">
+            <summary>
+            Set checkBox field value. 
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel">
+            <summary>
+            Represent the list ComboBox field of form.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.m_selectedIndex">
+            <summary>
+            Get or Set ComboBox Select Index
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.m_selectedValue">
+            <summary>
+            Get or Set ComboBox Select value
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.m_DataSource">
+            <summary>
+            Get ComboBox option item
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.DataSource">
+            <summary>
+            Get ComboBox option item
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.SelectedIndex">
+            <summary>
+            Get or Set ComboBox Select Index
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.#ctor(Spire.Pdf.Widget.PdfComboBoxWidgetFieldWidget,Spire.Pdf.Widget.PdfPageCollection)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="comboBoxField">Represent text field in pdf.</param>
+            <param name="pages">All pages in pdf document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.ComboBoxFieldModel.Fill">
+            <summary>
+            Fill ComboBox field value. 
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.FieldFlags.Default">
+            <summary>
+            Default field flag.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.FieldFlags.MultiSelect">
+            <summary>
+            If set, more than one of the fields option items may be selected simultaneously; 
+            if clear, no more than one item at a time may be selected.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.FieldItem">
+            <summary>
+            define form Field item,listbox or combobox option 
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel">
+            <summary>
+            Represent the list box field of form.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.m_selectedIndex">
+            <summary>
+            Get or Set ComboBox Select Index
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.m_DataSource">
+            <summary>
+            ListBox控件所有列表项
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.SelectedIndex">
+            <summary>
+            Get or Set ComboBox Select Index
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.TI">
+            <summary>
+            对于滚动条列表框，为顶部索引,列表中第一个选项的opt数组中的索引，默认为0
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.DataSource">
+            <summary>
+            Get ListBox option item
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.#ctor(Spire.Pdf.Widget.PdfListBoxWidgetFieldWidget,Spire.Pdf.Widget.PdfPageCollection)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="listBoxField">Represent text field in pdf.</param>
+            <param name="pages">All pages in pdf document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.Fill">
+            <summary>
+            Fill ListBox field value. 
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.ListBoxFieldModel.RewriteAp(System.Single)">
+            <summary>
+            List的所有项重新写入AP流
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.RadioButtonFieldModel">
+            <summary>
+            Represent the radio button field of form.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.RadioButtonFieldModel.SelectedIndex">
+            <summary>
+            Get or Set RadioButton Select Index
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.RadioButtonFieldModel.#ctor(Spire.Pdf.Widget.PdfRadioButtonListFieldWidget,Spire.Pdf.Widget.PdfPageCollection)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="radioButtonField">Represent text field in pdf.</param>
+            <param name="pages">All pages in pdf document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.RadioButtonFieldModel.Fill">
+            <summary>
+            Fill RadioButton field value. 
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.TextBoxFieldModel">
+            <summary>
+            Represent the text field of form.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.TextBoxFieldModel.Text">
+            <summary>
+            Text field value.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.TextBoxFieldModel.Multiline">
+            <summary>
+            If true,multiple lines of text,otherwise a single line.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.TextBoxFieldModel.Password">
+             <summary>
+            it's a password textbox?
+             </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.TextBoxFieldModel.#ctor(Spire.Pdf.Widget.PdfTextBoxFieldWidget,Spire.Pdf.Widget.PdfPageCollection)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="textBoxField">Represent text field in pdf.</param>
+            <param name="pages">All pages in pdf document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.TextBoxFieldModel.Fill">
+            <summary>
+            Fill text field value. 
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel">
+            <summary>
+            Represent the field of form.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_defaultFontSize">
+            <summary>
+            default fontsize is 9
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_fontSize">
+            <summary>
+            font size
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_defaultFontName">
+            <summary>
+            default fontname
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_da">
+             <summary>
+            form field da value in pdf file 
+             </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_ff">
+            <summary>
+            A set of flags specifying how the field is presented visually on page.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_backColor">
+            <summary>
+            Get a font background color
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_borderPen">
+            <summary>
+            Get a pen for border
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_styledFieldWidget">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.m_annotations">
+            <summary>
+            Field annotations.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.SelectedIndex">
+            <summary>
+            Get or Set listItem Select Index
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.TI">
+            <summary>
+            对于滚动条列表框，为顶部索引,列表中第一个选项的opt数组中的索引，默认为0
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.Annotations">
+            <summary>
+            Field annotations.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.StyledFieldWidget">
+            <summary>
+            Get or Set a form field object
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.Ff">
+            <summary>
+            A set of flags specifying how the field is presented visually on page.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.BackColor">
+            <summary>
+             Get a font background color
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.BorderPen">
+            <summary>
+            Get a pen for border
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.DataSource">
+            <summary>
+            Data Source
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.AnnotationUpdated">
+            <summary>
+            Field's annotation updated event.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.ListAnnotationUpdated">
+            <summary>
+            Field's annotation updated event.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.#ctor(Spire.Pdf.Widget.PdfStyledFieldWidget)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="dic">PdfStyledFieldWidget styledFieldWidget.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.Fill">
+            <summary>
+            Fill field value.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.GetFont(System.Single)">
+            <summary>
+            Get DA string from dictionary,use zoom and fontname create font
+            </summary>
+            <param name="zoomFator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.GetFont(System.Single,System.Drawing.SizeF)">
+            <summary>
+            
+            </summary>
+            <param name="zoomFator"></param>
+            <param name="controlSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.GetFontInfoFromDA(System.String)">
+            <summary>
+            Get DA string from dictionary
+            </summary>
+            <param name="DAstring"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.AddAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Add annotation.
+            </summary>
+            <param name="annotation">Field annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.IndexOf(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            searches for the specified object from Field and returns the index 
+            </summary>
+            <param name="annotation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel.RewriteAp(System.Single)">
+            <summary>
+            重写AP流
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.FormModel">
+            <summary>
+            Represent the form.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.FormModel.m_form">
+            <summary>
+            Pdf form.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.FormModel.Fields">
+            <summary>
+            Form's fields.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.FormModel.#ctor(Spire.Pdf.Widget.PdfFormWidget,Spire.Pdf.Widget.PdfPageCollection)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="form">Pdf form.</param>
+            <param name="pages">All pages in pdf document.</param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.AbstractFormPresenter">
+            <summary>
+            Abstract form presenter.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.Form">
+            <summary>
+            Represent form model.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.m_currentHighlightFieldAnnotation">
+            <summary>
+            Current highlight field annotation.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.m_currentFocusFieldAnnotation">
+            <summary>
+            Current focus field annotation.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.m_editableFieldAnnotations">
+            <summary>
+            Editable field annotations in form.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.LoadForm(Spire.Pdf.PdfDocument)">
+            <summary>
+            Load form.
+            </summary>
+            <param name="document">Document</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.UnloadForm">
+            <summary>
+            Unload form.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.PositionFieldAnnotation(System.Int32,Spire.Pdf.PdfPageRotateAngle,System.Drawing.RectangleF,System.Drawing.RectangleF,Spire.Pdf.Graphics.PdfMatrix)">
+            <summary>
+            Adjust field annotation's view rect.
+            Note:
+            The rect which apply pageViewMatrix to pageViewRect,is in view's default graphics space units.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="rotate">The page is rotated</param>
+            <param name="pageRect">The rect of page in default user space units.</param>
+            <param name="pageViewRect">The rect of page in view's current graphics space units.</param>
+            <param name="pageViewMatrix">The page's matrix in view's default graphics space units.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.FocusNextFieldAnnotation">
+            <summary>
+            Focus next field Annotation.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.HighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Highlight field Annotation.
+            </summary>
+            <param name="fieldAnnotation">field Annotation</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.FocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Focus field Annotation.
+            </summary>
+            <param name="fieldAnnotation">field Annotation</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.FocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel,Spire.PdfViewer.Forms.Form.FocusEvent)">
+            <summary>
+            Focus field Annotation.
+            </summary>
+            <param name="fieldAnnotation">field Annotation</param>
+            <param name="e">event arg</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.GetFieldAnnotationByViewPosition(System.Drawing.PointF)">
+            <summary>
+            Get field Annotation by view position.
+            </summary>
+            <param name="pos">view position.</param>
+            <returns>field Annotation.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.GetFieldAnnotationViewRect(Spire.Pdf.PdfPageRotateAngle,System.Drawing.RectangleF,System.Drawing.RectangleF,System.Drawing.RectangleF,Spire.Pdf.Graphics.PdfMatrix)">
+            <summary>
+            Get fieldAnnotation's rect in view's default graphics space units.
+            Note:
+            The rect which apply pageViewMatrix to pageViewRect,is in view's default graphics space units.
+            </summary>
+            <param name="rotate">The page is rotated</param>
+            <param name="fieldAnnotationRect">The fieldAnnotation's rect in default user space units.</param>
+            <param name="pageRect">The rect of page in default user space units.</param>
+            <param name="pageViewRect">The rect of page in view's current graphics space units.</param>
+            <param name="pageViewMatrix">The page's matrix in view's default graphics space units.</param>
+            <returns>fieldAnnotation's rect in view's default graphics space units.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnUpdateFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Trigger when filed annotation is updated.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnUpdateListFieldAnnotation(System.Collections.Generic.List{Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel})">
+            <summary>
+            Trigger when filed annotation is updated.
+            </summary>
+            <param name="fieldAnnotations">List filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnHighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Trigger when mouse enter to filed annotation.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnCancelHighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Trigger when mouse leave from filed annotation.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnPositionHighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Trigger when highlight filed annotation is position.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnFocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel,Spire.PdfViewer.Forms.Form.FocusEvent)">
+            <summary>
+            Trigger when focus enter to filed annotation.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnCancelFocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Trigger when focus leave from filed annotation.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.OnPositionFocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Trigger when focus filed annotation is position.
+            </summary>
+            <param name="fieldAnnotation">Filed annotation.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.Finalize">
+            <summary>
+            Destructor
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.Dispose">
+            <summary>
+            Releases all resources used.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.Disposed">
+            <summary>
+            Specify whether to had released resources.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.AbstractFormPresenter.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used.
+            </summary>
+            <param name="disposing">True,Releases all resources;False,Releases unmanaged resources.</param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.FocusEvent">
+            <summary>
+            Focus event.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ButtonBase.m_checked">
+            <summary>
+            设置选中值
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ButtonBase.#ctor">
+            <summary>
+            PdfStyledFieldWidget styledFieldWidget
+            </summary>
+            <param name="styledFieldWidget"></param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ButtonBase.FocusEvent">
+            <summary>
+            Focus event.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ButtonBase.Checked">
+            <summary>
+            设置选中值
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.m_focusEvent">
+            <summary>
+            事件源
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.checkBoxFieldModel">
+            <summary>
+            复选框对象
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.Bind">
+            <summary>
+            绑定控件内容
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.m_metafile">
+            <summary>
+            以AP流绘成的图片
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.m_AnnotItemRect">
+            <summary>
+            在没有缩放的情况下,比列为1,要显示Annot所有项需要的区域大小
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            绘制checkbox内容
+            </summary>
+            <param name="pe"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.CreateMetafile(System.Int32,System.Int32)">
+            <summary>
+            创建一张矢量图
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CheckBox.OnClick(System.EventArgs)">
+            <summary>
+            点击，实现选择或取消状态
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.m_zoomFactor">
+            <summary>
+            页面缩放比列
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.m_fieldAnnotation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.FieldAnnotation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.Rotate">
+            <summary>
+            the page is rotated
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.StyledFieldWidget">
+            <summary>
+            Get or Set a form field object
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.ZoomFator">
+            <summary>
+            页面缩放比列
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlBase.Bind">
+            <summary>
+            绑定控件数据
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_VisibleItemNumber">
+            <summary>
+            如果有滚动条,下拉框最多显示10项
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.VisibleItemNumber">
+            <summary>
+            如果有滚动条,下拉框最多显示7项
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_WhiteSpaceHeight">
+            <summary>
+            下拉框底部留一部分空白区域,避免内容与底部边框靠得太拢
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.WhiteSpaceHeight">
+            <summary>
+            下拉框底部留一部分空白区域,避免内容与底部边框靠得太拢
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_scrollUpOrDownButtonHeight">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的高度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ScrollUpOrDownButtonHeight">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的高度
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_scrollUpOrDownButtonWidth">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的宽度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ScrollUpOrDownButtonWidth">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的宽度
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_scrollMiddleHeight">
+            <summary>
+            滚动条中间拉条的高度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ScrollMiddleHeight">
+            <summary>
+            滚动条中间拉条的高度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ScrollWidth">
+            <summary>
+            滚动条宽度
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_FirstClick">
+            <summary>
+            是否第一次点开下拉框
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.FirstClick">
+            <summary>
+            是否第一次点开下拉框
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_OperationType">
+            <summary>
+            鼠标在combobox控件上操作类型
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.OperType">
+            <summary>
+            鼠标在combobox控件上操作类型
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_ListBox">
+            <summary>
+            下拉列表项
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ListBox">
+            <summary>
+            下拉列表项
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_ComboBoxScroll">
+            <summary>
+            下拉列滚动条
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ComboScroll">
+            <summary>
+            下拉列滚动条
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_TextBox">
+            <summary>
+            Combobox的文本框
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.TextBox">
+            <summary>
+            Combobox的文本框
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.m_ListPanel">
+            <summary>
+            下拉列框面板,存放下拉列表项
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.ListPanel">
+            <summary>
+            下拉列框面板,存放下拉列表项
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            刷背景色
+            </summary>
+            <param name="pevent"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            画ComboBox的文本框的内容
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.Bind">
+            <summary>
+            绑定数据
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox.Reset">
+            <summary>
+            重置数据
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox">
+            <summary>
+            ComboBox的文本框
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.m_comboBox">
+            <summary>
+            ComboBox
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.m_metafile">
+            <summary>
+            以AP流绘成的图片
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.#ctor(Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="comboBox"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            刷背景色
+            </summary>
+            <param name="pevent"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.m_AnnotItemRect">
+            <summary>
+            在没有缩放的情况下,比列为1,要显示Annot所有项需要的区域大小
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            根据AP流绘制文本框内容
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.ComboButtonWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.CreateMetafile(System.Int32,System.Int32)">
+            <summary>
+            创建一张矢量图
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.DrawComboButton(System.Drawing.Graphics,System.Drawing.PointF,System.Drawing.SizeF,System.Drawing.SizeF)">
+            <summary>
+            draw ComboButton for combobox annot
+            </summary>
+            <param name="g"></param>
+            <param name="start"></param>
+            <param name="buttonSize"></param>
+            <param name="blackTriangleSize"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.OnMouseClick(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标点击文本框的三角型按钮,弹出下拉框
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboTextBox.Reset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox">
+            <summary>
+            ComboBox的下拉框
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.m_comboBox">
+            <summary>
+            ComboBox object
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.#ctor">
+            <summary>
+            Initializes a new instance
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.#ctor(Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox)">
+            <summary>
+            Initializes a new instance
+            </summary>
+            <param name="listbox"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.m_selectedColor">
+            <summary>
+            选中时，默认显示的颜色
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.sf">
+            <summary>
+            use format by draw char
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.rects">
+             <summary>
+            ComboBox下拉框中每一项的矩形位置
+             </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.m_highlightRect">
+            <summary>
+            需要高亮的项的矩形位置
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.HighlightRect">
+            <summary>
+            需要高亮的项的矩形位置
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            刷背景
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            绘制ComboBox的下拉框
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.Init">
+            <summary>
+            初始化,计算ComboBox的下拉框中每一项的矩形位置
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.SelectItemHighlightRect(System.Int32,System.Int32)">
+            <summary>
+            依据坐标得到选中的索引项和选中项所在的矩形位置(高亮区域)
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.OnMouseClick(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标单击选择
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标在列表项上移动，高亮显示其中一项
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboListBox.Reset">
+            <summary>
+            重置数据
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll">
+            <summary>
+            combobox Scroll
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_buttonUp">
+            <summary>
+            滚动条Up按钮
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_buttonDown">
+            <summary>
+            滚动条Down按钮
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_comboBox">
+            <summary>
+            ComboBox object
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_scrollMoveRect">
+            <summary>
+            滚动条上下移动的区域
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_oldValue">
+            <summary>
+            滚动条上次移动的Value值
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_listBoxContentLocationY">
+            <summary>
+            绘制ListBoxContent控件列表项起始位置
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_scrollMoveOffsetY">
+            <summary>
+            滚动条中间拉条移动位置
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_listBoxContentMoveOffsetY">
+            <summary>
+            滚动条中间拉条移动1个像素,ListBox列表项移动的Y偏移量
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_DiffValue">
+            <summary>
+            列表框所有项总高度减去控件高度的值
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.DiffValue">
+            <summary>
+            列表框所有项总高度减去控件高度的值
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.#ctor(Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox)">
+            <summary>
+            Initializes a new instance
+            </summary>
+            <param name="listbox"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            刷背景
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            绘制滚动条
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.Init">
+            <summary>
+            Initializes...
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.ButtonUp_Click(System.Object,System.EventArgs)">
+            <summary>
+            scroll up
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.ButtonDown_Click(System.Object,System.EventArgs)">
+            <summary>
+            scroll down
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.m_MouseDown">
+            <summary>
+            鼠标是否处于按下状态
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.OnMouseDown(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标按下
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标弹起
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.OnMouseClick(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            点击滚动条
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            拖动滚动条
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBoxScroll.Reset">
+            <summary>
+            Reset data
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CustomPanel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CustomPanel.m_comboBox">
+            <summary>
+            ComboBox object
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CustomPanel.#ctor(Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ComboBox)">
+            <summary>
+            Initializes a new instance
+            </summary>
+            <param name="listbox"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CustomPanel.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            draw white background
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CustomPanel.Init">
+            <summary>
+            Initializes...
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.CustomPanel.Reset">
+            <summary>
+            重置数据
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.OperationType">
+            <summary>
+            鼠标在combobox控件上操作类型
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter">
+            <summary>
+            Form presenter on "Windows forms" platform.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.m_view">
+            <summary>
+            Document view.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.Enabled">
+            <summary>
+            Whether have enabled "fill form".
+            </summary>     
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.#ctor(Spire.PdfViewer.Forms.WinformDocumentView)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="view">Document view.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnDocumentViewOpened(System.Object)">
+            <summary>
+            Document have loaded to virtual document view.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnDocumentViewClosed(System.Object)">
+            <summary>
+            Document have unloaded from virtual document view.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnMouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse move event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnMouseClick(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse click event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnLeave(System.Object,System.EventArgs)">
+            <summary>
+            Focus leave event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnKeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            Key down event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPaint(System.Object,System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paint event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.LoadForm(Spire.Pdf.PdfDocument)">
+            <summary>
+            Load form.
+            </summary>
+            <param name="document">Document</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.UnloadForm">
+            <summary>
+            Unload form.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.SetHighLightToViewer(System.Boolean)">
+            <summary>
+            Set the highlight to viewer.
+            </summary>
+            <param name="isHighLight">is highlight</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnUpdateFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            fill form field,update field annotation in the window
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnUpdateListFieldAnnotation(System.Collections.Generic.List{Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel})">
+            <summary>
+            fill form field,update field annotation in the window
+            </summary>
+            <param name="fieldAnnotations"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnHighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            mouse move ,show highlight for formfield
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelHighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            mouse out,cancel highlight
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionHighlightFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            location position for highlight field
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnFocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel,Spire.PdfViewer.Forms.Form.FocusEvent)">
+            <summary>
+            get focus for form field,show control
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelFocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            lost focus for form field,cancel control 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionFocusFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            location position for control
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnFocusTextBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            click textBox, Get focus
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelFocusTextBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            textBox lose focus 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionFocusTextBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Calculation TextBox control Position 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnFocusListBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            click textBox, Get focus
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelFocusListBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            ListBox lose focus 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionFocusListBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Calculation ListBox control Position 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnFocusComBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            click Combobox, Get focus
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelFocusComBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Combobox lose focus 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionFocusComBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Calculation Combobox control Position 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnFocusCheckBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel,Spire.PdfViewer.Forms.Form.FocusEvent)">
+            <summary>
+            click CheckBox, Get focus
+            </summary>
+            <param name="fieldAnnotation"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelFocusCheckBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            CheckBox lose focus 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionFocusCheckBoxFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Calculation CheckBox control Position 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnFocusRadioButtonFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel,Spire.PdfViewer.Forms.Form.FocusEvent)">
+            <summary>
+            click RadioButton, Get focus
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnCancelFocusRadioButtonFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            RadioButton lose focus 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.OnPositionFocusRadioButtonFieldAnnotation(Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel)">
+            <summary>
+            Calculation RadioButton control Position 
+            </summary>
+            <param name="fieldAnnotation"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.Finalize">
+            <summary>
+            Destructor
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used.
+            </summary>
+            <param name="disposing">True,Releases all resources;False,Releases unmanaged resources.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.UnloadCustomControl">
+            <summary>
+            卸载释放所有自定义控件
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.FormPresenter.UnloadCustomControl(System.String)">
+            <summary>
+            卸载释放所有自定义控件
+            </summary>
+            <param name="controlName"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ControlType">
+            <summary>
+            custom control type.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.HighlightBox">
+            <summary>
+            Represent highlight effect.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.HighlightBox.BorderWidth">
+            <summary>
+            Border width.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.HighlightBox.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.HighlightBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            draw highlight border
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_scrollUpOrDownButtonHeight">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的高度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.ScrollUpOrDownButtonHeight">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的高度
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_scrollUpOrDownButtonWidth">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的宽度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.ScrollUpOrDownButtonWidth">
+            <summary>
+            滚动条顶部Up按钮或者Down按钮的宽度
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_scrollMiddleHeight">
+            <summary>
+            滚动条中间拉条的高度
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.ScrollMiddleHeight">
+            <summary>
+            滚动条中间拉条的高度
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_multiSelect">
+            <summary>
+            是否支持多选
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.MultiSelect">
+            <summary>
+            是否支持多选
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_KeyDownCtrl">
+            <summary>
+            是否按下Ctrl键
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.KeyDownCtrl">
+            <summary>
+            是否按下Ctrl键
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_listBoxContent">
+            <summary>
+            listbox列表项
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_listBoxScroll">
+            <summary>
+            listbox滚动条
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.Scroll">
+            <summary>
+            listbox滚动条
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_listItemheight">
+            <summary>
+            计算list列表项每一项的行高,得到一个总高度值
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_setScrollableIndex">
+            <summary>
+            第一次显示控件是否需要设置列表框的滚动条的索引
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.SetScrollableIndex">
+            <summary>
+            第一次显示控件是否需要设置列表框的滚动条的索引
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.m_IsExistScroll">
+            <summary>
+            判断是否存在滚动条
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.IsExistScroll">
+            <summary>
+            判断是否存在滚动条
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.#ctor">
+            <summary>
+             Initializes a new instance
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.Bind">
+            <summary>
+            绑定控件数据
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.JudgeExistScroll">
+            <summary>
+            根据列表内容判断是否加滚动条
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            绘制
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.LostFoucs">
+            <summary>
+            选中项后,失去焦点,得到控件可显示区域中每个列表项的索引，重新设置选中项的索引
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.Reset">
+            <summary>
+            重置数据
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.OnKeyDown(System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            按下Ctrl键
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox.OnKeyUp(System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            松开Ctrl键
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent">
+            <summary>
+            listbox的内容列表
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.m_listBox">
+            <summary>
+            a listbox object
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.#ctor">
+            <summary>
+            Initializes a new instance
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.#ctor(Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBox)">
+            <summary>
+            Initializes a new instance
+            </summary>
+            <param name="listbox"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.m_listBoxContentLocationY">
+            <summary>
+            ListBoxContent控件绘制列表起始位置
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.ListBoxContentLocationY">
+            <summary>
+            ListBoxContent控件绘制列表起始位置
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.rects">
+             <summary>
+            listBox中每一项的矩形位置
+             </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            刷背景
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.m_moveScroll">
+            <summary>
+            是否移动滚动条
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.MoveScroll">
+            <summary>
+            是否移动滚动条
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.m_AnnotItemRect">
+            <summary>
+            在没有缩放的情况下,比列为1,要显示Annot所有项需要的区域大小
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.m_ZoomAnnotItemRect">
+            <summary>
+            有缩放的情况下,比列为1,要显示Annot所有项需要的区域大小
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.m_Image">
+            <summary>
+            以AP流绘成的图片
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            绘制listbox 的列表项
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.CreateMetafile(System.Int32,System.Int32)">
+            <summary>
+            创建一张矢量图
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.GetClientRectangleItemIndexs">
+            <summary>
+            ListBox控件可显示区域中每个列表项的索引
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.GetRowRects">
+            <summary>
+            计算listBox列表中每一项的矩形位置
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.SelectItemHighlightRect(System.Int32,System.Int32)">
+            <summary>
+            依据坐标计算选中的索引项
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.OnMouseClick(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标单击选择
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxContent.Reset">
+            <summary>
+            重置数据
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll">
+            <summary>
+            listbox 滚动条
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_buttonUp">
+            <summary>
+            滚动条Up按钮
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_buttonDown">
+            <summary>
+            滚动条Down按钮
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_listBoxContent">
+            <summary>
+            list列表项控件
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_listBox">
+            <summary>
+            listbox控件
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_scrollMoveRect">
+            <summary>
+            滚动条上下移动的区域
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_oldValue">
+            <summary>
+            滚动条上次移动的Value值
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_listBoxContentLocationY">
+            <summary>
+            绘制ListBoxContent控件列表项起始位置
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_scrollMoveOffsetY">
+            <summary>
+            滚动条中间拉条移动位置
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_DiffValue">
+            <summary>
+            列表框所有项总高度减去控件高度的值
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.DiffValue">
+            <summary>
+            列表框所有项总高度减去控件高度的值
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            刷背景
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_listBoxContentMoveOffsetY">
+            <summary>
+            滚动条中间拉条移动1个像素,ListBox列表项移动的Y偏移量
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.m_MouseDown">
+            <summary>
+            鼠标是否处于按下状态
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.ButtonUp_Click(System.Object,System.EventArgs)">
+            <summary>
+            点击滚动条顶部的up按钮
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.ButtonDown_Click(System.Object,System.EventArgs)">
+            <summary>
+            点击滚动条底部的down按钮
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.OnMouseDown(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标按下
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            鼠标弹起
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            拖动滚动条
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.OnMouseClick(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            点击滚动条
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListBoxScroll.Reset">
+            <summary>
+            重置数据
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListControlBase.#ctor">
+            <summary>
+            PdfStyledFieldWidget styledFieldWidget
+            </summary>
+            <param name="styledFieldWidget"></param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListControlBase.DataSource">
+            <summary>
+            获取数据源
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListControlBase.m_selectedIndex">
+            <summary>
+            选中项索引值
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.ListControlBase.SelectedIndex">
+            <summary>
+            选中项索引值
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.RadioButton.m_metafile">
+            <summary>
+            以AP流绘成的图片
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.RadioButton.m_AnnotItemRect">
+            <summary>
+            在没有缩放的情况下,比列为1,要显示Annot所有项需要的区域大小
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.RadioButton.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            绘制radioButton内容
+            </summary>
+            <param name="pe"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.RadioButton.CreateMetafile(System.Int32,System.Int32)">
+            <summary>
+            创建一张矢量图
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.m_zoomFactor">
+            <summary>
+            页面缩放比列
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.m_fieldAnnotation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.FieldAnnotation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.ViewRect">
+            <summary>
+            控件显示位置
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.StyledFieldWidget">
+            <summary>
+            Get or Set a form field object
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.ZoomFator">
+            <summary>
+            页面缩放比列
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.Form.Platform.WindowsForms.TextInputBox.Bind">
+            <summary>
+            绑定控件数据
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PasswordDlg">
+            <summary>
+            Summary description for password.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PasswordDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PasswordDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PasswordDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfDocumentAttachment">
+            <summary>
+            PDF document attachment
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachment.FileName">
+            <summary>
+            Attachment file name
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachment.Description">
+            <summary>
+            Attachment description
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachment.MimeType">
+            <summary>
+            Attachment mime type
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachment.CreationTime">
+            <summary>
+            Attachment creat time
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachment.ModifyTime">
+            <summary>
+            Attachment modify time
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachment.Data">
+            <summary>
+            Attachment file data
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentAttachment.SaveAS(System.String)">
+            <summary>
+            Exported attachment data to file
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation">
+            <summary>
+            PDF document attachment annotation
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.FileName">
+            <summary>
+            Attachment file name
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.Text">
+            <summary>
+            Attachment annotation Text
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.PageIndex">
+            <summary>
+            Attachment annotation page index
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.Location">
+            <summary>
+            Attachment annotaion location in page 
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.Color">
+            <summary>
+            Attachment annotation text color
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.Icon">
+            <summary>
+            Attachment annotation icon
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.Data">
+            <summary>
+            Attachment annotaion file data
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation.SaveAs(System.String)">
+            <summary>
+            Exported attachment annotaion data to file
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Title">
+            <summary>
+            The title of current bookmark.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Style">
+            <summary>
+            Bookmark style
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Color">
+            <summary>
+            The color of bookmark.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Id">
+            <summary>
+            Bookmark order.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Destination">
+            <summary>
+            Bookmark to go to destination
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Previous">
+            <summary>
+            Previous sibling bookmark of current bookmark.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Next">
+            <summary>
+            Next sibling bookmark of current bookmark.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentBookmark.Children">
+            <summary>
+            All children object of current bookmark.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentBookmark.Convert(Spire.Pdf.Bookmarks.PdfBookmark,Spire.PdfViewer.Forms.PdfDocumentViewer)">
+             <summary>
+            Convert Spire.Pdf.Bookmarks.Pdfbookmark to Spire.PdfViewer.Forms.PdfDocumentBookmark.
+             </summary>
+             <param name="bookMark">Spire.Pdf.Bookmarks.Pdfbookmark</param>
+             <param name="viewer">Pdf document viewer.</param>
+             <returns>Spire.PdfViewer.Forms.PdfDocumentBookmark.</returns>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfDocumentBookmarkContainer">
+            <summary>
+            Root bookmark of PDF document
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfDocumentTextStyle.Regular">
+            <summary>
+            Regular text style.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfDocumentTextStyle.Bold">
+            <summary>
+            Bold text style.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfDocumentTextStyle.Italic">
+            <summary>
+            Italic text style.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfPagePonit">
+             <summary>
+            location of PDF document bookmark 
+             </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.IsDocumentLoaded">
+            <summary>
+            Specify whether doument is loaded.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.FileName">
+            <summary>
+            PDF document file name.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.VirtualDocumentView">
+            <summary>
+            Virtual Document view.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.OnRenderPageExceptionEvent">
+             <summary>
+            Register a delegate mothed，when the page drawing throws an exception,handle the event
+             </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.ViewerMode">
+            <summary>
+            Viewer display mode.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SetViewerMode(Spire.PdfViewer.Forms.PdfViewerMode.PdfViewerMode)">
+            <summary>
+            Set PdfDocumentViewer display mode
+            </summary>
+            <param name="mode">Display mode</param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.PageLayoutMode">
+            <summary>
+            Page layout mode.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SetPageLayoutMode(Spire.PdfViewer.Forms.PageLayoutMode)">
+            <summary>
+            Set PDF document page display mode
+            </summary>
+            <param name="pageMode">Page display mode</param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.ZoomFactor">
+            <summary>
+            Zoom factor. value is 1.0 (original size).
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.ZoomTo(System.Int32)">
+            <summary>
+            Zoom PDF document
+            </summary>
+            <param name="percentage">Zoom percentage</param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.ZoomMode">
+            <summary>
+            Gets or sets the zoom mode.
+            FitWidth: effect only if viewer mode is "MultiPage" and page layout mode is "SinglePageContinuous".
+            FitPage: effect only if viewer mode is "MultiPage" and page layout mode is "SinglePageDiscontinuous".
+            Default: no effect.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.ZoomTo(Spire.PdfViewer.Forms.ZoomMode)">
+            <summary>
+            Zoom PDF document
+            </summary>
+            <param name="mode">Zoom Mode</param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.CurrentPageNumber">
+            <summary>
+            Current page number.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.PageCount">
+            <summary>
+            Page count.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.PdfLoaded">
+            <summary>
+            Document have loaded.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.DocumentOpened">
+            <summary>
+            Document have opened.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.DocumentClosed">
+            <summary>
+            Document have closed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.PageNumberChanged">
+            <summary>
+            Current page number changed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.ZoomFactorChanged">
+            <summary>
+            Zoom factor changed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.ZoomChanged">
+            <summary>
+            Zoom percentage changed.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.FindTextHighLightColor">
+            <summary>
+            Find text highlight color
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.FindText">
+            <summary>
+            Find text
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.IgnoreCase">
+            <summary>
+            Find text ignore case.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.EastAsianFont">
+            <summary>
+            Gets or Sets a bool value . This value represents very supportive of East Asian text
+            </summary>     
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.PrintSettings">
+            <summary>
+            Get the print settings.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.FormPresenter">
+            <summary>
+            Form presenter.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.FormFillEnabled">
+            <summary>
+            Whether have enabled "fill form".
+            </summary>     
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.#ctor">
+            <summary>
+            Constructor a new instance.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.EnableHandTool">
+            <summary>
+            Enable hand tool,then mouse cursor become hand shape and can drag PDF document
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.EscapeHandTool">
+            <summary>
+            Escapae hand tool ,mouse cursor recover default shape
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GoToFirstPage">
+            <summary>
+            Go to first page.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GoToLastPage">
+            <summary>
+            Go to last page.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GoToNextPage">
+            <summary>
+            Go to next page.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GoToPreviousPage">
+            <summary>
+            Go to previous page.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GoToPage(System.Int32)">
+            <summary>
+            Go to the specified page
+            </summary>
+            <param name="pageNumber"> Page number</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.ScrollTo(System.Single,System.Single)">
+            <summary>
+            Scroll to the location.
+            </summary>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.Move(System.Single,System.Single)">
+            <summary>
+            Move offsetX in horizontal,offsetY in vertical from current scroll location.
+            </summary>
+            <param name="offsetX">Offset from current scroll location in horizontal</param>
+            <param name="offsetY">Offset from current scroll location in vertical.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.LoadFromStream(System.IO.Stream)">
+            <summary>
+            Load PDF document from stream.
+            </summary>
+            <param name="stream">Data stream</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.LoadFromFile(System.String)">
+            <summary>
+            Load PDF document from file.
+            </summary>
+            <param name="filePath">File path</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.LoadFromFile(System.String,System.String)">
+            <summary>
+            Load PDF document from file.
+            </summary>
+            <param name="filePath">File path</param>
+            <param name="password">File password</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.LoadFromHtml(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Load web page as PDF document.
+            </summary>
+            <param name="inputUrl"></param>
+            <param name="convertPdfName"></param>
+            <param name="enableJavascript"></param>
+            <param name="enableHyperLink"></param>
+            <param name="autoDetectePageBreak"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.LoadFromHtml(System.String,System.String)">
+            <summary>
+            Load html as PDF document.
+            </summary>
+            <param name="url">The html url</param>
+            <param name="convertPdfName">Converted PDF document file path.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SaveToFile(System.String)">
+            <summary>
+            Save to the file.
+            </summary>
+            <param name="filePath">The file path.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SaveToFile(System.IO.Stream)">
+            <summary>
+            save to the stream.
+            </summary>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SaveAsImage(System.Int32)">
+            <summary>
+            Saves to bitmap.
+            </summary>
+            <param name="pageIndex">The page index.</param>
+            <returns>Page bitmap.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SaveAsImage(System.Int32,System.Int32)">
+            <summary>
+            Saves to bitmap.
+            </summary>
+            <param name="startIndex">The start page index.</param>
+            <param name="endIndex">The end page index.</param>
+            <returns>Page bitmap array.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SaveAsThumbnail(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets thumbnail range of PDF document.
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.CloseDocument">
+            <summary>
+            Close pdf document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.PrintDoc">
+            <summary>
+            Print document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.Rotate(Spire.PdfViewer.Forms.RotateAngle)">
+            <summary>
+            Rotate PDF document
+            </summary>
+            <param name="angle">Rotate angle</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GetDocumentInfomation">
+            <summary>
+            Get PDF document information.
+            </summary>
+            <returns>Document information</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.IsEncryptedDocument(System.String)">
+            <summary>
+            Check whether doument is encrypted.
+            </summary>
+            <param name="filePath">File path.</param>
+            <returns>Document is encrypted,true.Otherwise,false.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.VeryfyDocumentEncrypted(System.String)">
+            <summary>
+            Check whether doument is encrypted.
+            </summary>
+            <param name="filePath">File path.</param>
+            <returns>Document is encrypted,true.Otherwise,false.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SearchText(System.String,System.Drawing.Color)">
+             <summary>
+            Set search text,highlight colors
+             </summary>
+             <param name="searchText">search text</param>
+             <param name="hightColor">highlightColor colors</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.SearchText(System.String,System.Drawing.Color,System.Boolean)">
+             <summary>
+            Set search text,highlight colors
+             </summary>
+             <param name="searchText">search text</param>
+             <param name="hightColor">highlightColor colors</param>
+             <param name="ignoreCase">bool ignoreCase</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.ExtractText(System.Int32)">
+            <summary>
+            Extract text from specific PDF pages.
+            </summary>
+            <param name="pageIndex">The page index.</param>
+            <returns>The texts in pages.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.ExtractImages(System.Int32)">
+             <summary>
+            Extract images from specific PDF page.
+             </summary>
+             <param name="pageIndex">The page index.</param>
+             <returns>The images in pages.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.ExtractImages(System.Int32,System.Boolean)">
+             <summary>
+            Extract images from specific PDF page,and adjust souce image rotatation.
+             </summary>
+             <param name="pageIndex">The page index.</param>
+             <param name="isAdjustImageRotate"></param>
+             <returns>The images in pages.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GetBookmarkContainer">
+            <summary>
+            Get PDF document bookmark container
+            </summary>
+            <returns> PDF document root bookmark</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GoToBookmark(Spire.PdfViewer.Forms.PdfDocumentBookmark)">
+            <summary>
+            Go to specified bookmark
+            </summary>
+            <param name="bookmark">PDF document bookmark</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GetAttachments">
+            <summary>
+            Get PDF document all of attachments
+            </summary>
+            <returns>PDF document all of attachments</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GetAttachmentAnnotaions">
+            <summary>
+            Get PDF document all of attachment annotations
+            </summary>
+            <returns>PDF document  all of attachment annotations</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GotoAttachmentAnnotation(Spire.PdfViewer.Forms.PdfDocumentAttachmentAnnotation)">
+            <summary>
+            Go to PDF document attachment annotation
+            </summary>
+            <param name="annotation">PDF document attachment annotation </param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.GetThumbnailControl">
+            <summary>
+            Get thumbnail control
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfDocumentViewer.LARGE_MOVE_CHANGE">
+            <summary>
+            Scroll bar large move change.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfDocumentViewer.SMALL_MOVE_CHANGE">
+            <summary>
+            Scroll bar small move change.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.HScrollBar">
+            <summary>
+            Horizontal scroll bar.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.VScrollBar">
+            <summary>
+            Vertical scroll bar.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.AutoScroll">
+            <summary>
+            Gets or sets a value indicating whether enables to auto scroll.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.HorizontalScroll">
+            <summary>
+            Gets the characteristics associated with the horizontal scroll bar.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentViewer.VerticalScroll">
+            <summary>
+            Gets the characteristics associated with the vertical scroll bar.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfDocumentViewer.Scroll">
+            <summary>
+            Scroll event.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.InitializeCustomScrollBar">
+            <summary>
+            Initialize custom scroll bar.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.RemoveCustomScrollBar">
+            <summary>
+            Remove custom scroll bar.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.OnScroll(System.Object,System.Windows.Forms.ScrollEventArgs)">
+            <summary>
+            Scroll event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfDocumentViewer.m_Disposed">
+            <summary>
+            whether dispose mehtod has been called.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfDocumentViewer.Dispose(System.Boolean)">
+            <summary>
+            Release resources(managed/unmanaged).
+            </summary>
+            <param name="disposing">
+            true to release both managed and unmanaged resources; false to release only
+            unmanaged resources.
+            </param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.ScrollProperties">
+            <summary>
+            Encapsulates properties related to scrolling.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.ScrollBar">
+            <summary>
+            Scroll bar.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.ScrollProperties.#ctor(System.Windows.Forms.ScrollBar)">
+            <summary>
+            Initializes a new instance of the System.Windows.Forms.ScrollProperties class.
+            </summary>
+            <param name="scrollBar">The ScrollBar whose scrolling properties this object describes.</param>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.LargeChange">
+            <summary>
+            Gets or sets the distance to move a scroll bar in response to a large scroll command.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.SmallChange">
+            <summary>
+            Gets or sets the distance to move a scroll bar in response to a small scroll command.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.Visible">
+            <summary>
+            Gets or sets whether the scroll bar can be seen by the user.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.Maximum">
+            <summary>
+            Gets or sets the upper limit of values of the scrollable range.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.Minimum">
+            <summary>
+            Gets or sets the lower limit of values of the scrollable range.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.ScrollProperties.Value">
+            <summary>
+            Gets or sets a numeric value that represents the current position of the
+            scroll bar box.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfDocumentInfo">
+            <summary>
+            PDF document basic information
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.Title">
+            <summary>
+            PDF document title
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.Author">
+            <summary>
+            PDF document author
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.Creator">
+            <summary>
+            PDF document creator
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.Producer">
+            <summary>
+            PDF document producer
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.Keywords">
+            <summary>
+            PDF document keywords
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.Subject">
+            <summary>
+            PDF document subject
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.CreationDate">
+            <summary>
+            PDF document create date
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfDocumentInfo.ModificationDate">
+            <summary>
+            PDF document modification date
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfThumbnails.PageThumbnail.m_PageLabelColor">
+            <summary>
+            Set the color of the page label color in thumbnail
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfThumbnails.PageThumbnail.m_PageLabelSelectedColor">
+            <summary>
+            Set the color of the selected page label color in thumbnail
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfThumbnails.PageThumbnail.PageLabelColor">
+            <summary>
+            Set the color of the page label color in thumbnail
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfThumbnails.PageThumbnail.PageLabelSelectedColor">
+            <summary>
+            Set the color of the selected page label color in thumbnail
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail">
+            <summary>
+            PDF document thumbnail control
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.m_PageLabelColor">
+            <summary>
+            Set the color of the page label color in thumbnail
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.m_PageLabelSelectedColor">
+            <summary>
+            Set the color of the selected page label color in thumbnail
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.PageLabelColor">
+            <summary>
+            Set the color of the page label in thumbnail
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.PageLabelSelectedColor">
+            <summary>
+            Set the color of the selected page label in thumbnail
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.ZoomPercent">
+            <summary>
+            thumnail zoom percentage
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.m_viewer_DocumentLoaded(System.Object,System.EventArgs)">
+            <summary>
+            Raises the Load event.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A EventArgs that contains the event data.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.m_viewer_PageNumberChanged(System.Object,System.EventArgs)">
+            <summary>
+            Raises the PageNumberChanged event.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A EventArgs that contains the event data.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Raises the Paint event.
+            </summary>
+            <param name="e">A args that contains event data.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.OnMouseClick(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Raises the MouseClick event.
+            </summary>
+            <param name="e">A MouseEventArgs that contains event data.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.OnResize(System.EventArgs)">
+            <summary>
+            Raises the Size Changed event.
+            </summary>
+            <param name="e">A args that contains event data.</param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfThumbnails.PdfDocumentThumbnail.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.OnRenderPageExceptionEvent">
+            <summary>
+            Register a delegate mothed，when the page drawing throws an exception,handle the event
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.FileName">
+            <summary>
+            Gets current opened pdf file name.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.IsDocumentLoaded">
+            <summary>
+            Whether document have loaded.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.PageCount">
+            <summary>
+            Gets the current number of display pages for the content.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.CurrentPageNumber">
+            <summary>
+            Gets the page number for the currently displayed page.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.PrintSettings">
+            <summary>
+            Get the print settings.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.IsToolBarVisible">
+            <summary>
+            Gets or sets whether is visible of toolbar.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.IgnoreCase">
+            <summary>
+            the found text ignore case
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.FindTextHighLightColor">
+            <summary>
+            The found text to highlight
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.ViewerBackgroundColor">
+            <summary>
+            Set the PdfViewer background color
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewer.FormFillEnabled">
+            <summary>
+            Whether have enabled "fill form".
+            </summary>     
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfViewer.PageNumberChanged">
+            <summary>
+            Occurs current page number changed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfViewer.DocumentOpened">
+            <summary>
+            Occurs after a document is opened.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfViewer.DocumentClosed">
+            <summary>
+            Occurs after a document is closed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.PdfViewer.ZoomChanged">
+            <summary>
+            Occurs zoom changed.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.SaveAsImage(System.Int32)">
+            <summary>
+            Saves page to image.
+            </summary>
+            <param name="pageNumber">Page number</param>
+            <returns>Page Image.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.SaveAsImage(System.Int32,System.Int32)">
+            <summary>
+            Saves page to image.
+            </summary>
+            <param name="startPageNumber">start page number</param>
+            <param name="endPageNumber">end page number</param>
+            <returns>Page image array.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.GoToPage(System.Int32)">
+            <summary>
+            Jump to a specified page number. 
+            </summary>
+            <param name="index">The page number.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.LoadFromStream(System.IO.Stream)">
+            <summary>
+            Load a PDF document from a Stream. 
+            </summary>
+            <param name="stream">A Stream containing a PDF document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.LoadFromFile(System.String)">
+            <summary>
+            Load a PDF document from a file. 
+            </summary>
+            <param name="filePath">The path of the file that contains the PDF document.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.LoadFromFile(System.String,System.String)">
+            <summary>
+            Load a PDF document from a file. 
+            </summary>
+            <param name="filePath">file path</param>
+            <param name="password">password</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.SaveToFile(System.String)">
+            <summary>
+            Save PDF documetns
+            </summary>
+            <param name="filePath">The file path.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.SaveToFile(System.IO.Stream)">
+            <summary>
+            Stream to save PDF document
+            </summary>
+            <param name="stream">The file stream.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.PrintDoc">
+            <summary>
+            Print document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.CloseDocument">
+            <summary>
+            Close current pdf document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.EnableHandTool">
+            <summary>
+            Enable hand tool then can drag PDF document
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.EscapeHandTool">
+            <summary>
+            Escape hand tool
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.GetThumbnailControl">
+            <summary>
+            Gets PDF document thumnail control
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.Rotate(Spire.PdfViewer.Forms.RotateAngle)">
+            <summary>
+            Rotate PDF document
+            </summary>
+            <param name="angle">The rotate angle.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.GetBookmarkContainer">
+            <summary>
+            Gets PDF document root bookmark
+            </summary>
+            <returns>The Bookmark container.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.GetDocumentAttachments">
+            <summary>
+            Gets PDF document all of attachments
+            </summary>
+            <returns>The attachment array.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.GetDocumentAttachmentAnnotations">
+            <summary>
+            Gets PDF document all of attachment annotations
+            </summary>
+            <returns>The attachment annotation array.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.SetViewerMode(Spire.PdfViewer.Forms.PdfViewerMode.PdfViewerMode)">
+            <summary>
+            Sets PdfViewer display mode
+            </summary>
+            <param name="mode">The viewer mode.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.SetPageLayouMode(Spire.PdfViewer.Forms.PageLayoutMode)">
+            <summary>
+            Sets PDF document page display mode
+            </summary>
+            <param name="mode">The page layout mode.</param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfViewer.m_disposed">
+            <summary>
+            whether dispose mehtod has been called.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewer.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used.
+            </summary>
+            <param name="disposing">True,Releases all resources;False,Releases unmanaged resources.</param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PageLayoutMode">
+            <summary>
+            PdfDocumentViewer Page display mode 
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfViewerMode.PdfViewerMode">
+            <summary>
+            PdfDocumentViewer display mode
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfViewerToolbar">
+            <summary>
+            Pdf viewer toolbar.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewerToolbar.ActiveView">
+            <summary>
+            Document viewer.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewerToolbar.AllowPrint">
+            <summary>
+            Allow "Print" button. 
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.PdfViewerToolbar.AllowSave">
+            <summary>
+            Allow "Save" button. 
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.#ctor">
+            <summary>
+            Construct a new instance.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.InitializeComponent">
+            <summary>
+            Initialize component.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.BindDocumentViewer">
+            <summary>
+            Bind document viewer.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.UnBindDocumentViewer">
+            <summary>
+            UnBind document viewer.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.OnDocumentOpened(System.Object,System.EventArgs)">
+            <summary>
+            Document have opened.
+            </summary>
+            <param name="sender">Document viewer.</param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.OnDocumentClosed(System.Object,System.EventArgs)">
+            <summary>
+            Document have closed.
+            </summary>
+            <param name="sender">Document viewer.</param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.OnPageNumberChanged(System.Object,System.EventArgs)">
+            <summary>
+            Page number changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.OnZoomPercentageChanged(System.Object,System.Int32)">
+            <summary>
+            Zoom percentage changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="zoomPercentage"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnOpen_Click(System.Object,System.EventArgs)">
+            <summary>
+            Open click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.OpenFileWithPassword(System.String)">
+            <summary>
+            Open file with password.
+            </summary>
+            <param name="filePath">File path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            Save click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnPrint_Click(System.Object,System.EventArgs)">
+            <summary>
+            Print click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToFirstPage_Click(System.Object,System.EventArgs)">
+            <summary>
+            Go to first page click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToFirstPage_EnabledChanged(System.Object,System.EventArgs)">
+            <summary>
+            Go to first page enabled changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToLastPage_Click(System.Object,System.EventArgs)">
+            <summary>
+            Go to last page click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToLastPage_EnabledChanged(System.Object,System.EventArgs)">
+            <summary>
+            Go to last page enabled changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToNextPage_Click(System.Object,System.EventArgs)">
+            <summary>
+             Go to next page click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToNextPage_EnabledChanged(System.Object,System.EventArgs)">
+            <summary>
+            Go to next page enabled changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToPreviousPage_Click(System.Object,System.EventArgs)">
+            <summary>
+             Go to previous page click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnGoToPreviousPage_EnabledChanged(System.Object,System.EventArgs)">
+            <summary>
+            Go to previous page enabled changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.txtCurrentPageNumber_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            Page number key down event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnZoomIn_Click(System.Object,System.EventArgs)">
+            <summary>
+            Zoom in event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnZoomOut_Click(System.Object,System.EventArgs)">
+            <summary>
+            Zoom out event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.cmbZoomPercentage_Changed(System.Object,System.EventArgs)">
+            <summary>
+            Zoom percentage changed event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.cmbZoomPercentage_KeyUp(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            Zoom percentage key up event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnFitWidth_Click(System.Object,System.EventArgs)">
+            <summary>
+            Fit width click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnFitPage_Click(System.Object,System.EventArgs)">
+            <summary>
+            Fit page click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnHandTool_Click(System.Object,System.EventArgs)">
+            <summary>
+            Hand tool click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.btnRotate_Click(System.Object,System.EventArgs)">
+            <summary>
+            Rotate Document(each time rotate 90 angle)
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.txtFindText_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            Find text key down event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.AdjustAllControlsByDocumentViewerData">
+            <summary>
+            Adjust all controls by current document viewer data. 
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.SelectCmbZoomPercentage(System.Single)">
+            <summary>
+            Select cmbZoomPercentage value.
+            </summary>
+            <param name="zoomPercentage">Zoom percentage.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.ParseZoomPercentage(System.String)">
+            <summary>
+            Parse zoom percentage format.
+            </summary>
+            <param name="zoomPercentageString">eg. 12.4%</param>
+            <returns>eg. 12.4</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.TryParsePercentage(System.String,System.Single@)">
+            <summary>
+            Parse percentage format.
+            </summary>
+            <param name="zoomPercentageString">eg. 12.4%</param>
+            <param name="zoomPercentage">eg. 12.4</param>
+            <returns>True, success,otherwise,False.</returns>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfViewerToolbar.m_disposed">
+            <summary>
+            whether dispose mehtod has been called.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used.
+            </summary>
+            <param name="disposing">True,Releases all resources;False,Releases unmanaged resources.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfViewerToolbar.Initialize(Spire.PdfViewer.Forms.PdfDocumentViewer)">
+            <summary>
+            Bind document viewer.
+            </summary>
+            <param name="view">Document viewer.</param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView">
+            <summary>
+            Virtual document view.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.VirtualPageView">
+            <summary>
+            Virtual page view.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.VirtualPageView.PageIndex">
+            <summary>
+            Page index.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.VirtualPageView.Page">
+            <summary>
+            Page object.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.VirtualPageView.Bound">
+            <summary>
+            Page layout bound.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.VirtualPageView.ContentBound">
+            <summary>
+            Page content bound.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.MARGIN">
+            <summary>
+            Page margin.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.TWO_PAGE_GAP">
+            <summary>
+            Two page layout page gap.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.m_pageViews">
+            <summary>
+            All page views.
+            Note: if viewer mode is single page, only exist current page view.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.m_currentPageView">
+            <summary>
+            Current page view.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.m_maxDocumentWidth">
+            <summary>
+            Max document width.
+            Note: if layout mode is discontinuous,document width is not fixed.
+            Otherwise,document width is fixed.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.m_scrollLocationDocumentWidth">
+            <summary>
+            Document width at Scroll location.
+            Note: if layout mode is discontinuous,document width is not fixed.
+            Otherwise,document width is fixed.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.m_documentHeight">
+            <summary>
+            Document height.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.Document">
+            <summary>
+            Pdf document object.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.Pages">
+            <summary>
+            Pdf page objects.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.PageCount">
+            <summary>
+            Page count.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.CurrentPageIndex">
+            <summary>
+            Current page index.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.ViewerScrollLocation">
+            <summary>
+            Viewer scroll location.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.ViewerClientSize">
+            <summary>
+            Viewer client size.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.ViewerMode">
+            <summary>
+            Viewer mode.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.PageLayoutMode">
+            <summary>
+            Page layout mode.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.VirtualDocumentView.ZoomFactor">
+            <summary>
+            Zoom factor.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewModeChangedEventHandler">
+            <summary>
+            Document view mode changed event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="documentViewWidth">
+            Document width at Scroll location.
+            Note: if layout mode is discontinuous,document width is not fixed at different scroll location.
+            </param>
+            <param name="documentViewHeight">Document height.</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewModeChanged">
+            <summary>
+            Document view mode changed event.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewPageLayoutModeChangedEventHandler">
+            <summary>
+            Document view page layout mode changed event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="documentViewWidth">
+            Document width at Scroll location.
+            Note: if layout mode is discontinuous,document width is not fixed at different scroll location.
+            </param>
+            <param name="documentViewHeight">Document height.</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewPageLayoutModeChanged">
+            <summary>
+            Document view mode changed event.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewZoomFactorChangedEventHandler">
+            <summary>
+            Zoom factor changed event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="zoomFactor">Zoom factor.</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewZoomFactorChanged">
+            <summary>
+            Zoom factor changed event.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewOpenedEventHandler">
+            <summary>
+            Document opened event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewOpened">
+            <summary>
+            Document opened event.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewClosedEventHandler">
+            <summary>
+            Document closed event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewClosed">
+            <summary>
+            Document closed event.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewUpdatedEventHandler">
+            <summary>
+            Document view updated event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+            <param name="documentViewWidth">
+            Document width at Scroll location.
+            Note: if layout mode is discontinuous,document width is not fixed at different scroll location.
+            </param>
+            <param name="documentViewHeight">Document height.</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewUpdated">
+            <summary>
+            Document view updated event.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewCurrentPageChangedEventHandler">
+            <summary>
+            Current page changed event handler.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="currentPageIndex">Current page index(0..count-1).</param>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.VirtualDocumentView.DocumentViewCurrentPageChanged">
+            <summary>
+            Current page changed event
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.#ctor">
+            <summary>
+            Construct a new instance.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.InitializeParas(Spire.PdfViewer.Forms.PdfViewerMode.PdfViewerMode,System.Drawing.SizeF,Spire.PdfViewer.Forms.PageLayoutMode,System.Single)">
+            <summary>
+            Initialize paras.
+            </summary>
+            <param name="viewerMode">Viewer mode.</param>
+            <param name="viewerClientSize">Viewer client size.</param>
+            <param name="pageLayoutMode">Page layout mode.</param>
+            <param name="zoomFactor">Zoom factor.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.InitializePages">
+            <summary>
+            Initialize pages.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.RotatePages(Spire.PdfViewer.Forms.RotateAngle)">
+            <summary>
+            Rotate pages.
+            </summary>
+            <param name="angle">rotate angle.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.InitializePageViews">
+            <summary>
+            Initialize page view.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.InitializePageViews(System.Int32,System.Int32)">
+            <summary>
+            Initialize page view.
+            </summary>
+            <param name="startPageIndex">Start page index.</param>
+            <param name="count">Count.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.Reset">
+            <summary>
+            Reset page view.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsScope">
+            <summary>
+            Set page scope.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsScope(System.Int32,System.Int32)">
+            <summary>
+            Set page scope.
+            </summary>
+            <param name="startPageIndex">Start page index.</param>
+            <param name="count">Count.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsPosition">
+            <summary>
+            Layout.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsPositionWithSinglePageContinuous">
+            <summary>
+            Layout in SinglePageContinuous.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsPositionWithSinglePageDiscontinuous">
+            <summary>
+            Layout in SinglePageDiscontinuous.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsPositionWithTwoPageContinuous">
+            <summary>
+            Layout in TwoPageContinuous.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.PreparePageViewsPositionWithTwoPageDiscontinuous">
+            <summary>
+            Layout in TwoPageDiscontinuous.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.UpdateScrollLocation(System.Int32,System.Single,System.Single)">
+            <summary>
+            Update scroll location.
+            </summary>
+            <param name="pageIndex">The page index(0...count-1)</param>
+            <param name="offsetOrignalX">
+            Offset relative to original size page top-left corner in horizontal.
+            </param>
+            <param name="offsetOrignalY">
+            Offset relative to original size page top-left corner in vertical.
+            </param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.AdjustDiscontinuousScrollLocation(Spire.PdfViewer.Forms.VirtualDocumentView.VirtualPageView,System.Single,System.Single)">
+            <summary>
+            Adjust discontinuous scroll location.
+            </summary>
+            <param name="pageView">Page view.</param>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location Y.</param>
+            <returns>Adjusted scroll location.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.UpdateScrollLocation(System.Single,System.Single)">
+            <summary>
+            Update scroll location.
+            </summary>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location Y.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.AdjustDiscontinuousScrollLocation(System.Single,System.Single)">
+            <summary>
+            Adjust discontinuous scroll location.
+            </summary>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+            <returns>Adjusted scroll location.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.SetScrollLocation(System.Single,System.Single)">
+            <summary>
+            Set scroll location.
+            </summary>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.GetScrollLocationDocumentWidth(System.Single)">
+            <summary>
+            Get document width at scroll location y.
+            </summary>
+            <param name="scrollLocationY">Scroll location y.</param>
+            <returns>Document width at scroll location y.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.GetCurrentPageView(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Get current page view.
+            </summary>
+            <param name="scrollLocationX">origin scroll location x.</param>
+            <param name="scrollLocationY">origin scroll location Y.</param>
+            <param name="fixedScrollLocationX">
+            Fixed scroll location x.Ensure x not outside scroll bound
+            </param>
+            <param name="fixedScrollLocationY">
+            Fixed scroll location y.Ensure y not outside scroll bound
+            </param>
+            <returns>current page view.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.OpenDocument(Spire.Pdf.PdfDocument)">
+            <summary>
+            Open pdf document.
+            </summary>
+            <param name="document">Pdf document object.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.CloseDocument">
+            <summary>
+            Close pdf document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.RotateDocument(Spire.PdfViewer.Forms.RotateAngle)">
+            <summary>
+            Rotate pdf document.
+            </summary>
+            <param name="angle">Rotate angle.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.LoadDocument(Spire.Pdf.PdfDocument)">
+            <summary>
+            Load document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.LoadEmptyDocument">
+            <summary>
+            Load empty document.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.VisitPage">
+            <summary>
+            Represents the method that visit page.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="page">Page.</param>
+            <param name="destRect">Dest rect.</param>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.Enumerate(Spire.PdfViewer.Forms.VirtualDocumentView.VisitPage)">
+            <summary>
+            Enumerate each page.
+            </summary>
+            <param name="visitPage">delegate that represents the method that visit page.</param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.VirtualDocumentView.PaintPage">
+            <summary>
+            Represents the method that paint page.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="page">Page.</param>
+            <param name="destRect">Dest rect.</param>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.Paint(Spire.PdfViewer.Forms.VirtualDocumentView.PaintPage)">
+            <summary>
+            Paint page.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.GoToScrollLocation(System.Single,System.Single)">
+            <summary>
+            Scroll to the location.
+            </summary>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.MoveScrollLocation(System.Single,System.Single)">
+            <summary>
+            Move offsetX in horizontal,offsetY in vertical from current scroll location.
+            </summary>
+            <param name="offsetX">Offset from current scroll location in horizontal</param>
+            <param name="offsetY">Offset from current scroll location in vertical.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.GoToPage(System.Int32)">
+            <summary>
+            Go to the page position.
+            </summary>
+            <param name="pageIndex">The page index(0...count-1)</param>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.VirtualDocumentView.m_disposed">
+            <summary>
+            Specify whether to had released resources.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used.
+            </summary>
+            <param name="disposing">True,Releases all resources;False,Releases unmanaged resources.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.Dispose">
+            <summary>
+            Releases all resources used.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.VirtualDocumentView.AutoFit(Spire.PdfViewer.Forms.ZoomMode)">
+            <summary>
+            Auto fit page size for viewer client size.
+            </summary>
+            <param name="zoomMode">
+            Zoom mode.
+            FitWidth: effect only if ViewerMode is "MultiPage" and PageLayoutMode is "SinglePageContinuous".
+            FitPage: effect only if ViewerMode is "MultiPage" and PageLayoutMode is "SinglePageDiscontinuous".
+            Default: no effect.
+            </param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.WinformDocumentView">
+            <summary>
+            Implement "VirtualDocumentView" on winform platform.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.OnRenderPageExceptionEvent">
+            <summary>
+            when the page drawing throws an exception,handle the event
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.BindControl">
+            <summary>
+            Bind control.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.ZoomMode">
+            <summary>
+            Gets or sets the zoom mode.
+            FitWidth: effect only if viewer mode is "MultiPage" and page layout mode is "SinglePageContinuous".
+            FitPage: effect only if viewer mode is "MultiPage" and page layout mode is "SinglePageDiscontinuous".
+            Default: no effect.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.SupportEastAsianFont">
+            <summary>
+            Whether support east asian font.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.HighlightFormField">
+            <summary>
+            Highlight form field.
+            </summary>     
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.IgnoreCase">
+            <summary>
+            Find text ignore case.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.FindTextHighLightColor">
+            <summary>
+            Find text highlight color.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.FindText">
+            <summary>
+            Find text
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_resources">
+            <summary>
+            Resources.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_strechCursor">
+            <summary>
+            Strech cursor.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_shrinkCursor">
+            <summary>
+            Shrink cursor.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_mouseScreenPosition">
+            <summary>
+            mouse position.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.WinformDocumentView.HandToolEnabled">
+            <summary>
+            Whether Hand tool have enabled.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.WinformDocumentView.DocumentOpened">
+            <summary>
+            Document have opened.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.WinformDocumentView.DocumentClosed">
+            <summary>
+            Document have Closed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.WinformDocumentView.PageNumberChanged">
+            <summary>
+            Current page changed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.WinformDocumentView.ZoomFactorChanged">
+            <summary>
+            Zoom factor changed.
+            </summary>
+        </member>
+        <member name="E:Spire.PdfViewer.Forms.WinformDocumentView.ZoomChanged">
+            <summary>
+            Zoom factor changed.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.#ctor(Spire.PdfViewer.Forms.PdfDocumentViewer)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="bindControl">Bind control.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnDocumentViewOpened(System.Object)">
+            <summary>
+            Document have loaded to virtual document view.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnDocumentViewClosed(System.Object)">
+            <summary>
+            Document have unloaded from virtual document view.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnDocumentViewUpdated(System.Object,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Virtual document view updated.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="scrollLocationX">Scroll location x.</param>
+            <param name="scrollLocationY">Scroll location y.</param>
+            <param name="documentViewWidth">
+            Document width at Scroll location.
+            Note: if layout mode is discontinuous,document width is not fixed at different scroll location.
+            </param>
+            <param name="documentViewHeight">Document height.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnDocumentViewCurrentPageChanged(System.Object,System.Int32)">
+            <summary>
+            Virtual document view's current page changed.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="currentPageIndex">Current page index(0..count-1).</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnDocumentViewZoomFactorChanged(System.Object,System.Single)">
+            <summary>
+            Virtual document view's zoom factor changed.
+            </summary>
+            <param name="sender">Virtual document view.</param>
+            <param name="zoomFactor">Zoom factor.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnClientSizeChanged(System.Object,System.EventArgs)">
+            <summary>
+            Client size changed event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnPaint(System.Object,System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paint event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnPreviewKeyDown(System.Object,System.Windows.Forms.PreviewKeyDownEventArgs)">
+            <summary>
+            Key down event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnScroll(System.Object,System.Windows.Forms.ScrollEventArgs)">
+            <summary>
+            Scroll event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnMouseWheel(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse wheel event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnMouseClick(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse click event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnMouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse down event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnMouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse move event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OnMouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse up event handler in view bind control.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.OpenDocument(Spire.Pdf.PdfDocument)">
+            <summary>
+            Open pdf document.
+            </summary>
+            <param name="document">Pdf document object.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.CloseDocument">
+            <summary>
+            Close pdf document.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.RotateDocument(Spire.PdfViewer.Forms.RotateAngle)">
+            <summary>
+            Rotate pdf document.
+            </summary>
+            <param name="angle">Rotate angle.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.Paint(System.Drawing.Graphics)">
+            <summary>
+            Paint pages.
+            </summary>
+            <param name="g">Graphics.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdateAnnotation(System.Int32,Spire.Pdf.Primitives.PdfDictionary)">
+            <summary>
+            Update annotation when annotation have changed.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="annotation">Annotation dictionary.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdateAnnotation(System.Int32,Spire.Pdf.Primitives.PdfDictionary[])">
+            <summary>
+            Update annotation when annotation have changed.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="annotation">Annotation dictionary.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetThumbnail(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get page thumbnail.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="width">Page thumbnail width.</param>
+            <param name="height">Page thumbnail height.</param>
+            <returns>Page thumbnail</returns>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_pageContentCache">
+            <summary>
+            Page content metafile.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_pageAnnotationCache">
+            <summary>
+            Page annotation metafile.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_pageHighLightTextCache">
+            <summary>
+            Page highlight text metafile.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.ClearAllPageCache">
+            <summary>
+            Clear all page cache.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.ClearPageContentCache">
+            <summary>
+            Clear page content cache.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.ClearPageAnnotationCache">
+            <summary>
+            Clear page annotation cache.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.ClearPageHighLightTextCache">
+            <summary>
+            Clear page highlight text cache.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageBitmap(System.Int32)">
+            <summary>
+            Get page whole bitmap.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <returns>Page whole bitmap.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageBitmap(System.Boolean,System.Int32)">
+            <summary>
+            Get page whole bitmap.
+            </summary>
+            <param name="eastAsianFont">Whether use east asian font.</param>
+            <param name="pageIndex">The page index.</param>
+            <returns>Page content metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageContentMetafile(System.Int32)">
+            <summary>
+            Get page content metafile.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <returns>Page content metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageContentMetafile(System.Boolean,System.Int32)">
+            <summary>
+            Get page content metafile.
+            </summary>
+            <param name="eastAsianFont">Whether use east asian font.</param>
+            <param name="pageIndex">The page index.</param>
+            <returns>Page content metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageAnnotationMetafile(System.Int32)">
+            <summary>
+            Get page annotation metafile.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <returns>Page annotation metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageAnnotationMetafile(System.Boolean,System.Boolean,System.Int32)">
+            <summary>
+            Get all page annotations metafile.
+            </summary>
+            <param name="highlightFormField">Whether highlight form field.</param>
+            <param name="eastAsianFont">Whether use east asian font.</param>
+            <returns>All page annotations metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageAnnotationMetafile(Spire.Pdf.Primitives.PdfDictionary[],System.Boolean,System.Int32)">
+            <summary>
+            Get the page annotation metafile.
+            </summary>
+            <param name="annotation">The page annotation dictionary.</param>
+            <param name="eastAsianFont">Whether use east asian font.</param>
+            <returns>The page annotation metafile</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageHighLightTextMetafile(System.Boolean,System.String,System.Drawing.Color,System.Int32)">
+            <summary>
+             Get page highlight text metafile.
+            </summary>
+            <param name="ignoreCase">Ignore case.</param>
+            <param name="findText">Find text.</param>
+            <param name="findTextHighLightColor">Find text hightlight color.</param>
+            <returns>Page highlight text metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.DrawPageHighLightText(System.Drawing.Graphics,Spire.Pdf.General.Find.PdfTextFindCollection,System.Drawing.Color)">
+            <summary>
+            Draw page highlight text.
+            </summary>
+            <param name="g">Graphics.</param>
+            <param name="ignoreCase">Ignore case.</param>
+            <param name="findText">Find text.</param>
+            <param name="findTextHighLightColor">Find text hightlight color.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdatePageAnnotationMetafile(System.Int32,Spire.Pdf.Primitives.PdfDictionary)">
+            <summary>
+            Update page annotation metafile when annotation have changed.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="annotation">Annotation dictionary.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdatePageAnnotationMetafile(System.Int32,Spire.Pdf.Primitives.PdfDictionary[])">
+            <summary>
+            Update page annotation metafile when annotation have changed.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <param name="annotation">Annotation dictionary.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageHighLightTextMetafile(System.Int32)">
+            <summary>
+            Get page highlight text metafile.
+            </summary>
+            <param name="pageIndex">Page index.</param>
+            <returns>Page highlight text metafile.</returns>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetEmptyMetafile(System.Int32,System.Int32)">
+            <summary>
+            Get empty metafile.
+            </summary>
+            <param name="width">width</param>
+            <param name="height">height.</param>
+            <returns>Empty metafile.</returns>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_pdfViewerLicenseProtector">
+            <summary>
+            The license protected. 
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.WinformDocumentView.m_disposed">
+            <summary>
+            Specify whether to had released resources.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used.
+            </summary>
+            <param name="disposing">True,Releases all resources;False,Releases unmanaged resources.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.Dispose">
+            <summary>
+            Releases all resources used.
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.PdfNotificationBar">
+            <summary>
+            Notification bar.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.#ctor">
+            <summary>
+            Construct a new instance.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.InitializeComponent">
+            <summary>
+            Initialize controls.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.OnCloseButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            Close button click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.OnExceptionLink_Click(System.Object,System.EventArgs)">
+            <summary>
+            Exception link click event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.OnPaint(System.Object,System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paint event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.Show(System.String,System.String)">
+            <summary>
+            Show notification message.
+            </summary>
+            <param name="message">Message.</param>
+            <param name="strace">Exception stack trace.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.Hide">
+            <summary>
+            Hide notification message.
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.PdfNotificationBar.m_disposed">
+            <summary>
+            whether dispose mehtod has been called.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Forms.PdfNotificationBar.Dispose(System.Boolean)">
+            <summary>
+            Release resources(managed/unmanaged).
+            </summary>
+            <param name="disposing">
+            true to release both managed and unmanaged resources; false to release only
+            unmanaged resources.
+            </param>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.ZoomMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.ZoomMode.Default">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.ZoomMode.FitPage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Spire.PdfViewer.Forms.ZoomMode.FitWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Spire.PdfViewer.Forms.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Spire.PdfViewer.Forms.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.PdfViewerLicenseProtector.ApplyInternalLicenseToPdf(Spire.Pdf.PdfDocument)">
+            <summary>
+            Apply internal license to pdf.
+            </summary>
+            <param name="document">The document</param>
+        </member>
+        <member name="T:Spire.PdfViewer.DocumentOpenedEventHandler">
+            <summary>
+            Provides document opened events
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.DocumentClosedEventHandler">
+            <summary>
+            Provides document closed events
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.PageNumberChangedEventHandler">
+            <summary>
+            Provides page number changed events.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.ZoomFactorChangedEventHandler">
+            <summary>
+            Provides zoom factor changed events.
+            </summary>
+            <param name="sender"></param>
+            <param name="zoomFactor"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.ZoomChangedEventHandler">
+            <summary>
+            Provides zoom percentage changed events
+            </summary>
+            <param name="sender"></param>
+            <param name="percentage"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Drawing.PdfViewerExceptions">
+            <summary>
+            Load pdf document throw exception information
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Drawing.PdfViewerExceptions.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Drawing.PdfViewerExceptions.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Drawing.RenderPageExceptionEventHandler">
+            <summary>
+            Define a delegate,when rendering a page,handing exceptions
+            </summary>
+            <param name="args"></param>
+        </member>
+    </members>
+</doc>

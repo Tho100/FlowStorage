@@ -1,0 +1,3924 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Spire.Email</name>
+    </assembly>
+    <members>
+        <member name="T:Spire.Email.Attachment">
+            <summary>
+            Represents an e-mail attachment
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Attachment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Attachment"/> class.
+            </summary>
+            <param name="filePath">Full path to the attached file on the local disk</param>
+        </member>
+        <member name="M:Spire.Email.Attachment.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Attachment"/> class.
+            </summary>
+            <param name="stream">The stream object</param>
+        </member>
+        <member name="M:Spire.Email.Attachment.#ctor(System.IO.Stream,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Attachment"/> class.
+            </summary>
+            <param name="stream">The stream object</param>
+            <param name="name">Attachment name</param>
+        </member>
+        <member name="M:Spire.Email.Attachment.#ctor(System.String,Spire.Email.ContentType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Attachment"/> class.
+            </summary>
+            <param name="filePath">Full path to the attached file on the local disk</param>
+            <param name="contentType">Content type of the attachment</param>
+        </member>
+        <member name="M:Spire.Email.Attachment.#ctor(System.IO.Stream,Spire.Email.ContentType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Attachment"/> class.
+            </summary>
+            <param name="stream">The stream object</param>
+            <param name="contentType">Content type of the attachment</param>
+        </member>
+        <member name="P:Spire.Email.Attachment.Data">
+            <summary>
+            Gets or sets data.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Attachment.ContentId">
+            <summary>
+            Gets or sets content id.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Attachment.ContentType">
+            <summary>
+            Gets or sets content type.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Attachment.DispositionType">
+            <summary>
+            Gets or sets dispostion type.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Attachment.FileName">
+            <summary>
+            Gets or sets file name for an attachment.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Attachment.Size">
+            <summary>
+            Gets or sets file size for an attachment.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.LinkedResource.ContentId">
+            <summary>
+            Gets or sets content id.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.ContentType">
+            <summary>
+            Represents a Content-Type header.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.ContentType.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.ContentType"/> class.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.ContentType.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.ContentType"/> class.
+            </summary>
+            <param name="contentType">Type of the content.</param>
+        </member>
+        <member name="P:Spire.Email.ContentType.Boundary">
+            <summary>
+            Gets or sets the value of the boundary parameter 
+            included in the Content-Type header.
+            </summary>
+            <value>A string that contains the value of boundary parameter.</value>
+        </member>
+        <member name="P:Spire.Email.ContentType.CharSet">
+            <summary>
+            Gets or sets the value of the charset parameter.
+            </summary>
+            <value>A string that contains the value of charset parameter.</value>
+        </member>
+        <member name="P:Spire.Email.ContentType.MediaType">
+            <summary>
+            Gets or sets the internet media type.
+            </summary>
+            <value>A String that contains the media type.</value>
+        </member>
+        <member name="P:Spire.Email.ContentType.Name">
+            <summary>
+            Gets or sets the value of the name parameter.
+            </summary>
+            <value>A String that contains the name.</value>
+        </member>
+        <member name="P:Spire.Email.ContentType.Parameters">
+            <summary>
+            Gets the dictionary that contains the parameters.
+            </summary>
+            <value>A StringDictionary that contains name and value pairs.</value>
+        </member>
+        <member name="P:Spire.Email.ContentType.IsChanged">
+            <summary>
+            Gets a value indicating whether content type is changed.
+            </summary>
+            <value>
+            <c>true</c> if content type is changed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Spire.Email.ContentType.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Spire.Email.ContentType.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="rparam">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+            	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Spire.Email.ContentType.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Spire.Email.ContentType.ParseValue">
+            <summary>
+            Parses this content type
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Implementation.Imap.ImapIdentification">
+            <summary>
+            Identification information.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Implementation.Imap.ImapIdentification.Name">
+            <summary>
+            The name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Implementation.Imap.ImapIdentification.Version">
+            <summary>
+            The version.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Implementation.Imap.ImapIdentification.Vendor">
+            <summary>
+            The vendor.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Implementation.Pop3.Pop3ClientImp.#ctor(System.String,System.Int32,System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance.
+            </summary>
+            <param name="host">The host name.</param>
+            <param name="port">The port number</param>
+            <param name="username">The username</param>
+            <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
+            <param name="useOAuth">Indicates whether use OAuth.</param>
+        </member>
+        <member name="T:Spire.Email.Implementation.Authentication.AuthMessage">
+            <summary>
+            Represent authentication messages for servers.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.Identification">
+            <summary>
+            Identification information.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.Identification.Name">
+            <summary>
+            The name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.Identification.Version">
+            <summary>
+            The version.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.Identification.Vendor">
+            <summary>
+            The vendor.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.ImapFolder">
+            <summary>
+            Represents an IMAP Mailbox. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapFolder.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Spire.Email.IMap.ImapFolder"/> class
+            </summary>
+            <param name="folder">A mailbox folder</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapFolder.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of <see cref="T:Spire.Email.IMap.ImapFolder"/> class
+            </summary>
+            <param name="folder">A mailbox folder</param>
+            <param name="readOnly">A value indicating whether the folder is readonly</param>
+            <param name="hasFlags">Indicates whether the folder has flags</param>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.Name">
+            <summary>
+            Gets the name of the folder. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.MessageCount">
+            <summary>
+            Gets the number of message in the mailbox. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.RecentCount">
+            <summary>
+            Gets the number of message that recent flag.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.UnseenCount">
+            <summary>
+            Gets the number of messages which do not have the seen flag set.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.SubFolders">
+            <summary>
+             Subfolders of the current folder
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.Messages">
+            <summary>
+            Messages stored in this folder
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.Selectable">
+            <summary>
+            Gets whether the folder can be selected 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.Marked">
+            <summary>
+            Gets a value indicating whether it is marked.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.UidValidity">
+            <summary>
+            Gets the unique identifier validity value.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolder.UidNext">
+            <summary>
+            Gets the next unique identifier value.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.ImapFolderCollection">
+            <summary>
+            Provides a container for a collection of ImapFolder objects. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapFolderCollection.Add(Spire.Email.IMap.ImapFolder)">
+            <summary>
+            Adds the ImapFolder to the ImapFolderCollection. 
+            </summary>
+            <param name="item">The ImapFolder object.</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapFolderCollection.RemoveAt(System.Int32)">
+            <summary>
+            Remove a ImapFolder at specified index.
+            </summary>
+            <param name="index">The zero-based index of the ImapFolder to remove. </param>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapFolderCollection.SyncRoot">
+            <summary>
+            Gets an object that can be used to synchronize access to the collection.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.ImapMessage">
+            <summary>
+            Represents a Imap message object.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.Cc">
+            <summary>
+            Gets the list of addresses of others who are to receive the messageImpl. 
+            </summary>
+            <value>
+            Primary recipient(s)
+            </value>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.Date">
+            <summary>
+             Gets the time when the message was written (or submitted)
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.From">
+            <summary>
+            Gets author or person taking responsibility for the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.IsAnswered">
+            <summary>
+            Return true if message has \Answered flag and false otherwise。
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.IsDeleted">
+            <summary>
+            Return true if message has \Deleted flag and false otherwise
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.IsDraft">
+            <summary>
+            Return true if message has \Draft flag and false otherwise
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.IsFlagged">
+            <summary>
+            Return true if message has \Flagged flag and false otherwise
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.IsRecent">
+            <summary>
+            Return true if message has \Recent flag and false otherwise
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.IsRead">
+            <summary>
+            Return true if message has \Seen flag and false otherwise
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.Size">
+            <summary>
+            The size of the message in bytes
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.ReplyTo">
+            <summary>
+            Gets the list of addresses that should receive replies to this message. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.Sender">
+            <summary>
+            Gets the sender of this message. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.SequenceNumber">
+            <summary>
+            Gets a relative position from 1 to the number of messages in the mailbox.
+            </summary>
+            <value>
+            The sequence number.
+            </value>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.Subject">
+            <summary>
+            Gets the subject of the message. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.To">
+            <summary>
+            Gets primary recipient(s)
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessage.UniqueId">
+            <summary>
+            Gets a unique identifier of the message.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.ImapMessageCollection">
+            <summary>
+            Collection of mail messagesImpl
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapMessageCollection.#ctor">
+            <summary>
+            Initializes a new instance of the ImapMessageCollection class. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapMessageCollection.Add(Spire.Email.IMap.ImapMessage)">
+            <summary>
+            Adds the messageImpl to collection. 
+            </summary>
+            <param name="item">The messageImpl to be added.</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapMessageCollection.Remove(Spire.Email.IMap.ImapMessage)">
+            <summary>
+            Remove specifed ImapMessage object from this collection.
+            </summary>
+            <param name="item">The ImapMessage object to be remove.</param>
+            <returns>False if this collection doesn't contains specified object.True if removed successfully.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapMessageCollection.RemoveAt(System.Int32)">
+            <summary>
+            Remove a ImapMessage in specified index from this collection.
+            </summary>
+            <param name="index">The index of the messageImpl to be remove.</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapMessageCollection.Insert(System.Int32,Spire.Email.IMap.ImapMessage)">
+            <summary>
+            Insert the specified ImapMessagInfo object at the specified index.
+            </summary>
+            <param name="index">The index that the specified object will be inserted into.</param>
+            <param name="item">The ImapMessagInfo object to be inserted.</param>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapMessageCollection.SyncRoot">
+            <summary>
+            Gets an object that can be used to synchronize access to the collection.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.ConnectionProtocols">
+            <summary>
+            Connection Protocols
+            </summary>
+        </member>
+        <member name="F:Spire.Email.IMap.ConnectionProtocols.None">
+            <summary>
+            Default Connection Protocol
+            </summary>
+        </member>
+        <member name="F:Spire.Email.IMap.ConnectionProtocols.Ssl">
+            <summary>
+            Ssl Connection Protocol
+            </summary>
+        </member>
+        <member name="F:Spire.Email.IMap.ConnectionProtocols.StartTls">
+            <summary>
+            StartTls Connection Protocol
+            </summary>
+        </member>
+        <member name="T:Spire.Email.IMap.ImapClient">
+            <summary>
+            _impl to interact with email server by IMAP4 protocol
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor">
+            <summary>
+            Creates a new instance of class
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to. 
+            </summary>
+            <param name="host"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to. 
+            </summary>
+            <param name="host">The host name</param>
+            <param name="port">The port number</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String,System.String,System.String,Spire.Email.IMap.ConnectionProtocols)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to. 
+            </summary>
+            <param name="host">The host name</param>
+            <param name="userName">The user name</param>
+            <param name="password">The password</param>
+            <param name="connectionProtocols">Connection Protocols</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String,System.Int32,System.String,System.String,Spire.Email.IMap.ConnectionProtocols)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to.
+            </summary>
+            <param name="host">The host name</param>
+            <param name="port">The port number</param>
+            <param name="userName">The user name</param>
+            <param name="password">The password</param>
+            <param name="connectionProtocols">Connection protocols</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String,System.String,System.String,System.Boolean,Spire.Email.IMap.ConnectionProtocols)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to. 
+            </summary>
+            <param name="host">The host name</param>
+            <param name="userName">The user name</param>
+            <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
+            <param name="useOAuth">Indicates whether use OAuth.</param>
+            <param name="connectionProtocols">Connection Protocols</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String,System.Int32,System.String,System.String,System.Boolean,Spire.Email.IMap.ConnectionProtocols)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to. 
+            </summary>
+            <param name="host">The host name</param>
+            <param name="port">The port number</param>
+            <param name="userName">The user name</param>
+            <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
+            <param name="useOAuth">Indicates whether use OAuth.</param>
+            <param name="connectionProtocols">Connection Protocols</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.#ctor(System.String,System.Int32,System.String,System.String,System.Net.Security.RemoteCertificateValidationCallback)">
+            <summary>
+            Creates a new instance of class, specifies the server and the port to connect to. 
+            </summary>
+            <param name="host">The host name</param>
+            <param name="port">The port number</param>
+            <param name="userName">The user name</param>
+            <param name="password">The password</param>
+            <param name="certificateValidationCallback">RemoteCertificateValidationCallback</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginCopy(System.Int32,System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously copies a messageImpl from the source folder into the ResultType folder.
+            </summary>
+            <param name="sequenceNo">The messageImpl sequence number</param>
+            <param name="folderName">The name of folder </param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginCreateFolder(System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously creates a new folder.
+            </summary>
+            <param name="folderName">A name of the folder to be created</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginDeleteFolder(System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously delete a new folder.
+            </summary>
+            <param name="folderName">A name of the folder to be deleted</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginDeleteMarkedMessages(System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously delete marked messagesImpl.
+            </summary>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginGetAllMessageHeaders(System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously requests OutlookHeaders of all messagesImpl in the specified folder.
+            </summary>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginGetFullMessage(System.Int32,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously requests a messageImpl.
+            </summary>
+            <param name="sequenceNo">The messageImpl sequence number</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginGetFolderCollection(System.AsyncCallback)">
+            <summary>
+            Begins an asynchronous getting folder collections.
+            </summary>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginGetMessageCount(System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously getting an amount of messagesImpl in the specified folder.
+            </summary>
+            <param name="folderName">The folder name</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginLogin(System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously starts the authentification.
+            </summary>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginConnect(System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously connect server.
+            </summary>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginDisconnect(System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously disconnect server.
+            </summary>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginMarkAsDeleted(System.Int32,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously marks a sequence of messagesImpl with deleted state.
+            </summary>
+            <param name="sequenceNo">The sequence no</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginMarkAsSeen(System.Int32,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously marks a sequence of messagesImpl with seen state.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginMarkAsUndeleted(System.Int32,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously resets the "IsDeleted" flag.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginMarkAsUnseen(System.Int32,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously resets the seen state for a messageImpl.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginRenameFolder(System.String,System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously rename the folder.
+            </summary>
+            <param name="oldName">The old folder name</param>
+            <param name="newName">The new folder name</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginSearch(System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously query collection of messagesImpl.
+            </summary>
+            <param name="query">The mail query</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginSubscribe(System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously subscribes the specified folder.
+            </summary>
+            <param name="folderName">The folder name</param>
+            <param name="callback">A delegate which will handle results of the command execution</param>
+            <returns>The object which can be used to monitor the execution state.</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.BeginUnsubscribe(System.String,System.AsyncCallback)">
+            <summary>
+            Begins an asynchronously unsubscribes specified folder.
+            </summary>
+            <param name="folderName"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Copy(System.Int32,System.String)">
+            <summary>
+            Copies a messagesImpl from the source folder into ResultType folder.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="destFolderName">The ResultType folder name</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Copy(System.String,System.String)">
+            <summary>
+            Copies a messagesImpl from the source folder into ResultType folder.
+            </summary>
+            <param name="uid">The uid of messageImpl.</param>
+            <param name="destFolderName">The ResultType folder name</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.CreateFolder(System.String)">
+            <summary>
+             Creates a new folder
+            </summary>
+            <param name="folderName">The folder name.</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.DeleteFolder(System.String)">
+            <summary>
+            Deletes an existing folder.
+            </summary>
+            <param name="folderName">The folder name</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.DeleteMarkedMessages">
+            <summary>
+            Removes all marked deleted messagesImpl.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndCopy(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndCreateFolder(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndDeleteFolder(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndDeleteMarkedMessages(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndGetAllMessageHeaders(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndGetFullMessage(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndGetFolderCollection(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndGetMessageCount(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndGetMessagesHeader(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndLogin(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndConnect(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndDisconnect(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndMarkAsDeleted(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndMarkAsSeen(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndMarkAsUndeleted(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndMarkAsUnseen(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndRenameFolder(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndSearch(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndSubscribe(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.EndUnsubscribe(System.IAsyncResult)">
+            <summary>
+            Waiting on others for command execution finish.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetAllMessageHeaders">
+            <summary>
+            Gets OutlookHeaders of all messagesImpl in the specific folder
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetAttachment(System.Int32,System.String)">
+            <summary>
+            Gets attachment from the server
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="attachmentName">Attchment name</param>
+            <returns>AttachmentImpl object</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetFullMessage(System.String)">
+            <summary>
+            Gets a messageImpl from the server
+            </summary>
+            <param name="uid">uid</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetFullMessage(System.Int32)">
+            <summary>
+            Gets a messageImpl from the server
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetFolderCollection">
+            <summary>
+            Gets a collection of mailboxes from the server
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetMessageCount(System.String)">
+            <summary>
+            Gets an amount of messagesImpl in the specific folder
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.GetMessageText(System.Int32)">
+            <summary>
+            Gets a messageImpl text without attachments from the server
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <returns>Mail messageImpl</returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Login">
+            <summary>
+            Authenticates user to the server
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Connect">
+            <summary>
+            Connection to the server 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Disconnect">
+            <summary>
+            Disconnect to the server 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.MarkAsDeleted(System.Int32)">
+            <summary>
+            Marks a messagesImpl with the delete state
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.MarkAsSeen(System.Int32)">
+            <summary>
+            Marks a messagesImpl with the seen state
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.MarkAsUndeleted(System.Int32)">
+            <summary>
+            Resets the deleted state for a specific messageImpl.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.MarkAsUnseen(System.Int32)">
+            <summary>
+            Resets the read state for a specific messageImpl.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.RenameFolder(System.String,System.String)">
+            <summary>
+            Renames an existing folder.
+            </summary>
+            <param name="folderName">The folder name to be renamed</param>
+            <param name="newName">The new folder name</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Search(System.String)">
+            <summary>
+            Searches messagesImpl in folder that match the query criteria.
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Select(System.String)">
+            <summary>
+            Sets a current active folder on the server
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.SelectInbox">
+            <summary>
+            Sets INBOX as active folder on server
+            </summary>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Subscribe(System.String)">
+            <summary>
+            Subscribes to the specified folder.
+            </summary>
+            <param name="folderName">The folder name</param>
+        </member>
+        <member name="M:Spire.Email.IMap.ImapClient.Unsubscribe(System.String)">
+            <summary>
+            Unsubscribes from the specified folder.
+            </summary>
+            <param name="folderName">The folder name</param>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.ConnectionProtocols">
+            <summary>
+            Specifies using TLS/SSL during the connection
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.UseOAuth">
+            <summary>
+            Indicates whether use OAuth
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.AccessToken">
+            <summary>
+            Gets or sets access token.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.Host">
+            <summary>
+            An address of the server
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.Password">
+            <summary>
+            A password to authenticate on the server
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.Port">
+            <summary>
+            A number of the TCP server port
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.Timeout">
+            <summary>
+            Specifies time in milliseconds to wait a response.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.ActiveFolder">
+            <summary>
+            Gets active folder.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.IMap.ImapClient.Username">
+            <summary>
+            A username to authenticate on the server
+            </summary>
+        </member>
+        <member name="T:Spire.Email.MailAddress">
+            <summary>
+            Represents the address of a message.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.MailAddress.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.MailAddress"/> class.
+            </summary>
+            <param name="address">The mail address.</param>
+        </member>
+        <member name="M:Spire.Email.MailAddress.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.MailAddress"/> class.
+            </summary>
+            <param name="address">The mail address.</param>
+            <param name="displayName">The display name.</param>
+        </member>
+        <member name="M:Spire.Email.MailAddress.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.MailAddress"/> class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailAddress.DisplayName">
+            <summary>
+            Gets or sets a display name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailAddress.User">
+            <summary>
+            Gets the username.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailAddress.Host">
+            <summary>
+            Gets the host of the address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailAddress.Address">
+            <summary>
+            Gets or sets the e-mail address.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.MailAddress.SetEncoding(System.Text.Encoding)">
+            <summary>
+            Sets encoding for dysplay name
+            </summary>
+            <param name="nameEncoding"></param>
+        </member>
+        <member name="M:Spire.Email.MailAddress.HasExtendedMaiboxAddressCharacter(System.String)">
+            <summary>
+            Determines whether the specified value has extended maibox address chars.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>
+            <c>true</c> if the specified value is extended maibox address char; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Spire.Email.MailMessage">
+            <summary>
+            Class represent a Message object
+            </summary>
+        </member>
+        <member name="M:Spire.Email.MailMessage.#ctor(Spire.Email.MailAddress,Spire.Email.MailAddress[])">
+            <summary>
+            Initializes a new instance of Message object
+            </summary>
+            <param name="addressFrom">From address</param>
+            <param name="addressTo">To address</param>
+        </member>
+        <member name="M:Spire.Email.MailMessage.#ctor(Spire.Email.MailAddress,Spire.Email.MailAddress)">
+            <summary>
+            Initializes a new instance of Message object
+            </summary>
+            <param name="addressFrom">From address</param>
+            <param name="addressTo">To address</param>
+        </member>
+        <member name="M:Spire.Email.MailMessage.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of Message object
+            </summary>
+            <param name="addressFrom">From address</param>
+            <param name="addressTo">To address</param>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Attachments">
+            <summary>
+            Returns a list with attachment.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Bcc">
+            <summary>
+            Returns a list with BCC recipients.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.BodyHtml">
+            <summary>
+            Returns the body of the message in html format.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.BodyText">
+            <summary>
+            Returns the body of the message in plain text format.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.BodyTextCharset">
+            <summary>
+            Gets or sets encoding of body text.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Cc">
+            <summary>
+            Gets or sets colllection of Cc recipients.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Date">
+            <summary>
+            Gets or sets date of message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.From">
+            <summary>
+            Gets or sets from address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Id">
+            <summary>
+            Returns the ID of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.OutlookHeaders">
+            <summary>
+            OutlookHeaders of the Message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.ReplyTo">
+            <summary>
+            Gets or sets list to reply to addresses.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Sender">
+            <summary>
+            Gets or sets sender address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.Subject">
+            <summary>
+            Gets or sets subject.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.MailMessage.To">
+            <summary>
+            eturns the list of recipients in the message.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.MailMessage.Load(System.String)">
+            <summary>
+            Load message from file.
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.MailMessage.Load(System.IO.Stream,Spire.Email.MailMessageFormat)">
+            <summary>
+            Load message from stream.
+            </summary>
+            <param name="stream">stream to load</param>
+            <param name="format">Message format</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.MailMessage.Load(System.String,Spire.Email.MailMessageFormat)">
+            <summary>
+             Load message from stream.
+            </summary>
+            <param name="filePath">file name</param>
+            <param name="format">message format</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.MailMessage.Save(System.String)">
+            <summary>
+            Saves message to file.
+            </summary>
+            <param name="filePath">The file name</param>
+        </member>
+        <member name="M:Spire.Email.MailMessage.Save(System.IO.Stream,Spire.Email.MailMessageFormat)">
+            <summary>
+            SaveToFile message to stream
+            </summary>
+            <param name="stream">Stream to be saved</param>
+            <param name="format">Message format</param>
+        </member>
+        <member name="M:Spire.Email.MailMessage.Save(System.String,Spire.Email.MailMessageFormat)">
+            <summary>
+            Saves message to file
+            </summary>
+            <param name="filePath">File name to be saved</param>
+            <param name="format">Message format</param>
+        </member>
+        <member name="T:Spire.Email.MailMessageFormat">
+            <summary>
+            Mail message format type.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.MailMessageFormat.Eml">
+            <summary>
+            Eml
+            </summary>
+        </member>
+        <member name="F:Spire.Email.MailMessageFormat.Emlx">
+            <summary>
+            Emlx
+            </summary>
+        </member>
+        <member name="F:Spire.Email.MailMessageFormat.Mhtml">
+            <summary>
+            Mhtml
+            </summary>
+        </member>
+        <member name="F:Spire.Email.MailMessageFormat.Msg">
+            <summary>
+            Msg
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookTaskMode">
+            <summary>
+            Defines the modes of a Task.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskMode.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskMode.Request">
+            <summary>
+            The task is a task assignment request
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskMode.Accepted">
+            <summary>
+            The task assignment request was accepted
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskMode.Declined">
+            <summary>
+            The task assignment request was declined
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskMode.Update">
+            <summary>
+            The task has been updated
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskMode.SelfDelegated">
+            <summary>
+            The task is self delegated
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.NoteColor">
+            <summary>
+            Specifies the suggested background color 
+            of the Note object
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookDocumentStatus">
+            <summary>
+            Represents the status of document. 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookDocumentStatus.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookDocumentStatus.Printed">
+            <summary>
+            Indicates whether journalized item  
+            was printed during journaling.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookDocumentStatus.Saved">
+            <summary>
+            Indicates whether journalized item  
+            was saved during journaling.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookDocumentStatus.Routed">
+            <summary>
+            Indicates whether journalized item was routed during journaling.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookDocumentStatus.Posted">
+            <summary>
+            Indicates whether the document was posted during journaling.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookContactAddress">
+            <summary>
+            Address information for a contact.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookContactAddress.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.IsMailingAddress">
+            <summary>
+            Indicates whether the address is mailing address
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.Street">
+            <summary>
+            Gets or sets the street portion of the address for the contact.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.City">
+            <summary>
+            Gets or sets the city portion of the address for the contact. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.StateOrProvince">
+            <summary>
+            Gets or sets the state code portion of the address for the contact
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.PostalCode">
+            <summary>
+            Gets or sets the postal code portion of the address for the contact
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.Country">
+            <summary>
+            Gets or sets the country/region portion of the address for the contact.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.CountryCode">
+             <summary>
+            Gets or sets the country/region code portion of the address for the contact
+             </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.Address">
+            <summary>
+            Gets or sets  the complete address of the contact.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContactAddress.PostOfficeBox">
+            <summary>
+            Gets or sets the post office box portion of the other address for the contact.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookGender">
+            <summary>
+            Gender of the contact
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookGender.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookGender.Female">
+            <summary>
+            Female
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookGender.Male">
+            <summary>
+            Male
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookEmailAddress">
+            <summary>
+            Represents the e-mail address for a contact.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookEmailAddress.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookEmailAddress.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="displayName"></param>
+            <param name="displayAs"></param>
+            <param name="addressType"></param>
+            <param name="emailAddress"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookEmailAddress.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="displayAs">Display name</param>
+            <param name="addressType">Address type</param>
+            <param name="emailAddress">Email address</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookEmailAddress.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="emailAddress">Email address</param>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookEmailAddress.IsEmpty">
+            <summary>
+            Indicates whether instance is empty
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookEmailAddress.DisplayAs">
+            <summary>
+            Gets or sets the user-readable display name for the e-mail address
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookEmailAddress.DisplayName">
+            <summary>
+            Gets or sets the diaplay name of email address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookEmailAddress.AddressType">
+            <summary>
+            Gets or sets the address type of the contact.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookEmailAddress.EmailAddress">
+            <summary>
+            Gets or sets the e-mail address of the contact.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookContentType">
+            <summary>
+            The content type of message body.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookContentType.PlainText">
+            <summary>
+            The plain text.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookContentType.Html">
+            <summary>
+            The html type.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookContentType.Rtf">
+            <summary>
+            The rtf type.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookMessageFlags">
+            <summary>
+            Outlook Message Flags.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.Read">
+            <summary>
+            The message is marked as having been read.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.Unmodified">
+            <summary>
+            The outgoing message has not been modified since the first time that it was saved.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.Unsent">
+            <summary>
+            The message is still being composed.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.FromMe">
+            <summary>
+            The messaging user sending was the messaging user receiving the message. 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.HasAttachment">
+            <summary>
+            The message has at least one attachment.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.Associated">
+            <summary>
+            Associated.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.Resend">
+            <summary>
+            The message includes a request for a resend operation with a non-delivery report. 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.NotifyRead">
+            <summary>
+            A read report needs to be sent for the message.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.NotifyUnread">
+             <summary>
+            A nonread report needs to be sent for the message. 
+             </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMessageFlags.EverRead">
+             <summary>
+            The messageImpl has been read at least once. 
+             </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookSensitivity">
+            <summary>
+            Indicates the message sensitivity.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookSensitivity.None">
+            <summary>
+            The message has no special sensitivity.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookSensitivity.Personal">
+            <summary>
+            The message is personal.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookSensitivity.Private">
+            <summary>
+            The message is private.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookSensitivity.Confidential">
+            <summary>
+            The message is confidential.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookImportance">
+            <summary>
+            Indicates the message importance.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookImportance.Low">
+            <summary>
+            Low importance.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookImportance.Normal">
+            <summary>
+            Normal importance.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookImportance.High">
+            <summary>
+            High importance.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookImportance.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookHeaderCollection">
+            <summary>
+            Represents the collection of header fields
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookHeaderCollection.entriesTable">
+            <summary>
+            Contains the OutlookHeaders (string headerKey, ArrayList headerValue)
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.#ctor(Spire.Email.Outlook.OutlookHeaderCollection)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="outlookcollection"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookHeaderCollection.OutllookKey">
+            <summary>
+            Gets a <see cref="T:Spire.Email.Outlook.OutlookHeaderCollection.OutllookKeyCollection"/> containing all header in collections
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookHeaderCollection.Count">
+            <summary>
+            Gets a count of OutlookHeaders
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookHeaderCollection.Item(System.String)">
+            <summary>
+            Gets value by name.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookHeaderCollection.Item(System.Int32)">
+            <summary>
+            Gets value by index.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.Clear">
+            <summary>
+            Clear all values.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.GetKey(System.Int32)">
+            <summary>
+            Get key.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.Get(System.Int32)">
+            <summary>
+            Gets value by index.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.Get(System.String)">
+            <summary>
+            Gets value by name.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.GetValues(System.String)">
+            <summary>
+            Gets values by name.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.Add_(System.String,System.String)">
+            <summary>
+            Add new item.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.Add(Spire.Email.Outlook.OutlookHeaderCollection)">
+            <summary>
+            Add new item.
+            </summary>
+            <param name="c"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.Add(System.String,System.String)">
+            <summary>
+            Add new item.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookHeaderCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+            <msonly />
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookHeaderCollection.OutllookKeyCollection.System#Collections#ICollection#SyncRoot">
+            <msonly />
+        </member>
+        <member name="T:Spire.Email.Outlook.IOutlookAttachment">
+            <summary>
+            Represents a document or link to a document contained in an Outlook item.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.Extension">
+            <summary>
+            Gets a filename extension that indicates the document type of an attachment.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.FileName">
+            <summary>
+            Gets the file name of the attachment.
+            </summary>
+            <value>
+            The file name.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.Size">
+            <summary>
+            Gets an integer value indicating the size (in bytes) of the attachment.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.LongFileName">
+            <summary>
+            Gets an attachment's long filename and extension, excluding path.
+            </summary>
+            <value>
+            The long file name.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.LongPathName">
+            <summary>
+            Gets an attachment's long path name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.DisplayName">
+            <summary>
+            Gets the display name of the ole object in an attachment.
+            </summary>
+            <value>
+            The display name.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.MimeTag">
+            <summary>
+            Gets formatting information about a 
+            Multipurpose Internet Mail Extensions (MIME) attachment.
+            </summary>
+            <value>
+            The mime tag.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.AttachmentEncoding">
+            <summary>
+            Gets the encoding.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.Rendering">
+            <summary>
+            Gets the rendering.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.Data">
+            <summary>
+            Gets or sets binary attachment data. 
+            </summary>
+            <value>
+            The binary data.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.Content">
+            <summary>
+            Gets the content.
+            </summary>
+            <value>The content.</value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookAttachment.CodePage">
+            <summary>
+            Gets the code page.
+            </summary>
+            <value>
+            The code page.
+            </value>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookAttachment.SaveToFile(System.String)">
+            <summary>
+            SaveToFile attachment content.
+            </summary>
+            <param name="filename">The file name to save.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookAttachment.SaveToFile(System.IO.Stream)">
+            <summary>
+            SaveToFile attachment content.
+            </summary>
+            <param name="stream">The stream to save.</param>
+        </member>
+        <member name="T:Spire.Email.Outlook.IOutlookRecipient">
+            <summary>
+            Represents a user or resource in Outlook, generally a mail message addressee.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.DisplayName">
+            <summary>
+            Gets or sets the display name of the message 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.AddressType">
+            <summary>
+            Gets the type of the address of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.EmailAddress">
+            <summary>
+            Gets or sets the email address of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.OrganizationEmailAddress">
+            <summary>
+            Gets the organization email address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.RecipientType">
+            <summary>
+            Gets the type of the recipient or sender.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.RecipientClass">
+            <summary>
+            Gets the type of recipent.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecipient.CodePage">
+            <summary>
+            Gets the code page.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.Period">
+            <summary>
+            Gets or sets the period. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.Frequency">
+            <summary>
+            Gets or sets the frequency of the recurring series.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.FirstDayOfWeek">
+            <summary>
+            Gets or sets the first day of the week.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.OccurrenceCount">
+            <summary>
+            Gets or sets the number of occurrences.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.PatternType">
+            <summary>
+            Gets or sets the type of recurrence pattern.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.CalendarType">
+            <summary>
+            Gets or sets the type of calendar.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookRecurrencePattern.EndType">
+            <summary>
+            Gets or sets the ending type for the recurrence.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Importance">
+            <summary>
+            Gets the ImportanceType.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Sensitivity">
+            <summary>
+            Gets the Sensitivity.
+            </summary>
+            <value>
+            The sensitivity.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.BodyRtf">
+            <summary>
+            Gets or sets the RTF formatted message text.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.BodyHtml">
+            <summary>
+            Gets the <see cref="P:Spire.Email.Outlook.IOutlookMessageImpl.BodyRtf"/> of the message converted to HTML.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.OutlookType">
+            <summary>
+            Gets the type of the body.
+            </summary>
+            <value>The type of the body.</value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.ReplyTo">
+            <summary>
+            Gets or sets the reply to names.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Body">
+            <summary>
+            Gets the message text.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.NormalizedSubject">
+            <summary>
+            Gets normalized subject of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.DisplayTo">
+            <summary>
+            Gets a list of the display names. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.DisplayNamePrefix">
+            <summary>
+            Gets a prefix of the display name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.DisplayName">
+            <summary>
+            Gets the display name for the message. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.DisplayCc">
+            <summary>
+            Gets a list of the display names of any carbon copy (Cc) message recipients.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.DisplayBcc">
+            <summary>
+            Gets a list of the display names of any blind carbon copy (BCC) message recipients.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SenderEmailAddress">
+            <summary>
+            Gets or sets the message sender's e-mail address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SenderAddressType">
+            <summary>
+            Gets the message sender's e-mail address type.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SenderName">
+            <summary>
+            Gets or sets the message sender's display name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.TransportMessageHeaders">
+            <summary>
+            Gets the transport-specific message envelope information.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.InternetMessageId">
+            <summary>
+            Gets the message id of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.ConversationTopic">
+            <summary>
+            Gets the topic of the first message in a conversation thread. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SentRepresentingEmailAddress">
+            <summary>
+            Gets or sets the e-mail address for the messaging user represented by the sender.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SentRepresentingAddressType">
+            <summary>
+            Gets the address type for the messaging user represented by the sender.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SentRepresentingName">
+            <summary>
+            Gets or sets the display name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.SubjectPrefix">
+            <summary>
+            Gets a subject prefix on a message. 
+            </summary>
+            <value>
+            The string that represents subject prefix.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Subject">
+            <summary>
+            Gets or sets the subject of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.MessageClass">
+            <summary>
+            Gets a case-sensitive string that identifies the sender-defined message class, such as IPM.Note.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Attachments">
+            <summary>
+            Gets the attachments in the message.
+            </summary>
+            <value>
+            The attachment collection.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Recipients">
+            <summary>
+            Gets the recipients of the message.
+            </summary>
+            <value>
+            The collection of recipients.
+            </value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.ClientSubmitTime">
+            <summary>
+            Gets or sets the date and time 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.DeliveryTime">
+            <summary>
+            Gets or sets the date and time was delivered
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.OutlookHeaders">
+            <summary>
+            Gets the transport message OutlookHeaders
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.Flags">
+            <summary>
+            Gets the message flags.
+            </summary>
+            <value>The messageImpl flags.</value>
+        </member>
+        <member name="P:Spire.Email.Outlook.IOutlookMessageImpl.CodePage">
+            <summary>
+            Gets the code page.
+            </summary>
+            <value>
+            The code page.
+            </value>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.SetMessageFlags(Spire.Email.Outlook.OutlookMessageFlags)">
+            <summary>
+            Sets the messageImpl flags.
+            </summary>
+            <param name="flags">The messageImpl flags.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.SaveAsTnef(System.IO.Stream)">
+            <summary>
+            SaveToFile message in TNEF format.
+            </summary>
+            <param name="stream">The stream where a messageImpl will be saved to.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.SaveAsTnef(System.String)">
+            <summary>
+            SaveToFile message in TNEF format.
+            </summary>
+            <param name="fileName">Name of the file where a messageImpl will be saved to.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.SaveToStream(System.String)">
+            <summary>
+            Saves the specified file name.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.SaveToStream(System.IO.Stream)">
+            <summary>
+            Saves the specified stream.
+            </summary>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.SetBodyContent(System.String,Spire.Email.Outlook.OutlookContentType)">
+            <summary>
+            Sets the content of the body.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.IOutlookMessageImpl.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookAttachmentCollection">
+            <summary>
+            Represents a collection of OutlookAttachment objects. 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookAttachmentCollection.messageImpl">
+            <summary>
+            The owner messageImpl.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAttachmentCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Outlook.OutlookAttachmentCollection"/> class.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAttachmentCollection.#ctor(Spire.Email.Outlook.OutlookMessage)">
+            <summary>
+            Initializes a new instance of the OutlookAttachmentCollection class.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAttachmentCollection.Add(System.String,System.Byte[])">
+            <summary>
+            Adds the new attachment.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAttachmentCollection.Add(Spire.Email.Outlook.IOutlookAttachment)">
+            <summary>
+            Adds an object to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1"/>.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAttachmentCollection.Insert(System.Int32,Spire.Email.Outlook.IOutlookAttachment)">
+            <summary>
+            Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1"/> at the specified index.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookRecipientCollection">
+            <summary>
+            Contains a collection of Recipient objects for an Outlook item. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookRecipientCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Outlook.OutlookRecipientCollection"/> class.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookRecipientCollection.Add(System.String,System.String,Spire.Email.Outlook.OutlookRecipientType)">
+            <summary>
+            Adds the new recipient.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookRecipientCollection.Add(System.String,System.String,Spire.Email.Outlook.OutlookRecipientType,System.Int32)">
+            <summary>
+            Adds the new recipient.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookRecipientCollection.Add(Spire.Email.Outlook.IOutlookRecipient)">
+            <summary>
+            Adds an object to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1"/>.
+            </summary>
+            <param name="item">The object to be added to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1"/>. The value can be null for reference types.</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookRecipientCollection.Insert(System.Int32,Spire.Email.Outlook.IOutlookRecipient)">
+            <summary>
+            Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1"/> at the specified index.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookObjectType">
+            <summary>
+            Represents the outlook object type.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.AddressBookContainer">
+            <summary>
+            AddressBookContainer
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.AddressBook">
+            <summary>
+            AddressBook
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.Attachment">
+            <summary>
+            AttachmentImpl
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.DistributionList">
+            <summary>
+            DistributionList
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.Folder">
+            <summary>
+            Folder
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.Form">
+            <summary>
+            Form
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.MailUser">
+            <summary>
+            MailUser
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.Message">
+            <summary>
+            Message
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.ProfileSelection">
+            <summary>
+            ProfileSelection
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.Session">
+            <summary>
+            Session
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.MessageStore">
+            <summary>
+            MessageStore
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookObjectType.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookRecipientType">
+            <summary>
+            Represent recipient type for a message recipient.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.Bcc">
+            <summary>
+            Bcc.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.Cc">
+            <summary>
+            Cc
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.Originator">
+            <summary>
+            Originator
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.P1">
+            <summary>
+            P1
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.Submitted">
+            <summary>
+            Submitted
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.To">
+            <summary>
+            To
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecipientType.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookRecurrenceEndType">
+            <summary>
+            The ending type for the recurrence.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookRecurrenceCalendarType">
+            <summary>
+            Calendar type of the recurrence
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.Default">
+            <summary>
+            The default value for the calendar type 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.Gregorian">
+            <summary>
+            Gregorian 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.GregorianUS">
+            <summary>
+            Gregorian U.S.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.JapaneseEmperorEra">
+            <summary>
+            Japanese Emperor Era
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.Taiwan">
+            <summary>
+            Taiwan
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.KoreanTangunEra">
+            <summary>
+            Korean Tangun Era
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.Hijri">
+            <summary>
+            Hijri (Arabic Lunar)
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.Thai">
+            <summary>
+            Thai
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.HebrewLunar">
+            <summary>
+            Hebrew lunar
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.GregorianMiddleEastFrench">
+            <summary>
+            Gregorian Middle East French
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.GregorianArabic">
+            <summary>
+            Gregorian Arabic
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.GregorianTransliteratedEnglish">
+            <summary>
+            Gregorian transliterated English
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.GregorianTransliteratedFrench">
+            <summary>
+            Gregorian transliterated French
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.CAL_LUNAR_JAPANESE">
+            <summary>
+            Japanese lunar
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.JapaneseLunar">
+            <summary>
+            Chinese lunar
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.SakaEra">
+            <summary>
+            Saka Era calendar
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.LunarETOChinese">
+            <summary>
+            Lunar ETO Chinese
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.LunarETOKorean">
+            <summary>
+            Lunar ETO Korean
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.LunarRokuyou">
+            <summary>
+            Lunar Rokuyou
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.KoreanLunar">
+            <summary>
+            Korean lunar
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceCalendarType.UmAlQura">
+            <summary>
+            Um Al Qura
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookRecurrencePatternType">
+            <summary>
+            Ccalendar recurrence pattern types
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.Day">
+            <summary>
+            Daily recurrence.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.Week">
+            <summary>
+            Weekly recurrence.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.Month">
+            <summary>
+            Monthly recurrence.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.MonthEnd">
+            <summary>
+            Month-end recurrence.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.MonthNth">
+            <summary>
+            Nth month pattern.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.HijriMonth">
+            <summary>
+            Monthly recurrence in the Hijri calendar
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.HijriMonthNth">
+            <summary>
+            The event has an every nth month pattern in the Hijri calendar.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrencePatternType.HijriMonthEnd">
+            <summary>
+            Month end recurrence in the Hijri calendar.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookRecurrenceFrequency">
+            <summary>
+            Calendar recurrence frequency
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceFrequency.Daily">
+            <summary>
+            Daily frequency
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceFrequency.Weekly">
+            <summary>
+            Weekly frequency
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceFrequency.Monthly">
+            <summary>
+            Monthly frequency
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookRecurrenceFrequency.Yearly">
+            <summary>
+            Yearly frequency
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookClientIntent">
+            <summary>
+            The intent of an appointment
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.Manager">
+            <summary>
+            The user is the owner of the Meeting object's
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.Delegate">
+            <summary>
+            The user is a delegate acting on a Meeting object in a delegator's Calendar folder.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.DeletedWithNoResponse">
+            <summary>
+            The user deleted the Meeting object with no response sent to the organizer
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.DeletedExceptionWithNoResponse">
+            <summary>
+            The user deleted an exception to a recurring series with no response sent to the organizer
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.RespondedTentative">
+            <summary>
+            AppointmentImpl accepted as tentative
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.RespondedAccept">
+            <summary>
+            AppointmentImpl accepted
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.RespondedDecline">
+            <summary>
+            AppointmentImpl declined
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.ModifiedStartTime">
+            <summary>
+            The user modified the start time
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.ModifiedEndTime">
+            <summary>
+            The user modified the end time
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.ModifiedLocation">
+            <summary>
+            The user changed the location of the meeting
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.RespondedExceptionDecline">
+            <summary>
+            The user declined an exception to a recurring series
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.Canceled">
+            <summary>
+            The user declined an exception to a recurring series
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookClientIntent.ExceptionCanceled">
+            <summary>
+            The user canceled an exception to a recurring serie
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskHistory.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookTaskStatus">
+            <summary>
+            Indicates the task status.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskStatus.NotStarted">
+            <summary>
+            the task is not started.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskStatus.InProgress">
+            <summary>
+            the task is in progress.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskStatus.Completed">
+            <summary>
+             the task is completed
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskStatus.WaitingOnOthers">
+            <summary>
+            waiting on others
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskStatus.Deferred">
+            <summary>
+            deferred work 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskStatus.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookTaskOwnership">
+             <summary>
+            Indicates the ownership state of the task. 
+             </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskOwnership.NewTask">
+            <summary>
+            Task has not yet been assigned to a user.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskOwnership.DelegatedTask">
+            <summary>
+            Task has been delegated to another user.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskOwnership.OwnTask">
+            <summary>
+            Task is assigned to the current Outlook user.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookTaskDelegationState">
+            <summary>
+            Indicates the acceptance state of the task.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskDelegationState.NoMatch">
+            <summary>
+            Not assigned.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskDelegationState.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskDelegationState.Accepted">
+            <summary>
+            Accepted. 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookTaskDelegationState.Declined">
+            <summary>
+            Declined. 
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookAppointment">
+            <summary>
+            Represents a meeting, a one-time appointment, or a recurring appointment or meeting. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAppointment.#ctor">
+            <summary>
+            Initializes a new instance of the OutlookAppointment class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.Id">
+            <summary>
+            Gets id of appointment.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.AppointmentMessageClass">
+            <summary>
+            Gets message class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.BusyStatus">
+            <summary>
+            Gets or sets busy status.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.EndTime">
+            <summary>
+            Gets or set end date and time.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.StartTime">
+            <summary>
+            Gets or set start date and time.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.IsAllDayEvent">
+            <summary>
+            Gets or sets a value indicating whether this instance is all day event. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.ClientIntent">
+            <summary>
+            Gets or sets the clients intention.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.IsReminderSet">
+            <summary>
+            Gets or sets a value indicating whether this instance is reminder set. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.Location">
+            <summary>
+            Gets or sets location.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.MeetingStatus">
+            <summary>
+            Indicates the status of an appointment or meeting. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.RecurrencePattern">
+            <summary>
+            Gets the recurrence pattern. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.StartTimeZone">
+            <summary>
+            Gets or sets the start date time zone. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.EndTimeZone">
+            <summary>
+            Gets or sets the end date time zone. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.AppointmentCounterProposal">
+            <summary>
+            Indicates whether object is a counter proposal.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookAppointment.ResponseRequested">
+            <summary>
+            Indicates True if the sender would like a response to the meeting request for the appointment. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAppointment.SaveAsiCalender(System.String)">
+            <summary>
+            SaveToFile as appomentment format.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookAppointment.SaveAsiCalender(System.IO.Stream)">
+            <summary>
+            SaveToFile as appomentment format.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookBusyStatus">
+            <summary>
+            The user's availability is based on scheduled appointments. 
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookBusyStatus.Free">
+            <summary>
+            The user is available.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookBusyStatus.Tentative">
+            <summary>
+            The user has a tentative event scheduled.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookBusyStatus.Busy">
+            <summary>
+            The user is busy.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookBusyStatus.OutOfOffice">
+            <summary>
+            The user is out of office.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookBusyStatus.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookContact">
+            <summary>
+            Class outlook contact.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookContact.#ctor">
+            <summary>
+            Initializes a new instance of the OutlookContact class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.AssistentName">
+            <summary>
+            Gets or set assistent name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Birthday">
+            <summary>
+            Gets or set birthday.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.BusinessAddress">
+            <summary>
+            Gets or sets business adddress.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.BusinessFax">
+            <summary>
+            Gets or set business fax.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.BusinessHomePage">
+            <summary>
+            Gets or sets business home page.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.BusinessPhone">
+            <summary>
+            Gets or sets business phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.BusinessPhone2">
+            <summary>
+            Gets or sets the second business phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.CallbackPhone">
+            <summary>
+            Gets or sets the callback phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.CarPhone">
+            <summary>
+            Gets or sets the car phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.MobilePhone">
+            <summary>
+            Gets or sets the mobile phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.CompanyMainPhone">
+            <summary>
+            Gets or sets the company main phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.CompanyName">
+            <summary>
+            Gets or sets the company name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.ComputerNetworkName">
+            <summary>
+            Gets or sets the computer network name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.CustomerId">
+            <summary>
+            Gets or sets the customer id.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.DepartmentName">
+            <summary>
+            Gets or sets the department name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.DisplayName">
+            <summary>
+            Gets or sets the display name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.DisplayNamePrefix">
+            <summary>
+            Gets or sets the display name prefix. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Email1Address">
+            <summary>
+            Gets or sets the email address. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Email1Address2">
+            <summary>
+            Gets or sets the second email address. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Email1Address3">
+            <summary>
+            Gets or sets the third email address. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.FileAs">
+            <summary>
+            Gets or sets file as.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.FtpSite">
+            <summary>
+            Gets or set ftp site.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Gender">
+            <summary>
+            Gets or sets gender.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Generation">
+            <summary>
+            Gets or set generation.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.GivenName">
+            <summary>
+            Gets or sets given name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.GovernmentId">
+            <summary>
+            Gets or sets goverment id.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Hobbies">
+            <summary>
+            Gets or sets hobbies.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.HomeAddress">
+            <summary>
+            Gets or sets the home address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.HomeFax">
+            <summary>
+            Gets or sets the home fax.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.HomePhone">
+            <summary>
+            Gets or sets the home phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.HomePhone2">
+            <summary>
+            Gets or sets the second home phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Initials">
+            <summary>
+            Gets or sets the Initials.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.InstantMessengerAddress">
+            <summary>
+            Gets or sets instant messenger address. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.InternetFreeBusyAddress">
+            <summary>
+            Gets or sets internet free busy address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Isdn">
+            <summary>
+            Gets or sets the isdn number.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.ManagerName">
+            <summary>
+            Gets or set manager name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.MiddleName">
+            <summary>
+            Gets or sets the middle name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Nickname">
+            <summary>
+            Gets or sets the nick name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.OfficeLocation">
+            <summary>
+            Gets or sets the office location.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.OtherAddress">
+            <summary>
+            Gets or sets the other address.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.OtherPhone">
+            <summary>
+            Gets or sets the other phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.PagerPhone">
+            <summary>
+            Gets or sets the pager phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.PersonalHomePage">
+            <summary>
+            Gets or sets personal home page.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.PrimaryFax">
+            <summary>
+            Gets or sets primary fax.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.PrimaryPhone">
+            <summary>
+            Gets or sets primary phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Profession">
+            <summary>
+            Gets or sets profession.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.RadioPhone">
+            <summary>
+            Gets or sets radio phone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.SpouseName">
+            <summary>
+            Gets or sets the spouse name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Surname">
+            <summary>
+            Gets or sets the surename.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Telex">
+            <summary>
+            Gets or sets the telex number.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.Title">
+            <summary>
+            Gets or sets title.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.TtyTddPhone">
+            <summary>
+            Gets or sets the tty or TDD phone. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookContact.WeddingAnniversary">
+            <summary>
+            Gets or sets the wedding anniversary.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookContact.SaveAsContact(System.String)">
+            <summary>
+            Save as vcard.
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookContact.SaveAsContact(System.IO.Stream)">
+            <summary>
+            Save as vcard
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookFolder">
+            <summary>
+            Represents folder in Outlook.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookFolder._properties">
+            <summary>
+            Folder properties.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookFolder._executor">
+            <summary>
+            The Pst Parser.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookFolder._entryId">
+            <summary>
+            Entry id of folder.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookFolder._nid">
+            <summary>
+            Node Id of Folder PC.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spire.Email.Outlook.OutlookFolder"/> class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.Name">
+            <summary>
+            Gets display name.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.FullPath">
+            <summary>
+            Gets e full path of folder
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.ItemCount">
+            <summary>
+            Gets item count.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.UnreadItemCount">
+            <summary>
+            Gets unread item count.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.HasSubFolders">
+            <summary>
+            Indicates whether this folder has sub folders.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.SubFolderCount">
+            <summary>
+            Gets count of sub folders.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.ContainerClass">
+            <summary>
+            Gets container class
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.LastModificationTime">
+            <summary>
+            Gets the last modification time. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.HasLastModificationTime">
+            <summary>
+            Indicates whether has last modification time property.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.EntryId">
+            <summary>
+            Gets the entry identifier. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFolder.Nid">
+            <summary>
+            Gets or sets node Id of Folder PC.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.GetEntryStringId">
+            <summary>
+            Gets entry id as string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.GetSubFolders">
+            <summary>
+            Gets collection of subfolders.
+            </summary>
+            <returns>The OutlookFolder collection.</returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.GetSubFolder(System.String)">
+            <summary>
+            Get subfolder.
+            </summary>
+            <param name="name">Name of subfolder.</param>
+            <returns>A OutlookFolder object.</returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.EnumerateFolders">
+            <summary>
+            Exposes the enumerator, which supports an iteration of subfolders in folder.
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/>, 
+            that represents an enumerator that iterates through a subfolders in folder.</returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.EnumerateOutlookItem">
+            <summary>
+            Exposes the enumerator, which supports an iteration of messagesImpl in folder.
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/>, 
+            that represents an enumerator that iterates through a message item in folder.</returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.EnumerateMessagesEntryId">
+            <summary>
+            Enumerates the entryID of messagesImpl.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.AddFolder(System.String)">
+            <summary>
+            Adds the new sub folder.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.AddFolder(System.String,System.String)">
+            <summary>
+            Adds the new sub folder.
+            </summary>
+            <param name="name"></param>
+            <param name="containerClass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.AddItem(Spire.Email.Outlook.OutlookItem)">
+            <summary>
+            Adds new messageImpl to folder.
+            </summary>
+            <param name="messageItem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.RemoveItem(System.Byte[])">
+            <summary>
+            Remove item by entry id.
+            </summary>
+            <param name="entryId"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFolder.ChangeName(System.String)">
+            <summary>
+            Changes display name
+            </summary>
+            <param name="newName"></param>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookFolderCollection">
+            <summary>
+            Represents collection of OutlookFolder.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookFile">
+            <summary>
+            Represents an outlook pst file.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.#ctor(System.String)">
+            <summary>
+            Load outlook file pst from disk.
+            </summary>
+            <param name="fileName">The file name</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.#ctor(System.IO.Stream)">
+            <summary>
+            Load outlook file pst from stream.
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.LoadFromFile(System.String)">
+            <summary>
+            Load outlook pst file from disk.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.LoadFromStream(System.IO.Stream)">
+            <summary>
+            Load outlook pst file from stream.
+            </summary>
+            <param name="stream">Stream to load</param>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFile.RootOutlookFolder">
+            <summary>
+            Gets mail box root outlookFolder.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFile.Items">
+            <summary>
+            Gets list of message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFile.Folders">
+            <summary>
+            Gets list of outlookFolder.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.GetRootFolder">
+            <summary>
+            Gets root outlookFolder.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookFile.Name">
+            <summary>
+            Gets display name.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.GetFolder(System.String)">
+            <summary>
+            Gets outlookFolder by outlookFolder name.
+            </summary>
+            <param name="folderName">The outlookFolder name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.GetFolderById(System.String)">
+            <summary>
+            Gets outlookFolder by outlookFolder id.
+            </summary>
+            <param name="folderId">The outlookFolder id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.GetSubFolders">
+            <summary>
+            Gets list of folders.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookFile.GetMessage(System.String)">
+            <summary>
+            Gets message by specific message id.
+            </summary>
+            <param name="messageId">The message id</param>
+            <returns></returns>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookItem">
+            <summary>
+            Represents an Outlook message format document.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="from">The from address</param>
+            <param name="to">The to address</param>
+            <param name="subject">The subject</param>
+            <param name="body">The body content</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="from">The from address of the message</param>
+            <param name="to">The to address of the message</param>
+            <param name="subject">The subject of the message</param>
+            <param name="body">The body content of the message</param>
+            <param name="isUnicode">Indicates use unicode or ascii encoding </param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.LoadMailMessage(Spire.Email.MailMessage)">
+            <summary>
+            Load outlook message from mail message.
+            </summary>
+            <param name="mailMessage"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.LoadMailMessage(Spire.Email.MailMessage,System.Boolean)">
+            <summary>
+            Load outlook message from mail message.
+            </summary>
+            <param name="mailMessage">Mail message object</param>
+            <param name="isUnicode">Is uncode message</param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.LoadFromFile(System.String)">
+            <summary>
+            Load outlook message from file.
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.LoadFromStream(System.IO.Stream)">
+            <summary>
+            Load outlook message from stream.
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.LoadFromTnefFile(System.String)">
+            <summary>
+            Load outlook message from tnef File
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookItem.LoadFromTnefStream(System.IO.Stream)">
+            <summary>
+            Load outlook message from tnef stream.
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookJournal">
+            <summary>
+            Class Outlook Journal.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookJournal.#ctor">
+            <summary>
+             Initializes a new instance of the OutlookJournal.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookJournal.Duration">
+            <summary>
+            Gets the duration.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookJournal.EndTime">
+            <summary>
+            Gets or sets end time.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookJournal.StartTime">
+            <summary>
+            Gets or sets start time.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookJournal.Status">
+            <summary>
+            Gets or sets status.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookJournal.HasAttachment">
+            <summary>
+            Indicates whether has attachment.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookMeetingState">
+            <summary>
+            Indicates the status of the meeting.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMeetingState.Meeting">
+            <summary>
+            The meeting has been scheduled.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMeetingState.Received">
+            <summary>
+            The meeting request has been received.
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Outlook.OutlookMeetingState.Canceled">
+            <summary>
+            The scheduled meeting has been cancelled.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookMessage">
+            <summary>
+            Represents an Outlook message format document.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookMessage.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookNote">
+            <summary>
+            Class Outlook Note. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookNote.#ctor">
+            <summary>
+            Initializes a new instance of the OutlookNote class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookNote.Color">
+            <summary>
+            Gets or sets color.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookNote.Height">
+            <summary>
+            Gets or sets height.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookNote.Left">
+            <summary>
+            Gets or sets left position.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookNote.Top">
+            <summary>
+            Gets or sets top position.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookNote.Width">
+            <summary>
+            Gets or sets width.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookNote.CreationDate">
+            <summary>
+            Gets creation date.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookTask">
+            <summary>
+            Class Outlook task.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Outlook.OutlookTask.#ctor">
+            <summary>
+            Initializes a new instance of the OutlookTask class.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.ActualWork">
+            <summary>
+            Gets or sets actual work.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.Mode">
+            <summary>
+            Gets or sets assignment status.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.LastUpdateDateTime">
+            <summary>
+            Gets or sets last update date time.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.DateCompleted">
+            <summary>
+            Gets or sets date when the user completed work on the task.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.DelegationState">
+            <summary>
+            Gets or sets the state of the delegation. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.DueDate">
+            <summary>
+            Gets or sets due date.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.IsComplete">
+            <summary>
+            Gets a value indicating whether this instance is complete.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.Owner">
+            <summary>
+            Gets or sets the name of task owner.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.Delegator">
+            <summary>
+            Gets or sets delegator.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.Ownership">
+            <summary>
+            Gets or sets ownership.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.PercentComplete">
+            <summary>
+            Gets or sets progress.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.RecurrencePattern">
+            <summary>
+            Gets or sets Recurrence.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.StartDate">
+            <summary>
+            Gets or sets start date.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.Status">
+            <summary>
+            Gets or sets status of task.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTask.TotalWork">
+            <summary>
+            Gets or sets the total work. 
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Outlook.OutlookTimeZone">
+            <summary>
+            Represents information for a time zone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.HasEffectiveTimeZone">
+            <summary>
+            Indicates whethere there is effective timezone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.Name">
+            <summary>
+            Gets or sets the identifier of the time zone.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.Bias">
+            <summary>
+            Gets or sets the difference in minutes of between the 
+            local time in this time zone and the Coordinated Universal Time (UTC).
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.StandardBias">
+            <summary>
+             Gets or sets the time offset in minutes from the Bias to account for standard time in this time zone. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.DaylightBias">
+            <summary>
+            Gets or sets the date and time in this time zone when time changes over to daylight time in the current year. 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.DaylightDate">
+            <summary>
+            Gets the date and time in this time zone when time changes over to daylight time in the current year.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Outlook.OutlookTimeZone.StandardDate">
+            <summary>
+            Gets the date and time in this time zone when time changes over to standard time. 
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Pop3.AuthenticationType">
+            <summary>
+            Authentication types
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Pop3.IPop3MessageInfo">
+            <summary>
+            Represents Pop3 mssage Info
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.IPop3MessageInfo.Size">
+            <summary>
+            Gets the size of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.IPop3MessageInfo.SequenceNumber">
+            <summary>
+            Gets the Sequence Number of the message.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.IPop3MessageInfo.UniqueId">
+            <summary>
+            Gets the Unique Id of the message.
+            </summary>
+            <value>
+            The unique id.
+            </value>
+        </member>
+        <member name="T:Spire.Email.Pop3.Pop3Client">
+            <summary>
+            Class to communicate with a Post Office Protocol Version 3 (POP3) server.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.#ctor">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the class
+            </summary>
+            <param name="host">The host name</param>
+            <param name="username">The user name</param>
+            <param name="password">The password</param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.#ctor(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the class 
+            </summary>
+            <param name="host">The host name</param>
+            <param name="port">The por number</param>
+            <param name="username">The user name</param>
+            <param name="password">The password</param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.#ctor(System.String,System.Int32,System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="host">The host name.</param>
+            <param name="port">The port number</param>
+            <param name="username">The username</param>
+            <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
+            <param name="useOAuth">Indicates whether use OAuth.</param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.BeginRecv(System.Int32,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins an asyncronous receiving all messagesImpl
+            </summary>
+            <param name="serialNumber"></param>
+            <param name="callback"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Connect">
+            <summary>
+            Connect server.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Disconnect">
+            <summary>
+            Disconnect server
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.DeleteMessage(System.Int32)">
+            <summary>
+            Deletes a messageImpl
+            </summary>
+            <param name="serialNumber">The serial number</param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.DeleteAllMessages">
+            <summary>
+            Deletes all message.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.EndRecv(System.IAsyncResult)">
+            <summary>
+            WaitingOnOthers for command execute finish.
+            </summary>
+            <param name="asyncResult"></param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.GetAllMessages">
+            <summary>
+            Gets all messages info.
+            </summary>
+            <returns>The messageImpl collection</returns>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.GetMessagesUid(System.Int32)">
+            <summary>
+            Gets all message UIDs (unique identifiers)		
+            </summary>
+            <param name="serialNumber">The serial number</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.GetMessage(System.Int32)">
+            <summary>
+             Gets a messageImpl from the POP3 server
+            </summary>
+            <param name="serialNumber">The serial number</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.GetMessageCount">
+            <summary>
+            Gets message count from the mailbox.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.GetSize">
+            <summary>
+            Gets the occupied size of the mailbox.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Login">
+            <summary>
+            Connects to the server and authorizes
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Login(Spire.Email.Pop3.AuthenticationType)">
+            <summary>
+            Connects to the server and authorizes	
+            </summary>
+            <param name="authenticationType"></param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Logout">
+            <summary>
+             Disconnects from the server
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Noop">
+            <summary>
+            Sends the presence command. 
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.Reset">
+            <summary>
+            Rolls back the current transaction
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.SaveToFile(System.Int32,System.String)">
+            <summary>
+            Save message to file.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="fileName">The file name</param>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3Client.SaveToFile(System.Int32,System.IO.Stream)">
+            <summary>
+            Save message to file.
+            </summary>
+            <param name="sequenceNo">The sequence number</param>
+            <param name="stream">The stream to be saved</param>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.EnableSsl">
+            <summary>
+            Gets or sets whether use SSL.
+            </summary> 
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.UseOAuth">
+            <summary>
+            Indicates whether use OAuth.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.AccessToken">
+            <summary>
+            Gets or sets access token.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.Host">
+            <summary>
+            An address of the server
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Value cannot be null</exception>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.Password">
+            <summary>
+            A password to authenticate on the server
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.Port">
+            <summary>
+            A number of the TCP server port
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.Timeout">
+            <summary>
+            Specifies time in milliseconds to wait a response while receiving packets from the server
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Pop3.Pop3Client.Username">
+            <summary>
+            A username to authenticate on the server
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Pop3.Pop3MessageInfoCollection">
+            <summary>
+            Represents the information of a mail message from Pop3 server.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Pop3.Pop3MessageInfoCollection.#ctor">
+            <summary>
+            Initializes a new instance of the Pop3MessageInfoCollection class.
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Smtp.ConnectionProtocols">
+            <summary>
+            Connection Protocols
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Smtp.ConnectionProtocols.None">
+            <summary>
+            Default Connection Protocol
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Smtp.ConnectionProtocols.Ssl">
+            <summary>
+            Ssl Connection Protocol
+            </summary>
+        </member>
+        <member name="F:Spire.Email.Smtp.ConnectionProtocols.StartTls">
+            <summary>
+            StartTls Connection Protocol
+            </summary>
+        </member>
+        <member name="T:Spire.Email.Smtp.SmtpClient">
+            <summary>
+            Represents component for access smtp servers
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String)">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+            <param name="host">URL of host</param>
+            <param name="port">The tcp port number</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.String,System.String,Spire.Email.Smtp.ConnectionProtocols)">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+            <param name="host">URL of host</param>
+            <param name="userName">The user name</param>
+            <param name="password">The password</param>
+            <param name="connectionProtocols">Connection Protocols</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.Int32,System.String,System.String,Spire.Email.Smtp.ConnectionProtocols)">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+            <param name="host">URL of host</param>
+            <param name="port">The tcp port number</param>
+            <param name="userName">The user name</param>
+            <param name="password">The password</param>
+            <param name="connectionProtocols">Connection protocols</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.UInt16,System.Boolean,System.String,System.String)">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+            <param name="host">URL of host to connect to</param>
+            <param name="port">TCP port for connection</param>
+            <param name="useOAuth">Indicates whether use OAuth.</param>
+            <param name="userName">Username to login to the SMTP server</param>
+            <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.#ctor(System.String,System.UInt16,System.Boolean,System.String,System.String,Spire.Email.Smtp.ConnectionProtocols)">
+            <summary>
+            Initializes the internal structures of the created object
+            </summary>
+            <param name="host">URL of host to connect to</param>
+            <param name="port">TCP port for the connection</param>
+            <param name="useOAuth">Indicates whether use OAuth.</param>
+            <param name="userName">Username to login to SMTP server</param>
+            <param name="authInfo">The password (useOAuth == false) or access token(useOAuth == false).</param>
+            <param name="connectionProtocols">Specifies using SSL during the connection</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.BeginSendOne(Spire.Email.MailMessage,System.AsyncCallback)">
+            <summary>
+            Starts an asyncronous sending of a message
+            </summary>
+            <param name="message">A message to send</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.BeginSendSome(System.Collections.Generic.List{Spire.Email.MailMessage},System.AsyncCallback)">
+            <summary>
+            Starts an asyncronous sending of specific messagesImpl.
+            </summary>
+            <param name="messages">Messages to be sent</param>
+            <param name="callback">called when sending process finishes</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.EndSendOne(System.IAsyncResult)">
+            <summary>
+            WaitingOnOthers for command execution finish.
+            </summary>
+            <param name="asyncResult"></param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.EndSendSome(System.IAsyncResult)">
+            <summary>
+            WaitingOnOthers for command execution finish.
+            </summary>
+            <param name="asyncResult"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.SendOne(Spire.Email.MailMessage)">
+            <summary>
+            Sends a message.
+            </summary>
+            <param name="message">message to be sent</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.SendOne(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sends a message.
+            </summary>
+            <param name="addressFrom">Source e-mail address</param>
+            <param name="addressTo">ResultType e-mail address</param>
+            <param name="messageSubject">Subject of the message</param>
+            <param name="messageText">Text of the message</param>
+        </member>
+        <member name="M:Spire.Email.Smtp.SmtpClient.SendSome(System.Collections.Generic.List{Spire.Email.MailMessage})">
+            <summary>
+            Sends messagesImpl.
+            </summary>
+            <param name="messages">Messages to be sent.</param>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.ConnectionProtocols">
+            <summary>
+            Specifies using TLS/SSL during the connection
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.Encoding">
+            <summary>
+            Gets or sets the mail encoding.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.UseOAuth">
+            <summary>
+            Indicates whether use OAuth
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.AccessToken">
+            <summary>
+            Gets or sets access token.
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.Host">
+            <summary>
+            An address of the server
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.Password">
+            <summary>
+            A password to authenticate on the server
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.Port">
+            <summary>
+            A number of the TCP server port
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.TimeOut">
+            <summary>
+            Specifies time in milliseconds to wait a response 
+            </summary>
+        </member>
+        <member name="P:Spire.Email.Smtp.SmtpClient.Username">
+            <summary>
+            A username to authenticate on the server
+            </summary>
+        </member>
+    </members>
+</doc>
