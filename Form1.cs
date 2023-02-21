@@ -62,15 +62,14 @@ namespace FlowSERVER1 {
                 String _getAuth = _getPath + "\\CUST_DATAS.txt";
                 if (File.Exists(_getAuth)) {
                     String _UsernameFirst = File.ReadLines(_getAuth).First();
-                    String _PassSed = File.ReadLines(_getAuth).ElementAtOrDefault(1);
+                    //String _PassSed = File.ReadLines(_getAuth).ElementAtOrDefault(1);
                     if (new FileInfo(_getAuth).Length != 0) {
                         Thread showLoadingForm = new Thread(() => new LoadAlertFORM().ShowDialog());
                         showLoadingForm.IsBackground = false;
                         showLoadingForm.Start();
 
                         guna2Panel7.Visible = false;
-                        label5.Text = _PassSed;
-                        label3.Text = _UsernameFirst;
+                        label5.Text = _UsernameFirst;
 
                         setupTime();
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
@@ -203,6 +202,20 @@ namespace FlowSERVER1 {
                 Form_1.label29.Text = "Autres";
                 Form_1.guna2Button3.Text = "Ajouter un compte";
                 Form_1.guna2Button5.Text = "Paramètres";
+            }
+
+            if(_custLang == "POR") {
+                Form_1.label10.Text = "Carregar";
+                Form_1.label2.Text = "Contagem de itens";
+                Form_1.guna2Button2.Text = "Subir arquivo";
+                Form_1.guna2Button12.Text = "Carregar Pasta";
+                Form_1.guna2Button1.Text = "Criar diretório";
+                Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essenciais";
+                Form_1.label29.Text = "Outros";
+                Form_1.guna2Button3.Text = "Adicionar Conta";
+                Form_1.guna2Button5.Text = "Configurações";
             }
         }
 
@@ -1052,10 +1065,15 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "FRE") {
                     greeting = "Bonjour " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "POR") {
+                    greeting = "Bom dia " + lab5.Text + " :)";
+                }
+
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
                 picturebox3.Visible = false;
             }
+
             else if (hours >= 12 && hours <= 16) {
                 if (CurrentLang == "US") {
                     greeting = "Good Afternoon " + lab5.Text + " :)";
@@ -1074,6 +1092,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "FRE") {
                     greeting = "Bon après-midi " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "POR") {
+                    greeting = "Boa tarde " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -1100,6 +1121,9 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "FRE") {
                         greeting = "bonne soirée " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "POR") {
+                        greeting = "Boa noite " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -1119,6 +1143,9 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "FRE") {
                         greeting = "bonne soirée " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "POR") {
+                        greeting = "Boa noite " + lab5.Text + " :)";
                     }
                 }
 
@@ -1145,6 +1172,10 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "FRE") {
                     greeting = "bonne nuit " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "POR") {
+                    greeting = "Boa noite " + lab5.Text + " :)";
+                }
+
                 picturebox1.Visible = true;
                 picturebox2.Visible = false;
                 picturebox3.Visible = false;
@@ -1155,69 +1186,6 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) {
             Form4 create_dir = new Form4();
             create_dir.Show();
-        }
-
-        private int getUserDirCount() {
-            String _typeAcc = "";
-            int _intAllowed = 0;
-            List<String> _emailValues = new List<string>();
-            List<String> _typeValues = new List<string>();
-
-            String _queSelectEm = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_queSelectEm, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-            MySqlDataReader _readEmail = command.ExecuteReader();
-            if (_readEmail.Read()) {
-                _emailValues.Add(_readEmail.GetString(0));
-            }
-            _readEmail.Close();
-
-            String _queSelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_EMAIL = @email";
-            command = new MySqlCommand(_queSelectType, con);
-            command.Parameters.AddWithValue("@email", _emailValues[0]);
-            MySqlDataReader _ReadType = command.ExecuteReader();
-            if (_ReadType.Read()) {
-                _typeValues.Add(_ReadType.GetString(0));
-            }
-            _ReadType.Close();
-            _typeAcc = _typeValues[0];
-
-            if (_typeAcc == "Basic") {
-                _intAllowed = 12;
-            }
-            else if (_typeAcc == "Max") {
-                _intAllowed = 30;
-            }
-            else if (_typeAcc == "Express") {
-                _intAllowed = 85;
-            }
-            else if (_typeAcc == "Supreme") {
-                _intAllowed = 170;
-            }
-            return _intAllowed;
-        }
-
-        private static IEnumerable<byte[]> ReadChunks(string path) {
-            var lengthBytes = new byte[sizeof(int)];
-
-            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                int n = fs.Read(lengthBytes, 0, sizeof(int));  // Read block size.
-
-                if (n == 0)      
-                    yield break;
-
-                if (n != sizeof(int))
-                    throw new InvalidOperationException("Invalid header");
-
-                int blockLength = BitConverter.ToInt32(lengthBytes, 0);
-                var buffer = new byte[blockLength];
-                n = fs.Read(buffer, 0, blockLength);
-
-                if (n != blockLength)
-                    throw new InvalidOperationException("Missing data");
-
-                yield return buffer;
-            }
         }
 
         private Byte[] convertFileToByte(String _filePath) {

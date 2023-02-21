@@ -31,13 +31,13 @@ namespace FlowSERVER1 {
             instance = this;
         }
 
-        public void setupAutoLogin(String _custPass, String _custUsername) {
+        public void setupAutoLogin(String _custUsername) {
             Task.Run(() =>{
                 String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                 Directory.CreateDirectory(setupDir);
                 using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
                     _performWrite.WriteLine(_custUsername);
-                    _performWrite.WriteLine(_custPass);
+                    //_performWrite.WriteLine(_custPass);
                 }
             });
         }
@@ -785,7 +785,7 @@ namespace FlowSERVER1 {
                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                 if (guna2CheckBox2.Checked == true) {
-                    setupAutoLogin(Form1.instance.label5.Text,encryptionKeyVal);
+                    setupAutoLogin(Form1.instance.label5.Text);
                 }     
             } else {
                 label4.Visible = true;
@@ -887,6 +887,34 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button3.Text = "Añadir cuenta";
                 Form_1.guna2Button5.Text = "Ajustes";
             }
+
+            if (_custLang == "FRE") {
+                Form_1.label10.Text = "Télécharger";
+                Form_1.label2.Text = "Nombre d'éléments";
+                Form_1.guna2Button2.Text = "Téléverser un fichier";
+                Form_1.guna2Button12.Text = "Télécharger le dossier";
+                Form_1.guna2Button1.Text = "Créer le répertoire";
+                Form_1.guna2Button7.Text = "Partage de fichiers";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essentiel";
+                Form_1.label29.Text = "Autres";
+                Form_1.guna2Button3.Text = "Ajouter un compte";
+                Form_1.guna2Button5.Text = "Paramètres";
+            }
+
+            if (_custLang == "POR") {
+                Form_1.label10.Text = "Carregar";
+                Form_1.label2.Text = "Contagem de itens";
+                Form_1.guna2Button2.Text = "Subir arquivo";
+                Form_1.guna2Button12.Text = "Carregar Pasta";
+                Form_1.guna2Button1.Text = "Criar diretório";
+                Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essenciais";
+                Form_1.label29.Text = "Outros";
+                Form_1.guna2Button3.Text = "Adicionar Conta";
+                Form_1.guna2Button5.Text = "Configurações";
+            }
         }
 
         private void getCurrentLang() {
@@ -931,10 +959,15 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "FRE") {
                     greeting = "Bonjour " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "POR") {
+                    greeting = "Bom dia " + lab5.Text + " :)";
+                }
+
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
                 picturebox3.Visible = false;
             }
+
             else if (hours >= 12 && hours <= 16) {
                 if (CurrentLang == "US") {
                     greeting = "Good Afternoon " + lab5.Text + " :)";
@@ -953,6 +986,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "FRE") {
                     greeting = "Bon après-midi " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "POR") {
+                    greeting = "Boa tarde " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -979,6 +1015,9 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "FRE") {
                         greeting = "bonne soirée " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "POR") {
+                        greeting = "Boa noite " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -998,6 +1037,9 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "FRE") {
                         greeting = "bonne soirée " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "POR") {
+                        greeting = "Boa noite " + lab5.Text + " :)";
                     }
                 }
 
@@ -1024,6 +1066,10 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "FRE") {
                     greeting = "bonne nuit " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "POR") {
+                    greeting = "Boa noite " + lab5.Text + " :)";
+                }
+
                 picturebox1.Visible = true;
                 picturebox2.Visible = false;
                 picturebox3.Visible = false;

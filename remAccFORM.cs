@@ -273,6 +273,10 @@ namespace FlowSERVER1 {
                 } else if (CurrentLang == "ESP") {
                     label37.Text = "Limitado a 12";
                 }
+                else if (CurrentLang == "POR") {
+                    label37.Text = "Limitado a 12";
+                }
+
             }
             else if (_accType == "Max") {
                 if (CurrentLang == "US") {
@@ -288,6 +292,9 @@ namespace FlowSERVER1 {
                     label37.Text = "30 個限定";
                 }
                 else if (CurrentLang == "ESP") {
+                    label37.Text = "Limitado a 30";
+                }
+                else if (CurrentLang == "POR") {
                     label37.Text = "Limitado a 30";
                 }
                 guna2Button5.Enabled = false;
@@ -308,6 +315,9 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "ESP") {
                     label37.Text = "Limitado a 85";
                 }
+                else if (CurrentLang == "POR") {
+                    label37.Text = "Limitado a 85";
+                }
                 guna2Button5.Enabled = false;
                 guna2Button6.Enabled = false;
             }
@@ -325,6 +335,9 @@ namespace FlowSERVER1 {
                     label37.Text = "170 個限定";
                 }
                 else if (CurrentLang == "ESP") {
+                    label37.Text = "Limitado a 170";
+                }
+                else if (CurrentLang == "POR") {
                     label37.Text = "Limitado a 170";
                 }
                 guna2Button5.Enabled = false;
@@ -780,10 +793,15 @@ namespace FlowSERVER1 {
                 else if (NewLang == "FRE") {
                     greeting = "Bonjour " + lab5.Text + " :)";
                 }
+                else if (NewLang == "POR") {
+                    greeting = "Bom dia " + lab5.Text + " :)";
+                }
+
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
                 picturebox3.Visible = false;
             }
+
             else if (hours >= 12 && hours <= 16) {
                 if (NewLang == "US") {
                     greeting = "Good Afternoon " + lab5.Text + " :)";
@@ -802,6 +820,9 @@ namespace FlowSERVER1 {
                 }
                 else if (NewLang == "FRE") {
                     greeting = "Bon après-midi " + lab5.Text + " :)";
+                }
+                else if (NewLang == "POR") {
+                    greeting = "Boa tarde " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -827,6 +848,9 @@ namespace FlowSERVER1 {
                     else if (NewLang == "FRE") {
                         greeting = "bonne soirée " + lab5.Text + " :)";
                     }
+                    else if (NewLang == "POR") {
+                        greeting = "Boa noite " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (NewLang == "US") {
@@ -844,6 +868,9 @@ namespace FlowSERVER1 {
                     }
                     else if (NewLang == "FRE") {
                         greeting = "bonne soirée " + lab5.Text + " :)";
+                    }
+                    else if (NewLang == "POR") {
+                        greeting = "Boa noite " + lab5.Text + " :)";
                     }
                 }
 
@@ -870,6 +897,10 @@ namespace FlowSERVER1 {
                 else if (NewLang == "FRE") {
                     greeting = "bonne nuit " + lab5.Text + " :)";
                 }
+                else if (NewLang == "POR") {
+                    greeting = "Boa noite " + lab5.Text + " :)";
+                }
+
                 picturebox1.Visible = true;
                 picturebox2.Visible = false;
                 picturebox3.Visible = false;
@@ -1194,6 +1225,59 @@ namespace FlowSERVER1 {
                 Form_1.label29.Text = "Autres";
                 Form_1.guna2Button3.Text = "Ajouter un compte";
                 Form_1.guna2Button5.Text = "Paramètres";
+            }
+
+            if (_custLang == "POR") {
+                label21.Text = "Configurações";
+                tabPage4.Text = "línguas";
+                tabPage3.Text = "Atualizar";
+                tabPage2.Text = "Estatisticas";
+                tabPage1.Text = "Conta";
+                label4.Text = "Nome de usuário";
+                label7.Text = "tipo de conta";
+                label38.Text = "Carregamento de item";
+
+                label58.Text = "Alterar meu nome de usuário";
+                label33.Text = "O nome de usuário da sua conta Flowstorage será alterado, mas seus dados permanecerão";
+
+                label18.Text = "Mudar minha senha";
+                label8.Text = "Altere a senha da sua conta Flowstorage";
+
+                label36.Text = "Sair da minha conta";
+                label35.Text = "O Flowstorage não fará login automaticamente em sua conta na inicialização";
+
+                label2.Text = "Deletar minha conta";
+                label3.Text = "Sua conta Flowstorage junto com seus dados serão excluídos";
+
+                label22.Text = "Configurações";
+                label1.Text = "Configurações";
+
+                label13.Text = "Contagem de arquivos";
+                label9.Text = "Contagem de diretório";
+                label11.Text = "Contagem de Pastas";
+                label31.Text = "Carregamento total hoje";
+                label28.Text = "Arquivo";
+                label29.Text = "Diretório";
+                label15.Text = "Data de criação da conta";
+
+                guna2Button12.Text = "Mudar";
+                guna2Button13.Text = "Mudar";
+                guna2Button4.Text = "Sair";
+                guna2Button4.TextOffset = new Point(0, 0);
+                guna2Button11.Location = new Point(196, 61);
+                guna2Button1.Text = "Deletar conta";
+
+                Form_1.label10.Text = "Carregar";
+                Form_1.label2.Text = "Contagem de itens";
+                Form_1.guna2Button2.Text = "Subir arquivo";
+                Form_1.guna2Button12.Text = "Carregar Pasta";
+                Form_1.guna2Button1.Text = "Criar diretório";
+                Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essenciais";
+                Form_1.label29.Text = "Outros";
+                Form_1.guna2Button3.Text = "Adicionar Conta";
+                Form_1.guna2Button5.Text = "Configurações";
             }
         }
 
