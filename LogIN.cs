@@ -902,6 +902,20 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button5.Text = "Paramètres";
             }
 
+            if (_custLang == "CHI") {
+                Form_1.label10.Text = "上传";
+                Form_1.label2.Text = "物品数量";
+                Form_1.guna2Button2.Text = "上传文件";
+                Form_1.guna2Button12.Text = "上传文件夹";
+                Form_1.guna2Button1.Text = "创建目录";
+                Form_1.guna2Button7.Text = "文件共享";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "要点";
+                Form_1.label29.Text = "其他的";
+                Form_1.guna2Button3.Text = "新增帐户";
+                Form_1.guna2Button5.Text = "设置";
+            }
+
             if (_custLang == "POR") {
                 Form_1.label10.Text = "Carregar";
                 Form_1.label2.Text = "Contagem de itens";
@@ -962,6 +976,9 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "POR") {
                     greeting = "Bom dia " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "CHI") {
+                    greeting = "早上好 " + lab5.Text + " :)";
+                }
 
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
@@ -989,6 +1006,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "POR") {
                     greeting = "Boa tarde " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "CHI") {
+                    greeting = "下午好 " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -1018,6 +1038,9 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "POR") {
                         greeting = "Boa noite " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "CHI") {
+                        greeting = "晚上好 " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -1040,6 +1063,9 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "POR") {
                         greeting = "Boa noite " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "CHI") {
+                        greeting = "晚上好 " + lab5.Text + " :)";
                     }
                 }
 
@@ -1068,6 +1094,9 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "POR") {
                     greeting = "Boa noite " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "CHI") {
+                    greeting = "晚安 " + lab5.Text + " :)";
                 }
 
                 picturebox1.Visible = true;

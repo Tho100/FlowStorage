@@ -1400,8 +1400,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Express") {
-                    if (CurrentUploadCount != 85) {
-                        _mainFileGenerator(85,"Express");
+                    if (CurrentUploadCount != 110) {
+                        _mainFileGenerator(110,"Express");
                     }
                     else {
                         DisplayError(_accType);
@@ -1409,8 +1409,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 170) {
-                        _mainFileGenerator(170,"Supreme");
+                    if (CurrentUploadCount != 200) {
+                        _mainFileGenerator(200,"Supreme");
                     }
                     else {
                         DisplayError(_accType);

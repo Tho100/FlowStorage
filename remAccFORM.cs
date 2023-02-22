@@ -301,44 +301,44 @@ namespace FlowSERVER1 {
             }
             else if (_accType == "Express") {
                 if (CurrentLang == "US") {
-                    label37.Text = "Limited to 85";
+                    label37.Text = "Limited to 110";
                 }
                 else if (CurrentLang == "MY") {
-                    label37.Text = "Terhad Kepada 85";
+                    label37.Text = "Terhad Kepada 110";
                 }
                 else if (CurrentLang == "GER") {
-                    label37.Text = "Begrenzt Auf 85";
+                    label37.Text = "Begrenzt Auf 110";
                 }
                 else if (CurrentLang == "JAP") {
                     label37.Text = "85 個限定";
                 }
                 else if (CurrentLang == "ESP") {
-                    label37.Text = "Limitado a 85";
+                    label37.Text = "Limitado a 110";
                 }
                 else if (CurrentLang == "POR") {
-                    label37.Text = "Limitado a 85";
+                    label37.Text = "Limitado a 110";
                 }
                 guna2Button5.Enabled = false;
                 guna2Button6.Enabled = false;
             }
             else if (_accType == "Supreme") {
                 if (CurrentLang == "US") {
-                    label37.Text = "Limited to 170";
+                    label37.Text = "Limited to 200";
                 }
                 else if (CurrentLang == "MY") {
-                    label37.Text = "Terhad Kepada 170";
+                    label37.Text = "Terhad Kepada 200";
                 }
                 else if (CurrentLang == "GER") {
-                    label37.Text = "Begrenzt Auf 170";
+                    label37.Text = "Begrenzt Auf 200";
                 }
                 else if (CurrentLang == "JAP") {
-                    label37.Text = "170 個限定";
+                    label37.Text = "200 個限定";
                 }
                 else if (CurrentLang == "ESP") {
-                    label37.Text = "Limitado a 170";
+                    label37.Text = "Limitado a 200";
                 }
                 else if (CurrentLang == "POR") {
-                    label37.Text = "Limitado a 170";
+                    label37.Text = "Limitado a 200";
                 }
                 guna2Button5.Enabled = false;
                 guna2Button6.Enabled = false;
@@ -796,6 +796,9 @@ namespace FlowSERVER1 {
                 else if (NewLang == "POR") {
                     greeting = "Bom dia " + lab5.Text + " :)";
                 }
+                else if (NewLang == "CHI") {
+                    greeting = "早上好 " + lab5.Text + " :)";
+                }
 
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
@@ -824,6 +827,9 @@ namespace FlowSERVER1 {
                 else if (NewLang == "POR") {
                     greeting = "Boa tarde " + lab5.Text + " :)";
                 }
+                else if (NewLang == "CHI") {
+                    greeting = "下午好 " + lab5.Text + " :)";
+                }
 
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
@@ -851,6 +857,9 @@ namespace FlowSERVER1 {
                     else if (NewLang == "POR") {
                         greeting = "Boa noite " + lab5.Text + " :)";
                     }
+                    else if (NewLang == "CHI") {
+                        greeting = "晚上好 " + lab5.Text + " :)";
+                    }
                 }
                 else {
                     if (NewLang == "US") {
@@ -871,6 +880,9 @@ namespace FlowSERVER1 {
                     }
                     else if (NewLang == "POR") {
                         greeting = "Boa noite " + lab5.Text + " :)";
+                    }
+                    else if (NewLang == "CHI") {
+                        greeting = "晚上好 " + lab5.Text + " :)";
                     }
                 }
 
@@ -899,6 +911,9 @@ namespace FlowSERVER1 {
                 }
                 else if (NewLang == "POR") {
                     greeting = "Boa noite " + lab5.Text + " :)";
+                }
+                else if (NewLang == "CHI") {
+                    greeting = "晚安 " + lab5.Text + " :)";
                 }
 
                 picturebox1.Visible = true;
@@ -1279,6 +1294,59 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button3.Text = "Adicionar Conta";
                 Form_1.guna2Button5.Text = "Configurações";
             }
+
+            if (_custLang == "CHI") {
+                label21.Text = "设置";
+                tabPage4.Text = "语言";
+                tabPage3.Text = "升级";
+                tabPage2.Text = "统计数据";
+                tabPage1.Text = "帐户";
+                label4.Text = "用户名";
+                label7.Text = "帐户类型";
+                label38.Text = "项目上传";
+
+                label58.Text = "更改我的用户名";
+                label33.Text = "您的 Flowstorage 帐户用户名将更改，但您的数据将保留";
+
+                label18.Text = "修改我的密码";
+                label8.Text = "更改您的流存账户密码";
+
+                label36.Text = "注销我的帐户";
+                label35.Text = "Flowstorage 不会在启动时自动登录您的帐户";
+
+                label2.Text = "删除我的账户";
+                label3.Text = "您的 Flowstorage 帐户以及您的数据将被删除";
+
+                label22.Text = "设置";
+                label1.Text = "设置";
+
+                label13.Text = "文件数";
+                label9.Text = "目录计数";
+                label11.Text = "文件夹数";
+                label31.Text = "今日上传总量";
+                label28.Text = "文件";
+                label29.Text = "目录";
+                label15.Text = "帐户创建日期";
+
+                guna2Button12.Text = "改变";
+                guna2Button13.Text = "改变";
+                guna2Button4.Text = "登出";
+                guna2Button4.TextOffset = new Point(0, 0);
+                guna2Button11.Location = new Point(102, 61);
+                guna2Button1.Text = "删除帐户";
+
+                Form_1.label10.Text = "上传";
+                Form_1.label2.Text = "物品数量";
+                Form_1.guna2Button2.Text = "上传文件";
+                Form_1.guna2Button12.Text = "上传文件夹";
+                Form_1.guna2Button1.Text = "创建目录";
+                Form_1.guna2Button7.Text = "文件共享";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "要点";
+                Form_1.label29.Text = "其他的";
+                Form_1.guna2Button3.Text = "新增帐户";
+                Form_1.guna2Button5.Text = "设置";
+            }
         }
 
         private void getCurrentLang() {
@@ -1335,6 +1403,10 @@ namespace FlowSERVER1 {
                 guna2Button21.Text = "Set as default";
                 guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button21.Enabled = true;
+
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
             }
 
             if (_custLang == "MY") {
@@ -1367,6 +1439,10 @@ namespace FlowSERVER1 {
                 guna2Button21.Text = "Set as default";
                 guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button21.Enabled = true;
+
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
             } 
 
             if(_custLang == "JAP") {
@@ -1399,6 +1475,10 @@ namespace FlowSERVER1 {
                 guna2Button21.Text = "Set as default";
                 guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button21.Enabled = true;
+
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
             }
 
             if(_custLang == "GER") {
@@ -1432,6 +1512,10 @@ namespace FlowSERVER1 {
                 guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button21.Enabled = true;
 
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
+
             }
 
             if (_custLang == "ESP") {
@@ -1464,6 +1548,10 @@ namespace FlowSERVER1 {
                 guna2Button21.Text = "Set as default";
                 guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button21.Enabled = true;
+
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
             }
 
             if (_custLang == "FRE") {
@@ -1496,6 +1584,10 @@ namespace FlowSERVER1 {
                 guna2Button21.Text = "Set as default";
                 guna2Button21.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button21.Enabled = true;
+
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
             }
 
             if (_custLang == "POR") {
@@ -1528,6 +1620,10 @@ namespace FlowSERVER1 {
                 guna2Button20.Text = "Set as default";
                 guna2Button20.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button20.Enabled = true;
+
+                guna2Button22.Text = "Set as default";
+                guna2Button22.ForeColor = Color.FromArgb(55, 0, 179);
+                guna2Button22.Enabled = true;
             }
 
             if (_custLang == "CHI") {
@@ -1622,6 +1718,14 @@ namespace FlowSERVER1 {
             languageChanger("CHI");
             NewLang = "CHI";
             setupTime();
+        }
+
+        private void label56_Click(object sender, EventArgs e) {
+
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e) {
+
         }
     }
 }

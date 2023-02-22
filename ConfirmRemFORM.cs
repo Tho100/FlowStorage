@@ -52,7 +52,7 @@ namespace FlowSERVER1 {
 
                 if(guna2TextBox2.Text == decryptPin) {
                     if (guna2TextBox1.Text == decryptPass) {
-                        if(MessageBox.Show("Delete your account?\nThe action is PERMANENT and your data will be deleted.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+                        if(MessageBox.Show("Delete your account?\nYour data will be deleted PERMANENTLY.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
                              
                             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                             String _getAuth = _getPath + "\\CUST_DATAS.txt";
