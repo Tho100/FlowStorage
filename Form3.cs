@@ -611,10 +611,6 @@ namespace FlowSERVER1
         }
         
         private void Form3_Load(object sender, EventArgs e) {
-            //Form4 get_dir_title = new Form4();
-            //string dir_title = get_dir_title.guna2TextBox1.Text;
-            //label3.Text = dir_title;
-            //this.Text = "Directory: " + label3.Text;
 
         }
 

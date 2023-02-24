@@ -476,7 +476,7 @@ namespace FlowSERVER1 {
             //_setupPayment("Max account for Flowstorage",2);
             _selectedAcc = "Max";
             guna2Button8.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/bIY9AEfERf5O2OI4gj"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/3cs148akx9Lu74YdQV"); // Live mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -502,13 +502,13 @@ namespace FlowSERVER1 {
         private void guna2Button7_Click(object sender, EventArgs e) {
             _selectedAcc = "Supreme";
             guna2Button10.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEeUY0JX8Hq4WQ5ko"); // Test mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/7sI8wAfER9Lu2OIcMT"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             _selectedAcc = "Express";
             guna2Button9.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/bIY9AE9gtf5O9d6bIK"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/eVa5ko1O1aPycpi9AG"); // Live mode
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -601,13 +601,13 @@ namespace FlowSERVER1 {
                 guna2Button7.Enabled = false;
                 guna2Button5.Enabled = false;
                 guna2Button10.Visible = false;
-                label37.Text = "Limited to 170";
+                label37.Text = "Limited to 200";
             }
             else if (_selectedAcc == "Express") {
                 guna2Button6.Enabled = false;
                 guna2Button5.Enabled = false;
                 guna2Button9.Visible = false;
-                label37.Text = "Limited to 85";
+                label37.Text = "Limited to 110";
             }
             else if (_selectedAcc == "Max") {
                 guna2Button5.Enabled = false;
@@ -616,7 +616,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        void setupAccount() {
+        private void setupAccount() {
 
             try {
 
@@ -634,13 +634,6 @@ namespace FlowSERVER1 {
                     LastEmail = customer.Email;
                 }
 
-
-     //           var options = new Stripe.CustomerListOptions {
-   //                 Limit = 1
- //               };
-                //var service = new Stripe.CustomerService();
-//                Stripe.StripeList<Stripe.Customer> customers = service.List(options);
-
                 List<String> CustUserValues = new List<String>();
                 String _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(_selectCustEmail, con);
@@ -651,34 +644,13 @@ namespace FlowSERVER1 {
                 }
                 _readEmail.Close();
 
-               /* foreach (var item in customers) {
-                    richTextBox2.Text = item.ToString();
-                }
-                String testing = richTextBox2.Text;
-                var f = testing.IndexOf(CustUserValues[0]) + Environment.NewLine;
-                var fq = testing.Substring(testing.IndexOf(CustUserValues[0]));
-                var result = Regex.Match(fq, @"^([\w\-]+)");*/ 
                 if (LastEmail == CustUserValues[0]) {
-                    ///String _insertNew = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES (@username,@email,@type)";
-                    //command = new MySqlCommand(_insertNew, con);
-                    //command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    //command.Parameters.AddWithValue("@email", CustUserValues[0]);
-                    //command.Parameters.AddWithValue("@type", _selectedAcc);
                     String _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     command = new MySqlCommand(_insertNew, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
                     if (command.ExecuteNonQuery() == 1) {
-                        //   String _deleteOld = "DELETE FROM cust_type WHERE CUST_USERNAME = @username";
-                        //   command = new MySqlCommand(_deleteOld, con);
-                        //   command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        //   command.ExecuteNonQuery();
-
-                        /*String _deleteOld = "UPDATE FROM cust_type WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(_deleteOld, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.ExecuteNonQuery();*/
 
                         String _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
                         command = new MySqlCommand(_insertPayment, con);

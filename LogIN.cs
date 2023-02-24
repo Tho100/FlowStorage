@@ -26,6 +26,7 @@ namespace FlowSERVER1 {
         private static String encryptionKeyVal;
         private static String pinDecryptionKey;
         private static String CurrentLang = "";
+        private static int attemptCurr = 0;
         public LogIN() {
             InitializeComponent();
             instance = this;
@@ -787,8 +788,14 @@ namespace FlowSERVER1 {
                 if (guna2CheckBox2.Checked == true) {
                     setupAutoLogin(Form1.instance.label5.Text);
                 }     
+
             } else {
+
                 label4.Visible = true;
+
+                if(attemptCurr == 5) {
+                    this.Close();
+                }
             }
         }
         private void label4_Click(object sender, EventArgs e) {
@@ -802,6 +809,8 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
 
+                attemptCurr++;
+
                 Application.DoEvents();
 
                 loadUserData();
@@ -809,8 +818,8 @@ namespace FlowSERVER1 {
                 Application.DoEvents();
 
             } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show(eq.Message);
+                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

@@ -788,6 +788,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\flowstorageLogo %2815%29.png" />
     <None Include="Resources\icons8-china-48.png" />
     <None Include="Resources\icons8-portugal-48.png" />
     <None Include="Resources\icons8-france-48.png" />
