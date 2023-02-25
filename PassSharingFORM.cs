@@ -40,6 +40,12 @@ namespace FlowSERVER1 {
             if(guna2TextBox2.Text != String.Empty) {
                 if(MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
+                    remAccFORM.instance.guna2Button23.Visible = false;
+                    remAccFORM.instance.guna2Button23.Enabled = false;
+
+                    remAccFORM.instance.guna2Button27.Visible = true;
+                    remAccFORM.instance.guna2Button27.Enabled = true;
+
                     String _customizeQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(_customizeQuery,con);
                     command.Parameters.AddWithValue("@getval",EncryptionModel.Encrypt(guna2TextBox2.Text, "0123456789085746"));

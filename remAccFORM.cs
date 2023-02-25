@@ -1875,6 +1875,21 @@ namespace FlowSERVER1 {
         private void tabPage5_Click(object sender, EventArgs e) {
         }
 
+ 
+        private string retrieveFileSharingPas() {
+            String _hasPass = "";
+            String _selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_selectQuery,con);
+            command.Parameters.AddWithValue("@username",label5.Text);
+            
+            MySqlDataReader _readPas = command.ExecuteReader();
+            while(_readPas.Read()) {
+                _hasPass = _readPas.GetString(0);
+            }
+            _readPas.Close();
+            return _hasPass;
+        }
+
         /// <summary>
         /// If user selected File Sharing tab page
         /// then retrieve their current file sharing information
@@ -1883,6 +1898,22 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2TabControl1_Click(object sender, EventArgs e) {
             if(guna2TabControl1.SelectedIndex == 2) {
+                if(retrieveFileSharingPas() != "DEF") {
+
+                    guna2Button27.Visible = true;
+                    guna2Button27.Enabled = true;
+
+                    guna2Button23.Visible = false;
+                    guna2Button23.Enabled = false;
+                } else {
+
+                    guna2Button27.Visible = false;
+                    guna2Button27.Enabled = false;
+
+                    guna2Button23.Visible = true;
+                    guna2Button23.Enabled = true;
+                }
+
                 if (retrieveDisabled(label5.Text) == "1") {
                     guna2Button24.Enabled = false;
                     guna2Button24.Visible = false;
@@ -1904,6 +1935,31 @@ namespace FlowSERVER1 {
                     label69.Text = "Disable File Sharing";
                     label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
                 }
+            }
+        }
+
+        /// <summary>
+        /// This function will delete user file sharing password 
+        /// if they have one setup
+        /// </summary>
+        /// <param name="_custUsername"></param>
+        private void removePasSharing(String _custUsername) {
+            String _removeQuery = "UPDATE sharing_info SET SET_PASS = @set WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_removeQuery,con);
+            command.Parameters.AddWithValue("@set","DEF");
+            command.Parameters.AddWithValue("@username", _custUsername);
+            command.ExecuteNonQuery();
+
+        }
+        private void guna2Button27_Click(object sender, EventArgs e) {
+            if(MessageBox.Show("Remove File Sharing password?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes) {
+
+                removePasSharing(label5.Text);
+                guna2Button23.Visible = true;
+                guna2Button23.Enabled = true;
+
+                guna2Button27.Visible = false;
+                guna2Button27.Enabled = false;
             }
         }
     }
