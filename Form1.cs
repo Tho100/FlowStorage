@@ -2243,10 +2243,13 @@ namespace FlowSERVER1 {
                                                     command.Parameters.AddWithValue("@CUST_LANG", "US");
                                                     command.ExecuteNonQuery();
 
-                                                    notifyIcon1.Text = "Flowstorage";
-                                                    notifyIcon1.BalloonTipTitle = "You've successfully registered an account.";
-                                                    notifyIcon1.BalloonTipText = "Don't forgot to rate your experience with Flowstorage on Microsoft Store.";
-                                                    notifyIcon1.ShowBalloonTip(2);
+                                                    String _InsertSharing = "INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS) VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
+                                                    command = new MySqlCommand(_InsertSharing, con);
+                                                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                    command.Parameters.AddWithValue("@DISABLED", "0");
+                                                    command.Parameters.AddWithValue("@SET_PASS", "DEF");
+                                                    command.ExecuteNonQuery();
+
 
                                                     label11.Visible = false;
                                                     label12.Visible = false;

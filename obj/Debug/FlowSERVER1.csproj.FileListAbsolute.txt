@@ -1326,3 +1326,5 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libvlc\win-x86\plug
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libvlc\win-x86\plugins\visualization\libgoom_plugin.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libvlc\win-x86\plugins\visualization\libprojectm_plugin.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libvlc\win-x86\plugins\visualization\libvisual_plugin.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.PassSharingFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AskPassSharing.resources

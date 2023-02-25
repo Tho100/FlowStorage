@@ -25,19 +25,19 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(remAccFORM));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series78 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series79 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series80 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series81 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series82 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series83 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series84 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series85 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series86 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series87 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series88 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series122 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series123 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series124 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series125 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series126 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series127 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series128 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series129 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series130 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series131 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series132 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
@@ -167,6 +167,18 @@
             this.label21 = new System.Windows.Forms.Label();
             this.guna2Button14 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.guna2Panel22 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button23 = new Guna.UI2.WinForms.Guna2Button();
+            this.label66 = new System.Windows.Forms.Label();
+            this.label67 = new System.Windows.Forms.Label();
+            this.guna2Panel23 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button24 = new Guna.UI2.WinForms.Guna2Button();
+            this.label68 = new System.Windows.Forms.Label();
+            this.label69 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.guna2Button25 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button26 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2TabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.guna2Panel12.SuspendLayout();
@@ -205,6 +217,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).BeginInit();
             this.guna2Panel15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).BeginInit();
+            this.tabPage5.SuspendLayout();
+            this.guna2Panel22.SuspendLayout();
+            this.guna2Panel23.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -236,8 +251,9 @@
             // 
             this.guna2TabControl1.Controls.Add(this.tabPage1);
             this.guna2TabControl1.Controls.Add(this.tabPage2);
-            this.guna2TabControl1.Controls.Add(this.tabPage3);
+            this.guna2TabControl1.Controls.Add(this.tabPage5);
             this.guna2TabControl1.Controls.Add(this.tabPage4);
+            this.guna2TabControl1.Controls.Add(this.tabPage3);
             this.guna2TabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.guna2TabControl1.ItemSize = new System.Drawing.Size(180, 40);
             this.guna2TabControl1.Location = new System.Drawing.Point(0, -2);
@@ -263,6 +279,7 @@
             this.guna2TabControl1.TabIndex = 30;
             this.guna2TabControl1.TabMenuBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.guna2TabControl1.TabMenuOrientation = Guna.UI2.WinForms.TabMenuOrientation.HorizontalTop;
+            this.guna2TabControl1.Click += new System.EventHandler(this.guna2TabControl1_Click);
             // 
             // tabPage1
             // 
@@ -901,78 +918,78 @@
             // 
             this.chart1.BackColor = System.Drawing.Color.Empty;
             this.chart1.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea8.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.chart1.Legends.Add(legend8);
+            chartArea12.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.chart1.Legends.Add(legend12);
             this.chart1.Location = new System.Drawing.Point(4, 16);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             this.chart1.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))))};
-            series78.ChartArea = "ChartArea1";
-            series78.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            series78.Legend = "Legend1";
-            series78.Name = "Image";
-            series78.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series79.ChartArea = "ChartArea1";
-            series79.Color = System.Drawing.Color.MediumPurple;
-            series79.Legend = "Legend1";
-            series79.Name = "Text";
-            series79.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series80.ChartArea = "ChartArea1";
-            series80.Legend = "Legend1";
-            series80.Name = "Video";
-            series80.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series81.ChartArea = "ChartArea1";
-            series81.Legend = "Legend1";
-            series81.Name = "Exe";
-            series81.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series82.ChartArea = "ChartArea1";
-            series82.Color = System.Drawing.Color.Crimson;
-            series82.Legend = "Legend1";
-            series82.Name = "PDF";
-            series82.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series83.ChartArea = "ChartArea1";
-            series83.Color = System.Drawing.Color.YellowGreen;
-            series83.Legend = "Legend1";
-            series83.Name = "APK";
-            series83.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series84.ChartArea = "ChartArea1";
-            series84.Color = System.Drawing.Color.Gray;
-            series84.Legend = "Legend1";
-            series84.Name = "GIF";
-            series84.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series85.ChartArea = "ChartArea1";
-            series85.Color = System.Drawing.SystemColors.HotTrack;
-            series85.Legend = "Legend1";
-            series85.Name = "Document";
-            series85.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series86.ChartArea = "ChartArea1";
-            series86.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series86.Legend = "Legend1";
-            series86.Name = "Presentation";
-            series86.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series87.ChartArea = "ChartArea1";
-            series87.Color = System.Drawing.Color.Gold;
-            series87.Legend = "Legend1";
-            series87.Name = "Audio";
-            series88.ChartArea = "ChartArea1";
-            series88.Color = System.Drawing.Color.ForestGreen;
-            series88.Legend = "Legend1";
-            series88.Name = "Excel";
-            series88.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series78);
-            this.chart1.Series.Add(series79);
-            this.chart1.Series.Add(series80);
-            this.chart1.Series.Add(series81);
-            this.chart1.Series.Add(series82);
-            this.chart1.Series.Add(series83);
-            this.chart1.Series.Add(series84);
-            this.chart1.Series.Add(series85);
-            this.chart1.Series.Add(series86);
-            this.chart1.Series.Add(series87);
-            this.chart1.Series.Add(series88);
+            series122.ChartArea = "ChartArea1";
+            series122.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            series122.Legend = "Legend1";
+            series122.Name = "Image";
+            series122.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series123.ChartArea = "ChartArea1";
+            series123.Color = System.Drawing.Color.MediumPurple;
+            series123.Legend = "Legend1";
+            series123.Name = "Text";
+            series123.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series124.ChartArea = "ChartArea1";
+            series124.Legend = "Legend1";
+            series124.Name = "Video";
+            series124.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series125.ChartArea = "ChartArea1";
+            series125.Legend = "Legend1";
+            series125.Name = "Exe";
+            series125.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series126.ChartArea = "ChartArea1";
+            series126.Color = System.Drawing.Color.Crimson;
+            series126.Legend = "Legend1";
+            series126.Name = "PDF";
+            series126.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series127.ChartArea = "ChartArea1";
+            series127.Color = System.Drawing.Color.YellowGreen;
+            series127.Legend = "Legend1";
+            series127.Name = "APK";
+            series127.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series128.ChartArea = "ChartArea1";
+            series128.Color = System.Drawing.Color.Gray;
+            series128.Legend = "Legend1";
+            series128.Name = "GIF";
+            series128.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series129.ChartArea = "ChartArea1";
+            series129.Color = System.Drawing.SystemColors.HotTrack;
+            series129.Legend = "Legend1";
+            series129.Name = "Document";
+            series129.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series130.ChartArea = "ChartArea1";
+            series130.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series130.Legend = "Legend1";
+            series130.Name = "Presentation";
+            series130.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series131.ChartArea = "ChartArea1";
+            series131.Color = System.Drawing.Color.Gold;
+            series131.Legend = "Legend1";
+            series131.Name = "Audio";
+            series132.ChartArea = "ChartArea1";
+            series132.Color = System.Drawing.Color.ForestGreen;
+            series132.Legend = "Legend1";
+            series132.Name = "Excel";
+            series132.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series122);
+            this.chart1.Series.Add(series123);
+            this.chart1.Series.Add(series124);
+            this.chart1.Series.Add(series125);
+            this.chart1.Series.Add(series126);
+            this.chart1.Series.Add(series127);
+            this.chart1.Series.Add(series128);
+            this.chart1.Series.Add(series129);
+            this.chart1.Series.Add(series130);
+            this.chart1.Series.Add(series131);
+            this.chart1.Series.Add(series132);
             this.chart1.Size = new System.Drawing.Size(602, 404);
             this.chart1.TabIndex = 31;
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -2131,6 +2148,204 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.tabPage5.Controls.Add(this.label70);
+            this.tabPage5.Controls.Add(this.guna2Button25);
+            this.tabPage5.Controls.Add(this.guna2Panel22);
+            this.tabPage5.Controls.Add(this.guna2Panel23);
+            this.tabPage5.Location = new System.Drawing.Point(4, 44);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(996, 522);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "File Sharing";
+            this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
+            // 
+            // guna2Panel22
+            // 
+            this.guna2Panel22.BorderRadius = 5;
+            this.guna2Panel22.BorderThickness = 1;
+            this.guna2Panel22.Controls.Add(this.guna2Button23);
+            this.guna2Panel22.Controls.Add(this.label66);
+            this.guna2Panel22.Controls.Add(this.label67);
+            this.guna2Panel22.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.guna2Panel22.Location = new System.Drawing.Point(3, 65);
+            this.guna2Panel22.Name = "guna2Panel22";
+            this.guna2Panel22.Size = new System.Drawing.Size(990, 87);
+            this.guna2Panel22.TabIndex = 31;
+            // 
+            // guna2Button23
+            // 
+            this.guna2Button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button23.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button23.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button23.BorderRadius = 5;
+            this.guna2Button23.BorderThickness = 1;
+            this.guna2Button23.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button23.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button23.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button23.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button23.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button23.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button23.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button23.ForeColor = System.Drawing.Color.Firebrick;
+            this.guna2Button23.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button23.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.guna2Button23.ImageSize = new System.Drawing.Size(30, 30);
+            this.guna2Button23.Location = new System.Drawing.Point(815, 29);
+            this.guna2Button23.Name = "guna2Button23";
+            this.guna2Button23.Size = new System.Drawing.Size(142, 30);
+            this.guna2Button23.TabIndex = 25;
+            this.guna2Button23.Text = "Add Password";
+            this.guna2Button23.Click += new System.EventHandler(this.guna2Button23_Click);
+            // 
+            // label66
+            // 
+            this.label66.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label66.AutoSize = true;
+            this.label66.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label66.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label66.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label66.Location = new System.Drawing.Point(15, 48);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(339, 17);
+            this.label66.TabIndex = 27;
+            this.label66.Text = "Ask for password before people can share a file to you";
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label67.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label67.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label67.Location = new System.Drawing.Point(13, 16);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(172, 25);
+            this.label67.TabIndex = 26;
+            this.label67.Text = "Required Password";
+            // 
+            // guna2Panel23
+            // 
+            this.guna2Panel23.BorderRadius = 5;
+            this.guna2Panel23.BorderThickness = 1;
+            this.guna2Panel23.Controls.Add(this.guna2Button26);
+            this.guna2Panel23.Controls.Add(this.guna2Button24);
+            this.guna2Panel23.Controls.Add(this.label68);
+            this.guna2Panel23.Controls.Add(this.label69);
+            this.guna2Panel23.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.guna2Panel23.Location = new System.Drawing.Point(3, 158);
+            this.guna2Panel23.Name = "guna2Panel23";
+            this.guna2Panel23.Size = new System.Drawing.Size(990, 101);
+            this.guna2Panel23.TabIndex = 30;
+            // 
+            // guna2Button24
+            // 
+            this.guna2Button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button24.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button24.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button24.BorderRadius = 5;
+            this.guna2Button24.BorderThickness = 1;
+            this.guna2Button24.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button24.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button24.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button24.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button24.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button24.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button24.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button24.ForeColor = System.Drawing.Color.Firebrick;
+            this.guna2Button24.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button24.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.guna2Button24.ImageSize = new System.Drawing.Size(30, 30);
+            this.guna2Button24.Location = new System.Drawing.Point(827, 29);
+            this.guna2Button24.Name = "guna2Button24";
+            this.guna2Button24.Size = new System.Drawing.Size(123, 30);
+            this.guna2Button24.TabIndex = 25;
+            this.guna2Button24.Text = "Disable";
+            this.guna2Button24.Click += new System.EventHandler(this.guna2Button24_Click);
+            // 
+            // label68
+            // 
+            this.label68.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label68.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label68.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label68.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label68.Location = new System.Drawing.Point(15, 50);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(747, 41);
+            this.label68.TabIndex = 27;
+            this.label68.Text = "Disabling file sharing will not allow people to share a file to you. You can stil" +
+    "l share to people however.";
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label69.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label69.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label69.Location = new System.Drawing.Point(13, 16);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(180, 25);
+            this.label69.TabIndex = 26;
+            this.label69.Text = "Disable File Sharing";
+            // 
+            // label70
+            // 
+            this.label70.AutoSize = true;
+            this.label70.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label70.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label70.Location = new System.Drawing.Point(56, 13);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(90, 30);
+            this.label70.TabIndex = 33;
+            this.label70.Text = "Settings";
+            // 
+            // guna2Button25
+            // 
+            this.guna2Button25.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button25.BorderRadius = 5;
+            this.guna2Button25.BorderThickness = 1;
+            this.guna2Button25.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button25.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button25.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button25.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button25.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button25.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button25.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button25.ForeColor = System.Drawing.Color.GhostWhite;
+            this.guna2Button25.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button25.Image")));
+            this.guna2Button25.Location = new System.Drawing.Point(10, 15);
+            this.guna2Button25.Name = "guna2Button25";
+            this.guna2Button25.Size = new System.Drawing.Size(36, 30);
+            this.guna2Button25.TabIndex = 32;
+            this.guna2Button25.Click += new System.EventHandler(this.guna2Button25_Click_1);
+            // 
+            // guna2Button26
+            // 
+            this.guna2Button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button26.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button26.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button26.BorderRadius = 5;
+            this.guna2Button26.BorderThickness = 1;
+            this.guna2Button26.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button26.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button26.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button26.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button26.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button26.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button26.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button26.ForeColor = System.Drawing.Color.Firebrick;
+            this.guna2Button26.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button26.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.guna2Button26.ImageSize = new System.Drawing.Size(30, 30);
+            this.guna2Button26.Location = new System.Drawing.Point(834, 29);
+            this.guna2Button26.Name = "guna2Button26";
+            this.guna2Button26.Size = new System.Drawing.Size(123, 30);
+            this.guna2Button26.TabIndex = 28;
+            this.guna2Button26.Text = "Enable";
+            this.guna2Button26.Visible = false;
+            this.guna2Button26.Click += new System.EventHandler(this.guna2Button26_Click);
+            // 
             // remAccFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2198,6 +2413,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).EndInit();
             this.guna2Panel15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            this.guna2Panel22.ResumeLayout(false);
+            this.guna2Panel22.PerformLayout();
+            this.guna2Panel23.ResumeLayout(false);
+            this.guna2Panel23.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2332,5 +2553,17 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel21;
         private System.Windows.Forms.Label label64;
         private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.TabPage tabPage5;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel22;
+        public Guna.UI2.WinForms.Guna2Button guna2Button23;
+        public System.Windows.Forms.Label label66;
+        public System.Windows.Forms.Label label67;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel23;
+        public Guna.UI2.WinForms.Guna2Button guna2Button24;
+        public System.Windows.Forms.Label label68;
+        public System.Windows.Forms.Label label69;
+        public System.Windows.Forms.Label label70;
+        private Guna.UI2.WinForms.Guna2Button guna2Button25;
+        public Guna.UI2.WinForms.Guna2Button guna2Button26;
     }
 }

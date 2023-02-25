@@ -19,14 +19,16 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
         public static LogIN instance;
+
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
         private static String decryptMainKey;
         private static String encryptionKeyVal;
         private static String pinDecryptionKey;
         private static String CurrentLang = "";
         private static int attemptCurr = 0;
+
         public LogIN() {
             InitializeComponent();
             instance = this;

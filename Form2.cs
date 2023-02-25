@@ -201,6 +201,13 @@ namespace FlowSERVER1
                                                 command.Parameters.AddWithValue("@CUST_LANG", "US");
                                                 command.ExecuteNonQuery();
 
+                                                String _InsertSharing = "INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS) VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
+                                                command = new MySqlCommand(_InsertSharing, con);
+                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                command.Parameters.AddWithValue("@DISABLED", "0");
+                                                command.Parameters.AddWithValue("@SET_PASS", "DEF");
+                                                command.ExecuteNonQuery();
+
                                                 label5.Visible = false;
                                                 label4.Visible = false;
                                                 Form1.instance.label5.Text = _getUser;

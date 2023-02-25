@@ -196,6 +196,32 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
+        /// This function will retrieve the 
+        /// current status of user file sharing (disabled, or enabled)
+        /// </summary>
+        private static string _isEnabled = "";
+        private String retrieveDisabled(String _custUsername) {
+            String _concludeOutput = "";
+            String _queryRetrieve = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_queryRetrieve, con);
+            command.Parameters.AddWithValue("@username", _custUsername);
+
+            MySqlDataReader _readDisabled = command.ExecuteReader();
+            while (_readDisabled.Read()) {
+                _isEnabled = _readDisabled.GetString(0);
+            }
+            _readDisabled.Close();
+
+            if (_isEnabled == "1") {
+                _concludeOutput = "1";
+            }
+            else {
+                _concludeOutput = "0";
+            }
+            return _concludeOutput;
+        }
+
+        /// <summary>
         /// This function will tells user how many files
         /// they have uploaded (in total)
         /// </summary>
@@ -898,6 +924,7 @@ namespace FlowSERVER1 {
             var Form_1 = Form1.instance;
             if(_custLang == "MY") {
                 label21.Text = "Tetapan";
+                tabPage5.Text = "Perkongsian Fail";
                 tabPage4.Text = "Bahasa";
                 tabPage3.Text = "Naik Taraf";
                 tabPage2.Text = "Perangkaan";
@@ -905,6 +932,14 @@ namespace FlowSERVER1 {
                 label4.Text = "Nama Pengguna";
                 label7.Text = "Jenis Akaun";
                 label38.Text = "Muat Naik Item";
+
+                label70.Text = "Tetapan";
+
+                label67.Text = "Perlukan Kata-Laluan";
+                label66.Text = "Minta kata-laluan sebelum oranng dibenarkan berkongsi fail kepada anda";
+
+                label69.Text = "Melumpuhkan Perkongsian Fail";
+                label68.Text = "Melumpuhkan Perkongsian Fail akan tidak benarkan orang berkongsi fail kepada anda. Anda masih boleh berkongsi fail kepada orang lain";
 
                 label58.Text = "Ubah nama-pengguna";
                 label33.Text = "Nama pengguna akaun Flowstorage anda akan ditukar, data anda akan kekal";
@@ -951,6 +986,7 @@ namespace FlowSERVER1 {
 
             if(_custLang == "US") {
                 label21.Text = "Settings";
+                tabPage5.Text = "File Sharing";
                 tabPage4.Text = "Languages";
                 tabPage3.Text = "Upgrade";
                 tabPage2.Text = "Statistics";
@@ -958,6 +994,13 @@ namespace FlowSERVER1 {
                 label4.Text = "Username";
                 label7.Text = "Account Type";
                 label38.Text = "Item Upload";
+                label70.Text = "Settings";
+
+                label67.Text = "Required Password";
+                label66.Text = "Ask for password before people can share a file to you";
+
+                label69.Text = "Disable File Sharing";
+                label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
 
                 label58.Text = "Change my username";
                 label33.Text = "Your Flowstorage account username will be changes but your data is remains";
@@ -1004,6 +1047,7 @@ namespace FlowSERVER1 {
 
             if(_custLang == "GER") {
                 label21.Text = "Einstellungen";
+                tabPage5.Text = "Datenaustausch";
                 tabPage4.Text = "Sprachen";
                 tabPage3.Text = "Aktualisierung";
                 tabPage2.Text = "Statistiken";
@@ -1011,6 +1055,14 @@ namespace FlowSERVER1 {
                 label4.Text = "Nutzername";
                 label7.Text = "Konto Typ";
                 label38.Text = "Artikel hochladen";
+
+                label70.Text = "Einstellungen";
+
+                label67.Text = "Erforderliches Passwort";
+                label66.Text = "Nach dem Passwort fragen, bevor andere eine Datei für Sie freigeben können";
+
+                label69.Text = "Dateifreigabe deaktivieren";
+                label68.Text = "Das Deaktivieren der Dateifreigabe erlaubt anderen nicht, eine Datei mit Ihnen zu teilen. Sie können sie jedoch immer noch mit anderen teilen.";
 
                 label58.Text = "Ändere meinen Benutzernamen";
                 label33.Text = "Der Benutzername Ihres Flowstorage-Kontos wird geändert, Ihre Daten bleiben jedoch erhalten";
@@ -1057,6 +1109,7 @@ namespace FlowSERVER1 {
 
             if (_custLang == "JAP") {
                 label21.Text = "設定";
+                tabPage5.Text = "ファイル共有";
                 tabPage4.Text = "言語";
                 tabPage3.Text = "アップグレード";
                 tabPage2.Text = "統計";
@@ -1064,6 +1117,14 @@ namespace FlowSERVER1 {
                 label4.Text = "ユーザー名";
                 label7.Text = "口座の種類";
                 label38.Text = "アイテムのアップロード";
+
+                label70.Text = "設定";
+
+                label67.Text = "必要なパスワード";
+                label66.Text = "ファイルを共有する前にパスワードを要求する";
+
+                label69.Text = "ファイル共有を無効にする";
+                label68.Text = "ファイル共有を無効にすると、他のユーザーがファイルを共有することはできなくなります。ただし、他のユーザーと共有することはできます。";
 
                 label58.Text = "ユーザー名を変更する";
                 label33.Text = "Flowstorage アカウントのユーザー名は変更されますが、データはそのまま残ります";
@@ -1110,6 +1171,7 @@ namespace FlowSERVER1 {
 
             if (_custLang == "ESP") {
                 label21.Text = "Ajustes";
+                tabPage5.Text = "Compartición de archivos";
                 tabPage4.Text = "Idiomas";
                 tabPage3.Text = "Mejora";
                 tabPage2.Text = "Estadísticas";
@@ -1117,6 +1179,14 @@ namespace FlowSERVER1 {
                 label4.Text = "Nombre de usuario";
                 label7.Text = "Tipo de cuenta";
                 label38.Text = "Carga de artículo";
+
+                label70.Text = "Configuración";
+
+                label67.Text = "Contraseña requerida";
+                label66.Text = "Solicite la contraseña antes de que la gente pueda compartir un archivo con usted";
+
+                label69.Text = "Desactivar uso compartido de archivos";
+                label68.Text = "Deshabilitar el uso compartido de archivos no permitirá que las personas compartan un archivo contigo. Sin embargo, aún puedes compartirlo con otras personas.";
 
                 label58.Text = "cambiar mi nombre de usuario";
                 label33.Text = "El nombre de usuario de su cuenta de Flowstorage cambiará, pero sus datos permanecerán";
@@ -1163,6 +1233,7 @@ namespace FlowSERVER1 {
 
             if (_custLang == "FRE") {
                 label21.Text = "Paramètres";
+                tabPage5.Text = "Partage de fichiers";
                 tabPage4.Text = "Langages";
                 tabPage3.Text = "Améliorer";
                 tabPage2.Text = "Statistiques";
@@ -1170,6 +1241,14 @@ namespace FlowSERVER1 {
                 label4.Text = "Nom d'utilisateur";
                 label7.Text = "Type de compte";
                 label38.Text = "Téléchargement de l'article";
+
+                label70.Text = "Paramètres";
+
+                label67.Text = "Mot de passe requis";
+                label66.Text = "Demandez un mot de passe avant que les gens puissent partager un fichier avec vous";
+
+                label69.Text = "Désactiver le partage de fichiers";
+                label68.Text = "La désactivation du partage de fichiers ne permettra pas aux autres de partager un fichier avec vous. Cependant, vous pouvez toujours partager avec d'autres personnes.";
 
                 label58.Text = "Changer mon nom d'utilisateur";
                 label33.Text = "Le nom d'utilisateur de votre compte Flowstorage sera modifié, mais vos données resteront";
@@ -1216,6 +1295,7 @@ namespace FlowSERVER1 {
 
             if (_custLang == "POR") {
                 label21.Text = "Configurações";
+                tabPage5.Text = "Compartilhamento de arquivos";
                 tabPage4.Text = "línguas";
                 tabPage3.Text = "Atualizar";
                 tabPage2.Text = "Estatisticas";
@@ -1223,6 +1303,14 @@ namespace FlowSERVER1 {
                 label4.Text = "Nome de usuário";
                 label7.Text = "tipo de conta";
                 label38.Text = "Carregamento de item";
+
+                label70.Text = "Configurações";
+
+                label67.Text = "Senha Necessária";
+                label66.Text = "Pedir senha antes que as pessoas possam compartilhar um arquivo com você";
+
+                label69.Text = "Desativar Compartilhamento de Arquivos";
+                label68.Text = "Desativar o compartilhamento de arquivos não permitirá que as pessoas compartilhem um arquivo com você. No entanto, você ainda pode compartilhar com outras pessoas.";
 
                 label58.Text = "Alterar meu nome de usuário";
                 label33.Text = "O nome de usuário da sua conta Flowstorage será alterado, mas seus dados permanecerão";
@@ -1269,6 +1357,7 @@ namespace FlowSERVER1 {
 
             if (_custLang == "CHI") {
                 label21.Text = "设置";
+                tabPage5.Text = "文件共享";
                 tabPage4.Text = "语言";
                 tabPage3.Text = "升级";
                 tabPage2.Text = "统计数据";
@@ -1276,6 +1365,14 @@ namespace FlowSERVER1 {
                 label4.Text = "用户名";
                 label7.Text = "帐户类型";
                 label38.Text = "项目上传";
+
+                label70.Text = "设置";
+
+                label67.Text = "需要密码";
+                label66.Text = "在别人分享文件给你之前要求输入密码";
+
+                label69.Text = "禁用文件共享";
+                label68.Text = "禁用文件共享将不允许其他人与您共享文件。但是您仍然可以与其他人共享。";
 
                 label58.Text = "更改我的用户名";
                 label33.Text = "您的 Flowstorage 帐户用户名将更改，但您的数据将保留";
@@ -1299,6 +1396,7 @@ namespace FlowSERVER1 {
                 label28.Text = "文件";
                 label29.Text = "目录";
                 label15.Text = "帐户创建日期";
+                label70.Text = "设置";
 
                 guna2Button12.Text = "改变";
                 guna2Button13.Text = "改变";
@@ -1698,6 +1796,115 @@ namespace FlowSERVER1 {
 
         private void tabPage3_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button25_Click_1(object sender, EventArgs e) {
+            this.Close();
+        }
+
+        private void guna2Button23_Click(object sender, EventArgs e) {
+            PassSharingFORM _passForm = new PassSharingFORM();
+            _passForm.Show();
+        }
+
+        /// <summary>
+        /// Function to start disabling file sharing
+        /// </summary>
+        /// <param name="_custUsername"></param>
+        private void disableSharing(String _custUsername) {
+            String _disableQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_disableQuery,con);
+            command.Parameters.AddWithValue("@username",_custUsername);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Function to enable file sharing
+        /// </summary>
+        /// <param name="_custUsername"></param>
+        private void enableSharing(String _custUsername) {
+            String _disableQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_disableQuery, con);
+            command.Parameters.AddWithValue("@username", _custUsername);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Disable file sharing button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2Button24_Click(object sender, EventArgs e) {
+
+            if(MessageBox.Show("Disable file sharing? You can always enable this option again later.","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes) {
+
+                guna2Button24.Enabled = false;
+                guna2Button24.Visible = false;
+
+                guna2Button26.Visible = true;
+                guna2Button26.Enabled = true;
+
+                label69.Text = "Enable File Sharing";
+                label68.Text = "Enabling file sharing will allows people to share a file to you";
+
+                disableSharing(label5.Text);
+
+            }
+        }
+
+        /// <summary>
+        /// Enable file sharing button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2Button26_Click(object sender, EventArgs e) {
+
+            guna2Button24.Enabled = true;
+            guna2Button24.Visible = true;
+
+            guna2Button26.Visible = false;
+            guna2Button26.Enabled = false;
+
+            label69.Text = "Disable File Sharing";
+            label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
+
+            enableSharing(label5.Text);
+
+        }
+
+        private void tabPage5_Click(object sender, EventArgs e) {
+        }
+
+        /// <summary>
+        /// If user selected File Sharing tab page
+        /// then retrieve their current file sharing information
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2TabControl1_Click(object sender, EventArgs e) {
+            if(guna2TabControl1.SelectedIndex == 2) {
+                if (retrieveDisabled(label5.Text) == "1") {
+                    guna2Button24.Enabled = false;
+                    guna2Button24.Visible = false;
+
+                    guna2Button26.Visible = true;
+                    guna2Button26.Enabled = true;
+
+                    label69.Text = "Enable File Sharing";
+                    label68.Text = "Enabling file sharing will allows people to share a file to you";
+
+                }
+                else {
+                    guna2Button24.Enabled = true;
+                    guna2Button24.Visible = true;
+
+                    guna2Button26.Visible = false;
+                    guna2Button26.Enabled = false;
+
+                    label69.Text = "Disable File Sharing";
+                    label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
+                }
+            }
         }
     }
 }

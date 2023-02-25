@@ -368,6 +368,12 @@
     <Compile Include="apkFORM.Designer.cs">
       <DependentUpon>apkFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="AskPassSharing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AskPassSharing.Designer.cs">
+      <DependentUpon>AskPassSharing.cs</DependentUpon>
+    </Compile>
     <Compile Include="audFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -493,6 +499,12 @@
     </Compile>
     <Compile Include="noPayment.Designer.cs">
       <DependentUpon>noPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PassSharingFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PassSharingFORM.Designer.cs">
+      <DependentUpon>PassSharingFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="pdfFORM.cs">
       <SubType>Form</SubType>
@@ -637,6 +649,9 @@
     <EmbeddedResource Include="apkFORM.resx">
       <DependentUpon>apkFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AskPassSharing.resx">
+      <DependentUpon>AskPassSharing.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -696,6 +711,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="noPayment.resx">
       <DependentUpon>noPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PassSharingFORM.resx">
+      <DependentUpon>PassSharingFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pdfFORM.resx">
       <DependentUpon>pdfFORM.cs</DependentUpon>
@@ -788,6 +806,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\Untitled %2872%29.png" />
     <None Include="Resources\flowstorageLogo %2815%29.png" />
     <None Include="Resources\icons8-china-48.png" />
     <None Include="Resources\icons8-portugal-48.png" />
