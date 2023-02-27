@@ -32,27 +32,33 @@ namespace FlowSERVER1 {
 
         private void sharingFORM_Load(object sender, EventArgs e) {
 
-            Application.DoEvents();
+            try {
 
-            flowLayoutPanel1.Controls.Clear();
-            String getFilesType = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-            command = new MySqlCommand(getFilesType, con);
-            command = con.CreateCommand();
-            command.CommandText = getFilesType;
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                Application.DoEvents();
 
-            List<String> _TypeValues = new List<String>();
+                flowLayoutPanel1.Controls.Clear();
+                String getFilesType = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
+                command = new MySqlCommand(getFilesType, con);
+                command = con.CreateCommand();
+                command.CommandText = getFilesType;
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
-            Application.DoEvents();
+                List<String> _TypeValues = new List<String>();
 
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _TypeValues.Add(_readType.GetString(0));// Append ToAr;
+                Application.DoEvents();
+
+                MySqlDataReader _readType = command.ExecuteReader();
+                while (_readType.Read()) {
+                    _TypeValues.Add(_readType.GetString(0));// Append ToAr;
+                }
+                _readType.Close();
+                generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
+
+                Application.DoEvents();
+
+            } catch (Exception) {
+                MessageBox.Show("An error occurred","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
-            _readType.Close();
-            generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
-
-            Application.DoEvents();
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {

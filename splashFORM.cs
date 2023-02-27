@@ -21,5 +21,9 @@ namespace FlowSERVER1 {
             timer1.Start();
             this.Close();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

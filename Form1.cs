@@ -36,8 +36,15 @@ namespace FlowSERVER1 {
         private String CurrentLang = "";
         private Object _getValues = "";
         public Form1() {
+
             InitializeComponent();
             instance = this;
+
+            Application.OpenForms
+                   .OfType<Form>()g
+                   .Where(form => String.Equals(form.Name, "Form4"))
+                   .ToList()
+                   .ForEach(form => form.Close());
 
             // @ Enable double buffering for Form
 
@@ -1048,6 +1055,10 @@ namespace FlowSERVER1 {
         private void Form1_Load(object sender, EventArgs e) {
             setupTime();
         }
+
+        /// <summary>
+        /// Setting up time label based on user chosen language
+        /// </summary>
         public void setupTime() {
 
             var form = Form1.instance;
@@ -1279,7 +1290,7 @@ namespace FlowSERVER1 {
 
             List<String> _filValues = new List<String>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
-            if (open.ShowDialog() == DialogResult.OK) { // _filValues.Add(Path.GetFileName(selectedItems));
+            if (open.ShowDialog() == DialogResult.OK) { 
                 foreach (var iterateItemsFiles in open.FileNames) {
                     _filValues.Add(Path.GetFileName(iterateItemsFiles));
                 }
@@ -2192,120 +2203,125 @@ namespace FlowSERVER1 {
                     label12.Visible = false;
                     label11.Visible = false;
 
-                    if(!(_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%"))) {
-                        if(!String.IsNullOrEmpty(_getPin)) {
-                        if(_getPin.Length == 3) {
-                            if (validateEmailUser(_getEmail) == true) {
-                                if (_getUser.Length <= 20) {
-                                    if (_getPass.Length > 5) {
-                                        if (!String.IsNullOrEmpty(_getEmail)) {
-                                            if (!String.IsNullOrEmpty(_getPass)) {
-                                                if (!String.IsNullOrEmpty(_getUser)) {
-                                                    flowlayout.Controls.Clear();
-                                                    if (flowlayout.Controls.Count == 0) {
-                                                        Form1.instance.label8.Visible = true;
-                                                        Form1.instance.guna2Button6.Visible = true;
+                    if(!(_getPass.Contains("!") || _getPass.Contains("!"))) {
+                        if(!(_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%"))) {
+                            if(!String.IsNullOrEmpty(_getPin)) {
+                            if(_getPin.Length == 3) {
+                                if (validateEmailUser(_getEmail) == true) {
+                                    if (_getUser.Length <= 20) {
+                                        if (_getPass.Length > 5) {
+                                            if (!String.IsNullOrEmpty(_getEmail)) {
+                                                if (!String.IsNullOrEmpty(_getPass)) {
+                                                    if (!String.IsNullOrEmpty(_getUser)) {
+                                                        flowlayout.Controls.Clear();
+                                                        if (flowlayout.Controls.Count == 0) {
+                                                            Form1.instance.label8.Visible = true;
+                                                            Form1.instance.guna2Button6.Visible = true;
+                                                        }
+                                                        if (Form1.instance.setupLabel.Text.Length > 14) {
+                                                            var label = Form1.instance.setupLabel;
+                                                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                                                            label.Location = new Point(3, 27);
+                                                        }
+
+                                                        var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
+                                                        //label3.Text = _encryptPassVal;
+                                                        label5.Text = _getUser;
+                                                        label24.Text = _getEmail;
+
+                                                        var _encryptPinVal = EncryptionModel.Encrypt(_getPin, "0123456789085746");
+
+                                                        String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                                                        String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN)";
+                                                        command = new MySqlCommand(_InsertUser, con);
+                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                        command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
+                                                        command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                                        command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
+                                                        command.ExecuteNonQuery();
+
+                                                        String _InsertType = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                                        command = new MySqlCommand(_InsertType, con);
+                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                                        command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                                                        command.ExecuteNonQuery();
+
+                                                        String _InsertLang = "INSERT INTO lang_info(CUST_USERNAME,CUST_LANG) VALUES(@CUST_USERNAME,@CUST_LANG)";
+                                                        command = new MySqlCommand(_InsertLang, con);
+                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                        command.Parameters.AddWithValue("@CUST_LANG", "US");
+                                                        command.ExecuteNonQuery();
+
+                                                        String _InsertSharing = "INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS) VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
+                                                        command = new MySqlCommand(_InsertSharing, con);
+                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                        command.Parameters.AddWithValue("@DISABLED", "0");
+                                                        command.Parameters.AddWithValue("@SET_PASS", "DEF");
+                                                        command.ExecuteNonQuery();
+
+
+                                                        label11.Visible = false;
+                                                        label12.Visible = false;
+                                                        label30.Visible = false;
+                                                        guna2Panel7.Visible = false;
+                                                        guna2TextBox1.Text = String.Empty;
+                                                        guna2TextBox2.Text = String.Empty;
+                                                        guna2TextBox3.Text = String.Empty;
+                                                        guna2TextBox4.Text = String.Empty;
+                                                        getCurrentLang();
+                                                        setupTime();
+
+                                                        listBox1.Items.Add("Home");
+                                                        listBox1.SelectedIndex = 0;
                                                     }
-                                                    if (Form1.instance.setupLabel.Text.Length > 14) {
-                                                        var label = Form1.instance.setupLabel;
-                                                        label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                                        label.Location = new Point(3, 27);
+                                                    else {
+                                                        label11.Visible = true;
                                                     }
-
-                                                    var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
-                                                    label3.Text = _encryptPassVal;
-                                                    label5.Text = _getUser;
-                                                    label24.Text = _getEmail;
-
-                                                    var _encryptPinVal = EncryptionModel.Encrypt(_getPin, "0123456789085746");
-
-                                                    String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                                                    String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN)";
-                                                    command = new MySqlCommand(_InsertUser, con);
-                                                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                    command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
-                                                    command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                                                    command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                    command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
-                                                    command.ExecuteNonQuery();
-
-                                                    String _InsertType = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                                                    command = new MySqlCommand(_InsertType, con);
-                                                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                    command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                    command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                                                    command.ExecuteNonQuery();
-
-                                                    String _InsertLang = "INSERT INTO lang_info(CUST_USERNAME,CUST_LANG) VALUES(@CUST_USERNAME,@CUST_LANG)";
-                                                    command = new MySqlCommand(_InsertLang, con);
-                                                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                    command.Parameters.AddWithValue("@CUST_LANG", "US");
-                                                    command.ExecuteNonQuery();
-
-                                                    String _InsertSharing = "INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS) VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
-                                                    command = new MySqlCommand(_InsertSharing, con);
-                                                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                    command.Parameters.AddWithValue("@DISABLED", "0");
-                                                    command.Parameters.AddWithValue("@SET_PASS", "DEF");
-                                                    command.ExecuteNonQuery();
-
-
-                                                    label11.Visible = false;
-                                                    label12.Visible = false;
-                                                    label30.Visible = false;
-                                                    guna2Panel7.Visible = false;
-                                                    guna2TextBox1.Text = String.Empty;
-                                                    guna2TextBox2.Text = String.Empty;
-                                                    guna2TextBox3.Text = String.Empty;
-                                                    guna2TextBox4.Text = String.Empty;
-                                                    getCurrentLang();
-                                                    setupTime();
-
-                                                    listBox1.Items.Add("Home");
-                                                    listBox1.SelectedIndex = 0;
                                                 }
                                                 else {
-                                                    label11.Visible = true;
+                                                    label12.Visible = true;
                                                 }
                                             }
                                             else {
-                                                label12.Visible = true;
+                                                label22.Visible = true;
+                                                label22.Text = "Please add your email";
                                             }
+
                                         }
                                         else {
-                                            label22.Visible = true;
-                                            label22.Text = "Please add your email";
+                                            label12.Visible = true;
+                                            label12.Text = "Password must be longer than 5 characters.";
                                         }
-
                                     }
                                     else {
-                                        label12.Visible = true;
-                                        label12.Text = "Password must be longer than 5 characters.";
+                                        label11.Visible = true;
+                                        label11.Text = "Username character length limit is 20.";
                                     }
                                 }
                                 else {
-                                    label11.Visible = true;
-                                    label11.Text = "Username character length limit is 20.";
+                                    label22.Visible = true;
+                                    label22.Text = "Entered email is not valid.";
                                 }
-                            }
-                            else {
-                                label22.Visible = true;
-                                label22.Text = "Entered email is not valid.";
+                            } else {
+                                label30.Visible = true;
+                                label30.Text = "PIN Number must have 3 digits.";
+                                }
+                            } else {
+                                label30.Visible = true;
+                                label30.Text = "Please add a PIN number.";
                             }
                         } else {
-                            label30.Visible = true;
-                            label30.Text = "PIN Number must have 3 digits.";
-                            }
-                        } else {
-                            label30.Visible = true;
-                            label30.Text = "Please add a PIN number.";
+                            label11.Visible = true;
+                            label11.Text = "Special characters is not allowed.";
                         }
                     } else {
-                        label11.Visible = true;
-                        label11.Text = "Special characters is not allowed.";
+                        label12.Visible = true;
+                        label12.Text = "Special characters is not allowed.";
                     }
-                }
+                } 
             }
             catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
