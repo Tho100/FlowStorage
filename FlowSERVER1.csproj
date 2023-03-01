@@ -445,12 +445,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form3.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -628,6 +622,12 @@
     <Compile Include="UploadAlrt.Designer.cs">
       <DependentUpon>UploadAlrt.cs</DependentUpon>
     </Compile>
+    <Compile Include="verificationTokenFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="verificationTokenFORM.Designer.cs">
+      <DependentUpon>verificationTokenFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="vidFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -684,9 +684,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
@@ -778,6 +775,9 @@
     <EmbeddedResource Include="UploadAlrt.resx">
       <DependentUpon>UploadAlrt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="verificationTokenFORM.resx">
+      <DependentUpon>verificationTokenFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="vidFORM.resx">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -806,6 +806,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-login-rounded-50.png" />
     <None Include="Resources\Untitled %2872%29.png" />
     <None Include="Resources\flowstorageLogo %2815%29.png" />
     <None Include="Resources\icons8-china-48.png" />

@@ -41,7 +41,7 @@ namespace FlowSERVER1 {
             instance = this;
 
             Application.OpenForms
-                   .OfType<Form>()g
+                   .OfType<Form>()
                    .Where(form => String.Equals(form.Name, "Form4"))
                    .ToList()
                    .ForEach(form => form.Close());
@@ -136,7 +136,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
                 Form_1.label29.Text = "Lain-lain";
-                Form_1.guna2Button3.Text = "Tambah Akaun";
+                Form_1.guna2Button3.Text = "Log Masuk";
                 Form_1.guna2Button5.Text = "Tetapan";
             }
 
@@ -151,7 +151,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
                 Form_1.label29.Text = "Others";
-                Form_1.guna2Button3.Text = "Add Account";
+                Form_1.guna2Button3.Text = "Sign In";
                 Form_1.guna2Button5.Text = "Settings";
             }
 
@@ -165,7 +165,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Essentials";
                 Form_1.label29.Text = "Others";
-                Form_1.guna2Button3.Text = "Konto hinzufügen";
+                Form_1.guna2Button3.Text = "Anmelden";
                 Form_1.guna2Button5.Text = "Einstellungen";
             }
 
@@ -179,7 +179,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "必需品";
                 Form_1.label29.Text = "その他";
-                Form_1.guna2Button3.Text = "アカウントを追加する";
+                Form_1.guna2Button3.Text = "ログイン";
                 Form_1.guna2Button5.Text = "設定";
             }
 
@@ -193,7 +193,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Esenciales";
                 Form_1.label29.Text = "Otros";
-                Form_1.guna2Button3.Text = "Añadir cuenta";
+                Form_1.guna2Button3.Text = "Iniciar sesión";
                 Form_1.guna2Button5.Text = "Ajustes";
             }
 
@@ -207,7 +207,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentiel";
                 Form_1.label29.Text = "Autres";
-                Form_1.guna2Button3.Text = "Ajouter un compte";
+                Form_1.guna2Button3.Text = "S'identifier";
                 Form_1.guna2Button5.Text = "Paramètres";
             }
 
@@ -221,7 +221,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essenciais";
                 Form_1.label29.Text = "Outros";
-                Form_1.guna2Button3.Text = "Adicionar Conta";
+                Form_1.guna2Button3.Text = "Entrar";
                 Form_1.guna2Button5.Text = "Configurações";
             }
 
@@ -235,7 +235,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "要点";
                 Form_1.label29.Text = "其他的";
-                Form_1.guna2Button3.Text = "新增帐户";
+                Form_1.guna2Button3.Text = "登入";
                 Form_1.guna2Button5.Text = "设置";
             }
         }
@@ -2001,7 +2001,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
-            Form2 login_page = new Form2();
+            LogIN login_page = new LogIN();
             login_page.Show();
         }
 
@@ -2140,6 +2140,24 @@ namespace FlowSERVER1 {
             return regex.IsMatch(_custEmail);
         }
 
+        Random _setRandom = new Random();
+        private string RandomString(int size, bool lowerCase = true) {
+            var builder = new StringBuilder(size);
+            char offset = lowerCase ? 'a' : 'A';
+            const int lettersOffset = 26;
+
+            for (var i = 0; i < size; i++) {
+                var @char = (char)_setRandom.Next(offset, offset + lettersOffset);
+                builder.Append(@char);
+            }
+
+            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
+        }
+
+        private int RandomInt(int size) {
+            return _setRandom.Next(0,15);
+        }
+
         private void guna2Button11_Click(object sender, EventArgs e) {
 
             try {
@@ -2230,16 +2248,19 @@ namespace FlowSERVER1 {
                                                         label24.Text = _getEmail;
 
                                                         var _encryptPinVal = EncryptionModel.Encrypt(_getPin, "0123456789085746");
-
+                                                        var _setupTok = RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12);
+                                                        var _removeSpaces = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+                                                        var _encryptTok = EncryptionModel.Encrypt(_removeSpaces, "0123456789085746");
                                                         String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                                                        String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN)";
+                                                        String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
                                                         command = new MySqlCommand(_InsertUser, con);
                                                         command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
                                                         command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
                                                         command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
                                                         command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
                                                         command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
+                                                        command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
                                                         command.ExecuteNonQuery();
 
                                                         String _InsertType = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";

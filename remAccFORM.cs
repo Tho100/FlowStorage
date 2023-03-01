@@ -31,6 +31,7 @@ namespace FlowSERVER1 {
 
         public static remAccFORM instance;
         public static String _selectedAcc;
+        public int tokenCheckCurr = 0;
 
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
@@ -502,7 +503,7 @@ namespace FlowSERVER1 {
             //_setupPayment("Max account for Flowstorage",2);
             _selectedAcc = "Max";
             guna2Button8.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/3cs148akx9Lu74YdQV"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/8wM9AE78le1KcpieV4"); // Live mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -528,13 +529,13 @@ namespace FlowSERVER1 {
         private void guna2Button7_Click(object sender, EventArgs e) {
             _selectedAcc = "Supreme";
             guna2Button10.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/7sI8wAfER9Lu2OIcMT"); // Test mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/eVacMQ3W97Dm60U6ow"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             _selectedAcc = "Express";
             guna2Button9.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/eVa5ko1O1aPycpi9AG"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/5kAaEIdwJ7DmgFybIR"); // Live mode
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -986,7 +987,7 @@ namespace FlowSERVER1 {
 
             if(_custLang == "US") {
                 label21.Text = "Settings";
-                tabPage5.Text = "File Sharing";
+                tabPage5.Text = "File Sharing & API";
                 tabPage4.Text = "Languages";
                 tabPage3.Text = "Upgrade";
                 tabPage2.Text = "Statistics";
@@ -1047,7 +1048,7 @@ namespace FlowSERVER1 {
 
             if(_custLang == "GER") {
                 label21.Text = "Einstellungen";
-                tabPage5.Text = "Datenaustausch";
+                tabPage5.Text = "Datenaustausch & API";
                 tabPage4.Text = "Sprachen";
                 tabPage3.Text = "Aktualisierung";
                 tabPage2.Text = "Statistiken";
@@ -1891,13 +1892,36 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
+        /// This function will retrieve user access token
+        /// </summary>
+        /// <param name="custUsername"></param>
+        /// <returns></returns>
+        private string getAccessToken(String custUsername) {
+            String _localTok = "";
+            String _selecTokQue = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(_selecTokQue,con);
+            command.Parameters.AddWithValue("@username",custUsername);
+
+            MySqlDataReader _readTok = command.ExecuteReader();
+            while(_readTok.Read()) {
+                _localTok = EncryptionModel.Decrypt(_readTok.GetString(0), "0123456789085746");
+            }
+            _readTok.Close();
+            return _localTok.ToLower();
+        }
+
+        /// <summary>
         /// If user selected File Sharing tab page
         /// then retrieve their current file sharing information
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2TabControl1_Click(object sender, EventArgs e) {
+
             if(guna2TabControl1.SelectedIndex == 2) {
+                
+                guna2TextBox2.Text = getAccessToken(label5.Text);
+
                 if(retrieveFileSharingPas() != "DEF") {
 
                     guna2Button27.Visible = true;
@@ -1961,6 +1985,29 @@ namespace FlowSERVER1 {
                 guna2Button27.Visible = false;
                 guna2Button27.Enabled = false;
             }
+        }
+
+        /// <summary>
+        /// This button will show user access token
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2Button28_Click(object sender, EventArgs e) {
+            if(tokenCheckCurr == 0) {
+                verificationTokenFORM _showVerForm = new verificationTokenFORM();
+                _showVerForm.Show();
+            } else {
+                guna2TextBox2.Enabled = true;
+                guna2Button28.Visible = false;
+                guna2Button29.Visible = true;
+                guna2TextBox2.PasswordChar = '\0';
+            }
+        }
+
+        private void guna2Button29_Click(object sender, EventArgs e) {
+            guna2Button29.Visible = false;
+            guna2Button28.Visible = true;
+            guna2TextBox2.PasswordChar = '*';
         }
     }
 }

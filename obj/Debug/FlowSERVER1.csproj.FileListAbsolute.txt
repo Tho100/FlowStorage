@@ -3,7 +3,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Form1.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.GenerateResource.cache
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.CoreCompileInputs.cache
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Form2.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Form3.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Form4.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\BouncyCastle.Crypto.dll
@@ -1328,3 +1327,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libvlc\win-x86\plug
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\libvlc\win-x86\plugins\visualization\libvisual_plugin.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.PassSharingFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AskPassSharing.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.verificationTokenFORM.resources

@@ -838,7 +838,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
                 Form_1.label29.Text = "Lain-lain";
-                Form_1.guna2Button3.Text = "Tambah Akaun";
+                Form_1.guna2Button3.Text = "Log Masuk";
                 Form_1.guna2Button5.Text = "Tetapan";
             }
 
@@ -853,22 +853,8 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
                 Form_1.label29.Text = "Others";
-                Form_1.guna2Button3.Text = "Add Account";
+                Form_1.guna2Button3.Text = "Sign In";
                 Form_1.guna2Button5.Text = "Settings";
-            }
-
-            if (_custLang == "JAP") {
-                Form_1.label10.Text = "アップロード";
-                Form_1.label2.Text = "アイテム数";
-                Form_1.guna2Button2.Text = "ファイルをアップロードする";
-                Form_1.guna2Button12.Text = "フォルダのアップロード";
-                Form_1.guna2Button1.Text = "ディレクトリの作成";
-                Form_1.guna2Button7.Text = "ファイル共有";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "必需品";
-                Form_1.label29.Text = "その他";
-                Form_1.guna2Button3.Text = "アカウントを追加する";
-                Form_1.guna2Button5.Text = "設定";
             }
 
             if (_custLang == "GER") {
@@ -881,11 +867,25 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Essentials";
                 Form_1.label29.Text = "Others";
-                Form_1.guna2Button3.Text = "Konto hinzufügen";
+                Form_1.guna2Button3.Text = "Anmelden";
                 Form_1.guna2Button5.Text = "Einstellungen";
             }
 
-            if(_custLang == "ESP") {
+            if (_custLang == "JAP") {
+                Form_1.label10.Text = "アップロード";
+                Form_1.label2.Text = "アイテム数";
+                Form_1.guna2Button2.Text = "ファイルをアップロードする";
+                Form_1.guna2Button12.Text = "フォルダのアップロード";
+                Form_1.guna2Button1.Text = "ディレクトリの作成";
+                Form_1.guna2Button7.Text = "ファイル共有";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "必需品";
+                Form_1.label29.Text = "その他";
+                Form_1.guna2Button3.Text = "ログイン";
+                Form_1.guna2Button5.Text = "設定";
+            }
+
+            if (_custLang == "ESP") {
                 Form_1.label10.Text = "Subir";
                 Form_1.label2.Text = "Recuento de elementos";
                 Form_1.guna2Button2.Text = "Subir archivo";
@@ -895,7 +895,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Esenciales";
                 Form_1.label29.Text = "Otros";
-                Form_1.guna2Button3.Text = "Añadir cuenta";
+                Form_1.guna2Button3.Text = "Iniciar sesión";
                 Form_1.guna2Button5.Text = "Ajustes";
             }
 
@@ -909,22 +909,8 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentiel";
                 Form_1.label29.Text = "Autres";
-                Form_1.guna2Button3.Text = "Ajouter un compte";
+                Form_1.guna2Button3.Text = "S'identifier";
                 Form_1.guna2Button5.Text = "Paramètres";
-            }
-
-            if (_custLang == "CHI") {
-                Form_1.label10.Text = "上传";
-                Form_1.label2.Text = "物品数量";
-                Form_1.guna2Button2.Text = "上传文件";
-                Form_1.guna2Button12.Text = "上传文件夹";
-                Form_1.guna2Button1.Text = "创建目录";
-                Form_1.guna2Button7.Text = "文件共享";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "要点";
-                Form_1.label29.Text = "其他的";
-                Form_1.guna2Button3.Text = "新增帐户";
-                Form_1.guna2Button5.Text = "设置";
             }
 
             if (_custLang == "POR") {
@@ -937,8 +923,22 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essenciais";
                 Form_1.label29.Text = "Outros";
-                Form_1.guna2Button3.Text = "Adicionar Conta";
+                Form_1.guna2Button3.Text = "Entrar";
                 Form_1.guna2Button5.Text = "Configurações";
+            }
+
+            if (_custLang == "CHI") {
+                Form_1.label10.Text = "上传";
+                Form_1.label2.Text = "物品数量";
+                Form_1.guna2Button2.Text = "上传文件";
+                Form_1.guna2Button12.Text = "上传文件夹";
+                Form_1.guna2Button1.Text = "创建目录";
+                Form_1.guna2Button7.Text = "文件共享";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "要点";
+                Form_1.label29.Text = "其他的";
+                Form_1.guna2Button3.Text = "登入";
+                Form_1.guna2Button5.Text = "设置";
             }
         }
 
