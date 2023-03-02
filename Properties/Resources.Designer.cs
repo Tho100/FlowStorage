@@ -373,6 +373,26 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_netherlands_96 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-netherlands-96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_netherlands_961 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-netherlands-961", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_partying_face_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-partying-face-96", resourceCulture);
@@ -426,6 +446,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_rename_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-rename-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_russian_federation_96 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-russian-federation-96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

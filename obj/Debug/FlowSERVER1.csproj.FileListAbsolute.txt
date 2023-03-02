@@ -23,7 +23,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\K4os.Compression.LZ
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\K4os.Compression.LZ4.Streams.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\K4os.Hash.xxHash.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\MySql.Data.xml
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.CopyComplete
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Guna.UI2.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.LogIN.resources
@@ -154,7 +153,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Retriev
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.errorLoad.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.chagneUserForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.successChangeUser.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.keyForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.UploadAlrt.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.sharingFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.sucessShare.resources

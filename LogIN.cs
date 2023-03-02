@@ -46,6 +46,7 @@ namespace FlowSERVER1 {
         }
 
         String custUsername;
+        String custEmail;
         /// <summary>
         /// Load user files as soon they loggin-ed
         /// </summary>
@@ -79,9 +80,27 @@ namespace FlowSERVER1 {
                     custUsername = _usernameValues[0];
                 }
 
+
+                String _selectEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
+                command = con.CreateCommand();
+                command.CommandText = _selectEmail;
+                command.Parameters.AddWithValue("@username", custUsername);
+
+                List<String> _emailValues = new List<String>();
+                MySqlDataReader _readEmail = command.ExecuteReader();
+                while (_readEmail.Read()) {
+                    _emailValues.Add(_readEmail.GetString(0));
+                }
+                _readEmail.Close();
+
+                if (_usernameValues.Count() > 0) {
+                    custEmail = _emailValues[0];
+                }
+
                 flowlayout.Controls.Clear();
                 form.listBox1.Items.Clear();
                 form.label5.Text = custUsername;
+                form.label24.Text = custEmail;
                 but6.Visible = false;
                 lab8.Visible = false;
                 label4.Visible = false;
@@ -139,7 +158,7 @@ namespace FlowSERVER1 {
                 setupRedundane();
                 this.Close();
 
-                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Attempting to connect to your account...","login").ShowDialog());
+                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Connecting to your account...","login").ShowDialog());
                 _retrievalAlertForm.Start();
 
                 getCurrentLang();
@@ -825,6 +844,10 @@ namespace FlowSERVER1 {
             }
         }
 
+        /// <summary>
+        /// Setup UI languages for labels
+        /// </summary>
+        /// <param name="_custLang"></param>
         private void setupUILanguage(String _custLang) {
             var Form_1 = Form1.instance;
             if (_custLang == "MY") {
@@ -940,8 +963,39 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button3.Text = "登入";
                 Form_1.guna2Button5.Text = "设置";
             }
+
+            if(_custLang == "RUS") {
+                Form_1.label10.Text = "Загрузить";
+                Form_1.label2.Text = "Количество предметов";
+                Form_1.guna2Button2.Text = "Загрузить файл";
+                Form_1.guna2Button12.Text = "Загрузить папку";
+                Form_1.guna2Button1.Text = "Создать каталог";
+                Form_1.guna2Button7.Text = "Общий доступ к файлам";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Основные";
+                Form_1.label29.Text = "Другие";
+                Form_1.guna2Button3.Text = "Войти";
+                Form_1.guna2Button5.Text = "Настройки";
+            }
+
+            if(_custLang == "DUT") {
+                Form_1.label10.Text = "Uploaden";
+                Form_1.label2.Text = "Aantal artikelen";
+                Form_1.guna2Button2.Text = "Bestand uploaden";
+                Form_1.guna2Button12.Text = "Map uploaden";
+                Form_1.guna2Button1.Text = "Directory aanmaken";
+                Form_1.guna2Button7.Text = "Bestanden delen";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essentials";
+                Form_1.label29.Text = "Overige";
+                Form_1.guna2Button3.Text = "Aanmelden";
+                Form_1.guna2Button5.Text = "Instellingen";
+            }
         }
 
+        /// <summary>
+        /// Retrieve user current language
+        /// </summary>
         private void getCurrentLang() {
             String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_selectLang, con);
@@ -990,6 +1044,12 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "CHI") {
                     greeting = "早上好 " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "RUS") {
+                    greeting = "Доброе утро " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "DUT") {
+                    greeting = "Goedemorgen " + lab5.Text + " :)";
+                }
 
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
@@ -1020,6 +1080,12 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "CHI") {
                     greeting = "下午好 " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "RUS") {
+                    greeting = "Добрый день " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "DUT") {
+                    greeting = "Goedemiddag " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -1052,6 +1118,13 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "CHI") {
                         greeting = "晚上好 " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "RUS") {
+                        greeting = "Добрый день " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "DUT") {
+                        greeting = "Goedeavond " + lab5.Text + " :)";
+                    }
+
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -1077,6 +1150,12 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "CHI") {
                         greeting = "晚上好 " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "RUS") {
+                        greeting = "Добрый вечер " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "DUT") {
+                        greeting = "Goedeavond " + lab5.Text + " :)";
                     }
                 }
 
@@ -1108,6 +1187,12 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "CHI") {
                     greeting = "晚安 " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "RUS") {
+                    greeting = "Спокойной ночи " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "DUT") {
+                    greeting = "Welterusten " + lab5.Text + " :)";
                 }
 
                 picturebox1.Visible = true;

@@ -1378,8 +1378,8 @@ namespace FlowSERVER1
                 String _accType = _types[0];
                 int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
                 if (_accType == "Basic") {
-                    if (CurrentUploadCount != 12) {
-                        _mainFileGenerator(12,"Basic");
+                    if (CurrentUploadCount != 20) {
+                        _mainFileGenerator(20,"Basic");
                     }
                     else {
                         DisplayError(_accType);
@@ -1387,8 +1387,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Max") {
-                    if (CurrentUploadCount != 30) {
-                        _mainFileGenerator(30,"Max");
+                    if (CurrentUploadCount != 99) {
+                        _mainFileGenerator(99,"Max");
                     }
                     else {
                         DisplayError(_accType);
@@ -1396,8 +1396,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Express") {
-                    if (CurrentUploadCount != 110) {
-                        _mainFileGenerator(110,"Express");
+                    if (CurrentUploadCount != 450) {
+                        _mainFileGenerator(450,"Express");
                     }
                     else {
                         DisplayError(_accType);
@@ -1405,8 +1405,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 200) {
-                        _mainFileGenerator(200,"Supreme");
+                    if (CurrentUploadCount != 1000) {
+                        _mainFileGenerator(1000, "Supreme");
                     }
                     else {
                         DisplayError(_accType);

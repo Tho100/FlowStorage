@@ -469,12 +469,6 @@
     <Compile Include="gifFORM.Designer.cs">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="keyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="keyForm.Designer.cs">
-      <DependentUpon>keyForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="LoadAlertFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -697,9 +691,6 @@
     <EmbeddedResource Include="gifFORM.resx">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="keyForm.resx">
-      <DependentUpon>keyForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoadAlertFORM.resx">
       <DependentUpon>LoadAlertFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -806,6 +797,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-netherlands-961.png" />
     <None Include="Resources\icons8-login-rounded-50.png" />
     <None Include="Resources\Untitled %2872%29.png" />
     <None Include="Resources\flowstorageLogo %2815%29.png" />

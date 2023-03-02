@@ -78,6 +78,18 @@ namespace FlowSERVER1 {
                         guna2Panel7.Visible = false;
                         label5.Text = _UsernameFirst;
 
+                        String getEmails = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
+                        command = new MySqlCommand(getEmails, ConnectionModel.con);
+                        command = ConnectionModel.con.CreateCommand();
+                        command.CommandText = getEmails;
+                        command.Parameters.AddWithValue("@username", label5.Text);
+
+                        MySqlDataReader _reader = command.ExecuteReader();
+                        while (_reader.Read()) {
+                            label24.Text = _reader.GetString(0);
+                        }
+                        _reader.Close();
+
                         setupTime();
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -123,6 +135,11 @@ namespace FlowSERVER1 {
             }
         }
 
+
+        /// <summary>
+        /// Start genertating UI labels based on user language
+        /// </summary>
+        /// <param name="_custLang"></param>
         private void setupUILanguage(String _custLang) {
             var Form_1 = Form1.instance;
             if (_custLang == "MY") {
@@ -238,8 +255,39 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button3.Text = "登入";
                 Form_1.guna2Button5.Text = "设置";
             }
+
+            if(_custLang == "RUS") {
+                Form_1.label10.Text = "Загрузить";
+                Form_1.label2.Text = "Количество предметов";
+                Form_1.guna2Button2.Text = "Загрузить файл";
+                Form_1.guna2Button12.Text = "Загрузить папку";
+                Form_1.guna2Button1.Text = "Создать каталог";
+                Form_1.guna2Button7.Text = "Общий доступ к файлам";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Основные";
+                Form_1.label29.Text = "Другие";
+                Form_1.guna2Button3.Text = "Войти";
+                Form_1.guna2Button5.Text = "Настройки";
+            }
+
+            if(_custLang == "DUT") {
+                Form_1.label10.Text = "Uploaden";
+                Form_1.label2.Text = "Aantal artikelen";
+                Form_1.guna2Button2.Text = "Bestand uploaden";
+                Form_1.guna2Button12.Text = "Map uploaden";
+                Form_1.guna2Button1.Text = "Directory aanmaken";
+                Form_1.guna2Button7.Text = "Bestanden delen";
+                Form_1.guna2Button7.Size = new Size(125, 47);
+                Form_1.label28.Text = "Essentials";
+                Form_1.label29.Text = "Overige";
+                Form_1.guna2Button3.Text = "Aanmelden";
+                Form_1.guna2Button5.Text = "Instellingen";
+            }
         }
 
+        /// <summary>
+        /// Get user current language
+        /// </summary>
         private void getCurrentLang() {
             String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_selectLang, con);
@@ -252,6 +300,12 @@ namespace FlowSERVER1 {
             _readLang.Close();
         }
 
+        /// <summary>
+        /// Generate user files on startup
+        /// </summary>
+        /// <param name="_tableName"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="currItem"></param>
         public void _generateUserFiles(String _tableName, String parameterName, int currItem) {
             
             Application.DoEvents();
@@ -626,6 +680,14 @@ namespace FlowSERVER1 {
 
             Application.DoEvents();
         }
+
+        /// <summary>
+        /// Generate user folders on startup
+        /// </summary>
+        /// <param name="_fileType">File type of the files</param>
+        /// <param name="_foldTitle">Folder title</param>
+        /// <param name="parameterName">Custom parameter name for panel</param>
+        /// <param name="currItem"></param>
         public void _generateUserFold(List<String> _fileType, String _foldTitle, String parameterName, int currItem) {
 
             try {
@@ -1096,6 +1158,12 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "CHI") {
                     greeting = "早上好 " + lab5.Text + " :)";
                 }
+                else if (CurrentLang == "RUS") {
+                    greeting = "Доброе утро " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "DUT") {
+                    greeting = "Goedemorgen " + lab5.Text + " :)";
+                }
 
                 picturebox2.Visible = true;
                 picturebox1.Visible = false;
@@ -1126,6 +1194,12 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "CHI") {
                     greeting = "下午好 " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "RUS") {
+                    greeting = "Добрый день " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "DUT") {
+                    greeting = "Goedemiddag " + lab5.Text + " :)";
                 }
 
                 picturebox2.Visible = true;
@@ -1158,6 +1232,13 @@ namespace FlowSERVER1 {
                     else if (CurrentLang == "CHI") {
                         greeting = "晚上好 " + lab5.Text + " :)";
                     }
+                    else if (CurrentLang == "RUS") {
+                        greeting = "Добрый день " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "DUT") {
+                        greeting = "Goedeavond " + lab5.Text + " :)";
+                    }
+
                 }
                 else {
                     if (CurrentLang == "US") {
@@ -1183,6 +1264,12 @@ namespace FlowSERVER1 {
                     }
                     else if (CurrentLang == "CHI") {
                         greeting = "晚上好 " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "RUS") {
+                        greeting = "Добрый вечер " + lab5.Text + " :)";
+                    }
+                    else if (CurrentLang == "DUT") {
+                        greeting = "Goedeavond " + lab5.Text + " :)";
                     }
                 }
 
@@ -1214,6 +1301,12 @@ namespace FlowSERVER1 {
                 }
                 else if (CurrentLang == "CHI") {
                     greeting = "晚安 " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "RUS") {
+                    greeting = "Спокойной ночи " + lab5.Text + " :)";
+                }
+                else if (CurrentLang == "DUT") {
+                    greeting = "Welterusten " + lab5.Text + " :)";
                 }
 
                 picturebox1.Visible = true;
@@ -1369,7 +1462,7 @@ namespace FlowSERVER1 {
                             searchPan = panName;
                             Application.DoEvents();
 
-                            if(fileSizeInMB < 8000) {
+                            if(fileSizeInMB < 1500) {
 
                                 String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
                                 command = new MySqlCommand(insertTxtQuery, con);
@@ -1387,6 +1480,7 @@ namespace FlowSERVER1 {
                                     Application.DoEvents();   
 
                                     command.Parameters["@CUST_FILE"].Value = setValue;
+                                    command.Prepare();
                                     command.ExecuteNonQuery();
                                     command.Dispose();
 
@@ -1548,30 +1642,36 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_exe") {
-                                    startSending(keyVal);
+                                    command.Parameters["@CUST_FILE"].Value = keyVal;
+                                    command.CommandTimeout = 12000;
+                                    command.Prepare();
+                                    if(command.ExecuteNonQuery() == 1) {
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
-                                    textboxPic.Click += (sender_ex, e_ex) => {
-                                        Form bgBlur = new Form();
-                                        using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text)) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
+                                        command.Dispose();
 
-                                            displayExe.Owner = bgBlur;
-                                            displayExe.ShowDialog();
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                                        textboxPic.Click += (sender_ex, e_ex) => {
+                                            Form bgBlur = new Form();
+                                            using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text)) {
+                                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                                bgBlur.Opacity = .24d;
+                                                bgBlur.BackColor = Color.Black;
+                                                bgBlur.WindowState = FormWindowState.Maximized;
+                                                bgBlur.TopMost = true;
+                                                bgBlur.Location = this.Location;
+                                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                                bgBlur.ShowInTaskbar = false;
+                                                bgBlur.Show();
 
-                                            bgBlur.Dispose();
-                                        }
-                                    };
-                                    clearRedundane();
+                                                displayExe.Owner = bgBlur;
+                                                displayExe.ShowDialog();
+
+                                                bgBlur.Dispose();
+                                            }
+                                        };
+                                        clearRedundane();
+                                    }
                                 }
 
                                 if (nameTable == "file_info_vid") {
@@ -1642,31 +1742,37 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_apk") {
-                                    startSending(keyVal);
+                                    command.Parameters["@CUST_FILE"].Value = keyVal;
+                                    command.CommandTimeout = 12000;
+                                    if(command.ExecuteNonQuery() == 1) {
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
-                                    textboxPic.Click += (sender_gi, e_gi) => {
-                                        Form bgBlur = new Form();
-                                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
+                                        command.Dispose();
 
-                                            displayPic.Owner = bgBlur;
-                                            displayPic.ShowDialog();
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                                        textboxPic.Click += (sender_gi, e_gi) => {
+                                            Form bgBlur = new Form();
+                                            using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
+                                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                                bgBlur.Opacity = .24d;
+                                                bgBlur.BackColor = Color.Black;
+                                                bgBlur.WindowState = FormWindowState.Maximized;
+                                                bgBlur.TopMost = true;
+                                                bgBlur.Location = this.Location;
+                                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                                bgBlur.ShowInTaskbar = false;
+                                                bgBlur.Show();
 
-                                            bgBlur.Dispose();
-                                        }
-                                    };
-                                    clearRedundane();
+                                                displayPic.Owner = bgBlur;
+                                                displayPic.ShowDialog();
+
+                                                bgBlur.Dispose();
+                                            }
+                                        };
+                                        clearRedundane();
+                                    }
                                 }
+
                                 if (nameTable == "file_info_pdf") {
                                     startSending(keyVal);
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
@@ -1676,6 +1782,7 @@ namespace FlowSERVER1 {
                                     };
                                     clearRedundane();
                                 }
+
                                 if (nameTable == "file_info_ptx") {
                                     startSending(keyVal);
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
@@ -1686,34 +1793,36 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_msi") {
-                                   /* command.Parameters["@CUST_FILE"].Value = keyVal;
-                                    command.CommandTimeout = 3;
-                                    command.ExecuteNonQuery();
-                                    command.Dispose();*/
-                                   startSending(keyVal);
+                                    command.Parameters["@CUST_FILE"].Value = keyVal;
+                                    command.CommandTimeout = 12000;
+                                    command.Prepare();
+                                    if(command.ExecuteNonQuery() == 1) {
+
+                                        command.Dispose();
                            
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
-                                    textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        Form bgBlur = new Form();
-                                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                                        textboxPic.Click += (sender_ptx, e_ptx) => {
+                                            Form bgBlur = new Form();
+                                            using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
+                                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                                bgBlur.Opacity = .24d;
+                                                bgBlur.BackColor = Color.Black;
+                                                bgBlur.WindowState = FormWindowState.Maximized;
+                                                bgBlur.TopMost = true;
+                                                bgBlur.Location = this.Location;
+                                                bgBlur.StartPosition = FormStartPosition.Manual;
+                                                bgBlur.ShowInTaskbar = false;
+                                                bgBlur.Show();
 
-                                            displayMsi.Owner = bgBlur;
-                                            displayMsi.ShowDialog();
+                                                displayMsi.Owner = bgBlur;
+                                                displayMsi.ShowDialog();
 
-                                            bgBlur.Dispose();
-                                        }
-                                    };
-                                    clearRedundane();
+                                                bgBlur.Dispose();
+                                            }
+                                        };
+                                        clearRedundane();
+                                    }
                                 }
 
                                 if (nameTable == "file_info_word") {
@@ -1757,7 +1866,7 @@ namespace FlowSERVER1 {
                                 dateLabTxt.Text = varDate;
 
                             } else {
-                                MessageBox.Show("File is too large, max file size is 8GB.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                MessageBox.Show("File is too large, max file size is 1.5GB.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                             }
                         }
 
@@ -1915,6 +2024,12 @@ namespace FlowSERVER1 {
                 bgBlur.Dispose();
             }
         }
+
+        /// <summary>
+        /// Select user account type and show file dialog to upload file 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
             try {
 
@@ -1935,8 +2050,8 @@ namespace FlowSERVER1 {
                     String _accType = _types[0];
                     int CurrentUploadCount = Convert.ToInt32(label4.Text);
                     if (_accType == "Basic") {
-                        if (CurrentUploadCount != 12) {
-                            _mainFileGenerator(12, _accType);
+                        if (CurrentUploadCount != 20) {
+                            _mainFileGenerator(20, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -1944,8 +2059,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Max") {
-                        if (CurrentUploadCount != 30) {
-                            _mainFileGenerator(30, _accType);
+                        if (CurrentUploadCount != 99) {
+                            _mainFileGenerator(99, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -1953,8 +2068,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Express") {
-                        if (CurrentUploadCount != 110) {
-                            _mainFileGenerator(110, _accType);
+                        if (CurrentUploadCount != 450) {
+                            _mainFileGenerator(450, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -1962,8 +2077,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Supreme") {
-                        if (CurrentUploadCount != 200) {
-                            _mainFileGenerator(200, _accType);
+                        if (CurrentUploadCount != 1000) {
+                            _mainFileGenerator(1000, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -2021,12 +2136,17 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// This button will show settings form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
 
             Thread _showRetrievalAlert = new Thread(() => new settingsAlert().ShowDialog());
             _showRetrievalAlert.Start();
 
-            remAccFORM _RemAccShow = new remAccFORM(label5.Text);
+            remAccFORM _RemAccShow = new remAccFORM(label5.Text,label24.Text);
             _RemAccShow.Show();
 
             Application.OpenForms
@@ -2098,6 +2218,10 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// Count how many files has been shared to receiver 
+        /// </summary>
+        /// <returns></returns>
         private int countSharing() {
             String queryCountShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
             command = new MySqlCommand(queryCountShared,con);
@@ -2134,12 +2258,20 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// Validate user entered email address format
+        /// </summary>
+        /// <param name="_custEmail"></param>
+        /// <returns></returns>
         private static bool validateEmailUser(String _custEmail) {
             string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(_custEmail);
         }
 
+        /// <summary>
+        /// Generate random string within range
+        /// </summary>
         Random _setRandom = new Random();
         private string RandomString(int size, bool lowerCase = true) {
             var builder = new StringBuilder(size);
@@ -2158,6 +2290,11 @@ namespace FlowSERVER1 {
             return _setRandom.Next(0,15);
         }
 
+        /// <summary>
+        /// Sign up process, insert all necessary data to DB
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button11_Click(object sender, EventArgs e) {
 
             try {
@@ -2243,7 +2380,6 @@ namespace FlowSERVER1 {
                                                         }
 
                                                         var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
-                                                        //label3.Text = _encryptPassVal;
                                                         label5.Text = _getUser;
                                                         label24.Text = _getEmail;
 
@@ -2800,7 +2936,7 @@ namespace FlowSERVER1 {
                     Application.DoEvents();
 
                     if (_accType == "Basic") {
-                        if (_numberOfFiles <= 12) {
+                        if (_numberOfFiles <= 20) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath,_getDirTitle,_TitleValues);
@@ -2814,7 +2950,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Max") {
-                        if (_numberOfFiles <= 30) {
+                        if (_numberOfFiles <= 99) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2826,7 +2962,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Express") {
-                        if (_numberOfFiles <= 110) {
+                        if (_numberOfFiles <= 450) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2840,7 +2976,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Supreme") {
-                        if (_numberOfFiles <= 200) {
+                        if (_numberOfFiles <= 1000) {
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
                             var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
@@ -2886,6 +3022,12 @@ namespace FlowSERVER1 {
         private void label25_Click(object sender, EventArgs e) {
 
         }
+
+        /// <summary>
+        /// Select folder from listBox and start showing
+        /// the files from selected folder
+        /// </summary>
+
         int foldCurr = 0;
         int mainFoldCurr = 0;
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
@@ -3052,7 +3194,14 @@ namespace FlowSERVER1 {
             _removeFoldFunc(_currentFold);
         }
 
-        void _generateUserDirectory(String userName, String passUser, int rowLength) {
+
+        /// <summary>
+        /// Generate user directory from Home folder
+        /// </summary>
+        /// <param name="userName">Username of user</param>
+        /// <param name="customParameter">Custom parameter for panel</param>
+        /// <param name="rowLength"></param>
+        void _generateUserDirectory(String userName,String customParameter, int rowLength) {
             for (int i = 0; i < rowLength; i++) {
                 int top = 275;
                 int h_p = 100;

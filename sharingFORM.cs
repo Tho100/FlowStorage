@@ -156,7 +156,16 @@ namespace FlowSERVER1 {
                     else if (_retrieved == ".exe") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.Parameters["@CUST_FILE"].Value = _toBase64;
+                        command.CommandTimeout = 12000;
                         command.ExecuteNonQuery();
+                        command.Dispose();
+                    }
+                    else if (_retrieved == ".msi") {
+                        var _toBase64 = Convert.ToBase64String(_getBytes);
+                        command.Parameters["@CUST_FILE"].Value = _toBase64;
+                        command.CommandTimeout = 12000;
+                        command.ExecuteNonQuery();
+                        command.Dispose();
                     }
                     else if (_retrieved == ".mp3" || _retrieved == ".wav") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
@@ -243,11 +252,11 @@ namespace FlowSERVER1 {
         /// This function will retrieves user 
         /// account type 
         /// </summary>
-        /// <param name="_receiverUsername"></param>
+        /// <param name="_receiverUsername">Receiver username who will received the file</param>
         /// <returns></returns>
         private int accountType(String _receiverUsername) {
 
-            int _allowedReturn = 12;
+            int _allowedReturn = 20;
             String _accType = "";
 
             String _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
@@ -260,13 +269,13 @@ namespace FlowSERVER1 {
             }
             _readAccType.Close();
             if(_accType == "Max") {
-                _allowedReturn = 30;
+                _allowedReturn = 99;
             } else if (_accType == "Express") {
-                _allowedReturn = 50;
+                _allowedReturn = 450;
             } else if (_accType == "Supreme") {
-                _allowedReturn = 170;
+                _allowedReturn = 1000;
             } else if (_accType == "Basic") {
-                _allowedReturn = 12;
+                _allowedReturn = 20;
             }
             return _allowedReturn;
         }

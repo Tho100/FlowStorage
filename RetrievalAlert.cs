@@ -58,6 +58,9 @@ namespace FlowSERVER1 {
                                 con.Open();
                             }
                         }
+
+                        Application.DoEvents();
+
                     } catch (Exception) {
                         con.Close();
                         if(con.State == System.Data.ConnectionState.Closed) {

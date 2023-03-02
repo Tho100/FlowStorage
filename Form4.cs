@@ -245,7 +245,7 @@ namespace FlowSERVER1
                     int _getValue = Convert.ToInt32(_getScalar);
 
                     if(_accType == "Supreme") {
-                        if(Convert.ToInt32(_getFilesCount) != 170) {
+                        if(Convert.ToInt32(_getFilesCount) != 1000) {
                             if(_getValue != 5) {
 
                                 value_Dir++;
@@ -268,7 +268,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Basic") {
-                        if(Convert.ToInt32(_getFilesCount) != 12) {
+                        if(Convert.ToInt32(_getFilesCount) != 20) {
                             if (_getValue != 2) {
                           
                                 value_Dir++;
@@ -294,7 +294,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Max") {
-                        if (Convert.ToInt32(_getFilesCount) != 30) {
+                        if (Convert.ToInt32(_getFilesCount) != 99) {
                             if (_getValue != 2) {
 
                                 value_Dir++;
@@ -320,7 +320,7 @@ namespace FlowSERVER1
                     }
 
                     if (_accType == "Express") {
-                        if (Convert.ToInt32(_getFilesCount) != 85) {
+                        if (Convert.ToInt32(_getFilesCount) != 450) {
                             if (_getValue != 2) {
 
                                 value_Dir++;
