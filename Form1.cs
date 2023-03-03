@@ -35,6 +35,16 @@ namespace FlowSERVER1 {
         public bool stopFileTransaction = false;
         private String CurrentLang = "";
         private Object _getValues = "";
+
+        string get_ex;
+        string getName;
+        string retrieved;
+        string retrievedName;
+        object keyValMain;
+        long fileSizeInMB;
+        string varDate;
+        string tableName;
+
         public Form1() {
 
             InitializeComponent();
@@ -1379,7 +1389,7 @@ namespace FlowSERVER1 {
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;*.psd|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
-            string varDate = DateTime.Now.ToString("dd/MM/yyyy");
+            varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
             List<String> _filValues = new List<String>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
@@ -1423,11 +1433,11 @@ namespace FlowSERVER1 {
 
                         Application.DoEvents();
 
-                        string get_ex = open.FileName;
-                        string getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
-                        string retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
-                        string retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
-                        long fileSizeInMB = 0;
+                        get_ex = open.FileName;
+                        getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
+                        retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
+                        retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
+                        fileSizeInMB = 0;
 
                         void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
 
@@ -1642,36 +1652,33 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_exe") {
-                                    command.Parameters["@CUST_FILE"].Value = keyVal;
-                                    command.CommandTimeout = 12000;
-                                    command.Prepare();
-                                    if(command.ExecuteNonQuery() == 1) {
 
-                                        command.Dispose();
+                                    keyValMain = keyVal;
+                                    tableName = "file_info_exe";
+                                    backgroundWorker1.RunWorkerAsync();
 
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
-                                        textboxPic.Click += (sender_ex, e_ex) => {
-                                            Form bgBlur = new Form();
-                                            using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text)) {
-                                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                                bgBlur.Opacity = .24d;
-                                                bgBlur.BackColor = Color.Black;
-                                                bgBlur.WindowState = FormWindowState.Maximized;
-                                                bgBlur.TopMost = true;
-                                                bgBlur.Location = this.Location;
-                                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                                bgBlur.ShowInTaskbar = false;
-                                                bgBlur.Show();
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                                    textboxPic.Click += (sender_ex, e_ex) => {
+                                        Form bgBlur = new Form();
+                                        using (exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text)) {
+                                            bgBlur.StartPosition = FormStartPosition.Manual;
+                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                            bgBlur.Opacity = .24d;
+                                            bgBlur.BackColor = Color.Black;
+                                            bgBlur.WindowState = FormWindowState.Maximized;
+                                            bgBlur.TopMost = true;
+                                            bgBlur.Location = this.Location;
+                                            bgBlur.StartPosition = FormStartPosition.Manual;
+                                            bgBlur.ShowInTaskbar = false;
+                                            bgBlur.Show();
 
-                                                displayExe.Owner = bgBlur;
-                                                displayExe.ShowDialog();
+                                            displayExe.Owner = bgBlur;
+                                            displayExe.ShowDialog();
 
-                                                bgBlur.Dispose();
-                                            }
-                                        };
-                                        clearRedundane();
-                                    }
+                                            bgBlur.Dispose();
+                                        }
+                                    };
+                                    clearRedundane();
                                 }
 
                                 if (nameTable == "file_info_vid") {
@@ -1742,35 +1749,32 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_apk") {
-                                    command.Parameters["@CUST_FILE"].Value = keyVal;
-                                    command.CommandTimeout = 12000;
-                                    if(command.ExecuteNonQuery() == 1) {
+                                    keyValMain = keyVal;
+                                    tableName = "file_info_apk";
+                                    backgroundWorker1.RunWorkerAsync();
 
-                                        command.Dispose();
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                                    textboxPic.Click += (sender_gi, e_gi) => {
+                                        Form bgBlur = new Form();
+                                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
+                                            bgBlur.StartPosition = FormStartPosition.Manual;
+                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                            bgBlur.Opacity = .24d;
+                                            bgBlur.BackColor = Color.Black;
+                                            bgBlur.WindowState = FormWindowState.Maximized;
+                                            bgBlur.TopMost = true;
+                                            bgBlur.Location = this.Location;
+                                            bgBlur.StartPosition = FormStartPosition.Manual;
+                                            bgBlur.ShowInTaskbar = false;
+                                            bgBlur.Show();
 
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
-                                        textboxPic.Click += (sender_gi, e_gi) => {
-                                            Form bgBlur = new Form();
-                                            using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null")) {
-                                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                                bgBlur.Opacity = .24d;
-                                                bgBlur.BackColor = Color.Black;
-                                                bgBlur.WindowState = FormWindowState.Maximized;
-                                                bgBlur.TopMost = true;
-                                                bgBlur.Location = this.Location;
-                                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                                bgBlur.ShowInTaskbar = false;
-                                                bgBlur.Show();
+                                            displayPic.Owner = bgBlur;
+                                            displayPic.ShowDialog();
 
-                                                displayPic.Owner = bgBlur;
-                                                displayPic.ShowDialog();
-
-                                                bgBlur.Dispose();
-                                            }
-                                        };
-                                        clearRedundane();
-                                    }
+                                            bgBlur.Dispose();
+                                        }
+                                    };
+                                    clearRedundane();
                                 }
 
                                 if (nameTable == "file_info_pdf") {
@@ -1793,36 +1797,39 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_msi") {
-                                    command.Parameters["@CUST_FILE"].Value = keyVal;
+                                    keyValMain = keyVal;
+                                    tableName = "file_info_msi";
+                                    backgroundWorker1.RunWorkerAsync();
+                                    /*command.Parameters["@CUST_FILE"].Value = keyVal;
                                     command.CommandTimeout = 12000;
                                     command.Prepare();
                                     if(command.ExecuteNonQuery() == 1) {
 
-                                        command.Dispose();
+                                        command.Dispose();*/
                            
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
-                                        textboxPic.Click += (sender_ptx, e_ptx) => {
-                                            Form bgBlur = new Form();
-                                            using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
-                                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                                bgBlur.Opacity = .24d;
-                                                bgBlur.BackColor = Color.Black;
-                                                bgBlur.WindowState = FormWindowState.Maximized;
-                                                bgBlur.TopMost = true;
-                                                bgBlur.Location = this.Location;
-                                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                                bgBlur.ShowInTaskbar = false;
-                                                bgBlur.Show();
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                                    textboxPic.Click += (sender_ptx, e_ptx) => {
+                                        Form bgBlur = new Form();
+                                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null")) {
+                                            bgBlur.StartPosition = FormStartPosition.Manual;
+                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
+                                            bgBlur.Opacity = .24d;
+                                            bgBlur.BackColor = Color.Black;
+                                            bgBlur.WindowState = FormWindowState.Maximized;
+                                            bgBlur.TopMost = true;
+                                            bgBlur.Location = this.Location;
+                                            bgBlur.StartPosition = FormStartPosition.Manual;
+                                            bgBlur.ShowInTaskbar = false;
+                                            bgBlur.Show();
 
-                                                displayMsi.Owner = bgBlur;
-                                                displayMsi.ShowDialog();
+                                            displayMsi.Owner = bgBlur;
+                                            displayMsi.ShowDialog();
 
-                                                bgBlur.Dispose();
-                                            }
-                                        };
-                                        clearRedundane();
-                                    }
+                                            bgBlur.Dispose();
+                                        }
+                                    };
+                                    clearRedundane();
+                                    //}
                                 }
 
                                 if (nameTable == "file_info_word") {
@@ -4534,6 +4541,40 @@ namespace FlowSERVER1 {
             }
 
             Application.DoEvents();
+        }
+
+        private void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e) {
+            String insertQuery = "INSERT INTO " + tableName + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
+            command = new MySqlCommand(insertQuery, con);
+
+            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+
+            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+            command.Parameters["@CUST_FILE"].Value = keyValMain;
+
+            command.CommandTimeout = 15000;
+            command.Prepare();
+
+            if (command.ExecuteNonQuery() == 1) {
+                Application.OpenForms
+                 .OfType<Form>()
+                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                 .ToList()
+                 .ForEach(form => form.Close());
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged_3(object sender, ProgressChangedEventArgs e) {
+            progressBar1.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted_3(object sender, RunWorkerCompletedEventArgs e) {
+
         }
     }
 }

@@ -25,19 +25,19 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(remAccFORM));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend20 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series210 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series211 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series212 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series213 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series214 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series215 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series216 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series217 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series218 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series219 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series220 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
@@ -56,14 +56,17 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
+            this.label76 = new System.Windows.Forms.Label();
+            this.label75 = new System.Windows.Forms.Label();
             this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
             this.label37 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -98,7 +101,14 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.guna2Panel25 = new Guna.UI2.WinForms.Guna2Panel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.guna2CircleButton3 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.guna2CircleButton2 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.label80 = new System.Windows.Forms.Label();
             this.label81 = new System.Windows.Forms.Label();
+            this.label79 = new System.Windows.Forms.Label();
+            this.label78 = new System.Windows.Forms.Label();
             this.guna2Separator6 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Panel24 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button28 = new Guna.UI2.WinForms.Guna2Button();
@@ -196,16 +206,6 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label78 = new System.Windows.Forms.Label();
-            this.label79 = new System.Windows.Forms.Label();
-            this.label80 = new System.Windows.Forms.Label();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2CircleButton2 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2CircleButton3 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.label75 = new System.Windows.Forms.Label();
-            this.label76 = new System.Windows.Forms.Label();
-            this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.guna2TabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.guna2Panel12.SuspendLayout();
@@ -555,31 +555,6 @@
             this.guna2Button3.TabIndex = 30;
             this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.label4.Location = new System.Drawing.Point(598, 11);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(83, 21);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Username";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label5.Location = new System.Drawing.Point(760, 10);
-            this.label5.Name = "label5";
-            this.label5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label5.Size = new System.Drawing.Size(200, 21);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "Username";
-            // 
             // guna2Panel2
             // 
             this.guna2Panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -602,6 +577,40 @@
             this.guna2Panel2.Size = new System.Drawing.Size(990, 95);
             this.guna2Panel2.TabIndex = 26;
             this.guna2Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint);
+            // 
+            // guna2VSeparator1
+            // 
+            this.guna2VSeparator1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2VSeparator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.guna2VSeparator1.Location = new System.Drawing.Point(572, 13);
+            this.guna2VSeparator1.Name = "guna2VSeparator1";
+            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 18);
+            this.guna2VSeparator1.TabIndex = 42;
+            // 
+            // label76
+            // 
+            this.label76.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label76.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label76.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label76.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label76.Location = new System.Drawing.Point(156, 11);
+            this.label76.Name = "label76";
+            this.label76.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label76.Size = new System.Drawing.Size(404, 21);
+            this.label76.TabIndex = 41;
+            this.label76.Text = "domain@gmail.com";
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label75.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.label75.Location = new System.Drawing.Point(19, 10);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(112, 21);
+            this.label75.TabIndex = 40;
+            this.label75.Text = "Email Address";
             // 
             // guna2Button11
             // 
@@ -675,6 +684,31 @@
             this.label7.TabIndex = 28;
             this.label7.Text = "Account Type";
             this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label5.Location = new System.Drawing.Point(760, 10);
+            this.label5.Name = "label5";
+            this.label5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label5.Size = new System.Drawing.Size(200, 21);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Username";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.label4.Location = new System.Drawing.Point(598, 11);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 21);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Username";
             // 
             // guna2Panel1
             // 
@@ -953,78 +987,78 @@
             // 
             this.chart1.BackColor = System.Drawing.Color.Empty;
             this.chart1.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea20.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea20);
-            legend20.Name = "Legend1";
-            this.chart1.Legends.Add(legend20);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(4, 16);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             this.chart1.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))))};
-            series210.ChartArea = "ChartArea1";
-            series210.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            series210.Legend = "Legend1";
-            series210.Name = "Image";
-            series210.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series211.ChartArea = "ChartArea1";
-            series211.Color = System.Drawing.Color.MediumPurple;
-            series211.Legend = "Legend1";
-            series211.Name = "Text";
-            series211.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series212.ChartArea = "ChartArea1";
-            series212.Legend = "Legend1";
-            series212.Name = "Video";
-            series212.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series213.ChartArea = "ChartArea1";
-            series213.Legend = "Legend1";
-            series213.Name = "Exe";
-            series213.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series214.ChartArea = "ChartArea1";
-            series214.Color = System.Drawing.Color.Crimson;
-            series214.Legend = "Legend1";
-            series214.Name = "PDF";
-            series214.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series215.ChartArea = "ChartArea1";
-            series215.Color = System.Drawing.Color.YellowGreen;
-            series215.Legend = "Legend1";
-            series215.Name = "APK";
-            series215.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series216.ChartArea = "ChartArea1";
-            series216.Color = System.Drawing.Color.Gray;
-            series216.Legend = "Legend1";
-            series216.Name = "GIF";
-            series216.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series217.ChartArea = "ChartArea1";
-            series217.Color = System.Drawing.SystemColors.HotTrack;
-            series217.Legend = "Legend1";
-            series217.Name = "Document";
-            series217.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series218.ChartArea = "ChartArea1";
-            series218.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series218.Legend = "Legend1";
-            series218.Name = "Presentation";
-            series218.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series219.ChartArea = "ChartArea1";
-            series219.Color = System.Drawing.Color.Gold;
-            series219.Legend = "Legend1";
-            series219.Name = "Audio";
-            series220.ChartArea = "ChartArea1";
-            series220.Color = System.Drawing.Color.ForestGreen;
-            series220.Legend = "Legend1";
-            series220.Name = "Excel";
-            series220.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series210);
-            this.chart1.Series.Add(series211);
-            this.chart1.Series.Add(series212);
-            this.chart1.Series.Add(series213);
-            this.chart1.Series.Add(series214);
-            this.chart1.Series.Add(series215);
-            this.chart1.Series.Add(series216);
-            this.chart1.Series.Add(series217);
-            this.chart1.Series.Add(series218);
-            this.chart1.Series.Add(series219);
-            this.chart1.Series.Add(series220);
+            series1.ChartArea = "ChartArea1";
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            series1.Legend = "Legend1";
+            series1.Name = "Image";
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series2.ChartArea = "ChartArea1";
+            series2.Color = System.Drawing.Color.MediumPurple;
+            series2.Legend = "Legend1";
+            series2.Name = "Text";
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Video";
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Exe";
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series5.ChartArea = "ChartArea1";
+            series5.Color = System.Drawing.Color.Crimson;
+            series5.Legend = "Legend1";
+            series5.Name = "PDF";
+            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series6.ChartArea = "ChartArea1";
+            series6.Color = System.Drawing.Color.YellowGreen;
+            series6.Legend = "Legend1";
+            series6.Name = "APK";
+            series6.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series7.ChartArea = "ChartArea1";
+            series7.Color = System.Drawing.Color.Gray;
+            series7.Legend = "Legend1";
+            series7.Name = "GIF";
+            series7.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series8.ChartArea = "ChartArea1";
+            series8.Color = System.Drawing.SystemColors.HotTrack;
+            series8.Legend = "Legend1";
+            series8.Name = "Document";
+            series8.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series9.ChartArea = "ChartArea1";
+            series9.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series9.Legend = "Legend1";
+            series9.Name = "Presentation";
+            series9.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series10.ChartArea = "ChartArea1";
+            series10.Color = System.Drawing.Color.Gold;
+            series10.Legend = "Legend1";
+            series10.Name = "Audio";
+            series11.ChartArea = "ChartArea1";
+            series11.Color = System.Drawing.Color.ForestGreen;
+            series11.Legend = "Legend1";
+            series11.Name = "Excel";
+            series11.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
+            this.chart1.Series.Add(series7);
+            this.chart1.Series.Add(series8);
+            this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
+            this.chart1.Series.Add(series11);
             this.chart1.Size = new System.Drawing.Size(602, 404);
             this.chart1.TabIndex = 31;
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -1209,6 +1243,76 @@
             this.guna2Panel25.Size = new System.Drawing.Size(318, 167);
             this.guna2Panel25.TabIndex = 38;
             // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel2.Location = new System.Drawing.Point(240, 136);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(67, 15);
+            this.linkLabel2.TabIndex = 33;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Learn More";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // guna2CircleButton3
+            // 
+            this.guna2CircleButton3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.guna2CircleButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2CircleButton3.ForeColor = System.Drawing.Color.White;
+            this.guna2CircleButton3.Location = new System.Drawing.Point(25, 129);
+            this.guna2CircleButton3.Name = "guna2CircleButton3";
+            this.guna2CircleButton3.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton3.Size = new System.Drawing.Size(10, 10);
+            this.guna2CircleButton3.TabIndex = 42;
+            // 
+            // guna2CircleButton2
+            // 
+            this.guna2CircleButton2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.guna2CircleButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2CircleButton2.ForeColor = System.Drawing.Color.White;
+            this.guna2CircleButton2.Location = new System.Drawing.Point(25, 101);
+            this.guna2CircleButton2.Name = "guna2CircleButton2";
+            this.guna2CircleButton2.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton2.Size = new System.Drawing.Size(10, 10);
+            this.guna2CircleButton2.TabIndex = 41;
+            // 
+            // guna2CircleButton1
+            // 
+            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
+            this.guna2CircleButton1.Location = new System.Drawing.Point(25, 73);
+            this.guna2CircleButton1.Name = "guna2CircleButton1";
+            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton1.Size = new System.Drawing.Size(10, 10);
+            this.guna2CircleButton1.TabIndex = 39;
+            // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label80.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label80.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label80.Location = new System.Drawing.Point(38, 125);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(148, 17);
+            this.label80.TabIndex = 40;
+            this.label80.Text = "Delete Flowstorage File";
+            // 
             // label81
             // 
             this.label81.AutoSize = true;
@@ -1220,6 +1324,31 @@
             this.label81.Size = new System.Drawing.Size(283, 42);
             this.label81.TabIndex = 34;
             this.label81.Text = "Implement Flowstorage in your \r\napplication with Flowstorage.API SDK";
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label79.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label79.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label79.Location = new System.Drawing.Point(38, 97);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(171, 17);
+            this.label79.TabIndex = 39;
+            this.label79.Text = "Download Flowstorage File";
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label78.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label78.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label78.Location = new System.Drawing.Point(38, 69);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(153, 17);
+            this.label78.TabIndex = 35;
+            this.label78.Text = "Upload Flowstorage File";
+            this.label78.Click += new System.EventHandler(this.label78_Click);
             // 
             // guna2Separator6
             // 
@@ -2264,7 +2393,7 @@
             this.guna2Button10.Name = "guna2Button10";
             this.guna2Button10.Size = new System.Drawing.Size(141, 26);
             this.guna2Button10.TabIndex = 13;
-            this.guna2Button10.Text = "Use this account";
+            this.guna2Button10.Text = "Use Supreme";
             this.guna2Button10.TextOffset = new System.Drawing.Point(0, -1);
             this.guna2Button10.Visible = false;
             this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
@@ -2304,7 +2433,7 @@
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(199, 40);
             this.label52.TabIndex = 15;
-            this.label52.Text = "From limited to 12 files you \r\ncan now add more 988 files.";
+            this.label52.Text = "From limited to 20 files you \r\ncan now add more 980 files.";
             // 
             // guna2Button7
             // 
@@ -2420,7 +2549,7 @@
             this.guna2Button9.Name = "guna2Button9";
             this.guna2Button9.Size = new System.Drawing.Size(141, 26);
             this.guna2Button9.TabIndex = 7;
-            this.guna2Button9.Text = "Use this account";
+            this.guna2Button9.Text = "Use Express";
             this.guna2Button9.TextOffset = new System.Drawing.Point(0, -1);
             this.guna2Button9.Visible = false;
             this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
@@ -2459,7 +2588,7 @@
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(200, 40);
             this.label46.TabIndex = 9;
-            this.label46.Text = "From limited to 12 files you \r\ncan now add more 438 files.";
+            this.label46.Text = "From limited to 20 files you \r\ncan now add more 430 files.";
             // 
             // guna2Button6
             // 
@@ -2587,7 +2716,7 @@
             this.guna2Button8.Name = "guna2Button8";
             this.guna2Button8.Size = new System.Drawing.Size(141, 26);
             this.guna2Button8.TabIndex = 6;
-            this.guna2Button8.Text = "Use this account";
+            this.guna2Button8.Text = "Use Max";
             this.guna2Button8.TextOffset = new System.Drawing.Point(0, -1);
             this.guna2Button8.Visible = false;
             this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
@@ -2631,9 +2760,9 @@
             this.label42.ForeColor = System.Drawing.Color.Gainsboro;
             this.label42.Location = new System.Drawing.Point(41, 260);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(197, 40);
+            this.label42.Size = new System.Drawing.Size(199, 40);
             this.label42.TabIndex = 3;
-            this.label42.Text = "From limited to 12 files you \r\ncan now add more 87 files.";
+            this.label42.Text = "From limited to 20 files you \r\ncan now add more 79 files.";
             this.label42.Click += new System.EventHandler(this.label42_Click);
             // 
             // label41
@@ -2665,134 +2794,6 @@
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
-            // 
-            // label78
-            // 
-            this.label78.AutoSize = true;
-            this.label78.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label78.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label78.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label78.Location = new System.Drawing.Point(38, 69);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(153, 17);
-            this.label78.TabIndex = 35;
-            this.label78.Text = "Upload Flowstorage File";
-            this.label78.Click += new System.EventHandler(this.label78_Click);
-            // 
-            // label79
-            // 
-            this.label79.AutoSize = true;
-            this.label79.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label79.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label79.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label79.Location = new System.Drawing.Point(38, 97);
-            this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(171, 17);
-            this.label79.TabIndex = 39;
-            this.label79.Text = "Download Flowstorage File";
-            // 
-            // label80
-            // 
-            this.label80.AutoSize = true;
-            this.label80.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label80.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label80.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label80.Location = new System.Drawing.Point(38, 125);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(148, 17);
-            this.label80.TabIndex = 40;
-            this.label80.Text = "Delete Flowstorage File";
-            // 
-            // guna2CircleButton1
-            // 
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(25, 73);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(10, 10);
-            this.guna2CircleButton1.TabIndex = 39;
-            // 
-            // guna2CircleButton2
-            // 
-            this.guna2CircleButton2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.guna2CircleButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton2.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton2.Location = new System.Drawing.Point(25, 101);
-            this.guna2CircleButton2.Name = "guna2CircleButton2";
-            this.guna2CircleButton2.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton2.Size = new System.Drawing.Size(10, 10);
-            this.guna2CircleButton2.TabIndex = 41;
-            // 
-            // guna2CircleButton3
-            // 
-            this.guna2CircleButton3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.guna2CircleButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton3.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton3.Location = new System.Drawing.Point(25, 129);
-            this.guna2CircleButton3.Name = "guna2CircleButton3";
-            this.guna2CircleButton3.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton3.Size = new System.Drawing.Size(10, 10);
-            this.guna2CircleButton3.TabIndex = 42;
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel2.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel2.Location = new System.Drawing.Point(240, 136);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(67, 15);
-            this.linkLabel2.TabIndex = 33;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Learn More";
-            // 
-            // label75
-            // 
-            this.label75.AutoSize = true;
-            this.label75.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label75.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.label75.Location = new System.Drawing.Point(19, 10);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(112, 21);
-            this.label75.TabIndex = 40;
-            this.label75.Text = "Email Address";
-            // 
-            // label76
-            // 
-            this.label76.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label76.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label76.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label76.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label76.Location = new System.Drawing.Point(156, 11);
-            this.label76.Name = "label76";
-            this.label76.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label76.Size = new System.Drawing.Size(404, 21);
-            this.label76.TabIndex = 41;
-            this.label76.Text = "domain@gmail.com";
-            // 
-            // guna2VSeparator1
-            // 
-            this.guna2VSeparator1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2VSeparator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.guna2VSeparator1.Location = new System.Drawing.Point(572, 13);
-            this.guna2VSeparator1.Name = "guna2VSeparator1";
-            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 18);
-            this.guna2VSeparator1.TabIndex = 42;
             // 
             // remAccFORM
             // 

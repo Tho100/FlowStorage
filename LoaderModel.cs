@@ -8,9 +8,9 @@ using System.IO;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
-    /*
-      @ Essential class for data retrieval
-     */
+    /// <summary>
+    /// File downloader class
+    /// </summary>
     public partial class LoaderModel {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;

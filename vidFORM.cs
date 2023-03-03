@@ -60,12 +60,14 @@ namespace FlowSERVER1 {
 
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Normal;
+            label1.AutoSize = false;
             guna2Button3.Visible = false;
             guna2Button1.Visible = true;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Maximized;
+            label1.AutoSize = true;
             guna2Button3.Visible = true;
             guna2Button1.Visible = false;
         }

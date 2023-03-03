@@ -21,6 +21,7 @@ using Stripe.Checkout;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Diagnostics;
 //using Stripe;
 
 namespace FlowSERVER1 {
@@ -2399,6 +2400,15 @@ namespace FlowSERVER1 {
 
         private void label78_Click(object sender, EventArgs e) {
 
+        }
+
+        /// <summary>
+        /// Open API web page on browser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://flowstorage.netlify.app/api_web/index.html");
         }
     }
 }

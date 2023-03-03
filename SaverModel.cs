@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,12 +18,15 @@ namespace FlowSERVER1 {
     /// Download file class
     /// </summary>
 
+
     public partial class SaverModel {
+
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
         private static String _getExt;
         public static SaverModel instance;
         public static bool stopFileRetrieval = false;
+
 
         /// <summary>
         /// 
@@ -32,7 +36,6 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_FileTitle"></param>
         /// <param name="_getBytes"></param>
-
         private static void _openDialog(String _FileTitle, Byte[] _getBytes) {
             Application.OpenForms
                      .OfType<Form>()

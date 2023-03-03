@@ -31,7 +31,16 @@ namespace FlowSERVER1
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
         private static String _extName = null;
-        
+
+        private string get_ex;
+        private string getName;
+        private string retrieved;
+        private string retrievedName;
+        private string tableName;
+        private string varDate;
+        private long fileSizeInMB;
+        private object keyValMain;
+
         public Form3(String sendTitle_)
         {
             InitializeComponent();
@@ -702,7 +711,7 @@ namespace FlowSERVER1
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.csv|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
             open.Multiselect = true;
-            string varDate = DateTime.Now.ToString("dd/MM/yyyy");
+            varDate = DateTime.Now.ToString("dd/MM/yyyy");
         
             List<String> _filValues = new List<String>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
@@ -746,11 +755,11 @@ namespace FlowSERVER1
 
                         Application.DoEvents();
 
-                        string get_ex = open.FileName;
-                        string getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
-                        string retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
-                        string retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
-                        var fileSizeInMB = 0;
+                        get_ex = open.FileName;
+                        getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
+                        retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
+                        retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
+                        fileSizeInMB = 0;
 
                         Application.OpenForms
                           .OfType<Form>()
@@ -814,9 +823,7 @@ namespace FlowSERVER1
 
                             Application.DoEvents();
 
-                            if(fileSizeInMB < 8000) {
-
-                            
+                            if(fileSizeInMB < 1500) {
 
                                 String insertTxtQuery = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
                                 command = new MySqlCommand(insertTxtQuery, con);
@@ -840,6 +847,7 @@ namespace FlowSERVER1
                                 void startSending(Object setValue) {
                                     Application.DoEvents();
                                     command.Parameters["@CUST_FILE"].Value = setValue;
+                                    command.Prepare();
                                     command.ExecuteNonQuery();
                                     command.Dispose();
 
@@ -1002,7 +1010,9 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_exe") {
-                                    startSending(keyVal);
+                                    keyValMain = keyVal;
+                                    backgroundWorker1.RunWorkerAsync(); 
+
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
@@ -1079,7 +1089,9 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_apk") {
-                                    startSending(keyVal);
+                                    keyValMain = keyVal;
+                                    backgroundWorker1.RunWorkerAsync();
+
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
@@ -1122,7 +1134,8 @@ namespace FlowSERVER1
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_msi") {
-                                    startSending(keyVal);
+                                    keyValMain = keyVal;
+                                    backgroundWorker1.RunWorkerAsync();
 
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1446,6 +1459,46 @@ namespace FlowSERVER1
         }
 
         private void guna2Button12_Click(object sender, EventArgs e) {
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
+            String insertTxtQuery = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
+            command = new MySqlCommand(insertTxtQuery, con);
+
+            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+            command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
+            command.Parameters.Add("@FILE_EXT", MySqlDbType.LongText);
+            command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
+
+            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+            command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
+            command.Parameters["@FILE_EXT"].Value = retrieved;
+            command.Parameters["@DIR_NAME"].Value = label1.Text;
+            command.Parameters["@CUST_THUMB"].Value = "null";
+
+            command.CommandTimeout = 15000;
+            command.Prepare();
+
+            if(command.ExecuteNonQuery() == 1) {
+                Application.OpenForms
+                .OfType<Form>()
+                .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                .ToList()
+                .ForEach(form => form.Close());
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 
         }
     }
