@@ -15,6 +15,7 @@ namespace FlowSERVER1 {
         }
 
         private void splashFORM_Load(object sender, EventArgs e) {
+
         }
 
         private void timer1_Tick(object sender, EventArgs e) {

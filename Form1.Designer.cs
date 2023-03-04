@@ -82,7 +82,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.guna2TextBox5 = new Guna.UI2.WinForms.Guna2TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.button1 = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.guna2Panel3.SuspendLayout();
@@ -477,6 +478,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.guna2Panel7.Controls.Add(this.button1);
+            this.guna2Panel7.Controls.Add(this.richTextBox1);
             this.guna2Panel7.Controls.Add(this.pictureBox4);
             this.guna2Panel7.Controls.Add(this.label30);
             this.guna2Panel7.Controls.Add(this.label15);
@@ -496,9 +499,9 @@
             this.guna2Panel7.Controls.Add(this.guna2TextBox2);
             this.guna2Panel7.Controls.Add(this.guna2TextBox1);
             this.guna2Panel7.Controls.Add(this.guna2Button11);
-            this.guna2Panel7.Location = new System.Drawing.Point(0, -1);
+            this.guna2Panel7.Location = new System.Drawing.Point(0, 2);
             this.guna2Panel7.Name = "guna2Panel7";
-            this.guna2Panel7.Size = new System.Drawing.Size(1642, 829);
+            this.guna2Panel7.Size = new System.Drawing.Size(1642, 826);
             this.guna2Panel7.TabIndex = 28;
             this.guna2Panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
             // 
@@ -509,7 +512,7 @@
             this.pictureBox4.Image = global::FlowSERVER1.Properties.Resources.Untitled__72_;
             this.pictureBox4.Location = new System.Drawing.Point(0, 0);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(561, 666);
+            this.pictureBox4.Size = new System.Drawing.Size(561, 663);
             this.pictureBox4.TabIndex = 49;
             this.pictureBox4.TabStop = false;
             // 
@@ -956,12 +959,27 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged_3);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted_3);
             // 
-            // progressBar1
+            // button1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(474, 12);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(361, 23);
-            this.progressBar1.TabIndex = 30;
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(717, 303);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 51;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Enabled = false;
+            this.richTextBox1.Location = new System.Drawing.Point(248, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(407, 213);
+            this.richTextBox1.TabIndex = 50;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.Visible = false;
             // 
             // Form1
             // 
@@ -981,7 +999,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2TextBox5);
-            this.Controls.Add(this.progressBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1061,7 +1078,8 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

@@ -27,11 +27,16 @@ using System.Net;
 using System.Threading;
 
 namespace FlowSERVER1 {
+    /// <summary>
+    /// Main form class
+    /// </summary>
     public partial class Form1 : Form {
+
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+
         public static Form1 instance;
         public Label setupLabel;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
         public bool stopFileTransaction = false;
         private String CurrentLang = "";
         private Object _getValues = "";
@@ -48,6 +53,7 @@ namespace FlowSERVER1 {
         public Form1() {
 
             InitializeComponent();
+
             instance = this;
 
             Application.OpenForms
@@ -79,7 +85,6 @@ namespace FlowSERVER1 {
                 String _getAuth = _getPath + "\\CUST_DATAS.txt";
                 if (File.Exists(_getAuth)) {
                     String _UsernameFirst = File.ReadLines(_getAuth).First();
-                    //String _PassSed = File.ReadLines(_getAuth).ElementAtOrDefault(1);
                     if (new FileInfo(_getAuth).Length != 0) {
                         Thread showLoadingForm = new Thread(() => new LoadAlertFORM().ShowDialog());
                         showLoadingForm.IsBackground = false;
@@ -2426,6 +2431,7 @@ namespace FlowSERVER1 {
                                                         command.Parameters.AddWithValue("@SET_PASS", "DEF");
                                                         command.ExecuteNonQuery();
 
+                                                        setupAutoLogin(_getUser);
 
                                                         label11.Visible = false;
                                                         label12.Visible = false;
@@ -2490,6 +2496,16 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        public void setupAutoLogin(String _custUsername) {
+            Task.Run(() => {
+                String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                Directory.CreateDirectory(setupDir);
+                using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(_custUsername);
+                }
+            });
         }
 
         private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
@@ -4570,11 +4586,25 @@ namespace FlowSERVER1 {
         }
 
         private void backgroundWorker1_ProgressChanged_3(object sender, ProgressChangedEventArgs e) {
-            progressBar1.Value = e.ProgressPercentage;
         }
 
         private void backgroundWorker1_RunWorkerCompleted_3(object sender, RunWorkerCompletedEventArgs e) {
 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e) {
+            richTextBox1.Text = EncryptConnection(richTextBox1.Text,"abcde0152-connection");
+        }
+        private string EncryptConnection(string source, string key) {
+            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider()) {
+                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider()) {
+                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
+                    tripleDESCryptoService.Key = byteHash;
+                    tripleDESCryptoService.Mode = CipherMode.ECB;
+                    byte[] data = Encoding.UTF8.GetBytes(source);
+                    return Convert.ToBase64String(tripleDESCryptoService.CreateEncryptor().TransformFinalBlock(data, 0, data.Length));
+                }
+            }
         }
     }
 }

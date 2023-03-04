@@ -22,6 +22,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Configuration;
 using System.Diagnostics;
+using System.Security.Cryptography;
 //using Stripe;
 
 namespace FlowSERVER1 {
@@ -456,10 +457,9 @@ namespace FlowSERVER1 {
 
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            //_setupPayment("Max account for Flowstorage",2);
             _selectedAcc = "Max";
             guna2Button8.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/8wM9AE78le1KcpieV4"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -485,13 +485,13 @@ namespace FlowSERVER1 {
         private void guna2Button7_Click(object sender, EventArgs e) {
             _selectedAcc = "Supreme";
             guna2Button10.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/eVacMQ3W97Dm60U6ow"); // Test mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             _selectedAcc = "Express";
             guna2Button9.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/5kAaEIdwJ7DmgFybIR"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -599,11 +599,24 @@ namespace FlowSERVER1 {
             }
         }
 
+        private string DecryptApi(string encrypt, string key) {
+            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider()) {
+                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider()) {
+                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
+                    tripleDESCryptoService.Key = byteHash;
+                    tripleDESCryptoService.Mode = CipherMode.ECB;
+                    byte[] data = Convert.FromBase64String(encrypt);
+                    return Encoding.UTF8.GetString(tripleDESCryptoService.CreateDecryptor().TransformFinalBlock(data, 0, data.Length));
+                }
+            }
+        }
+
         private void setupAccount() {
 
             try {
 
-                var _setupApiKey = ConfigurationManager.ConnectionStrings["APISETUP"].ConnectionString;
+                var _setupApiKey = DecryptApi(ConfigurationManager.ConnectionStrings["APISETUP"].ConnectionString, "abcde0152-connection");
+                MessageBox.Show(_setupApiKey);
                 Stripe.StripeConfiguration.SetApiKey(_setupApiKey);
                 var service = new Stripe.CustomerService();
                 var customers = service.List();
@@ -611,8 +624,11 @@ namespace FlowSERVER1 {
                 String lastId = null;
                 String LastEmail = null;
 
+                List<String> _custEmails = new List<String>();
+
                 // @ Enumerate the first page of the list
                 foreach (Stripe.Customer customer in customers) {
+                    _custEmails.Add(customer.Id);
                     lastId = customer.Id;
                     LastEmail = customer.Email;
                 }
@@ -627,7 +643,7 @@ namespace FlowSERVER1 {
                 }
                 _readEmail.Close();
 
-                if (LastEmail == CustUserValues[0]) {
+                if (_custEmails.Contains(CustUserValues[0])) {
                     String _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     command = new MySqlCommand(_insertNew, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
