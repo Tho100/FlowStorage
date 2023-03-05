@@ -85,16 +85,16 @@
             this.label2.ForeColor = System.Drawing.Color.LightGray;
             this.label2.Location = new System.Drawing.Point(131, 55);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(257, 40);
+            this.label2.Size = new System.Drawing.Size(265, 40);
             this.label2.TabIndex = 24;
-            this.label2.Text = "It looks like you\'ve reached the max \r\namount of files you can upload";
+            this.label2.Text = "It\'s looks like you\'ve selected number \r\nof files than you can upload";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.LightGray;
-            this.label3.Location = new System.Drawing.Point(131, 104);
+            this.label3.Location = new System.Drawing.Point(131, 112);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(163, 20);
             this.label3.TabIndex = 25;

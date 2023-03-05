@@ -8,23 +8,29 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Data;
+using System.IO;
 
 namespace FlowSERVER1 {
     public class ConnectionModel {
 
-        private static string getConnection = DecryptConnection(ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString, "abcde0152-connection");
+        private static string getConnection = ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString;//DecryptConnection("0afe74-gksuwpe8r",ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString);
         public static MySqlConnection con = new MySqlConnection(getConnection);
         public static MySqlCommand command;
         public static MySqlCommand commandRead;
 
-        private static string DecryptConnection(string encrypt, string key) {
-            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider()) {
-                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider()) {
-                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
-                    tripleDESCryptoService.Key = byteHash;
-                    tripleDESCryptoService.Mode = CipherMode.ECB;
-                    byte[] data = Convert.FromBase64String(encrypt);
-                    return Encoding.UTF8.GetString(tripleDESCryptoService.CreateDecryptor().TransformFinalBlock(data, 0, data.Length));
+        private static string DecryptConnection(string key, string cipherText) {
+            byte[] iv = new byte[16];
+            byte[] buffer = Convert.FromBase64String(cipherText);
+            using (Aes aes = Aes.Create()) {
+                aes.Key = Encoding.UTF8.GetBytes(key);
+                aes.IV = iv;
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+                using (MemoryStream memoryStream = new MemoryStream(buffer)) {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read)) {
+                        using (StreamReader streamReader = new StreamReader((Stream)cryptoStream)) {
+                            return streamReader.ReadToEnd();
+                        }
+                    }
                 }
             }
         }

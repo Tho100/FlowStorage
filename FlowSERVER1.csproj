@@ -797,6 +797,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-csv-48.png" />
     <None Include="Resources\icons8-netherlands-961.png" />
     <None Include="Resources\icons8-login-rounded-50.png" />
     <None Include="Resources\Untitled %2872%29.png" />

@@ -120,6 +120,11 @@ namespace FlowSERVER1
                         _extName = ".html";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".html"));
                     }
+                    if (_countRow(".csv") > 0) {
+                        Application.DoEvents();
+                        _extName = ".csv";
+                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".csv"));
+                    }
                     if (_countRow(".css") > 0) {
                         Application.DoEvents();
                         _extName = ".css";
@@ -127,7 +132,7 @@ namespace FlowSERVER1
                     }
                     ////
                 // LOAD EXE
-                if (_countRow(".exe") > 0) {
+                    if (_countRow(".exe") > 0) {
                         Application.DoEvents();
                         _extName = ".exe";
                         _generateUserFiles("file_info_exe", "exeFile", _countRow(".exe"));
@@ -438,6 +443,9 @@ namespace FlowSERVER1
                     else if (_extTypes == ".sql") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                     }
+                    else if (_extTypes == ".csv") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
+                    }
                     picMain_Q.Click += (sender_t, e_t) => {
                         Form bgBlur = new Form();
                         using (txtFORM displayPic = new txtFORM("", "upload_info_directory", titleLab.Text, label1.Text, Form1.instance.label5.Text)) {
@@ -709,7 +717,7 @@ namespace FlowSERVER1
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.csv|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.csv|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
             open.Multiselect = true;
             varDate = DateTime.Now.ToString("dd/MM/yyyy");
         
@@ -980,6 +988,9 @@ namespace FlowSERVER1
                                     else if (_extTypes == ".sql") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                                     }
+                                    else if (_extTypes == ".csv") {
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
+                                    }
 
                                     String nonLine = "";
                                     var filePath = getName;
@@ -1226,7 +1237,7 @@ namespace FlowSERVER1
                                     }
                                 }
                             }
-                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql") {
+                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
@@ -1400,8 +1411,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Max") {
-                    if (CurrentUploadCount != 99) {
-                        _mainFileGenerator(99,"Max");
+                    if (CurrentUploadCount != 150) {
+                        _mainFileGenerator(150,"Max");
                     }
                     else {
                         DisplayError(_accType);
@@ -1409,8 +1420,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Express") {
-                    if (CurrentUploadCount != 450) {
-                        _mainFileGenerator(450,"Express");
+                    if (CurrentUploadCount != 500) {
+                        _mainFileGenerator(500,"Express");
                     }
                     else {
                         DisplayError(_accType);
@@ -1418,8 +1429,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 1000) {
-                        _mainFileGenerator(1000, "Supreme");
+                    if (CurrentUploadCount != 1500) {
+                        _mainFileGenerator(1500, "Supreme");
                     }
                     else {
                         DisplayError(_accType);

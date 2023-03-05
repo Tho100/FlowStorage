@@ -53,12 +53,14 @@ namespace FlowSERVER1 {
         public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName) {
             _getExt = _FileTitle.Split('.').Last();
             try {
+
                 List<String> _base64Encoded = new List<string>();
+
                 if (_TableName == "upload_info_directory") {
+
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
                     ShowAlert.Start();
 
-                    Application.DoEvents();
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -67,25 +69,35 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@dirname", _DirectoryName);
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
+
                     if (stopFileRetrieval == true) {
+
                         _byteReader.Close();
+
                         Application.OpenForms
                         .OfType<Form>()
                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                         .ToList()
                         .ForEach(form => form.Close());
+
                         stopFileRetrieval = false;
+
                     }
+
                     if (_byteReader.Read()) {
                         _base64Encoded.Add(_byteReader.GetString(0));
                         var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
                         _openDialog(_FileTitle,_getBytes);
                     }
                     _byteReader.Close();
+
                 } else if (_TableName == "folder_upload_info") {
+
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
                     ShowAlert.Start();
+
                     Application.DoEvents();
+
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -94,13 +106,52 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
+
                     if (stopFileRetrieval == true) {
+
                         _byteReader.Close();
+
                         Application.OpenForms
                         .OfType<Form>()
                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                         .ToList()
                         .ForEach(form => form.Close());
+
+                        stopFileRetrieval = false;
+                    }
+
+                    if (_byteReader.Read()) {
+                        _base64Encoded.Add(_byteReader.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                        _openDialog(_FileTitle, _getBytes);
+                    }
+                    _byteReader.Close();
+
+                } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory" && _TableName != "cust_sharing") {
+
+                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
+                    ShowAlert.Start();
+
+                    //Application.DoEvents();
+
+                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = con.CreateCommand();
+                    command.CommandText = _retrieveBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", _FileTitle);
+
+                    MySqlDataReader _byteReader = command.ExecuteReader();
+
+                    if(stopFileRetrieval == true) {
+
+                        _byteReader.Close();
+
+                        Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                        .ToList()
+                        .ForEach(form => form.Close());
+
                         stopFileRetrieval = false;
                     }
                     if (_byteReader.Read()) {
@@ -109,35 +160,12 @@ namespace FlowSERVER1 {
                         _openDialog(_FileTitle, _getBytes);
                     }
                     _byteReader.Close();
-                } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory" && _TableName != "cust_sharing") {
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
-                    ShowAlert.Start();
-                    Application.DoEvents();
-                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", _FileTitle);
 
-                    MySqlDataReader _byteReader = command.ExecuteReader();
-                    if(stopFileRetrieval == true) {
-                        _byteReader.Close();
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
-                        stopFileRetrieval = false;
-                    }
-                    if (_byteReader.Read()) {
-                        _base64Encoded.Add(_byteReader.GetString(0));
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        _openDialog( _FileTitle, _getBytes);
-                    }
-                    _byteReader.Close();
                 } else if (_TableName == "cust_sharing") {
+
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.","Saver");
                     ShowAlert.Show();
+
                     Application.DoEvents();
 
                     String _retrieveBytes = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
@@ -147,15 +175,20 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@filename", _FileTitle);
 
                     MySqlDataReader _byteReader = command.ExecuteReader();
+
                     if (stopFileRetrieval == true) {
+
                         _byteReader.Close();
+
                         Application.OpenForms
                         .OfType<Form>()
                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                         .ToList()
                         .ForEach(form => form.Close());
+
                         stopFileRetrieval = false;
                     }
+
                     if (_byteReader.Read()) {
                         _base64Encoded.Add(_byteReader.GetString(0));
                         var _getBytes = Convert.FromBase64String(_base64Encoded[0]);

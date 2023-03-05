@@ -520,6 +520,10 @@ namespace FlowSERVER1 {
                     } else if (_extTypes == ".sql") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                     }
+                    else if (_extTypes == ".csv") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
+                    }
+
                     picMain_Q.Click += (sender_t, e_t) => {
                         Form bgBlur = new Form();
                         using (txtFORM displayPic = new txtFORM("IGNORETHIS", "file_info_expand", titleLab.Text,"null",label5.Text)) {
@@ -897,7 +901,7 @@ namespace FlowSERVER1 {
                     }
 
 
-                    if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql") {
+                    if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql" || typeValues[i] == ".csv") {
                         String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(retrieveImg, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
@@ -931,6 +935,9 @@ namespace FlowSERVER1 {
                         }
                         else if (_extTypes == ".sql") {
                             img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+                        }
+                        else if (_extTypes == ".csv") {
+                            img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                         }
 
                         picMain_Q.Click += (sender_t, e_t) => {
@@ -1392,7 +1399,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;*.psd|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;*.psd|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
             open.Multiselect = true;
             varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -1492,6 +1499,7 @@ namespace FlowSERVER1 {
                                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
                                 void startSending(Object setValue) {
+
                                     Application.DoEvents();   
 
                                     command.Parameters["@CUST_FILE"].Value = setValue;
@@ -1627,6 +1635,9 @@ namespace FlowSERVER1 {
                                     }
                                     else if (_extTypes == ".sql") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+                                    }
+                                    else if (_extTypes == ".csv") {
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                                     }
 
                                     var filePath = getName;
@@ -1910,7 +1921,7 @@ namespace FlowSERVER1 {
                                     }
                                 }
                             }
-                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql") {
+                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
@@ -2071,8 +2082,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Max") {
-                        if (CurrentUploadCount != 99) {
-                            _mainFileGenerator(99, _accType);
+                        if (CurrentUploadCount != 150) {
+                            _mainFileGenerator(150, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -2080,8 +2091,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Express") {
-                        if (CurrentUploadCount != 450) {
-                            _mainFileGenerator(450, _accType);
+                        if (CurrentUploadCount != 500) {
+                            _mainFileGenerator(500, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -2089,8 +2100,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Supreme") {
-                        if (CurrentUploadCount != 1000) {
-                            _mainFileGenerator(1000, _accType);
+                        if (CurrentUploadCount != 1500) {
+                            _mainFileGenerator(1500, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -2732,7 +2743,7 @@ namespace FlowSERVER1 {
 
                         };
                     }
-                    if (_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js" || _extTypes == ".sql") {
+                    if (_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js" || _extTypes == ".sql" || _extTypes == ".csv") {
                         if (_extTypes == ".py") {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
                         }
@@ -2750,6 +2761,9 @@ namespace FlowSERVER1 {
                         }
                         else if (_extTypes == ".sql") {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+                        }
+                        else if (_extTypes == ".csv") {
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                         }
 
                         var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files), "TXTCONTS01947265");
@@ -2973,7 +2987,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Max") {
-                        if (_numberOfFiles <= 99) {
+                        if (_numberOfFiles <= 120) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2985,7 +2999,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Express") {
-                        if (_numberOfFiles <= 450) {
+                        if (_numberOfFiles <= 500) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2999,7 +3013,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Supreme") {
-                        if (_numberOfFiles <= 1000) {
+                        if (_numberOfFiles <= 1500) {
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
                             var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
@@ -3698,7 +3712,7 @@ namespace FlowSERVER1 {
                 }
 
 
-                if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql") {
+                if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql" || typeValues[i] == ".csv") {
                     String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH LIKE @filename";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
@@ -3732,6 +3746,9 @@ namespace FlowSERVER1 {
                     }
                     else if (_extTypes == ".sql") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+                    }
+                    else if (_extTypes == ".csv") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
@@ -3856,7 +3873,6 @@ namespace FlowSERVER1 {
                 if (typeValues[i] == ".apk") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
-                        Form bgBlur = new Form();
                         apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "folder_upload_info", _foldTitle);
                         displayPic.Show();
                     };
@@ -3865,7 +3881,6 @@ namespace FlowSERVER1 {
                 if (typeValues[i] == ".exe") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     img.Click += (sender_ap, e_ap) => {
-                        Form bgBlur = new Form();
                         exeFORM displayPic = new exeFORM(titleLab.Text, "folder_upload_info", _foldTitle, "null");
                         displayPic.Show();
                     };
@@ -3874,7 +3889,6 @@ namespace FlowSERVER1 {
                 if (typeValues[i] == ".pdf") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     img.Click += (sender_pdf, e_pdf) => {
-                        Form bgBlur = new Form();
                         pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info", _foldTitle, label5.Text);
                         displayPic.Show();
                     };
@@ -3883,7 +3897,6 @@ namespace FlowSERVER1 {
                 if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     img.Click += (sender_pdf, e_pdf) => {
-                        Form bgBlur = new Form();
                         wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle, label5.Text);
                         displayDoc.Show();
                     };
@@ -3892,7 +3905,6 @@ namespace FlowSERVER1 {
                 if (typeValues[i] == ".pptx" || typeValues[i] == ".ppt") {
                     img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     img.Click += (sender_pdf, e_pdf) => {
-                        Form bgBlur = new Form();
                         wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle, label5.Text);
                         displayDoc.Show();
                     };
@@ -3901,7 +3913,6 @@ namespace FlowSERVER1 {
                 if (typeValues[i] == ".msi") {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
                         msiFORM displayMsi = new msiFORM(titleLab.Text, "folder_upload_info", _foldTitle);
                         displayMsi.Show();
                     };
@@ -4144,6 +4155,9 @@ namespace FlowSERVER1 {
                     }
                     else if (_extTypes == ".sql") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+                    }
+                    else if (_extTypes == ".csv") {
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
                         Form bgBlur = new Form();
@@ -4593,18 +4607,28 @@ namespace FlowSERVER1 {
         }
 
         private void button1_Click_1(object sender, EventArgs e) {
-            richTextBox1.Text = EncryptConnection(richTextBox1.Text,"abcde0152-connection");
+            richTextBox1.Text = EncryptConnection("0afe74-gksuwpe8r", richTextBox1.Text);
         }
-        private string EncryptConnection(string source, string key) {
-            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider()) {
-                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider()) {
-                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
-                    tripleDESCryptoService.Key = byteHash;
-                    tripleDESCryptoService.Mode = CipherMode.ECB;
-                    byte[] data = Encoding.UTF8.GetBytes(source);
-                    return Convert.ToBase64String(tripleDESCryptoService.CreateEncryptor().TransformFinalBlock(data, 0, data.Length));
+
+        public static string EncryptConnection(string key, string plainInput) {
+            byte[] iv = new byte[16];
+            byte[] array;
+            using (Aes aes = Aes.Create()) {
+                aes.Key = Encoding.UTF8.GetBytes(key);
+                aes.IV = iv;
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write)) {
+                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream)) {
+                            streamWriter.Write(plainInput);
+                        }
+
+                        array = memoryStream.ToArray();
+                    }
                 }
             }
+
+            return Convert.ToBase64String(array);
         }
     }
 }

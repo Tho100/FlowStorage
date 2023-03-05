@@ -67,13 +67,13 @@ namespace FlowSERVER1 {
             }
             _readAccType.Close();
             if (_accType == "Max") {
-                _allowedReturn = 99;
+                _allowedReturn = 120;
             }
             else if (_accType == "Express") {
-                _allowedReturn = 450;
+                _allowedReturn = 500;
             }
             else if (_accType == "Supreme") {
-                _allowedReturn = 1000;
+                _allowedReturn = 1500;
             }
             else if (_accType == "Basic") {
                 _allowedReturn = 20;

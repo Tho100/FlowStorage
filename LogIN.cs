@@ -508,6 +508,9 @@ namespace FlowSERVER1 {
                             else if (_extTypes == ".sql") {
                                 img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                             }
+                            else if (_extTypes == ".csv") {
+                                img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
+                            }
                             picMain_Q.Click += (sender_t, e_t) => {
                                 txtFORM txtFormShow = new txtFORM("LOLOL","file_info_expand", titleLab.Text,"null",Form1.instance.label5.Text);
                                 txtFormShow.Show();
