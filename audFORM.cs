@@ -56,7 +56,7 @@ namespace FlowSERVER1 {
                 else {
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.","Loader").ShowDialog());
                     ShowAlert.Start();
-                    Application.DoEvents();
+
                     if (_TabName == "file_info_audi") {
                         pictureBox3.Enabled = true;
                         setupPlayer(_audType,LoaderModel.LoadFile("file_info_audi",_DirName,label1.Text));

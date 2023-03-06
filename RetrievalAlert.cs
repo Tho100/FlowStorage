@@ -43,8 +43,6 @@ namespace FlowSERVER1 {
 
                     try {
 
-                        Application.DoEvents();
-
                         label9.Text = "Cancelling Operation...";
                         if (con.State == System.Data.ConnectionState.Open) {
 
@@ -58,8 +56,6 @@ namespace FlowSERVER1 {
                                 con.Open();
                             }
                         }
-
-                        Application.DoEvents();
 
                     } catch (Exception) {
                         con.Close();

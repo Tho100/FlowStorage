@@ -23,10 +23,17 @@ namespace FlowSERVER1 {
             try {
 
                 void remove_ItemsTab(String _tableName) {
-                    String _remQueryBegin = "DELETE FROM " + _tableName +  " WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(_remQueryBegin, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.ExecuteNonQuery();
+                    if(_tableName != "cust_sharing") {
+                        String _remQueryBegin = "DELETE FROM " + _tableName +  " WHERE CUST_USERNAME = @username";
+                        command = new MySqlCommand(_remQueryBegin, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.ExecuteNonQuery();
+                    } else {
+                        String _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
+                        command = new MySqlCommand(_remSharingBeings, con);
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.ExecuteNonQuery();
+                    }
                 }
 
                 String returnValues(String _WhichColumn) {
@@ -69,6 +76,8 @@ namespace FlowSERVER1 {
                             remove_ItemsTab("file_info_word");
                             remove_ItemsTab("file_info_apk");
                             remove_ItemsTab("file_info_exe");
+                            remove_ItemsTab("file_info_audi");
+                            remove_ItemsTab("file_info_vid");
                             remove_ItemsTab("file_info_excel");
                             remove_ItemsTab("file_info_directory");
                             remove_ItemsTab("upload_info_directory");
@@ -76,6 +85,9 @@ namespace FlowSERVER1 {
                             remove_ItemsTab("file_info_msi");
                             remove_ItemsTab("cust_type");
                             remove_ItemsTab("lang_info");
+                            remove_ItemsTab("cust_buyer");
+                            remove_ItemsTab("cust_sharing");
+                            remove_ItemsTab("sharing_info");
 
                             this.Close();
 

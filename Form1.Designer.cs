@@ -499,9 +499,9 @@
             this.guna2Panel7.Controls.Add(this.guna2TextBox2);
             this.guna2Panel7.Controls.Add(this.guna2TextBox1);
             this.guna2Panel7.Controls.Add(this.guna2Button11);
-            this.guna2Panel7.Location = new System.Drawing.Point(0, 2);
+            this.guna2Panel7.Location = new System.Drawing.Point(0, -1);
             this.guna2Panel7.Name = "guna2Panel7";
-            this.guna2Panel7.Size = new System.Drawing.Size(1642, 826);
+            this.guna2Panel7.Size = new System.Drawing.Size(1642, 829);
             this.guna2Panel7.TabIndex = 28;
             this.guna2Panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
             // 
@@ -518,7 +518,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(248, 3);
+            this.richTextBox1.Location = new System.Drawing.Point(135, 180);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(407, 213);
             this.richTextBox1.TabIndex = 50;
@@ -532,7 +532,7 @@
             this.pictureBox4.Image = global::FlowSERVER1.Properties.Resources.Untitled__72_;
             this.pictureBox4.Location = new System.Drawing.Point(0, 0);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(561, 663);
+            this.pictureBox4.Size = new System.Drawing.Size(561, 666);
             this.pictureBox4.TabIndex = 49;
             this.pictureBox4.TabStop = false;
             // 
@@ -987,16 +987,16 @@
             this.ClientSize = new System.Drawing.Size(1299, 661);
             this.Controls.Add(this.guna2Panel7);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.guna2Panel4);
             this.Controls.Add(this.guna2Panel3);
-            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.guna2Panel17);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2TextBox5);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

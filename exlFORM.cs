@@ -54,7 +54,6 @@ namespace FlowSERVER1 {
 
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your workbook.","Loader");
                 ShowAlert.Show();
-                Application.DoEvents();
 
                 if (_TableName == "file_info_excel") {
                     generateSheet(LoaderModel.LoadFile("file_info_excel",DirectoryName,titleName));
@@ -71,9 +70,8 @@ namespace FlowSERVER1 {
                     _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 }
             }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message,"Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                //MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            catch (Exception) {
+                MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
        

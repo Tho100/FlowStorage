@@ -133,8 +133,6 @@ namespace FlowSERVER1 {
                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
                 command.Parameters["@FILE_EXT"].Value = _retrieved;
 
-                Application.DoEvents();
-
                 _currentFileName = guna2TextBox2.Text;
 
                 if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
@@ -225,8 +223,6 @@ namespace FlowSERVER1 {
                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
                 .ToList()
                 .ForEach(form => form.Close());
-
-                Application.DoEvents();
 
                 this.Close();
             }

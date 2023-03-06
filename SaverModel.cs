@@ -96,8 +96,6 @@ namespace FlowSERVER1 {
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
                     ShowAlert.Start();
 
-                    Application.DoEvents();
-
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -132,8 +130,6 @@ namespace FlowSERVER1 {
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
                     ShowAlert.Start();
 
-                    //Application.DoEvents();
-
                     String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     command = con.CreateCommand();
                     command.CommandText = _retrieveBytes;
@@ -165,8 +161,6 @@ namespace FlowSERVER1 {
 
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.","Saver");
                     ShowAlert.Show();
-
-                    Application.DoEvents();
 
                     String _retrieveBytes = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     command = con.CreateCommand();

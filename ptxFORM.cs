@@ -45,7 +45,6 @@ namespace FlowSERVER1 {
 
                 Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader").ShowDialog());
                 ShowAlert.Start();
-                Application.DoEvents();
 
                 if (_TableName == "file_info_ptx") {   
                     setupPtx(LoaderModel.LoadFile("file_info_ptx",_DirectoryName,label1.Text));

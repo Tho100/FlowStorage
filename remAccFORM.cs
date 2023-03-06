@@ -61,8 +61,6 @@ namespace FlowSERVER1 {
             ToolTip1.SetToolTip(this.guna2Button11, "Item upload indicate how many file/directory you can upload.");
 
             try {
-
-                Application.DoEvents();
                 
                 getCurrentLang();
                 setupUILanguage(CurrentLang);
@@ -113,8 +111,6 @@ namespace FlowSERVER1 {
 
                 var _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
                 label12.Text = _totalUploadOvertime.ToString();
-
-                Application.DoEvents();
 
             } catch (Exception) {
                 Form bgBlur = new Form();

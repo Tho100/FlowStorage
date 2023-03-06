@@ -67,25 +67,20 @@ namespace FlowSERVER1
                     flowLayoutPanel1.Controls.Clear();
 
                     if (_countRow(".png") > 0) {
-                        Application.DoEvents();
                         _extName = ".png";
-                        _generateUserFiles("file_info", "imgFilePng", _countRow(".png"));
                     }
 
                     if (_countRow(".jpg") > 0) {
-                        Application.DoEvents();
                         _extName = ".jpg";
                         _generateUserFiles("file_info", "imgFileJpg", _countRow(".jpg"));
                     }
 
                     if (_countRow(".jpeg") > 0) {
-                        Application.DoEvents();
                         _extName = ".jpeg";
                         _generateUserFiles("file_info", "imgFilePeg", _countRow(".jpeg"));
                     }
 
                     if (_countRow(".bmp") > 0) {
-                        Application.DoEvents();
                         _extName = ".bmp";
                         _generateUserFiles("file_info", "imgFileBmp", _countRow(".bmp"));
                     }
@@ -95,91 +90,74 @@ namespace FlowSERVER1
                     //
 
                     if (_countRow(".txt") > 0) {
-                        Application.DoEvents();
                         _extName = ".txt";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".txt"));
                     }
 
                     if (_countRow(".js") > 0) {
-                        Application.DoEvents();
                         _extName = ".js";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".js"));
                     }
                     if (_countRow(".sql") > 0) {
-                        Application.DoEvents();
                         _extName = ".sql";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".sql"));
                     }
                     if (_countRow(".py") > 0) {
-                        Application.DoEvents();
                         _extName = ".py";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".py"));
                     }
                     if (_countRow(".html") > 0) {
-                        Application.DoEvents();
                         _extName = ".html";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".html"));
                     }
                     if (_countRow(".csv") > 0) {
-                        Application.DoEvents();
                         _extName = ".csv";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".csv"));
                     }
                     if (_countRow(".css") > 0) {
-                        Application.DoEvents();
                         _extName = ".css";
                         _generateUserFiles("file_info_expand", "txtFile", _countRow(".css"));
                     }
                     ////
                 // LOAD EXE
                     if (_countRow(".exe") > 0) {
-                        Application.DoEvents();
                         _extName = ".exe";
                         _generateUserFiles("file_info_exe", "exeFile", _countRow(".exe"));
                     }
                     // LOAD VID
                     if (_countRow(".mp4") > 0) {
-                        Application.DoEvents();
                         _extName = ".mp4";
                         _generateUserFiles("file_info_vid", "vidFile", _countRow(".mp4"));
                     }
                     if (_countRow(".xlsx") > 0) {
-                        Application.DoEvents();
                         _extName = ".xlsx";
                         _generateUserFiles("file_info_excel", "exlFile", _countRow(".xlsx"));
                     }
                     if (_countRow(".mp3") > 0) {
-                        Application.DoEvents();
                         _extName = ".mp3";
                         _generateUserFiles("file_info_audi", "audiFile", _countRow(".mp3"));
                     }
                     if (_countRow(".gif") > 0) {
-                        Application.DoEvents();
                         _extName = ".gif";
                         _generateUserFiles("file_info_gif", "gifFile", _countRow(".gif"));
                     }
                     if (_countRow(".apk") > 0) {
-                        Application.DoEvents();
                         _extName = ".apk";
                         _generateUserFiles("file_info_apk", "apkFile", _countRow(".apk"));
                     }
                     if (_countRow(".pdf") > 0) {
-                        Application.DoEvents();
                         _extName = ".pdf";
                         _generateUserFiles("file_info_pdf", "pdfFile", _countRow(".pdf"));
                     }
                     if (_countRow(".pptx") > 0) {
-                        Application.DoEvents();
                         _extName = ".pptx";
                         _generateUserFiles("file_info_ptx", "ptxFile", _countRow(".pptx"));
                     }
                     if (_countRow(".msi") > 0) {
-                        Application.DoEvents();
                         _extName = ".msi";
                         _generateUserFiles("file_info_msi", "msiFile", _countRow(".msi"));
                     }
                     if (_countRow(".docx") > 0) {
-                        Application.DoEvents();
                         _extName = ".docx";
                         _generateUserFiles("file_info_word", "docFile", _countRow(".docx"));
                     }
@@ -446,26 +424,16 @@ namespace FlowSERVER1
                     else if (_extTypes == ".csv") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                     }
+
                     picMain_Q.Click += (sender_t, e_t) => {
-                        Form bgBlur = new Form();
-                        using (txtFORM displayPic = new txtFORM("", "upload_info_directory", titleLab.Text, label1.Text, Form1.instance.label5.Text)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.Name = "bgBlurForm";
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
 
-                            displayPic.Owner = bgBlur;
-                            displayPic.ShowDialog();
-
-                            bgBlur.Dispose();
+                        if (_extTypes == ".csv" || _extTypes == ".sql") {
+                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrieval().ShowDialog());
+                            _showRetrievalCsvAlert.Start();
                         }
+
+                        txtFORM displayPic = new txtFORM("", "upload_info_directory", titleLab.Text, label1.Text, Form1.instance.label5.Text);
+                        displayPic.Show();
                     };
                     //clearRedundane();
                 }
@@ -761,8 +729,6 @@ namespace FlowSERVER1
                             guna2Button6.Visible = false;
                         }
 
-                        Application.DoEvents();
-
                         get_ex = open.FileName;
                         getName = Path.GetFileName(selectedItems);//open.SafeFileName;//selectedItems;//open.SafeFileName;
                         retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
@@ -829,9 +795,7 @@ namespace FlowSERVER1
 
                         void createPanelMain(String nameTable, String panName, int itemCurr, Object keyVal) {
 
-                            Application.DoEvents();
-
-                            if(fileSizeInMB < 1500) {
+                            if(fileSizeInMB < 8000) {
 
                                 String insertTxtQuery = "INSERT INTO " + "upload_info_directory" + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
                                 command = new MySqlCommand(insertTxtQuery, con);
@@ -853,7 +817,7 @@ namespace FlowSERVER1
                                 command.Parameters["@CUST_THUMB"].Value = "null";
 
                                 void startSending(Object setValue) {
-                                    Application.DoEvents();
+
                                     command.Parameters["@CUST_FILE"].Value = setValue;
                                     command.Prepare();
                                     command.ExecuteNonQuery();
@@ -965,9 +929,6 @@ namespace FlowSERVER1
                                 if (nameTable == "file_info_expand") {
                                     var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
                                     startSending(encryptValue);
-                                    //command.Parameters["@CUST_FILE"].Value = encryptValue;
-                                    //command.ExecuteNonQuery();
-                                    //command.Dispose();
 
                                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                                     if (_extTypes == ".py") {
@@ -992,30 +953,17 @@ namespace FlowSERVER1
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                                     }
 
-                                    String nonLine = "";
                                     var filePath = getName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
-                                        Form bgBlur = new Form();
-                                        using (txtFORM txtFormShow = new txtFORM("", "upload_info_directory", titleLab.Text, label1.Text, form1.label5.Text)) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.Name = "bgBlurForm";
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
 
-                                            txtFormShow.Owner = bgBlur;
-                                            txtFormShow.ShowDialog();
-
-                                            bgBlur.Dispose();
+                                        if (_extTypes == ".csv" || _extTypes == ".sql") {
+                                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrieval().ShowDialog());
+                                            _showRetrievalCsvAlert.Start();
                                         }
 
+                                        txtFORM txtFormShow = new txtFORM("", "upload_info_directory", titleLab.Text, label1.Text, form1.label5.Text);
+                                        txtFormShow.Show();
                                     };
                                     clearRedundane();
                                 }
@@ -1024,26 +972,11 @@ namespace FlowSERVER1
                                     keyValMain = keyVal;
                                     backgroundWorker1.RunWorkerAsync(); 
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
-                                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text, form1.label5.Text)) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
-
-                                            displayExe.Owner = bgBlur;
-                                            displayExe.ShowDialog();
-
-                                            bgBlur.Dispose();
-                                        }
+                                        exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", label1.Text, form1.label5.Text);
+                                        displayExe.Show();
                                     };
                                     clearRedundane();
                                 }
@@ -1106,23 +1039,8 @@ namespace FlowSERVER1
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
-                                        using (apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text, "upload_info_directory", label1.Text)) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
-
-                                            displayPic.Owner = bgBlur;
-                                            displayPic.ShowDialog();
-
-                                            bgBlur.Dispose();
-                                        }
+                                        apkFORM displayPic = new apkFORM(titleLab.Text, form1.label5.Text, "upload_info_directory", label1.Text);
+                                        displayPic.Show();
                                     };
                                     clearRedundane();
                                 }
@@ -1220,7 +1138,6 @@ namespace FlowSERVER1
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
                                 if (retrieved != ".ico") {
-                                    Application.DoEvents();
                                     Byte[] _getByteImg = File.ReadAllBytes(selectedItems);
                                     fileSizeInMB = (_getByteImg.Length / 1024) / 1024;
                                     String _tempToBase64 = Convert.ToBase64String(_getByteImg);
@@ -1243,14 +1160,12 @@ namespace FlowSERVER1
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
-                                Application.DoEvents();
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
                             }
                             else if (retrieved == ".exe") {
                                 exeCurr++;
                                 Byte[] streamRead = File.ReadAllBytes(selectedItems);
                                 fileSizeInMB = (streamRead.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_exe", "PanExe", exeCurr, streamRead);
 
                             }
@@ -1259,7 +1174,6 @@ namespace FlowSERVER1
                                 Byte[] streamReadVid = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(streamReadVid);
                                 fileSizeInMB = (streamReadVid.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_vid", "PanVid", vidCurr, _toBase64);
                             }
                             else if (retrieved == ".xlsx" || retrieved == ".xls") {
@@ -1267,7 +1181,6 @@ namespace FlowSERVER1
                                 Byte[] _toByte = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 fileSizeInMB = (_toByte.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_excel", "PanExl", exlCurr, _toBase64);
                             }
                             else if (retrieved == ".mp3" || retrieved == ".wav") {
@@ -1275,14 +1188,12 @@ namespace FlowSERVER1
                                 Byte[] toByte_ = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(toByte_);
                                 fileSizeInMB = (toByte_.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_audi", "PanAud", audCurr, _toBase64); // ReadFile(open.FileName)
                             }
                             else if (retrieved == ".gif") {
                                 gifCurr++;
                                 Byte[] toByteGif_ = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(toByteGif_);
-                                Application.DoEvents();
                                 createPanelMain("file_info_gif", "PanGif", gifCurr, _toBase64);
                             }
                             else if (retrieved == ".apk") {
@@ -1290,7 +1201,6 @@ namespace FlowSERVER1
                                 Byte[] readApkBytes = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(readApkBytes);
                                 fileSizeInMB = (readApkBytes.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_apk", "PanApk", apkCurr, _toBase64);
                             }
                             else if (retrieved == ".pdf") {
@@ -1298,7 +1208,6 @@ namespace FlowSERVER1
                                 Byte[] readPdfBytes = File.ReadAllBytes(selectedItems);//File.ReadAllBytes(open.FileName);
                                 var _toBase64 = Convert.ToBase64String(readPdfBytes);
                                 fileSizeInMB = (readPdfBytes.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_pdf", "PanPdf", pdfCurr, _toBase64);
                             }
                             else if (retrieved == ".pptx" || retrieved == ".ppt") {
@@ -1306,7 +1215,6 @@ namespace FlowSERVER1
                                 Byte[] readPtxBytes = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(readPtxBytes);
                                 fileSizeInMB = (readPtxBytes.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_ptx", "PanPtx", ptxCurr, _toBase64);
                             }
                             else if (retrieved == ".msi") {
@@ -1314,7 +1222,6 @@ namespace FlowSERVER1
                                 Byte[] readMsiBytes = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(readMsiBytes);
                                 fileSizeInMB = (readMsiBytes.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_msi", "PanMsi", msiCurr, readMsiBytes);
                             }
                             else if (retrieved == ".docx") {
@@ -1322,7 +1229,6 @@ namespace FlowSERVER1
                                 Byte[] readDocxBytes = File.ReadAllBytes(selectedItems);
                                 var _toBase64 = Convert.ToBase64String(readDocxBytes);
                                 fileSizeInMB = (readDocxBytes.Length / 1024) / 1024;
-                                Application.DoEvents();
                                 createPanelMain("file_info_word", "PanDoc", docxCurr, _toBase64);
                             }
 

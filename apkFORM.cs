@@ -64,9 +64,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             try {
+
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
                 ShowAlert.Show();
-                Application.DoEvents();
+
                 if (_TableName == "file_info_apk") {
                     SaverModel.SaveSelectedFile(label1.Text, "file_info_apk", _DirName);
                 }

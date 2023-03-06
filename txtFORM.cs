@@ -43,7 +43,9 @@ namespace FlowSERVER1 {
             label2.Text = "Uploaded By " + _UploaderUsername;
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
+
             if (tableName == "upload_info_directory" & getText == "") {
+
                 string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                 command = new MySqlCommand(getTxtQue, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -114,6 +116,7 @@ namespace FlowSERVER1 {
 
                 var decryptTextValues = EncryptionModel.DecryptText(textValuesF[0]);
                 richTextBox1.Text = decryptTextValues;
+
                 if (FileExt_ == ".py") {
                     pythonSyntax();
                 }
@@ -303,7 +306,11 @@ namespace FlowSERVER1 {
         }
 
         private void txtFORM_Load(object sender, EventArgs e) {
-
+            Application.OpenForms
+             .OfType<Form>()
+             .Where(form => String.Equals(form.Name, "SheetRetrieval"))
+             .ToList()
+             .ForEach(form => form.Close());
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {

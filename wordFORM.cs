@@ -39,7 +39,6 @@ namespace FlowSERVER1 {
 
                 Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog());
                 ShowAlert.Start();
-                Application.DoEvents();
 
                 if (_TableName == "file_info_word") {
                     setupDocx(LoaderModel.LoadFile("file_info_word","null",label1.Text));

@@ -34,8 +34,6 @@ namespace FlowSERVER1 {
 
             try {
 
-                Application.DoEvents();
-
                 flowLayoutPanel1.Controls.Clear();
                 String getFilesType = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 command = new MySqlCommand(getFilesType, con);
@@ -45,16 +43,12 @@ namespace FlowSERVER1 {
 
                 List<String> _TypeValues = new List<String>();
 
-                Application.DoEvents();
-
                 MySqlDataReader _readType = command.ExecuteReader();
                 while (_readType.Read()) {
                     _TypeValues.Add(_readType.GetString(0));// Append ToAr;
                 }
                 _readType.Close();
                 generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
-
-                Application.DoEvents();
 
             } catch (Exception) {
                 MessageBox.Show("An error occurred","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -133,8 +127,6 @@ namespace FlowSERVER1 {
                     command.Parameters["@CUST_FILE_PATH"].Value = _FileName;
                     command.Parameters["@UPLOAD_DATE"].Value = varDate;
                     command.Parameters["@FILE_EXT"].Value = _retrieved;
-
-                    Application.DoEvents();
 
                     _currentFileName = guna2TextBox2.Text;
 
@@ -235,9 +227,6 @@ namespace FlowSERVER1 {
                     .Where(form => String.Equals(form.Name, "UploadAlrt"))
                     .ToList()
                     .ForEach(form => form.Close());
-
-                    Application.DoEvents();
-
                 }
                 else {
                     MessageBox.Show("File is already sent.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -403,7 +392,6 @@ namespace FlowSERVER1 {
 
             List<String> _TypeValues = new List<String>();
 
-            Application.DoEvents();
             MySqlDataReader _readType = command.ExecuteReader();
             while (_readType.Read()) {
                 _TypeValues.Add(_readType.GetString(0));// Append ToAr;
@@ -431,8 +419,6 @@ namespace FlowSERVER1 {
         }
 
         private void generateUserShared(List<String> _extTypes, String parameterName, int itemCurr) {
-
-            Application.DoEvents();
 
             var form1 = Form1.instance;
             var UploaderUsername = uploaderName();
@@ -550,15 +536,12 @@ namespace FlowSERVER1 {
                     panelTxt.ShadowDecoration.Enabled = false;
                 };
 
-                Application.DoEvents();
-
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp") {
                     List<String> _base64Encoded = new List<string>();
                     String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
 
-                    Application.DoEvents();
                     MySqlDataReader _readBase64 = command.ExecuteReader();
                     while (_readBase64.Read()) {
                         _base64Encoded.Add(_readBase64.GetString(0));
@@ -833,7 +816,6 @@ namespace FlowSERVER1 {
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
 
-                    Application.DoEvents();
                     MySqlDataReader _readBase64 = command.ExecuteReader();
                     while (_readBase64.Read()) {
                         _base64Encoded.Add(_readBase64.GetString(0));
@@ -865,8 +847,6 @@ namespace FlowSERVER1 {
                         }
                     };
                 }
-
-                Application.DoEvents();
 
                 Application.OpenForms
                    .OfType<Form>()

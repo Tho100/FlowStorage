@@ -562,6 +562,12 @@
     <Compile Include="sharingFORM.Designer.cs">
       <DependentUpon>sharingFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="SheetRetrieval.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SheetRetrieval.Designer.cs">
+      <DependentUpon>SheetRetrieval.cs</DependentUpon>
+    </Compile>
     <Compile Include="splashFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -738,6 +744,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="sharingFORM.resx">
       <DependentUpon>sharingFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SheetRetrieval.resx">
+      <DependentUpon>SheetRetrieval.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="splashFORM.resx">
       <DependentUpon>splashFORM.cs</DependentUpon>

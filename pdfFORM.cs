@@ -35,7 +35,6 @@ namespace FlowSERVER1 {
 
                 Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").ShowDialog());
                 ShowAlert.Start();
-                Application.DoEvents();
 
                 if (_tableName == "file_info_pdf") {
                     setupPdf(LoaderModel.LoadFile("file_info_pdf", _DirectoryName, label1.Text));

@@ -89,7 +89,6 @@ namespace FlowSERVER1 {
 
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..","Loader").ShowDialog());
                     ShowAlert.Start();
-                    Application.DoEvents();
 
                     guna2PictureBox1.Visible = false;
                     videoView1.Visible = true;

@@ -63,7 +63,6 @@ namespace FlowSERVER1 {
         /// <param name="FileName"></param>
         /// <param name="TableName"></param>
         private void FileDeletionNormal(String FileName, String TableName) {
-            Application.DoEvents();
             String fileDeletionQuery = "DELETE FROM " + TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -74,7 +73,6 @@ namespace FlowSERVER1 {
         /// File deletion function for directory
         /// </summary>
         private void FileDeletionDirectory(String _FileName) {
-            Application.DoEvents();
             String fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -88,7 +86,6 @@ namespace FlowSERVER1 {
         /// <param name="_FileName"></param>
         /// <param name="_FoldName"></param>
         private void FileDeletionFolder(String _FileName, String _FoldName) {
-            Application.DoEvents();
             String fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -100,7 +97,6 @@ namespace FlowSERVER1 {
         /// File deletion function for sharing
         /// </summary>
         private void FileDeletionSharing(String _CustTo,String _FileName) {
-            Application.DoEvents();
             String fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -119,8 +115,6 @@ namespace FlowSERVER1 {
         private void guna2Button10_Click(object sender, EventArgs e) {
 
             try {
-
-                Application.DoEvents();
 
                 label9.Text = "Cancelling Operation...";
                 if(con.State == System.Data.ConnectionState.Open) {
@@ -237,8 +231,6 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                Application.DoEvents(); 
-
                 if (TableName == "null") {
 
                     Control foundControl = null;
@@ -294,8 +286,6 @@ namespace FlowSERVER1 {
                         foundControl.Dispose();
                     }
                 }
-
-                Application.DoEvents();
 
             } catch (Exception) {
                 MessageBox.Show("Cancellation failed, file is already uploaded.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);

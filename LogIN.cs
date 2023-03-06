@@ -52,8 +52,6 @@ namespace FlowSERVER1 {
         /// </summary>
         public void loadUserData() {
 
-            Application.DoEvents();
-
             var form = Form1.instance;
             var flowlayout = form.flowLayoutPanel1;
             var but6 = form.guna2Button6;
@@ -341,7 +339,6 @@ namespace FlowSERVER1 {
                 }
 
                 void _generateUserFiles(String _tableName, String parameterName, int currItem) {
-                    Application.DoEvents();
                     for (int i = 0; i < currItem; i++) {
                         int top = 275;
                         int h_p = 100;
@@ -742,64 +739,49 @@ namespace FlowSERVER1 {
 
                 // LOAD IMG
                 if (_countRow("file_info") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
                 }
                 // LOAD .TXT
                 if (_countRow("file_info_expand") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
                 }
                 // LOAD EXE
                 if (_countRow("file_info_exe") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
                 }
                 // LOAD VID
                 if (_countRow("file_info_vid") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
                 }
                 if (_countRow("file_info_excel") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
                 }
                 if (_countRow("file_info_audi") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
                 }
                 if (_countRow("file_info_gif") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
                 }
                 if (_countRow("file_info_apk") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
                 }
                 if (_countRow("file_info_pdf") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
                 }
                 if (_countRow("file_info_ptx") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
                 }
                 if(_countRow("file_info_msi") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_msi","msiFile",_countRow("file_info_msi"));
                 }
                 if(_countRow("file_info_word") > 0) {
-                    Application.DoEvents();
                     _generateUserFiles("file_info_word","docFile",_countRow("file_info_word"));
                 }
                 if (_countRow("file_info_directory") > 0) {
-                    Application.DoEvents();
                     _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
                 }
           
                 _generateUserFolder(custUsername,_getPass);
-
-                Application.DoEvents();
 
                 Application.OpenForms
                     .OfType<Form>()
