@@ -383,6 +383,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_moon_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-moon-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_netherlands_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-netherlands-96", resourceCulture);
@@ -396,6 +406,26 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_netherlands_961 {
             get {
                 object obj = ResourceManager.GetObject("icons8-netherlands-961", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_night_60 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-night-60", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_night_601 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-night-601", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -526,6 +556,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_subtract_30 {
             get {
                 object obj = ResourceManager.GetObject("icons8-subtract-30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_sun_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-sun-48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

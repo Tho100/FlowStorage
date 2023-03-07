@@ -806,6 +806,9 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-sun-48.png" />
+    <None Include="Resources\icons8-moon-48.png" />
+    <None Include="Resources\icons8-night-601.png" />
     <None Include="Resources\Untitled %2882%291.png" />
     <None Include="Resources\Untitled %2883%29.png" />
     <None Include="Resources\icons8-csv-48.png" />
