@@ -35,14 +35,23 @@ namespace FlowSERVER1 {
         }
 
         public void setupAutoLogin(String _custUsername) {
-            Task.Run(() =>{
-                String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-                Directory.CreateDirectory(setupDir);
-                using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(_custUsername);
-                    //_performWrite.WriteLine(_custPass);
+            String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            if (!Directory.Exists(appDataPath)) {
+
+                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789012345"));
                 }
-            });
+                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+            }
+            else {
+                Directory.Delete(appDataPath, true);
+                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789012345"));
+                }
+                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+            }
         }
 
         String custUsername;
@@ -817,14 +826,8 @@ namespace FlowSERVER1 {
 
                 attemptCurr++;
 
-                Application.DoEvents();
-
                 loadUserData();
-
-                Application.DoEvents();
-
-            } catch (Exception eq) {
-                //MessageBox.Show(eq.Message);
+            } catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

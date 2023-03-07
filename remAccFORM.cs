@@ -440,7 +440,7 @@ namespace FlowSERVER1 {
                     Form1.instance.listBox1.Items.Clear();
                 }
             } catch (Exception) {
-                MessageBox.Show("There's a problem while attempting to logout your account.","Flowstorage");
+                MessageBox.Show("There's a problem while attempting to logout your account. Please try again.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 

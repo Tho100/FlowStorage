@@ -75,66 +75,77 @@ namespace FlowSERVER1 {
                 setupLabel = label5;
 
                 String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-                String _getAuth = _getPath + "\\CUST_DATAS.txt";
-                if (File.Exists(_getAuth)) {
-                    String _UsernameFirst = File.ReadLines(_getAuth).First();
-                    if (new FileInfo(_getAuth).Length != 0) {
-                        Thread showLoadingForm = new Thread(() => new LoadAlertFORM().ShowDialog());
-                        showLoadingForm.IsBackground = false;
-                        showLoadingForm.Start();
 
-                        guna2Panel7.Visible = false;
-                        label5.Text = _UsernameFirst;
+                if(Directory.Exists(_getPath)) {
 
-                        String getEmails = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(getEmails, ConnectionModel.con);
-                        command = ConnectionModel.con.CreateCommand();
-                        command.CommandText = getEmails;
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                    DirectoryInfo _getDirectory = new DirectoryInfo(_getPath);
+                    _getDirectory.Attributes = _getDirectory.Attributes & ~FileAttributes.Hidden;
 
-                        MySqlDataReader _reader = command.ExecuteReader();
-                        while (_reader.Read()) {
-                            label24.Text = _reader.GetString(0);
+                    String _getAuth = _getPath + "\\CUST_DATAS.txt";
+                    if (File.Exists(_getAuth)) {
+                        String _UsernameFirst = EncryptionModel.Decrypt(File.ReadLines(_getAuth).First(), "0123456789012345");
+                        if (new FileInfo(_getAuth).Length != 0) {
+                            Thread showLoadingForm = new Thread(() => new LoadAlertFORM().ShowDialog());
+                            showLoadingForm.IsBackground = false;
+                            showLoadingForm.Start();
+
+                            guna2Panel7.Visible = false;
+                            label5.Text = _UsernameFirst;
+
+                            _getDirectory.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+
+                            String getEmails = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
+                            command = new MySqlCommand(getEmails, ConnectionModel.con);
+                            command = ConnectionModel.con.CreateCommand();
+                            command.CommandText = getEmails;
+                            command.Parameters.AddWithValue("@username", label5.Text);
+
+                            MySqlDataReader _reader = command.ExecuteReader();
+                            while (_reader.Read()) {
+                                label24.Text = _reader.GetString(0);
+                            }
+                            _reader.Close();
+
+                            setupTime();
+                            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                            // @ ADD FOLDERS TO LISTBOX
+
+                            listBox1.Items.Add("Home");
+                            listBox1.SelectedIndex = 0;
+
+                            List<String> titleValues = new List<String>();
+
+                            String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+                            command = new MySqlCommand(getTitles, ConnectionModel.con);
+                            command = ConnectionModel.con.CreateCommand();
+                            command.CommandText = getTitles;
+
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            MySqlDataReader fold_Reader = command.ExecuteReader();
+                            while (fold_Reader.Read()) {
+                                titleValues.Add(fold_Reader.GetString(0));
+                            }
+
+                            fold_Reader.Close();
+
+                            List<String> updatesTitle = titleValues.Distinct().ToList();
+                            for (int iterateTitles = 0; iterateTitles < updatesTitle.Count; iterateTitles++) {
+                                listBox1.Items.Add(updatesTitle[iterateTitles]);
+                            }
                         }
-                        _reader.Close();
 
-                        setupTime();
-                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        getCurrentLang();
+                        setupUILanguage(CurrentLang);
 
-                        // @ ADD FOLDERS TO LISTBOX
-
-                        listBox1.Items.Add("Home");
-                        listBox1.SelectedIndex = 0;
-
-                        List<String> titleValues = new List<String>();
-
-                        String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(getTitles, ConnectionModel.con);
-                        command = ConnectionModel.con.CreateCommand();
-                        command.CommandText = getTitles;
-
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        MySqlDataReader fold_Reader = command.ExecuteReader();
-                        while (fold_Reader.Read()) {
-                            titleValues.Add(fold_Reader.GetString(0));
-                        }
-
-                        fold_Reader.Close();
-
-                        List<String> updatesTitle = titleValues.Distinct().ToList();
-                        for (int iterateTitles = 0; iterateTitles < updatesTitle.Count; iterateTitles++) {
-                            listBox1.Items.Add(updatesTitle[iterateTitles]);
-                        }
+                        Application.OpenForms
+                            .OfType<Form>()
+                            .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
+                            .ToList()
+                            .ForEach(form => form.Close());
                     }
-
-                    getCurrentLang();
-                    setupUILanguage(CurrentLang);
-
-                    Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                } else {
+                    // @ Ignore "FlowstorageInfos not found" error
                 }
             }
          
@@ -2390,14 +2401,30 @@ namespace FlowSERVER1 {
             }
         }
 
-        public void setupAutoLogin(String _custUsername) {
-            Task.Run(() => {
-                String setupDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-                Directory.CreateDirectory(setupDir);
-                using (StreamWriter _performWrite = File.CreateText(setupDir + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(_custUsername);
+        /// <summary>
+        /// Create file and insert user username into that file in a sub folder 
+        /// called FlowStorageInfos located in %appdata%
+        /// </summary>
+        /// <param name="_custUsername">Username of user</param>
+        private void setupAutoLogin(String _custUsername) {
+
+            String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            if(!Directory.Exists(appDataPath)) {
+
+                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789012345"));
                 }
-            });
+                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+
+            } else {
+                Directory.Delete(appDataPath,true);
+                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789012345"));
+                }
+                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+            }
         }
 
         private void guna2Panel7_Paint(object sender, PaintEventArgs e) {

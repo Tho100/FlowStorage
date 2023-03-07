@@ -13,6 +13,9 @@ using MySql.Data;
 
 namespace FlowSERVER1
 {
+    /// <summary>
+    /// Create directory form class
+    /// </summary>
     public partial class Form4 : Form
     {
         public static Form4 instance;
@@ -25,22 +28,7 @@ namespace FlowSERVER1
             this.Text = "Create New Directory Page";
             instance = this;
         }
-
-        public void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        public void button3_Click(object sender, EventArgs e)
-        {
-         
-        }
-
         public void Form4_Load(object sender, EventArgs e) {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e) {
 
         }
 
@@ -49,10 +37,12 @@ namespace FlowSERVER1
             Form1.instance.label8.Visible = false;
         }
         
-        public void uploadDir(String DirectoryTitle_) {
-            //
-        }
 
+        /// <summary>
+        /// Start generating user directory panel into main form
+        /// </summary>
+        /// <param name="currMain"></param>
+        /// <param name="getDirTitle"></param>
         public void generateDir(int currMain, String getDirTitle) {
             try {
                 var flowlayout = Form1.instance.flowLayoutPanel1;
@@ -159,18 +149,23 @@ namespace FlowSERVER1
                 };
 
                 picBanner.Click += (sender_f, e_f) => {
+
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.","Loader");
                     ShowAlert.Show();
                     Form3 displayDirectory = new Form3(getDirTitle);
                     displayDirectory.Show();
+
                     Application.OpenForms
                    .OfType<Form>()
                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                    .ToList()
                    .ForEach(form => form.Close());
                 };
+
                 clearRedundane();
+
                 this.Close();
+
             } catch (Exception) {
                 MessageBox.Show("Are you conneted to the internet?","Flowstorage: An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
@@ -217,7 +212,12 @@ namespace FlowSERVER1
             }
         }
 
+        /// <summary>
+        /// Verify necessary stuff before allowing user to create directory
+        /// </summary>
+
         public static int value_Dir = 0;
+        public static string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
         public void guna2Button2_Click(object sender, EventArgs e) {
             var _getFilesCount = Form1.instance.label4.Text;
             int TotalFiles = Convert.ToInt32(_getFilesCount);
@@ -236,6 +236,7 @@ namespace FlowSERVER1
 
             String _GetDirTitle = guna2TextBox1.Text;
             if(_GetDirTitle != String.Empty) {        
+
                 try {
 
                     String _countSameDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname";
@@ -260,7 +261,6 @@ namespace FlowSERVER1
                                     generateDir(value_Dir, _GetDirTitle);
                                     Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
                                     String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                     command = new MySqlCommand(_insertValues,con);
                                     command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
@@ -283,7 +283,6 @@ namespace FlowSERVER1
                                     generateDir(value_Dir, _GetDirTitle);
                                     Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
                                     String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                     command = new MySqlCommand(_insertValues, con);
                                     command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
@@ -309,7 +308,6 @@ namespace FlowSERVER1
                                     generateDir(value_Dir, _GetDirTitle);
                                     Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
                                     String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                     command = new MySqlCommand(_insertValues, con);
                                     command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
@@ -335,7 +333,6 @@ namespace FlowSERVER1
                                     generateDir(value_Dir, _GetDirTitle);
                                     Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
                                     String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
                                     command = new MySqlCommand(_insertValues, con);
                                     command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
