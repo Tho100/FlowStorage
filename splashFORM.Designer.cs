@@ -45,10 +45,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.flowstorageLogo__15_;
-            this.pictureBox1.Location = new System.Drawing.Point(44, 35);
+            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.Untitled__83_;
+            this.pictureBox1.Location = new System.Drawing.Point(0, -11);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(489, 156);
+            this.pictureBox1.Size = new System.Drawing.Size(578, 244);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;

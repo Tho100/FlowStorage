@@ -12,7 +12,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\K4os.Compression.LZ
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\K4os.Hash.xxHash.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\MySql.Data.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Buffers.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Memory.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ubiety.Dns.Core.dll

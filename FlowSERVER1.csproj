@@ -806,10 +806,11 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\Untitled %2882%291.png" />
+    <None Include="Resources\Untitled %2883%29.png" />
     <None Include="Resources\icons8-csv-48.png" />
     <None Include="Resources\icons8-netherlands-961.png" />
     <None Include="Resources\icons8-login-rounded-50.png" />
-    <None Include="Resources\Untitled %2872%29.png" />
     <None Include="Resources\flowstorageLogo %2815%29.png" />
     <None Include="Resources\icons8-china-48.png" />
     <None Include="Resources\icons8-portugal-48.png" />
@@ -835,7 +836,6 @@
     <None Include="Resources\icons8-rename-48.png" />
     <None Include="Resources\icons8-partying-face-96.png" />
     <None Include="Resources\icons8-subtract-30.png" />
-    <None Include="Resources\Untitled %2826%29.png" />
     <None Include="Resources\icons8-voice-50.png" />
     <None Include="Resources\icons8-block-64.png" />
     <None Include="Resources\icons8-audio-file-60.png" />

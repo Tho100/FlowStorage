@@ -573,9 +573,9 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled__26_ {
+        internal static System.Drawing.Bitmap Untitled__82_1 {
             get {
-                object obj = ResourceManager.GetObject("Untitled (26)", resourceCulture);
+                object obj = ResourceManager.GetObject("Untitled (82)1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -583,9 +583,9 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled__72_ {
+        internal static System.Drawing.Bitmap Untitled__83_ {
             get {
-                object obj = ResourceManager.GetObject("Untitled (72)", resourceCulture);
+                object obj = ResourceManager.GetObject("Untitled (83)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

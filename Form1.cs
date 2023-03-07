@@ -4438,5 +4438,9 @@ namespace FlowSERVER1 {
 
             return Convert.ToBase64String(array);
         }
+
+        private void pictureBox4_Click(object sender, EventArgs e) {
+
+        }
     }
 }
