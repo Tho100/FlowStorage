@@ -10,22 +10,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
-using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Globalization;
 using System.Text;
-using System.Management;
-using System.Reflection;
-using System.Web;
-using System.Net.Http;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using System.Net.Mail;
-using System.Net;
 using System.Threading;
-using Spire.Spreadsheet.Forms.Main;
 
 namespace FlowSERVER1 {
     /// <summary>
@@ -41,6 +31,8 @@ namespace FlowSERVER1 {
         public bool stopFileTransaction = false;
         private String CurrentLang = "";
         private Object _getValues = "";
+
+        // @ Variables to initialize file upload
 
         string get_ex;
         string getName;
@@ -4413,6 +4405,15 @@ namespace FlowSERVER1 {
         private void backgroundWorker1_RunWorkerCompleted_3(object sender, RunWorkerCompletedEventArgs e) {
 
         }
+
+
+        /// ------------- TESTING ---------------
+
+        /// <summary>
+        /// Start encrypting connection 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void button1_Click_1(object sender, EventArgs e) {
             richTextBox1.Text = EncryptConnection("0afe74-gksuwpe8r", richTextBox1.Text);

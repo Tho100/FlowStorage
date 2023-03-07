@@ -238,113 +238,124 @@ namespace FlowSERVER1
             if(_GetDirTitle != String.Empty) {        
                 try {
 
-                    String _countTotalDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(_countTotalDir,con);
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    var _getScalar = command.ExecuteScalar();
-                    int _getValue = Convert.ToInt32(_getScalar);
+                    String _countSameDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname";
+                    command = new MySqlCommand(_countSameDir,con);
+                    command.Parameters.AddWithValue("@dirname",_GetDirTitle);
+                    var _makeRead = command.ExecuteScalar();
+                    int _getCount = Convert.ToInt32(_makeRead);
 
-                    if(_accType == "Supreme") {
-                        if(Convert.ToInt32(_getFilesCount) != 1500) {
-                            if(_getValue != 5) {
+                    if(_getCount < 1) {
 
-                                value_Dir++;
-                                generateDir(value_Dir, _GetDirTitle);
-                                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+                        String _countTotalDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username";
+                        command = new MySqlCommand(_countTotalDir,con);
+                        command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                        var _getScalar = command.ExecuteScalar();
+                        int _getValue = Convert.ToInt32(_getScalar);
 
-                                var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                command = new MySqlCommand(_insertValues,con);
-                                command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                        if(_accType == "Supreme") {
+                            if(Convert.ToInt32(_getFilesCount) != 1500) {
+                                if(_getValue != 5) {
 
-                                command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.ExecuteNonQuery();
-                            } else {
-                                DisplayError(_accType);
+                                    value_Dir++;
+                                    generateDir(value_Dir, _GetDirTitle);
+                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+
+                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
+                                    command = new MySqlCommand(_insertValues,con);
+                                    command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
+                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+
+                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                                    command.ExecuteNonQuery();
+                                } else {
+                                    DisplayError(_accType);
+                                }
                             }
                         }
-                    }
 
-                    if (_accType == "Basic") {
-                        if(Convert.ToInt32(_getFilesCount) != 20) {
-                            if (_getValue != 2) {
+                        if (_accType == "Basic") {
+                            if(Convert.ToInt32(_getFilesCount) != 20) {
+                                if (_getValue != 2) {
                           
-                                value_Dir++;
-                                generateDir(value_Dir, _GetDirTitle);
-                                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+                                    value_Dir++;
+                                    generateDir(value_Dir, _GetDirTitle);
+                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                command = new MySqlCommand(_insertValues, con);
-                                command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
+                                    command = new MySqlCommand(_insertValues, con);
+                                    command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
+                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
 
-                                command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.ExecuteNonQuery();
+                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                                    command.ExecuteNonQuery();
+                                }
+                                else {
+                                    DisplayError(_accType);
+                                }   
+                            } else {
+                                DisplayErrorUpgrade(_accType);
+                            }
+                        }
+
+                        if (_accType == "Max") {
+                            if (Convert.ToInt32(_getFilesCount) != 150) {
+                                if (_getValue != 2) {
+
+                                    value_Dir++;
+                                    generateDir(value_Dir, _GetDirTitle);
+                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+
+                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
+                                    command = new MySqlCommand(_insertValues, con);
+                                    command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
+                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+
+                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                                    command.ExecuteNonQuery();
+                                }
+                                else {
+                                    DisplayError(_accType);
+                                }
+                            } else {
+                                DisplayErrorUpgrade(_accType);
+                            }
+                        }
+
+                        if (_accType == "Express") {
+                            if (Convert.ToInt32(_getFilesCount) != 500) {
+                                if (_getValue != 2) {
+
+                                    value_Dir++;
+                                    generateDir(value_Dir, _GetDirTitle);
+                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+
+                                    var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
+                                    command = new MySqlCommand(_insertValues, con);
+                                    command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
+                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+
+                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
+                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
+                                    command.ExecuteNonQuery();
+                                }
+                                else {
+                                    DisplayError(_accType);
+                                }
                             }
                             else {
-                                DisplayError(_accType);
-                            }   
-                        } else {
-                            DisplayErrorUpgrade(_accType);
-                        }
+                                DisplayErrorUpgrade(_accType);
+                            }
+                        } 
+                    } else {
+                        MessageBox.Show("Directory with this name already exists","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     }
-
-                    if (_accType == "Max") {
-                        if (Convert.ToInt32(_getFilesCount) != 150) {
-                            if (_getValue != 2) {
-
-                                value_Dir++;
-                                generateDir(value_Dir, _GetDirTitle);
-                                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
-                                var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                command = new MySqlCommand(_insertValues, con);
-                                command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-
-                                command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.ExecuteNonQuery();
-                            }
-                            else {
-                                DisplayError(_accType);
-                            }
-                        } else {
-                            DisplayErrorUpgrade(_accType);
-                        }
-                    }
-
-                    if (_accType == "Express") {
-                        if (Convert.ToInt32(_getFilesCount) != 500) {
-                            if (_getValue != 2) {
-
-                                value_Dir++;
-                                generateDir(value_Dir, _GetDirTitle);
-                                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
-                                var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-                                String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                command = new MySqlCommand(_insertValues, con);
-                                command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-
-                                command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                command.ExecuteNonQuery();
-                            }
-                            else {
-                                DisplayError(_accType);
-                            }
-                        }
-                        else {
-                            DisplayErrorUpgrade(_accType);
-                        }
-                    } 
                 }
                 catch (Exception) {
                     //
