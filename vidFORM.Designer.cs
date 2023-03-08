@@ -29,7 +29,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.videoView1 = new LibVLCSharp.WinForms.VideoView();
             this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
@@ -38,9 +37,10 @@
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
+            this.videoView1 = new LibVLCSharp.WinForms.VideoView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -84,21 +84,6 @@
             this.label3.Text = "guest919402";
             this.label3.Visible = false;
             // 
-            // videoView1
-            // 
-            this.videoView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.videoView1.BackColor = System.Drawing.Color.Black;
-            this.videoView1.Location = new System.Drawing.Point(12, 67);
-            this.videoView1.MediaPlayer = null;
-            this.videoView1.Name = "videoView1";
-            this.videoView1.Size = new System.Drawing.Size(718, 338);
-            this.videoView1.TabIndex = 35;
-            this.videoView1.Text = "videoView1";
-            this.videoView1.Visible = false;
-            this.videoView1.Click += new System.EventHandler(this.videoView1_Click_1);
-            // 
             // guna2Button6
             // 
             this.guna2Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -124,6 +109,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Enabled = false;
             this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_sun_48;
             this.pictureBox1.Location = new System.Drawing.Point(117, 11);
             this.pictureBox1.Name = "pictureBox1";
@@ -257,14 +243,28 @@
             this.guna2Button2.TabIndex = 21;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
+            // videoView1
+            // 
+            this.videoView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.videoView1.BackColor = System.Drawing.Color.Black;
+            this.videoView1.Location = new System.Drawing.Point(12, 67);
+            this.videoView1.MediaPlayer = null;
+            this.videoView1.Name = "videoView1";
+            this.videoView1.Size = new System.Drawing.Size(718, 349);
+            this.videoView1.TabIndex = 38;
+            this.videoView1.Text = "videoView1";
+            this.videoView1.Visible = false;
+            // 
             // vidFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(742, 470);
-            this.Controls.Add(this.guna2Button6);
             this.Controls.Add(this.videoView1);
+            this.Controls.Add(this.guna2Button6);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -282,9 +282,9 @@
             this.Text = "vidFORM";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.vidFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,7 +303,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
-        private LibVLCSharp.WinForms.VideoView videoView1;
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
+        private LibVLCSharp.WinForms.VideoView videoView1;
     }
 }

@@ -43,7 +43,6 @@ namespace FlowSERVER1 {
             label2.Text = "Uploaded By " + _UploaderUsername;
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
-
             if (tableName == "upload_info_directory" & getText == "") {
 
                 string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
@@ -106,15 +105,15 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename",label1.Text);
             
-                List<string> textValuesF = new List<string>();
+                var textValuesF = "";
                 
                 MySqlDataReader txtReader = command.ExecuteReader();
                 while(txtReader.Read()) {
-                    textValuesF.Add(txtReader.GetString(0));
+                    textValuesF = txtReader.GetString(0);
                 }
                 txtReader.Close();
 
-                var decryptTextValues = EncryptionModel.DecryptText(textValuesF[0]);
+                var decryptTextValues = EncryptionModel.DecryptText(textValuesF);
                 richTextBox1.Text = decryptTextValues;
 
                 if (FileExt_ == ".py") {

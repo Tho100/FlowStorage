@@ -1585,7 +1585,6 @@ namespace FlowSERVER1 {
                                 if (nameTable == "file_info_expand") {
                                     var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
                                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-
                                     startSending(encryptValue);
                                     
                                     if (_extTypes == ".py") {
@@ -1825,6 +1824,7 @@ namespace FlowSERVER1 {
                                     }
                                 }
                             }
+
                             else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
                                 txtCurr++;
                                 String nonLine = "";
@@ -1833,6 +1833,7 @@ namespace FlowSERVER1 {
                                 }
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
                             }
+
                             else if (retrieved == ".exe") {
                                 exeCurr++;
                                 var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
@@ -1844,32 +1845,38 @@ namespace FlowSERVER1 {
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 createPanelMain("file_info_vid", "PanVid", vidCurr, _toBase64);
                             }
+
                             else if (retrieved == ".xlsx" || retrieved == ".xls") {
                                 exlCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 createPanelMain("file_info_excel","PanExl",exlCurr,_toBase64);
                             }
+
                             else if (retrieved == ".mp3" || retrieved == ".wav") {
                                 audCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 createPanelMain("file_info_audi", "PanAud", audCurr, _toBase64); // ReadFile(open.FileName)
                                 
                             }
+
                             else if (retrieved == ".gif") {
                                 gifCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 createPanelMain("file_info_gif", "PanGif", gifCurr, _toBase64);
                             }
+
                             else if (retrieved == ".apk") {
                                 apkCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 createPanelMain("file_info_apk", "PanApk", apkCurr, _toBase64);
                             }
+
                             else if (retrieved == ".pdf") {
                                 pdfCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 createPanelMain("file_info_pdf", "PanPdf", pdfCurr, _toBase64);
                             }
+
                             else if (retrieved == ".pptx" || retrieved == ".ppt") {
                                 ptxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);

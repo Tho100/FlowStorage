@@ -9,10 +9,11 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
 using Newtonsoft.Json.Serialization;
+using System.Threading;
 
 namespace FlowSERVER1 {
     /// <summary>
-    /// File downloader class
+    /// File Loader Class
     /// </summary>
     public partial class LoaderModel {
         public static MySqlCommand command = ConnectionModel.command;
@@ -167,8 +168,7 @@ namespace FlowSERVER1 {
                     _readByteValues.Close();
                 }
             } catch (Exception) {
-                
-                //MessageBox.Show("OPERATION WAS CANCELLED");
+                // @ ignore exception                
             }
             return universalBytes;
         }

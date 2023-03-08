@@ -52,10 +52,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
             if(_mp != null) {
                 _mp.Stop();
             } 
+            this.Close();
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
@@ -72,24 +72,34 @@ namespace FlowSERVER1 {
             guna2Button1.Visible = false;
         }
         private void setupPlayer(Byte[] _retrieveBytesValue) {
+
             Stream _toStream = new MemoryStream(_retrieveBytesValue);
             _libVLC = new LibVLC();
+
             var media = new Media(_libVLC, new StreamMediaInput(_toStream));
+
             _mp = new MediaPlayer(media);
+
             videoView1.MediaPlayer = _mp;
             _mp.Play();
+
         }
+
         // Play
         private void guna2Button5_Click(object sender, EventArgs e) {
+
             try {
+
                 if(_mp != null) {
+
                     videoView1.MediaPlayer = _mp;
                     _mp.Play();
+
                 } else {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..","Loader").ShowDialog());
+                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..", "Loader").ShowDialog());
                     ShowAlert.Start();
-
+                        
                     guna2PictureBox1.Visible = false;
                     videoView1.Visible = true;
                     if (_TableName == "upload_info_directory") {
@@ -106,6 +116,7 @@ namespace FlowSERVER1 {
 
                 guna2Button5.Visible = false;
                 guna2Button6.Visible = true;
+
             } catch (Exception) {
                 MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
@@ -152,6 +163,10 @@ namespace FlowSERVER1 {
                 guna2Button5.Visible = true;
                 guna2Button6.Visible = false;
             }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

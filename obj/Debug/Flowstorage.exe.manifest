@@ -158,7 +158,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Vfyse8OtIBhAOOqgTDOkfsbX8suM0cVPU9jue9gswv0=</dsig:DigestValue>
+        <dsig:DigestValue>qPCQbo1OoFhUE1Qzc/9PO5cEz5oLlMLlDgeoTjuEKMw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>oaVbkH9a4Icow/iD7hy7Vgt8TbKzLqU5u5etXEpetw0=</dsig:DigestValue>
+        <dsig:DigestValue>VoPTreZdNBktfgIdMv+Kru3OhvUxwUiGStBfKHKxpmo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -375,6 +375,30 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>BUGX4xcJ9yByAa3EeX6DxqGMCLQ93Uyy4Yz7D3TXS6U=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LibVLCSharp.Forms.dll" size="97280">
+      <assemblyIdentity name="LibVLCSharp.Forms" version="3.6.7.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>KlRPMvE9ONPVKq1XPSX4tnFlLS10/EDyPEvYuGd67vM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="fr\LibVLCSharp.Forms.resources.dll" size="6144">
+      <assemblyIdentity name="LibVLCSharp.Forms.resources" version="3.6.7.0" language="fr" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>UA7XhuriKecahAbHXBllbO1IO5oufCjDsUV3ywqX1WM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -871,6 +895,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Memory.dll" size="141184">
+      <assemblyIdentity name="System.Memory" version="4.0.1.1" publicKeyToken="CC7B13FFCD2DDD51" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>jnYxjosGaSq/fasRadJ9FVV/fwo002r2Rj7/D+ISE8c=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Numerics.Vectors.dll" size="115856">
       <assemblyIdentity name="System.Numerics.Vectors" version="4.1.4.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -967,38 +1003,38 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Core.dll" size="66048">
-      <assemblyIdentity name="Vlc.DotNet.Core" version="3.1.0.0" publicKeyToken="84529DA31F4EB963" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Core.dll" size="691792">
+      <assemblyIdentity name="Xamarin.Forms.Core" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WpqlUJYP3yaE6SUHRWtLqr92sM/WB1S3RedsR0yuqNI=</dsig:DigestValue>
+        <dsig:DigestValue>1T3QjvVv+jsGiNB5IlgA5Nk3qJkRUDFLejvEQXUY5yI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Core.Interops.dll" size="79872">
-      <assemblyIdentity name="Vlc.DotNet.Core.Interops" version="3.1.0.0" publicKeyToken="84529DA31F4EB963" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Platform.dll" size="12376">
+      <assemblyIdentity name="Xamarin.Forms.Platform" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bWO/3WivFGGAsilkzp9f6LOUaklJe5xYn+gTjNLhb8Q=</dsig:DigestValue>
+        <dsig:DigestValue>588VgnAAzzOZIqzK5utb85VSfeG6cFTegKzAD4j5o7c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Forms.dll" size="24576">
-      <assemblyIdentity name="Vlc.DotNet.Forms" version="3.1.0.0" publicKeyToken="84529DA31F4EB963" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Xaml.dll" size="91728">
+      <assemblyIdentity name="Xamarin.Forms.Xaml" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>OfRxuEdM+Vf1Q3rnHguYj2hlF7MvqdBB2REgrvYMwD0=</dsig:DigestValue>
+        <dsig:DigestValue>F/EY/8uSfbFzjqfMtFyn8lF4D/RYcS/fSDLxhS+HLg4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1026,13 +1062,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Flowstorage.exe.config" size="3916">
+  <file name="Flowstorage.exe.config" size="3921">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>7CafKB1d9btyDj5Ff1vdbIRoAG/JlmQhk42E91B3XAY=</dsig:DigestValue>
+      <dsig:DigestValue>zGnQHsKv7YHEifIFixxrB4DRThXLV5PDEXmzvbRwapU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">
