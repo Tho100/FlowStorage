@@ -185,6 +185,8 @@ namespace FlowSERVER1 {
                 void _generateUserFolder(String userName,String passUser) {
                         
                     _form.listBox1.Items.Add("Home");
+                    _form.listBox1.Items.Add("Shared To Me");
+                    _form.listBox1.Items.Add("Shared To Others");
                     _form.listBox1.SelectedIndex = 0;
 
                     List<String> titleValues = new List<String>();
@@ -691,7 +693,7 @@ namespace FlowSERVER1 {
                             picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                             picMain_Q.Click += (sender_ptx, e_ptx) => {
                                 Form bgBlur = new Form();
-                                using (msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null")) {
+                                using (msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null",Form1.instance.label5.Text)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -799,6 +801,8 @@ namespace FlowSERVER1 {
                     .ForEach(FormsQ => FormsQ.Close());
 
                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+                Form1.instance._TypeValues.Clear();
+                Form1.instance._TypeValuesOthers.Clear();
 
                 if (guna2CheckBox2.Checked == true) {
                     setupAutoLogin(Form1.instance.label5.Text);
@@ -1006,7 +1010,8 @@ namespace FlowSERVER1 {
 
             DateTime now = DateTime.Now;
             var hours = now.Hour;
-            String greeting = null;
+            String greeting = "Good Night " + label5.Text;
+            picturebox1.Visible = true;
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {
                     greeting = "Good Morning " + lab5.Text + " :) ";

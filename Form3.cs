@@ -572,7 +572,7 @@ namespace FlowSERVER1
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", label1.Text);
+                        msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", label1.Text, Form1.instance.label5.Text);
                         displayMsi.Show();
                     };
                   //  clearRedundane();
@@ -1069,7 +1069,7 @@ namespace FlowSERVER1
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         Form bgBlur = new Form();
-                                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", label1.Text)) {
+                                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", label1.Text, Form1.instance.label5.Text)) {
                                             bgBlur.StartPosition = FormStartPosition.Manual;
                                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                                             bgBlur.Opacity = .24d;

@@ -25,7 +25,7 @@ namespace FlowSERVER1 {
         private static MySqlCommand command = ConnectionModel.command;
         private static String _getExt;
         public static SaverModel instance;
-        public static bool stopFileRetrieval = false;
+        public static bool stopFileRetrieval;
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName) {
+        public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName, bool _isFromShared = false) {
             _getExt = _FileTitle.Split('.').Last();
             try {
 
@@ -157,7 +157,42 @@ namespace FlowSERVER1 {
                     }
                     _byteReader.Close();
 
-                } else if (_TableName == "cust_sharing") {
+                }
+                else if (_TableName == "cust_sharing" && _isFromShared == true) {
+
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.", "Saver");
+                    ShowAlert.Show();
+
+                    String _retrieveBytes = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                    command = con.CreateCommand();
+                    command.CommandText = _retrieveBytes;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", _FileTitle);
+
+                    MySqlDataReader _byteReader = command.ExecuteReader();
+
+                    if (stopFileRetrieval == true) {
+
+                        _byteReader.Close();
+
+                        Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                        .ToList()
+                        .ForEach(form => form.Close());
+
+                        stopFileRetrieval = false;
+                    }
+
+                    if (_byteReader.Read()) {
+                        _base64Encoded.Add(_byteReader.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                        _openDialog(_FileTitle, _getBytes);
+                    }
+                    _byteReader.Close();
+                }
+                
+                else if (_TableName == "cust_sharing") {
 
                     RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.","Saver");
                     ShowAlert.Show();
@@ -191,6 +226,7 @@ namespace FlowSERVER1 {
                     _byteReader.Close();
                 }
             }
+
             catch (Exception) {
                 Application.OpenForms
                          .OfType<Form>()

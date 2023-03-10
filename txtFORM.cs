@@ -38,9 +38,20 @@ namespace FlowSERVER1 {
 
         public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderUsername;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderUsername;
+            }
+
             instance = this;
             label1.Text = fileName;
-            label2.Text = "Uploaded By " + _UploaderUsername;
+            label2.Text = _getName;
             var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
             if (tableName == "upload_info_directory" & getText == "") {

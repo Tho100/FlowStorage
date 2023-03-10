@@ -20,7 +20,7 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
         public static String _Directory;
-
+        private static bool _IsFromShared;
         /// <summary>
         /// 
         /// Load GIF based on table name
@@ -31,7 +31,7 @@ namespace FlowSERVER1 {
         /// <param name="_directoryName"></param>
         /// <param name="_uploaderName"></param>
 
-        public gifFORM(String _titleName,String _tableName, String _directoryName,String _uploaderName) {
+        public gifFORM(String _titleName,String _tableName, String _directoryName,String _uploaderName, bool _isFromShared = false) {
             InitializeComponent();
             var _form = Form1.instance;
             instance = this;
@@ -39,6 +39,7 @@ namespace FlowSERVER1 {
             label1.Text = _titleName;
             _TableName = _tableName;
             _Directory = _directoryName;
+            _IsFromShared = _isFromShared;
 
             try {
                 if(_TableName == "file_info_gif") {                  
@@ -113,7 +114,7 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_gif", _Directory);
             }
             else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _Directory);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _Directory,_IsFromShared);
             }
         }
 

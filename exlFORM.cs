@@ -31,6 +31,7 @@ namespace FlowSERVER1 {
         private static int _currentSheetIndex = 1;
         private static int _changedIndex = 0;
         private static Byte[] _sheetsByte;
+        private static bool _isFromShared;
 
         /// <summary>
         /// 
@@ -42,13 +43,25 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
         
-        public exlFORM(String titleName, String _TableName, String _DirectoryName, String _UploaderName) {
+        public exlFORM(String titleName, String _TableName, String _DirectoryName, String _UploaderName, bool isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+            }
+
             instance = this;
-            label2.Text = "Uploaded By " + _UploaderName;
+            label2.Text = _getName;
             label1.Text = titleName;
             DirectoryName = _DirectoryName;
             TableName = _TableName;
+            _isFromShared = isFromShared;
 
             try {
 
@@ -66,7 +79,7 @@ namespace FlowSERVER1 {
                     generateSheet(LoaderModel.LoadFile("folder_upload_info", DirectoryName, titleName));
                     _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 } else if (_TableName == "cust_sharing") {
-                    generateSheet(LoaderModel.LoadFile("cust_sharing", DirectoryName, titleName));
+                    generateSheet(LoaderModel.LoadFile("cust_sharing", DirectoryName, titleName,isFromShared));
                     _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 }
             }

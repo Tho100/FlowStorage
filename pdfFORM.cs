@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Drawing;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
 
@@ -15,6 +16,7 @@ namespace FlowSERVER1 {
     public partial class pdfFORM : Form {
         private static String _TableName;
         private static String _DirName;
+        private static bool _IsFromShared;
 
         /// <summary>
         /// Load file based on table name 
@@ -24,12 +26,25 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
         
-        public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName) {
+        public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName, bool _isFromShared = false) {
+
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+            }
+
             label1.Text = _FileTitle;
-            label2.Text = "Uploaded By " + _UploaderName;
+            label2.Text = _getName;
             _TableName = _tableName;
             _DirName = _DirectoryName;
+            _IsFromShared = _isFromShared;
 
             try {
 
@@ -44,8 +59,9 @@ namespace FlowSERVER1 {
                     setupPdf(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
                 }
                 else if (_tableName == "cust_sharing") {
-                    setupPdf(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
+                    setupPdf(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text,_isFromShared));
                 }
+
             } catch (Exception) {
                 Form bgBlur = new Form();
                 using (errorLoad displayError = new errorLoad()) {
@@ -119,7 +135,7 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_pdf", _DirName);
             }
             else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName,_IsFromShared);
             }
             this.TopMost = true;
         }

@@ -10,19 +10,33 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class apkFORM : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static String _TableName;
-        public static String _DirName;
-        public apkFORM(String _titleFile, String _userName,String _tabName, String _dirName) {
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+        private static String _TableName;
+        private static String _DirName;
+        private static bool isFromShared = false;
+        public apkFORM(String _titleFile, String _userName,String _tabName, String _dirName, bool _isFromShared = false) {
+
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_userName, @"^([\w\-]+)").Value == "Shared";
+
+            if(_isShared == true) {
+                _getName = _userName;
+            } else {
+                _getName = "Uploaded By " + _userName; 
+            }
+
             label1.Text = _titleFile;
-            label2.Text = "Uploaded by " + _userName;
+            label2.Text =  _getName;
             _TableName = _tabName;
             _DirName = _dirName;
+            isFromShared = _isFromShared;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
@@ -77,7 +91,7 @@ namespace FlowSERVER1 {
                     SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirName);
                 }
                 else if (_TableName == "cust_sharing") {
-                    SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
+                    SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName,isFromShared);
                 }
             } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);

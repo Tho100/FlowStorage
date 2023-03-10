@@ -321,7 +321,7 @@ namespace FlowSERVER1 {
             int _totalDir = Convert.ToInt32(_setupCount);
             label19.Text = _totalDir.ToString();
 
-            var countTotalFolders = Form1.instance.listBox1.Items.Count - 1;
+            var countTotalFolders = Form1.instance.listBox1.Items.Count - 3;
             label20.Text = countTotalFolders.ToString();
         }
 

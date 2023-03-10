@@ -12,6 +12,7 @@ using System.Dynamic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
@@ -20,12 +21,27 @@ namespace FlowSERVER1 {
         public static String _TabName = "";
         public static String _DirName = "";
         public static audFORM instance;
-        public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName) {
+        private static bool isFromShared;
+        public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+            }
+
             label1.Text = titleName;
-            label2.Text = "Uploaded By " + _UploaderName;
             _TabName = _TableName;
             _DirName = _DirectoryName;
+            isFromShared = _isFromShared;
+
+            label2.Text = _getName;
+
             pictureBox3.Enabled = false;
             instance = this;
         }
@@ -54,6 +70,7 @@ namespace FlowSERVER1 {
                     pictureBox3.Enabled = true;
                 }
                 else {
+
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.","Loader").ShowDialog());
                     ShowAlert.Start();
 
@@ -69,7 +86,7 @@ namespace FlowSERVER1 {
                         setupPlayer(_audType, LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
                     } else if (_TabName == "cust_sharing") {
                         pictureBox3.Enabled = true;
-                        setupPlayer(_audType, LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text));
+                        setupPlayer(_audType, LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text,isFromShared));
                     }
 
                     if (LoaderModel.stopFileRetrievalLoad == true) {

@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
         public static String _DirectoryName;
-
+        private static bool _IsFromShared;
         /// <summary>
         /// 
         /// Load user docx,doc, document based on table name
@@ -28,12 +28,24 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName) {
+        public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName, bool _isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = System.Text.RegularExpressions.Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+            }
+
             label1.Text = _docName;
-            label2.Text = "Uploaded By " + _UploaderName;
+            label2.Text = _getName;
             _TableName = _Table;
             _DirectoryName = _Directory;
+            _IsFromShared = _isFromShared;
 
             try {
 
@@ -48,7 +60,7 @@ namespace FlowSERVER1 {
                 else if (_TableName == "folder_upload_info") {
                     setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
                 } else if (_TableName == "cust_sharing") {
-                    setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
+                    setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text,_isFromShared));
                 }
             }
             catch (Exception) {
@@ -104,7 +116,7 @@ namespace FlowSERVER1 {
             } else if (_TableName == "file_info_word") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_word", _DirectoryName);
             } else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName,_IsFromShared);
             }
             this.TopMost = true;
         }

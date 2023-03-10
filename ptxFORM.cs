@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Globalization;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
 
@@ -22,6 +23,7 @@ namespace FlowSERVER1 {
         public static MySqlConnection con = ConnectionModel.con;
         public static String _TableName;
         public static String _DirectoryName;
+        private static bool _IsFromShared;
 
         /// <summary>
         /// 
@@ -34,12 +36,24 @@ namespace FlowSERVER1 {
         /// <param name="_UploaderName"></param>
 
 
-        public ptxFORM(String _Title,String _Table, String _Directory,String _UploaderName) {
+        public ptxFORM(String _Title,String _Table, String _Directory,String _UploaderName, bool _isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+            }
+
             label1.Text = _Title;
-            label2.Text = "Uploaded By " + _UploaderName;
+            label2.Text = _getName;
             _TableName = _Table;
             _DirectoryName = _Directory;
+            _IsFromShared = _isFromShared;
 
             try {
 
@@ -55,8 +69,9 @@ namespace FlowSERVER1 {
                     setupPtx(LoaderModel.LoadFile("folder_upload_info", _DirectoryName, label1.Text));
                 }
                 else if (_TableName == "cust_sharing") {
-                    setupPtx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text));
+                    setupPtx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text,_isFromShared));
                 }
+
             }  catch (Exception) {
                 Form bgBlur = new Form();
                 using (errorLoad displayError = new errorLoad()) {
@@ -103,7 +118,7 @@ namespace FlowSERVER1 {
             else if (_TableName == "file_info_ptx") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_ptx", _DirectoryName);
             } else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName,_IsFromShared);
             }
             this.TopMost = true;
         }
@@ -133,14 +148,6 @@ namespace FlowSERVER1 {
         }
 
         private void ptxFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e) {
-
-        }
-
-        private void pdfViewer1_Load(object sender, EventArgs e) {
 
         }
 

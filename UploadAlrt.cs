@@ -274,7 +274,7 @@ namespace FlowSERVER1 {
 
                 } else if (TableName == "folder_upload_info") {
                     Control foundControl = null;
-                    foreach (Control _getControls in sharingFORM.instance.flowLayoutPanel1.Controls) {
+                    foreach (Control _getControls in Form1.instance.flowLayoutPanel1.Controls) {
                         if (_getControls.Name == ControlName) {
                             foundControl = _getControls;
                             break;
@@ -282,7 +282,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (foundControl != null) {
-                        sharingFORM.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        Form1.instance.flowLayoutPanel1.Controls.Remove(foundControl);
                         foundControl.Dispose();
                     }
                 }
@@ -297,8 +297,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            this.TopMost = false; 
-            this.WindowState = FormWindowState.Minimized;
+            this.Close();
         }
 
         private void label9_Click(object sender, EventArgs e) {

@@ -13,6 +13,7 @@ using LibVLCSharp.Shared.MediaPlayerElement;
 using LibVLCSharp.WinForms;
 using LibVLCSharp.Shared;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
@@ -25,18 +26,31 @@ namespace FlowSERVER1 {
         private static String _TableName;
         private static String _DirName;
         private static String _UploaderName;
+        private static bool _IsFromShared;
 
-        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName) {
+        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName, bool _isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = uploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + uploaderName;
+            }
+
             instance = this;
             var setupImage = resizeImage(getThumb, new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = getTitle;
-            label2.Text = "Uploaded By " + uploaderName;
+            label2.Text = _getName;
             label3.Text = tableName;
             _TableName = tableName;
             _DirName = dirName;
             _UploaderName = uploaderName;
+            _IsFromShared = _isFromShared;
         }
 
         public static Image resizeImage(Image userImg, Size size) {
@@ -110,7 +124,7 @@ namespace FlowSERVER1 {
                     } else if (_TableName == "folder_upload_info") {
                         setupPlayer(LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
                     } else if (_TableName == "cust_sharing") {
-                        setupPlayer(LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text));
+                        setupPlayer(LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text,_IsFromShared));
                     }
                 }
 
@@ -137,7 +151,7 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_vid", _DirName);
             }
             else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName,_IsFromShared);
             }
         }
 

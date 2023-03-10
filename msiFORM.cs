@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class msiFORM : Form {
@@ -16,12 +17,25 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static String _TableName;
         public static String _DirectoryName;
-        public msiFORM(String _fileName,String tabName, String dirName) {
+        private static bool _IsFromShared;
+        public msiFORM(String _fileName,String tabName, String dirName,String _UploaderUsername, bool _isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderUsername;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderUsername;
+            }
+
             label1.Text = _fileName;
-            label2.Text = "Uploaded By " + Form1.instance.label5.Text;
+            label2.Text = _getName;
             _TableName = tabName;
             _DirectoryName = dirName;
+            _IsFromShared = _isFromShared;
         }
 
         private void msiFORM_Load(object sender, EventArgs e) {
@@ -41,6 +55,9 @@ namespace FlowSERVER1 {
             }
             else if (_TableName == "file_info_msi") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_msi", _DirectoryName);
+            } 
+            else if (_TableName == "cust_sharing") {
+                SaverModel.SaveSelectedFile(label1.Text, "file_info_msi", _DirectoryName, _IsFromShared);
             }
         }
 

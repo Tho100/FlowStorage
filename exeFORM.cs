@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using MySql.Data;
 using System.IO;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class exeFORM : Form {
@@ -20,13 +21,26 @@ namespace FlowSERVER1 {
         public static Byte[] GlobalByte;
         public static String _TableName;
         public static String _DirectoryName;
-        public exeFORM(String getTitle,String tableName, String directoryName, String _UploaderUsername) {
+        private static bool _isFromShared;
+        public exeFORM(String getTitle,String tableName, String directoryName, String _UploaderUsername,bool isFromShared = false) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderUsername;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderUsername;
+            }
+
             label1.Text = getTitle;
             instance = this;
-            label2.Text = "Uploaded By " + _UploaderUsername;
+            label2.Text = _getName;
             _TableName = tableName;
             _DirectoryName = directoryName;
+            _isFromShared = isFromShared;
         }
 
         private void exeFORM_Load(object sender, EventArgs e) {
@@ -76,7 +90,7 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info_exe", _DirectoryName);
             }
             else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName,_isFromShared);
             }
         }
 

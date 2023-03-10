@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,11 +16,22 @@ namespace FlowSERVER1 {
         private static String Directoryname;
         public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName) {
             InitializeComponent();
+
+            String _getName = "";
+            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+            }
+
             instance = this;
             var setupImage = resizeUserImage(userImage,new Size(width,height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = title;
-            label2.Text = "Uploaded By " + _UploaderName;
+            label2.Text = _getName;
             TableName = _TableName;
             Directoryname = _DirectoryName;
 

@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Windows.Media.Animation;
-using Newtonsoft.Json.Serialization;
 using System.Threading;
 
 namespace FlowSERVER1 {
@@ -21,7 +18,7 @@ namespace FlowSERVER1 {
         public static Byte[] universalBytes;
         public static bool stopFileRetrievalLoad = false;
 
-        public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName) {
+        public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName, bool _isFromSharedTo = false) {
 
             try {
 
@@ -138,16 +135,20 @@ namespace FlowSERVER1 {
                     }
                     _readByteValues.Close();
 
-                } else if (_TableName == "cust_sharing") {
-                    String _readGifFiles = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
+                } else if (_TableName == "cust_sharing" && _isFromSharedTo == true) {
+
+                    String _readGifFiles = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
                     command = con.CreateCommand();
                     command.CommandText = _readGifFiles;
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@filepath", _FileName);
 
                     MySqlDataReader _readByteValues = command.ExecuteReader();
+
                     if (stopFileRetrievalLoad == true) {
+
                         _readByteValues.Close();
+
                         Application.OpenForms
                         .OfType<Form>()
                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
@@ -156,11 +157,49 @@ namespace FlowSERVER1 {
                         stopFileRetrievalLoad = false;
                     }
                     if (_readByteValues.Read()) {
+
                         Application.OpenForms
                                .OfType<Form>()
                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                                .ToList()
                                .ForEach(form => form.Close());
+
+                        _base64Encoded.Add(_readByteValues.GetString(0));
+                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                        universalBytes = _getBytes;
+                    }
+                    _readByteValues.Close();
+                }
+
+                else if (_TableName == "cust_sharing") {
+
+                    String _readGifFiles = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
+                    command = con.CreateCommand();
+                    command.CommandText = _readGifFiles;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filepath", _FileName);
+
+                    MySqlDataReader _readByteValues = command.ExecuteReader();
+
+                    if (stopFileRetrievalLoad == true) {
+
+                        _readByteValues.Close();
+
+                        Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                        .ToList()
+                        .ForEach(form => form.Close());
+                        stopFileRetrievalLoad = false;
+                    }
+                    if (_readByteValues.Read()) {
+
+                        Application.OpenForms
+                               .OfType<Form>()
+                               .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                               .ToList()
+                               .ForEach(form => form.Close());
+
                         _base64Encoded.Add(_readByteValues.GetString(0));
                         var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
                         universalBytes = _getBytes;
