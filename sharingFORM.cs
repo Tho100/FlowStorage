@@ -129,6 +129,12 @@ namespace FlowSERVER1 {
                         sucessShare _showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text, guna2TextBox1.Text);
                         _showSuccessfullyTransaction.Show();
 
+                        Application.OpenForms
+                         .OfType<Form>()
+                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                         .ToList()
+                         .ForEach(form => form.Close());
+
                     }
 
                     if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
@@ -313,6 +319,24 @@ namespace FlowSERVER1 {
             }
             return _concludeOutput;
         }
+        
+        /// <summary>
+        /// Verify if file is already shared
+        /// </summary>
+        /// <param name="_custUsername">Username of receiver</param>
+        /// <param name="_fileName">File name to be send</param>
+        /// <returns></returns>
+        private int fileIsUploaded(String _custUsername,String _fileName) {
+            String _queryRetrieve = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+            command = new MySqlCommand(_queryRetrieve, con);
+            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            command.Parameters.AddWithValue("@receiver", _custUsername);
+            command.Parameters.AddWithValue("@filename", _fileName);
+
+            var _startCount = command.ExecuteScalar();
+            int _toInt = Convert.ToInt32(_startCount);
+            return _toInt;
+        }
 
         private static String _controlName = null;
         private static String _currentFileName = "";
@@ -329,35 +353,43 @@ namespace FlowSERVER1 {
                     if(guna2TextBox1.Text != String.Empty) {
                         if(guna2TextBox2.Text != String.Empty) {
                             if(userIsExists(guna2TextBox1.Text) > 0) {
-                                if(!(retrieveDisabled(guna2TextBox1.Text) == "0")) {
-                                    MessageBox.Show("The user " + guna2TextBox1.Text + " disabled their file sharing.","Sharing Failed",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                                if(fileIsUploaded(guna2TextBox1.Text,guna2TextBox2.Text) > 0) {
+
+                                    MessageBox.Show("This file is already shared.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
                                 } else {
 
-                                    if(hasPassword(guna2TextBox1.Text) != "") {
-                                        AskPassSharing _askPassForm = new AskPassSharing(guna2TextBox1.Text,guna2TextBox2.Text,_FilePath,_retrieved);
-                                        _askPassForm.Show();
-
+                                    if(!(retrieveDisabled(guna2TextBox1.Text) == "0")) {
+                                        MessageBox.Show("The user " + guna2TextBox1.Text + " disabled their file sharing.","Sharing Failed",MessageBoxButtons.OK,MessageBoxIcon.Information);
                                     } else {
 
-                                        startSharing();
+                                        if(hasPassword(guna2TextBox1.Text) != "") {
+                                            AskPassSharing _askPassForm = new AskPassSharing(guna2TextBox1.Text,guna2TextBox2.Text,_FilePath,_retrieved);
+                                            _askPassForm.Show();
 
-                                        Application.OpenForms
-                                       .OfType<Form>()
-                                       .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                       .ToList()
-                                       .ForEach(form => form.Close());
+                                        } else {
 
+                                            startSharing();
+
+                                            Application.OpenForms
+                                           .OfType<Form>()
+                                           .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                           .ToList()
+                                           .ForEach(form => form.Close());
+
+                                        }
                                     }
+                                }
                             }
+                            else {
+                                MessageBox.Show("User '" + guna2TextBox1.Text + "' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                          }
                         }
-                        else {
-                            MessageBox.Show("User '" + guna2TextBox1.Text + "' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                      }
+                    } else {
+                        MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                } else {
-                    MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             } catch (Exception) {
                 MessageBox.Show("An unknown error occurred.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }

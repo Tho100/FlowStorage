@@ -186,7 +186,7 @@ namespace FlowSERVER1 {
                         
                     _form.listBox1.Items.Add("Home");
                     _form.listBox1.Items.Add("Shared To Me");
-                    _form.listBox1.Items.Add("Shared To Others");
+                    _form.listBox1.Items.Add("Shared Files");
                     _form.listBox1.SelectedIndex = 0;
 
                     List<String> titleValues = new List<String>();

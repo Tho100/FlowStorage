@@ -14,7 +14,8 @@ namespace FlowSERVER1 {
         public static picFORM instance;
         private static String TableName;
         private static String Directoryname;
-        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName) {
+        private static bool IsFromShared;
+        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false) {
             InitializeComponent();
 
             String _getName = "";
@@ -34,6 +35,7 @@ namespace FlowSERVER1 {
             label2.Text = _getName;
             TableName = _TableName;
             Directoryname = _DirectoryName;
+            IsFromShared = _IsFromShared;
 
             ToolTip saveTip = new ToolTip();
             saveTip.SetToolTip(this.guna2Button4,"Download Image");
@@ -77,7 +79,7 @@ namespace FlowSERVER1 {
             else if (TableName == "file_info") {
                 SaverModel.SaveSelectedFile(label1.Text, "file_info", Directoryname);
             } else if (TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", Directoryname);
+                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", Directoryname,IsFromShared);
             }
             this.TopMost = true;
         }

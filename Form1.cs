@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Xml;
 
 namespace FlowSERVER1 {
     /// <summary>
@@ -30,9 +31,10 @@ namespace FlowSERVER1 {
         public Label setupLabel;
         public bool stopFileTransaction = false;
         private String CurrentLang = "";
-        private Object _getValues = "";
+        private Object _getValues;
+        private String nameTableInsert;
 
-
+        private BackgroundWorker worker;
         // @ Variables to initialize file upload
 
         string get_ex;
@@ -114,7 +116,7 @@ namespace FlowSERVER1 {
 
                             listBox1.Items.Add("Home");
                             listBox1.Items.Add("Shared To Me");
-                            listBox1.Items.Add("Shared To Others");
+                            listBox1.Items.Add("Shared Files");
                             listBox1.SelectedIndex = 0;
 
                             List<String> titleValues = new List<String>();
@@ -1089,7 +1091,13 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                Application.OpenForms
+                    Application.OpenForms
+                            .OfType<Form>()
+                            .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
+                            .ToList()
+                            .ForEach(form => form.Close());
+
+                    Application.OpenForms
                   .OfType<Form>()
                   .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                   .ToList()
@@ -1333,6 +1341,44 @@ namespace FlowSERVER1 {
             return fileData;
         }
 
+        private void InsertMainData(Object sender, DoWorkEventArgs e) {
+
+            String insertTxtQuery = "INSERT INTO " + nameTableInsert + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
+            command = new MySqlCommand(insertTxtQuery, con);
+
+            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
+            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
+            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
+            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+
+            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
+            command.Parameters["@UPLOAD_DATE"].Value = varDate;
+
+            command.Parameters["@CUST_FILE"].Value = _getValues;
+            command.Prepare();
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+
+        private void CompletedInsertion(Object sender, RunWorkerCompletedEventArgs e) {
+            if(e.Cancelled) {
+                MessageBox.Show("CANCELLED");
+            } else if (e.Error != null) {
+                MessageBox.Show("ERROR");
+            } else {
+                worker.WorkerSupportsCancellation = true;
+                worker.WorkerReportsProgress = true;
+
+                Application.OpenForms
+                 .OfType<Form>()
+                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                 .ToList()
+                 .ForEach(form => form.Close());
+
+            }
+        }
+
         /// <summary>
         /// 
         /// This function will opens a file dialog and 
@@ -1358,7 +1404,7 @@ namespace FlowSERVER1 {
         private string searchPan = "";
         private Control titlePanelSearch;
         private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
-            
+
             void deletionMethod(String fileName, String getDB) {
                 String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
                 command = new MySqlCommand(offSqlUpdates, con);
@@ -1377,7 +1423,7 @@ namespace FlowSERVER1 {
             }
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;*.psd|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
+            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
             open.Multiselect = true;
             varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -1458,8 +1504,9 @@ namespace FlowSERVER1 {
 
                         void createPanelMain(String nameTable, String panName, int itemCurr, Object keyVal) {
                             searchPan = panName;
+                            nameTableInsert = nameTable;
 
-                            if(fileSizeInMB < 1500) {
+                            if (fileSizeInMB < 1500) {
 
                                 String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
                                 command = new MySqlCommand(insertTxtQuery, con);
@@ -1662,6 +1709,22 @@ namespace FlowSERVER1 {
                                 }
                                 if (nameTable == "file_info_audi") {
                                     startSending(keyVal);
+
+                                    /*_getValues = keyVal;
+
+                                    worker = new BackgroundWorker();
+
+                                    worker.DoWork += new DoWorkEventHandler(InsertMainData);
+                                    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedInsertion);
+                                    worker.WorkerSupportsCancellation = true;
+                                    worker.WorkerReportsProgress = true;
+
+                                    if (!worker.IsBusy) { 
+                                        worker.WorkerSupportsCancellation = false;
+                                        worker.WorkerReportsProgress = false;
+                                        worker.RunWorkerAsync();
+                                    }*/
+
                                     var _getWidth = this.Width;
                                     var _getHeight = this.Height;
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
@@ -2144,18 +2207,6 @@ namespace FlowSERVER1 {
 
         }
 
-        /// <summary>
-        /// Count how many files has been shared to receiver 
-        /// </summary>
-        /// <returns></returns>
-        private int countSharing() {
-            String queryCountShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
-            command = new MySqlCommand(queryCountShared,con);
-            command.Parameters.AddWithValue("@username",label5.Text);
-            var _getValueInt = command.ExecuteScalar();
-            int _convertValInt = Convert.ToInt32(_getValueInt);
-            return _convertValInt;
-        }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
 
@@ -2355,7 +2406,7 @@ namespace FlowSERVER1 {
 
                                                         listBox1.Items.Add("Home");
                                                         listBox1.Items.Add("Shared To Me");
-                                                        listBox1.Items.Add("Shared To Others");
+                                                        listBox1.Items.Add("Shared Files");
 
 
                                                         listBox1.SelectedIndex = 0;
@@ -2963,6 +3014,24 @@ namespace FlowSERVER1 {
 
         }
 
+        private int countSharingSharedTo() {
+            String _countQuery = "SELECT COUNT(CUST_FROM) FROM cust_sharing WHERE CUST_FROM = @username";
+            command = new MySqlCommand(_countQuery,con);
+            command.Parameters.AddWithValue("@username",label5.Text);
+            var _startCounting = command.ExecuteScalar();
+            int _toInt = Convert.ToInt32(_startCounting);
+            return _toInt;
+        }
+
+        private int countSharingShared() {
+            String _countQuery = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_TO = @username";
+            command = new MySqlCommand(_countQuery, con);
+            command.Parameters.AddWithValue("@username", label5.Text);
+            var _startCounting = command.ExecuteScalar();
+            int _toInt = Convert.ToInt32(_startCounting);
+            return _toInt;
+        }
+
         /// <summary>
         /// Select folder from listBox and start showing
         /// the files from selected folder
@@ -2973,7 +3042,6 @@ namespace FlowSERVER1 {
         public List<String> _TypeValues = new List<String>();
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
-
 
             try {
 
@@ -3053,7 +3121,7 @@ namespace FlowSERVER1 {
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 }
-                else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared To Others") {
+                else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
                     guna2Button19.Visible = true;
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
@@ -3087,6 +3155,13 @@ namespace FlowSERVER1 {
                     guna2Button4.Visible = true;
                     guna2Button19.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
+
+                    clearRedundane();
+
+                    if(countSharingShared() >= 2) {
+                        Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
+                        _showRetrievalForm.Start();
+                    }
 
                     Application.DoEvents();
 
@@ -3124,6 +3199,13 @@ namespace FlowSERVER1 {
                     guna2Button19.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
 
+                    clearRedundane();
+
+                    if (countSharingSharedTo() >= 2) {
+                        Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
+                        _showRetrievalForm.Start();
+                    }
+
                     Application.DoEvents();
 
                     if (_TypeValuesOthers.Count == 0) {
@@ -3157,7 +3239,7 @@ namespace FlowSERVER1 {
 
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
-            } catch (Exception) {
+            } catch (Exception f) {
                 flowLayoutPanel1.Controls.Clear();
                 if (flowLayoutPanel1.Controls.Count == 0) {
                     showRedundane();
@@ -3165,8 +3247,8 @@ namespace FlowSERVER1 {
                 else {
                     clearRedundane();
                 }
-
-                MessageBox.Show("Hmm... something is wrong. Restarting Flowstorage may fix the problem.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show(f.Message);
+                //MessageBox.Show("Hmm... something is wrong. Restarting Flowstorage may fix the problem.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -3252,9 +3334,11 @@ namespace FlowSERVER1 {
         private void generateUserSharedOthers(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
-            String varDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+            Application.DoEvents();
 
             List<String> typeValues = new List<String>(_extTypes);
+
             for (int q = 0; q < itemCurr; q++) {
                 int top = 275;
                 int h_p = 100;
@@ -3308,6 +3392,20 @@ namespace FlowSERVER1 {
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = filesNames[q];
+
+                List<String> fileDates = new List<string>();
+
+                String _selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
+                command = new MySqlCommand(_selectFileDates, con);
+                command = con.CreateCommand();
+                command.CommandText = _selectFileDates;
+                command.Parameters.AddWithValue("@username", form1.label5.Text);
+
+                MySqlDataReader _readFileDates = command.ExecuteReader();
+                while (_readFileDates.Read()) {
+                    fileDates.Add(_readFileDates.GetString(0));
+                }
+                _readFileDates.Close();
 
                 getUploaderNameShared = titleLab.Text;
                 var setupSharedUsername = sharedToName();
@@ -3366,7 +3464,7 @@ namespace FlowSERVER1 {
                 dateLabTxt.Enabled = true;
                 dateLabTxt.Location = new Point(12, 208);
                 dateLabTxt.Width = 1000;
-                dateLabTxt.Text = varDate;
+                dateLabTxt.Text = fileDates[q];
 
                 textboxPic.MouseHover += (_senderM, _ev) => {
                     panelTxt.ShadowDecoration.Enabled = true;
@@ -3376,6 +3474,8 @@ namespace FlowSERVER1 {
                 textboxPic.MouseLeave += (_senderQ, _evQ) => {
                     panelTxt.ShadowDecoration.Enabled = false;
                 };
+
+                Application.DoEvents();
 
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp") {
                     List<String> _base64Encoded = new List<string>();
@@ -3400,7 +3500,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, "Shared To " + sharedToName())) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, "Shared To " + sharedToName(),true)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -3648,17 +3748,13 @@ namespace FlowSERVER1 {
                     };
                 }
 
+                Application.DoEvents();
+
                 Application.OpenForms
                     .OfType<Form>()
                     .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
                     .ToList()
                     .ForEach(form => form.Close());
-
-                Application.OpenForms
-                   .OfType<Form>()
-                   .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                   .ToList()
-                   .ForEach(form => form.Close());
 
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -3666,6 +3762,9 @@ namespace FlowSERVER1 {
                     label8.Visible = false;
                     guna2Button6.Visible = false;
                 }
+
+                Application.DoEvents();
+
             }
         }
 
@@ -3678,10 +3777,13 @@ namespace FlowSERVER1 {
         private void generateUserShared(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
+
             var UploaderUsername = uploaderName();
-            String varDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+            Application.DoEvents();
 
             List<String> typeValues = new List<String>(_extTypes);
+
             for (int q = 0; q < itemCurr; q++) {
                 int top = 275;
                 int h_p = 100;
@@ -3736,6 +3838,20 @@ namespace FlowSERVER1 {
                 titleLab.Height = 30;
                 titleLab.Text = filesNames[q];
 
+                List<String> fileDates = new List<string>();
+
+                String _selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
+                command = new MySqlCommand(_selectFileDates, con);
+                command = con.CreateCommand();
+                command.CommandText = _selectFileDates;
+                command.Parameters.AddWithValue("@username", form1.label5.Text);
+
+                MySqlDataReader _readFileDates = command.ExecuteReader();
+                while (_readFileDates.Read()) {
+                    fileDates.Add(_readFileDates.GetString(0));
+                }
+                _readFileDates.Close();
+
                 Guna2Button remButTxt = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButTxt);
                 remButTxt.Name = "RemTxtBut" + q;
@@ -3782,7 +3898,7 @@ namespace FlowSERVER1 {
                 dateLabTxt.Enabled = true;
                 dateLabTxt.Location = new Point(12, 208);
                 dateLabTxt.Width = 1000;
-                dateLabTxt.Text = varDate;
+                dateLabTxt.Text = fileDates[q];
 
                 textboxPic.MouseHover += (_senderM, _ev) => {
                     panelTxt.ShadowDecoration.Enabled = true;
@@ -4072,18 +4188,22 @@ namespace FlowSERVER1 {
                     };
                 }
 
+                Application.DoEvents();
+
                 Application.OpenForms
-                   .OfType<Form>()
-                   .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                   .ToList()
-                   .ForEach(form => form.Close());
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
+                    .ToList()
+                    .ForEach(form => form.Close());
 
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 if (flowLayoutPanel1.Controls.Count > 0) {
-                    guna2Button6.Visible = false;
                     label8.Visible = false;
+                    guna2Button6.Visible = false;
                 }
+
+                Application.DoEvents();
             }
         }
 
@@ -5609,6 +5729,12 @@ namespace FlowSERVER1 {
                     };
                 }
 
+                Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
+                    .ToList()
+                    .ForEach(form => form.Close());
+
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                 clearRedundane();
 
@@ -5711,6 +5837,7 @@ namespace FlowSERVER1 {
             else {
                 clearRedundane();
             }
+
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
             Application.OpenForms
@@ -5771,21 +5898,17 @@ namespace FlowSERVER1 {
                 int _countCharsLength = guna2TextBox5.Text.Length;
 
                 if (_countCharsLength == 0) {
-                    if(label26.Text == "Home") {
-                        Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
-                        _showRetrievalForm.Start();
+
+                    Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
+                    _showRetrievalForm.Start();
+
+                    if (label26.Text == "Home") {
                         callGeneratorSearch();
-                    } else if (label26.Text != "Shared To Others" && label26.Text != "Home" && label26.Text != "Shared To Me") {
+                    } else if (label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
                         callGeneratorFolder();
                     } else if (listBox1.SelectedIndex == 2) {
-
                         _TypeValuesOthers.Clear();
-
-                        Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
-                        _showRetrievalForm.Start();
-
                         callGeneratorSharedSearch();
-
                     } else if (listBox1.SelectedIndex == 1) {
                         //
                     }
@@ -5831,7 +5954,7 @@ namespace FlowSERVER1 {
                             _generateUserDirectory("file_info_directory", "dirFile", _countRowSearch("file_info_directory"));
                         }
 
-                    } else if(label26.Text != "Shared To Others" && label26.Text != "Home" && label26.Text != "Shared To Me") {
+                    } else if(label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
 
                         List<string> typesValues = new List<string>();
                         String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH LIKE @filename";
@@ -5989,6 +6112,9 @@ namespace FlowSERVER1 {
             _TypeValuesOthers.Clear();
             flowLayoutPanel1.Controls.Clear();
 
+            Thread _showAlert = new Thread(() => new LoadAlertFORM().ShowDialog());
+            _showAlert.Start();
+
             if(_selectedIndex == 1) {
 
                 if (_TypeValues.Count == 0) {
@@ -6035,10 +6161,19 @@ namespace FlowSERVER1 {
                     }
                     _readTypeOthers.Close();
 
+                    Application.DoEvents();
+
                     generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
+
+                    Application.DoEvents();
                 }
                 else {
+
+                    Application.DoEvents();
+
                     generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
+
+                    Application.DoEvents();
                 }
 
                 if (flowLayoutPanel1.Controls.Count == 0) {
