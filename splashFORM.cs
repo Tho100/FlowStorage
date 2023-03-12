@@ -7,11 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class splashFORM : Form {
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
         public splashFORM() {
             InitializeComponent();
+            con.Open();
         }
 
         private void splashFORM_Load(object sender, EventArgs e) {

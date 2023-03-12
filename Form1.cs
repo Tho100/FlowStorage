@@ -33,6 +33,8 @@ namespace FlowSERVER1 {
         private String CurrentLang = "";
         private Object _getValues;
         private String nameTableInsert;
+        private List<String> PropertyMine = new List<String>();
+        private List<String> TitlePropertyMine = new List<String>();
 
         private BackgroundWorker worker;
         // @ Variables to initialize file upload
@@ -72,8 +74,6 @@ namespace FlowSERVER1 {
             // @ Load user data  
 
             try {
-
-                con.Open();
 
                 setupLabel = label5;
 
@@ -324,6 +324,7 @@ namespace FlowSERVER1 {
             _readLang.Close();
         }
 
+
         /// <summary>
         /// Generate user files on startup
         /// </summary>
@@ -352,6 +353,7 @@ namespace FlowSERVER1 {
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                 var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
+                PropertyMine.Add(parameterName + i);
 
                 List<string> dateValues = new List<string>();
                 List<string> titleValues = new List<string>();
@@ -403,6 +405,7 @@ namespace FlowSERVER1 {
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = titleValues[i];
+                TitlePropertyMine.Add(titleValues[i]);
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 panelF.Controls.Add(picMain_Q);
@@ -730,7 +733,7 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                     var panelF = ((Guna2Panel)flowLayoutPanel1.Controls["panelf" + i]);
-
+                    PropertyMine.Add("panelf" + i);
                     List<string> dateValues = new List<string>();
                     List<string> titleValues = new List<string>();
 
@@ -774,7 +777,7 @@ namespace FlowSERVER1 {
 
                     Label titleLab = new Label();
                     panelF.Controls.Add(titleLab);
-                    titleLab.Name = "titlef" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                    titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
                     titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                     titleLab.ForeColor = Color.Gainsboro;
                     titleLab.Visible = true;
@@ -783,6 +786,7 @@ namespace FlowSERVER1 {
                     titleLab.Width = 220;
                     titleLab.Height = 30;
                     titleLab.Text = titleValues[i];
+                    TitlePropertyMine.Add(titleValues[i]);
 
                     Guna2PictureBox picMain_Q = new Guna2PictureBox();
                     panelF.Controls.Add(picMain_Q);
@@ -1549,6 +1553,7 @@ namespace FlowSERVER1 {
                                 top += h_p;
                                 flowLayoutPanel1.Controls.Add(panelTxt);
                                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[panName + itemCurr]);
+                                PropertyMine.Add(panName + itemCurr);
 
                                 var textboxPic = new Guna2PictureBox();
                                 mainPanelTxt.Controls.Add(textboxPic);
@@ -1571,6 +1576,7 @@ namespace FlowSERVER1 {
                                 titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = getName;
+                                TitlePropertyMine.Add(getName);
 
                                 titlePanelSearch = titleLab;
 
@@ -2560,8 +2566,16 @@ namespace FlowSERVER1 {
                 void setupUpload(Byte[] _byteValues) {
                     String _tempToBase64 = Convert.ToBase64String(_byteValues);
                     command.Parameters["@CUST_FILE"].Value = _tempToBase64;
+                    command.Prepare();
                     command.ExecuteNonQuery();
                     command.Dispose();
+
+                    Application.OpenForms
+                        .OfType<Form>()
+                        .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                        .ToList()
+                        .ForEach(form => form.Close());
+
                 }
 
                 _IntCurr++;
@@ -2582,10 +2596,11 @@ namespace FlowSERVER1 {
                 flowLayoutPanel1.Controls.Add(panelVid);
                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExlFold" + _IntCurr]);
                 _controlName = "PanExlFold" + _IntCurr;
+                PropertyMine.Add(_controlName);
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = "LabExlUpFold" + _IntCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = "titleImgL" + _IntCurr;//Segoe UI Semibold, 11.25pt, style=Bold
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -2594,6 +2609,7 @@ namespace FlowSERVER1 {
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = _TitleValues[_IntCurr - 1]; // [_IntCurr - 1];
+                TitlePropertyMine.Add(_TitleValues[_IntCurr]);
 
                 // LOAD THUMBNAIL
 
@@ -2640,7 +2656,7 @@ namespace FlowSERVER1 {
 
                 remButExl.Click += (sender_vid, e_vid) => {
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         deletionFoldFile(label5.Text, titleLab.Text, label26.Text);
                         panelVid.Dispose();
@@ -2713,16 +2729,16 @@ namespace FlowSERVER1 {
                     }
                     if (_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js" || _extTypes == ".sql" || _extTypes == ".csv") {
                         if (_extTypes == ".py") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                         }
                         else if (_extTypes == ".txt") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                         }
                         else if (_extTypes == ".html") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                         }
                         else if (_extTypes == ".css") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                         }
                         else if (_extTypes == ".js") {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
@@ -2748,7 +2764,7 @@ namespace FlowSERVER1 {
                             displayPic.Show();
                         };
 
-                        command.Parameters["@CUST_FILE"].Value = _encryptConts; // Receive text
+                        command.Parameters["@CUST_FILE"].Value = _encryptConts; 
                         command.ExecuteNonQuery();
                         command.Dispose();
                     }
@@ -3069,10 +3085,12 @@ namespace FlowSERVER1 {
                     }
 
                     if (_countRow("file_info") > 0) {
+                        //PropertyMine.Add("imgFile");
                         _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
                     }
                     // LOAD .TXT
                     if (_countRow("file_info_expand") > 0) {
+                        //PropertyMine.Add("txtFile");
                         _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
                     }
                     // LOAD EXE
@@ -5880,149 +5898,7 @@ namespace FlowSERVER1 {
             _generateUserFold(typesValues, _selectedFolder, "QWERTY", currMainLength);
         }
 
-        /// <summary>
-        /// 
-        /// Detect for text input and search
-        /// file based on the input
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void guna2TextBox5_TextChanged(object sender, EventArgs e) {
-           
-            String _selectedFolderSearch = listBox1.GetItemText(listBox1.SelectedItem);
-            flowLayoutPanel1.Controls.Clear();
-
-            try {
-
-                int _countCharsLength = guna2TextBox5.Text.Length;
-
-                if (_countCharsLength == 0) {
-
-                    Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
-                    _showRetrievalForm.Start();
-
-                    if (label26.Text == "Home") {
-                        callGeneratorSearch();
-                    } else if (label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
-                        callGeneratorFolder();
-                    } else if (listBox1.SelectedIndex == 2) {
-                        _TypeValuesOthers.Clear();
-                        callGeneratorSharedSearch();
-                    } else if (listBox1.SelectedIndex == 1) {
-                        //
-                    }
-
-                } else {
-                    
-                    if(label26.Text == "Home") {
-
-                        if (_countRowSearch("file_info") > 0) {
-                            generateSearching("file_info", "imgFile", _countRowSearch("file_info"));
-                        }
-                        if (_countRowSearch("file_info_word") > 0) {
-                            generateSearching("file_info_word", "docFile", _countRowSearch("file_info_word"));
-                        }
-                        if (_countRowSearch("file_info_expand") > 0) {
-                            generateSearching("file_info_expand", "txtFile", _countRowSearch("file_info_expand"));
-                        }
-                        if (_countRowSearch("file_info_ptx") > 0) {
-                            generateSearching("file_info_ptx", "ptxFile", _countRowSearch("file_info_ptx"));
-                        }
-                        if (_countRowSearch("file_info_pdf") > 0) {
-                            generateSearching("file_info_pdf", "pdfFile", _countRowSearch("file_info_pdf"));
-                        }
-                        if (_countRowSearch("file_info_excel") > 0) {
-                            generateSearching("file_info_excel", "exlFile", _countRowSearch("file_info_excel"));
-                        }
-                        if (_countRowSearch("file_info_gif") > 0) {
-                            generateSearching("file_info_gif", "gifFile", _countRowSearch("file_info_gif"));
-                        }
-                        if (_countRowSearch("file_info_exe") > 0) {
-                            generateSearching("file_info_exe", "exeFile", _countRowSearch("file_info_exe"));
-                        }
-                        if (_countRowSearch("file_info_vid") > 0) {
-                            generateSearching("file_info_vid", "vidFile", _countRowSearch("file_info_vid"));
-                        }
-                        if (_countRowSearch("file_info_msi") > 0) {
-                            generateSearching("file_info_msi", "msiFile", _countRowSearch("file_info_msi"));
-                        }
-                        if (_countRowSearch("file_info_audi") > 0) {
-                            generateSearching("file_info_audi", "imgFile", _countRowSearch("file_info_audi"));
-                        }
-                        if (_countRowSearch("file_info_directory") > 0) {
-                            _generateUserDirectory("file_info_directory", "dirFile", _countRowSearch("file_info_directory"));
-                        }
-
-                    } else if(label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
-
-                        List<string> typesValues = new List<string>();
-                        String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH LIKE @filename";
-                        command = new MySqlCommand(getFileType, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getFileType;
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@foldername", _selectedFolderSearch);
-                        command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-
-                        MySqlDataReader _readTypeSearch = command.ExecuteReader();
-                        while (_readTypeSearch.Read()) {
-                            typesValues.Add(_readTypeSearch.GetString(0));
-                        }
-                        _readTypeSearch.Close();
-
-                        List<String> mainTypes = typesValues.Distinct().ToList();
-                        var currMainLength = typesValues.Count;
-
-                        folderSearching(typesValues, _selectedFolderSearch, "SearchPar", currMainLength);
-
-                    } else if (listBox1.SelectedIndex == 2) {
-
-                        _TypeValuesOthers.Clear();
-
-                        guna2Button4.Visible = true;
-                        guna2Button19.Visible = false;
-                        flowLayoutPanel1.Controls.Clear();
-
-                        Application.DoEvents();
-
-                        String getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
-                        command = new MySqlCommand(getFilesTypeOthers, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getFilesTypeOthers;
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-
-                        MySqlDataReader _readTypeOthers = command.ExecuteReader();
-                        while (_readTypeOthers.Read()) {
-                            _TypeValuesOthers.Add(_readTypeOthers.GetString(0));// Append ToAr;
-                        }
-                        _readTypeOthers.Close();
-
-                        generateUserSharedOthersSearching(_TypeValuesOthers, "SearchParShare", _TypeValuesOthers.Count);
-
-                        if (flowLayoutPanel1.Controls.Count == 0) {
-                            showRedundane();
-                        }
-                        else {
-                            clearRedundane();
-                        }
-
-                        Application.DoEvents();
-
-                    } else if (listBox1.SelectedIndex == 1) {
-
-                    }
-                }
-           } catch (Exception) {
-                //showRedundane();
-            }
-
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-            if (label4.Text == "0") {
-                showRedundane();
-            }
-        }
+      
 
         private void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e) {
             String insertQuery = "INSERT INTO " + tableName + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
@@ -6186,6 +6062,346 @@ namespace FlowSERVER1 {
 
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
+        }
+
+        private IEnumerable<Control> GetAllControls(Control parent) {
+            var controls = parent.Controls.Cast<Control>();
+            return controls.SelectMany(c => GetAllControls(c)).Concat(controls);
+        }
+
+        /// <summary>
+        /// 
+        /// Detect for text input and search
+        /// file based on the input
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        bool _isSearched = false;
+        private void guna2TextBox5_TextChanged(object sender, EventArgs e) {
+
+             try {
+
+                /*GetAllControls(flowLayoutPanel1)
+                    .OfType<Label>()
+                    .Where(c => c.Text.IndexOf(guna2TextBox5.Text,
+                    StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    .ToList().ForEach(c => c.Parent.Controls.Remove(c));*/
+
+                int _countCharsLength = guna2TextBox5.Text.Length;
+                String foundValuesFile = guna2TextBox5.Text.ToLower();
+
+                List<String> titleValues = new List<String>();
+                List<String> nameValues = new List<String>();
+
+                /*for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
+                    var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[PropertyMine[i]]);
+
+                    var name = panelF.Controls["titleImgL" + i];
+                    var getTitles = TitlePropertyMine[i].ToLower();
+                    titleValues.Add(getTitles); // name.Text.ToLower()// object references was not set to an object
+                    nameValues.Add(panelF.Name);
+                    MessageBox.Show()
+                }
+
+                for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
+                    var panelToRemove = ((Guna2Panel)flowLayoutPanel1.Controls[nameValues[i]]);
+                    flowLayoutPanel1.Controls.Add(panelToRemove);
+                }*/
+
+                /// @ Return back all files if the user cancelled the file searchin
+                if (_countCharsLength == 0) {
+
+                    Application.DoEvents();
+
+                    if (_isSearched == true) {
+
+                        Thread _showRetrievalAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your files.","").ShowDialog());
+                        _showRetrievalAlert.Start();
+
+                        _isSearched = false;
+
+                        flowLayoutPanel1.Controls.Clear();
+
+                        int _countRow(String _tableName) {
+                            String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
+                            command = new MySqlCommand(_countRowTable, con);
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            var _totalRow = command.ExecuteScalar();
+                            int totalRowInt = Convert.ToInt32(_totalRow);
+                            return totalRowInt;
+                        }
+
+                        if (_countRow("file_info") > 0) {
+                            //PropertyMine.Add("imgFile");
+                            _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
+                        }
+                        // LOAD .TXT
+                        if (_countRow("file_info_expand") > 0) {
+                            //PropertyMine.Add("txtFile");
+                            _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
+                        }
+                        // LOAD EXE
+                        if (_countRow("file_info_exe") > 0) {
+                            _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
+                        }
+                        // LOAD VID
+                        if (_countRow("file_info_vid") > 0) {
+                            _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_vid"));
+                        }
+                        if (_countRow("file_info_excel") > 0) {
+                            _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
+                        }
+                        if (_countRow("file_info_audi") > 0) {
+                            _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
+                        }
+                        if (_countRow("file_info_gif") > 0) {
+                            _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
+                        }
+                        if (_countRow("file_info_apk") > 0) {
+                            _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
+                        }
+                        if (_countRow("file_info_pdf") > 0) {
+                            _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
+                        }
+                        if (_countRow("file_info_ptx") > 0) {
+                            _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
+                        }
+                        if (_countRow("file_info_msi") > 0) {
+                            _generateUserFiles("file_info_msi", "msiFile", _countRow("file_info_msi"));
+                        }
+                        if (_countRow("file_info_word") > 0) {
+                            _generateUserFiles("file_info_word", "docFile", _countRow("file_info_word"));
+                        }
+                        if (_countRow("file_info_directory") > 0) {
+                            _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
+                        }
+
+                        Application.DoEvents();
+
+                        Application.OpenForms
+                           .OfType<Form>()
+                           .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                           .ToList()
+                           .ForEach(form => form.Close());
+
+                    }
+                    else {
+                        //
+                    }
+                }
+
+
+                /// @ Search for file panel
+                for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
+                    var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[PropertyMine[i]]);
+
+                    var name = panelF.Controls["titleImgL" + i];
+                    var getTitles = TitlePropertyMine[i].ToLower();
+                    titleValues.Add(getTitles.Substring(0,1)); // name.Text.ToLower()// object references was not set to an object
+                    nameValues.Add(panelF.Name);
+                }
+
+                if (titleValues.Contains(foundValuesFile.Substring(0,1)) || titleValues.Contains(foundValuesFile.Substring(0,2))) {
+                    int indexFound = titleValues.FindIndex(a => a.Contains(foundValuesFile));
+                    for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
+                        if (nameValues[i] != nameValues[indexFound]) {//indexFound
+                            _isSearched = true;
+                            var panelToRemove = ((Guna2Panel)flowLayoutPanel1.Controls[nameValues[i]]);
+                            panelToRemove.Visible = false; // ... Controls.Remove(panelToRemove)
+                        } 
+                    }
+                }
+
+                /*for (int i = flowLayoutPanel1.Controls.Count - 1; i >= 0; i--) {
+                        if (flowLayoutPanel1.Controls[i] is Guna2Panel pnl) {
+                            for (int j = pnl.Controls.Count - 1; j >= 0; j--) {
+                                if (pnl.Controls[j] is Label lbl &&
+                                    lbl.Text.IndexOf(guna2TextBox5.Text,
+                                    StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                    //pnl.Controls.Remove(lbl);
+                                    pnl.Dispose();
+                                    // In case you want to remove the Panel:
+                                    //flowLayoutPanel1.Controls.Remove(pnl);
+                                }
+                            }
+                        }
+                    }*/
+
+                    /*if (string.IsNullOrWhiteSpace(guna2TextBox5.Text)) {
+                        foreach (var userControl in flowLayoutPanel1.Controls.OfType<Guna2Panel>()) {
+                            userControl.Visible = true;
+                        }
+                    }
+                    else {
+                        foreach (var userControl in flowLayoutPanel1.Controls.OfType<Guna2Panel>()) {
+                            var controlsMain = ((Guna2Panel)flowLayoutPanel1.Controls[propertymine]);
+                            userControl.Visible = userControl..Contains(guna2TextBox5.Text, StringComparison.OrdinalIgnoreCase);
+                        }
+                    }*/
+
+                
+            } catch (Exception) {
+
+                Application.OpenForms
+               .OfType<Form>()
+               .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+               .ToList()
+               .ForEach(form => form.Close());
+
+                showRedundane();
+
+                if (flowLayoutPanel1.Controls.Count == 0) {
+                    showRedundane();
+                }
+                else {
+                    clearRedundane();
+                }
+
+                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                // MessageBox.Show(eq.Message);
+            }
+
+            /*for(int i=0; i<=flowLayoutPanel1.Controls.Count; i++) {
+                foreach(Control panel in flowLayoutPanel1.Controls) {
+                    Label str = (Label)panel.Controls.Find("LabVidUp " + i, true).FirstOrDefault() as Label;
+                    MessageBox.Show(str.Text);
+                }
+            }*/
+
+            /*String _selectedFolderSearch = listBox1.GetItemText(listBox1.SelectedItem);
+            flowLayoutPanel1.Controls.Clear();
+
+            try {
+
+                int _countCharsLength = guna2TextBox5.Text.Length;
+
+                if (_countCharsLength == 0) {
+
+                    Thread _showRetrievalForm = new Thread(() => new LoadAlertFORM().ShowDialog());
+                    _showRetrievalForm.Start();
+
+                    if (label26.Text == "Home") {
+                        callGeneratorSearch();
+                    } else if (label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
+                        callGeneratorFolder();
+                    } else if (listBox1.SelectedIndex == 2) {
+                        _TypeValuesOthers.Clear();
+                        callGeneratorSharedSearch();
+                    } else if (listBox1.SelectedIndex == 1) {
+                        //
+                    }
+
+                } else {
+                    
+                    if(label26.Text == "Home") {
+
+                        if (_countRowSearch("file_info") > 0) {
+                            generateSearching("file_info", "imgFile", _countRowSearch("file_info"));
+                        }
+                        if (_countRowSearch("file_info_word") > 0) {
+                            generateSearching("file_info_word", "docFile", _countRowSearch("file_info_word"));
+                        }
+                        if (_countRowSearch("file_info_expand") > 0) {
+                            generateSearching("file_info_expand", "txtFile", _countRowSearch("file_info_expand"));
+                        }
+                        if (_countRowSearch("file_info_ptx") > 0) {
+                            generateSearching("file_info_ptx", "ptxFile", _countRowSearch("file_info_ptx"));
+                        }
+                        if (_countRowSearch("file_info_pdf") > 0) {
+                            generateSearching("file_info_pdf", "pdfFile", _countRowSearch("file_info_pdf"));
+                        }
+                        if (_countRowSearch("file_info_excel") > 0) {
+                            generateSearching("file_info_excel", "exlFile", _countRowSearch("file_info_excel"));
+                        }
+                        if (_countRowSearch("file_info_gif") > 0) {
+                            generateSearching("file_info_gif", "gifFile", _countRowSearch("file_info_gif"));
+                        }
+                        if (_countRowSearch("file_info_exe") > 0) {
+                            generateSearching("file_info_exe", "exeFile", _countRowSearch("file_info_exe"));
+                        }
+                        if (_countRowSearch("file_info_vid") > 0) {
+                            generateSearching("file_info_vid", "vidFile", _countRowSearch("file_info_vid"));
+                        }
+                        if (_countRowSearch("file_info_msi") > 0) {
+                            generateSearching("file_info_msi", "msiFile", _countRowSearch("file_info_msi"));
+                        }
+                        if (_countRowSearch("file_info_audi") > 0) {
+                            generateSearching("file_info_audi", "imgFile", _countRowSearch("file_info_audi"));
+                        }
+                        if (_countRowSearch("file_info_directory") > 0) {
+                            _generateUserDirectory("file_info_directory", "dirFile", _countRowSearch("file_info_directory"));
+                        }
+
+                    } else if(label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
+
+                        List<string> typesValues = new List<string>();
+                        String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH LIKE @filename";
+                        command = new MySqlCommand(getFileType, con);
+                        command = con.CreateCommand();
+                        command.CommandText = getFileType;
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@foldername", _selectedFolderSearch);
+                        command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
+
+                        MySqlDataReader _readTypeSearch = command.ExecuteReader();
+                        while (_readTypeSearch.Read()) {
+                            typesValues.Add(_readTypeSearch.GetString(0));
+                        }
+                        _readTypeSearch.Close();
+
+                        List<String> mainTypes = typesValues.Distinct().ToList();
+                        var currMainLength = typesValues.Count;
+
+                        folderSearching(typesValues, _selectedFolderSearch, "SearchPar", currMainLength);
+
+                    } else if (listBox1.SelectedIndex == 2) {
+
+                        _TypeValuesOthers.Clear();
+
+                        guna2Button4.Visible = true;
+                        guna2Button19.Visible = false;
+                        flowLayoutPanel1.Controls.Clear();
+
+                        Application.DoEvents();
+
+                        String getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
+                        command = new MySqlCommand(getFilesTypeOthers, con);
+                        command = con.CreateCommand();
+                        command.CommandText = getFilesTypeOthers;
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
+
+                        MySqlDataReader _readTypeOthers = command.ExecuteReader();
+                        while (_readTypeOthers.Read()) {
+                            _TypeValuesOthers.Add(_readTypeOthers.GetString(0));// Append ToAr;
+                        }
+                        _readTypeOthers.Close();
+
+                        generateUserSharedOthersSearching(_TypeValuesOthers, "SearchParShare", _TypeValuesOthers.Count);
+
+                        if (flowLayoutPanel1.Controls.Count == 0) {
+                            showRedundane();
+                        }
+                        else {
+                            clearRedundane();
+                        }
+
+                        Application.DoEvents();
+
+                    } else if (listBox1.SelectedIndex == 1) {
+
+                    }
+                }
+           } catch (Exception) {
+                //showRedundane();
+            }
+
+            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            if (label4.Text == "0") {
+                showRedundane();
+            }*/
         }
     }
 }
