@@ -68,6 +68,7 @@ namespace FlowSERVER1
 
                     if (_countRow(".png") > 0) {
                         _extName = ".png";
+                        _generateUserFiles("file_info","imgFilePng",_countRow(".png"));
                     }
 
                     if (_countRow(".jpg") > 0) {
@@ -664,6 +665,7 @@ namespace FlowSERVER1
         int msiCurr = 0;
         int docxCurr = 0;
         int progressionUpload = 0;
+        private string _controlName;
         private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
             var form1 = Form1.instance;
             void deletionMethod(String fileName, String getDB) {
@@ -734,12 +736,6 @@ namespace FlowSERVER1
                         retrieved = Path.GetExtension(selectedItems); //Path.GetExtension(get_ex);
                         retrievedName = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileNameWithoutExtension(selectedItems);
                         fileSizeInMB = 0;
-
-                        Application.OpenForms
-                          .OfType<Form>()
-                          .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                          .ToList()
-                          .ForEach(form => form.Close());
 
                         void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
 
@@ -824,10 +820,10 @@ namespace FlowSERVER1
                                     command.Dispose();
 
                                     Application.OpenForms
-                                     .OfType<Form>()
-                                     .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                     .ToList()
-                                     .ForEach(form => form.Close());
+                                    .OfType<Form>()
+                                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                                    .ToList()
+                                    .ForEach(form => form.Close());
                                 }
 
                                 int top = 275;
@@ -842,9 +838,11 @@ namespace FlowSERVER1
                                     Location = new Point(600, top)
                                 };
 
+                 
                                 top += h_p;
                                 flowLayoutPanel1.Controls.Add(panelTxt);
                                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[panName + itemCurr]);
+                                _controlName = panName + itemCurr;
 
                                 var textboxPic = new Guna2PictureBox();
                                 mainPanelTxt.Controls.Add(textboxPic);
@@ -891,8 +889,10 @@ namespace FlowSERVER1
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
 
-                                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(getName, form1.label5.Text, "upload_info_directory", panName + itemCurr,label1.Text,_fileSize: fileSizeInMB).ShowDialog());
+                                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(getName, form1.label5.Text, "upload_info_directory", _controlName, label1.Text, _fileSize: fileSizeInMB).ShowDialog());
                                 _setupUploadAlertThread.Start();
+
+                                Application.DoEvents();
 
                                 if (nameTable == "file_info") {
                                     startSending(keyVal);
@@ -1132,6 +1132,7 @@ namespace FlowSERVER1
                         }
 
                         try {
+
                             if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".svg") {
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);//new Bitmap(open.FileName);
@@ -1139,7 +1140,7 @@ namespace FlowSERVER1
                                 var imgHeight = getImg.Height;
                                 if (retrieved != ".ico") {
                                     Byte[] _getByteImg = File.ReadAllBytes(selectedItems);
-                                    fileSizeInMB = (_getByteImg.Length / 1024) / 1024;
+                                    //fileSizeInMB = (_getByteImg.Length / 1024) / 1024;
                                     String _tempToBase64 = Convert.ToBase64String(_getByteImg);
                                     createPanelMain("file_info", "PanImg", curr, _tempToBase64);
                                 }
@@ -1318,6 +1319,7 @@ namespace FlowSERVER1
 
                 if (_accType == "Max") {
                     if (CurrentUploadCount != 150) {
+
                         _mainFileGenerator(150,"Max");
                     }
                     else {

@@ -35,7 +35,7 @@ namespace FlowSERVER1 {
         private String nameTableInsert;
         private List<String> PropertyMine = new List<String>();
         private List<String> TitlePropertyMine = new List<String>();
-
+        private static String fileInfoTitle = "";
         private BackgroundWorker worker;
         // @ Variables to initialize file upload
 
@@ -1578,7 +1578,8 @@ namespace FlowSERVER1 {
                                 titleLab.Text = getName;
                                 TitlePropertyMine.Add(getName);
 
-                                titlePanelSearch = titleLab;
+                                //titlePanelSearch = titleLab;
+                                fileInfoTitle = titleLab.Text;
 
                                 Guna2Button remButTxt = new Guna2Button();
                                 mainPanelTxt.Controls.Add(remButTxt);
@@ -4938,7 +4939,7 @@ namespace FlowSERVER1 {
         /// <param name="_TableName"></param>
         private void generateSearching(String _tableName, String parameterName, int currItem) {
 
-            Application.DoEvents();
+       //     Application.DoEvents();
 
             flowLayoutPanel1.Controls.Clear();
 
@@ -6080,197 +6081,7 @@ namespace FlowSERVER1 {
         bool _isSearched = false;
         private void guna2TextBox5_TextChanged(object sender, EventArgs e) {
 
-             try {
-
-                /*GetAllControls(flowLayoutPanel1)
-                    .OfType<Label>()
-                    .Where(c => c.Text.IndexOf(guna2TextBox5.Text,
-                    StringComparison.InvariantCultureIgnoreCase) >= 0)
-                    .ToList().ForEach(c => c.Parent.Controls.Remove(c));*/
-
-                int _countCharsLength = guna2TextBox5.Text.Length;
-                String foundValuesFile = guna2TextBox5.Text.ToLower();
-
-                List<String> titleValues = new List<String>();
-                List<String> nameValues = new List<String>();
-
-                /*for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
-                    var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[PropertyMine[i]]);
-
-                    var name = panelF.Controls["titleImgL" + i];
-                    var getTitles = TitlePropertyMine[i].ToLower();
-                    titleValues.Add(getTitles); // name.Text.ToLower()// object references was not set to an object
-                    nameValues.Add(panelF.Name);
-                    MessageBox.Show()
-                }
-
-                for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
-                    var panelToRemove = ((Guna2Panel)flowLayoutPanel1.Controls[nameValues[i]]);
-                    flowLayoutPanel1.Controls.Add(panelToRemove);
-                }*/
-
-                /// @ Return back all files if the user cancelled the file searchin
-                if (_countCharsLength == 0) {
-
-                    Application.DoEvents();
-
-                    if (_isSearched == true) {
-
-                        Thread _showRetrievalAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your files.","").ShowDialog());
-                        _showRetrievalAlert.Start();
-
-                        _isSearched = false;
-
-                        flowLayoutPanel1.Controls.Clear();
-
-                        int _countRow(String _tableName) {
-                            String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                            command = new MySqlCommand(_countRowTable, con);
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            var _totalRow = command.ExecuteScalar();
-                            int totalRowInt = Convert.ToInt32(_totalRow);
-                            return totalRowInt;
-                        }
-
-                        if (_countRow("file_info") > 0) {
-                            //PropertyMine.Add("imgFile");
-                            _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
-                        }
-                        // LOAD .TXT
-                        if (_countRow("file_info_expand") > 0) {
-                            //PropertyMine.Add("txtFile");
-                            _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
-                        }
-                        // LOAD EXE
-                        if (_countRow("file_info_exe") > 0) {
-                            _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
-                        }
-                        // LOAD VID
-                        if (_countRow("file_info_vid") > 0) {
-                            _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_vid"));
-                        }
-                        if (_countRow("file_info_excel") > 0) {
-                            _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
-                        }
-                        if (_countRow("file_info_audi") > 0) {
-                            _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
-                        }
-                        if (_countRow("file_info_gif") > 0) {
-                            _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
-                        }
-                        if (_countRow("file_info_apk") > 0) {
-                            _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
-                        }
-                        if (_countRow("file_info_pdf") > 0) {
-                            _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
-                        }
-                        if (_countRow("file_info_ptx") > 0) {
-                            _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
-                        }
-                        if (_countRow("file_info_msi") > 0) {
-                            _generateUserFiles("file_info_msi", "msiFile", _countRow("file_info_msi"));
-                        }
-                        if (_countRow("file_info_word") > 0) {
-                            _generateUserFiles("file_info_word", "docFile", _countRow("file_info_word"));
-                        }
-                        if (_countRow("file_info_directory") > 0) {
-                            _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
-                        }
-
-                        Application.DoEvents();
-
-                        Application.OpenForms
-                           .OfType<Form>()
-                           .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                           .ToList()
-                           .ForEach(form => form.Close());
-
-                    }
-                    else {
-                        //
-                    }
-                }
-
-
-                /// @ Search for file panel
-                for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
-                    var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[PropertyMine[i]]);
-
-                    var name = panelF.Controls["titleImgL" + i];
-                    var getTitles = TitlePropertyMine[i].ToLower();
-                    titleValues.Add(getTitles.Substring(0,1)); // name.Text.ToLower()// object references was not set to an object
-                    nameValues.Add(panelF.Name);
-                }
-
-                if (titleValues.Contains(foundValuesFile.Substring(0,1)) || titleValues.Contains(foundValuesFile.Substring(0,2))) {
-                    int indexFound = titleValues.FindIndex(a => a.Contains(foundValuesFile));
-                    for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++) {
-                        if (nameValues[i] != nameValues[indexFound]) {//indexFound
-                            _isSearched = true;
-                            var panelToRemove = ((Guna2Panel)flowLayoutPanel1.Controls[nameValues[i]]);
-                            panelToRemove.Visible = false; // ... Controls.Remove(panelToRemove)
-                        } 
-                    }
-                }
-
-                /*for (int i = flowLayoutPanel1.Controls.Count - 1; i >= 0; i--) {
-                        if (flowLayoutPanel1.Controls[i] is Guna2Panel pnl) {
-                            for (int j = pnl.Controls.Count - 1; j >= 0; j--) {
-                                if (pnl.Controls[j] is Label lbl &&
-                                    lbl.Text.IndexOf(guna2TextBox5.Text,
-                                    StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                    //pnl.Controls.Remove(lbl);
-                                    pnl.Dispose();
-                                    // In case you want to remove the Panel:
-                                    //flowLayoutPanel1.Controls.Remove(pnl);
-                                }
-                            }
-                        }
-                    }*/
-
-                    /*if (string.IsNullOrWhiteSpace(guna2TextBox5.Text)) {
-                        foreach (var userControl in flowLayoutPanel1.Controls.OfType<Guna2Panel>()) {
-                            userControl.Visible = true;
-                        }
-                    }
-                    else {
-                        foreach (var userControl in flowLayoutPanel1.Controls.OfType<Guna2Panel>()) {
-                            var controlsMain = ((Guna2Panel)flowLayoutPanel1.Controls[propertymine]);
-                            userControl.Visible = userControl..Contains(guna2TextBox5.Text, StringComparison.OrdinalIgnoreCase);
-                        }
-                    }*/
-
-                
-            } catch (Exception) {
-
-                Application.OpenForms
-               .OfType<Form>()
-               .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-               .ToList()
-               .ForEach(form => form.Close());
-
-                showRedundane();
-
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    showRedundane();
-                }
-                else {
-                    clearRedundane();
-                }
-
-                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-                // MessageBox.Show(eq.Message);
-            }
-
-            /*for(int i=0; i<=flowLayoutPanel1.Controls.Count; i++) {
-                foreach(Control panel in flowLayoutPanel1.Controls) {
-                    Label str = (Label)panel.Controls.Find("LabVidUp " + i, true).FirstOrDefault() as Label;
-                    MessageBox.Show(str.Text);
-                }
-            }*/
-
-            /*String _selectedFolderSearch = listBox1.GetItemText(listBox1.SelectedItem);
+            String _selectedFolderSearch = listBox1.GetItemText(listBox1.SelectedItem);
             flowLayoutPanel1.Controls.Clear();
 
             try {
@@ -6328,7 +6139,7 @@ namespace FlowSERVER1 {
                             generateSearching("file_info_msi", "msiFile", _countRowSearch("file_info_msi"));
                         }
                         if (_countRowSearch("file_info_audi") > 0) {
-                            generateSearching("file_info_audi", "imgFile", _countRowSearch("file_info_audi"));
+                            generateSearching("file_info_audi", "audFile", _countRowSearch("file_info_audi"));
                         }
                         if (_countRowSearch("file_info_directory") > 0) {
                             _generateUserDirectory("file_info_directory", "dirFile", _countRowSearch("file_info_directory"));
@@ -6401,7 +6212,7 @@ namespace FlowSERVER1 {
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
             if (label4.Text == "0") {
                 showRedundane();
-            }*/
+            }
         }
     }
 }
