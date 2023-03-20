@@ -19,9 +19,11 @@ using System.Threading;
 using System.Xml;
 
 namespace FlowSERVER1 {
+
     /// <summary>
     /// Main form class
     /// </summary>
+    
     public partial class Form1 : Form {
 
         private static MySqlConnection con = ConnectionModel.con;
@@ -29,13 +31,9 @@ namespace FlowSERVER1 {
 
         public static Form1 instance;
         public Label setupLabel;
-        public bool stopFileTransaction = false;
         private String CurrentLang = "";
         private Object _getValues;
         private String nameTableInsert;
-        private List<String> PropertyMine = new List<String>();
-        private List<String> TitlePropertyMine = new List<String>();
-        private static String fileInfoTitle = "";
         private BackgroundWorker worker;
 
         // @ Variables to initialize file upload
@@ -72,6 +70,8 @@ namespace FlowSERVER1 {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             // @ Load user data  
+
+            this.TopMost = false;
 
             try {
 
@@ -353,7 +353,6 @@ namespace FlowSERVER1 {
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                 var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
-                PropertyMine.Add(parameterName + i);
 
                 List<string> dateValues = new List<string>();
                 List<string> titleValues = new List<string>();
@@ -405,7 +404,6 @@ namespace FlowSERVER1 {
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = titleValues[i];
-                TitlePropertyMine.Add(titleValues[i]);
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 panelF.Controls.Add(picMain_Q);
@@ -733,7 +731,6 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                     var panelF = ((Guna2Panel)flowLayoutPanel1.Controls["panelf" + i]);
-                    PropertyMine.Add("panelf" + i);
                     List<string> dateValues = new List<string>();
                     List<string> titleValues = new List<string>();
 
@@ -786,7 +783,6 @@ namespace FlowSERVER1 {
                     titleLab.Width = 220;
                     titleLab.Height = 30;
                     titleLab.Text = titleValues[i];
-                    TitlePropertyMine.Add(titleValues[i]);
 
                     Guna2PictureBox picMain_Q = new Guna2PictureBox();
                     panelF.Controls.Add(picMain_Q);
@@ -1553,7 +1549,6 @@ namespace FlowSERVER1 {
                                 top += h_p;
                                 flowLayoutPanel1.Controls.Add(panelTxt);
                                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[panName + itemCurr]);
-                                PropertyMine.Add(panName + itemCurr);
 
                                 var textboxPic = new Guna2PictureBox();
                                 mainPanelTxt.Controls.Add(textboxPic);
@@ -1576,10 +1571,6 @@ namespace FlowSERVER1 {
                                 titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = getName;
-                                TitlePropertyMine.Add(getName);
-
-                                //titlePanelSearch = titleLab;
-                                fileInfoTitle = titleLab.Text;
 
                                 Guna2Button remButTxt = new Guna2Button();
                                 mainPanelTxt.Controls.Add(remButTxt);
@@ -2597,7 +2588,6 @@ namespace FlowSERVER1 {
                 flowLayoutPanel1.Controls.Add(panelVid);
                 var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls["PanExlFold" + _IntCurr]);
                 _controlName = "PanExlFold" + _IntCurr;
-                PropertyMine.Add(_controlName);
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
@@ -2610,7 +2600,6 @@ namespace FlowSERVER1 {
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = _TitleValues[_IntCurr - 1]; // [_IntCurr - 1];
-                TitlePropertyMine.Add(_TitleValues[_IntCurr]);
 
                 // LOAD THUMBNAIL
 
