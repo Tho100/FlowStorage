@@ -11,11 +11,19 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class splashFORM : Form {
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+        private static MySqlConnection con {get; set;} = ConnectionModel.con;
         public splashFORM() {
+
             InitializeComponent();
-            con.Open();
+
+            try {
+
+                con.Open();
+
+            } catch (Exception) {
+                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void splashFORM_Load(object sender, EventArgs e) {

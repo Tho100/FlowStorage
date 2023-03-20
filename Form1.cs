@@ -37,8 +37,8 @@ namespace FlowSERVER1 {
         private List<String> TitlePropertyMine = new List<String>();
         private static String fileInfoTitle = "";
         private BackgroundWorker worker;
-        // @ Variables to initialize file upload
 
+        // @ Variables to initialize file upload
         string get_ex;
         string getName;
         string retrieved;
