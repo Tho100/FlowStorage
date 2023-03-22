@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="7312384">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="7326720">
       <assemblyIdentity name="Flowstorage" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SeFaxi5Ia6oRP2sF8Q6gutuewv1JoaIVKEBrZWToKjE=</dsig:DigestValue>
+        <dsig:DigestValue>ifaocZ1hnwHwp5O0XVc91Q1JH2MpbzUs/qnYA/qXeds=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GQ1FTVINMP9HqSB5tLOrP6LK2ayAWJH33/tK5JwejnM=</dsig:DigestValue>
+        <dsig:DigestValue>sGE6E94r3RE0XtG2WSanJmQV4MQKFsjUmmc9Bd+Mb3g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1062,13 +1062,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Flowstorage.exe.config" size="3918">
+  <file name="Flowstorage.exe.config" size="3917">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>MYWuNqKCbiblovzcjEAmV+s/vU0fVnAcXzwmMyTaVus=</dsig:DigestValue>
+      <dsig:DigestValue>NyMyacTP+s3J7f2c6lzXgIie7jbh7uJqEI55gibCSL8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">

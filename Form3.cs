@@ -1318,9 +1318,9 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Max") {
-                    if (CurrentUploadCount != 150) {
+                    if (CurrentUploadCount != 500) {
 
-                        _mainFileGenerator(150,"Max");
+                        _mainFileGenerator(500,"Max");
                     }
                     else {
                         DisplayError(_accType);
@@ -1328,8 +1328,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Express") {
-                    if (CurrentUploadCount != 500) {
-                        _mainFileGenerator(500,"Express");
+                    if (CurrentUploadCount != 1000) {
+                        _mainFileGenerator(1000, "Express");
                     }
                     else {
                         DisplayError(_accType);
@@ -1337,8 +1337,8 @@ namespace FlowSERVER1
                 }
 
                 if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 1500) {
-                        _mainFileGenerator(1500, "Supreme");
+                    if (CurrentUploadCount != 2000) {
+                        _mainFileGenerator(2000, "Supreme");
                     }
                     else {
                         DisplayError(_accType);

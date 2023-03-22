@@ -71,37 +71,24 @@ namespace FlowSERVER1 {
 
             void setupRedundane() {
 
-                String _selectUser = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
-                command = con.CreateCommand();
-                command.CommandText = _selectUser;
-                command.Parameters.AddWithValue("@email",_getEmail);
+                const string selectUserQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
+                const string selectEmailQuery = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
 
-                List<String> _usernameValues = new List<String>();
-                MySqlDataReader _readUsers = command.ExecuteReader();
-                while(_readUsers.Read()) {
-                    _usernameValues.Add(_readUsers.GetString(0));
-                }
-                _readUsers.Close();
+                using (var command = new MySqlCommand(selectUserQuery, con)) {
+                    command.Parameters.AddWithValue("@email", _getEmail);
+                    var username = command.ExecuteScalar() as string;
 
-                if(_usernameValues.Count() > 0) {
-                    custUsername = _usernameValues[0];
-                }
+                    if (username != null) {
+                        using (var emailCommand = new MySqlCommand(selectEmailQuery, con)) {
+                            emailCommand.Parameters.AddWithValue("@username", username);
+                            var email = emailCommand.ExecuteScalar() as string;
 
-
-                String _selectEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-                command = con.CreateCommand();
-                command.CommandText = _selectEmail;
-                command.Parameters.AddWithValue("@username", custUsername);
-
-                List<String> _emailValues = new List<String>();
-                MySqlDataReader _readEmail = command.ExecuteReader();
-                while (_readEmail.Read()) {
-                    _emailValues.Add(_readEmail.GetString(0));
-                }
-                _readEmail.Close();
-
-                if (_usernameValues.Count() > 0) {
-                    custEmail = _emailValues[0];
+                            if (email != null) {
+                                custUsername = username;
+                                custEmail = email;
+                            }
+                        }
+                    }
                 }
 
                 flowlayout.Controls.Clear();
@@ -112,7 +99,9 @@ namespace FlowSERVER1 {
                 lab8.Visible = false;
                 label4.Visible = false;
                 Form1.instance.guna2Panel7.Visible = false;
+
                 setupTime();
+
                 if (flowlayout.Controls.Count == 0) {
                     Form1.instance.label8.Visible = true;
                     Form1.instance.guna2Button6.Visible = true;
@@ -152,6 +141,7 @@ namespace FlowSERVER1 {
                         pinDecryptionKey = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
                     }
                 }
+
             } catch (Exception) {
                 label4.Visible = true;
             }
@@ -183,30 +173,25 @@ namespace FlowSERVER1 {
                 }
 
                 void _generateUserFolder(String userName,String passUser) {
-                        
-                    _form.listBox1.Items.Add("Home");
-                    _form.listBox1.Items.Add("Shared To Me");
-                    _form.listBox1.Items.Add("Shared Files");
+
+                    String[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
+                    _form.listBox1.Items.AddRange(itemFolder);
                     _form.listBox1.SelectedIndex = 0;
 
-                    List<String> titleValues = new List<String>();
+                    List<String> updatesTitle = new List<String>();
 
-                    String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(getTitles,con);
-                    command = con.CreateCommand();
-                    command.CommandText = getTitles;
-                    command.Parameters.AddWithValue("@username",userName);
-
-                    MySqlDataReader fold_Reader = command.ExecuteReader();
-                    while(fold_Reader.Read()) {
-                        titleValues.Add(fold_Reader.GetString(0));
+                    string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
+                        command.Parameters.AddWithValue("@username", userName);
+                        using (MySqlDataReader fold_Reader = command.ExecuteReader()) {
+                            while (fold_Reader.Read()) {
+                                updatesTitle.Add(fold_Reader.GetString(0));
+                            }
+                        }
                     }
 
-                    fold_Reader.Close();
-
-                    List<String> updatesTitle = titleValues.Distinct().ToList();
-                    for(int iterateTitles=0; iterateTitles<updatesTitle.Count; iterateTitles++) {
-                        _form.listBox1.Items.Add(updatesTitle[iterateTitles]);
+                    foreach (String titleEach in updatesTitle) {
+                        _form.listBox1.Items.Add(titleEach);
                     }
                 }
 

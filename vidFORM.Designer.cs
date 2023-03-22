@@ -124,7 +124,6 @@
             // pictureBox1
             // 
             this.pictureBox1.Enabled = false;
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_paper_plane_100;
             this.pictureBox1.Location = new System.Drawing.Point(117, 11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 50);

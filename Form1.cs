@@ -29,22 +29,22 @@ namespace FlowSERVER1 {
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
 
-        public static Form1 instance;
-        public Label setupLabel;
-        private String CurrentLang = "";
-        private Object _getValues;
-        private String nameTableInsert;
-        private BackgroundWorker worker;
+        public static Form1 instance { get; set;} = new Form1();
+        public Label setupLabel { get; set; }
+        public string CurrentLang { get; private set; }
+        public object _getValues { get; private set; }
+        public string nameTableInsert { get; private set; }
+        public BackgroundWorker worker { get; private set; }
 
-        // @ Variables to initialize file upload
-        string get_ex;
-        string getName;
-        string retrieved;
-        string retrievedName;
-        object keyValMain;
-        long fileSizeInMB;
-        string varDate;
-        string tableName;
+        // Variables to initialize file upload
+        private string get_ex;
+        private string getName;
+        private string retrieved;
+        private string retrievedName;
+        private object keyValMain;
+        private long fileSizeInMB;
+        private string varDate;
+        private string tableName;
 
         public Form1() {
 
@@ -52,26 +52,19 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            Application.OpenForms
-                   .OfType<Form>()
-                   .Where(form => String.Equals(form.Name, "Form4"))
-                   .ToList()
-                   .ForEach(form => form.Close());
+            // Close all instances of Form4 (which randomly opened on startup)
+            var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
+            foreach (var form in form4Instances) {
+                form.Close();
+            }
 
-            // @ Enable double buffering for Form
-
+            // Enable double buffering for the current form
             this.DoubleBuffered = true;
-            this.SetStyle(
-            ControlStyles.AllPaintingInWmPaint |
-            ControlStyles.UserPaint |
-            ControlStyles.DoubleBuffer, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
-            // @ Load user data  
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
 
             this.TopMost = false;
+
+            // @ Load user data  
 
             try {
 
@@ -88,56 +81,51 @@ namespace FlowSERVER1 {
                     if (File.Exists(_getAuth)) {
                         String _UsernameFirst = EncryptionModel.Decrypt(File.ReadLines(_getAuth).First(), "0123456789012345");
                         if (new FileInfo(_getAuth).Length != 0) {
-                            Thread showLoadingForm = new Thread(() => new LoadAlertFORM().ShowDialog());
-                            showLoadingForm.IsBackground = false;
-                            showLoadingForm.Start();
+
+                            new Thread(() =>
+                            {
+                                new LoadAlertFORM().ShowDialog();
+                            }) {
+                                IsBackground = false
+                            }.Start();
 
                             guna2Panel7.Visible = false;
                             label5.Text = _UsernameFirst;
 
                             _getDirectory.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
-                            String getEmails = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-                            command = new MySqlCommand(getEmails, ConnectionModel.con);
-                            command = ConnectionModel.con.CreateCommand();
-                            command.CommandText = getEmails;
-                            command.Parameters.AddWithValue("@username", label5.Text);
-
-                            MySqlDataReader _reader = command.ExecuteReader();
-                            while (_reader.Read()) {
-                                label24.Text = _reader.GetString(0);
+                            string getEmails = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
+                            using (MySqlCommand command = new MySqlCommand(getEmails, con)) {
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                using (MySqlDataReader reader = command.ExecuteReader()) {
+                                    if (reader.Read()) {
+                                        label24.Text = reader.GetString(0);
+                                    }
+                                }
                             }
-                            _reader.Close();
 
-                            setupTime();
-                            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-                            // @ ADD FOLDERS TO LISTBOX
-
-                            listBox1.Items.Add("Home");
-                            listBox1.Items.Add("Shared To Me");
-                            listBox1.Items.Add("Shared Files");
+                            String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
+                            listBox1.Items.AddRange(itemsFolder);
                             listBox1.SelectedIndex = 0;
 
-                            List<String> titleValues = new List<String>();
+                            List<String> updatesTitle = new List<String>();
 
-                            String getTitles = "SELECT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
-                            command = new MySqlCommand(getTitles, ConnectionModel.con);
-                            command = ConnectionModel.con.CreateCommand();
-                            command.CommandText = getTitles;
-
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            MySqlDataReader fold_Reader = command.ExecuteReader();
-                            while (fold_Reader.Read()) {
-                                titleValues.Add(fold_Reader.GetString(0));
+                            string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+                            using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                using (MySqlDataReader fold_Reader = command.ExecuteReader()) {
+                                    while (fold_Reader.Read()) {
+                                        updatesTitle.Add(fold_Reader.GetString(0));
+                                    }
+                                }
                             }
 
-                            fold_Reader.Close();
-
-                            List<String> updatesTitle = titleValues.Distinct().ToList();
-                            for (int iterateTitles = 0; iterateTitles < updatesTitle.Count; iterateTitles++) {
-                                listBox1.Items.Add(updatesTitle[iterateTitles]);
+                            foreach(String titleEach in updatesTitle) {
+                                listBox1.Items.Add(titleEach);
                             }
+
+                            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                            setupTime();
                         }
 
                         getCurrentLang();
@@ -354,21 +342,18 @@ namespace FlowSERVER1 {
 
                 var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
 
-                List<string> dateValues = new List<string>();
-                List<string> titleValues = new List<string>();
+                List<String> dateValues = new List<String>();
+                List<String> titleValues = new List<String>();
 
                 String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(getUpDate, con);
-                command = con.CreateCommand();
-                command.CommandText = getUpDate;
-
-                command.Parameters.AddWithValue("@username", label5.Text);
-                MySqlDataReader readerDate = command.ExecuteReader();
-
-                while (readerDate.Read()) {
-                    dateValues.Add(readerDate.GetString(0));
+                using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    using (MySqlDataReader readerDate = command.ExecuteReader()) {
+                        while (readerDate.Read()) {
+                            dateValues.Add(readerDate.GetString(0));
+                        }
+                    }
                 }
-                readerDate.Close();
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
@@ -381,18 +366,15 @@ namespace FlowSERVER1 {
                 dateLab.Text = dateValues[i];
 
                 String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(getTitleQue, con);
-                command = con.CreateCommand();
-                command.CommandText = getTitleQue;
-
-                command.Parameters.AddWithValue("@username", label5.Text);
-
-                MySqlDataReader titleReader = command.ExecuteReader();
-                while (titleReader.Read()) {
-                    titleValues.Add(titleReader.GetString(0));
+                using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    using (MySqlDataReader titleReader = command.ExecuteReader()) {
+                        while (titleReader.Read()) {
+                            titleValues.Add(titleReader.GetString(0));
+                        }
+                    }
                 }
-                titleReader.Close();
-
+            
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
                 titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
@@ -1341,44 +1323,6 @@ namespace FlowSERVER1 {
             return fileData;
         }
 
-        private void InsertMainData(Object sender, DoWorkEventArgs e) {
-
-            String insertTxtQuery = "INSERT INTO " + nameTableInsert + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
-            command = new MySqlCommand(insertTxtQuery, con);
-
-            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-
-            command.Parameters["@CUST_FILE_PATH"].Value = getName;
-            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-            command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
-            command.Parameters["@CUST_FILE"].Value = _getValues;
-            command.Prepare();
-            command.ExecuteNonQuery();
-            command.Dispose();
-        }
-
-        private void CompletedInsertion(Object sender, RunWorkerCompletedEventArgs e) {
-            if(e.Cancelled) {
-                MessageBox.Show("CANCELLED");
-            } else if (e.Error != null) {
-                MessageBox.Show("ERROR");
-            } else {
-                worker.WorkerSupportsCancellation = true;
-                worker.WorkerReportsProgress = true;
-
-                Application.OpenForms
-                 .OfType<Form>()
-                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                 .ToList()
-                 .ForEach(form => form.Close());
-
-            }
-        }
-
         /// <summary>
         /// 
         /// This function will opens a file dialog and 
@@ -1508,30 +1452,18 @@ namespace FlowSERVER1 {
 
                             if (fileSizeInMB < 1500) {
 
-                                String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
-                                command = new MySqlCommand(insertTxtQuery, con);
-
-                                command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                                command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-                                command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                                command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-
-                                command.Parameters["@CUST_FILE_PATH"].Value = getName;
-                                command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                                command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
                                 void startSending(Object setValue) {
+                                    String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
+                                    using (var command = new MySqlCommand(insertTxtQuery, con)) {
+                                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = getName;
+                                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
+                                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
+                                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
+                                        command.ExecuteNonQuery();    
+                                    }
 
-                                    command.Parameters["@CUST_FILE"].Value = setValue;
-                                    command.Prepare();
-                                    command.ExecuteNonQuery();
-                                    command.Dispose();
+                                    Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
 
-                                    Application.OpenForms
-                                     .OfType<Form>()
-                                     .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                     .ToList()
-                                     .ForEach(form => form.Close());
                                 }
 
                                 int top = 275;
@@ -2046,15 +1978,6 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Max") {
-                        if (CurrentUploadCount != 150) {
-                            _mainFileGenerator(150, _accType);
-                        }
-                        else {
-                            DisplayError(_accType);
-                        }
-                    }
-
-                    if (_accType == "Express") {
                         if (CurrentUploadCount != 500) {
                             _mainFileGenerator(500, _accType);
                         }
@@ -2063,9 +1986,18 @@ namespace FlowSERVER1 {
                         }
                     }
 
+                    if (_accType == "Express") {
+                        if (CurrentUploadCount != 1000) {
+                            _mainFileGenerator(1000, _accType);
+                        }
+                        else {
+                            DisplayError(_accType);
+                        }
+                    }
+
                     if (_accType == "Supreme") {
-                        if (CurrentUploadCount != 1500) {
-                            _mainFileGenerator(1500, _accType);
+                        if (CurrentUploadCount != 2000) {
+                            _mainFileGenerator(2000, _accType);
                         }
                         else {
                             DisplayError(_accType);
@@ -2130,18 +2062,19 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
 
-            Thread _showRetrievalAlert = new Thread(() => new settingsAlert().ShowDialog());
-            _showRetrievalAlert.Start();
+            Task.Run(() => new settingsAlert().ShowDialog());
 
-            remAccFORM _RemAccShow = new remAccFORM(label5.Text,label24.Text);
-            _RemAccShow.Show();
+            var remAccShow = new remAccFORM(label5.Text, label24.Text);
+            remAccShow.Show();
 
-            Application.OpenForms
-            .OfType<Form>()
-            .Where(form => String.Equals(form.Name, "settingsAlert"))
-            .ToList()
-            .ForEach(form => form.Close());
+            var settingsAlertForms = Application.OpenForms
+                .OfType<Form>()
+                .Where(form => form.Name == "settingsAlert")
+                .ToList();
 
+            foreach (var form in settingsAlertForms) {
+                form.Close();
+            }
         }
 
         private void label4_Click(object sender, EventArgs e) {
@@ -2282,7 +2215,6 @@ namespace FlowSERVER1 {
 
                 List<String> userExists = new List<String>();
                 List<String> emailExists = new List<String>();
-                List<String> accTypeExists = new List<String>();
 
                 MySqlDataReader userReader = command.ExecuteReader();
                 while (userReader.Read()) {
@@ -2302,18 +2234,7 @@ namespace FlowSERVER1 {
                 }
                 emailReader.Close();
 
-                String verifyAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-                command = con.CreateCommand();
-                command.CommandText = verifyAccType;
-                command.Parameters.AddWithValue("@username", _getUser);
-
-                MySqlDataReader accTypeReader = command.ExecuteReader();
-                while (accTypeReader.Read()) {
-                    accTypeExists.Add(accTypeReader.GetString(0));
-                }
-                accTypeReader.Close();
-
-                if (emailExists.Count() >= 1 || userExists.Count() >= 1 || accTypeExists.Count() >= 1) {
+                if (emailExists.Count() >= 1 || userExists.Count() >= 1) {
                     if (emailExists.Count() >= 1) {
                         label22.Visible = true;
                         label22.Text = "Email already exists.";
@@ -2328,7 +2249,7 @@ namespace FlowSERVER1 {
                     label12.Visible = false;
                     label11.Visible = false;
 
-                    if(!(_getPass.Contains("!") || _getPass.Contains("!"))) {
+                    if (!(_getPass.Contains("!") || _getPass.Contains("!"))) {
                         if(!(_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%"))) {
                             if(!String.IsNullOrEmpty(_getPin)) {
                             if(_getPin.Length == 3) {
@@ -2359,35 +2280,56 @@ namespace FlowSERVER1 {
                                                         var _encryptTok = EncryptionModel.Encrypt(_removeSpaces, "0123456789085746");
                                                         String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                                                        String _InsertUser = "INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK) VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
-                                                        command = new MySqlCommand(_InsertUser, con);
-                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                        command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
-                                                        command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                        command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
-                                                        command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
-                                                        command.ExecuteNonQuery();
+                                                        using (var transaction = con.BeginTransaction()) {
 
-                                                        String _InsertType = "INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE) VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                                                        command = new MySqlCommand(_InsertType, con);
-                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                        command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                        command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                                                        command.ExecuteNonQuery();
+                                                            try {
 
-                                                        String _InsertLang = "INSERT INTO lang_info(CUST_USERNAME,CUST_LANG) VALUES(@CUST_USERNAME,@CUST_LANG)";
-                                                        command = new MySqlCommand(_InsertLang, con);
-                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                        command.Parameters.AddWithValue("@CUST_LANG", "US");
-                                                        command.ExecuteNonQuery();
+                                                                MySqlCommand command = con.CreateCommand();
 
-                                                        String _InsertSharing = "INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS) VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
-                                                        command = new MySqlCommand(_InsertSharing, con);
-                                                        command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                        command.Parameters.AddWithValue("@DISABLED", "0");
-                                                        command.Parameters.AddWithValue("@SET_PASS", "DEF");
-                                                        command.ExecuteNonQuery();
+                                                                // Insert user information
+                                                                command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK)
+                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
+                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                                command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
+                                                                command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                                                                command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                                                command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
+                                                                command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
+                                                                command.ExecuteNonQuery();
+
+                                                                // Insert customer type
+                                                                command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
+                            VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                                                                command.Parameters.Clear();
+                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                                command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                                                                command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                                                                command.ExecuteNonQuery();
+
+                                                                // Insert customer language
+                                                                command.CommandText = @"INSERT INTO lang_info(CUST_USERNAME,CUST_LANG)
+                            VALUES(@CUST_USERNAME,@CUST_LANG)";
+                                                                command.Parameters.Clear();
+                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                                command.Parameters.AddWithValue("@CUST_LANG", "US");
+                                                                command.ExecuteNonQuery();
+
+                                                                // Insert customer sharing info
+                                                                command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS)
+                            VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
+                                                                command.Parameters.Clear();
+                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                                                                command.Parameters.AddWithValue("@DISABLED", "0");
+                                                                command.Parameters.AddWithValue("@SET_PASS", "DEF");
+                                                                command.ExecuteNonQuery();
+
+                                                                // Commit transaction
+                                                                transaction.Commit();
+                                                            }
+                                                            catch (Exception) {
+                                                                transaction.Rollback();
+                                                            }
+                                                        }
 
                                                         setupAutoLogin(_getUser);
 
@@ -2402,11 +2344,8 @@ namespace FlowSERVER1 {
                                                         getCurrentLang();
                                                         setupTime();
 
-                                                        listBox1.Items.Add("Home");
-                                                        listBox1.Items.Add("Shared To Me");
-                                                        listBox1.Items.Add("Shared Files");
-
-
+                                                        String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
+                                                        listBox1.Items.AddRange(itemsFolder);
                                                         listBox1.SelectedIndex = 0;
                                                     }
                                                     else {
@@ -2453,7 +2392,7 @@ namespace FlowSERVER1 {
                         label12.Visible = true;
                         label12.Text = "Special characters is not allowed.";
                     }
-                } 
+                }
             }
             catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2947,7 +2886,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Max") {
-                        if (_numberOfFiles <= 120) {
+                        if (_numberOfFiles <= 500) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2959,7 +2898,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Express") {
-                        if (_numberOfFiles <= 500) {
+                        if (_numberOfFiles <= 1000) {
                             flowLayoutPanel1.Controls.Clear();
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2973,7 +2912,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (_accType == "Supreme") {
-                        if (_numberOfFiles <= 1500) {
+                        if (_numberOfFiles <= 2000) {
                             listBox1.Items.Add(_getDirTitle);
                             folderDialog(_getDirPath, _getDirTitle, _TitleValues);
                             var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
@@ -3046,7 +2985,6 @@ namespace FlowSERVER1 {
 
         public List<String> _TypeValuesOthers = new List<String>();
         public List<String> _TypeValues = new List<String>();
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
 
             try {
@@ -3125,11 +3063,13 @@ namespace FlowSERVER1 {
                     else {
                         clearRedundane();
                     }
+                   
 
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 }
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
+
                     guna2Button19.Visible = true;
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
@@ -4928,9 +4868,9 @@ namespace FlowSERVER1 {
         /// <param name="_TableName"></param>
         private void generateSearching(String _tableName, String parameterName, int currItem) {
 
-       //     Application.DoEvents();
+            //Application.DoEvents();
 
-            flowLayoutPanel1.Controls.Clear();
+            //flowLayoutPanel1.Controls.Clear();
 
             for (int i = 0; i < currItem; i++) {
                 int top = 275;
@@ -5325,6 +5265,7 @@ namespace FlowSERVER1 {
 
             var form1 = Form1.instance;
             List<String> typeValues = new List<String>(_extTypes);
+
             for (int q = 0; q < itemCurr; q++) {
                 int top = 275;
                 int h_p = 100;
@@ -6202,6 +6143,10 @@ namespace FlowSERVER1 {
             if (label4.Text == "0") {
                 showRedundane();
             }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

@@ -39,134 +39,146 @@ namespace FlowSERVER1 {
         public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername) {
             InitializeComponent();
 
-            String _getName = "";
-            bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
+            try {
 
-            if (_isShared == true) {
-                _getName = _UploaderUsername;
-            }
-            else {
-                _getName = "Uploaded By " + _UploaderUsername;
-            }
+                String _getName = "";
+                bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
 
-            instance = this;
-            label1.Text = fileName;
-            label2.Text = _getName;
-            var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
-
-            if (tableName == "upload_info_directory" & getText == "") {
-
-                string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                command = new MySqlCommand(getTxtQue, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
-                command.Parameters.AddWithValue("@dirname",Form3.instance.label1.Text);
-                List<string> textValuesF = new List<string>();
-
-                MySqlDataReader txtReader = command.ExecuteReader();
-                while (txtReader.Read()) {
-                    textValuesF.Add(txtReader.GetString(0));
+                if (_isShared == true) {
+                    _getName = _UploaderUsername;
                 }
-                txtReader.Close();
-
-                var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]);
-                richTextBox1.Text = decryptValueKey;
-                if (FileExt_ == ".py") {
-                    pythonSyntax();
-                }
-                if (FileExt_ == ".html") {
-                    htmlSyntax();
-                }
-                if (FileExt_ == ".css") {
-                    cssSyntax();
+                else {
+                    _getName = "Uploaded By " + _UploaderUsername;
                 }
 
-            } else if (getText == "" && tableName == "folder_upload_info") {
-                String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                command = new MySqlCommand(retrieveImg, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
-                command.Parameters.AddWithValue("@filename",fileName);
+                instance = this;
+                label1.Text = fileName;
+                label2.Text = _getName;
+                var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
-                List<String> textValues_ = new List<String>();
+                if (tableName == "upload_info_directory" & getText == "") {
 
-                MySqlDataReader _ReadTexts = command.ExecuteReader();
-                while (_ReadTexts.Read()) {
-                    textValues_.Add(_ReadTexts.GetString(0));
-                }
-                _ReadTexts.Close();
-                var getMainText = EncryptionModel.DecryptText(textValues_[0]);
-                richTextBox1.Text = getMainText;
-                if (FileExt_ == ".py") {
-                    pythonSyntax();
-                }
-                if (FileExt_ == ".html") {
-                    htmlSyntax();
-                }
-                if (FileExt_ == ".css") {
-                    cssSyntax();
-                }
-                if (FileExt_ == ".js") {
-                    jsSyntax();
-                }
-            } else if (tableName == "file_info_expand"){
+                    string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command = new MySqlCommand(getTxtQue, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
+                    command.Parameters.AddWithValue("@dirname",Form3.instance.label1.Text);
+                    List<string> textValuesF = new List<string>();
 
-                string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                command = new MySqlCommand(getTxtQue,con);
-                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename",label1.Text);
+                    MySqlDataReader txtReader = command.ExecuteReader();
+                    while (txtReader.Read()) {
+                        textValuesF.Add(txtReader.GetString(0));
+                    }
+                    txtReader.Close();
+
+                    var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]);
+                    richTextBox1.Text = decryptValueKey;
+                    if (FileExt_ == ".py") {
+                        pythonSyntax();
+                    }
+                    if (FileExt_ == ".html") {
+                        htmlSyntax();
+                    }
+                    if (FileExt_ == ".css") {
+                        cssSyntax();
+                    }
+
+                } else if (getText == "" && tableName == "folder_upload_info") {
+                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(retrieveImg, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
+                    command.Parameters.AddWithValue("@filename",fileName);
+
+                    List<String> textValues_ = new List<String>();
+
+                    MySqlDataReader _ReadTexts = command.ExecuteReader();
+                    while (_ReadTexts.Read()) {
+                        textValues_.Add(_ReadTexts.GetString(0));
+                    }
+                    _ReadTexts.Close();
+                    var getMainText = EncryptionModel.DecryptText(textValues_[0]);
+                    richTextBox1.Text = getMainText;
+                    if (FileExt_ == ".py") {
+                        pythonSyntax();
+                    }
+                    if (FileExt_ == ".html") {
+                        htmlSyntax();
+                    }
+                    if (FileExt_ == ".css") {
+                        cssSyntax();
+                    }
+                    if (FileExt_ == ".js") {
+                        jsSyntax();
+                    }
+                } else if (tableName == "file_info_expand") {
+
+                    string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(getTxtQue,con);
+                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename",label1.Text);
             
-                var textValuesF = "";
+                    var textValuesF = "";
                 
-                MySqlDataReader txtReader = command.ExecuteReader();
-                while(txtReader.Read()) {
-                    textValuesF = txtReader.GetString(0);
-                }
-                txtReader.Close();
+                    MySqlDataReader txtReader = command.ExecuteReader();
+                    while(txtReader.Read()) {
+                        textValuesF = txtReader.GetString(0);
+                    }
+                    txtReader.Close();
 
-                var decryptTextValues = EncryptionModel.DecryptText(textValuesF);
-                richTextBox1.Text = decryptTextValues;
+                    var decryptTextValues = EncryptionModel.DecryptText(textValuesF);
+                    richTextBox1.Text = decryptTextValues;
 
-                if (FileExt_ == ".py") {
-                    pythonSyntax();
-                }
-                if (FileExt_ == ".html") {
-                    htmlSyntax();
-                }
-                if(FileExt_ == ".css") {
-                    cssSyntax();
-                }
-                if(FileExt_ == ".js") {
-                    jsSyntax();
-                }
-            } else if (tableName == "cust_sharing") {
-                string getTxtQue = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                command = new MySqlCommand(getTxtQue, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                    if (FileExt_ == ".py") {
+                        pythonSyntax();
+                    }
+                    if (FileExt_ == ".html") {
+                        htmlSyntax();
+                    }
+                    if(FileExt_ == ".css") {
+                        cssSyntax();
+                    }
+                    if(FileExt_ == ".js") {
+                        jsSyntax();
+                    }
+                } else if (tableName == "cust_sharing") {
+                    string getTxtQue = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    command = new MySqlCommand(getTxtQue, con);
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@filename", label1.Text);
 
-                List<string> textValuesF = new List<string>();
+                    List<string> textValuesF = new List<string>();
 
-                MySqlDataReader txtReader = command.ExecuteReader();
-                while (txtReader.Read()) {
-                    textValuesF.Add(txtReader.GetString(0));
-                }
-                txtReader.Close();
+                    MySqlDataReader txtReader = command.ExecuteReader();
+                    while (txtReader.Read()) {
+                        textValuesF.Add(txtReader.GetString(0));
+                    }
+                    txtReader.Close();
 
-                var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]); //, "TXTCONTS01947265"
-                richTextBox1.Text = decryptValueKey;
-                if (FileExt_ == ".py") {
-                    pythonSyntax();
+                    var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]); //, "TXTCONTS01947265"
+                    richTextBox1.Text = decryptValueKey;
+                    if (FileExt_ == ".py") {
+                        pythonSyntax();
+                    }
+                    if (FileExt_ == ".html") {
+                        htmlSyntax();
+                    }
+                    if (FileExt_ == ".css") {
+                        cssSyntax();
+                    }
+                    if (FileExt_ == ".js") {
+                        jsSyntax();
+                    }
                 }
-                if (FileExt_ == ".html") {
-                    htmlSyntax();
-                }
-                if (FileExt_ == ".css") {
-                    cssSyntax();
-                }
-                if (FileExt_ == ".js") {
-                    jsSyntax();
-                }
+            } catch (Exception) {
+
+                Application.OpenForms
+                .OfType<Form>()
+                .Where(form => String.Equals(form.Name, "SheetRetrieval"))
+                .ToList()
+                .ForEach(form => form.Close());
+
+                MessageBox.Show("Cannot load this file. There's an ongoing upload.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
