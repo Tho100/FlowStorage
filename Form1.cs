@@ -713,22 +713,20 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                     var panelF = ((Guna2Panel)flowLayoutPanel1.Controls["panelf" + i]);
-                    List<string> dateValues = new List<string>();
-                    List<string> titleValues = new List<string>();
 
-                    String getUpDate = "SELECT UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-                    command = new MySqlCommand(getUpDate, con);
-                    command = con.CreateCommand();
-                    command.CommandText = getUpDate;
+                    List<String> dateValues = new List<String>();
+                    List<String> titleValues = new List<String>();
 
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@foldername", _foldTitle);
-                    MySqlDataReader readerDate = command.ExecuteReader();
+                    using (var command = new MySqlCommand("SELECT UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername", con)) {
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@foldername", _foldTitle);
 
-                    while (readerDate.Read()) {
-                        dateValues.Add(readerDate.GetString(0));
+                        using (var readerDate = command.ExecuteReader()) {
+                            while (readerDate.Read()) {
+                                dateValues.Add(readerDate.GetString("UPLOAD_DATE"));
+                            }
+                        }
                     }
-                    readerDate.Close();
 
                     Label dateLab = new Label();
                     panelF.Controls.Add(dateLab);
@@ -740,19 +738,16 @@ namespace FlowSERVER1 {
                     dateLab.Location = new Point(12, 208);
                     dateLab.Text = dateValues[i];
 
-                    String getTitleQue = "SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-                    command = new MySqlCommand(getTitleQue, con);
-                    command = con.CreateCommand();
-                    command.CommandText = getTitleQue;
+                    using (var command = new MySqlCommand("SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername", con)) {
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@foldername", _foldTitle);
 
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@foldername", _foldTitle);
-
-                    MySqlDataReader titleReader = command.ExecuteReader();
-                    while (titleReader.Read()) {
-                        titleValues.Add(titleReader.GetString(0));
+                        using (var readerTitle = command.ExecuteReader()) {
+                            while (readerTitle.Read()) {
+                                titleValues.Add(readerTitle.GetString("CUST_FILE_PATH"));
+                            }
+                        }
                     }
-                    titleReader.Close();
 
                     Label titleLab = new Label();
                     panelF.Controls.Add(titleLab);
