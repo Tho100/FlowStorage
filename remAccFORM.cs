@@ -971,7 +971,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
                 Form_1.label29.Text = "Lain-lain";
-                Form_1.guna2Button3.Text = "Tambah Akaun";
+                Form_1.guna2Button3.Text = "Log Masuk";
                 Form_1.guna2Button5.Text = "Tetapan";
                 Form_1.label2.Text = "Kiraan Item";
             }

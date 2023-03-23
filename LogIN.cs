@@ -110,29 +110,24 @@ namespace FlowSERVER1 {
 
             //////////////////// DECRYPTION AND ENCRYPTION
 
-
-            String _valueToReturn = "";
             String returnValues(String _WhichColumn) {
 
-                List<String> _concludeValue = new List<String>();
+                List<String> concludeValue = new List<String>();
 
-                String checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_EMAIL = @email";
-                command = new MySqlCommand(checkPassword_Query, con);
-                command = ConnectionModel.con.CreateCommand();
-                command.CommandText = checkPassword_Query;
-                command.Parameters.AddWithValue("@email", _getEmail);
-                MySqlDataReader readerPass_ = command.ExecuteReader();
-
-                while (readerPass_.Read()) {
-                    _concludeValue.Add(readerPass_.GetString(0));
+                String checkPasswordQuery = $"SELECT {_WhichColumn} FROM information WHERE CUST_EMAIL = @email";
+                using (MySqlCommand command = new MySqlCommand(checkPasswordQuery, con)) {
+                    command.Parameters.AddWithValue("@email", _getEmail);
+                    using (MySqlDataReader readerPass = command.ExecuteReader()) {
+                        while (readerPass.Read()) {
+                            concludeValue.Add(readerPass.GetString(0));
+                        }
+                    }
                 }
-                readerPass_.Close();
-                if(_concludeValue[0] != "") {
-                    _valueToReturn = _concludeValue[0];
-                } 
-                return _valueToReturn;
+
+                String valueToReturn = concludeValue.FirstOrDefault();
+                return valueToReturn ?? string.Empty;
             }
-           
+
             try {
 
                 if(EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746") != "") {
@@ -180,7 +175,7 @@ namespace FlowSERVER1 {
 
                     List<String> updatesTitle = new List<String>();
 
-                    string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+                    String getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
                         command.Parameters.AddWithValue("@username", userName);
                         using (MySqlDataReader fold_Reader = command.ExecuteReader()) {
@@ -217,20 +212,19 @@ namespace FlowSERVER1 {
 
                         var panelF = ((Guna2Panel)_form.flowLayoutPanel1.Controls["ABC02" + i]);
 
-                        List<string> dateValues = new List<string>();
-                        List<string> titleValues = new List<string>();
+                        List<String> dateValues = new List<String>();
+                        List<String> titleValues = new List<String>();
 
                         String getUpDate = "SELECT UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(getUpDate, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getUpDate;
-                        command.Parameters.AddWithValue("@username", userName);
+                        using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
+                            command.Parameters.AddWithValue("@username", userName);
 
-                        MySqlDataReader readerDate = command.ExecuteReader();
-                        while (readerDate.Read()) {
-                            dateValues.Add(readerDate.GetString(0));
+                            using (MySqlDataReader readerDate = command.ExecuteReader()) {
+                                while (readerDate.Read()) {
+                                    dateValues.Add(readerDate.GetString(0));
+                                }
+                            }
                         }
-                        readerDate.Close();
 
                         Label dateLab = new Label();
                         panelF.Controls.Add(dateLab);
@@ -242,17 +236,16 @@ namespace FlowSERVER1 {
                         dateLab.Location = new Point(12, 208);
                         dateLab.Text = dateValues[i];
 
-                        String getTitleQue = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(getTitleQue, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getTitleQue;
-                        command.Parameters.AddWithValue("@username", userName);
+                        String getTitleDir = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
+                        using (MySqlCommand command = new MySqlCommand(getTitleDir, con)) {
+                            command.Parameters.AddWithValue("@username", userName);
 
-                        MySqlDataReader titleReader = command.ExecuteReader();
-                        while (titleReader.Read()) {
-                            titleValues.Add(titleReader.GetString(0));
+                            using (MySqlDataReader readerTitle = command.ExecuteReader()) {
+                                while (readerTitle.Read()) {
+                                    titleValues.Add(readerTitle.GetString(0));
+                                }
+                            }
                         }
-                        titleReader.Close();
 
                         Label titleLab = new Label();
                         panelF.Controls.Add(titleLab);
@@ -356,21 +349,18 @@ namespace FlowSERVER1 {
 
                         var panelF = ((Guna2Panel)_form.flowLayoutPanel1.Controls[parameterName + i]);
 
-                        List<string> dateValues = new List<string>();
-                        List<string> titleValues = new List<string>();
+                        List<String> dateValues = new List<String>();
+                        List<String> titleValues = new List<String>();
 
                         String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(getUpDate, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getUpDate;
-
-                        command.Parameters.AddWithValue("@username", _form.label5.Text);
-                        MySqlDataReader readerDate = command.ExecuteReader();
-
-                        while (readerDate.Read()) {
-                            dateValues.Add(readerDate.GetString(0));
+                        using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
+                            command.Parameters.AddWithValue("@username", _form.label5.Text);
+                            using (MySqlDataReader readerDate = command.ExecuteReader()) {
+                                while (readerDate.Read()) {
+                                    dateValues.Add(readerDate.GetString(0));
+                                }
+                            }
                         }
-                        readerDate.Close();
 
                         Label dateLab = new Label();
                         panelF.Controls.Add(dateLab);
@@ -383,17 +373,14 @@ namespace FlowSERVER1 {
                         dateLab.Text = dateValues[i];
 
                         String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(getTitleQue, con);
-                        command = con.CreateCommand();
-                        command.CommandText = getTitleQue;
-
-                        command.Parameters.AddWithValue("@username", _form.label5.Text);
-
-                        MySqlDataReader titleReader = command.ExecuteReader();
-                        while (titleReader.Read()) {
-                            titleValues.Add(titleReader.GetString(0));
+                        using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
+                            command.Parameters.AddWithValue("@username", _form.label5.Text);
+                            using (MySqlDataReader titleReader = command.ExecuteReader()) {
+                                while (titleReader.Read()) {
+                                    titleValues.Add(titleReader.GetString(0));
+                                }
+                            }
                         }
-                        titleReader.Close();
 
                         Label titleLab = new Label();
                         panelF.Controls.Add(titleLab);
@@ -465,12 +452,26 @@ namespace FlowSERVER1 {
                         var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
                         if (_tableName == "file_info") {
-                            MySqlDataAdapter da = new MySqlDataAdapter(command);
-                            DataSet ds = new DataSet();
 
-                            da.Fill(ds);
-                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i][0]);
-                            img.Image = new Bitmap(ms);
+                            List<string> base64Encoded = new List<string>();
+
+                            string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                                    while (readBase64.Read()) {
+                                        base64Encoded.Add(readBase64.GetString(0));
+                                    }
+                                }
+                            }
+
+                            if (base64Encoded.Count > i) {
+                                byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                                using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                                    img.Image = new Bitmap(toMs);
+                                }
+                            }
+
 
                             picMain_Q.Click += (sender, e) => {
                                 var getImgName = (Guna2PictureBox)sender;
@@ -537,17 +538,25 @@ namespace FlowSERVER1 {
                         }
 
                         if (_tableName == "file_info_vid") {
-                                
-                            String getImgQue = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username";
-                            command = new MySqlCommand(getImgQue, con);
-                            command.Parameters.AddWithValue("@username", _form.label5.Text);
 
-                            MySqlDataAdapter da = new MySqlDataAdapter(command);
-                            DataSet ds = new DataSet();
+                            List<string> base64Encoded = new List<string>();
 
-                            da.Fill(ds);
-                            MemoryStream ms = new MemoryStream((byte[])ds.Tables[0].Rows[i]["CUST_THUMB"]);
-                            img.Image = new Bitmap(ms);
+                            string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                                    while (readBase64.Read()) {
+                                        base64Encoded.Add(readBase64.GetString(0));
+                                    }
+                                }
+                            }
+
+                            if (base64Encoded.Count > i) {
+                                byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                                using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                                    img.Image = new Bitmap(toMs);
+                                }
+                            }
 
                             picMain_Q.Click += (sender_vq, e_vq) => {
                                 var getImgName = (Guna2PictureBox)sender_vq;
@@ -725,12 +734,12 @@ namespace FlowSERVER1 {
                 }
 
                 int _countRow(String _tableName) {
-                    String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(_countRowTable, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    var _totalRow = command.ExecuteScalar();
-                    int totalRowInt = Convert.ToInt32(_totalRow);
-                    return totalRowInt;
+                    String countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        int totalRowInt = Convert.ToInt32(command.ExecuteScalar());
+                        return totalRowInt;
+                    }
                 }
 
                 // LOAD IMG

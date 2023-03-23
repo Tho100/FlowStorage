@@ -447,21 +447,25 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "file_info") {
 
-                    List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    
-                    MySqlDataReader _readBase64 = command.ExecuteReader();
-                    while(_readBase64.Read()) {
-                        _base64Encoded.Add(_readBase64.GetString(0));
+                    List<string> base64Encoded = new List<string>();
+
+                    string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                            while (readBase64.Read()) {
+                                base64Encoded.Add(readBase64.GetString(0));
+                            }
+                        }
                     }
-                    _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
-                    MemoryStream _toMs = new MemoryStream(_getBytes);
+                    if (base64Encoded.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            img.Image = new Bitmap(toMs);
+                        }
+                    }
 
-                    img.Image = new Bitmap(_toMs);
                     picMain_Q.Click += (sender, e) => {
                         var getImgName = (Guna2PictureBox)sender;
                         var getWidth = getImgName.Image.Width;
@@ -539,21 +543,24 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "file_info_vid") {
 
-                    List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_THUMB FROM  " + _tableName + " WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
+                    List<string> base64Encoded = new List<string>();
 
-                    MySqlDataReader _readBase64 = command.ExecuteReader();
-                    while (_readBase64.Read()) {
-                        _base64Encoded.Add(_readBase64.GetString(0));
+                    string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                            while (readBase64.Read()) {
+                                base64Encoded.Add(readBase64.GetString(0));
+                            }
+                        }
                     }
-                    _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
-                    MemoryStream _toMs = new MemoryStream(_getBytes);
-
-                    img.Image = new Bitmap(_toMs);
+                    if (base64Encoded.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            img.Image = new Bitmap(toMs);
+                        }
+                    }
 
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         var getImgName = (Guna2PictureBox)sender_vq;
@@ -824,21 +831,25 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".png" || typeValues[i] == ".jpg" || typeValues[i] == ".jpeg") {
 
-                        List<String> _base64Encoded = new List<string>();
-                        String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-                        command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@foldername", _foldTitle);
+                        List<string> base64Encoded = new List<string>();
 
-                        MySqlDataReader _readBase64 = command.ExecuteReader();
-                        while (_readBase64.Read()) {
-                            _base64Encoded.Add(_readBase64.GetString(0));
+                        string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@foldtitle", _foldTitle);
+                            using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                                while (readBase64.Read()) {
+                                    base64Encoded.Add(readBase64.GetString(0));
+                                }
+                            }
                         }
-                        _readBase64.Close();
 
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
-                        MemoryStream _toMs = new MemoryStream(_getBytes);
-                        img.Image = new Bitmap(_toMs);
+                        if (base64Encoded.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                                img.Image = new Bitmap(toMs);
+                            }
+                        }
 
                         picMain_Q.Click += (sender, e) => {
                             var getImgName = (Guna2PictureBox)sender;
@@ -923,21 +934,27 @@ namespace FlowSERVER1 {
                     }
 
                     if(typeValues[i] == ".mp4" || typeValues[i] == ".mov" || typeValues[i] == ".webm" || typeValues[i] == ".avi" || typeValues[i] == ".wmv") {
-                        List<String> _base64Encoded = new List<string>();
-                        String retrieveImg = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@foldername", _foldTitle);
-                        command.Parameters.AddWithValue("@filename", titleLab.Text);
 
-                        MySqlDataReader _readBase64 = command.ExecuteReader();
-                        while(_readBase64.Read()) {
-                            _base64Encoded.Add(_readBase64.GetString(0));
+                        List<string> base64Encoded = new List<string>();
+
+                        string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@foldername", _foldTitle);
+                            command.Parameters.AddWithValue("@filename", titleLab.Text);
+                            using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                                while (readBase64.Read()) {
+                                    base64Encoded.Add(readBase64.GetString(0));
+                                }
+                            }
                         }
-                        _readBase64.Close();
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        MemoryStream _toMs = new MemoryStream(_getBytes);
-                        img.Image = new Bitmap(_toMs);
+
+                        //if (base64Encoded.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            img.Image = new Bitmap(toMs);
+                        }
+                        //}
 
                         img.Click += (sender_vid, e_vid) => {
                             var getImgName = (Guna2PictureBox)sender_vid;
