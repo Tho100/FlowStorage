@@ -25,7 +25,7 @@ namespace FlowSERVER1
 
         public Form4() {
             InitializeComponent();
-            this.Text = "Create New Directory Page";
+            this.Text = "Create New Directory";
             instance = this;
         }
         public void Form4_Load(object sender, EventArgs e) {
@@ -219,146 +219,76 @@ namespace FlowSERVER1
         public static int value_Dir = 0;
         public static string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
         public void guna2Button2_Click(object sender, EventArgs e) {
-            var _getFilesCount = Form1.instance.label4.Text;
-            int TotalFiles = Convert.ToInt32(_getFilesCount);
+            String filesCount = Form1.instance.label4.Text;
+            int totalFiles = int.Parse(filesCount);
 
-            String _getAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_getAccType, con);
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            String username = Form1.instance.label5.Text;
 
-            List<String> _types = new List<String>();
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _types.Add(_readType.GetString(0));
+            var command = new MySqlCommand("SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username", con);
+            command.Parameters.AddWithValue("@username", username);
+
+            String accType = "";
+            using (var reader = command.ExecuteReader()) {
+                while (reader.Read()) {
+                    accType = reader.GetString(0);
+                }
             }
-            _readType.Close();
-            String _accType = _types[0];
 
-            String _GetDirTitle = guna2TextBox1.Text;
-            if(_GetDirTitle != String.Empty) {        
-
+            String dirTitle = guna2TextBox1.Text.Trim();
+            if (!String.IsNullOrEmpty(dirTitle)) {
                 try {
+                    var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
+                    countSameDirCommand.Parameters.AddWithValue("@dirname", dirTitle);
+                    int countSameDir = Convert.ToInt32(countSameDirCommand.ExecuteScalar());
 
-                    String _countSameDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname";
-                    command = new MySqlCommand(_countSameDir,con);
-                    command.Parameters.AddWithValue("@dirname",_GetDirTitle);
-                    var _makeRead = command.ExecuteScalar();
-                    int _getCount = Convert.ToInt32(_makeRead);
+                    if (countSameDir < 1) {
+                        var countTotalDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username", con);
+                        countTotalDirCommand.Parameters.AddWithValue("@username", username);
+                        int countTotalDir = Convert.ToInt32(countTotalDirCommand.ExecuteScalar());
 
-                    if(_getCount < 1) {
-
-                        String _countTotalDir = "SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(_countTotalDir,con);
-                        command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                        var _getScalar = command.ExecuteScalar();
-                        int _getValue = Convert.ToInt32(_getScalar);
-
-                        if(_accType == "Supreme") {
-                            if(Convert.ToInt32(_getFilesCount) != 1500) {
-                                if(_getValue != 5) {
-
-                                    value_Dir++;
-                                    generateDir(value_Dir, _GetDirTitle);
-                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
-                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                    command = new MySqlCommand(_insertValues,con);
-                                    command.Parameters.Add("@DIR_NAME",MySqlDbType.Text);
-                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-
-                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                    command.ExecuteNonQuery();
-                                } else {
-                                    DisplayError(_accType);
-                                }
-                            }
+                        int maxFilesCount = 0;
+                        int maxDirCount = 0;
+                        switch (accType) {
+                            case "Supreme":
+                                maxFilesCount = 2000;
+                                maxDirCount = 5;
+                                break;
+                            case "Basic":
+                                maxFilesCount = 20;
+                                maxDirCount = 2;
+                                break;
+                            case "Max":
+                                maxFilesCount = 500;
+                                maxDirCount = 2;
+                                break;
+                            case "Express":
+                                maxFilesCount = 1000;
+                                maxDirCount = 2;
+                                break;
                         }
 
-                        if (_accType == "Basic") {
-                            if(Convert.ToInt32(_getFilesCount) != 20) {
-                                if (_getValue != 2) {
-                          
-                                    value_Dir++;
-                                    generateDir(value_Dir, _GetDirTitle);
-                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+                        if (totalFiles != maxFilesCount && countTotalDir != maxDirCount) {
+                            value_Dir++;
+                            generateDir(value_Dir, dirTitle);
+                            Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                    command = new MySqlCommand(_insertValues, con);
-                                    command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-
-                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                    command.ExecuteNonQuery();
-                                }
-                                else {
-                                    DisplayError(_accType);
-                                }   
-                            } else {
-                                DisplayErrorUpgrade(_accType);
-                            }
+                            var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
+                            insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", dirTitle);
+                            insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
+                            insertValuesCommand.ExecuteNonQuery();
                         }
-
-                        if (_accType == "Max") {
-                            if (Convert.ToInt32(_getFilesCount) != 150) {
-                                if (_getValue != 2) {
-
-                                    value_Dir++;
-                                    generateDir(value_Dir, _GetDirTitle);
-                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
-                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                    command = new MySqlCommand(_insertValues, con);
-                                    command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-
-                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                    command.ExecuteNonQuery();
-                                }
-                                else {
-                                    DisplayError(_accType);
-                                }
-                            } else {
-                                DisplayErrorUpgrade(_accType);
-                            }
+                        else {
+                            DisplayErrorUpgrade(accType);
                         }
-
-                        if (_accType == "Express") {
-                            if (Convert.ToInt32(_getFilesCount) != 500) {
-                                if (_getValue != 2) {
-
-                                    value_Dir++;
-                                    generateDir(value_Dir, _GetDirTitle);
-                                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
-                                    String _insertValues = "INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)";
-                                    command = new MySqlCommand(_insertValues, con);
-                                    command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-
-                                    command.Parameters["@DIR_NAME"].Value = _GetDirTitle;
-                                    command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
-                                    command.ExecuteNonQuery();
-                                }
-                                else {
-                                    DisplayError(_accType);
-                                }
-                            }
-                            else {
-                                DisplayErrorUpgrade(_accType);
-                            }
-                        } 
-                    } else {
-                        MessageBox.Show("Directory with this name already exists","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    }
+                    else {
+                        MessageBox.Show("Directory with this name already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 catch (Exception) {
                     //
                 }
             }
-
         }
         private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
 
