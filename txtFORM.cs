@@ -58,21 +58,24 @@ namespace FlowSERVER1 {
 
                 if (tableName == "upload_info_directory" & getText == "") {
 
-                    string getTxtQue = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                    command = new MySqlCommand(getTxtQue, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
-                    command.Parameters.AddWithValue("@dirname",Form3.instance.label1.Text);
-                    List<string> textValuesF = new List<string>();
+                    string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
-                    MySqlDataReader txtReader = command.ExecuteReader();
-                    while (txtReader.Read()) {
-                        textValuesF.Add(txtReader.GetString(0));
+                    using (var command = new MySqlCommand(getTxtQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", label1.Text);
+                        command.Parameters.AddWithValue("@dirname", Form3.instance.label1.Text);
+
+                        string textValuesF = "";
+                        using (MySqlDataReader reader = command.ExecuteReader()) {
+                            if (reader.Read()) {
+                                textValuesF = reader.GetString(0);
+                            }
+                        }
+
+                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                        richTextBox1.Text = decryptedTextValues;
                     }
-                    txtReader.Close();
 
-                    var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]);
-                    richTextBox1.Text = decryptValueKey;
                     if (FileExt_ == ".py") {
                         pythonSyntax();
                     }
@@ -84,21 +87,26 @@ namespace FlowSERVER1 {
                     }
 
                 } else if (getText == "" && tableName == "folder_upload_info") {
-                    String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
-                    command.Parameters.AddWithValue("@filename",fileName);
 
-                    List<String> textValues_ = new List<String>();
+                    string getTxtQuery = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
-                    MySqlDataReader _ReadTexts = command.ExecuteReader();
-                    while (_ReadTexts.Read()) {
-                        textValues_.Add(_ReadTexts.GetString(0));
+                    using (var command = new MySqlCommand(getTxtQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
+                        command.Parameters.AddWithValue("@filename", fileName);
+
+                        string textValuesF = "";
+                        using (MySqlDataReader reader = command.ExecuteReader()) {
+                            if (reader.Read()) {
+                                textValuesF = reader.GetString(0);
+                            }
+                        }
+
+                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                        richTextBox1.Text = decryptedTextValues;
                     }
-                    _ReadTexts.Close();
-                    var getMainText = EncryptionModel.DecryptText(textValues_[0]);
-                    richTextBox1.Text = getMainText;
+
+
                     if (FileExt_ == ".py") {
                         pythonSyntax();
                     }
@@ -113,21 +121,23 @@ namespace FlowSERVER1 {
                     }
                 } else if (tableName == "file_info_expand") {
 
-                    string getTxtQue = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = new MySqlCommand(getTxtQue,con);
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename",label1.Text);
-            
-                    var textValuesF = "";
-                
-                    MySqlDataReader txtReader = command.ExecuteReader();
-                    while(txtReader.Read()) {
-                        textValuesF = txtReader.GetString(0);
-                    }
-                    txtReader.Close();
+                    string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
 
-                    var decryptTextValues = EncryptionModel.DecryptText(textValuesF);
-                    richTextBox1.Text = decryptTextValues;
+                    using (var command = new MySqlCommand(getTxtQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", label1.Text);
+
+                        string textValuesF = "";
+                        using (MySqlDataReader reader = command.ExecuteReader()) {
+                            if (reader.Read()) {
+                                textValuesF = reader.GetString(0);
+                            }
+                        }
+
+                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                        richTextBox1.Text = decryptedTextValues;
+                    }
+
 
                     if (FileExt_ == ".py") {
                         pythonSyntax();
@@ -141,22 +151,26 @@ namespace FlowSERVER1 {
                     if(FileExt_ == ".js") {
                         jsSyntax();
                     }
+
                 } else if (tableName == "cust_sharing") {
-                    string getTxtQue = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    command = new MySqlCommand(getTxtQue, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", label1.Text);
 
-                    List<string> textValuesF = new List<string>();
+                    string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
 
-                    MySqlDataReader txtReader = command.ExecuteReader();
-                    while (txtReader.Read()) {
-                        textValuesF.Add(txtReader.GetString(0));
+                    using (var command = new MySqlCommand(getTxtQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", label1.Text);
+
+                        string textValuesF = "";
+                        using (MySqlDataReader reader = command.ExecuteReader()) {
+                            if (reader.Read()) {
+                                textValuesF = reader.GetString(0);
+                            }
+                        }
+
+                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                        richTextBox1.Text = decryptedTextValues;
                     }
-                    txtReader.Close();
 
-                    var decryptValueKey = EncryptionModel.DecryptText(textValuesF[0]); //, "TXTCONTS01947265"
-                    richTextBox1.Text = decryptValueKey;
                     if (FileExt_ == ".py") {
                         pythonSyntax();
                     }
@@ -374,7 +388,7 @@ namespace FlowSERVER1 {
                     File.WriteAllText(_OpenDialog.FileName,guna2textbox1.Text);
                 }
             } catch (Exception) {
-                MessageBox.Show("An error occurred while attempting to save file.","Flow Storage",
+                MessageBox.Show("An error occurred while attempting to save file.","Flowstorage",
                     MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }

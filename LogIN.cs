@@ -292,7 +292,7 @@ namespace FlowSERVER1 {
 
                         remBut.Click += (sender_im, e_im) => {
                             var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
                                 String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                                 command = new MySqlCommand(noSafeUpdate, con);
@@ -427,7 +427,7 @@ namespace FlowSERVER1 {
 
                         remBut.Click += (sender_im, e_im) => {
                             var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (verifyDialog == DialogResult.Yes) {
                                 String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                                 command = new MySqlCommand(noSafeUpdate, con);

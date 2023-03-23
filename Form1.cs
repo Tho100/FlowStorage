@@ -949,12 +949,10 @@ namespace FlowSERVER1 {
                             }
                         }
 
-                        //if (base64Encoded.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
                             img.Image = new Bitmap(toMs);
                         }
-                        //}
 
                         img.Click += (sender_vid, e_vid) => {
                             var getImgName = (Guna2PictureBox)sender_vid;
@@ -1366,7 +1364,7 @@ namespace FlowSERVER1 {
                 command = new MySqlCommand(offSqlUpdates, con);
                 command.ExecuteNonQuery();
 
-                String removeQuery = "DELETE FROM " + getDB + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                String removeQuery = $"DELETE FROM {getDB} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(removeQuery, con);
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@filename", fileName);
@@ -1968,18 +1966,21 @@ namespace FlowSERVER1 {
 
                 if(_currentFolder == "Home") {
 
-                    List<String> _types = new List<String>();
-                    String _getAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(_getAccType, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
-
-                    MySqlDataReader readAccType = command.ExecuteReader();
-                    while (readAccType.Read()) {
-                        _types.Add(readAccType.GetString(0));
+                    String _accType = "";
+                    String getAccTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+                    using (var command = new MySqlCommand(getAccTypeQuery, con)) {
+                        command.Parameters.AddWithValue("@username", label5.Text);
+                        List<String> types = new List<String>();
+                        using (var reader = command.ExecuteReader()) {
+                            while (reader.Read()) {
+                                types.Add(reader.GetString(0));
+                            }
+                        }
+                        _accType = types.FirstOrDefault();
                     }
-                    readAccType.Close();
-                    String _accType = _types[0];
+
                     int CurrentUploadCount = Convert.ToInt32(label4.Text);
+
                     if (_accType == "Basic") {
                         if (CurrentUploadCount != 20) {
                             _mainFileGenerator(20, _accType);
@@ -3016,12 +3017,11 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Clear();
 
                     int _countRow(String _tableName) {
-                        String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(_countRowTable, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        var _totalRow = command.ExecuteScalar(); 
-                        int totalRowInt = Convert.ToInt32(_totalRow);
-                        return totalRowInt;
+                        using (var command = con.CreateCommand()) {
+                            command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            return Convert.ToInt32(command.ExecuteScalar());
+                        }
                     }
 
                     if (_countRow("file_info") > 0) {
@@ -5698,24 +5698,22 @@ namespace FlowSERVER1 {
         }
 
         private int _countRowSearch(String _tableName) {
-            String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH LIKE @filename";
-            command = new MySqlCommand(_countRowTable, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-            command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-            var _totalRow = command.ExecuteScalar();
-            int totalRowInt = Convert.ToInt32(_totalRow);
-            return totalRowInt;
+            using (var command = con.CreateCommand()) {
+                command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH LIKE @filename";
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@filename", $"%{guna2TextBox5.Text}%");
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
         }
 
         private void callGeneratorSearch() {
 
             int _countRow(String _tableName) {
-                String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(_countRowTable, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                var _totalRow = command.ExecuteScalar();
-                int totalRowInt = Convert.ToInt32(_totalRow);
-                return totalRowInt;
+                using (var command = con.CreateCommand()) {
+                    command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
             }
 
             if (_countRow("file_info") > 0) {
@@ -5814,28 +5812,18 @@ namespace FlowSERVER1 {
 
 
         private void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e) {
-            String insertQuery = "INSERT INTO " + tableName + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
-            command = new MySqlCommand(insertQuery, con);
+            using (var command = con.CreateCommand()) {
+                command.CommandText = $"INSERT INTO {tableName} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", getName);
+                command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
+                command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
+                command.CommandTimeout = 15000;
 
-            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-
-            command.Parameters["@CUST_FILE_PATH"].Value = getName;
-            command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-            command.Parameters["@UPLOAD_DATE"].Value = varDate;
-            command.Parameters["@CUST_FILE"].Value = keyValMain;
-
-            command.CommandTimeout = 15000;
-            command.Prepare();
-
-            if (command.ExecuteNonQuery() == 1) {
-                Application.OpenForms
-                 .OfType<Form>()
-                 .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                 .ToList()
-                 .ForEach(form => form.Close());
+                if (command.ExecuteNonQuery() == 1) {
+                    var form = Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.Name == "UploadAlrt");
+                    form?.Close();
+                }
             }
         }
 

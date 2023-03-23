@@ -30,16 +30,16 @@ namespace FlowSERVER1
         public static Form3 instance;
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
-        private static String _extName = null;
+        private static string _extName { get; set; }
 
-        private string get_ex;
-        private string getName;
-        private string retrieved;
-        private string retrievedName;
-        private string tableName;
-        private string varDate;
-        private long fileSizeInMB;
-        private object keyValMain;
+        private string get_ex { get; set; }
+        private string getName { get; set; }
+        private string retrieved { get; set; }
+        private string retrievedName { get; set; }
+        private string tableName { get; set; }
+        private string varDate { get; set; }
+        private long fileSizeInMB { get; set; }
+        private object keyValMain { get; set; }
 
         public Form3(String sendTitle_)
         {
@@ -53,142 +53,142 @@ namespace FlowSERVER1
             try {
 
                 int _countRow(String _fileExt) {
-                    String _countRowTable = "SELECT COUNT(CUST_USERNAME) FROM " + "upload_info_directory" + " WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    command = new MySqlCommand(_countRowTable, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
-                    command.Parameters.AddWithValue("@ext", _fileExt);
+                    string countRowTableQuery = "SELECT COUNT(CUST_USERNAME) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                    using (var command = new MySqlCommand(countRowTableQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@dirname", label1.Text);
+                        command.Parameters.AddWithValue("@ext", _fileExt);
 
-                    var _totalRow = command.ExecuteScalar();
-                    int totalRowInt = Convert.ToInt32(_totalRow);
-                    return totalRowInt;
+                        int totalRows = Convert.ToInt32(command.ExecuteScalar());
+                        return totalRows;
+                    }
                 }
 
-                    flowLayoutPanel1.Controls.Clear();
+                flowLayoutPanel1.Controls.Clear();
 
-                    if (_countRow(".png") > 0) {
-                        _extName = ".png";
-                        _generateUserFiles("file_info","imgFilePng",_countRow(".png"));
-                    }
+                if (_countRow(".png") > 0) {
+                    _extName = ".png";
+                    _generateUserFiles("file_info","imgFilePng",_countRow(".png"));
+                }
 
-                    if (_countRow(".jpg") > 0) {
-                        _extName = ".jpg";
-                        _generateUserFiles("file_info", "imgFileJpg", _countRow(".jpg"));
-                    }
+                if (_countRow(".jpg") > 0) {
+                    _extName = ".jpg";
+                    _generateUserFiles("file_info", "imgFileJpg", _countRow(".jpg"));
+                }
 
-                    if (_countRow(".jpeg") > 0) {
-                        _extName = ".jpeg";
-                        _generateUserFiles("file_info", "imgFilePeg", _countRow(".jpeg"));
-                    }
+                if (_countRow(".jpeg") > 0) {
+                    _extName = ".jpeg";
+                    _generateUserFiles("file_info", "imgFilePeg", _countRow(".jpeg"));
+                }
 
-                    if (_countRow(".bmp") > 0) {
-                        _extName = ".bmp";
-                        _generateUserFiles("file_info", "imgFileBmp", _countRow(".bmp"));
-                    }
+                if (_countRow(".bmp") > 0) {
+                    _extName = ".bmp";
+                    _generateUserFiles("file_info", "imgFileBmp", _countRow(".bmp"));
+                }
 
-                    //
-                    // LOAD TEXT
-                    //
+                //
+                // LOAD TEXT
+                //
 
-                    if (_countRow(".txt") > 0) {
-                        _extName = ".txt";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".txt"));
-                    }
+                if (_countRow(".txt") > 0) {
+                    _extName = ".txt";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".txt"));
+                }
 
-                    if (_countRow(".js") > 0) {
-                        _extName = ".js";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".js"));
-                    }
-                    if (_countRow(".sql") > 0) {
-                        _extName = ".sql";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".sql"));
-                    }
-                    if (_countRow(".py") > 0) {
-                        _extName = ".py";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".py"));
-                    }
-                    if (_countRow(".html") > 0) {
-                        _extName = ".html";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".html"));
-                    }
-                    if (_countRow(".csv") > 0) {
-                        _extName = ".csv";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".csv"));
-                    }
-                    if (_countRow(".css") > 0) {
-                        _extName = ".css";
-                        _generateUserFiles("file_info_expand", "txtFile", _countRow(".css"));
-                    }
-                    ////
-                // LOAD EXE
-                    if (_countRow(".exe") > 0) {
-                        _extName = ".exe";
-                        _generateUserFiles("file_info_exe", "exeFile", _countRow(".exe"));
-                    }
-                    // LOAD VID
-                    if (_countRow(".mp4") > 0) {
-                        _extName = ".mp4";
-                        _generateUserFiles("file_info_vid", "vidFile", _countRow(".mp4"));
-                    }
-                    if (_countRow(".xlsx") > 0) {
-                        _extName = ".xlsx";
-                        _generateUserFiles("file_info_excel", "exlFile", _countRow(".xlsx"));
-                    }
-                    if (_countRow(".mp3") > 0) {
-                        _extName = ".mp3";
-                        _generateUserFiles("file_info_audi", "audiFile", _countRow(".mp3"));
-                    }
-                    if (_countRow(".gif") > 0) {
-                        _extName = ".gif";
-                        _generateUserFiles("file_info_gif", "gifFile", _countRow(".gif"));
-                    }
-                    if (_countRow(".apk") > 0) {
-                        _extName = ".apk";
-                        _generateUserFiles("file_info_apk", "apkFile", _countRow(".apk"));
-                    }
-                    if (_countRow(".pdf") > 0) {
-                        _extName = ".pdf";
-                        _generateUserFiles("file_info_pdf", "pdfFile", _countRow(".pdf"));
-                    }
-                    if (_countRow(".pptx") > 0) {
-                        _extName = ".pptx";
-                        _generateUserFiles("file_info_ptx", "ptxFile", _countRow(".pptx"));
-                    }
-                    if (_countRow(".msi") > 0) {
-                        _extName = ".msi";
-                        _generateUserFiles("file_info_msi", "msiFile", _countRow(".msi"));
-                    }
-                    if (_countRow(".docx") > 0) {
-                        _extName = ".docx";
-                        _generateUserFiles("file_info_word", "docFile", _countRow(".docx"));
-                    }
+                if (_countRow(".js") > 0) {
+                    _extName = ".js";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".js"));
+                }
+                if (_countRow(".sql") > 0) {
+                    _extName = ".sql";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".sql"));
+                }
+                if (_countRow(".py") > 0) {
+                    _extName = ".py";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".py"));
+                }
+                if (_countRow(".html") > 0) {
+                    _extName = ".html";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".html"));
+                }
+                if (_countRow(".csv") > 0) {
+                    _extName = ".csv";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".csv"));
+                }
+                if (_countRow(".css") > 0) {
+                    _extName = ".css";
+                    _generateUserFiles("file_info_expand", "txtFile", _countRow(".css"));
+                }
+                ////
+            // LOAD EXE
+                if (_countRow(".exe") > 0) {
+                    _extName = ".exe";
+                    _generateUserFiles("file_info_exe", "exeFile", _countRow(".exe"));
+                }
+                // LOAD VID
+                if (_countRow(".mp4") > 0) {
+                    _extName = ".mp4";
+                    _generateUserFiles("file_info_vid", "vidFile", _countRow(".mp4"));
+                }
+                if (_countRow(".xlsx") > 0) {
+                    _extName = ".xlsx";
+                    _generateUserFiles("file_info_excel", "exlFile", _countRow(".xlsx"));
+                }
+                if (_countRow(".mp3") > 0) {
+                    _extName = ".mp3";
+                    _generateUserFiles("file_info_audi", "audiFile", _countRow(".mp3"));
+                }
+                if (_countRow(".gif") > 0) {
+                    _extName = ".gif";
+                    _generateUserFiles("file_info_gif", "gifFile", _countRow(".gif"));
+                }
+                if (_countRow(".apk") > 0) {
+                    _extName = ".apk";
+                    _generateUserFiles("file_info_apk", "apkFile", _countRow(".apk"));
+                }
+                if (_countRow(".pdf") > 0) {
+                    _extName = ".pdf";
+                    _generateUserFiles("file_info_pdf", "pdfFile", _countRow(".pdf"));
+                }
+                if (_countRow(".pptx") > 0) {
+                    _extName = ".pptx";
+                    _generateUserFiles("file_info_ptx", "ptxFile", _countRow(".pptx"));
+                }
+                if (_countRow(".msi") > 0) {
+                    _extName = ".msi";
+                    _generateUserFiles("file_info_msi", "msiFile", _countRow(".msi"));
+                }
+                if (_countRow(".docx") > 0) {
+                    _extName = ".docx";
+                    _generateUserFiles("file_info_word", "docFile", _countRow(".docx"));
+                }
 
-                    if (flowLayoutPanel1.Controls.Count == 0) {
-                        showRedundane();
-                    }
-                    else {
-                   //   clearRedundane();
-                    }
-                } catch (Exception) {
-                    Form bgBlur = new Form();
-                    using (waitFORM displayWait = new waitFORM()) {
-                        bgBlur.StartPosition = FormStartPosition.Manual;
-                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                        bgBlur.Opacity = .24d;
-                        bgBlur.BackColor = Color.Black;
-                        bgBlur.WindowState = FormWindowState.Maximized;
-                        bgBlur.TopMost = true;
-                        bgBlur.Location = this.Location;
-                        bgBlur.StartPosition = FormStartPosition.Manual;
-                        bgBlur.ShowInTaskbar = false;
-                        bgBlur.Show();
+                if (flowLayoutPanel1.Controls.Count == 0) {
+                    showRedundane();
+                }
+                else {
+                //   clearRedundane();
+                }
+            } catch (Exception) {
+                Form bgBlur = new Form();
+                using (waitFORM displayWait = new waitFORM()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
 
-                        displayWait.Owner = bgBlur;
-                        displayWait.ShowDialog();
+                    displayWait.Owner = bgBlur;
+                    displayWait.ShowDialog();
 
-                        bgBlur.Dispose();
-                    }
-              }
+                    bgBlur.Dispose();
+                }
+            }
             
 
             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -244,21 +244,16 @@ namespace FlowSERVER1
                 List<string> dateValues = new List<string>();
                 List<string> titleValues = new List<string>();
 
-                String getUpDate = "SELECT UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                command = new MySqlCommand(getUpDate, con);
-                command = con.CreateCommand();
-                command.CommandText = getUpDate;
-
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);//Form1.instance.
-                command.Parameters.AddWithValue("@dirname", label1.Text);
-                command.Parameters.AddWithValue("@ext", _extName);
-
-                MySqlDataReader readerDate = command.ExecuteReader();
-
-                while (readerDate.Read()) {
-                    dateValues.Add(readerDate.GetString(0));
+                using(var command = new MySqlCommand("SELECT UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext",con)) {
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);//Form1.instance.
+                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@ext", _extName);
+                    using(var readerDate = command.ExecuteReader()) {
+                        while(readerDate.Read()) {
+                            dateValues.Add(readerDate.GetString("UPLOAD_DATE"));
+                        }
+                    }
                 }
-                readerDate.Close();
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
@@ -270,20 +265,16 @@ namespace FlowSERVER1
                 dateLab.Location = new Point(12, 208);
                 dateLab.Text = dateValues[i];
 
-                String getTitleQue = "SELECT CUST_FILE_PATH FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                command = new MySqlCommand(getTitleQue, con);
-                command = con.CreateCommand();
-                command.CommandText = getTitleQue;
-
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@dirname", label1.Text);
-                command.Parameters.AddWithValue("@ext", _extName);
-
-                MySqlDataReader titleReader = command.ExecuteReader();
-                while (titleReader.Read()) {
-                    titleValues.Add(titleReader.GetString(0));
+                using(var command = new MySqlCommand("SELECT CUST_FILE_PATH FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext",con)) {
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@ext", _extName);
+                    using(var readerTitle = command.ExecuteReader()) {
+                        while(readerTitle.Read()) {
+                            titleValues.Add(readerTitle.GetString("CUST_FILE_PATH"));
+                        }
+                    }
                 }
-                titleReader.Close();
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
@@ -356,23 +347,28 @@ namespace FlowSERVER1
                 var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
                 if (_tableName == "file_info") {
-                    List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
-                    command.Parameters.AddWithValue("@ext", _extName);
 
-                    MySqlDataReader _readBase64 = command.ExecuteReader();
-                    while (_readBase64.Read()) {
-                        _base64Encoded.Add(_readBase64.GetString(0));
+                    List<string> base64Encoded = new List<string>();
+
+                    string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@dirname", label1.Text);
+                        command.Parameters.AddWithValue("@ext", _extName);
+                        using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                            while (readBase64.Read()) {
+                                base64Encoded.Add(readBase64.GetString(0));
+                            }
+                        }
                     }
-                    _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
-                    MemoryStream _toMs = new MemoryStream(_getBytes);
+                    if (base64Encoded.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            img.Image = new Bitmap(toMs);
+                        }
+                    }
 
-                    img.Image = new Bitmap(_toMs);
                     picMain_Q.Click += (sender, e) => {
                         var getImgName = (Guna2PictureBox)sender;
                         var getWidth = getImgName.Image.Width;
@@ -451,23 +447,26 @@ namespace FlowSERVER1
 
                 if (_tableName == "file_info_vid") {
 
-                    List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
-                    command.Parameters.AddWithValue("@ext", _extName);
+                    List<string> base64Encoded = new List<string>();
 
-                    MySqlDataReader _readBase64 = command.ExecuteReader();
-                    while (_readBase64.Read()) {
-                        _base64Encoded.Add(_readBase64.GetString(0));
+                    string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@dirname", label1.Text);
+                        command.Parameters.AddWithValue("@ext", _extName);
+                        using (MySqlDataReader readBase64 = command.ExecuteReader()) {
+                            while (readBase64.Read()) {
+                                base64Encoded.Add(readBase64.GetString(0));
+                            }
+                        }
                     }
-                    _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
-                    MemoryStream _toMs = new MemoryStream(_getBytes);
-
-                    img.Image = new Bitmap(_toMs);
+                    if (base64Encoded.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            img.Image = new Bitmap(toMs);
+                        }
+                    }
 
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         var getImgName = (Guna2PictureBox)sender_vq;
@@ -1293,21 +1292,25 @@ namespace FlowSERVER1
             return buffer;
         }
         private void guna2Button2_Click_1(object sender, EventArgs e) {
+
             try {
 
-                String _getAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(_getAccType, con);
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-
-                List<String> _types = new List<String>();
-                MySqlDataReader _readType = command.ExecuteReader();
-                while (_readType.Read()) {
-                    _types.Add(_readType.GetString(0));
+                int CurrentUploadCount = 0;
+                String _accType = "";
+                String getAccTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+                using (var command = new MySqlCommand(getAccTypeQuery, con)) {
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    List<String> types = new List<String>();
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            types.Add(reader.GetString(0));
+                        }
+                    }
+                    _accType = types.FirstOrDefault();
+                    CurrentUploadCount = flowLayoutPanel1.Controls.Count;
                 }
-                _readType.Close();
+                
 
-                String _accType = _types[0];
-                int CurrentUploadCount = flowLayoutPanel1.Controls.Count;
                 if (_accType == "Basic") {
                     if (CurrentUploadCount != 20) {
                         _mainFileGenerator(20,"Basic");

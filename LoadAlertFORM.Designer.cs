@@ -46,10 +46,10 @@
             this.label8.ForeColor = System.Drawing.Color.LightGray;
             this.label8.Location = new System.Drawing.Point(179, 82);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(305, 40);
+            this.label8.Size = new System.Drawing.Size(314, 40);
             this.label8.TabIndex = 61;
-            this.label8.Text = "Flowstorage is retrieving your files...\r\nSit down and relax. This may take a minu" +
-    "te.";
+            this.label8.Text = "Flowstorage is retrieving your files...\r\nSit down and relax. This may take a mome" +
+    "nt.";
             this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9

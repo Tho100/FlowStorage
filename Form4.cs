@@ -121,12 +121,11 @@ namespace FlowSERVER1
 
                 remButTxt.Click += (sender_tx, e_tx) => {
                     var titleFile = dirName.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' directory?", "Flow Storage System", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
-                        //deletionMethod(titleFile, nameTable);
+
                         panel.Dispose();
                         Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
 
                         String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeDirQuery, con);
@@ -167,7 +166,7 @@ namespace FlowSERVER1
                 this.Close();
 
             } catch (Exception) {
-                MessageBox.Show("Are you conneted to the internet?","Flowstorage: An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Are you conneted to the internet?","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
         public void DisplayError(String accType) {

@@ -18,15 +18,13 @@ namespace FlowSERVER1 {
     /// Download file class
     /// </summary>
 
-
     public partial class SaverModel {
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static String _getExt;
-        public static SaverModel instance;
-        public static bool stopFileRetrieval;
-
+        private static readonly MySqlConnection con = ConnectionModel.con;
+        private static readonly MySqlCommand command = ConnectionModel.command;
+        public static readonly SaverModel Instance = new SaverModel();
+        public static bool stopFileRetrieval { get; set; } = false;
+        private static string _getExt { get; set; }
 
         /// <summary>
         /// 
@@ -37,17 +35,22 @@ namespace FlowSERVER1 {
         /// <param name="_FileTitle"></param>
         /// <param name="_getBytes"></param>
         private static void _openDialog(String _FileTitle, Byte[] _getBytes) {
-            Application.OpenForms
-                     .OfType<Form>()
-                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                     .ToList()
-                     .ForEach(form => form.Close());
-            SaveFileDialog _dialog = new SaveFileDialog();
-            _dialog.Filter = "|*." + _getExt;
-            _dialog.FileName = _FileTitle;
-            if (_dialog.ShowDialog() == DialogResult.OK) {
-                File.WriteAllBytes(_dialog.FileName, _getBytes);
+
+            var retrievalAlertForm = Application.OpenForms
+                .OfType<Form>()
+                .FirstOrDefault(form => form.Name == "RetrievalAlert");
+
+            retrievalAlertForm?.Close();
+
+            var dialog = new SaveFileDialog {
+                Filter = $"|*.{_getExt}",
+                FileName = _FileTitle
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                File.WriteAllBytes(dialog.FileName, _getBytes);
             }
+
         }
 
         public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName, bool _isFromShared = false) {
@@ -58,172 +61,197 @@ namespace FlowSERVER1 {
 
                 if (_TableName == "upload_info_directory") {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
-                    ShowAlert.Start();
+                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
+                    retrievalThread.Start();
 
-                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", _FileTitle);
-                    command.Parameters.AddWithValue("@dirname", _DirectoryName);
+                    using (var command = new MySqlCommand("SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@dirname", _DirectoryName);
 
-                    MySqlDataReader _byteReader = command.ExecuteReader();
+                        using (var reader = command.ExecuteReader()) {
+                            if (stopFileRetrieval) {
 
-                    if (stopFileRetrieval == true) {
+                                reader.Close();
 
-                        _byteReader.Close();
+                                Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                                .ToList()
+                                .ForEach(form => form.Close());
+                                
+                                stopFileRetrieval = false;
+                                return;
+                            }
 
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
-
-                        stopFileRetrieval = false;
-
+                            if (reader.Read()) {
+                                var base64Encoded = reader.GetString(0);
+                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                _openDialog(_FileTitle, getBytes);
+                            }
+                        }
                     }
 
-                    if (_byteReader.Read()) {
-                        _base64Encoded.Add(_byteReader.GetString(0));
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        _openDialog(_FileTitle,_getBytes);
-                    }
-                    _byteReader.Close();
+                    Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
 
                 } else if (_TableName == "folder_upload_info") {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
-                    ShowAlert.Start();
+                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
+                    retrievalThread.Start();
 
-                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", _FileTitle);
-                    command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
+                    using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
+                        using (var reader = command.ExecuteReader()) {
 
-                    MySqlDataReader _byteReader = command.ExecuteReader();
+                            if (stopFileRetrieval) {
 
-                    if (stopFileRetrieval == true) {
+                                reader.Close();
 
-                        _byteReader.Close();
+                                Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                                .ToList()
+                                .ForEach(form => form.Close());
 
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                                stopFileRetrieval = false;
+                                return;
+                            }
 
-                        stopFileRetrieval = false;
+                            if (reader.Read()) {
+                                var base64Encoded = reader.GetString(0);
+                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                _openDialog(_FileTitle, getBytes);
+                            }
+                        }
                     }
 
-                    if (_byteReader.Read()) {
-                        _base64Encoded.Add(_byteReader.GetString(0));
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        _openDialog(_FileTitle, _getBytes);
-                    }
-                    _byteReader.Close();
+                    Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
 
                 } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory" && _TableName != "cust_sharing") {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.","Saver").ShowDialog());
-                    ShowAlert.Start();
+                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
+                    retrievalThread.Start();
 
-                    String _retrieveBytes = "SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", _FileTitle);
+                    using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        using (var reader = command.ExecuteReader()) {
 
-                    MySqlDataReader _byteReader = command.ExecuteReader();
+                            if (stopFileRetrieval) {
 
-                    if(stopFileRetrieval == true) {
+                                reader.Close();
 
-                        _byteReader.Close();
+                                Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                                .ToList()
+                                .ForEach(form => form.Close());
 
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                                stopFileRetrieval = false;
+                                return;
+                            }
 
-                        stopFileRetrieval = false;
+                            if (reader.Read()) {
+                                var base64Encoded = reader.GetString(0);
+                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                _openDialog(_FileTitle, getBytes);
+                            }
+                        }
                     }
-                    if (_byteReader.Read()) {
-                        _base64Encoded.Add(_byteReader.GetString(0));
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        _openDialog(_FileTitle, _getBytes);
-                    }
-                    _byteReader.Close();
+
+                    Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
 
                 }
                 else if (_TableName == "cust_sharing" && _isFromShared == true) {
 
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.", "Saver");
-                    ShowAlert.Show();
+                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
+                    retrievalThread.Start();
 
-                    String _retrieveBytes = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", _FileTitle);
+                    using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        using (var reader = command.ExecuteReader()) {
 
-                    MySqlDataReader _byteReader = command.ExecuteReader();
+                            if (stopFileRetrieval) {
 
-                    if (stopFileRetrieval == true) {
+                                reader.Close();
 
-                        _byteReader.Close();
+                                Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                                .ToList()
+                                .ForEach(form => form.Close());
 
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                                stopFileRetrieval = false;
+                                return;
+                            }
 
-                        stopFileRetrieval = false;
+                            if (reader.Read()) {
+                                var base64Encoded = reader.GetString(0);
+                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                _openDialog(_FileTitle, getBytes);
+                            }
+                        }
                     }
 
-                    if (_byteReader.Read()) {
-                        _base64Encoded.Add(_byteReader.GetString(0));
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        _openDialog(_FileTitle, _getBytes);
-                    }
-                    _byteReader.Close();
+                    Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
                 }
                 
                 else if (_TableName == "cust_sharing") {
 
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your file.","Saver");
-                    ShowAlert.Show();
+                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
+                    retrievalThread.Start();
 
-                    String _retrieveBytes = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    command = con.CreateCommand();
-                    command.CommandText = _retrieveBytes;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@filename", _FileTitle);
+                    using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        using (var reader = command.ExecuteReader()) {
 
-                    MySqlDataReader _byteReader = command.ExecuteReader();
+                            if (stopFileRetrieval) {
 
-                    if (stopFileRetrieval == true) {
+                                reader.Close();
 
-                        _byteReader.Close();
+                                Application.OpenForms
+                                .OfType<Form>()
+                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                                .ToList()
+                                .ForEach(form => form.Close());
 
-                        Application.OpenForms
-                        .OfType<Form>()
-                        .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                        .ToList()
-                        .ForEach(form => form.Close());
+                                stopFileRetrieval = false;
+                                return;
+                            }
 
-                        stopFileRetrieval = false;
+                            if (reader.Read()) {
+                                var base64Encoded = reader.GetString(0);
+                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                _openDialog(_FileTitle, getBytes);
+                            }
+                        }
                     }
 
-                    if (_byteReader.Read()) {
-                        _base64Encoded.Add(_byteReader.GetString(0));
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
-                        _openDialog(_FileTitle, _getBytes);
-                    }
-                    _byteReader.Close();
+                    Application.OpenForms
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
                 }
             }
 
