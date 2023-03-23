@@ -243,11 +243,11 @@ namespace FlowSERVER1 {
             }
             _readAccType.Close();
             if(_accType == "Max") {
-                _allowedReturn = 120;
-            } else if (_accType == "Express") {
                 _allowedReturn = 500;
+            } else if (_accType == "Express") {
+                _allowedReturn = 1000;
             } else if (_accType == "Supreme") {
-                _allowedReturn = 1500;
+                _allowedReturn = 2000;
             } else if (_accType == "Basic") {
                 _allowedReturn = 20;
             }
@@ -260,22 +260,21 @@ namespace FlowSERVER1 {
         /// </summary>
         private static string _hasPas = "DEF";
         private string hasPassword(String _custUsername) {
-            String _storeVal = "";
-            String _queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_queryGet,con);
-            command.Parameters.AddWithValue("@username",_custUsername);
+            String storeVal = "";
+            String queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(queryGet, con);
+            command.Parameters.AddWithValue("@username", _custUsername);
 
-            MySqlDataReader _readPas = command.ExecuteReader();
-            while(_readPas.Read()) {
-                _hasPas = _readPas.GetString(0);
+            object result = command.ExecuteScalar();
+            if (result != null) {
+                storeVal = result.ToString();
+                if (storeVal == "DEF") {
+                    storeVal = "";
+                }
             }
-            _readPas.Close();
-            if(_hasPas == "DEF") {
-                _hasPas = "DEF";
-            } else {
-                _storeVal = _hasPas;
-            }
-            return _storeVal;
+
+            return storeVal;
+
         }
 
         /// <summary>
@@ -285,39 +284,40 @@ namespace FlowSERVER1 {
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
         private int countReceiverShared(String _receiverUsername) {
-            String _countFileShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
-            command = new MySqlCommand(_countFileShared, con);
-            command.Parameters.AddWithValue("@username", _receiverUsername);
+            string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+            int fileCount = 0;
 
-            var _getValue = command.ExecuteScalar();
-            int _toInt = Convert.ToInt32(_getValue);
-            return _toInt;
-            
+            using (MySqlCommand command = new MySqlCommand(countFileSharedQuery, con)) {
+                command.Parameters.AddWithValue("@username", _receiverUsername);
+
+                object result = command.ExecuteScalar();
+                if (result != null && result != DBNull.Value) {
+                    fileCount = Convert.ToInt32(result);
+                }
+            }
+
+            return fileCount;
+
         }
 
         /// <summary>
         /// This function will retrieve user current 
         /// file sharing status (enabeled or disabled)
         /// </summary>
-        private static string _isEnabled = "";
         private String retrieveDisabled(String _custUsername) {
-            String _concludeOutput = "";
-            String _queryRetrieve = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_queryRetrieve,con);
-            command.Parameters.AddWithValue("@username",_custUsername);
+            String querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+            String isEnabled = "0";
 
-            MySqlDataReader _readDisabled = command.ExecuteReader();
-            while(_readDisabled.Read()) {
-                _isEnabled = _readDisabled.GetString(0);
+            using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    if (reader.Read()) {
+                        isEnabled = reader.GetString(0);
+                    }
+                }
             }
-            _readDisabled.Close();
 
-            if(_isEnabled == "1") {
-                _concludeOutput = "1";
-            } else {
-                _concludeOutput = "0";
-            }
-            return _concludeOutput;
+            return isEnabled;
         }
         
         /// <summary>
@@ -327,15 +327,15 @@ namespace FlowSERVER1 {
         /// <param name="_fileName">File name to be send</param>
         /// <returns></returns>
         private int fileIsUploaded(String _custUsername,String _fileName) {
-            String _queryRetrieve = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
-            command = new MySqlCommand(_queryRetrieve, con);
+            String queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+            command = new MySqlCommand(queryRetrieveCount, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@receiver", _custUsername);
             command.Parameters.AddWithValue("@filename", _fileName);
 
-            var _startCount = command.ExecuteScalar();
-            int _toInt = Convert.ToInt32(_startCount);
-            return _toInt;
+            int count = Convert.ToInt32(command.ExecuteScalar());
+            return count;
+
         }
 
         private static String _controlName = null;

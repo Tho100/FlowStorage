@@ -3074,7 +3074,7 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
 
-                    List<string> typesValues = new List<string>();
+                    List<String> typesValues = new List<String>();
                     String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                     command = new MySqlCommand(getFileType, con);
                     command = con.CreateCommand();
@@ -3088,7 +3088,7 @@ namespace FlowSERVER1 {
                     _readType.Close();
 
                     List<String> mainTypes = typesValues.Distinct().ToList();
-                    var currMainLength = typesValues.Count;
+                    int currMainLength = typesValues.Count;
                     _generateUserFold(typesValues, _selectedFolder, "TESTING", currMainLength); 
                 
                     if (flowLayoutPanel1.Controls.Count == 0) {
@@ -3238,21 +3238,18 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <returns></returns>
         private string uploaderName() {
-            String _theName = "";
-            List<String> _returnName = new List<string>();
-            String selectUploaderName = "SELECT CUST_FROM FROM cust_sharing where CUST_TO = @username";
-            command = new MySqlCommand(selectUploaderName, con);
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+            String selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
+            using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    if (reader.Read()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
 
-            MySqlDataReader _ReadUser = command.ExecuteReader();
-            if (_ReadUser.Read()) {
-                _returnName.Add(_ReadUser.GetString(0));
-            }
-            _ReadUser.Close();
-            if (_returnName.Count > 0) {
-                _theName = _returnName[0];
-            }
-            return _theName;
+            return String.Empty;
+
         }
 
         /// <summary>
@@ -3261,24 +3258,27 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         String getUploaderNameShared = "";
         private string sharedToName() {
-            String _theName = "";
-            List<String> _returnName = new List<string>();
-            String selectUploaderName = "SELECT CUST_TO FROM cust_sharing where CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-            command = new MySqlCommand(selectUploaderName, con);
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename",getUploaderNameShared);
+            String selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", getUploaderNameShared);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    if (reader.Read()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
 
-            MySqlDataReader _ReadUser = command.ExecuteReader();
-            if (_ReadUser.Read()) {
-                _returnName.Add(_ReadUser.GetString(0));
-            }
-            _ReadUser.Close();
-            if (_returnName.Count > 0) {
-                _theName = _returnName[0];
-            }
-            return _theName;
+            return String.Empty;
+
         }
-
+        
+        /// <summary>
+        /// Generate files that has been shared to other
+        /// </summary>
+        /// <param name="_extTypes"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="itemCurr"></param>
         private void generateUserSharedOthers(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
@@ -3315,19 +3315,18 @@ namespace FlowSERVER1 {
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
 
-                List<String> filesNames = new List<string>();
+                List<String> filesNames = new List<String>();
+                String selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_FROM = @username";
 
-                String _selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_FROM = @username";
-                command = new MySqlCommand(_selectFileName, con);
-                command = con.CreateCommand();
-                command.CommandText = _selectFileName;
-                command.Parameters.AddWithValue("@username", form1.label5.Text);
+                using (MySqlCommand command = new MySqlCommand(selectFileName, con)) {
+                    command.Parameters.AddWithValue("@username", form1.label5.Text);
 
-                MySqlDataReader _readFileNames = command.ExecuteReader();
-                while (_readFileNames.Read()) {
-                    filesNames.Add(_readFileNames.GetString(0));
+                    using (MySqlDataReader reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            filesNames.Add(reader.GetString(0));
+                        }
+                    }
                 }
-                _readFileNames.Close();
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
@@ -3341,19 +3340,18 @@ namespace FlowSERVER1 {
                 titleLab.Height = 30;
                 titleLab.Text = filesNames[q];
 
-                List<String> fileDates = new List<string>();
+                List<String> fileDates = new List<String>();
+                String selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
 
-                String _selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
-                command = new MySqlCommand(_selectFileDates, con);
-                command = con.CreateCommand();
-                command.CommandText = _selectFileDates;
-                command.Parameters.AddWithValue("@username", form1.label5.Text);
+                using (MySqlCommand command = new MySqlCommand(selectFileDates, con)) {
+                    command.Parameters.AddWithValue("@username", form1.label5.Text);
 
-                MySqlDataReader _readFileDates = command.ExecuteReader();
-                while (_readFileDates.Read()) {
-                    fileDates.Add(_readFileDates.GetString(0));
+                    using (MySqlDataReader reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            fileDates.Add(reader.GetString(0));
+                        }
+                    }
                 }
-                _readFileDates.Close();
 
                 getUploaderNameShared = titleLab.Text;
                 var setupSharedUsername = sharedToName();
@@ -3760,19 +3758,18 @@ namespace FlowSERVER1 {
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
 
-                List<String> filesNames = new List<string>();
+                List<String> filesNames = new List<String>();
+                String selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_TO = @username";
 
-                String _selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_TO = @username";
-                command = new MySqlCommand(_selectFileName, con);
-                command = con.CreateCommand();
-                command.CommandText = _selectFileName;
-                command.Parameters.AddWithValue("@username", form1.label5.Text);
+                using (MySqlCommand command = new MySqlCommand(selectFileName, con)) {
+                    command.Parameters.AddWithValue("@username", form1.label5.Text);
 
-                MySqlDataReader _readFileNames = command.ExecuteReader();
-                while (_readFileNames.Read()) {
-                    filesNames.Add(_readFileNames.GetString(0));
+                    using (MySqlDataReader reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            filesNames.Add(reader.GetString(0));
+                        }
+                    }
                 }
-                _readFileNames.Close();
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
@@ -3786,19 +3783,18 @@ namespace FlowSERVER1 {
                 titleLab.Height = 30;
                 titleLab.Text = filesNames[q];
 
-                List<String> fileDates = new List<string>();
+                List<String> fileDates = new List<String>();
+                String selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
 
-                String _selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
-                command = new MySqlCommand(_selectFileDates, con);
-                command = con.CreateCommand();
-                command.CommandText = _selectFileDates;
-                command.Parameters.AddWithValue("@username", form1.label5.Text);
+                using (MySqlCommand command = new MySqlCommand(selectFileDates, con)) {
+                    command.Parameters.AddWithValue("@username", form1.label5.Text);
 
-                MySqlDataReader _readFileDates = command.ExecuteReader();
-                while (_readFileDates.Read()) {
-                    fileDates.Add(_readFileDates.GetString(0));
+                    using (MySqlDataReader reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            fileDates.Add(reader.GetString(0));
+                        }
+                    }
                 }
-                _readFileDates.Close();
 
                 Guna2Button remButTxt = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButTxt);
@@ -4210,17 +4206,14 @@ namespace FlowSERVER1 {
                 directoryLab.Width = 75;
                 directoryLab.Text = "Directory";
 
-                String getTitleQue = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(getTitleQue, con);
-                command = con.CreateCommand();
-                command.CommandText = getTitleQue;
-                command.Parameters.AddWithValue("@username", label5.Text);
-
-                MySqlDataReader titleReader = command.ExecuteReader();
-                while (titleReader.Read()) {
-                    titleValues.Add(titleReader.GetString(0));
+                using (var command = new MySqlCommand("SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username", con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            titleValues.Add(reader.GetString(0));
+                        }
+                    }
                 }
-                titleReader.Close();
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
@@ -4893,23 +4886,19 @@ namespace FlowSERVER1 {
 
                 var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
 
-                List<string> dateValues = new List<string>();
-                List<string> titleValues = new List<string>();
+                List<String> dateValues = new List<String>();
+                List<String> titleValues = new List<String>();
 
-                String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH LIKE @filename";
-                command = new MySqlCommand(getUpDate, con);
-                command = con.CreateCommand();
-                command.CommandText = getUpDate;
-
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-
-                MySqlDataReader readerDate = command.ExecuteReader();
-
-                while (readerDate.Read()) {
-                    dateValues.Add(readerDate.GetString(0));
+                String getUpDate = $"SELECT DISTINCT UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH LIKE @filename";
+                using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@filename", $"%{guna2TextBox5.Text}%");
+                    using (MySqlDataReader readerDate = command.ExecuteReader()) {
+                        while (readerDate.Read()) {
+                            dateValues.Add(readerDate.GetString(0));
+                        }
+                    }
                 }
-                readerDate.Close();
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
@@ -4921,19 +4910,16 @@ namespace FlowSERVER1 {
                 dateLab.Location = new Point(12, 208);
                 dateLab.Text = dateValues[i];
 
-                String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH LIKE @filename";
-                command = new MySqlCommand(getTitleQue, con);
-                command = con.CreateCommand();
-                command.CommandText = getTitleQue;
-
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-
-                MySqlDataReader titleReader = command.ExecuteReader();
-                while (titleReader.Read()) {
-                    titleValues.Add(titleReader.GetString(0));
+                String getTitleQue = $"SELECT DISTINCT CUST_FILE_PATH FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH LIKE @filename";
+                using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@filename", $"%{guna2TextBox5.Text}%");
+                    using (MySqlDataReader titleReader = command.ExecuteReader()) {
+                        while (titleReader.Read()) {
+                            titleValues.Add(titleReader.GetString(0));
+                        }
+                    }
                 }
-                titleReader.Close();
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
@@ -5294,34 +5280,20 @@ namespace FlowSERVER1 {
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
 
-                List<String> filesNames = new List<string>();
-                List<String> fileDates = new List<string>();
+                List<String> filesNames = new List<String>();
+                List<String> fileDates = new List<String>();
 
-                String _selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
-                command = new MySqlCommand(_selectFileName, con);
-                command = con.CreateCommand();
-                command.CommandText = _selectFileName;
-                command.Parameters.AddWithValue("@username", form1.label5.Text);
-                command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-
-                MySqlDataReader _readFileNames = command.ExecuteReader();
-                while (_readFileNames.Read()) {
-                    filesNames.Add(_readFileNames.GetString(0));
+                String _selectFiles = $"SELECT DISTINCT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
+                using (MySqlCommand command = new MySqlCommand(_selectFiles, con)) {
+                    command.Parameters.AddWithValue("@username", form1.label5.Text);
+                    command.Parameters.AddWithValue("@filename", $"%{guna2TextBox5.Text}%");
+                    using (MySqlDataReader reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            filesNames.Add(reader.GetString(0));
+                            fileDates.Add(reader.GetString(1));
+                        }
+                    }
                 }
-                _readFileNames.Close();
-
-                String _selectFileDate = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
-                command = new MySqlCommand(_selectFileDate, con);
-                command = con.CreateCommand();
-                command.CommandText = _selectFileDate;
-                command.Parameters.AddWithValue("@username", form1.label5.Text);
-                command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-
-                MySqlDataReader _readFileDate = command.ExecuteReader();
-                while (_readFileDate.Read()) {
-                    fileDates.Add(_readFileDate.GetString(0));
-                }
-                _readFileDate.Close();
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
@@ -5699,20 +5671,17 @@ namespace FlowSERVER1 {
         }
 
         private void callGeneratorSharedSearch() {
-            String getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-            command = new MySqlCommand(getFilesTypeOthers, con);
-            command = con.CreateCommand();
-            command.CommandText = getFilesTypeOthers;
-            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-
-            MySqlDataReader _readTypeOthers = command.ExecuteReader();
-            while (_readTypeOthers.Read()) {
-                _TypeValuesOthers.Add(_readTypeOthers.GetString(0));
+            String getFilesTypeOthers = $"SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
+            using (MySqlCommand command = new MySqlCommand(getFilesTypeOthers, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    while (reader.Read()) {
+                        _TypeValuesOthers.Add(reader.GetString(0));
+                    }
+                }
             }
-            _readTypeOthers.Close();
 
             generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
-
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
@@ -5812,24 +5781,25 @@ namespace FlowSERVER1 {
 
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
 
-            List<string> typesValues = new List<string>();
+            List<String> typesValues = new List<String>();
             String getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-            command = new MySqlCommand(getFileType, con);
-            command = con.CreateCommand();
-            command.CommandText = getFileType;
-            command.Parameters.AddWithValue("@username", label5.Text);
-            command.Parameters.AddWithValue("@foldername", _selectedFolder);
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                typesValues.Add(_readType.GetString(0));// Append ToAr;
-            }
-            _readType.Close();
 
-            var currMainLength = typesValues.Count;
-            _generateUserFold(typesValues, _selectedFolder, "QWERTY", currMainLength);
+            using (MySqlCommand command = new MySqlCommand(getFileType, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@foldername", _selectedFolder);
+
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    while (reader.Read()) {
+                        typesValues.Add(reader.GetString(0));
+                    }
+                }
+            }
+
+            _generateUserFold(typesValues, _selectedFolder, "QWERTY", typesValues.Count);
+
         }
 
-      
+
 
         private void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e) {
             String insertQuery = "INSERT INTO " + tableName + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";

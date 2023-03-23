@@ -65,7 +65,7 @@ namespace FlowSERVER1 {
                 getCurrentLang();
                 setupUILanguage(CurrentLang);
                 setupRedundane(label6.Text);
-                getAccType();
+                GetAccountType();
                 countTotalAll();
 
                 // @SUMMARY Retrieve account creation date and display the date on label
@@ -140,26 +140,15 @@ namespace FlowSERVER1 {
         /// This function will retrieve the 
         /// current status of user file sharing (disabled, or enabled)
         /// </summary>
-        private static string _isEnabled = "";
         private String retrieveDisabled(String _custUsername) {
-            String _concludeOutput = "";
-            String _queryRetrieve = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_queryRetrieve, con);
-            command.Parameters.AddWithValue("@username", _custUsername);
+            String querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
 
-            MySqlDataReader _readDisabled = command.ExecuteReader();
-            while (_readDisabled.Read()) {
-                _isEnabled = _readDisabled.GetString(0);
+                string isEnabled = Convert.ToString(command.ExecuteScalar());
+                string concludeOutput = isEnabled == "1" ? "1" : "0";
+                return concludeOutput;
             }
-            _readDisabled.Close();
-
-            if (_isEnabled == "1") {
-                _concludeOutput = "1";
-            }
-            else {
-                _concludeOutput = "0";
-            }
-            return _concludeOutput;
         }
 
         /// <summary>
@@ -167,14 +156,14 @@ namespace FlowSERVER1 {
         /// they have uploaded (in total)
         /// </summary>
         /// <param name="_tableName"></param>
-        public void TotalUploadFile(String _tableName) {
-            String _CountQue = "SELECT COUNT(*) FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_CountQue,con);
-            command.Parameters.AddWithValue("@username",label5.Text);
+        private void TotalUploadFile(String _tableName) {
+            String countQuery = $"SELECT COUNT(*) FROM {_tableName} WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(countQuery, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
 
-            var totalCount = command.ExecuteScalar();
-            int intTotalCount = Convert.ToInt32(totalCount);
-            _TotalUploadOvertime.Add(intTotalCount);
+                int totalCount = Convert.ToInt32(command.ExecuteScalar());
+                _TotalUploadOvertime.Add(totalCount);
+            }
         }
 
         /// <summary>
@@ -182,53 +171,52 @@ namespace FlowSERVER1 {
         /// files they've uploaded a day
         /// </summary>
         /// <param name="_TableName"></param>
-        public void TotalUploadFileTodayCount(String _TableName) {
-            String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
-            String _QueryCount = "SELECT COUNT(CUST_USERNAME) FROM " + _TableName + " WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
-            command = new MySqlCommand(_QueryCount,con);
-            command.Parameters.AddWithValue("@date",_CurDate);
-            command.Parameters.AddWithValue("@username",label5.Text);
+        private void TotalUploadFileTodayCount(String _TableName) {
+            String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+            String queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+            using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@date", currentDate);
 
-            var _totalCount = command.ExecuteScalar();
-            int _toInt = Convert.ToInt32(_totalCount);
-            _TotalUploadToday.Add(_toInt);
+                int totalCount = Convert.ToInt32(command.ExecuteScalar());
+                _TotalUploadToday.Add(totalCount);
+            }
         }
+
         /// <summary>
         /// This function will tells user the number
         /// of directory they have created a day
         /// </summary>
-        public void TotalUploadDirectoryTodayCount() {
-            String _CurDate = DateTime.Now.ToString("dd/MM/yyyy");
-            String _QueryCount = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
-            command = new MySqlCommand(_QueryCount, con);
-            command.Parameters.AddWithValue("@date", _CurDate);
-            command.Parameters.AddWithValue("@username", label5.Text);
+        private void TotalUploadDirectoryTodayCount() {
+            String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+            String querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+            using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@date", currentDate);
 
-            MySqlDataReader _ReadDir = command.ExecuteReader();
-            while(_ReadDir.Read()) {    
-                _TotalUploadDirectoryToday.Add(_ReadDir.GetString(0));
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    while (reader.Read()) {
+                        _TotalUploadDirectoryToday.Add(reader.GetString(0));
+                    }
+                }
             }
-            _ReadDir.Close();
 
-            List<String> _DistinctDir = _TotalUploadDirectoryToday.Distinct().ToList();
-            label30.Text = _DistinctDir.Count().ToString();
+            int distinctDirCount = _TotalUploadDirectoryToday.Distinct().Count();
+            label30.Text = distinctDirCount.ToString();
         }
 
-        public void getAccType() {
-            String GetAccType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(GetAccType, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
+        private void GetAccountType() {
 
-            List<String> _types = new List<String>();
-            MySqlDataReader _readType = command.ExecuteReader();
-            while (_readType.Read()) {
-                _types.Add(_readType.GetString(0));
+            String accountType = "";
+            String querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+            using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+
+                accountType = Convert.ToString(command.ExecuteScalar());
+                label6.Text = accountType;
             }
-            _readType.Close();
 
-            String _accType = _types[0];
-            label6.Text = _accType;
-            if (_accType == "Basic") {
+            if (accountType == "Basic") {
                 if(CurrentLang == "US") {
                     label37.Text = "Limited to 20";
                 } else if (CurrentLang == "MY") {
@@ -241,54 +229,32 @@ namespace FlowSERVER1 {
                     label37.Text = "Limitado a 20";
                 }
                 else if (CurrentLang == "POR") {
-                    label37.Text = "Limitado a 12";
+                    label37.Text = "Limitado a 20";
                 }
 
             }
-            else if (_accType == "Max") {
+            else if (accountType == "Max") {
                 if (CurrentLang == "US") {
-                    label37.Text = "Limited to 30";
+                    label37.Text = "Limited to 500";
                 }
                 else if (CurrentLang == "MY") {
-                    label37.Text = "Terhad Kepada 30";
+                    label37.Text = "Terhad Kepada 500";
                 }
                 else if (CurrentLang == "GER") {
-                    label37.Text = "Begrenzt Auf 99";
+                    label37.Text = "Begrenzt Auf 500";
                 }
                 else if (CurrentLang == "JAP") {
-                    label37.Text = "99 個限定";
+                    label37.Text = "500 個限定";
                 }
                 else if (CurrentLang == "ESP") {
-                    label37.Text = "Limitado a 99";
+                    label37.Text = "Limitado a 500";
                 }
                 else if (CurrentLang == "POR") {
-                    label37.Text = "Limitado a 99";
+                    label37.Text = "Limitado a 500";
                 }
                 guna2Button5.Enabled = false;
             }
-            else if (_accType == "Express") {
-                if (CurrentLang == "US") {
-                    label37.Text = "Limited to 450";
-                }
-                else if (CurrentLang == "MY") {
-                    label37.Text = "Terhad Kepada 450";
-                }
-                else if (CurrentLang == "GER") {
-                    label37.Text = "Begrenzt Auf 450";
-                }
-                else if (CurrentLang == "JAP") {
-                    label37.Text = "450 個限定";
-                }
-                else if (CurrentLang == "ESP") {
-                    label37.Text = "Limitado a 450";
-                }
-                else if (CurrentLang == "POR") {
-                    label37.Text = "Limitado a 450";
-                }
-                guna2Button5.Enabled = false;
-                guna2Button6.Enabled = false;
-            }
-            else if (_accType == "Supreme") {
+            else if (accountType == "Express") {
                 if (CurrentLang == "US") {
                     label37.Text = "Limited to 1000";
                 }
@@ -296,7 +262,7 @@ namespace FlowSERVER1 {
                     label37.Text = "Terhad Kepada 1000";
                 }
                 else if (CurrentLang == "GER") {
-                    label37.Text = "Begrenzt Auf 100";
+                    label37.Text = "Begrenzt Auf 1000";
                 }
                 else if (CurrentLang == "JAP") {
                     label37.Text = "1000 個限定";
@@ -305,7 +271,29 @@ namespace FlowSERVER1 {
                     label37.Text = "Limitado a 1000";
                 }
                 else if (CurrentLang == "POR") {
-                    label37.Text = "Limitado a 1000";
+                    label37.Text = "Limitado a 450";
+                }
+                guna2Button5.Enabled = false;
+                guna2Button6.Enabled = false;
+            }
+            else if (accountType == "Supreme") {
+                if (CurrentLang == "US") {
+                    label37.Text = "Limited to 2000";
+                }
+                else if (CurrentLang == "MY") {
+                    label37.Text = "Terhad Kepada 2000";
+                }
+                else if (CurrentLang == "GER") {
+                    label37.Text = "Begrenzt Auf 2000";
+                }
+                else if (CurrentLang == "JAP") {
+                    label37.Text = "2000 個限定";
+                }
+                else if (CurrentLang == "ESP") {
+                    label37.Text = "Limitado a 2000";
+                }
+                else if (CurrentLang == "POR") {
+                    label37.Text = "Limitado a 2000";
                 }
                 guna2Button5.Enabled = false;
                 guna2Button6.Enabled = false;
@@ -313,15 +301,15 @@ namespace FlowSERVER1 {
             }
         }
         public void countTotalAll() {
-    
-            String CountDirQue = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(CountDirQue,con);
-            command.Parameters.AddWithValue("@username",label5.Text);
-            var _setupCount = command.ExecuteScalar();
-            int _totalDir = Convert.ToInt32(_setupCount);
-            label19.Text = _totalDir.ToString();
 
-            var countTotalFolders = Form1.instance.listBox1.Items.Count - 3;
+            String countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                int totalDir = Convert.ToInt32(command.ExecuteScalar());
+                label19.Text = totalDir.ToString();
+            }
+
+            int countTotalFolders = Form1.instance.listBox1.Items.Count - 3;
             label20.Text = countTotalFolders.ToString();
         }
 
@@ -336,26 +324,26 @@ namespace FlowSERVER1 {
 
         public void generateChart(String _serName, String _tableName) {
 
-            List<String> _datesValues = new List<string>();
-            List<int> _totalRow = new List<int>();
+            List<int> totalRows = new List<int>();
+            List<String> uploadDates = new List<String>();
 
-            String _countUpload = "SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM " + _tableName + " WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0"; //
-            command = con.CreateCommand();
-            command.CommandText = _countUpload;
-            command.Parameters.AddWithValue("@username", label5.Text);
-
-            MySqlDataReader _readRowUploadTexts = command.ExecuteReader();
-            while (_readRowUploadTexts.Read()) {
-                _totalRow.Add(_readRowUploadTexts.GetInt32("COUNT(UPLOAD_DATE)"));
-                _datesValues.Add(_readRowUploadTexts.GetString("UPLOAD_DATE"));
+            String querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
+            using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    while (reader.Read()) {
+                        totalRows.Add(reader.GetInt32(1));
+                        uploadDates.Add(reader.GetString(0));
+                    }
+                }
             }
-            _readRowUploadTexts.Close();
 
-            List<int> _fileUploadValues = new List<int>();
-            for (int i = 0; i < _totalRow.Count(); i++) {
-                chart1.Series[_serName].Points.AddXY(_datesValues[i], _totalRow[i]);
+            for (int i = 0; i < totalRows.Count; i++) {
+                chart1.Series[_serName].Points.AddXY(uploadDates[i], totalRows[i]);
             }
+
         }
+
         private void remAccFORM_Load(object sender, EventArgs e) {
 
         }
@@ -2160,17 +2148,18 @@ namespace FlowSERVER1 {
 
  
         private string retrieveFileSharingPas() {
-            String _hasPass = "";
-            String _selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_selectQuery,con);
-            command.Parameters.AddWithValue("@username",label5.Text);
-            
-            MySqlDataReader _readPas = command.ExecuteReader();
-            while(_readPas.Read()) {
-                _hasPass = _readPas.GetString(0);
+            String hasPass = "";
+            String selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(selectQuery, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+
+                object result = command.ExecuteScalar();
+                if (result != null) {
+                    hasPass = result.ToString();
+                }
             }
-            _readPas.Close();
-            return _hasPass;
+
+            return hasPass;
         }
 
         /// <summary>
@@ -2202,21 +2191,15 @@ namespace FlowSERVER1 {
 
             if(guna2TabControl1.SelectedIndex == 1) {
                 CurrDateStats++;
-                String _getJoinDate = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
-                command = con.CreateCommand();
-                command.CommandText = _getJoinDate;
+                String getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
+                command = new MySqlCommand(getJoinDateQuery, con);
                 command.Parameters.AddWithValue("@username", label5.Text);
 
-                List<String> _JoinedDateValues = new List<String>();
-
-                MySqlDataReader _readDate = command.ExecuteReader();
-                while (_readDate.Read()) {
-                    _JoinedDateValues.Add(_readDate.GetString(0));
+                String joinedDate = command.ExecuteScalar()?.ToString();
+                if (joinedDate != null) {
+                    label16.Text = joinedDate;
                 }
-                _readDate.Close();
-                var joinedDate = _JoinedDateValues[0];
-                label16.Text = joinedDate;
-                joinedDate = label16.Text;
+
             } else {
                 if(CurrDateStats > 0) {
                     label16.Text = JoinedDate;
@@ -2335,9 +2318,9 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_custUsername"></param>
         private void removePasSharing(String _custUsername) {
-            String _removeQuery = "UPDATE sharing_info SET SET_PASS = @set WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_removeQuery,con);
-            command.Parameters.AddWithValue("@set","DEF");
+            String removeQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
+            command = new MySqlCommand(removeQuery, con);
+            command.Parameters.AddWithValue("@setPass", "DEF");
             command.Parameters.AddWithValue("@username", _custUsername);
             command.ExecuteNonQuery();
 

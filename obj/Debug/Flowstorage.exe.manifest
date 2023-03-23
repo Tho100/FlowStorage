@@ -158,7 +158,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ifaocZ1hnwHwp5O0XVc91Q1JH2MpbzUs/qnYA/qXeds=</dsig:DigestValue>
+        <dsig:DigestValue>Gi45i+n1V/2QDFujn2+EHp2G8BhmRINN0F8TEfdc/Vg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sGE6E94r3RE0XtG2WSanJmQV4MQKFsjUmmc9Bd+Mb3g=</dsig:DigestValue>
+        <dsig:DigestValue>XdIq8WZu7LkoEbD66W79GdXuRa1XH9RScqME+4GhT5U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1068,7 +1068,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>NyMyacTP+s3J7f2c6lzXgIie7jbh7uJqEI55gibCSL8=</dsig:DigestValue>
+      <dsig:DigestValue>B3iqzKzQI5UtMowiuppU3J9NdvsXqykRFamd5V/uzC8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">
