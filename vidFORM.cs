@@ -34,25 +34,57 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            if (_isShared == true) {
-                _getName = uploaderName;
-            }
-            else {
-                _getName = "Uploaded By " + uploaderName;
-            }
-
             instance = this;
-            var setupImage = resizeImage(getThumb, new Size(width,height));
+            var setupImage = resizeImage(getThumb, new Size(width, height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = getTitle;
-            label2.Text = _getName;
             label3.Text = tableName;
             _TableName = tableName;
             _DirName = dirName;
             _UploaderName = uploaderName;
             _IsFromShared = _isFromShared;
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+                label4.Visible = true;
+                label4.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+                label4.Visible = true;
+                label4.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+            }
+
+            label2.Text = _getName;
         }
 
+        private string getCommentSharedToMe() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+        private string getCommentSharedToOthers() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
         public static Image resizeImage(Image userImg, Size size) {
             return (Image)(new Bitmap(userImg,size));
         }

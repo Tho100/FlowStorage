@@ -51,6 +51,7 @@ namespace FlowSERVER1 {
             }
 
             label2.Text = _getName;
+
             try {
 
                 Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog());
