@@ -34,6 +34,7 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.pdfDocumentViewer1 = new Spire.PdfViewer.Forms.PdfDocumentViewer();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -46,7 +47,7 @@
             // 
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(13, 35);
+            this.label2.Location = new System.Drawing.Point(13, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(579, 17);
             this.label2.TabIndex = 35;
@@ -69,7 +70,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(615, 12);
+            this.guna2Button4.Location = new System.Drawing.Point(647, 12);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 34;
@@ -91,7 +92,7 @@
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
             this.guna2Button3.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button3.Location = new System.Drawing.Point(703, 12);
+            this.guna2Button3.Location = new System.Drawing.Point(735, 12);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(38, 31);
             this.guna2Button3.TabIndex = 33;
@@ -114,7 +115,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button1.Location = new System.Drawing.Point(703, 12);
+            this.guna2Button1.Location = new System.Drawing.Point(735, 12);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 31);
             this.guna2Button1.TabIndex = 32;
@@ -124,7 +125,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(13, 11);
+            this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(579, 21);
             this.label1.TabIndex = 31;
@@ -146,7 +147,7 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(747, 12);
+            this.guna2Button2.Location = new System.Drawing.Point(779, 12);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 30;
@@ -169,7 +170,7 @@
             this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
             this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
             this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button8.Location = new System.Drawing.Point(659, 12);
+            this.guna2Button8.Location = new System.Drawing.Point(691, 12);
             this.guna2Button8.Name = "guna2Button8";
             this.guna2Button8.Size = new System.Drawing.Size(38, 31);
             this.guna2Button8.TabIndex = 51;
@@ -183,12 +184,12 @@
             this.pdfDocumentViewer1.AutoScroll = true;
             this.pdfDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
             this.pdfDocumentViewer1.FormFillEnabled = false;
-            this.pdfDocumentViewer1.Location = new System.Drawing.Point(17, 65);
+            this.pdfDocumentViewer1.Location = new System.Drawing.Point(16, 89);
             this.pdfDocumentViewer1.MultiPagesThreshold = 60;
             this.pdfDocumentViewer1.Name = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.OnRenderPageExceptionEvent = null;
             this.pdfDocumentViewer1.PageLayoutMode = Spire.PdfViewer.Forms.PageLayoutMode.SinglePageContinuous;
-            this.pdfDocumentViewer1.Size = new System.Drawing.Size(768, 445);
+            this.pdfDocumentViewer1.Size = new System.Drawing.Size(801, 446);
             this.pdfDocumentViewer1.TabIndex = 52;
             this.pdfDocumentViewer1.Text = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.Threshold = 60;
@@ -197,12 +198,24 @@
             this.pdfDocumentViewer1.ZoomMode = Spire.PdfViewer.Forms.ZoomMode.Default;
             this.pdfDocumentViewer1.Click += new System.EventHandler(this.pdfDocumentViewer1_Click_1);
             // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label3.Location = new System.Drawing.Point(14, 59);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(579, 17);
+            this.label3.TabIndex = 53;
+            this.label3.Text = "Uploaded By urmom";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
             // pdfFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(797, 520);
+            this.ClientSize = new System.Drawing.Size(829, 543);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.pdfDocumentViewer1);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.label2);
@@ -233,5 +246,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
         private Spire.PdfViewer.Forms.PdfDocumentViewer pdfDocumentViewer1;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -26,17 +26,51 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(_userName, @"^([\w\-]+)").Value == "Shared";
 
-            if(_isShared == true) {
-                _getName = _userName;
-            } else {
-                _getName = "Uploaded By " + _userName; 
-            }
-
             label1.Text = _titleFile;
-            label2.Text =  _getName;
             _TableName = _tabName;
             _DirName = _dirName;
             isFromShared = _isFromShared;
+
+            if (_isShared == true) {
+                _getName = _userName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+            }
+            else {
+                _getName = "Uploaded By " + _userName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+            }
+
+            label2.Text = _getName;
+        }
+
+        private string getCommentSharedToMe() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+        private string getCommentSharedToOthers() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {

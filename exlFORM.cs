@@ -33,6 +33,9 @@ namespace FlowSERVER1 {
         private static Byte[] _sheetsByte;
         private static bool _isFromShared;
 
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+
         /// <summary>
         /// 
         /// Load user excel workbook sheet based on table name 
@@ -42,26 +45,31 @@ namespace FlowSERVER1 {
         /// <param name="_TableName"></param>
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
-        
+
         public exlFORM(String titleName, String _TableName, String _DirectoryName, String _UploaderName, bool isFromShared = false) {
             InitializeComponent();
 
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            if (_isShared == true) {
-                _getName = _UploaderName;
-            }
-            else {
-                _getName = "Uploaded By " + _UploaderName;
-            }
-
             instance = this;
-            label2.Text = _getName;
             label1.Text = titleName;
             DirectoryName = _DirectoryName;
             TableName = _TableName;
             _isFromShared = isFromShared;
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+            }
+
+            label2.Text = _getName;
 
             try {
 
@@ -87,12 +95,40 @@ namespace FlowSERVER1 {
                 MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
-       
+
+        private string getCommentSharedToMe() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+        private string getCommentSharedToOthers() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
 
         /// <summary>
         /// Essential variable to prevent sheetname duplication
         /// </summary>
-        
+
         int onlyOnceVarible = 0; 
 
         /// <summary>

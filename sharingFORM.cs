@@ -94,7 +94,7 @@ namespace FlowSERVER1 {
                     Application.DoEvents();
 
                     String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                    String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
+                    String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
                     command = new MySqlCommand(insertQuery, con);
 
                     command.Parameters.Add("@CUST_TO", MySqlDbType.Text);
@@ -104,12 +104,14 @@ namespace FlowSERVER1 {
                     command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
                     command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
+                    command.Parameters.Add("@CUST_COMMENT", MySqlDbType.LongText);
 
                     command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
                     command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
                     command.Parameters["@CUST_FILE_PATH"].Value = _FileName;
                     command.Parameters["@UPLOAD_DATE"].Value = varDate;
                     command.Parameters["@FILE_EXT"].Value = _retrieved;
+                    command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text;
 
                     _currentFileName = guna2TextBox2.Text;
 
@@ -403,5 +405,8 @@ namespace FlowSERVER1 {
 
         }
 
+        private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
+            label5.Text = guna2TextBox4.Text.Length + "/52";
+        }
     }
 }

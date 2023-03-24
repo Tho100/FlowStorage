@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,30 +16,65 @@ namespace FlowSERVER1 {
         private static String TableName;
         private static String Directoryname;
         private static bool IsFromShared;
+        private static MySqlConnection con = ConnectionModel.con;
+
         public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false) {
             InitializeComponent();
 
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            if (_isShared == true) {
-                _getName = _UploaderName;
-            }
-            else {
-                _getName = "Uploaded By " + _UploaderName;
-            }
-
             instance = this;
-            var setupImage = resizeUserImage(userImage,new Size(width,height));
+            var setupImage = resizeUserImage(userImage, new Size(width, height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = title;
-            label2.Text = _getName;
             TableName = _TableName;
             Directoryname = _DirectoryName;
             IsFromShared = _IsFromShared;
 
+            if (_isShared == true) {
+                _getName = _UploaderName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+            }
+
+            label2.Text = _getName;
+
             ToolTip saveTip = new ToolTip();
             saveTip.SetToolTip(this.guna2Button4,"Download Image");
+        }
+
+        private string getCommentSharedToMe() {
+            String returnComment = "";
+            using(MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename",con)) {
+                command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using(MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while(readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+        private string getCommentSharedToOthers() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
         }
 
         public static Image resizeUserImage(Image userImage, Size size) {
@@ -89,6 +125,10 @@ namespace FlowSERVER1 {
         }
 
         private void label2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e) {
 
         }
     }

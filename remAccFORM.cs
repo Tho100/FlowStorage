@@ -1540,14 +1540,15 @@ namespace FlowSERVER1 {
 
         private void getCurrentLang() {
             String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_selectLang,con);
-            command.Parameters.AddWithValue("@username",label5.Text);
+            using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
 
-            MySqlDataReader _readLang = command.ExecuteReader();
-            if(_readLang.Read()) {
-                CurrentLang = _readLang.GetString(0);
+                using (MySqlDataReader _readLang = command.ExecuteReader()) {
+                    if (_readLang.Read()) {
+                        CurrentLang = _readLang.GetString(0);
+                    }
+                }
             }
-            _readLang.Close();
         }
 
         private void updateLang(String _custLang) {

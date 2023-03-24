@@ -17,6 +17,7 @@ namespace FlowSERVER1 {
         private static String _TableName;
         private static String _DirName;
         private static bool _IsFromShared;
+        private static MySqlConnection con = ConnectionModel.con;
 
         /// <summary>
         /// Load file based on table name 
@@ -25,7 +26,7 @@ namespace FlowSERVER1 {
         /// <param name="_tableName"></param>
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
-        
+
         public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName, bool _isFromShared = false) {
 
             InitializeComponent();
@@ -33,18 +34,23 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            if (_isShared == true) {
-                _getName = _UploaderName;
-            }
-            else {
-                _getName = "Uploaded By " + _UploaderName;
-            }
-
             label1.Text = _FileTitle;
-            label2.Text = _getName;
             _TableName = _tableName;
             _DirName = _DirectoryName;
             _IsFromShared = _isFromShared;
+
+            if (_isShared == true) {
+                _getName = _UploaderName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+            }
+            else {
+                _getName = "Uploaded By " + _UploaderName;
+                label3.Visible = true;
+                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+            }
+
+            label2.Text = _getName;
 
             try {
 
@@ -84,6 +90,36 @@ namespace FlowSERVER1 {
                 //MessageBox.Show("Failed to load this file.","Flowstorage");
             }
         }
+
+        private string getCommentSharedToMe() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+        private string getCommentSharedToOthers() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+
         // @SUMMARY Convert bytes of PDF file to stream
         public void setupPdf(byte[] pdfBytes) {
             if(pdfBytes != null) {
@@ -166,6 +202,10 @@ namespace FlowSERVER1 {
         }
 
         private void pdfDocumentViewer1_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e) {
 
         }
     }

@@ -44,17 +44,22 @@ namespace FlowSERVER1 {
                 String _getName = "";
                 bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
 
+                instance = this;
+                label1.Text = fileName;
+                var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
+
                 if (_isShared == true) {
                     _getName = _UploaderUsername;
+                    label3.Visible = true;
+                    label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
                 }
                 else {
                     _getName = "Uploaded By " + _UploaderUsername;
+                    label3.Visible = true;
+                    label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
                 }
 
-                instance = this;
-                label1.Text = fileName;
                 label2.Text = _getName;
-                var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
                 if (tableName == "upload_info_directory" & getText == "") {
 
@@ -194,6 +199,34 @@ namespace FlowSERVER1 {
 
                 MessageBox.Show("Cannot load this file. There's an ongoing upload.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
+        }
+
+        private string getCommentSharedToMe() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
+        }
+
+        private string getCommentSharedToOthers() {
+            String returnComment = "";
+            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = readerComment.GetString(0);
+                    }
+                }
+            }
+            return returnComment;
         }
 
         /// <summary>

@@ -35,6 +35,7 @@
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // guna2Button3
@@ -53,7 +54,7 @@
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
             this.guna2Button3.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button3.Location = new System.Drawing.Point(504, 17);
+            this.guna2Button3.Location = new System.Drawing.Point(735, 17);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(38, 31);
             this.guna2Button3.TabIndex = 23;
@@ -76,7 +77,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button1.Location = new System.Drawing.Point(504, 17);
+            this.guna2Button1.Location = new System.Drawing.Point(735, 17);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 31);
             this.guna2Button1.TabIndex = 22;
@@ -86,7 +87,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 12);
+            this.label1.Location = new System.Drawing.Point(11, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(393, 21);
             this.label1.TabIndex = 21;
@@ -108,7 +109,7 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(548, 17);
+            this.guna2Button2.Location = new System.Drawing.Point(779, 17);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 20;
@@ -133,14 +134,14 @@
             this.guna2textbox1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2textbox1.ForeColor = System.Drawing.Color.White;
             this.guna2textbox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2textbox1.Location = new System.Drawing.Point(13, 71);
+            this.guna2textbox1.Location = new System.Drawing.Point(13, 88);
             this.guna2textbox1.Margin = new System.Windows.Forms.Padding(4);
             this.guna2textbox1.Multiline = true;
             this.guna2textbox1.Name = "guna2textbox1";
             this.guna2textbox1.PasswordChar = '\0';
             this.guna2textbox1.PlaceholderText = "";
             this.guna2textbox1.SelectedText = "";
-            this.guna2textbox1.Size = new System.Drawing.Size(570, 341);
+            this.guna2textbox1.Size = new System.Drawing.Size(801, 444);
             this.guna2textbox1.TabIndex = 24;
             this.guna2textbox1.TextChanged += new System.EventHandler(this.haha_TextChanged);
             // 
@@ -154,7 +155,7 @@
             // 
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(12, 36);
+            this.label2.Location = new System.Drawing.Point(12, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(393, 17);
             this.label2.TabIndex = 28;
@@ -177,7 +178,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(416, 17);
+            this.guna2Button4.Location = new System.Drawing.Point(647, 17);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 29;
@@ -193,9 +194,9 @@
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.richTextBox1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.richTextBox1.Location = new System.Drawing.Point(21, 80);
+            this.richTextBox1.Location = new System.Drawing.Point(21, 97);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(552, 324);
+            this.richTextBox1.Size = new System.Drawing.Size(783, 427);
             this.richTextBox1.TabIndex = 30;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -217,18 +218,29 @@
             this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
             this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
             this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button8.Location = new System.Drawing.Point(460, 17);
+            this.guna2Button8.Location = new System.Drawing.Point(691, 17);
             this.guna2Button8.Name = "guna2Button8";
             this.guna2Button8.Size = new System.Drawing.Size(38, 31);
             this.guna2Button8.TabIndex = 51;
             this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label3.Location = new System.Drawing.Point(12, 59);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(393, 17);
+            this.label3.TabIndex = 52;
+            this.label3.Text = "Uploaded By urmom";
             // 
             // txtFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(598, 425);
+            this.ClientSize = new System.Drawing.Size(829, 543);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.guna2Button4);
@@ -261,5 +273,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button4;
         private System.Windows.Forms.RichTextBox richTextBox1;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private System.Windows.Forms.Label label3;
     }
 }

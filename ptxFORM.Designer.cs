@@ -34,6 +34,7 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.officeViewer1 = new Spire.OfficeViewer.Forms.OfficeViewer();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -46,7 +47,7 @@
             // 
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(12, 39);
+            this.label2.Location = new System.Drawing.Point(12, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(590, 17);
             this.label2.TabIndex = 34;
@@ -69,7 +70,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(615, 21);
+            this.guna2Button4.Location = new System.Drawing.Point(647, 21);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 33;
@@ -91,7 +92,7 @@
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
             this.guna2Button3.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button3.Location = new System.Drawing.Point(703, 21);
+            this.guna2Button3.Location = new System.Drawing.Point(735, 21);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(38, 31);
             this.guna2Button3.TabIndex = 32;
@@ -114,7 +115,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button1.Location = new System.Drawing.Point(703, 21);
+            this.guna2Button1.Location = new System.Drawing.Point(735, 21);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 31);
             this.guna2Button1.TabIndex = 31;
@@ -146,7 +147,7 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(747, 21);
+            this.guna2Button2.Location = new System.Drawing.Point(779, 21);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 29;
@@ -157,9 +158,9 @@
             this.officeViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.officeViewer1.Location = new System.Drawing.Point(16, 74);
+            this.officeViewer1.Location = new System.Drawing.Point(16, 89);
             this.officeViewer1.Name = "officeViewer1";
-            this.officeViewer1.Size = new System.Drawing.Size(769, 434);
+            this.officeViewer1.Size = new System.Drawing.Size(801, 446);
             this.officeViewer1.TabIndex = 35;
             this.officeViewer1.Text = "officeViewer1";
             this.officeViewer1.Click += new System.EventHandler(this.officeViewer1_Click);
@@ -181,18 +182,29 @@
             this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
             this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
             this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button8.Location = new System.Drawing.Point(659, 21);
+            this.guna2Button8.Location = new System.Drawing.Point(691, 21);
             this.guna2Button8.Name = "guna2Button8";
             this.guna2Button8.Size = new System.Drawing.Size(38, 31);
             this.guna2Button8.TabIndex = 51;
             this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label3.Location = new System.Drawing.Point(13, 64);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(590, 17);
+            this.label3.TabIndex = 52;
+            this.label3.Text = "Uploaded By urmom";
             // 
             // ptxFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(797, 520);
+            this.ClientSize = new System.Drawing.Size(829, 543);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.officeViewer1);
             this.Controls.Add(this.label2);
@@ -222,5 +234,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private Spire.OfficeViewer.Forms.OfficeViewer officeViewer1;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private System.Windows.Forms.Label label3;
     }
 }
