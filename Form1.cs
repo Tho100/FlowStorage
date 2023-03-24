@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Xml;
+using static Spire.Spreadsheet.Forms.Common.Win32;
+using System.Runtime.Caching;
 
 namespace FlowSERVER1 {
 
@@ -309,6 +311,11 @@ namespace FlowSERVER1 {
         }
 
 
+        private async Task RetrieveDataAsync() {
+            
+        }
+
+
         /// <summary>
         /// Generate user files on startup
         /// </summary>
@@ -343,8 +350,8 @@ namespace FlowSERVER1 {
 
                 string getUpDate = $"SELECT UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    using (MySqlDataReader readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                    using (MySqlDataReader readerDate = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await readerDate.ReadAsync()) {
                             dateValues.Add(readerDate.GetString(0));
                         }
@@ -363,7 +370,7 @@ namespace FlowSERVER1 {
 
                 String getTitleQue = $"SELECT CUST_FILE_PATH FROM {_tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
-                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
                     using (MySqlDataReader titleReader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await titleReader.ReadAsync()) {
                             titleValues.Add(titleReader.GetString(0));
@@ -445,14 +452,28 @@ namespace FlowSERVER1 {
 
                     List<string> base64Encoded = new List<string>();
 
-                    string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(readBase64.GetString(0));
+                    string cacheKeySet = $"user_{label5.Text}_images";
+                    MemoryCache cache = MemoryCache.Default;
+
+                    if (cache.Contains(cacheKeySet)) {
+                        base64Encoded = (List<string>)cache.Get(cacheKeySet);
+                    }
+                    else {
+
+                        string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                while (await readBase64.ReadAsync()) {
+                                    base64Encoded.Add(readBase64.GetString(0));
+                                }
                             }
                         }
+
+                        CacheItemPolicy cachePolicy = new CacheItemPolicy {
+                            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30) // Cache for 30 minutes
+                        };
+                        cache.Add(cacheKeySet, base64Encoded, cachePolicy);
                     }
 
                     if (base64Encoded.Count > i) {
@@ -539,16 +560,23 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "file_info_vid") {
 
-                    List<string> base64Encoded = new List<string>();
+                    string cacheKeyVid = $"user_{label5.Text}_thumbnails";
 
-                    string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(readBase64.GetString(0));
+                    List<string> base64Encoded = MemoryCache.Default.Get(cacheKeyVid) as List<string>;
+
+                    if (base64Encoded == null) {
+                        base64Encoded = new List<string>();
+                        string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                while (await readBase64.ReadAsync()) {
+                                    base64Encoded.Add(readBase64.GetString(0));
+                                }
                             }
                         }
+
+                        MemoryCache.Default.Add(cacheKeyVid, base64Encoded, DateTimeOffset.Now.AddMinutes(30)); 
                     }
 
                     if (base64Encoded.Count > i) {
@@ -829,15 +857,29 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@foldtitle", _foldTitle);
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    base64Encoded.Add(readBase64.GetString(0));
+                        string cacheKeySetFold = $"user_images_folder";
+                        MemoryCache cache = MemoryCache.Default;
+
+                        if (cache.Contains(cacheKeySetFold)) {
+                            base64Encoded = (List<string>)cache.Get(cacheKeySetFold);
+                        }
+                        else {
+
+                            string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                command.Parameters.AddWithValue("@foldtitle", _foldTitle);
+                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        base64Encoded.Add(readBase64.GetString(0));
+                                    }
                                 }
                             }
+
+                            CacheItemPolicy cachePolicy = new CacheItemPolicy {
+                                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30) // Cache for 30 minutes
+                            };
+                            cache.Add(cacheKeySetFold, base64Encoded, cachePolicy);
                         }
 
                         if (base64Encoded.Count > i) {
@@ -933,16 +975,29 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@foldername", _foldTitle);
-                            command.Parameters.AddWithValue("@filename", titleLab.Text);
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    base64Encoded.Add(readBase64.GetString(0));
+                        string cacheKeyThumbnailVid = $"user_thumb_folder";
+                        MemoryCache cache = MemoryCache.Default;
+
+                        if (cache.Contains(cacheKeyThumbnailVid)) {
+                            base64Encoded = (List<string>)cache.Get(cacheKeyThumbnailVid);
+                        } else {
+
+                            string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                                command.Parameters.AddWithValue("@username", label5.Text);
+                                command.Parameters.AddWithValue("@foldername", _foldTitle);
+                                command.Parameters.AddWithValue("@filename", titleLab.Text);
+                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        base64Encoded.Add(readBase64.GetString(0));
+                                    }
                                 }
                             }
+
+                            CacheItemPolicy cachePolicy = new CacheItemPolicy {
+                                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30) // Cache for 30 minutes
+                            };
+                            cache.Add(cacheKeyThumbnailVid, base64Encoded, cachePolicy);
                         }
 
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
@@ -3302,8 +3357,6 @@ namespace FlowSERVER1 {
 
             var form1 = Form1.instance;
 
-            Application.DoEvents();
-
             List<String> typeValues = new List<String>(_extTypes);
 
             for (int q = 0; q < itemCurr; q++) {
@@ -3445,9 +3498,11 @@ namespace FlowSERVER1 {
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp") {
 
                     List<string> base64Encoded = new List<string>();
+
                     string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
@@ -3578,20 +3633,22 @@ namespace FlowSERVER1 {
                 if (typeValues[q] == ".mp4" || typeValues[q] == ".mov" || typeValues[q] == ".webm" || typeValues[q] == ".avi" || typeValues[q] == ".wmv") {
 
                     List<string> base64Encoded = new List<string>();
+
                     string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", form1.label5.Text);
-                        command.Parameters.AddWithValue("@filename", titleLab.Text);
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
                         }
                     }
 
-                    byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
-                    using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                        textboxPic.Image = new Bitmap(toMs);
+                    if (base64Encoded.Count > q) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            textboxPic.Image = new Bitmap(toMs);
+                        }
                     }
 
                     textboxPic.Click += (sender_im, e_im) => {
@@ -3881,11 +3938,11 @@ namespace FlowSERVER1 {
                 if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp") {
 
                     List<string> base64Encoded = new List<string>();
-                    string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
 
+                    string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
@@ -4022,21 +4079,24 @@ namespace FlowSERVER1 {
 
                 if (typeValues[q] == ".mp4" || typeValues[q] == ".mov" || typeValues[q] == ".webm" || typeValues[q] == ".avi" || typeValues[q] == ".wmv") {
 
-                    List<string> base64Encoded = new List<string>();
+                    List<string> base64Encoded = new List<string>();    
+
                     string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
                         command.Parameters.AddWithValue("@filename", titleLab.Text);
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
                         }
                     }
 
-                    byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
-                    using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                        textboxPic.Image = new Bitmap(toMs);
+                    if (base64Encoded.Count > q) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[q]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            textboxPic.Image = new Bitmap(toMs);
+                        }
                     }
 
                     textboxPic.Click += (sender_im, e_im) => {
@@ -5928,18 +5988,19 @@ namespace FlowSERVER1 {
 
                 if (_TypeValues.Count == 0) {
 
-                    String getFilesType = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                    command = new MySqlCommand(getFilesType, con);
-                    command = con.CreateCommand();
-                    command.CommandText = getFilesType;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    using (MySqlCommand command = con.CreateCommand()) {
+                        command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
-                    MySqlDataReader _readType = command.ExecuteReader();
-                    while (_readType.Read()) {
-                        _TypeValues.Add(_readType.GetString(0));// Append ToAr;
+                        using (MySqlDataReader _readType = command.ExecuteReader()) {
+                            while (_readType.Read()) {
+                                _TypeValues.Add(_readType.GetString(0));// Append ToAr;
+                            }
+                        }
                     }
-                    _readType.Close();
+
                     generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
+
 
                 }
                 else {
@@ -5958,29 +6019,25 @@ namespace FlowSERVER1 {
 
                 if (_TypeValuesOthers.Count == 0) {
 
-                    String getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                    command = new MySqlCommand(getFilesTypeOthers, con);
-                    command = con.CreateCommand();
-                    command.CommandText = getFilesTypeOthers;
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    using (MySqlCommand command = con.CreateCommand()) {
+                        command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
-                    MySqlDataReader _readTypeOthers = command.ExecuteReader();
-                    while (_readTypeOthers.Read()) {
-                        _TypeValuesOthers.Add(_readTypeOthers.GetString(0));
+                        using (MySqlDataReader _readType = command.ExecuteReader()) {
+                            while (_readType.Read()) {
+                                _TypeValuesOthers.Add(_readType.GetString(0));// Append ToAr;
+                            }
+                        }
                     }
-                    _readTypeOthers.Close();
 
-                    Application.DoEvents();
+                    generateUserSharedOthers(_TypeValuesOthers, "DIRPAROTHER", _TypeValuesOthers.Count);
 
-                    generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
-
-                    Application.DoEvents();
                 }
                 else {
 
                     Application.DoEvents();
 
-                    generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
+                    generateUserSharedOthers(_TypeValuesOthers, "DIRPAROTHER", _TypeValuesOthers.Count);
 
                     Application.DoEvents();
                 }

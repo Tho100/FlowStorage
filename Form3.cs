@@ -19,6 +19,7 @@ using System.Management;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Runtime.Caching;
 
 namespace FlowSERVER1
 {
@@ -218,7 +219,7 @@ namespace FlowSERVER1
         /// <param name="_tableName"></param>
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
-        public void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+        private async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
             for (int i = 0; i < currItem; i++) {
                 int top = 275;
@@ -248,8 +249,8 @@ namespace FlowSERVER1
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);//Form1.instance.
                     command.Parameters.AddWithValue("@dirname", label1.Text);
                     command.Parameters.AddWithValue("@ext", _extName);
-                    using(var readerDate = command.ExecuteReader()) {
-                        while(readerDate.Read()) {
+                    using(var readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        while(await readerDate.ReadAsync()) {
                             dateValues.Add(readerDate.GetString("UPLOAD_DATE"));
                         }
                     }
@@ -269,8 +270,8 @@ namespace FlowSERVER1
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@dirname", label1.Text);
                     command.Parameters.AddWithValue("@ext", _extName);
-                    using(var readerTitle = command.ExecuteReader()) {
-                        while(readerTitle.Read()) {
+                    using(var readerTitle = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        while(await readerTitle.ReadAsync()) {
                             titleValues.Add(readerTitle.GetString("CUST_FILE_PATH"));
                         }
                     }
@@ -355,8 +356,8 @@ namespace FlowSERVER1
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@dirname", label1.Text);
                         command.Parameters.AddWithValue("@ext", _extName);
-                        using (MySqlDataReader readBase64 = command.ExecuteReader()) {
-                            while (readBase64.Read()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
                         }
@@ -454,13 +455,13 @@ namespace FlowSERVER1
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@dirname", label1.Text);
                         command.Parameters.AddWithValue("@ext", _extName);
-                        using (MySqlDataReader readBase64 = command.ExecuteReader()) {
-                            while (readBase64.Read()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
                         }
                     }
-
+                        
                     if (base64Encoded.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {

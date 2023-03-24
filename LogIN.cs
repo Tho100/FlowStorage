@@ -733,6 +733,8 @@ namespace FlowSERVER1 {
                     }
                 }
 
+
+
                 int _countRow(String _tableName) {
                     String countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
