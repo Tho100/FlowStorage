@@ -3184,8 +3184,6 @@ namespace FlowSERVER1 {
                         showRetrievalFormThread.Start();
                     }
 
-                    Application.DoEvents();
-
                     if (_TypeValues.Count == 0) {
                         string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                         using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
@@ -3210,8 +3208,6 @@ namespace FlowSERVER1 {
                         clearRedundane();
                     }
 
-                    Application.DoEvents();
-
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 }
@@ -3227,8 +3223,6 @@ namespace FlowSERVER1 {
                         var showRetrievalFormThread = new Thread(() => new LoadAlertFORM().ShowDialog());
                         showRetrievalFormThread.Start();
                     }
-
-                    Application.DoEvents();
 
                     if (!_TypeValuesOthers.Any()) {
                         string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
@@ -3252,8 +3246,6 @@ namespace FlowSERVER1 {
                     else {
                         clearRedundane();
                     }
-
-                    Application.DoEvents();
 
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -3300,10 +3292,10 @@ namespace FlowSERVER1 {
                 int indexSelected = listBox1.Items.IndexOf("Home");
                 listBox1.SelectedIndex = indexSelected;
                 Application.OpenForms
-                     .OfType<Form>()
-                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                     .ToList()
-                     .ForEach(form => form.Close());
+                    .OfType<Form>()
+                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+                    .ToList()
+                    .ForEach(form => form.Close());
             }
         }
 
@@ -3467,7 +3459,8 @@ namespace FlowSERVER1 {
 
                         mainPanelTxt.Dispose();
                         if (flowLayoutPanel1.Controls.Count == 0) {
-                            label5.Visible = true;
+                            label8.Visible = true;
+                            guna2Button6.Visible = true;
                         }
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
@@ -3678,7 +3671,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".xml" || typeValues[q] == ".py" || typeValues[q] == ".css" || typeValues[q] == ".js" || typeValues[q] == ".sql" || typeValues[q] == ".csv") {
-                    List<String> _contValues = new List<String>();
+                    /*List<String> _contValues = new List<String>();
                     String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
@@ -3687,7 +3680,7 @@ namespace FlowSERVER1 {
                     if (_ReadConts.Read()) {
                         _contValues.Add(_ReadConts.GetString(0));
                     }
-                    _ReadConts.Close();
+                    _ReadConts.Close();*/
 
                     if (typeValues[q] == ".py") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
@@ -3711,30 +3704,17 @@ namespace FlowSERVER1 {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                     }
 
+                    MessageBox.Show("FUCK");
+
                     textboxPic.Click += (sender_im, e_im) => {
-                        var getImgName = (Guna2PictureBox)sender_im;
-                        var getWidth = getImgName.Image.Width;
-                        var getHeight = getImgName.Image.Height;
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        Form bgBlur = new Form();
-                        using (txtFORM displayTxt = new txtFORM(_contValues[0], "cust_sharing", titleLab.Text, label1.Text, "Shared To " + sharedToName())) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayTxt.Owner = bgBlur;
-                            displayTxt.ShowDialog();
-
-                            bgBlur.Dispose();
+                        if (typeValues[q] == ".csv" || typeValues[q] == ".sql") {
+                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrieval().ShowDialog());
+                            _showRetrievalCsvAlert.Start();
                         }
+
+                        txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, label1.Text, "Shared To " + sharedToName());
+                        displayTxt.Show();
                     };
                 }
 

@@ -143,7 +143,6 @@ namespace FlowSERVER1 {
                         richTextBox1.Text = decryptedTextValues;
                     }
 
-
                     if (FileExt_ == ".py") {
                         pythonSyntax();
                     }
@@ -188,7 +187,8 @@ namespace FlowSERVER1 {
                     if (FileExt_ == ".js") {
                         jsSyntax();
                     }
-                }
+                } 
+
             } catch (Exception) {
 
                 Application.OpenForms
