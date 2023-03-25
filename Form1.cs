@@ -65,9 +65,78 @@ namespace FlowSERVER1 {
 
             this.TopMost = false;
 
-            // @ Load user data  
+            // Load user data  
 
-            try {
+            setupLabel = label5;
+
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
+
+            if (Directory.Exists(path)) {
+                new DirectoryInfo(path).Attributes &= ~FileAttributes.Hidden;
+
+                string authFile = Path.Combine(path, "CUST_DATAS.txt");
+                if (File.Exists(authFile) && new FileInfo(authFile).Length > 0) {
+
+                    string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), "0123456789012345");
+
+                    var alertForm = new LoadAlertFORM();
+                    alertForm.Show();
+                    var closeAlertAction = new Action(() => {
+                        alertForm.Close();
+                        getCurrentLang();
+                        setupUILanguage(CurrentLang);
+                    });
+
+                    try {
+
+                        guna2Panel7.Visible = false;
+                        label5.Text = username;
+
+                        using (var command = new MySqlCommand("SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username", con)) {
+                            command.Parameters.AddWithValue("@username", username);
+                            using (var reader = command.ExecuteReader()) {
+                                if (reader.Read()) {
+                                    label24.Text = reader.GetString(0);
+                                }
+                            }
+                        }
+
+                        var itemsFolder = new[] { "Home", "Shared To Me", "Shared Files" };
+                        listBox1.Items.AddRange(itemsFolder);
+                        listBox1.SelectedIndex = 0;
+
+                        var updatesTitle = new List<string>();
+                        using (var command = new MySqlCommand("SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username", ConnectionModel.con)) {
+                            command.Parameters.AddWithValue("@username", username);
+                            using (var reader = command.ExecuteReader()) {
+                                while (reader.Read()) {
+                                    updatesTitle.Add(reader.GetString(0));
+                                }
+                            }
+                        }
+
+                        listBox1.Items.AddRange(updatesTitle.ToArray());
+                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        setupTime();
+                    }
+
+                    finally {
+                        closeAlertAction();
+                    }
+                   
+                    label5.Text = username;
+                    new DirectoryInfo(path).Attributes |= (FileAttributes.Directory | FileAttributes.Hidden);
+                }
+            }
+            else {
+                // @ Ignore "FlowstorageInfos not found" error
+            }
+
+            // Close any open LoadAlertFORM
+            Application.OpenForms.OfType<Form>().Where(form => form.Name == "LoadAlertFORM").ToList().ForEach(form => form.Close());
+
+
+            /*try {
 
                 setupLabel = label5;
 
@@ -137,11 +206,9 @@ namespace FlowSERVER1 {
                 } else {
                     // @ Ignore "FlowstorageInfos not found" error
                 }
-            }
-         
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            }*/
         }
 
 

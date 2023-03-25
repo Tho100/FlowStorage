@@ -48,98 +48,10 @@ namespace FlowSERVER1 {
 
         public remAccFORM(String _accName,String _emailAddr) {
             InitializeComponent();
-            /*instance = this;
-            label5.Text = _accName;   
-            label76.Text = _emailAddr.Substring(3) + "***";
-
-            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
-
-            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
-            ToolTip1.SetToolTip(this.guna2Button11, "Item upload indicate how many file/directory you can upload.");
-
-            try {
-                
-                getCurrentLang();
-                setupUILanguage(CurrentLang);
-                setupRedundane(label6.Text);
-                GetAccountType();
-                countTotalAll();
-
-                // @SUMMARY Retrieve account creation date and display the date on label
-
-                chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
-                generateChart("Image", "file_info");
-                generateChart("Text", "file_info_expand");
-                generateChart("Video", "file_info_vid");
-                generateChart("PDF", "file_info_pdf");
-                generateChart("APK", "file_info_apk");
-                generateChart("Exe", "file_info_exe");
-                generateChart("GIF", "file_info_gif");
-                generateChart("Document", "file_info_word");
-                generateChart("Presentation", "file_info_ptx");
-                generateChart("Audio","file_info_audi");
-                generateChart("Excel","file_info_excel");
-
-                TotalUploadFileTodayCount("file_info");
-                TotalUploadFileTodayCount("file_info_pdf");
-                TotalUploadFileTodayCount("file_info_expand");
-                TotalUploadFileTodayCount("file_info_exe");
-                TotalUploadFileTodayCount("file_info_word");
-                TotalUploadFileTodayCount("file_info_ptx");
-                TotalUploadFileTodayCount("file_info_gif");
-                TotalUploadFileTodayCount("file_info_audi");
-                TotalUploadFileTodayCount("file_info_vid");
-                TotalUploadFileTodayCount("file_info_excel");
-                TotalUploadDirectoryTodayCount();
-
-                var _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
-                label26.Text = _totalUploadTodayCount.ToString();
-
-                TotalUploadFile("file_info");
-                TotalUploadFile("file_info_pdf");
-                TotalUploadFile("file_info_expand");
-                TotalUploadFile("file_info_exe");
-                TotalUploadFile("file_info_word");
-                TotalUploadFile("file_info_ptx");
-                TotalUploadFile("file_info_gif");
-                TotalUploadFile("file_info_audi");
-                TotalUploadFile("file_info_vid");
-                TotalUploadFile("file_info_excel");
-
-                var _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
-                label12.Text = _totalUploadOvertime.ToString();
-
-            } catch (Exception) {
-                Form bgBlur = new Form();
-                using (waitFORM displayWait = new waitFORM()) {
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                    bgBlur.Opacity = .24d;
-                    bgBlur.BackColor = Color.Black;
-                    bgBlur.WindowState = FormWindowState.Maximized;
-                    bgBlur.TopMost = true;
-                    bgBlur.Location = this.Location;
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.ShowInTaskbar = false;
-                    bgBlur.Show();
-
-                    displayWait.Owner = bgBlur;
-                    displayWait.ShowDialog();
-
-                    bgBlur.Dispose();
-                }
-                
-            }*/
-
-
-
 
             instance = this;
             label5.Text = _accName;
-            //label76.Text = _emailAddr.Substring(3) + "***";
+  
             int indexOfAllias = _emailAddr.IndexOf("@");
             label76.Text = _emailAddr.Substring(0, 1) + new String('*', indexOfAllias - 2) + _emailAddr.Substring(indexOfAllias - 1);
 
@@ -161,7 +73,7 @@ namespace FlowSERVER1 {
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
-                string[] tableNames = { "info", "info_vid", "info_apk", "info_pdf", "info_exe", "info_excel", "info_gif", "info_word", "info_ptx", "info_audi", "info_expand" };
+                string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_gif", "info_word", "info_ptx", "info_audi", "info_excel" };
                 string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "GIF", "Document", "Presentation", "Audio", "Excel" };
                 foreach ((string tableName, string chartName) in tableNames.Zip(chartTypes, (a, b) => (a, b))) {
                     generateChart(chartName, "file_" + tableName.ToLower());
@@ -194,11 +106,6 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-
-
-
-
-
         }
 
         /// <summary>
@@ -252,15 +159,15 @@ namespace FlowSERVER1 {
         /// This function will tells user the number
         /// of directory they have created a day
         /// </summary>
-        private void TotalUploadDirectoryTodayCount() {
+        private async void TotalUploadDirectoryTodayCount() {
             String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
             String querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@date", currentDate);
 
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
                         _TotalUploadDirectoryToday.Add(reader.GetString(0));
                     }
                 }
@@ -387,16 +294,16 @@ namespace FlowSERVER1 {
         /// <param name="_serName"></param>
         /// <param name="_tableName"></param>
 
-        public void generateChart(String _serName, String _tableName) {
+        private async void generateChart(String _serName, String _tableName) {
 
             List<int> totalRows = new List<int>();
-            List<String> uploadDates = new List<String>();
+            List<string> uploadDates = new List<string>();
 
-            String querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
+            string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
                         totalRows.Add(reader.GetInt32(1));
                         uploadDates.Add(reader.GetString(0));
                     }
@@ -1603,13 +1510,13 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void getCurrentLang() {
-            String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
+        private async void getCurrentLang() {
+            string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
-                using (MySqlDataReader _readLang = command.ExecuteReader()) {
-                    if (_readLang.Read()) {
+                using (MySqlDataReader _readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await _readLang.ReadAsync()) {
                         CurrentLang = _readLang.GetString(0);
                     }
                 }
