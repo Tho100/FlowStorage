@@ -15,8 +15,8 @@ using System.IO;
 using System.Xml;
 using ExcelDataReader;
 using ClosedXML.Excel;
-
 namespace FlowSERVER1 {
+
 
     /// <summary>
     /// Excel viewer form
@@ -91,6 +91,7 @@ namespace FlowSERVER1 {
                     _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
                 }
             }
+
             catch (Exception) {
                 MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
@@ -136,40 +137,62 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name=""></param>
         private void generateSheet(Byte[] _getByte) {
-            onlyOnceVarible++;
-            MemoryStream _toStream = new MemoryStream(_getByte);
-            using (XLWorkbook workBook = new XLWorkbook(_toStream)) {
 
-                foreach (var _getSheetsName in workBook.Worksheets) {
-                    if(onlyOnceVarible == 1) {
-                        guna2ComboBox1.Items.Add(_getSheetsName);
+            try {
+
+                onlyOnceVarible++;
+                MemoryStream _toStream = new MemoryStream(_getByte);
+                using (XLWorkbook workBook = new XLWorkbook(_toStream)) {
+
+                    foreach (var _getSheetsName in workBook.Worksheets) {
+                        if(onlyOnceVarible == 1) {
+                            guna2ComboBox1.Items.Add(_getSheetsName);
+                        }
+                    }
+                    guna2ComboBox1.SelectedIndex = _changedIndex;
+                    guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
+                    _currentSheetIndex = _changedIndex+1;
+                    IXLWorksheet workSheet = workBook.Worksheet(_currentSheetIndex);
+
+                    DataTable dt = new DataTable();
+
+                    bool firstRow = true;
+                    foreach (IXLRow row in workSheet.Rows()) {
+                        if (firstRow) {
+                            foreach (IXLCell cell in row.Cells()) {
+                                dt.Columns.Add(cell.Value.ToString());
+                            }
+                            firstRow = false;
+                        }
+                        else {
+                            dt.Rows.Add();
+                            int i = 0;
+                            foreach (IXLCell cell in row.Cells()) {
+                                dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
+                                i++;
+                            }
+                        }
+
+                        dataGridView1.DataSource = dt;
                     }
                 }
-                guna2ComboBox1.SelectedIndex = _changedIndex;
-                guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
-                _currentSheetIndex = _changedIndex+1;
-                IXLWorksheet workSheet = workBook.Worksheet(_currentSheetIndex);
 
-                DataTable dt = new DataTable();
+            } catch (Exception) {
 
-                bool firstRow = true;
-                foreach (IXLRow row in workSheet.Rows()) {
-                    if (firstRow) {
-                        foreach (IXLCell cell in row.Cells()) {
-                            dt.Columns.Add(cell.Value.ToString());
-                        }
-                        firstRow = false;
+                using (var bgBlur = new Form {
+                    StartPosition = FormStartPosition.Manual,
+                    FormBorderStyle = FormBorderStyle.None,
+                    Opacity = .24d,
+                    BackColor = Color.Black,
+                    WindowState = FormWindowState.Maximized,
+                    TopMost = true,
+                    Location = this.Location,
+                    ShowInTaskbar = false
+                }) {
+                    using (var displayWait = new errorLoad { Owner = bgBlur }) {
+                        bgBlur.Show();
+                        displayWait.ShowDialog();
                     }
-                    else {
-                        dt.Rows.Add();
-                        int i = 0;
-                        foreach (IXLCell cell in row.Cells()) {
-                            dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
-                            i++;
-                        }
-                    }
-
-                    dataGridView1.DataSource = dt;
                 }
             }
         }

@@ -56,10 +56,11 @@ namespace FlowSERVER1 {
 
         String custUsername;
         String custEmail;
+
         /// <summary>
-        /// Load user files as soon they loggin-ed
+        /// Load user files as soon they logged in
         /// </summary>
-        public void loadUserData() {
+        private void loadUserData() {
 
             var form = Form1.instance;
             var flowlayout = form.flowLayoutPanel1;
@@ -167,7 +168,7 @@ namespace FlowSERVER1 {
                     _form.label8.Visible = false;
                 }
 
-                void _generateUserFolder(String userName,String passUser) {
+                async void _generateUserFolder(String userName,String passUser) {
 
                     String[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
                     _form.listBox1.Items.AddRange(itemFolder);
@@ -178,8 +179,8 @@ namespace FlowSERVER1 {
                     String getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
                         command.Parameters.AddWithValue("@username", userName);
-                        using (MySqlDataReader fold_Reader = command.ExecuteReader()) {
-                            while (fold_Reader.Read()) {
+                        using (MySqlDataReader fold_Reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                            while (await fold_Reader.ReadAsync()) {
                                 updatesTitle.Add(fold_Reader.GetString(0));
                             }
                         }
@@ -190,7 +191,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                void _generateUserDirectory(String userName, String passUser, int rowLength) {
+                async void _generateUserDirectory(String userName, String passUser, int rowLength) {
                     for(int i=0; i<rowLength-1; i++) {
                         int top = 275;
                         int h_p = 100;
@@ -219,8 +220,8 @@ namespace FlowSERVER1 {
                         using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
                             command.Parameters.AddWithValue("@username", userName);
 
-                            using (MySqlDataReader readerDate = command.ExecuteReader()) {
-                                while (readerDate.Read()) {
+                            using (MySqlDataReader readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                while (await readerDate.ReadAsync()) {
                                     dateValues.Add(readerDate.GetString(0));
                                 }
                             }
@@ -240,8 +241,8 @@ namespace FlowSERVER1 {
                         using (MySqlCommand command = new MySqlCommand(getTitleDir, con)) {
                             command.Parameters.AddWithValue("@username", userName);
 
-                            using (MySqlDataReader readerTitle = command.ExecuteReader()) {
-                                while (readerTitle.Read()) {
+                            using (MySqlDataReader readerTitle = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                while (await readerTitle.ReadAsync()) {
                                     titleValues.Add(readerTitle.GetString(0));
                                 }
                             }
@@ -314,10 +315,12 @@ namespace FlowSERVER1 {
 
                         picMain_Q.Image = FlowSERVER1.Properties.Resources.icon1;
                         picMain_Q.Click += (sender_dir, ev_dir) => {
-                            RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader");
-                            ShowAlert.Show();
+
+                            RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader");                            ShowAlert.Show();
+
                             Form3 displayDirectory = new Form3(titleLab.Text);
                             displayDirectory.Show();
+
                             Application.OpenForms
                                .OfType<Form>()
                                .Where(getForm => String.Equals(getForm.Name, "RetrievalAlert"))
@@ -327,7 +330,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+                async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
                     for (int i = 0; i < currItem; i++) {
                         int top = 275;
                         int h_p = 100;
@@ -355,8 +358,8 @@ namespace FlowSERVER1 {
                         String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            using (MySqlDataReader readerDate = command.ExecuteReader()) {
-                                while (readerDate.Read()) {
+                            using (MySqlDataReader readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                while (await readerDate.ReadAsync()) {
                                     dateValues.Add(readerDate.GetString(0));
                                 }
                             }
@@ -375,8 +378,8 @@ namespace FlowSERVER1 {
                         String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            using (MySqlDataReader titleReader = command.ExecuteReader()) {
-                                while (titleReader.Read()) {
+                            using (MySqlDataReader titleReader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                while (await titleReader.ReadAsync()) {
                                     titleValues.Add(titleReader.GetString(0));
                                 }
                             }
@@ -458,8 +461,8 @@ namespace FlowSERVER1 {
                             string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                                 command.Parameters.AddWithValue("@username", label5.Text);
-                                using (MySqlDataReader readBase64 = command.ExecuteReader()) {
-                                    while (readBase64.Read()) {
+                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
                                     }
                                 }
@@ -544,8 +547,8 @@ namespace FlowSERVER1 {
                             string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                                 command.Parameters.AddWithValue("@username", label5.Text);
-                                using (MySqlDataReader readBase64 = command.ExecuteReader()) {
-                                    while (readBase64.Read()) {
+                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
                                     }
                                 }
@@ -827,6 +830,7 @@ namespace FlowSERVER1 {
                 attemptCurr++;
 
                 loadUserData();
+
             } catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

@@ -61,7 +61,9 @@ namespace FlowSERVER1 {
 
                 label2.Text = _getName;
 
-                if (tableName == "upload_info_directory" & getText == "") {
+
+
+                if (tableName == "upload_info_directory" && getText == "") {
 
                     string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
@@ -124,70 +126,17 @@ namespace FlowSERVER1 {
                     if (FileExt_ == ".js") {
                         jsSyntax();
                     }
+
                 } else if (tableName == "file_info_expand") {
-
                     string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-
-                    using (var command = new MySqlCommand(getTxtQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", label1.Text);
-
-                        string textValuesF = "";
-                        using (MySqlDataReader reader = command.ExecuteReader()) {
-                            if (reader.Read()) {
-                                textValuesF = reader.GetString(0);
-                            }
-                        }
-
-                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
-                        richTextBox1.Text = decryptedTextValues;
-                    }
-
-                    if (FileExt_ == ".py") {
-                        pythonSyntax();
-                    }
-                    if (FileExt_ == ".html") {
-                        htmlSyntax();
-                    }
-                    if(FileExt_ == ".css") {
-                        cssSyntax();
-                    }
-                    if(FileExt_ == ".js") {
-                        jsSyntax();
-                    }
-
-                } else if (tableName == "cust_sharing") {
-
+                    retrieveData(getTxtQuery,FileExt_);
+                } else if (tableName == "cust_sharing" && _isShared == false) {
                     string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-
-                    using (var command = new MySqlCommand(getTxtQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", label1.Text);
-
-                        string textValuesF = "";
-                        using (MySqlDataReader reader = command.ExecuteReader()) {
-                            if (reader.Read()) {
-                                textValuesF = reader.GetString(0);
-                            }
-                        }
-
-                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
-                        richTextBox1.Text = decryptedTextValues;
-                    }
-
-                    if (FileExt_ == ".py") {
-                        pythonSyntax();
-                    }
-                    if (FileExt_ == ".html") {
-                        htmlSyntax();
-                    }
-                    if (FileExt_ == ".css") {
-                        cssSyntax();
-                    }
-                    if (FileExt_ == ".js") {
-                        jsSyntax();
-                    }
-                } 
+                    retrieveData(getTxtQuery,FileExt_);
+                } else if (tableName == "cust_sharing" && _isShared == true) {
+                    string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                    retrieveData(getTxtQuery,FileExt_);
+                }
 
             } catch (Exception) {
 
@@ -197,8 +146,41 @@ namespace FlowSERVER1 {
                 .ToList()
                 .ForEach(form => form.Close());
 
-                MessageBox.Show("Cannot load this file. There's an ongoing upload.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
+        }
+
+        private async void retrieveData(String PerformQue,String FileExtension) {
+
+            string getTxtQuery = PerformQue;
+            using (var command = new MySqlCommand(getTxtQuery, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", label1.Text);
+
+                string textValuesF = "";
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+                        textValuesF = reader.GetString(0);
+                    }
+                }
+
+                string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                richTextBox1.Text = decryptedTextValues;
+            }
+
+            if (FileExtension == ".py") {
+                pythonSyntax();
+            }
+            if (FileExtension == ".html") {
+                htmlSyntax();
+            }
+            if (FileExtension == ".css") {
+                cssSyntax();
+            }
+            if (FileExtension == ".js") {
+                jsSyntax();
+            }
+
         }
 
         private string getCommentSharedToMe() {

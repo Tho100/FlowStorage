@@ -134,83 +134,8 @@ namespace FlowSERVER1 {
 
             // Close any open LoadAlertFORM
             Application.OpenForms.OfType<Form>().Where(form => form.Name == "LoadAlertFORM").ToList().ForEach(form => form.Close());
-
-
-            /*try {
-
-                setupLabel = label5;
-
-                String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-
-                if(Directory.Exists(_getPath)) {
-
-                    DirectoryInfo _getDirectory = new DirectoryInfo(_getPath);
-                    _getDirectory.Attributes = _getDirectory.Attributes & ~FileAttributes.Hidden;
-
-                    String _getAuth = _getPath + "\\CUST_DATAS.txt";
-                    if (File.Exists(_getAuth)) {
-                        String _UsernameFirst = EncryptionModel.Decrypt(File.ReadLines(_getAuth).First(), "0123456789012345");
-                        if (new FileInfo(_getAuth).Length != 0) {
-
-                            Thread showAlertLoadThread = new Thread(() => new LoadAlertFORM().ShowDialog());
-                            showAlertLoadThread.Start();
-
-                            guna2Panel7.Visible = false;
-                            label5.Text = _UsernameFirst;
-
-                            _getDirectory.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-
-                            string getEmails = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-                            using (MySqlCommand command = new MySqlCommand(getEmails, con)) {
-                                command.Parameters.AddWithValue("@username", label5.Text);
-                                using (MySqlDataReader reader = command.ExecuteReader()) {
-                                    if (reader.Read()) {
-                                        label24.Text = reader.GetString(0);
-                                    }
-                                }
-                            }
-
-                            String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
-                            listBox1.Items.AddRange(itemsFolder);
-                            listBox1.SelectedIndex = 0;
-
-                            List<String> updatesTitle = new List<String>();
-
-                            string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
-                            using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
-                                command.Parameters.AddWithValue("@username", label5.Text);
-                                using (MySqlDataReader fold_Reader = command.ExecuteReader()) {
-                                    while (fold_Reader.Read()) {
-                                        updatesTitle.Add(fold_Reader.GetString(0));
-                                    }
-                                }
-                            }
-
-                            foreach(String titleEach in updatesTitle) {
-                                listBox1.Items.Add(titleEach);
-                            }
-
-                            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-                            setupTime();
-                        }
-
-                        getCurrentLang();
-                        setupUILanguage(CurrentLang);
-
-                        Application.OpenForms
-                            .OfType<Form>()
-                            .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                            .ToList()
-                            .ForEach(form => form.Close());
-                    }
-                } else {
-                    // @ Ignore "FlowstorageInfos not found" error
-                }
-            } catch (Exception) {
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }*/
+     
         }
-
 
         /// <summary>
         /// Start genertating UI labels based on user language
@@ -3762,10 +3687,10 @@ namespace FlowSERVER1 {
 
                     textboxPic.Click += (sender_im, e_im) => {
 
-                        if (typeValues[q] == ".csv" || typeValues[q] == ".sql") {
+                        /*if (typeValues[q] == ".csv" || typeValues[q] == ".sql") {
                             Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrieval().ShowDialog());
                             _showRetrievalCsvAlert.Start();
-                        }
+                        }*/
 
                         txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, label1.Text, "Shared To " + sharedToName());
                         displayTxt.Show();
@@ -4199,24 +4124,8 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        Form bgBlur = new Form();
-                        using (txtFORM displayTxt = new txtFORM(_contValues[0], "cust_sharing", titleLab.Text, label1.Text, UploaderUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayTxt.Owner = bgBlur;
-                            displayTxt.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        txtFORM displayTxt = new txtFORM(_contValues[0], "cust_sharing", titleLab.Text, label1.Text, UploaderUsername);
+                        displayTxt.Show();
                     };
                 }
 
@@ -5231,7 +5140,7 @@ namespace FlowSERVER1 {
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", label5.Text);
                             command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     base64Encoded.Add(readBase64.GetString(0));
                                 }
