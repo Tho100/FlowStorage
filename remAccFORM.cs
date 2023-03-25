@@ -48,7 +48,7 @@ namespace FlowSERVER1 {
 
         public remAccFORM(String _accName,String _emailAddr) {
             InitializeComponent();
-            instance = this;
+            /*instance = this;
             label5.Text = _accName;   
             label76.Text = _emailAddr.Substring(3) + "***";
 
@@ -132,7 +132,72 @@ namespace FlowSERVER1 {
                     bgBlur.Dispose();
                 }
                 
+            }*/
+
+
+
+
+            instance = this;
+            label5.Text = _accName;
+            //label76.Text = _emailAddr.Substring(3) + "***";
+            int indexOfAllias = _emailAddr.IndexOf("@");
+            label76.Text = _emailAddr.Substring(0, 1) + new String('*', indexOfAllias - 2) + _emailAddr.Substring(indexOfAllias - 1);
+
+            foreach (var axis in chart1.ChartAreas[0].Axes) {
+                axis.MajorGrid.Enabled = false;
+                axis.MinorGrid.Enabled = false;
             }
+
+            ToolTip ToolTip1 = new ToolTip();
+            ToolTip1.SetToolTip(guna2Button11, "Item upload indicate how many file/directory you can upload.");
+
+            try {
+
+                getCurrentLang();
+                setupUILanguage(CurrentLang);
+                setupRedundane(label6.Text);
+                GetAccountType();
+                countTotalAll();
+
+                chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
+
+                string[] tableNames = { "info", "info_vid", "info_apk", "info_pdf", "info_exe", "info_excel", "info_gif", "info_word", "info_ptx", "info_audi", "info_expand" };
+                string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "GIF", "Document", "Presentation", "Audio", "Excel" };
+                foreach ((string tableName, string chartName) in tableNames.Zip(chartTypes, (a, b) => (a, b))) {
+                    generateChart(chartName, "file_" + tableName.ToLower());
+                    TotalUploadFileTodayCount("file_" + tableName.ToLower());
+                    TotalUploadFile("file_" + tableName.ToLower());
+                }
+
+                TotalUploadDirectoryTodayCount();
+
+                int _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
+                label26.Text = _totalUploadTodayCount.ToString();
+
+                int _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
+                label12.Text = _totalUploadOvertime.ToString();
+
+            } catch (Exception) {
+                using (var bgBlur = new Form {
+                    StartPosition = FormStartPosition.Manual,
+                    FormBorderStyle = FormBorderStyle.None,
+                    Opacity = .24d,
+                    BackColor = Color.Black,
+                    WindowState = FormWindowState.Maximized,
+                    TopMost = true,
+                    Location = this.Location,
+                    ShowInTaskbar = false
+                }) {
+                    using (var displayWait = new waitFORM { Owner = bgBlur }) {
+                        bgBlur.Show();
+                        displayWait.ShowDialog();
+                    }
+                }
+            }
+
+
+
+
 
         }
 
@@ -603,7 +668,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                var _setupApiKey = DecryptApi("0afe74-gksuwpe8r", ConfigurationManager.ConnectionStrings["APISETUP"].ConnectionString);
+                var _setupApiKey = DecryptApi("0afe74-gksuwpe8r", ConfigurationManager.ConnectionStrings["asfhuwdajdwdwpo=#k"].ConnectionString);
                 Stripe.StripeConfiguration.SetApiKey(_setupApiKey);
                 var service = new Stripe.CustomerService();
                 var customers = service.List();
@@ -2408,6 +2473,10 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Process.Start("https://flowstorage.netlify.app/api_web/index.html");
+        }
+
+        private void label22_Click(object sender, EventArgs e) {
+
         }
     }
 }

@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Xml;
-using static Spire.Spreadsheet.Forms.Common.Win32;
 using System.Runtime.Caching;
 
 namespace FlowSERVER1 {
@@ -3152,8 +3151,8 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand(getFileType, con)) {
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@foldername", _selectedFolder);
-                        using (var reader = command.ExecuteReader()) {
-                            while (reader.Read()) {
+                        using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                            while (await reader.ReadAsync()) {
                                 typesValues.Add(reader.GetString(0));
                             }
                         }
@@ -3671,16 +3670,6 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".xml" || typeValues[q] == ".py" || typeValues[q] == ".css" || typeValues[q] == ".js" || typeValues[q] == ".sql" || typeValues[q] == ".csv") {
-                    /*List<String> _contValues = new List<String>();
-                    String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-
-                    MySqlDataReader _ReadConts = command.ExecuteReader();
-                    if (_ReadConts.Read()) {
-                        _contValues.Add(_ReadConts.GetString(0));
-                    }
-                    _ReadConts.Close();*/
 
                     if (typeValues[q] == ".py") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
@@ -3703,8 +3692,6 @@ namespace FlowSERVER1 {
                     else if (typeValues[q] == ".csv") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                     }
-
-                    MessageBox.Show("FUCK");
 
                     textboxPic.Click += (sender_im, e_im) => {
 
@@ -4571,7 +4558,6 @@ namespace FlowSERVER1 {
                 dateLab.Enabled = true;
                 dateLab.Location = new Point(12, 208);
                 dateLab.Text = dateValues[i];
-
 
                 String selectFileName = "SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH LIKE @filename";
                 using (MySqlCommand command = new MySqlCommand(selectFileName, con)) {
@@ -5591,22 +5577,27 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[q] == ".mp4" || typeValues[q] == ".mov" || typeValues[q] == ".webm" || typeValues[q] == ".avi" || typeValues[q] == ".wmv") {
-                    List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-                    command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
 
-                    MySqlDataReader _readBase64 = command.ExecuteReader();
-                    while (_readBase64.Read()) {
-                        _base64Encoded.Add(_readBase64.GetString(0));
+                    List<string> base64Encoded = new List<string>();
+                    string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH LIKE @filename";
+
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", form1.label5.Text);
+                        command.Parameters.AddWithValue("@filename", "%" + guna2TextBox5.Text + "%");
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await readBase64.ReadAsync()) {
+                                base64Encoded.Add(readBase64.GetString(0));
+                            }
+                        }
                     }
-                    _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[q]);
-                    MemoryStream _toMs = new MemoryStream(_getBytes);
+                    if (base64Encoded.Count > q) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[q]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            textboxPic.Image = new Bitmap(toMs);
+                        }
+                    }
 
-                    textboxPic.Image = new Bitmap(_toMs);
                     textboxPic.Click += (sender_im, e_im) => {
                         var getImgName = (Guna2PictureBox)sender_im;
                         var getWidth = getImgName.Image.Width;
@@ -5754,12 +5745,12 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void callGeneratorSharedSearch() {
+        private async void callGeneratorSharedSearch() {
             String getFilesTypeOthers = $"SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(getFilesTypeOthers, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
                         _TypeValuesOthers.Add(reader.GetString(0));
                     }
                 }
@@ -5853,7 +5844,7 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         
-        private void callGeneratorFolder() {
+        private async void callGeneratorFolder() {
 
             _TypeValuesOthers.Clear();
             flowLayoutPanel1.Controls.Clear();
@@ -5870,8 +5861,8 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@foldername", _selectedFolder);
 
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
                         typesValues.Add(reader.GetString(0));
                     }
                 }
