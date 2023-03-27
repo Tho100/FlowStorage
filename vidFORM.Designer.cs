@@ -39,6 +39,7 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
@@ -268,12 +269,35 @@
             this.label4.TabIndex = 39;
             this.label4.Text = "Uploaded By urmom";
             // 
+            // guna2Button7
+            // 
+            this.guna2Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button7.Animated = true;
+            this.guna2Button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.guna2Button7.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.guna2Button7.BorderRadius = 6;
+            this.guna2Button7.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button7.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button7.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button7.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button7.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button7.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.guna2Button7.ForeColor = System.Drawing.Color.White;
+            this.guna2Button7.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
+            this.guna2Button7.ImageSize = new System.Drawing.Size(17, 17);
+            this.guna2Button7.Location = new System.Drawing.Point(675, 12);
+            this.guna2Button7.Name = "guna2Button7";
+            this.guna2Button7.Size = new System.Drawing.Size(38, 31);
+            this.guna2Button7.TabIndex = 40;
+            this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click);
+            // 
             // vidFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(857, 570);
+            this.Controls.Add(this.guna2Button7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.videoView1);
             this.Controls.Add(this.guna2Button6);
@@ -318,5 +342,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
         private LibVLCSharp.WinForms.VideoView videoView1;
         private System.Windows.Forms.Label label4;
+        public Guna.UI2.WinForms.Guna2Button guna2Button7;
     }
 }

@@ -24,7 +24,7 @@ namespace FlowSERVER1 {
         public static txtFORM instance;
         public static MySqlConnection con = ConnectionModel.con;
         public static MySqlCommand command = ConnectionModel.command;
-
+        private static bool IsFromSharing;
         /// <summary>
         /// 
         /// Retrieve text data based on table name 
@@ -36,7 +36,7 @@ namespace FlowSERVER1 {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername) {
+        public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername, bool _isFromSharing = true) {
             InitializeComponent();
 
             try {
@@ -50,6 +50,7 @@ namespace FlowSERVER1 {
 
                 if (_isShared == true) {
                     _getName = _UploaderUsername;
+                    guna2Button5.Visible = false;
                     label3.Visible = true;
                     label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
                 }
@@ -128,6 +129,7 @@ namespace FlowSERVER1 {
                     }
 
                 } else if (tableName == "file_info_expand") {
+                    MessageBox.Show("IN");
                     string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_);
                 } else if (tableName == "cust_sharing" && _isShared == false) {
@@ -164,8 +166,8 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
-                richTextBox1.Text = decryptedTextValues;
+                ///string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                richTextBox1.Text = textValuesF;
             }
 
             if (FileExtension == ".py") {
@@ -426,6 +428,13 @@ namespace FlowSERVER1 {
               .Where(form => String.Equals(form.Name, "bgBlurForm"))
               .ToList()
               .ForEach(form => form.Hide());
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            _showSharingFileFORM.Show();
         }
     }
 }

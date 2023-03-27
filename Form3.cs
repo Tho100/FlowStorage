@@ -1381,7 +1381,7 @@ namespace FlowSERVER1
 
         }
 
-        private void guna2Button12_Click(object sender, EventArgs e) {
+        private void guna2Button12_Click(object sender, EventArgs   e) {
 
         }
 

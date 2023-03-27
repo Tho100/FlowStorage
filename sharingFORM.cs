@@ -111,7 +111,7 @@ namespace FlowSERVER1 {
                     command.Parameters["@CUST_FILE_PATH"].Value = _FileName;
                     command.Parameters["@UPLOAD_DATE"].Value = varDate;
                     command.Parameters["@FILE_EXT"].Value = _retrieved;
-                    command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text;
+                    command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text.Replace("\r\n","");
 
                     _currentFileName = guna2TextBox2.Text;
 
@@ -196,8 +196,8 @@ namespace FlowSERVER1 {
                         using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
                             nonLine = ReadFileTxt.ReadToEnd();
                         }
-                        var encryptValue = EncryptionModel.EncryptText(nonLine);
-                        startSending(encryptValue);
+                        //var encryptValue = EncryptionModel.EncryptText(nonLine);
+                        startSending(nonLine);
 
                     }
                     else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
@@ -407,6 +407,22 @@ namespace FlowSERVER1 {
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
             label5.Text = guna2TextBox4.Text.Length + "/52";
+        }
+
+        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

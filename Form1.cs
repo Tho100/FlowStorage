@@ -289,23 +289,17 @@ namespace FlowSERVER1 {
         /// <summary>
         /// Get user current language
         /// </summary>
-        private void getCurrentLang() {
+        private async void getCurrentLang() {
             String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_selectLang, con);
-            command.Parameters.AddWithValue("@username", label5.Text);
-
-            MySqlDataReader _readLang = command.ExecuteReader();
-            if (_readLang.Read()) {
-                CurrentLang = _readLang.GetString(0);
+            using(var command = new MySqlCommand(_selectLang,con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                using(MySqlDataReader readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if(await readLang.ReadAsync()) {
+                        CurrentLang = readLang.GetString(0);
+                    }
+                }   
             }
-            _readLang.Close();
         }
-
-
-        private async Task RetrieveDataAsync() {
-            
-        }
-
 
         /// <summary>
         /// Generate user files on startup
@@ -1616,9 +1610,9 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_expand") {
-                                    var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
+                                    //var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
                                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                                    startSending(encryptValue);
+                                    startSending(keyVal);
                                     
                                     if (_extTypes == ".py") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
@@ -1877,7 +1871,7 @@ namespace FlowSERVER1 {
                             else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
                                 txtCurr++;
                                 String nonLine = "";
-                                using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { //open.FileName
+                                using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { 
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
@@ -2253,7 +2247,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button11_Click(object sender, EventArgs e) {
+        private async void guna2Button11_Click(object sender, EventArgs e) {
 
             try {
 
@@ -2263,40 +2257,40 @@ namespace FlowSERVER1 {
                 String _getEmail = guna2TextBox3.Text;
                 String _getPin = guna2TextBox4.Text;
 
-                String verfiyUserQue = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
-                command = con.CreateCommand();
-                command.CommandText = verfiyUserQue;
-                command.Parameters.AddWithValue("@username", _getUser);
+                List<string> existsInfosMail = new List<string>();
+                List<string> existsInfosUser = new List<string>();
 
-                List<String> userExists = new List<String>();
-                List<String> emailExists = new List<String>();
+                using (MySqlCommand command = con.CreateCommand()) {
+                    string verifyQueryUser = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+                    command.CommandText = verifyQueryUser;
+                    command.Parameters.AddWithValue("@username", _getUser);
 
-                MySqlDataReader userReader = command.ExecuteReader();
-                while (userReader.Read()) {
-                    userExists.Add(userReader.GetString(0));
-                }
-
-                userReader.Close();
-
-                String verifyEmailQue = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
-                command = con.CreateCommand();
-                command.CommandText = verifyEmailQue;
-                command.Parameters.AddWithValue("@email", _getEmail);
-
-                MySqlDataReader emailReader = command.ExecuteReader();
-                while (emailReader.Read()) {
-                    emailExists.Add(emailReader.GetString(0));
-                }
-                emailReader.Close();
-
-                if (emailExists.Count() >= 1 || userExists.Count() >= 1) {
-                    if (emailExists.Count() >= 1) {
-                        label22.Visible = true;
-                        label22.Text = "Email already exists.";
+                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        while (await reader.ReadAsync()) {
+                            existsInfosUser.Add(reader.GetString(0));
+                        }
                     }
-                    if (userExists.Count() >= 1) {
+
+                    string verifyQueryMail = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
+                    command.CommandText = verifyQueryMail;
+                    command.Parameters.AddWithValue("@email", _getEmail);
+
+                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        while (await reader.ReadAsync()) {
+                            existsInfosMail.Add(reader.GetString(0));
+                        }
+                    }
+
+                }
+
+                if (existsInfosUser.Count() >= 1 || existsInfosMail.Count() >= 1) {
+                    if(existsInfosUser.Count() >= 1) {
                         label11.Visible = true;
                         label11.Text = "Username is taken.";
+                    }
+                    if (existsInfosMail.Count() >= 1) {
+                        label22.Visible = true;
+                        label22.Text = "Email already exists.";
                     }
                 }
                 else {
@@ -3621,7 +3615,7 @@ namespace FlowSERVER1 {
                     string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
@@ -3686,11 +3680,6 @@ namespace FlowSERVER1 {
                     }
 
                     textboxPic.Click += (sender_im, e_im) => {
-
-                        /*if (typeValues[q] == ".csv" || typeValues[q] == ".sql") {
-                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrieval().ShowDialog());
-                            _showRetrievalCsvAlert.Start();
-                        }*/
 
                         txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, label1.Text, "Shared To " + sharedToName());
                         displayTxt.Show();
@@ -3922,7 +3911,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -3942,7 +3931,7 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                if (typeValues[q] == ".pptx" || typeValues[q] == ".pptx") {
+                if (typeValues[q] == ".pptx" || typeValues[q] == ".ppt") {
 
                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                     textboxPic.Click += (sender_im, e_im) => {
@@ -3952,7 +3941,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
                         displayPtx.Show();
                     };
                 }
@@ -3966,7 +3955,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
                         displayPtx.Show();
                     };
                 }
@@ -3980,7 +3969,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (apkFORM displayApk = new apkFORM(titleLab.Text, UploaderUsername, "cust_sharing", label1.Text)) {
+                        using (apkFORM displayApk = new apkFORM(titleLab.Text, UploaderUsername, "cust_sharing", label1.Text,true)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -4009,7 +3998,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
                         displayDoc.Show();
                     };
                 }
@@ -4017,7 +4006,7 @@ namespace FlowSERVER1 {
                 if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls") {
                     textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                     textboxPic.Click += (sender_im, e_im) => {
-                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
                         displayXls.Show();
                     };
                 }
@@ -4031,7 +4020,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
                         displayAud.Show();
                     };
                 }
@@ -4044,7 +4033,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
                         command.Parameters.AddWithValue("@filename", titleLab.Text);
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
@@ -4065,7 +4054,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
                         displayAud.Show();
                     };
                 }
@@ -4124,7 +4113,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        txtFORM displayTxt = new txtFORM(_contValues[0], "cust_sharing", titleLab.Text, label1.Text, UploaderUsername);
+                        txtFORM displayTxt = new txtFORM(_contValues[0], "cust_sharing", titleLab.Text, label1.Text, UploaderUsername,true);
                         displayTxt.Show();
                     };
                 }
@@ -4147,7 +4136,7 @@ namespace FlowSERVER1 {
                     textboxPic.Image = new Bitmap(_toMs);
                     textboxPic.Click += (sender_im, e_im) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername)) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;

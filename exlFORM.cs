@@ -32,6 +32,7 @@ namespace FlowSERVER1 {
         private static int _changedIndex = 0;
         private static Byte[] _sheetsByte;
         private static bool _isFromShared;
+        private static bool IsFromSharing;  // Shared to me 
 
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
@@ -60,6 +61,7 @@ namespace FlowSERVER1 {
 
             if (_isShared == true) {
                 _getName = _UploaderName;
+                guna2Button5.Visible = false;
                 label3.Visible = true;
                 label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -280,6 +282,13 @@ namespace FlowSERVER1 {
         private void guna2Button8_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
             this.TopMost = false;
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            _showSharingFileFORM.Show();
         }
     }
 }

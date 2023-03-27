@@ -15,10 +15,11 @@ namespace FlowSERVER1 {
         public static picFORM instance;
         private static String TableName;
         private static String Directoryname;
-        private static bool IsFromShared;
+        private static bool IsFromShared; // Shared to others
+        private static bool IsFromSharing;  // Shared to me 
         private static MySqlConnection con = ConnectionModel.con;
 
-        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false) {
+        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
             String _getName = "";
@@ -31,9 +32,11 @@ namespace FlowSERVER1 {
             TableName = _TableName;
             Directoryname = _DirectoryName;
             IsFromShared = _IsFromShared;
+            IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
                 _getName = _UploaderName;
+                guna2Button5.Visible = false;
                 label3.Visible = true;
                 label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -130,6 +133,13 @@ namespace FlowSERVER1 {
 
         private void label3_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text,getExtension,IsFromSharing);
+            _showSharingFileFORM.Show();
         }
     }
 }

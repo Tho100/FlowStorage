@@ -85,6 +85,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SheetRetrieval";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.SheetRetrieval_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

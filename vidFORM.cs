@@ -27,8 +27,9 @@ namespace FlowSERVER1 {
         private static String _DirName;
         private static String _UploaderName;
         private static bool _IsFromShared;
+        private static bool IsFromSharing;
 
-        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName, bool _isFromShared = false) {
+        public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName, bool _isFromShared = false,bool _isFromSharing = true) {
             InitializeComponent();
 
             String _getName = "";
@@ -43,9 +44,11 @@ namespace FlowSERVER1 {
             _DirName = dirName;
             _UploaderName = uploaderName;
             _IsFromShared = _isFromShared;
+            IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
                 _getName = _UploaderName;
+                guna2Button7.Visible = false;
                 label4.Visible = true;
                 label4.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -213,6 +216,13 @@ namespace FlowSERVER1 {
 
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button7_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            _showSharingFileFORM.Show();
         }
     }
 }

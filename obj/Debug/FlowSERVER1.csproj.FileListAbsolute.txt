@@ -1339,3 +1339,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\fr\LibVLCSharp.Forms.resources.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\XamlC.stamp
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.shareFileFORM.resources

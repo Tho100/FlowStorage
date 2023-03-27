@@ -22,7 +22,9 @@ namespace FlowSERVER1 {
         public static String _DirName = "";
         public static audFORM instance;
         private static bool isFromShared;
-        public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false) {
+        private static bool IsFromSharing;  // Shared to me 
+
+        public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
             String _getName = "";
@@ -32,9 +34,11 @@ namespace FlowSERVER1 {
             _TabName = _TableName;
             _DirName = _DirectoryName;
             isFromShared = _isFromShared;
+            IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
                 _getName = _UploaderName;
+                guna2Button5.Visible = false;
                 label3.Visible = true;
                 label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -239,6 +243,13 @@ namespace FlowSERVER1 {
                   .ToList()
                   .ForEach(form => form.Hide());
             }
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            _showSharingFileFORM.Show();
         }
     }
 }

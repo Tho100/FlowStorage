@@ -18,6 +18,7 @@ namespace FlowSERVER1 {
         public static String _TableName;
         public static String _DirectoryName;
         private static bool _IsFromShared;
+        private static bool IsFromSharing;  // Shared to me
         /// <summary>
         /// 
         /// Load user docx,doc, document based on table name
@@ -28,7 +29,7 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName, bool _isFromShared = false) {
+        public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
             String _getName = "";
@@ -38,9 +39,11 @@ namespace FlowSERVER1 {
             _TableName = _Table;
             _DirectoryName = _Directory;
             _IsFromShared = _isFromShared;
+            IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
                 _getName = _UploaderName;
+                guna2Button5.Visible = false;
                 label3.Visible = true;
                 label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -171,6 +174,14 @@ namespace FlowSERVER1 {
         }
 
         private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            _showSharingFileFORM.Show();
 
         }
     }

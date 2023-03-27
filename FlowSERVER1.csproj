@@ -573,6 +573,12 @@
     <Compile Include="settingsAlert.Designer.cs">
       <DependentUpon>settingsAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="shareFileFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="shareFileFORM.Designer.cs">
+      <DependentUpon>shareFileFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="sharingFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -759,6 +765,9 @@
     <EmbeddedResource Include="settingsAlert.resx">
       <DependentUpon>settingsAlert.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="shareFileFORM.resx">
+      <DependentUpon>shareFileFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="sharingFORM.resx">
       <DependentUpon>sharingFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -823,6 +832,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-share-26.png" />
     <None Include="Resources\icons8-restart-500 %281%29.png" />
     <None Include="Resources\icons8-sun-48.png" />
     <None Include="Resources\icons8-moon-48.png" />

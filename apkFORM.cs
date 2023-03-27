@@ -18,8 +18,9 @@ namespace FlowSERVER1 {
         private static MySqlCommand command = ConnectionModel.command;
         private static String _TableName;
         private static String _DirName;
+        private static bool IsFromSharing;  // Shared to me 
         private static bool isFromShared = false;
-        public apkFORM(String _titleFile, String _userName,String _tabName, String _dirName, bool _isFromShared = false) {
+        public apkFORM(String _titleFile, String _userName,String _tabName, String _dirName, bool _isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
 
@@ -30,9 +31,11 @@ namespace FlowSERVER1 {
             _TableName = _tabName;
             _DirName = _dirName;
             isFromShared = _isFromShared;
+            IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
                 _getName = _userName;
+                guna2Button5.Visible = false;
                 label3.Visible = true;
                 label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -81,10 +84,6 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e) {
-
-        }
-
         private void label3_Click(object sender, EventArgs e) {
 
         }
@@ -130,6 +129,13 @@ namespace FlowSERVER1 {
             } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
             }
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            string[] parts = label1.Text.Split('.');
+            string getExtension = "." + parts[1];
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            _showSharingFileFORM.Show();
         }
     }
 }
