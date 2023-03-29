@@ -134,7 +134,7 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             string[] parts = label1.Text.Split('.');
             string getExtension = "." + parts[1];
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing,_TableName,_DirName);
             _showSharingFileFORM.Show();
         }
     }

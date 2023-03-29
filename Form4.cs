@@ -217,19 +217,19 @@ namespace FlowSERVER1
 
         public static int value_Dir = 0;
         public static string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-        public void guna2Button2_Click(object sender, EventArgs e) {
+        private async void guna2Button2_Click(object sender, EventArgs e) {
             String filesCount = Form1.instance.label4.Text;
             int totalFiles = int.Parse(filesCount);
 
             String username = Form1.instance.label5.Text;
 
-            var command = new MySqlCommand("SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username", con);
-            command.Parameters.AddWithValue("@username", username);
-
-            String accType = "";
-            using (var reader = command.ExecuteReader()) {
-                while (reader.Read()) {
-                    accType = reader.GetString(0);
+            string accType = "";
+            using (var command = new MySqlCommand("SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username", con)) {
+                command.Parameters.AddWithValue("@username", username);
+                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        accType = reader.GetString(0);
+                    }
                 }
             }
 
@@ -268,13 +268,19 @@ namespace FlowSERVER1
 
                         if (totalFiles != maxFilesCount && countTotalDir != maxDirCount) {
                             value_Dir++;
-                            generateDir(value_Dir, dirTitle);
-                            Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                            var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
-                            insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", dirTitle);
-                            insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
-                            insertValuesCommand.ExecuteNonQuery();
+                            if(Form1.instance.listBox1.Items[Form1.instance.listBox1.SelectedIndex] != "Home") {
+                                MessageBox.Show("You can only create a directory on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            } else {
+
+                                generateDir(value_Dir, dirTitle);
+                                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+
+                                var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
+                                insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", dirTitle);
+                                insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
+                                insertValuesCommand.ExecuteNonQuery();
+                            }
                         }
                         else {
                             DisplayErrorUpgrade(accType);

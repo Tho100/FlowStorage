@@ -96,10 +96,7 @@ namespace FlowSERVER1 {
                 form.listBox1.Items.Clear();
                 form.label5.Text = custUsername;
                 form.label24.Text = custEmail;
-                but6.Visible = false;
-                lab8.Visible = false;
-                label4.Visible = false;
-                Form1.instance.guna2Panel7.Visible = false;
+                but6.Visible = lab8.Visible = label4.Visible = Form1.instance.guna2Panel7.Visible = false;
 
                 setupTime();
 

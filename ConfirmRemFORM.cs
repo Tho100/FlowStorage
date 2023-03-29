@@ -12,8 +12,8 @@ using System.IO;
 
 namespace FlowSERVER1 {
     public partial class ConfirmRemFORM : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
         public ConfirmRemFORM() {
             InitializeComponent();
         }

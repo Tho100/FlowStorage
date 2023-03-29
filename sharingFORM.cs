@@ -108,7 +108,7 @@ namespace FlowSERVER1 {
 
                     command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
                     command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
-                    command.Parameters["@CUST_FILE_PATH"].Value = _FileName;
+                    command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName, "0123456789085746");
                     command.Parameters["@UPLOAD_DATE"].Value = varDate;
                     command.Parameters["@FILE_EXT"].Value = _retrieved;
                     command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text.Replace("\r\n","");
@@ -122,20 +122,11 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                         command.Dispose();
 
-                        Application.OpenForms
-                         .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                         .ToList()
-                         .ForEach(form => form.Close());
+                        var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
+                        uploadAlertFormSucceeded?.Close();
 
                         sucessShare _showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text, guna2TextBox1.Text);
                         _showSuccessfullyTransaction.Show();
-
-                        Application.OpenForms
-                         .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                         .ToList()
-                         .ForEach(form => form.Close());
 
                     }
 
@@ -145,30 +136,35 @@ namespace FlowSERVER1 {
                     }
                     else if (_retrieved == ".docx" || _retrieved == ".doc") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        startSending(_toBase64);
-                    }
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);                    }
                     else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".exe") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.CommandTimeout = 12000;
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".msi") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.CommandTimeout = 12000;
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".mp3" || _retrieved == ".wav") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
 
                     else if (_retrieved == ".pdf") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".apk") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
@@ -177,7 +173,8 @@ namespace FlowSERVER1 {
                     }
                     else if (_retrieved == ".xlsx" || _retrieved == ".xls") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".gif") {
                         ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
@@ -194,10 +191,10 @@ namespace FlowSERVER1 {
                     else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql" || _retrieved == ".csv") {
                         var nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
-                            nonLine = ReadFileTxt.ReadToEnd();
+                            nonLine = ReadFileTxt.ReadToEnd();  
                         }
-                        //var encryptValue = EncryptionModel.EncryptText(nonLine);
-                        startSending(nonLine);
+                        String encryptText = EncryptionModel.Encrypt(nonLine, "0123456789085746");
+                        startSending(encryptText);
 
                     }
                     else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
@@ -209,7 +206,8 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_THUMB"].Value = toBase64Str;// To load: Bitmap -> Byte array
                         }
                         var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
 
                     Application.DoEvents();
@@ -374,11 +372,8 @@ namespace FlowSERVER1 {
 
                                             startSharing();
 
-                                            Application.OpenForms
-                                           .OfType<Form>()
-                                           .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                                           .ToList()
-                                           .ForEach(form => form.Close());
+                                            var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
+                                            uploadAlertFormSucceeded?.Close();
 
                                         }
                                     }

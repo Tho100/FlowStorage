@@ -77,15 +77,15 @@ namespace FlowSERVER1 {
                 string authFile = Path.Combine(path, "CUST_DATAS.txt");
                 if (File.Exists(authFile) && new FileInfo(authFile).Length > 0) {
 
-                    string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), "0123456789012345");
+                    string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), "0123456789085746");
 
-                    var alertForm = new LoadAlertFORM();
+                    var alertForm = new LoadAlertFORM(); // LoadAlertFORM
                     alertForm.Show();
                     var closeAlertAction = new Action(() => {
-                        alertForm.Close();
                         getCurrentLang();
                         setupUILanguage(CurrentLang);
                     });
+                    alertForm.Close();
 
                     try {
 
@@ -301,6 +301,30 @@ namespace FlowSERVER1 {
             }
         }
 
+       /* private async static void FilePathGetter(String TableName) {
+            List<string> fileNamesValues = new List<string>();
+            string decryptedPathName = "";
+
+            using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH FROM {TableName} WHERE CUST_USERNAME = @username", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        fileNamesValues.Add(EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746"));
+                    }
+                }
+            }
+
+            for (int i = 0; i <= fileNamesValues.Count; i++) {
+                if (fileNamesValues[i] == originalFileName) {
+                    decryptedPathName = fileNamesValues[i];
+                    break;
+                }
+            }
+
+            finalEncryptedValue = EncryptionModel.Encrypt(decryptedPathName, "0123456789085746");
+        }*/
+
         /// <summary>
         /// Generate user files on startup
         /// </summary>
@@ -358,7 +382,7 @@ namespace FlowSERVER1 {
                     command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
                     using (MySqlDataReader titleReader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await titleReader.ReadAsync()) {
-                            titleValues.Add(titleReader.GetString(0));
+                            titleValues.Add(EncryptionModel.Decrypt(titleReader.GetString(0), "0123456789085746"));
                         }
                     }
                 }
@@ -417,7 +441,7 @@ namespace FlowSERVER1 {
                         String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@filename", titleFile);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
                         command.ExecuteNonQuery();
 
                         panelPic_Q.Dispose();
@@ -704,6 +728,12 @@ namespace FlowSERVER1 {
 
             try {
 
+                Application.OpenForms
+                   .OfType<Form>()
+                   .Where(form => String.Equals(form.Name, "UploadAlrt"))
+                   .ToList()
+                   .ForEach(form => form.Close());
+
                 flowLayoutPanel1.Controls.Clear();
                 List<String> typeValues = new List<String>(_fileType);
 
@@ -753,14 +783,14 @@ namespace FlowSERVER1 {
                     dateLab.Enabled = true;
                     dateLab.Location = new Point(12, 208);
                     dateLab.Text = dateValues[i];
-
+                    
                     using (var command = new MySqlCommand("SELECT CUST_FILE_PATH FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername", con)) {
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@foldername", _foldTitle);
 
                         using (var readerTitle = await command.ExecuteReaderAsync()) {
                             while (await readerTitle.ReadAsync()) {
-                                titleValues.Add(readerTitle.GetString(0));
+                                titleValues.Add(EncryptionModel.Decrypt(readerTitle.GetString(0), "0123456789085746"));
                             }
                         }
                     }
@@ -819,7 +849,7 @@ namespace FlowSERVER1 {
                             String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
                             command = new MySqlCommand(removeQuery, con);
                             command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@filename", titleFile);
+                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
                             command.Parameters.AddWithValue("@foldername", _foldTitle);
                             command.ExecuteNonQuery();
 
@@ -905,20 +935,21 @@ namespace FlowSERVER1 {
 
 
                     if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql" || typeValues[i] == ".csv") {
-                        String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@foldername", _foldTitle);
-                        command.Parameters.AddWithValue("@filename", titleLab.Text);
-
                         List<String> textValues_ = new List<String>();
+                        String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImg, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@foldername", _foldTitle);
+                            command.Parameters.AddWithValue("@filename", titleLab.Text);
 
-                        MySqlDataReader _ReadTexts = command.ExecuteReader();
-                        while (_ReadTexts.Read()) {
-                            textValues_.Add(_ReadTexts.GetString(0));
+                            using (MySqlDataReader _ReadTexts = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                while (await _ReadTexts.ReadAsync()) {
+                                    textValues_.Add(_ReadTexts.GetString(0));
+                                }
+                            }
                         }
-                        _ReadTexts.Close();
-                        var getMainText = textValues_[0];
+
+                        var getMainText = EncryptionModel.Decrypt(textValues_[0], "0123456789085746");
 
                         var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                         if (typeValues[i] == ".py") {
@@ -971,7 +1002,7 @@ namespace FlowSERVER1 {
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                                 command.Parameters.AddWithValue("@username", label5.Text);
                                 command.Parameters.AddWithValue("@foldername", _foldTitle);
-                                command.Parameters.AddWithValue("@filename", titleLab.Text);
+                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
@@ -1004,18 +1035,19 @@ namespace FlowSERVER1 {
                     if (typeValues[i] == ".gif") {
                         List<String> _base64Encoded = new List<string>();
                         String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@foldername", _foldTitle);
-                        command.Parameters.AddWithValue("@filename", titleLab.Text);
+                        using (MySqlCommand command = new MySqlCommand(retrieveImg, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@foldername", _foldTitle);
+                            command.Parameters.AddWithValue("@filename", titleLab.Text);
 
-                        MySqlDataReader _readBase64 = command.ExecuteReader();
-                        while (_readBase64.Read()) {
-                            _base64Encoded.Add(_readBase64.GetString(0));
+                            using (MySqlDataReader _readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                while (await _readBase64.ReadAsync()) {
+                                    _base64Encoded.Add(_readBase64.GetString(0));
+                                }
+                            }
                         }
-                        _readBase64.Close();
 
-                        var _getBytes = Convert.FromBase64String(_base64Encoded[0]);
+                        var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[0], "0123456789085746"));
                         MemoryStream _toMs = new MemoryStream(_getBytes);
 
                         img.Image = new Bitmap(_toMs);
@@ -1119,18 +1151,14 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    Application.OpenForms
-                            .OfType<Form>()
-                            .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                            .ToList()
-                            .ForEach(form => form.Close());
+                    var loadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "LoadAlertFORM");
+                    loadAlertForm?.Close();
 
-                    Application.OpenForms
-                  .OfType<Form>()
-                  .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                  .ToList()
-                  .ForEach(form => form.Close());
+                    var retrievalAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "RetrievalAlert");
+                    retrievalAlertForm?.Close();
 
+                    var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
+                    uploadAlertForm?.Close();
                 }
 
             } catch (Exception) {
@@ -1403,7 +1431,7 @@ namespace FlowSERVER1 {
                 String removeQuery = $"DELETE FROM {getDB} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 command = new MySqlCommand(removeQuery, con);
                 command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@filename", fileName);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, "0123456789085746"));
 
                 command.ExecuteNonQuery();
                 if (flowLayoutPanel1.Controls.Count == 0) {
@@ -1472,7 +1500,7 @@ namespace FlowSERVER1 {
                             command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
                             command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
 
-                            command.Parameters["@CUST_FILE_PATH"].Value = getNamePath;
+                            command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(getNamePath, "0123456789085746");
                             command.Parameters["@CUST_USERNAME"].Value = label5.Text;
                             command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
@@ -1501,7 +1529,7 @@ namespace FlowSERVER1 {
                                 void startSending(Object setValue) {
                                     String insertTxtQuery = "INSERT INTO " + nameTable + "(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
                                     using (var command = new MySqlCommand(insertTxtQuery, con)) {
-                                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = getName;
+                                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName, "0123456789085746");
                                         command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
                                         command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
                                         command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
@@ -1610,7 +1638,6 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_expand") {
-                                    //var encryptValue = EncryptionModel.EncryptText(keyVal.ToString());
                                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                                     startSending(keyVal);
                                     
@@ -1685,21 +1712,6 @@ namespace FlowSERVER1 {
                                 }
                                 if (nameTable == "file_info_audi") {
                                     startSending(keyVal);
-
-                                    /*_getValues = keyVal;
-
-                                    worker = new BackgroundWorker();
-
-                                    worker.DoWork += new DoWorkEventHandler(InsertMainData);
-                                    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedInsertion);
-                                    worker.WorkerSupportsCancellation = true;
-                                    worker.WorkerReportsProgress = true;
-
-                                    if (!worker.IsBusy) { 
-                                        worker.WorkerSupportsCancellation = false;
-                                        worker.WorkerReportsProgress = false;
-                                        worker.RunWorkerAsync();
-                                    }*/
 
                                     var _getWidth = this.Width;
                                     var _getHeight = this.Height;
@@ -1874,66 +1886,77 @@ namespace FlowSERVER1 {
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { 
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
-                                createPanelMain("file_info_expand", "PanTxt", txtCurr, nonLine);
+                                String encryptText = EncryptionModel.Encrypt(nonLine, "0123456789085746");
+                                createPanelMain("file_info_expand", "PanTxt", txtCurr, encryptText);
                             }
 
                             else if (retrieved == ".exe") {
                                 exeCurr++;
                                 var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
-                                createPanelMain("file_info_exe", "PanExe", exeCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_exe", "PanExe", exeCurr, encryptText);
 
                             }
                             else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
                                 vidCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_vid", "PanVid", vidCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_vid", "PanVid", vidCurr, encryptText);
                             }
 
                             else if (retrieved == ".xlsx" || retrieved == ".xls") {
                                 exlCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_excel","PanExl",exlCurr,_toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_excel","PanExl",exlCurr,encryptText);
                             }
 
                             else if (retrieved == ".mp3" || retrieved == ".wav") {
                                 audCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_audi", "PanAud", audCurr, _toBase64); // ReadFile(open.FileName)
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_audi", "PanAud", audCurr, encryptText); // ReadFile(open.FileName)
                                 
                             }
 
                             else if (retrieved == ".gif") {
                                 gifCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_gif", "PanGif", gifCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_gif", "PanGif", gifCurr, encryptText);
                             }
 
                             else if (retrieved == ".apk") {
                                 apkCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_apk", "PanApk", apkCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_apk", "PanApk", apkCurr, encryptText);
                             }
 
                             else if (retrieved == ".pdf") {
                                 pdfCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_pdf", "PanPdf", pdfCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_pdf", "PanPdf", pdfCurr, encryptText);
                             }
 
                             else if (retrieved == ".pptx" || retrieved == ".ppt") {
                                 ptxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_ptx", "PanPtx", ptxCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_ptx", "PanPtx", ptxCurr, encryptText);
                             }
                             else if (retrieved == ".msi") {
                                 msiCurr++;
                                 var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
-                                createPanelMain("file_info_msi", "PanMsi", msiCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptText);
                             }
                             else if (retrieved == ".docx") {
                                 docxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                createPanelMain("file_info_word", "PanDoc", docxCurr, _toBase64);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                createPanelMain("file_info_word", "PanDoc", docxCurr, encryptText);
                             }
 
                             Application.OpenForms
@@ -2460,7 +2483,7 @@ namespace FlowSERVER1 {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789012345"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
@@ -2468,7 +2491,7 @@ namespace FlowSERVER1 {
                 Directory.Delete(appDataPath,true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789012345"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
@@ -2514,7 +2537,7 @@ namespace FlowSERVER1 {
                 command = new MySqlCommand(_remQue, con);
                 command.Parameters.AddWithValue("@username", _Username);
                 command.Parameters.AddWithValue("@foldtitle", _foldTitle);
-                command.Parameters.AddWithValue("@filename", _fileName);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName, "0123456789085746"));
                 if (command.ExecuteNonQuery() != 1) {
                     MessageBox.Show("There's an unknown error while attempting to delete this file.", "Erorr");
                 }
@@ -2539,12 +2562,11 @@ namespace FlowSERVER1 {
                 String varDate = DateTime.Now.ToString("dd/MM/yyyy");
                 command.Parameters["@FOLDER_TITLE"].Value = _getDirTitle;
                 command.Parameters["@CUST_USERNAME"].Value = label5.Text;
-                command.Parameters["@CUST_FILE_PATH"].Value = Path.GetFileName(_Files);
+                command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(Path.GetFileName(_Files), "0123456789085746");
                 command.Parameters["@FILE_TYPE"].Value = Path.GetExtension(_Files);
                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
-                void setupUpload(Byte[] _byteValues) {
-                    String _tempToBase64 = Convert.ToBase64String(_byteValues);
+                void setupUpload(String _tempToBase64) {
                     command.Parameters["@CUST_FILE"].Value = _tempToBase64;
                     command.Prepare();
                     command.ExecuteNonQuery();
@@ -2674,8 +2696,11 @@ namespace FlowSERVER1 {
                     fileSizeInMB = (_getBytes.Length / 1024) / 1024;
 
                     if (_extTypes == ".png" || _extTypes == ".jpg" || _extTypes == ".jpeg" || _extTypes == ".bmp" || _extTypes == ".psd") {
+
                         var _imgContent = new Bitmap(_Files);
-                        setupUpload(_getBytes);
+
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        setupUpload(_tobase64);
 
                         textboxExl.Image = _imgContent;
                         textboxExl.Click += (sender_f, e_f) => {
@@ -2728,7 +2753,7 @@ namespace FlowSERVER1 {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                         }
 
-                        var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files), "TXTCONTS01947265");
+                        var _encryptConts = EncryptionModel.Encrypt(File.ReadAllText(_Files), "0123456789085746");
                         var _readText = File.ReadAllText(_Files);
 
                         textboxExl.Click += (sender_t, e_t) => {
@@ -2748,7 +2773,9 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".apk") {
-                        setupUpload(_getBytes);
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64, "0123456789085746");
+                        setupUpload(encryptValues);
                         textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                         textboxExl.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
@@ -2765,7 +2792,7 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_THUMB"].Value = toBase64;// To load: Bitmap -> Byte array
                         }
 
-                        String _tempToBase64 = Convert.ToBase64String(_getBytes);
+                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(_getBytes), "0123456789085746");
                         command.Parameters["@CUST_FILE"].Value = _tempToBase64;
                         command.ExecuteNonQuery();
                         command.Dispose();
@@ -2791,7 +2818,7 @@ namespace FlowSERVER1 {
                             command.Parameters["@CUST_THUMB"].Value = toBase64;// To load: Bitmap -> Byte array
                         }
 
-                        String _tempToBase64 = Convert.ToBase64String(_getBytes);
+                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(_getBytes), "0123456789085746");
                         command.Parameters["@CUST_FILE"].Value = _tempToBase64;
                         command.ExecuteNonQuery();
                         command.Dispose();
@@ -2808,7 +2835,9 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".pdf") {
-                        setupUpload(_getBytes);
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64, "0123456789085746");
+                        setupUpload(encryptValues);
 
                         textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -2819,7 +2848,9 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".docx" || _extTypes == ".doc") {
-                        setupUpload(_getBytes);
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64, "0123456789085746");
+                        setupUpload(encryptValues);
 
                         textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -2830,7 +2861,10 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".xlsx" || _extTypes == ".xls") {
-                        setupUpload(_getBytes);
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64, "0123456789085746");
+                        setupUpload(encryptValues);
+                        
                         textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
@@ -2841,7 +2875,10 @@ namespace FlowSERVER1 {
 
 
                     if (_extTypes == ".pptx" || _extTypes == ".ppt") {
-                        setupUpload(_getBytes);
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64, "0123456789085746");
+                        setupUpload(encryptValues);
+                        
                         textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
@@ -2851,7 +2888,9 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".mp3" || _extTypes == ".wav") {
-                        setupUpload(_getBytes);
+                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64, "0123456789085746");
+                        setupUpload(encryptValues);
 
                         textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3148,6 +3187,7 @@ namespace FlowSERVER1 {
                     var currMainLength = typesValues.Count;
                     _generateUserFold(typesValues, _selectedFolder, "TESTING", currMainLength);
 
+                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     if (flowLayoutPanel1.Controls.Count == 0) {
                         showRedundane();
                     }
@@ -3312,7 +3352,7 @@ namespace FlowSERVER1 {
             String selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", getUploaderNameShared);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(getUploaderNameShared, "0123456789085746"));
                 using (MySqlDataReader reader = command.ExecuteReader()) {
                     if (reader.Read()) {
                         return reader.GetString(0);
@@ -3372,7 +3412,7 @@ namespace FlowSERVER1 {
 
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            filesNames.Add(reader.GetString(0));
+                            filesNames.Add(EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746"));
                         }
                     }
                 }
@@ -3428,12 +3468,10 @@ namespace FlowSERVER1 {
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        //string _receiverName = sharedToName();
-
                         String removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@filename", titleFile);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, "0123456789085746"));
                         command.Parameters.AddWithValue("@sharedname", setupSharedUsername);
 
                         if(command.ExecuteNonQuery() == 1) {
@@ -3612,9 +3650,11 @@ namespace FlowSERVER1 {
 
                     List<string> base64Encoded = new List<string>();
 
-                    string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                    string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename"; //  AND CUST_FILE_PATH = @filename
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(titleLab.Text, "0123456789085746");
+
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
@@ -3622,8 +3662,8 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    if (base64Encoded.Count > q) {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
+                    if(base64Encoded.Count > q) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[q]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
                             textboxPic.Image = new Bitmap(toMs);
                         }
@@ -3796,7 +3836,7 @@ namespace FlowSERVER1 {
 
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            filesNames.Add(reader.GetString(0));
+                            filesNames.Add(EncryptionModel.Decrypt(reader.GetString(0),"0123456789085746"));
                         }
                     }
                 }
@@ -3851,7 +3891,7 @@ namespace FlowSERVER1 {
                         String removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
-                        command.Parameters.AddWithValue("@filename", titleFile);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, "0123456789085746"));
                         command.ExecuteNonQuery();
 
                         mainPanelTxt.Dispose();
@@ -3890,7 +3930,7 @@ namespace FlowSERVER1 {
                     string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
@@ -3911,7 +3951,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -3941,7 +3981,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
+                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false);
                         displayPtx.Show();
                     };
                 }
@@ -3955,7 +3995,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
+                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false);
                         displayPtx.Show();
                     };
                 }
@@ -3998,7 +4038,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
+                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false);
                         displayDoc.Show();
                     };
                 }
@@ -4006,7 +4046,7 @@ namespace FlowSERVER1 {
                 if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls") {
                     textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                     textboxPic.Click += (sender_im, e_im) => {
-                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
+                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false);
                         displayXls.Show();
                     };
                 }
@@ -4020,7 +4060,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
+                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false);
                         displayAud.Show();
                     };
                 }
@@ -4032,7 +4072,7 @@ namespace FlowSERVER1 {
                     string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
-                        command.Parameters.AddWithValue("@filename", titleLab.Text);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
@@ -4040,7 +4080,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    if (base64Encoded.Count > q) {
+                    if(base64Encoded.Count > q) {
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[q]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
                             textboxPic.Image = new Bitmap(toMs);
@@ -4054,7 +4094,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true);
+                        vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false);
                         displayAud.Show();
                     };
                 }
@@ -4074,16 +4114,6 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".xml" || typeValues[q] == ".py" || typeValues[q] == ".css" || typeValues[q] == ".js" || typeValues[q] == ".sql" || typeValues[q] == ".csv") {
-                    List<String> _contValues = new List<String>();
-                    String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-
-                    MySqlDataReader _ReadConts = command.ExecuteReader();
-                    if (_ReadConts.Read()) {
-                        _contValues.Add(_ReadConts.GetString(0));
-                    }
-                    _ReadConts.Close();
 
                     if (typeValues[q] == ".py") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
@@ -4113,7 +4143,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        txtFORM displayTxt = new txtFORM(_contValues[0], "cust_sharing", titleLab.Text, label1.Text, UploaderUsername,true);
+                        txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, label1.Text, UploaderUsername, false);
                         displayTxt.Show();
                     };
                 }
@@ -4130,13 +4160,13 @@ namespace FlowSERVER1 {
                     }
                     _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[q]);
+                    var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[q], "0123456789085746"));
                     MemoryStream _toMs = new MemoryStream(_getBytes);
 
                     textboxPic.Image = new Bitmap(_toMs);
                     textboxPic.Click += (sender_im, e_im) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,true)) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -4590,7 +4620,7 @@ namespace FlowSERVER1 {
                         String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@filename", titleFile);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, "0123456789085746"));
                         command.Parameters.AddWithValue("@foldername", _foldTitle);
                         command.ExecuteNonQuery();
 

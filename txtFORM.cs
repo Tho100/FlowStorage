@@ -22,9 +22,11 @@ namespace FlowSERVER1 {
 
     public partial class txtFORM : Form {
         public static txtFORM instance;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        private static bool IsFromSharing;
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+        public static bool IsFromSharing {get; set; }
+        public static String DirectoryName {get; set; }
+        public static String TableName { get; set; }
         /// <summary>
         /// 
         /// Retrieve text data based on table name 
@@ -46,6 +48,9 @@ namespace FlowSERVER1 {
 
                 instance = this;
                 label1.Text = fileName;
+                TableName = tableName;
+                DirectoryName = _directory;
+
                 var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
                 if (_isShared == true) {
@@ -62,15 +67,13 @@ namespace FlowSERVER1 {
 
                 label2.Text = _getName;
 
-
-
                 if (tableName == "upload_info_directory" && getText == "") {
 
                     string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", label1.Text);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
                         command.Parameters.AddWithValue("@dirname", Form3.instance.label1.Text);
 
                         string textValuesF = "";
@@ -80,7 +83,7 @@ namespace FlowSERVER1 {
                             }
                         }
 
-                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                        string decryptedTextValues = EncryptionModel.Decrypt(textValuesF, "0123456789085746");
                         richTextBox1.Text = decryptedTextValues;
                     }
 
@@ -101,7 +104,7 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
-                        command.Parameters.AddWithValue("@filename", fileName);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, "0123456789085746"));
 
                         string textValuesF = "";
                         using (MySqlDataReader reader = command.ExecuteReader()) {
@@ -110,7 +113,7 @@ namespace FlowSERVER1 {
                             }
                         }
 
-                        string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
+                        string decryptedTextValues = EncryptionModel.Decrypt(textValuesF, "0123456789085746");
                         richTextBox1.Text = decryptedTextValues;
                     }
 
@@ -129,15 +132,14 @@ namespace FlowSERVER1 {
                     }
 
                 } else if (tableName == "file_info_expand") {
-                    MessageBox.Show("IN");
                     string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_);
+                    retrieveData(getTxtQuery,FileExt_,"file_info_expand");
                 } else if (tableName == "cust_sharing" && _isShared == false) {
                     string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_);
+                    retrieveData(getTxtQuery,FileExt_,"cust_sharing");
                 } else if (tableName == "cust_sharing" && _isShared == true) {
                     string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_);
+                    retrieveData(getTxtQuery,FileExt_,"cust_sharing");
                 }
 
             } catch (Exception) {
@@ -152,22 +154,18 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void retrieveData(String PerformQue,String FileExtension) {
+        private async void retrieveData(String PerformQue,String FileExtension,String TableName) {
 
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
 
-                string textValuesF = "";
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
-                        textValuesF = reader.GetString(0);
+                        richTextBox1.Text = EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746");
                     }
                 }
-
-                ///string decryptedTextValues = EncryptionModel.DecryptText(textValuesF);
-                richTextBox1.Text = textValuesF;
             }
 
             if (FileExtension == ".py") {
@@ -189,7 +187,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -203,7 +201,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -433,7 +431,7 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             string[] parts = label1.Text.Split('.');
             string getExtension = "." + parts[1];
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, TableName, DirectoryName);
             _showSharingFileFORM.Show();
         }
     }

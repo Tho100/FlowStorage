@@ -24,15 +24,69 @@ namespace FlowSERVER1 {
             return lowerCase ? builder.ToString().ToLower() : builder.ToString();
         }
         public static string Encrypt(String _value, String _key) {
-            var _setupRandom = new Random();
+            /*var _setupRandom = new Random();
             var _setupRandInt = _setupRandom.Next(0,15);
-            var _setupCustPs = RandomString(15) +  "0125f91q25" +  "gMAI5ld2waolkd" + _key + "?" + _value + "!" + _setupRandInt + "85e124";
-            return _setupCustPs;
+            var _setupCustPs = RandomString(15) +  "0125f91q25" +  "gMAI5ld2waolkd" + _key + "?" + _value + "!" + _setupRandInt + "85e124";*/
+
+            String toBase64 = "";
+
+            try {
+
+                byte[] iv = new byte[16]; 
+                byte[] keyBytes = Encoding.UTF8.GetBytes(_key);
+                byte[] plainBytes = Encoding.UTF8.GetBytes(_value); 
+
+                using (Aes aes = Aes.Create()) {
+                    aes.Key = keyBytes;
+                    aes.IV = iv;
+                    aes.Mode = CipherMode.CBC;
+                    aes.Padding = PaddingMode.PKCS7;
+
+                    using (ICryptoTransform encryptor = aes.CreateEncryptor()) {
+                        byte[] encryptedBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+                        toBase64 = Convert.ToBase64String(encryptedBytes);
+                    }
+                }
+
+            } catch (Exception) {
+                // @
+            }
+
+            return toBase64;
+
+            //return _setupCustPs;
         }
 
         public static string Decrypt(String _value, String _key) {
-            var _setupCustDec = GetStringBetweenCharacters(_value,"?","!");
-            return _setupCustDec;
+            //var _setupCustDec = GetStringBetweenCharacters(_value,"?","!");
+            //return _setupCustDec;
+            //return "";
+
+            String toBase64 = "";
+
+            try {
+                
+                byte[] iv = new byte[16]; 
+                byte[] keyBytes = Encoding.UTF8.GetBytes(_key); 
+                byte[] encryptedBytes = Convert.FromBase64String(_value); 
+
+                using (Aes aes = Aes.Create()) {
+                    aes.Key = keyBytes;
+                    aes.IV = iv;
+                    aes.Mode = CipherMode.CBC;
+                    aes.Padding = PaddingMode.PKCS7;
+
+                    using (ICryptoTransform decryptor = aes.CreateDecryptor()) {
+                        byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+                        toBase64 = Encoding.UTF8.GetString(decryptedBytes);
+                    }
+                }
+            } catch (Exception) {
+                // @
+            }
+
+            return toBase64;
+
         }
          
         public static string EncryptText(String _value) {

@@ -38,7 +38,7 @@ namespace FlowSERVER1 {
 
             if (_isShared == true) {
                 _getName = _UploaderName;
-                guna2Button5.Visible = false;
+                guna2Button1.Visible = false;
                 label3.Visible = true;
                 label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
             }
@@ -248,7 +248,7 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) {
             string[] parts = label1.Text.Split('.');
             string getExtension = "." + parts[1];
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TabName, _DirName);
             _showSharingFileFORM.Show();
         }
     }
