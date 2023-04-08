@@ -42,15 +42,17 @@ namespace FlowSERVER1 {
             IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
-                _getName = _UploaderName;
+                _getName = _UploaderName.Replace("Shared", "");
+                label4.Text = "Shared To";
                 guna2Button5.Visible = false;
                 label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
             }
             else {
-                _getName = "Uploaded By " + _UploaderName;
+                _getName = " " + _UploaderName;
+                label4.Text = "Uploaded By";
                 label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
             }
 
             label2.Text = _getName;
@@ -157,12 +159,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
@@ -182,6 +186,10 @@ namespace FlowSERVER1 {
             string getExtension = "." + parts[1];
             shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
             _showSharingFileFORM.Show();
+
+        }
+
+        private void label6_Click(object sender, EventArgs e) {
 
         }
     }

@@ -437,6 +437,7 @@
     <Compile Include="emailValidate.Designer.cs">
       <DependentUpon>emailValidate.cs</DependentUpon>
     </Compile>
+    <Compile Include="EncryptionKey.cs" />
     <Compile Include="EncryptionModel.cs" />
     <Compile Include="errorLoad.cs">
       <SubType>Form</SubType>
@@ -832,6 +833,15 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\video_image.png" />
+    <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
+    <None Include="Resources\image_icon.png" />
+    <None Include="Resources\icons8-audio-file-60.png" />
+    <None Include="Resources\icons8-csv-48.png" />
+    <None Include="Resources\icons8-txt-48.png" />
+    <None Include="Resources\icons8-microsoft-word-60.png" />
+    <None Include="Resources\excelIcon.png" />
+    <None Include="Resources\icons8-pdf-60 %281%29.png" />
     <None Include="Resources\icons8-share-26.png" />
     <None Include="Resources\icons8-restart-500 %281%29.png" />
     <None Include="Resources\icons8-sun-48.png" />
@@ -839,7 +849,6 @@
     <None Include="Resources\icons8-night-601.png" />
     <None Include="Resources\Untitled %2882%291.png" />
     <None Include="Resources\Untitled %2883%29.png" />
-    <None Include="Resources\icons8-csv-48.png" />
     <None Include="Resources\icons8-netherlands-961.png" />
     <None Include="Resources\icons8-login-rounded-50.png" />
     <None Include="Resources\flowstorageLogo %2815%29.png" />
@@ -859,7 +868,6 @@
     <None Include="Resources\icons8-password-52.png" />
     <None Include="Resources\giphy %2810%29.gif" />
     <None Include="Resources\giphy %289%29.gif" />
-    <None Include="Resources\excelIcon.png" />
     <None Include="Resources\giphy %281%29.gif" />
     <None Include="Resources\icons8-share-641.png" />
     <None Include="Resources\icons8-update-left-rotation-24.png" />
@@ -869,20 +877,15 @@
     <None Include="Resources\icons8-subtract-30.png" />
     <None Include="Resources\icons8-voice-50.png" />
     <None Include="Resources\icons8-block-64.png" />
-    <None Include="Resources\icons8-audio-file-60.png" />
     <None Include="Resources\icons8-logout-64 %281%29.png" />
     <None Include="Resources\icons8-database-50.png" />
-    <None Include="Resources\icons8-microsoft-word-60.png" />
     <None Include="Resources\icons8-software-installer-32.png" />
     <None Include="Resources\icons8-javascript-50.png" />
-    <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
-    <None Include="Resources\icons8-pdf-60 %281%29.png" />
     <None Include="Resources\icons8-exe-96.png" />
     <None Include="Resources\icon1.png" />
     <None Include="Resources\icons8-garbage-66.png" />
     <None Include="Resources\icons8-exe-48.png" />
     <None Include="Resources\icons8-garbage-66 %281%29.png" />
-    <None Include="Resources\icons8-txt-48.png" />
     <None Include="Resources\icons8-python-file-48.png" />
     <None Include="Resources\icons8-html-filetype-48 %281%29.png" />
     <None Include="Resources\icons8-android-os-50.png" />

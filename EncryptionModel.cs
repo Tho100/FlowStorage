@@ -11,6 +11,7 @@ namespace FlowSERVER1 {
     public static class EncryptionModel {
         //0123456789085746
         private static readonly Random _random = new Random();
+        private static string IsOriginFrom = "";
         private static string RandomString(int size, bool lowerCase = true) {
             var builder = new StringBuilder(size);
             char offset = lowerCase ? 'a' : 'A';
@@ -24,16 +25,12 @@ namespace FlowSERVER1 {
             return lowerCase ? builder.ToString().ToLower() : builder.ToString();
         }
         public static string Encrypt(String _value, String _key) {
-            /*var _setupRandom = new Random();
-            var _setupRandInt = _setupRandom.Next(0,15);
-            var _setupCustPs = RandomString(15) +  "0125f91q25" +  "gMAI5ld2waolkd" + _key + "?" + _value + "!" + _setupRandInt + "85e124";*/
-
             String toBase64 = "";
 
             try {
 
                 byte[] iv = new byte[16]; 
-                byte[] keyBytes = Encoding.UTF8.GetBytes(_key);
+                byte[] keyBytes = Encoding.UTF8.GetBytes("0123456789085746");
                 byte[] plainBytes = Encoding.UTF8.GetBytes(_value); 
 
                 using (Aes aes = Aes.Create()) {
@@ -53,21 +50,16 @@ namespace FlowSERVER1 {
             }
 
             return toBase64;
-
-            //return _setupCustPs;
         }
 
         public static string Decrypt(String _value, String _key) {
-            //var _setupCustDec = GetStringBetweenCharacters(_value,"?","!");
-            //return _setupCustDec;
-            //return "";
 
             String toBase64 = "";
 
             try {
                 
                 byte[] iv = new byte[16]; 
-                byte[] keyBytes = Encoding.UTF8.GetBytes(_key); 
+                byte[] keyBytes = Encoding.UTF8.GetBytes("0123456789085746"); 
                 byte[] encryptedBytes = Convert.FromBase64String(_value); 
 
                 using (Aes aes = Aes.Create()) {

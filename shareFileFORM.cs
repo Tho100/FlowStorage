@@ -160,7 +160,7 @@ namespace FlowSERVER1 {
             command = new MySqlCommand(queryRetrieveCount, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@receiver", _custUsername);
-            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName, "0123456789085746"));
+            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName, EncryptionKey.KeyValue));
 
             int count = Convert.ToInt32(command.ExecuteScalar());
             return count;
@@ -283,7 +283,7 @@ namespace FlowSERVER1 {
 
                 command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
                 command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
-                command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName, "0123456789085746");
+                command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue);
                 command.Parameters["@UPLOAD_DATE"].Value = varDate;
                 command.Parameters["@FILE_EXT"].Value = _FileExt;
                 command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text.Replace("\r\n","");
@@ -303,38 +303,39 @@ namespace FlowSERVER1 {
                 }
 
                 if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
-                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnails("cust_sharing",Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
+                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnails("cust_sharing",Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
                     startSending(getFileMetadataShared(Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746")));
                 } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
                     if (_FileExt == ".png" || _FileExt == ".jpg" || _FileExt == ".jpeg" || _FileExt == ".bmp") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"),"file_info"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue),"file_info"));  
                     } else if (_FileExt == ".xlsx" || _FileExt == ".xls") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_excel"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_excel"));
                     } else if (_FileExt == ".txt" || _FileExt == ".html" || _FileExt == ".sql" || _FileExt == ".csv" || _FileExt == ".css" || _FileExt == ".js") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_expand"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_expand"));
                     } else if (_FileExt == ".pdf") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_pdf"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_pdf"));
                     } else if (_FileExt == ".pptx" || _FileExt == ".ppt") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_ptx"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_ptx"));
                     } else if (_FileExt == ".docx" || _FileExt == ".doc") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_doc"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_doc"));
                     } else if (_FileExt == ".wav" || _FileExt == ".mp3") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_audi"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_audi"));
                     } else if (_FileExt == ".mp4" || _FileExt == ".mov" || _FileExt == ".avi" || _FileExt == ".webm" || _FileExt == ".wmv") {
-                        command.Parameters["@CUST_THUMB"].Value = retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_vid"));
+                        MessageBox.Show("HI");
+                        command.Parameters["@CUST_THUMB"].Value = retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"));
                     } else if (_FileExt == ".exe") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_exe"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_exe"));
                     } else if (_FileExt == ".apk") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, "0123456789085746"), "file_info_apk"));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_apk"));
                     }
 
                 } else if (_IsFromTable == "upload_info_directory") {
-                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-                    startSending(getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, "0123456789085746")));
+                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    startSending(getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 } else if (_IsFromTable == "folder_upload_info") {
                     command.Parameters["@CUST_THUMB"].Value = retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-                    startSending(getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746")));
+                    startSending(getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 }
 
                 var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
@@ -395,10 +396,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            label5.Text = guna2TextBox4.Text.Length.ToString() + "/52";
+            label5.Text = guna2TextBox4.Text.Length.ToString() + "/295";
         }
 
         private void shareFileFORM_Load(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
 
         }
     }

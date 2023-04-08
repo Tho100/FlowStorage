@@ -230,7 +230,7 @@
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(52, 40);
+            this.label4.Location = new System.Drawing.Point(52, 37);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(130, 20);
             this.label4.TabIndex = 5;
@@ -248,7 +248,7 @@
             this.guna2Panel3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.guna2Panel3.Location = new System.Drawing.Point(491, 81);
             this.guna2Panel3.Name = "guna2Panel3";
-            this.guna2Panel3.Size = new System.Drawing.Size(376, 218);
+            this.guna2Panel3.Size = new System.Drawing.Size(376, 385);
             this.guna2Panel3.TabIndex = 35;
             this.guna2Panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_1);
             // 
@@ -259,11 +259,11 @@
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(323, 175);
+            this.label5.Location = new System.Drawing.Point(310, 334);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 17);
+            this.label5.Size = new System.Drawing.Size(41, 17);
             this.label5.TabIndex = 17;
-            this.label5.Text = "0/52";
+            this.label5.Text = "0/295";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // guna2TextBox4
@@ -283,16 +283,16 @@
             this.guna2TextBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.guna2TextBox4.ForeColor = System.Drawing.Color.White;
             this.guna2TextBox4.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Location = new System.Drawing.Point(20, 65);
+            this.guna2TextBox4.Location = new System.Drawing.Point(20, 64);
             this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox4.MaxLength = 52;
+            this.guna2TextBox4.MaxLength = 295;
             this.guna2TextBox4.Multiline = true;
             this.guna2TextBox4.Name = "guna2TextBox4";
             this.guna2TextBox4.PasswordChar = '\0';
             this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox4.PlaceholderText = "Add a short comment";
+            this.guna2TextBox4.PlaceholderText = "Add a comment";
             this.guna2TextBox4.SelectedText = "";
-            this.guna2TextBox4.Size = new System.Drawing.Size(337, 100);
+            this.guna2TextBox4.Size = new System.Drawing.Size(337, 262);
             this.guna2TextBox4.TabIndex = 16;
             this.guna2TextBox4.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
@@ -302,7 +302,7 @@
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(24, 39);
+            this.label6.Location = new System.Drawing.Point(24, 35);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(141, 20);
             this.label6.TabIndex = 5;

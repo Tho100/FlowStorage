@@ -291,7 +291,7 @@ namespace FlowSERVER1
                     }
                 }
                 catch (Exception) {
-                    //
+                    // @ 
                 }
             }
         }
@@ -299,7 +299,7 @@ namespace FlowSERVER1
 
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) {
+        private void guna2Button1_Click(object sender, EventArgs e) {
             this.Close();
         }
     }

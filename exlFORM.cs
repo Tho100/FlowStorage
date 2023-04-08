@@ -60,15 +60,17 @@ namespace FlowSERVER1 {
             _isFromShared = isFromShared;
 
             if (_isShared == true) {
-                _getName = _UploaderName;
+                _getName = _UploaderName.Replace("Shared", "");
+                label4.Text = "Shared To";
                 guna2Button5.Visible = false;
                 label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
             }
             else {
-                _getName = "Uploaded By " + _UploaderName;
+                _getName = " " + _UploaderName;
+                label4.Text = "Uploaded By";
                 label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
             }
 
             label2.Text = _getName;
@@ -84,13 +86,13 @@ namespace FlowSERVER1 {
                 }
                 else if (_TableName == "upload_info_directory") {
                     generateSheet(LoaderModel.LoadFile("upload_info_directory", DirectoryName, titleName));
-                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
+                    _sheetsByte = LoaderModel.LoadFile("upload_info_directory", DirectoryName, titleName);
                 } else if (_TableName == "folder_upload_info") {
                     generateSheet(LoaderModel.LoadFile("folder_upload_info", DirectoryName, titleName));
-                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
+                    _sheetsByte = LoaderModel.LoadFile("folder_upload_info", DirectoryName, titleName);
                 } else if (_TableName == "cust_sharing") {
                     generateSheet(LoaderModel.LoadFile("cust_sharing", DirectoryName, titleName,isFromShared));
-                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, titleName);
+                    _sheetsByte = LoaderModel.LoadFile("cust_sharing", DirectoryName, titleName);
                 }
             }
 
@@ -103,7 +105,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -117,7 +119,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -214,6 +216,7 @@ namespace FlowSERVER1 {
         }
         
         private void guna2Button3_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
@@ -236,6 +239,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;

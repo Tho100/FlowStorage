@@ -86,7 +86,7 @@ namespace FlowSERVER1 {
 
                             if (email != null) {
                                 custUsername = username;
-                                custEmail = email;
+                                custEmail = email;        
                             }
                         }
                     }
@@ -141,6 +141,7 @@ namespace FlowSERVER1 {
          
 
             ///////////////////
+            ///
 
             if (_getPass == decryptMainKey && _getPin == pinDecryptionKey) {
 
@@ -352,7 +353,7 @@ namespace FlowSERVER1 {
                         List<String> dateValues = new List<String>();
                         List<String> titleValues = new List<String>();
 
-                        String getUpDate = "SELECT UPLOAD_DATE FROM " + _tableName + " WHERE CUST_USERNAME = @username";
+                        String getUpDate = $"SELECT UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
                             using (MySqlDataReader readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -364,7 +365,7 @@ namespace FlowSERVER1 {
 
                         Label dateLab = new Label();
                         panelF.Controls.Add(dateLab);
-                        dateLab.Name = "LabG" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                        dateLab.Name = "LabG" + i;
                         dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
                         dateLab.ForeColor = Color.DarkGray;
                         dateLab.Visible = true;
@@ -372,7 +373,7 @@ namespace FlowSERVER1 {
                         dateLab.Location = new Point(12, 208);
                         dateLab.Text = dateValues[i];
 
-                        String getTitleQue = "SELECT CUST_FILE_PATH FROM " + _tableName + " WHERE CUST_USERNAME = @username";
+                        String getTitleQue = $"SELECT CUST_FILE_PATH FROM {_tableName} WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
                             command.Parameters.AddWithValue("@username", _form.label5.Text);
                             using (MySqlDataReader titleReader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -384,7 +385,7 @@ namespace FlowSERVER1 {
 
                         Label titleLab = new Label();
                         panelF.Controls.Add(titleLab);
-                        titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Name = "titleImgL" + i;
                         titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                         titleLab.ForeColor = Color.Gainsboro;
                         titleLab.Visible = true;
@@ -450,7 +451,6 @@ namespace FlowSERVER1 {
                         _form.guna2Button6.Visible = false;
                         _form.label8.Visible = false;
                         var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
-
                         if (_tableName == "file_info") {
 
                             List<string> base64Encoded = new List<string>();
@@ -460,7 +460,7 @@ namespace FlowSERVER1 {
                                 command.Parameters.AddWithValue("@username", label5.Text);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
-                                        base64Encoded.Add(readBase64.GetString(0));
+                                        base64Encoded.Add(EncryptionModel.Encrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
                                     }
                                 }
                             }
@@ -489,13 +489,13 @@ namespace FlowSERVER1 {
                         if (_tableName == "file_info_expand") {
                             var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                             if (_extTypes == ".py") {
-                                img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                             }
                             else if (_extTypes == ".txt") {
-                                img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                             }
                             else if (_extTypes == ".html") {
-                                img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                             } else if (_extTypes == ".css") {
                                 img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                             }
@@ -733,76 +733,60 @@ namespace FlowSERVER1 {
                     }
                 }
 
+                try {
 
+                    int _countRow(String _tableName) {
+                         String countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
+                         using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
+                             command.Parameters.AddWithValue("@username", label5.Text);
+                             int totalRowInt = Convert.ToInt32(command.ExecuteScalar());
+                             return totalRowInt;
+                         }
+                     }
 
-                int _countRow(String _tableName) {
-                    String countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        int totalRowInt = Convert.ToInt32(command.ExecuteScalar());
-                        return totalRowInt;
+                    Dictionary<string, string> tableToFileType = new Dictionary<string, string>
+                        {
+                        {"file_info", "imgFile"},
+                        {"file_info_expand", "txtFile"},
+                        {"file_info_exe", "exeFile"},
+                        {"file_info_vid", "vidFile"},
+                        {"file_info_excel", "exlFile"},
+                        {"file_info_audi", "audiFile"},
+                        {"file_info_gif", "gifFile"},
+                        {"file_info_apk", "apkFile"},
+                        {"file_info_pdf", "pdfFile"},
+                        {"file_info_ptx", "ptxFile"},
+                        {"file_info_msi", "msiFile"},
+                        {"file_info_word", "docFile"},
+                        {"file_info_directory", "dirFile"}
+                    };
+
+                    foreach (string tableName in tableToFileType.Keys) {
+                        if (_countRow(tableName) > 0) {
+                            if (tableToFileType[tableName] == "dirFile") {
+                                _generateUserDirectory(tableName, tableToFileType[tableName], _countRow(tableName));
+                            }
+                            else {
+                                _generateUserFiles(tableName, tableToFileType[tableName], _countRow(tableName));
+                            }
+                        }
                     }
-                }
 
-                // LOAD IMG
-                if (_countRow("file_info") > 0) {
-                    _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
-                }
-                // LOAD .TXT
-                if (_countRow("file_info_expand") > 0) {
-                    _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
-                }
-                // LOAD EXE
-                if (_countRow("file_info_exe") > 0) {
-                    _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
-                }
-                // LOAD VID
-                if (_countRow("file_info_vid") > 0) {
-                    _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_exe"));
-                }
-                if (_countRow("file_info_excel") > 0) {
-                    _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
-                }
-                if (_countRow("file_info_audi") > 0) {
-                    _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
-                }
-                if (_countRow("file_info_gif") > 0) {
-                    _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
-                }
-                if (_countRow("file_info_apk") > 0) {
-                    _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
-                }
-                if (_countRow("file_info_pdf") > 0) {
-                    _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
-                }
-                if (_countRow("file_info_ptx") > 0) {
-                    _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
-                }
-                if(_countRow("file_info_msi") > 0) {
-                    _generateUserFiles("file_info_msi","msiFile",_countRow("file_info_msi"));
-                }
-                if(_countRow("file_info_word") > 0) {
-                    _generateUserFiles("file_info_word","docFile",_countRow("file_info_word"));
-                }
-                if (_countRow("file_info_directory") > 0) {
-                    _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
-                }
-          
-                _generateUserFolder(custUsername,_getPass);
+                    _generateUserFolder(custUsername,_getPass);
 
-                Application.OpenForms
-                    .OfType<Form>()
-                    .Where(FormsQ => String.Equals(FormsQ.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(FormsQ => FormsQ.Close());
+                    RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
+                    retrievalAlertForm?.Close();
 
-                Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-                Form1.instance._TypeValues.Clear();
-                Form1.instance._TypeValuesOthers.Clear();
+                    Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
+                    Form1.instance._TypeValues.Clear();
+                    Form1.instance._TypeValuesOthers.Clear();
 
-                if (guna2CheckBox2.Checked == true) {
-                    setupAutoLogin(Form1.instance.label5.Text);
-                }     
+                    if (guna2CheckBox2.Checked) {
+                        setupAutoLogin(Form1.instance.label5.Text);
+                    }
+                } catch (Exception) {
+                    MessageBox.Show("An error occurred. Please hit the refresh button to resolve this.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                }
 
             } else {
 
@@ -813,6 +797,8 @@ namespace FlowSERVER1 {
                 }
             }
         }
+
+
         private void label4_Click(object sender, EventArgs e) {
 
         }
@@ -1007,7 +993,7 @@ namespace FlowSERVER1 {
 
             DateTime now = DateTime.Now;
             var hours = now.Hour;
-            String greeting = "Good Night " + label5.Text;
+            String greeting = "Good Night " + Form1.instance.label5.Text;
             picturebox1.Visible = true;
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {

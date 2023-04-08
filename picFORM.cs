@@ -15,17 +15,18 @@ namespace FlowSERVER1 {
         public static picFORM instance;
         private static String TableName;
         private static String Directoryname;
-        private static bool IsFromShared; // Shared to others
-        private static bool IsFromSharing;  // Shared to me 
+        private static bool IsFromShared; // @ Shared to others
+        private static bool IsFromSharing;  // @ Shared to me 
         private static MySqlConnection con = ConnectionModel.con;
 
         public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
+            instance = this;
+
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            instance = this;
             var setupImage = resizeUserImage(userImage, new Size(width, height));
             guna2PictureBox1.Image = setupImage;
             label1.Text = title;
@@ -34,16 +35,20 @@ namespace FlowSERVER1 {
             IsFromShared = _IsFromShared;
             IsFromSharing = _isFromSharing;
 
+            label7.Text = $"({width}x{height})";
+             
             if (_isShared == true) {
-                _getName = _UploaderName;
+                _getName = _UploaderName.Replace("Shared","");
+                label4.Text = "Shared To";
                 guna2Button5.Visible = false;
                 label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
             }
             else {
-                _getName = "Uploaded By " + _UploaderName;
+                _getName = " " + _UploaderName;
+                label4.Text = "Uploaded By";
                 label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
             }
 
             label2.Text = _getName;
@@ -93,17 +98,17 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
-            label1.AutoSize = true;
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
-            label1.AutoSize = false;
         }
         
         private void guna2Button4_Click(object sender, EventArgs e) {

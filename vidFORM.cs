@@ -47,15 +47,17 @@ namespace FlowSERVER1 {
             IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
-                _getName = _UploaderName;
+                _getName = _UploaderName.Replace("Shared", "");
+                label5.Text = "Shared To";
                 guna2Button7.Visible = false;
                 label4.Visible = true;
-                label4.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+                label4.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
             }
             else {
-                _getName = "Uploaded By " + _UploaderName;
+                _getName = " " + _UploaderName;
+                label5.Text = "Uploaded By";
                 label4.Visible = true;
-                label4.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+                label4.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
             }
 
             label2.Text = _getName;
@@ -65,7 +67,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -79,7 +81,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -108,15 +110,15 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
-            label1.AutoSize = false;
             guna2Button3.Visible = false;
             guna2Button1.Visible = true;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
-            label1.AutoSize = true;
             guna2Button3.Visible = true;
             guna2Button1.Visible = false;
         }
@@ -223,6 +225,19 @@ namespace FlowSERVER1 {
             string getExtension = "." + parts[1];
             shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TableName, _DirName);
             _showSharingFileFORM.Show();
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button8_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Button9_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+            this.TopMost = false;
         }
     }
 }

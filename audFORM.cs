@@ -61,7 +61,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -75,7 +75,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", label1.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);

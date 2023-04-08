@@ -60,7 +60,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             OpenFileDialog _OpenDialog = new OpenFileDialog();
-            _OpenDialog.Filter = "All Files|*.*";
+            _OpenDialog.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
             if (_OpenDialog.ShowDialog() == DialogResult.OK) {
                 var getEx = _OpenDialog.FileName;
                 var getName = _OpenDialog.SafeFileName;
@@ -132,7 +132,8 @@ namespace FlowSERVER1 {
 
                     if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".docx" || _retrieved == ".doc") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
@@ -190,10 +191,12 @@ namespace FlowSERVER1 {
                     }
                     else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql" || _retrieved == ".csv") {
                         var nonLine = "";
-                        using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
+                        using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { 
                             nonLine = ReadFileTxt.ReadToEnd();  
                         }
-                        String encryptText = EncryptionModel.Encrypt(nonLine, "0123456789085746");
+                        byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
+                        String getEncoded = Convert.ToBase64String(getBytes);
+                        String encryptText = EncryptionModel.Encrypt(getEncoded, "0123456789085746");
                         startSending(encryptText);
 
                     }
@@ -209,9 +212,6 @@ namespace FlowSERVER1 {
                         String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
                         startSending(encryptText);
                     }
-
-                    Application.DoEvents();
-
                 }
                 else {
                     MessageBox.Show("File is already sent.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -401,7 +401,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            label5.Text = guna2TextBox4.Text.Length + "/52";
+            label5.Text = guna2TextBox4.Text.Length + "/295";
         }
 
         private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {

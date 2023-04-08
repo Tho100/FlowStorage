@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class splashFORM : Form {
         private static MySqlConnection con {get; set;} = ConnectionModel.con;
+        private System.Timers.Timer keepAliveTimer;
+
         public splashFORM() {
 
             InitializeComponent();
@@ -20,10 +16,22 @@ namespace FlowSERVER1 {
 
                 con.Open();
 
+                keepAliveTimer = new System.Timers.Timer();
+                keepAliveTimer.Interval = 30000; // 30 seconds
+                keepAliveTimer.Elapsed += new ElapsedEventHandler(KeepAliveTimer_Elapsed);
+                keepAliveTimer.Enabled = true;
+
             } catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+        }
+
+        private void KeepAliveTimer_Elapsed(object sender, ElapsedEventArgs e) {
+            if (con.Ping() == false) {
+                con.Close();
+                con.Open();
+            }
         }
 
         private void splashFORM_Load(object sender, EventArgs e) {

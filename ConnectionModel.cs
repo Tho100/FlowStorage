@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Windows;
 using System.Data;
 using System.IO;
+using System.Timers;
 
 namespace FlowSERVER1 {
     public class ConnectionModel {
@@ -18,6 +19,7 @@ namespace FlowSERVER1 {
             
         public static MySqlCommand command;
         public static MySqlCommand commandRead;
+        private Timer keepAliveTimer;
 
         private static string DecryptConnection(string key, string cipherText) {
             byte[] iv = new byte[16];

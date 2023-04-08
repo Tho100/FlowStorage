@@ -66,7 +66,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
                         command.Parameters.AddWithValue("@dirname", _DirectoryName);
 
                         using (var reader = command.ExecuteReader()) {
@@ -105,7 +105,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
                         command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
                         using (var reader = command.ExecuteReader()) {
 
@@ -144,7 +144,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
                         using (var reader = command.ExecuteReader()) {
 
                             if (stopFileRetrieval) {
@@ -162,7 +162,7 @@ namespace FlowSERVER1 {
                             }
 
                             if (reader.Read()) {
-                                var base64Encoded = reader.GetString(0);
+                                var base64Encoded = EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746");
                                 var getBytes = Convert.FromBase64String(base64Encoded);
                                 _openDialog(_FileTitle, getBytes);
                             }
@@ -183,7 +183,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
                         using (var reader = command.ExecuteReader()) {
 
                             if (stopFileRetrieval) {
@@ -222,7 +222,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", _FileTitle);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
                         using (var reader = command.ExecuteReader()) {
 
                             if (stopFileRetrieval) {

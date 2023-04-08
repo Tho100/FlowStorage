@@ -84,10 +84,11 @@
             this.guna2Panel1.Controls.Add(this.guna2TextBox1);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(77, 78);
+            this.guna2Panel1.Location = new System.Drawing.Point(81, 78);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(426, 367);
+            this.guna2Panel1.Size = new System.Drawing.Size(442, 438);
             this.guna2Panel1.TabIndex = 30;
+            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // label5
             // 
@@ -96,11 +97,11 @@
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(340, 190);
+            this.label5.Location = new System.Drawing.Point(350, 268);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 17);
+            this.label5.Size = new System.Drawing.Size(41, 17);
             this.label5.TabIndex = 34;
-            this.label5.Text = "0/52";
+            this.label5.Text = "0/295";
             // 
             // guna2TextBox4
             // 
@@ -119,15 +120,16 @@
             this.guna2TextBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.guna2TextBox4.ForeColor = System.Drawing.Color.White;
             this.guna2TextBox4.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Location = new System.Drawing.Point(43, 138);
+            this.guna2TextBox4.Location = new System.Drawing.Point(51, 128);
             this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox4.MaxLength = 52;
+            this.guna2TextBox4.MaxLength = 295;
+            this.guna2TextBox4.Multiline = true;
             this.guna2TextBox4.Name = "guna2TextBox4";
             this.guna2TextBox4.PasswordChar = '\0';
             this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox4.PlaceholderText = "Add a short comment";
+            this.guna2TextBox4.PlaceholderText = "Add a comment for receiver to see";
             this.guna2TextBox4.SelectedText = "";
-            this.guna2TextBox4.Size = new System.Drawing.Size(337, 44);
+            this.guna2TextBox4.Size = new System.Drawing.Size(337, 134);
             this.guna2TextBox4.TabIndex = 33;
             this.guna2TextBox4.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
@@ -137,7 +139,7 @@
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(47, 113);
+            this.label6.Location = new System.Drawing.Point(53, 102);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(153, 20);
             this.label6.TabIndex = 32;
@@ -158,7 +160,7 @@
             this.guna2Button6.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Location = new System.Drawing.Point(43, 281);
+            this.guna2Button6.Location = new System.Drawing.Point(51, 370);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(348, 48);
             this.guna2Button6.TabIndex = 31;
@@ -178,7 +180,7 @@
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(43, 220);
+            this.guna2Button2.Location = new System.Drawing.Point(51, 309);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(348, 51);
             this.guna2Button2.TabIndex = 17;
@@ -202,7 +204,7 @@
             this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.guna2TextBox1.ForeColor = System.Drawing.Color.White;
             this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox1.Location = new System.Drawing.Point(43, 56);
+            this.guna2TextBox1.Location = new System.Drawing.Point(51, 47);
             this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.guna2TextBox1.Name = "guna2TextBox1";
             this.guna2TextBox1.PasswordChar = '\0';
@@ -218,7 +220,7 @@
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(47, 31);
+            this.label4.Location = new System.Drawing.Point(55, 22);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(130, 20);
             this.label4.TabIndex = 5;
@@ -229,7 +231,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(603, 468);
+            this.ClientSize = new System.Drawing.Size(608, 535);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.guna2Panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

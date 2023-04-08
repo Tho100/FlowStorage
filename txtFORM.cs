@@ -54,6 +54,20 @@ namespace FlowSERVER1 {
                 var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
                 if (_isShared == true) {
+                    _getName = _UploaderUsername.Replace("Shared", "");
+                    label4.Text = "Shared To";
+                    guna2Button5.Visible = false;
+                    label3.Visible = true;
+                    label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
+                }
+                else {
+                    _getName = " " + _UploaderUsername;
+                    label4.Text = "Uploaded By";
+                    label3.Visible = true;
+                    label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
+                }
+
+                /*if (_isShared == true) {
                     _getName = _UploaderUsername;
                     guna2Button5.Visible = false;
                     label3.Visible = true;
@@ -63,7 +77,7 @@ namespace FlowSERVER1 {
                     _getName = "Uploaded By " + _UploaderUsername;
                     label3.Visible = true;
                     label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
-                }
+                }*/
 
                 label2.Text = _getName;
 
@@ -83,7 +97,7 @@ namespace FlowSERVER1 {
                             }
                         }
 
-                        string decryptedTextValues = EncryptionModel.Decrypt(textValuesF, "0123456789085746");
+                        string decryptedTextValues = EncryptionModel.Decrypt(textValuesF, EncryptionKey.KeyValue);
                         richTextBox1.Text = decryptedTextValues;
                     }
 
@@ -133,13 +147,13 @@ namespace FlowSERVER1 {
 
                 } else if (tableName == "file_info_expand") {
                     string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_,"file_info_expand");
+                    retrieveData(getTxtQuery,FileExt_);
                 } else if (tableName == "cust_sharing" && _isShared == false) {
                     string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_,"cust_sharing");
+                    retrieveData(getTxtQuery,FileExt_);
                 } else if (tableName == "cust_sharing" && _isShared == true) {
                     string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_,"cust_sharing");
+                    retrieveData(getTxtQuery,FileExt_);
                 }
 
             } catch (Exception) {
@@ -154,16 +168,18 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void retrieveData(String PerformQue,String FileExtension,String TableName) {
+        private async void retrieveData(String PerformQue,String FileExtension) {
 
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
-                        richTextBox1.Text = EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746");
+                        Byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue));
+                        String toDecodedBase64 = Encoding.UTF8.GetString(toBytes);
+                        richTextBox1.Text = toDecodedBase64;
                     }
                 }
             }
@@ -187,7 +203,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -201,7 +217,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = readerComment.GetString(0);
@@ -369,12 +385,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+            this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
