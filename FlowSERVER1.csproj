@@ -833,6 +833,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-android-os-50.png" />
     <None Include="Resources\video_image.png" />
     <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
     <None Include="Resources\image_icon.png" />
@@ -888,7 +889,6 @@
     <None Include="Resources\icons8-garbage-66 %281%29.png" />
     <None Include="Resources\icons8-python-file-48.png" />
     <None Include="Resources\icons8-html-filetype-48 %281%29.png" />
-    <None Include="Resources\icons8-android-os-50.png" />
     <None Include="Resources\icons8-css-filetype-48 %281%29.png" />
     <None Include="icons8-closed-eye-24.png" />
   </ItemGroup>

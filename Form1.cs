@@ -70,7 +70,7 @@ namespace FlowSERVER1 {
 
             if (Directory.Exists(path)) {
                 new DirectoryInfo(path).Attributes &= ~FileAttributes.Hidden;
-
+                
                 string authFile = Path.Combine(path, "CUST_DATAS.txt");
                 if (File.Exists(authFile) && new FileInfo(authFile).Length > 0) {
 
@@ -304,17 +304,34 @@ namespace FlowSERVER1 {
         /// <param name="_tableName"></param>
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
-        public async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
-            
-            for (int i = 0; i < currItem; i++) {
-                int top = 275;
-                int h_p = 100;
+        /// 
 
-                flowLayoutPanel1.Location = new Point(13, 10);
-                flowLayoutPanel1.Size = new Size(1118, 579);
+        public async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+
+            List<Tuple<string, string>> filesInfo = new List<Tuple<string, string>>();
+            string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        string uploadDate = reader.GetString(1);
+                        filesInfo.Add(new Tuple<string, string>(fileName, uploadDate));
+                    }
+                }
+            }
+
+            flowLayoutPanel1.Location = new Point(13, 10);
+            flowLayoutPanel1.Size = new Size(1118, 579);
+
+            int top = 275;
+            int h_p = 100;
+
+            for (int i = 0; i < currItem; i++) {
 
                 var panelPic_Q = new Guna2Panel() {
-                    Name = parameterName + i,
+                    Name = $"{parameterName + i}",
                     Width = 240,
                     Height = 262,
                     BorderRadius = 8,
@@ -325,44 +342,21 @@ namespace FlowSERVER1 {
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
-                var panelF = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + i]);
-
-                List<String> dateValues = new List<String>();
-                List<String> titleValues = new List<String>();
-
-                string getUpDate = $"SELECT UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
-                    command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
-                    using (MySqlDataReader readerDate = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        while (await readerDate.ReadAsync()) {
-                            dateValues.Add(readerDate.GetString(0));
-                        }
-                    }
-                }
+                var panelF = (Guna2Panel)panelPic_Q;
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
-                dateLab.Name = "LabG" + i;
+                dateLab.Name = $"LabG{i}";
                 dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
                 dateLab.ForeColor = Color.DarkGray;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
                 dateLab.Location = new Point(12, 208);
-                dateLab.Text = dateValues[i];
+                dateLab.Text = filesInfo[i].Item2;
 
-                String getTitleQue = $"SELECT CUST_FILE_PATH FROM {_tableName} WHERE CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
-                    command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
-                    using (MySqlDataReader titleReader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await titleReader.ReadAsync()) {
-                            titleValues.Add(EncryptionModel.Decrypt(titleReader.GetString(0), EncryptionKey.KeyValue));
-                        }
-                    }
-                }
-            
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
-                titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = $"titleImgL{i}"; 
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -370,7 +364,7 @@ namespace FlowSERVER1 {
                 titleLab.Location = new Point(12, 182);
                 titleLab.Width = 220;
                 titleLab.Height = 30;
-                titleLab.Text = titleValues[i];
+                titleLab.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 panelF.Controls.Add(picMain_Q);
@@ -1407,16 +1401,10 @@ namespace FlowSERVER1 {
         private Control titlePanelSearch;
         private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
 
-            void deletionMethod(String fileName, String getDB) {
+            void deletionMethod(string fileName, string tableName) {
+                string query = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
 
-                String offSqlUpdates = "SET SQL_SAFE_UPDATES = 0";
-                String removeQuery = $"DELETE FROM {getDB} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-
-                using (MySqlCommand command = new MySqlCommand(offSqlUpdates, con)) {
-                    command.ExecuteNonQuery();
-                }
-
-                using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
+                using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, "0123456789085746"));
                     command.ExecuteNonQuery();
@@ -1426,22 +1414,19 @@ namespace FlowSERVER1 {
                     label8.Visible = true;
                     guna2Button6.Visible = true;
                 }
-
             }
 
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
-            open.Multiselect = true;
+            var open = new OpenFileDialog {
+                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
+                Multiselect = true
+            };
+
             varDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-            List<String> _filValues = new List<String>();
             int curFilesCount = flowLayoutPanel1.Controls.Count;
             if (open.ShowDialog() == DialogResult.OK) { 
-                foreach (var iterateItemsFiles in open.FileNames) {
-                    _filValues.Add(Path.GetFileName(iterateItemsFiles));
-                }
-
-                if (_filValues.Count() + curFilesCount > AccountType_) {
+                List<string> _filValues = open.FileNames.Select(Path.GetFileName).ToList();
+                if (open.FileNames.Length + curFilesCount > AccountType_) {
                     Form bgBlur = new Form();
                     using (upgradeFORM displayUpgrade = new upgradeFORM(_AccountTypeStr_)) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
@@ -1480,17 +1465,17 @@ namespace FlowSERVER1 {
                         retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
                         fileSizeInMB = 0;
 
-                        void containThumbUpload(String nameTable, String getNamePath, Object keyValMain) {
-
-                            using (MySqlCommand command = con.CreateCommand()) {
+                        void containThumbUpload(string nameTable, string getNamePath, object keyValMain) {
+                            using (var command = new MySqlCommand()) {
+                                command.Connection = con;
                                 command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
                                 command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath, "0123456789085746"));
                                 command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
                                 command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
                                 command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
 
-                                using (ShellFile shellFile = ShellFile.FromFilePath(selectedItems)) {
-                                    Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                                using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
+                                    var toBitMap = shellFile.Thumbnail.Bitmap;
                                     using (var stream = new MemoryStream()) {
                                         toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                                         var toBase64 = Convert.ToBase64String(stream.ToArray());
@@ -1500,6 +1485,9 @@ namespace FlowSERVER1 {
 
                                 command.ExecuteNonQuery();
                             }
+
+                            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+
                         }
 
                         void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
@@ -1508,18 +1496,26 @@ namespace FlowSERVER1 {
 
                             if (fileSizeInMB < 1500) {
 
-                                void startSending(String setValue) {
-                                    String insertTxtQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE)";
-                                    using (var command = new MySqlCommand(insertTxtQuery, con)) {
-                                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName, "0123456789085746");
-                                        command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
-                                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
-                                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
-                                        command.ExecuteNonQuery();    
+                                void startSending(string setValue) {
+
+                                    string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
+
+                                    try {
+                                        using (var command = new MySqlCommand(insertQuery, con)) {
+                                            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName, EncryptionKey.KeyValue);
+                                            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
+                                            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
+                                            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
+
+                                            command.ExecuteNonQuery();
+                                        }
+
+                                        Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
                                     }
-
-                                    Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
+                                    catch (Exception) {
+                                        MessageBox.Show("Failed to upload this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                        // @ 
+                                    }
                                 }
 
                                 int top = 275;
@@ -1550,7 +1546,7 @@ namespace FlowSERVER1 {
 
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
-                                titleLab.Name = "LabVidUp" + itemCurr;//Segoe UI Semibold, 11.25pt, style=Bold
+                                titleLab.Name = "LabVidUp" + itemCurr;
                                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                                 titleLab.ForeColor = Color.Gainsboro;
                                 titleLab.Visible = true;
@@ -1845,17 +1841,18 @@ namespace FlowSERVER1 {
 
                                 if (retrieved != ".ico") {
                                     String _tempToBase64 = Convert.ToBase64String(_toByte);
-                                    String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64, "0123456789085746");
+                                    String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64, EncryptionKey.KeyValue);
                                     createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                                 }
                                 else {
-                                    Image retrieveIcon = Image.FromFile(selectedItems);//Image.FromFile(open.FileName);
+                                    Image retrieveIcon = Image.FromFile(selectedItems);
                                     byte[] dataIco;
                                     using (MemoryStream msIco = new MemoryStream()) {
                                         retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                         dataIco = msIco.ToArray();
-                                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco), "0123456789085746");
-                                        createPanelMain("file_info", "PanImg", curr, _tempToBase64);
+                                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco), EncryptionKey.KeyValue);
+                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64, EncryptionKey.KeyValue);
+                                        createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                                     }
                                 }
                             }
@@ -1868,76 +1865,76 @@ namespace FlowSERVER1 {
                                 }
                                 byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                                 String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptText = EncryptionModel.Encrypt(getEncoded, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(getEncoded, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, encryptText);
                             }
 
                             else if (retrieved == ".exe") {
                                 exeCurr++;
                                 var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_exe", "PanExe", exeCurr, encryptText);
 
                             }
                             else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
                                 vidCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_vid", "PanVid", vidCurr, encryptText);
                             }
 
                             else if (retrieved == ".xlsx" || retrieved == ".xls") {
                                 exlCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_excel","PanExl",exlCurr,encryptText);
                             }
 
                             else if (retrieved == ".mp3" || retrieved == ".wav") {
                                 audCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
-                                createPanelMain("file_info_audi", "PanAud", audCurr, encryptText); // ReadFile(open.FileName)
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                createPanelMain("file_info_audi", "PanAud", audCurr, encryptText); 
                                 
                             }
 
                             else if (retrieved == ".gif") {
                                 gifCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_gif", "PanGif", gifCurr, encryptText);
                             }
 
                             else if (retrieved == ".apk") {
                                 apkCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_apk", "PanApk", apkCurr, encryptText);
                             }
 
                             else if (retrieved == ".pdf") {
                                 pdfCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_pdf", "PanPdf", pdfCurr, encryptText);
                             }
 
                             else if (retrieved == ".pptx" || retrieved == ".ppt") {
                                 ptxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_ptx", "PanPtx", ptxCurr, encryptText);
                             }
                             else if (retrieved == ".msi") {
                                 msiCurr++;
                                 var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptText);
                             }
                             else if (retrieved == ".docx") {
                                 docxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_word", "PanDoc", docxCurr, encryptText);
                             }
 
@@ -3232,6 +3229,8 @@ namespace FlowSERVER1 {
 
                     clearRedundane();
 
+                    _callFilesInformationShared();
+
                     buildSharedToMe();
 
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
@@ -3245,6 +3244,8 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
+
+                    _callFilesInformationOthers();
 
                     buildSharedToOthers();
 
@@ -3346,17 +3347,37 @@ namespace FlowSERVER1 {
         /// <param name="_extTypes"></param>
         /// <param name="parameterName"></param>
         /// <param name="itemCurr"></param>
+        /// 
+            
+        List<Tuple<string, string>> filesInfoSharedOthers = new List<Tuple<string, string>>();
+        private async void _callFilesInformationOthers() {
+            string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
+            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746");
+                        string uploadDate = reader.GetString(1);
+                        filesInfoSharedOthers.Add(new Tuple<string, string>(fileName, uploadDate));
+                    }
+                }
+            }
+        }
+
         private async void generateUserSharedOthers(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
 
             List<String> typeValues = new List<String>(_extTypes);
 
+            int top = 275;
+            int h_p = 100;
+
             for (int q = 0; q < itemCurr; q++) {
-                int top = 275;
-                int h_p = 100;
+
                 var panelTxt = new Guna2Panel() {
-                    Name = parameterName + q,
+                    Name = $"parameterName{q}",
                     Width = 240,
                     Height = 262,
                     BorderRadius = 8,
@@ -3367,12 +3388,12 @@ namespace FlowSERVER1 {
 
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelTxt);
-                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + q]);
-                _controlName = parameterName + q;
+                var mainPanelTxt = (Guna2Panel)panelTxt;  
+                _controlName = $"parameterName{q}";
 
                 var textboxPic = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxPic);
-                textboxPic.Name = "TxtBox" + q;
+                textboxPic.Name = $"TxtBox{q}";
                 textboxPic.Width = 240;
                 textboxPic.Height = 164;
                 textboxPic.BorderRadius = 8;
@@ -3380,22 +3401,9 @@ namespace FlowSERVER1 {
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
 
-                List<String> filesNames = new List<String>();
-                String selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_FROM = @username";
-
-                using (MySqlCommand command = new MySqlCommand(selectFileName, con)) {
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            filesNames.Add(EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746"));
-                        }
-                    }
-                }
-
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = "LabVidUp" + q;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = $"LabVidUp{q}";
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -3403,20 +3411,7 @@ namespace FlowSERVER1 {
                 titleLab.Location = new Point(12, 182);
                 titleLab.Width = 220;
                 titleLab.Height = 30;
-                titleLab.Text = filesNames[q];
-
-                List<String> fileDates = new List<String>();
-                String selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
-
-                using (MySqlCommand command = new MySqlCommand(selectFileDates, con)) {
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            fileDates.Add(reader.GetString(0));
-                        }
-                    }
-                }
+                titleLab.Text = filesInfoSharedOthers[q].Item1;
 
                 getUploaderNameShared = titleLab.Text;
                 var setupSharedUsername = sharedToName();
@@ -3424,7 +3419,7 @@ namespace FlowSERVER1 {
 
                 Guna2Button remButTxt = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButTxt);
-                remButTxt.Name = "RemTxtBut" + q;
+                remButTxt.Name = $"RemTxtBut{q}";
                 remButTxt.Width = 39;
                 remButTxt.Height = 35;
                 remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
@@ -3440,20 +3435,26 @@ namespace FlowSERVER1 {
                     var titleFile = titleLab.Text;
                     DialogResult verifyDialog = MessageBox.Show("'" + titleFile + "' Delete this shared file?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
-                        String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                        command = new MySqlCommand(noSafeUpdate, con);
-                        command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
-                        command = new MySqlCommand(removeQuery, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
-                        command.Parameters.AddWithValue("@sharedname", setupSharedUsername);
+                        string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                        using (MySqlCommand cmd = new MySqlCommand(noSafeUpdate, con)) {
+                            cmd.ExecuteNonQuery();
+                        }
 
-                        if(command.ExecuteNonQuery() == 1) {
-                            // @ ignore success file deletion
-                        } else {
-                            MessageBox.Show("Failed to delete this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
+                        using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
+                            cmd.Parameters.AddWithValue("@username", label5.Text);
+                            cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
+                            cmd.Parameters.AddWithValue("@sharedname", setupSharedUsername);
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            if (rowsAffected == 1) {
+                                // Ignore success file deletion
+                            }
+                            else {
+                                MessageBox.Show("Failed to delete this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
 
                         mainPanelTxt.Dispose();
@@ -3467,14 +3468,14 @@ namespace FlowSERVER1 {
 
                 Label dateLabTxt = new Label();
                 mainPanelTxt.Controls.Add(dateLabTxt);
-                dateLabTxt.Name = "LabTxtUp" + q;
+                dateLabTxt.Name = $"LabTxtUp{q}";
                 dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 dateLabTxt.ForeColor = Color.DarkGray;
                 dateLabTxt.Visible = true;
                 dateLabTxt.Enabled = true;
                 dateLabTxt.Location = new Point(12, 208);
                 dateLabTxt.Width = 1000;
-                dateLabTxt.Text = fileDates[q];
+                dateLabTxt.Text = filesInfoSharedOthers[q].Item2;
 
                 textboxPic.MouseHover += (_senderM, _ev) => {
                     panelTxt.ShadowDecoration.Enabled = true;
@@ -3773,13 +3774,12 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                Application.DoEvents();
-
                 Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                    .ToList()
-                    .ForEach(form => form.Close());
+                             .OfType<Form>()
+                             .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
+                             .ToList()
+                             .ForEach(form => form.Close());
+
 
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -3787,8 +3787,6 @@ namespace FlowSERVER1 {
                     label8.Visible = false;
                     guna2Button6.Visible = false;
                 }
-
-                Application.DoEvents();
 
             }
         }
@@ -3799,13 +3797,30 @@ namespace FlowSERVER1 {
         /// <param name="_extTypes"></param>
         /// <param name="parameterName"></param>
         /// <param name="itemCurr"></param>
+        /// 
+
+        List<Tuple<string, string>> filesInfoShared = new List<Tuple<string, string>>();
+        private async void _callFilesInformationShared() {
+            string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
+            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        string uploadDate = reader.GetString(1);
+                        filesInfoShared.Add(new Tuple<string, string>(fileName, uploadDate));
+                    }
+                }
+            }
+
+        }
+
         private async void generateUserShared(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
 
             var UploaderUsername = uploaderName();
-
-            Application.DoEvents();
 
             List<String> typeValues = new List<String>(_extTypes);
 
@@ -3813,7 +3828,7 @@ namespace FlowSERVER1 {
                 int top = 275;
                 int h_p = 100;
                 var panelTxt = new Guna2Panel() {
-                    Name = parameterName + q,
+                    Name = $"parameterName{q}",
                     Width = 240,
                     Height = 262,
                     BorderRadius = 8,
@@ -3824,12 +3839,12 @@ namespace FlowSERVER1 {
 
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelTxt);
-                var mainPanelTxt = ((Guna2Panel)flowLayoutPanel1.Controls[parameterName + q]);
+                var mainPanelTxt = (Guna2Panel)panelTxt; 
                 _controlName = parameterName + q;
 
                 var textboxPic = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxPic);
-                textboxPic.Name = "TxtBox" + q;
+                textboxPic.Name = $"TxtBox{q}";
                 textboxPic.Width = 240;
                 textboxPic.Height = 164;
                 textboxPic.BorderRadius = 8;
@@ -3837,22 +3852,9 @@ namespace FlowSERVER1 {
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
 
-                List<String> filesNames = new List<String>();
-                String selectFileName = "SELECT CUST_FILE_PATH FROM cust_sharing WHERE CUST_TO = @username";
-
-                using (MySqlCommand command = new MySqlCommand(selectFileName, con)) {
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            filesNames.Add(EncryptionModel.Decrypt(reader.GetString(0),"0123456789085746"));
-                        }
-                    }
-                }
-
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = "LabVidUp" + q;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = $"LabVidUp{q}";//Segoe UI Semibold, 11.25pt, style=Bold
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -3860,31 +3862,18 @@ namespace FlowSERVER1 {
                 titleLab.Location = new Point(12, 182);
                 titleLab.Width = 220;
                 titleLab.Height = 30;
-                titleLab.Text = filesNames[q];
-
-                List<String> fileDates = new List<String>();
-                String selectFileDates = "SELECT UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
-
-                using (MySqlCommand command = new MySqlCommand(selectFileDates, con)) {
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
-
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            fileDates.Add(reader.GetString(0));
-                        }
-                    }
-                }
+                titleLab.Text = filesInfoShared[q].Item1;
 
                 Guna2Button remButTxt = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButTxt);
-                remButTxt.Name = "RemTxtBut" + q;
+                remButTxt.Name = $"RemTxtBut{q}";
                 remButTxt.Width = 39;
                 remButTxt.Height = 35;
                 remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
                 remButTxt.BorderRadius = 6;
                 remButTxt.BorderThickness = 1;
                 remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
                 remButTxt.Visible = true;
                 remButTxt.Location = new Point(189, 218);
                 remButTxt.BringToFront();
@@ -3918,14 +3907,14 @@ namespace FlowSERVER1 {
 
                 Label dateLabTxt = new Label();
                 mainPanelTxt.Controls.Add(dateLabTxt);
-                dateLabTxt.Name = "LabTxtUp" + q;
+                dateLabTxt.Name = $"LabTxtUp{q}";
                 dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 dateLabTxt.ForeColor = Color.DarkGray;
                 dateLabTxt.Visible = true;
                 dateLabTxt.Enabled = true;
                 dateLabTxt.Location = new Point(12, 208);
                 dateLabTxt.Width = 1000;
-                dateLabTxt.Text = fileDates[q];
+                dateLabTxt.Text = filesInfoShared[q].Item2;
 
                 textboxPic.MouseHover += (_senderM, _ev) => {
                     panelTxt.ShadowDecoration.Enabled = true;
@@ -4200,13 +4189,12 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                Application.DoEvents();
-
                 Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                    .ToList()
-                    .ForEach(form => form.Close());
+                          .OfType<Form>()
+                          .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
+                          .ToList()
+                          .ForEach(form => form.Close());
+
 
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -4214,8 +4202,6 @@ namespace FlowSERVER1 {
                     label8.Visible = false;
                     guna2Button6.Visible = false;
                 }
-
-                Application.DoEvents();
             }
         }
 
@@ -5883,21 +5869,27 @@ namespace FlowSERVER1 {
 
 
 
-        private void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e) {
-            using (var command = con.CreateCommand()) {
-                command.CommandText = $"INSERT INTO {tableName} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
-                command.Parameters.AddWithValue("@CUST_FILE_PATH", getName);
-                command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
-                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
-                command.CommandTimeout = 15000;
+     private async void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e)
+{
+    await Task.Run(() =>
+    {
+        using (var command = con.CreateCommand())
+        {
+            command.CommandText = $"INSERT INTO {tableName} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
+            command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName, EncryptionKey.KeyValue));
+            command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+            command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
+            command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
+            command.CommandTimeout = 15000;
 
-                if (command.ExecuteNonQuery() == 1) {
-                    var form = Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.Name == "UploadAlrt");
-                    form?.Close();
-                }
+            if (command.ExecuteNonQuery() == 1)
+            {
+                var form = Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.Name == "UploadAlrt");
+                form?.Close();
             }
         }
+    });
+}
 
         private void backgroundWorker1_ProgressChanged_3(object sender, ProgressChangedEventArgs e) {
         }

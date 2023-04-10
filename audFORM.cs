@@ -16,13 +16,13 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static String _TabName = "";
-        public static String _DirName = "";
-        public static audFORM instance;
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
+        private static String _TabName = "";
+        private static String _DirName = "";
+        private static audFORM instance;
         private static bool isFromShared;
-        private static bool IsFromSharing;  // Shared to me 
+        private static bool IsFromSharing; 
 
         public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
@@ -37,15 +37,17 @@ namespace FlowSERVER1 {
             IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
-                _getName = _UploaderName;
+                _getName = _UploaderName.Replace("Shared", "");
+                label5.Text = "Shared To";
                 guna2Button1.Visible = false;
                 label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
             }
             else {
-                _getName = "Uploaded By " + _UploaderName;
+                _getName = " " + _UploaderName;
+                label5.Text = "Uploaded By";
                 label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
+                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
             }
 
             label2.Text = _getName;
@@ -250,6 +252,10 @@ namespace FlowSERVER1 {
             string getExtension = "." + parts[1];
             shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TabName, _DirName);
             _showSharingFileFORM.Show();
+        }
+
+        private void label7_Click(object sender, EventArgs e) {
+
         }
     }
 }

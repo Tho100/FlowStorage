@@ -266,45 +266,32 @@ namespace FlowSERVER1 {
                 Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text, _fileSize: fileSizeInMB).ShowDialog());
                 showUploadAlert.Start();
 
-                Application.DoEvents();
+                void startSending(Object setValue, Object thumbnailValue = null) {
 
-                String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
-                command = new MySqlCommand(insertQuery, con);
+                    using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
+                        command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
+                        command.Parameters.AddWithValue("@CUST_FROM", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
+                        command.Parameters.AddWithValue("@CUST_FILE", setValue);
+                        command.Parameters.AddWithValue("@FILE_EXT", _FileExt);
+                        command.Parameters.AddWithValue("@CUST_COMMENT", guna2TextBox4.Text);
+                        command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
-                command.Parameters.Add("@CUST_TO", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_FROM", MySqlDbType.Text);
-                command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-                command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
-                command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                command.Parameters.Add("@CUST_COMMENT", MySqlDbType.LongText);
-
-                command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
-                command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
-                command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue);
-                command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                command.Parameters["@FILE_EXT"].Value = _FileExt;
-                command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text.Replace("\r\n","");
-
-                void startSending(Object setValue) {
-
-                    command.Parameters["@CUST_FILE"].Value = setValue;
-                    command.Prepare();
-                    command.ExecuteNonQuery();
-                    command.Dispose();
+                        command.ExecuteNonQuery();
+                    }
 
                     var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
                     uploadAlertFormSucceeded?.Close();
 
                     sucessShare _showSuccessfullyTransaction = new sucessShare(_FileName, guna2TextBox1.Text);
                     _showSuccessfullyTransaction.Show();
+
                 }
 
                 if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
-                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnails("cust_sharing",Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                    startSending(getFileMetadataShared(Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746")));
+                    string getThumbnails = retrieveThumbnails("cust_sharing",Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    startSending(getFileMetadataShared(Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)),getThumbnails);
                 } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
                     if (_FileExt == ".png" || _FileExt == ".jpg" || _FileExt == ".jpeg" || _FileExt == ".bmp") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue),"file_info"));  
@@ -321,9 +308,8 @@ namespace FlowSERVER1 {
                     } else if (_FileExt == ".wav" || _FileExt == ".mp3") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_audi"));
                     } else if (_FileExt == ".mp4" || _FileExt == ".mov" || _FileExt == ".avi" || _FileExt == ".webm" || _FileExt == ".wmv") {
-                        MessageBox.Show("HI");
-                        command.Parameters["@CUST_THUMB"].Value = retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"));
+                        string getThumbnails = retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
+                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"),getThumbnails);
                     } else if (_FileExt == ".exe") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_exe"));
                     } else if (_FileExt == ".apk") {
@@ -331,10 +317,10 @@ namespace FlowSERVER1 {
                     }
 
                 } else if (_IsFromTable == "upload_info_directory") {
-                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    string getThumbnails = retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
                     startSending(getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 } else if (_IsFromTable == "folder_upload_info") {
-                    command.Parameters["@CUST_THUMB"].Value = retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
+                    string getThumbnails = retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
                     startSending(getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 }
 

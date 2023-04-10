@@ -91,102 +91,99 @@ namespace FlowSERVER1 {
                     Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text, _fileSize: fileSizeInMB).ShowDialog());
                     showUploadAlert.Start();
 
-                    Application.DoEvents();
-
-                    String varDate = DateTime.Now.ToString("dd/MM/yyyy");
                     String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
                     command = new MySqlCommand(insertQuery, con);
 
-                    command.Parameters.Add("@CUST_TO", MySqlDbType.Text);
-                    command.Parameters.Add("@CUST_FROM", MySqlDbType.Text);
-                    command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-                    command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                    command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
-                    command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                    command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-                    command.Parameters.Add("@CUST_COMMENT", MySqlDbType.LongText);
-
-                    command.Parameters["@CUST_FROM"].Value = Form1.instance.label5.Text;
-                    command.Parameters["@CUST_TO"].Value = guna2TextBox1.Text;
-                    command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName, "0123456789085746");
-                    command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                    command.Parameters["@FILE_EXT"].Value = _retrieved;
-                    command.Parameters["@CUST_COMMENT"].Value = guna2TextBox4.Text.Replace("\r\n","");
-
                     _currentFileName = guna2TextBox2.Text;
 
-                    void startSending(Object setValue) {
+                    void startSending(Object setValue, Object thumbnailValue = null) {
+                        command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
+                        command.Parameters.AddWithValue("@CUST_FROM", Form1.instance.label5.Text);
+                        command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
+                        command.Parameters.AddWithValue("@CUST_FILE", setValue);
+                        command.Parameters.AddWithValue("@FILE_EXT", _retrieved);
+                        command.Parameters.AddWithValue("@CUST_COMMENT", guna2TextBox4.Text);
+                        command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
-                        command.Parameters["@CUST_FILE"].Value = setValue;
                         command.Prepare();
-                        command.ExecuteNonQuery();
-                        command.Dispose();
 
-                        var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-                        uploadAlertFormSucceeded?.Close();
+                        try {
 
-                        sucessShare _showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text, guna2TextBox1.Text);
-                        _showSuccessfullyTransaction.Show();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
 
+                            if (Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt") is Form uploadAlertFormSucceeded) {
+                                uploadAlertFormSucceeded.Invoke(new Action(() => {
+                                    uploadAlertFormSucceeded.Close();
+                                }));
+                                var showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text, guna2TextBox1.Text);
+                                showSuccessfullyTransaction.Show();
+                            }
+                        } catch (Exception) {
+                            MessageBox.Show("Failed to share this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                        }
                     }
 
                     if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
                     else if (_retrieved == ".docx" || _retrieved == ".doc") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);                    }
                     else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
                     else if (_retrieved == ".exe") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.CommandTimeout = 12000;
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
                     else if (_retrieved == ".msi") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.CommandTimeout = 12000;
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
                     else if (_retrieved == ".mp3" || _retrieved == ".wav") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
 
                     else if (_retrieved == ".pdf") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
                     else if (_retrieved == ".apk") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        command.Parameters["@CUST_FILE"].Value = _toBase64;
-                        command.ExecuteNonQuery();
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        startSending(encryptText);
                     }
                     else if (_retrieved == ".xlsx" || _retrieved == ".xls") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         startSending(encryptText);
                     }
                     else if (_retrieved == ".gif") {
                         ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                        String toBase64Thumbnail;
                         using (var stream = new MemoryStream()) {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                            var toBase64String = Convert.ToBase64String(stream.ToArray());
-                            command.Parameters["@CUST_THUMB"].Value = toBase64String;
+                            toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
                         var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                        startSending(_toBase64);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        startSending(encryptText, toBase64Thumbnail);
 
                     }
                     else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql" || _retrieved == ".csv") {
@@ -196,21 +193,21 @@ namespace FlowSERVER1 {
                         }
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         String getEncoded = Convert.ToBase64String(getBytes);
-                        String encryptText = EncryptionModel.Encrypt(getEncoded, "0123456789085746");
+                        String encryptText = EncryptionModel.Encrypt(getEncoded, EncryptionKey.KeyValue);
                         startSending(encryptText);
 
                     }
                     else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
                         ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
+                        String toBase64Thumbnail;
                         using (var stream = new MemoryStream()) {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                            var toBase64Str = Convert.ToBase64String(stream.ToArray());
-                            command.Parameters["@CUST_THUMB"].Value = toBase64Str;// To load: Bitmap -> Byte array
+                            toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
                         var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, "0123456789085746");
-                        startSending(encryptText);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        startSending(encryptText,toBase64Thumbnail);
                     }
                 }
                 else {
