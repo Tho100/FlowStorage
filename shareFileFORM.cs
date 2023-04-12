@@ -168,6 +168,7 @@ namespace FlowSERVER1 {
         }
 
         private string getFileMetadata(String _fileName,String _TableName) {
+
             String GetBase64String = "";
             String queryGetFileByte = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using(MySqlCommand command = new MySqlCommand(queryGetFileByte,con)) {
@@ -295,31 +296,53 @@ namespace FlowSERVER1 {
                 } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
                     if (_FileExt == ".png" || _FileExt == ".jpg" || _FileExt == ".jpeg" || _FileExt == ".bmp") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue),"file_info"));  
-                    } else if (_FileExt == ".xlsx" || _FileExt == ".xls") {
+                    } 
+                    
+                    else if (_FileExt == ".xlsx" || _FileExt == ".xls") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_excel"));
-                    } else if (_FileExt == ".txt" || _FileExt == ".html" || _FileExt == ".sql" || _FileExt == ".csv" || _FileExt == ".css" || _FileExt == ".js") {
+                    }
+                    
+                    else if (_FileExt == ".txt" || _FileExt == ".html" || _FileExt == ".sql" || _FileExt == ".csv" || _FileExt == ".css" || _FileExt == ".js") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_expand"));
-                    } else if (_FileExt == ".pdf") {
+                    } 
+                    
+                    else if (_FileExt == ".pdf") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_pdf"));
-                    } else if (_FileExt == ".pptx" || _FileExt == ".ppt") {
+                    } 
+                    
+                    else if (_FileExt == ".pptx" || _FileExt == ".ppt") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_ptx"));
-                    } else if (_FileExt == ".docx" || _FileExt == ".doc") {
+                    } 
+                    
+                    else if (_FileExt == ".docx" || _FileExt == ".doc") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_doc"));
-                    } else if (_FileExt == ".wav" || _FileExt == ".mp3") {
+                    } 
+                    
+                    else if (_FileExt == ".wav" || _FileExt == ".mp3") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_audi"));
-                    } else if (_FileExt == ".mp4" || _FileExt == ".mov" || _FileExt == ".avi" || _FileExt == ".webm" || _FileExt == ".wmv") {
+                    } 
+                    
+                    else if (_FileExt == ".mp4" || _FileExt == ".mov" || _FileExt == ".avi" || _FileExt == ".webm" || _FileExt == ".wmv") {
                         string getThumbnails = retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"),getThumbnails);
-                    } else if (_FileExt == ".exe") {
+                    }
+                    
+                    else if (_FileExt == ".exe") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_exe"));
-                    } else if (_FileExt == ".apk") {
+                    }
+                    
+                    else if (_FileExt == ".apk") {
                         startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_apk"));
                     }
 
-                } else if (_IsFromTable == "upload_info_directory") {
+                } 
+                
+                else if (_IsFromTable == "upload_info_directory") {
                     string getThumbnails = retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
                     startSending(getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
-                } else if (_IsFromTable == "folder_upload_info") {
+                } 
+                
+                else if (_IsFromTable == "folder_upload_info") {
                     string getThumbnails = retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
                     startSending(getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 }

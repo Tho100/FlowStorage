@@ -88,7 +88,7 @@ namespace FlowSERVER1
                 Guna2PictureBox picBanner = new Guna2PictureBox();
                 panel.Controls.Add(picBanner);
                 picBanner.Name = "PicBanner" + currMain;
-                picBanner.Image = FlowSERVER1.Properties.Resources.icon1;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icon1.png");
+                picBanner.Image = FlowSERVER1.Properties.Resources.DirIcon;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icon1.png");
                 picBanner.SizeMode = PictureBoxSizeMode.CenterImage;
                 picBanner.BorderRadius = 8;
                 picBanner.Width = 240;

@@ -81,24 +81,7 @@ namespace FlowSERVER1 {
                 }
 
             }  catch (Exception) {
-                Form bgBlur = new Form();
-                using (errorLoad displayError = new errorLoad()) {
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                    bgBlur.Opacity = .24d;
-                    bgBlur.BackColor = Color.Black;
-                    bgBlur.WindowState = FormWindowState.Maximized;
-                    bgBlur.TopMost = true;
-                    bgBlur.Location = this.Location;
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.ShowInTaskbar = false;
-                    bgBlur.Show();
-
-                    displayError.Owner = bgBlur;
-                    displayError.ShowDialog();
-
-                    bgBlur.Dispose();
-                }
+                MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 

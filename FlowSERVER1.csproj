@@ -711,12 +711,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="exlFORM.resx">
       <DependentUpon>exlFORM.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="gifFORM.resx">
       <DependentUpon>gifFORM.cs</DependentUpon>
@@ -774,6 +776,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SheetRetrieval.resx">
       <DependentUpon>SheetRetrieval.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="splashFORM.resx">
       <DependentUpon>splashFORM.cs</DependentUpon>
@@ -833,6 +836,10 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\DirIcon.png" />
+    <None Include="Resources\icons8-folder-48.png" />
+    <None Include="Resources\icons8-home-page-32.png" />
+    <None Include="Resources\icons8-exe-48.png" />
     <None Include="Resources\icons8-android-os-50.png" />
     <None Include="Resources\video_image.png" />
     <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
@@ -883,9 +890,7 @@
     <None Include="Resources\icons8-software-installer-32.png" />
     <None Include="Resources\icons8-javascript-50.png" />
     <None Include="Resources\icons8-exe-96.png" />
-    <None Include="Resources\icon1.png" />
     <None Include="Resources\icons8-garbage-66.png" />
-    <None Include="Resources\icons8-exe-48.png" />
     <None Include="Resources\icons8-garbage-66 %281%29.png" />
     <None Include="Resources\icons8-python-file-48.png" />
     <None Include="Resources\icons8-html-filetype-48 %281%29.png" />

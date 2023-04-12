@@ -357,9 +357,6 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
-            
- //           richTextBox2.Text = JsonConvert.DeserializeObject<Stripe.Customer>(customers).Email;// yes.ToString();
-            //}
 
             this.Close();
         }
@@ -386,9 +383,7 @@ namespace FlowSERVER1 {
                     Form1.instance.guna2Button7.Text = "File Sharing";
                     Form1.instance.guna2Button7.Size = new Size(125, 47);
                     Form1.instance.label28.Text = "Essentials";
-                    Form1.instance.label29.Text = "Others";
                     Form1.instance.guna2Button3.Text = "Sign In";
-                    Form1.instance.guna2Button5.Text = "Settings";
 
                     String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                     String _getAuth = _getPath + "\\CUST_DATAS.txt";
@@ -706,13 +701,13 @@ namespace FlowSERVER1 {
             String greeting = null;
             if (hours >= 1 && hours <= 12) {
                 if (NewLang == "US") {
-                    greeting = "Good Morning " + lab5.Text + " :) ";
+                    greeting = "Good Morning, " + lab5.Text;
                 }
                 else if (NewLang == "MY") {
-                    greeting = "Selemat Pagi " + lab5.Text + " :) ";
+                    greeting = "Selemat Pagi, " + lab5.Text;
                 }
                 else if (NewLang == "GER") {
-                    greeting = "Guten Morgen " + lab5.Text + " :)";
+                    greeting = "Guten Morgen, " + lab5.Text;
                 }
                 else if (NewLang == "JAP") {
                     greeting = "おはよう " + lab5.Text + " :)";
@@ -780,12 +775,12 @@ namespace FlowSERVER1 {
             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
                     if (NewLang == "US") {
-                        greeting = "Good Late Evening " + lab5.Text + " :)";
+                        greeting = "Good Late Evening, " + lab5.Text;
                     }
                     else if (NewLang == "MY") {
-                        greeting = "Selamat Lewat-Petang " + lab5.Text + " :)";
+                        greeting = "Selamat Lewat-Petang, " + lab5.Text;
                     } else if (NewLang == "GER") {
-                        greeting = "Guten späten Abend " + lab5.Text + " :)";
+                        greeting = "Guten späten Abend, " + lab5.Text;
                     }
                     else if (NewLang == "JAP") {
                         greeting = "こんばんは " + lab5.Text + " :)";
@@ -812,12 +807,12 @@ namespace FlowSERVER1 {
                 }
                 else {
                     if (NewLang == "US") {
-                        greeting = "Good Evening " + lab5.Text + " :)";
+                        greeting = "Good Evening, " + lab5.Text;
                     }
                     else if (NewLang == "MY") {
-                        greeting = "Selamat Petang " + lab5.Text + " :)";
+                        greeting = "Selamat Petang, " + lab5.Text;
                     } else if (NewLang == "GER") {
-                        greeting = "Guten Abend " + lab5.Text + " :)";
+                        greeting = "Guten Abend, " + lab5.Text;
                     } else if (NewLang == "JAP") {
                         greeting = "こんばんは " + lab5.Text + " :)";
                     }
@@ -847,13 +842,13 @@ namespace FlowSERVER1 {
             }
             else if (hours >= 21 && hours <= 24) {
                 if (NewLang == "US") {
-                    greeting = "Good Night " + lab5.Text + " :)";
+                    greeting = "Good Night, " + lab5.Text;
                 }
                 else if (NewLang == "MY") {
-                    greeting = "Selamat Malam " + lab5.Text + " :)";
+                    greeting = "Selamat Malam, " + lab5.Text;
                 }
                 else if (NewLang == "GER") {
-                    greeting = "Guten Nacth " + lab5.Text + " :)";
+                    greeting = "Guten Nacth, " + lab5.Text;
                 }
                 else if (NewLang == "JAP") {
                     greeting = "おやすみ " + lab5.Text + " :)";
@@ -942,16 +937,14 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Perkongsian Fail";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
-                Form_1.label29.Text = "Lain-lain";
                 Form_1.guna2Button3.Text = "Log Masuk";
-                Form_1.guna2Button5.Text = "Tetapan";
                 Form_1.label2.Text = "Kiraan Item";
             }
 
             if(_custLang == "US") {
                 label21.Text = "Settings";
                 label75.Text = "Email Address";
-                tabPage5.Text = "File Sharing & API";
+                tabPage5.Text = "File Sharing";
                 tabPage4.Text = "Languages";
                 tabPage3.Text = "Upgrade";
                 tabPage2.Text = "Statistics";
@@ -1005,9 +998,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "File Sharing";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.label29.Text = "Others";
                 Form_1.guna2Button3.Text = "Sign in";
-                Form_1.guna2Button5.Text = "Settings";
             }
 
             if(_custLang == "DUT") {
@@ -1067,9 +1058,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Bestanden delen";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.label29.Text = "Overige";
                 Form_1.guna2Button3.Text = "Aanmelden";
-                Form_1.guna2Button5.Text = "Instellingen";
             }
 
             if(_custLang == "RUS") {
@@ -1129,9 +1118,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Общий доступ к файлам";
                 Form_1.guna2Button7.Size = new Size(129, 47);
                 Form_1.label28.Text = "Основные";
-                Form_1.label29.Text = "Другие";
                 Form_1.guna2Button3.Text = "Войти";
-                Form_1.guna2Button5.Text = "Настройки";
             }
 
             if(_custLang == "GER") {
@@ -1192,9 +1179,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Datenaustausch";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.label29.Text = "Others";
                 Form_1.guna2Button3.Text = "Anmelden";
-                Form_1.guna2Button5.Text = "Einstellungen";
             }
 
             if (_custLang == "JAP") {
@@ -1254,9 +1239,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "ファイル共有";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "必需品";
-                Form_1.label29.Text = "その他";
                 Form_1.guna2Button3.Text = "ログイン\r\n";
-                Form_1.guna2Button5.Text = "設定";
             }
 
             if (_custLang == "ESP") {
@@ -1317,9 +1300,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartición de archivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Esenciales";
-                Form_1.label29.Text = "Otros";
                 Form_1.guna2Button3.Text = "Iniciar sesión";
-                Form_1.guna2Button5.Text = "Ajustes";
             }
 
             if (_custLang == "FRE") {
@@ -1379,9 +1360,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Partage de fichiers";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentiel";
-                Form_1.label29.Text = "Autres";
                 Form_1.guna2Button3.Text = "S'identifier";
-                Form_1.guna2Button5.Text = "Paramètres";
             }
 
             if (_custLang == "POR") {
@@ -1441,9 +1420,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essenciais";
-                Form_1.label29.Text = "Outros";
                 Form_1.guna2Button3.Text = "Entrar";
-                Form_1.guna2Button5.Text = "Configurações";
             }
 
             if (_custLang == "CHI") {
@@ -1504,9 +1481,7 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "文件共享";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "要点";
-                Form_1.label29.Text = "其他的";
                 Form_1.guna2Button3.Text = "登入";
-                Form_1.guna2Button5.Text = "设置";
             }
         }
 

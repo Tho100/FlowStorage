@@ -55,6 +55,7 @@ namespace FlowSERVER1 {
 
                 if (_isShared == true) {
                     _getName = _UploaderUsername.Replace("Shared", "");
+                    IsFromSharing = true;
                     label4.Text = "Shared To";
                     guna2Button5.Visible = false;
                     label3.Visible = true;
@@ -66,18 +67,6 @@ namespace FlowSERVER1 {
                     label3.Visible = true;
                     label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
                 }
-
-                /*if (_isShared == true) {
-                    _getName = _UploaderUsername;
-                    guna2Button5.Visible = false;
-                    label3.Visible = true;
-                    label3.Text = getCommentSharedToOthers() != "" ? "Comment: '" + getCommentSharedToOthers() + "'" : "Comment: (No Comment)";
-                }
-                else {
-                    _getName = "Uploaded By " + _UploaderUsername;
-                    label3.Visible = true;
-                    label3.Text = getCommentSharedToMe() != "" ? "Comment: '" + getCommentSharedToMe() + "'" : "Comment: (No Comment)";
-                }*/
 
                 label2.Text = _getName;
 
@@ -113,22 +102,21 @@ namespace FlowSERVER1 {
 
                 } else if (getText == "" && tableName == "folder_upload_info") {
 
-                    string getTxtQuery = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                    string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, "0123456789085746"));
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
 
-                        string textValuesF = "";
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
-                                textValuesF = reader.GetString(0);
+                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
+                                string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
+                                richTextBox1.Text = toBase64Decoded;
                             }
                         }
 
-                        string decryptedTextValues = EncryptionModel.Decrypt(textValuesF, "0123456789085746");
-                        richTextBox1.Text = decryptedTextValues;
                     }
 
 
@@ -426,7 +414,7 @@ namespace FlowSERVER1 {
             }
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
-           
+           guna2Button6.Visible = true;
         }
 
         private void label1_Click(object sender, EventArgs e) {
@@ -451,6 +439,72 @@ namespace FlowSERVER1 {
             string getExtension = "." + parts[1];
             shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, TableName, DirectoryName);
             _showSharingFileFORM.Show();
+        }
+
+        private void _saveChangesUpdate(String textValues) {
+
+            try {
+
+                if(TableName == "file_info_expand") {
+                    string updateQue = $"UPDATE file_info_expand SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    using(MySqlCommand command = new MySqlCommand(updateQue,con)) {
+                        command.Parameters.Add("@update",MySqlDbType.LongText).Value = textValues;
+                        command.Parameters.Add("@username",MySqlDbType.Text).Value = Form1.instance.label5.Text;
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue);
+                        command.ExecuteNonQuery();
+                    }
+
+                } else if (TableName == "cust_sharing" && IsFromSharing == false) {
+
+                    string updateQue = $"UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
+                        command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.ExecuteNonQuery();
+                    }
+
+                } else if (TableName == "cust_sharing" && IsFromSharing == true) {
+
+                    string updateQue = $"UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
+                        command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.ExecuteNonQuery();
+                    }
+
+                } else if (TableName == "upload_info_directory") {
+
+                    string updateQue = $"UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
+                        command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
+                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = DirectoryName;
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                } catch (Exception) {
+                MessageBox.Show("Failed to save changes.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+
+            DialogResult verifySave = MessageBox.Show("Save Changes? \nThe changes will also affect the user you've shared this file to.","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Asterisk);
+    
+            if(verifySave == DialogResult.Yes) {
+
+                string getStrings = richTextBox1.Text;
+                byte[] getBytesText = System.Text.Encoding.UTF8.GetBytes(getStrings);
+                string base64Strings = Convert.ToBase64String(getBytesText);
+
+                string encryptedEncoded = EncryptionModel.Encrypt(base64Strings,EncryptionKey.KeyValue);
+                _saveChangesUpdate(encryptedEncoded);
+            }
+
         }
     }
 }

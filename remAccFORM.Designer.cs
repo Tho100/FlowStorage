@@ -1222,7 +1222,7 @@
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(996, 522);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "File Sharing & API";
+            this.tabPage5.Text = "File Sharing";
             this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
             // 
             // guna2Panel25
@@ -1243,6 +1243,7 @@
             this.guna2Panel25.Name = "guna2Panel25";
             this.guna2Panel25.Size = new System.Drawing.Size(318, 167);
             this.guna2Panel25.TabIndex = 38;
+            this.guna2Panel25.Visible = false;
             // 
             // linkLabel2
             // 
@@ -1358,6 +1359,7 @@
             this.guna2Separator6.Name = "guna2Separator6";
             this.guna2Separator6.Size = new System.Drawing.Size(983, 10);
             this.guna2Separator6.TabIndex = 38;
+            this.guna2Separator6.Visible = false;
             // 
             // guna2Panel24
             // 
@@ -1374,6 +1376,7 @@
             this.guna2Panel24.Name = "guna2Panel24";
             this.guna2Panel24.Size = new System.Drawing.Size(990, 44);
             this.guna2Panel24.TabIndex = 35;
+            this.guna2Panel24.Visible = false;
             // 
             // guna2Button28
             // 
