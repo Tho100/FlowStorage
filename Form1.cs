@@ -19,7 +19,6 @@ using System.Threading;
 using System.Xml;
 using System.Runtime.Caching;
 using Stripe.Terminal;
-using static Spire.Spreadsheet.Forms.Common.Win32;
 using Xamarin.Forms.Internals;
 
 namespace FlowSERVER1 {
@@ -75,7 +74,7 @@ namespace FlowSERVER1 {
                 string authFile = Path.Combine(path, "CUST_DATAS.txt");
                 if (File.Exists(authFile) && new FileInfo(authFile).Length > 0) {
 
-                    string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), "0123456789085746");
+                    string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), EncryptionKey.KeyValue);
 
                     var alertForm = new LoadAlertFORM(); 
                     alertForm.Show();
@@ -2367,6 +2366,7 @@ namespace FlowSERVER1 {
                                                         label11.Visible = false;
                                                         label12.Visible = false;
                                                         label30.Visible = false;
+                                                        label6.Text = "20";
                                                         guna2Panel7.Visible = false;
                                                         guna2TextBox1.Text = String.Empty;
                                                         guna2TextBox2.Text = String.Empty;
