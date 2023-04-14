@@ -113,7 +113,7 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
-                command.Parameters.AddWithValue("@dirname", directoryName);
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName,EncryptionKey.KeyValue));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {

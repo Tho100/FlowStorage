@@ -1976,6 +1976,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
+
             try {
 
                 String _currentFolder = listBox1.GetItemText(listBox1.SelectedItem);
@@ -4243,14 +4244,14 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     using (var reader = await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            titleValues.Add(reader.GetString(0));
+                            titleValues.Add(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
                         }
                     }
                 }
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
-                titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = "titleImgL" + i;
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -4287,7 +4288,7 @@ namespace FlowSERVER1 {
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
                 remBut.Visible = true;
                 remBut.Location = new Point(189, 218);
 
@@ -4302,13 +4303,13 @@ namespace FlowSERVER1 {
                         String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeDirQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@dirname", titleLab.Text);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
                         command.ExecuteNonQuery();
 
                         String _removeDirUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeDirUploadQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@dirname", titleLab.Text);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text,EncryptionKey.KeyValue));
                         command.ExecuteNonQuery();
 
                         panelPic_Q.Dispose();

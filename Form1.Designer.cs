@@ -47,6 +47,7 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.label18 = new System.Windows.Forms.Label();
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             this.label9 = new System.Windows.Forms.Label();
@@ -102,6 +103,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.guna2Panel4.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel7.SuspendLayout();
@@ -356,11 +358,12 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.panel3.Controls.Add(this.guna2Button3);
+            this.panel3.Controls.Add(this.guna2PictureBox1);
             this.panel3.Controls.Add(this.label18);
             this.panel3.Controls.Add(this.guna2Separator2);
             this.panel3.Controls.Add(this.label9);
             this.panel3.Controls.Add(this.listBox1);
-            this.panel3.Location = new System.Drawing.Point(1, 2);
+            this.panel3.Location = new System.Drawing.Point(2, 0);
             this.panel3.Name = "panel3";
             this.panel3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.panel3.Size = new System.Drawing.Size(207, 669);
@@ -392,12 +395,23 @@
             this.guna2Button3.TextOffset = new System.Drawing.Point(2, -1);
             this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
             // 
+            // guna2PictureBox1
+            // 
+            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.DirIcon;
+            this.guna2PictureBox1.ImageRotate = 0F;
+            this.guna2PictureBox1.Location = new System.Drawing.Point(16, 102);
+            this.guna2PictureBox1.Name = "guna2PictureBox1";
+            this.guna2PictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.guna2PictureBox1.TabIndex = 34;
+            this.guna2PictureBox1.TabStop = false;
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label18.Location = new System.Drawing.Point(11, 41);
+            this.label18.Location = new System.Drawing.Point(12, 48);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(83, 30);
             this.label18.TabIndex = 36;
@@ -416,7 +430,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label9.Location = new System.Drawing.Point(11, 103);
+            this.label9.Location = new System.Drawing.Point(41, 104);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(85, 20);
             this.label9.TabIndex = 32;
@@ -431,9 +445,9 @@
             this.listBox1.ForeColor = System.Drawing.Color.DarkGray;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 17;
-            this.listBox1.Location = new System.Drawing.Point(16, 133);
+            this.listBox1.Location = new System.Drawing.Point(16, 141);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(162, 493);
+            this.listBox1.Size = new System.Drawing.Size(177, 493);
             this.listBox1.TabIndex = 31;
             this.listBox1.Visible = false;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
@@ -1215,6 +1229,7 @@
             this.guna2Panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel3.PerformLayout();
@@ -1301,6 +1316,7 @@
         public System.Windows.Forms.Label label7;
         public Guna.UI2.WinForms.Guna2Button guna2Button14;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
     }
 }
 

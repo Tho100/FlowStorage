@@ -1340,3 +1340,9 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\fr\LibVLCSharp.Forms.resources.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\XamlC.stamp
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.shareFileFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Imaging.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Math.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Imaging.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Math.xml

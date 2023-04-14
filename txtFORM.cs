@@ -76,18 +76,17 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
-                        command.Parameters.AddWithValue("@dirname", Form3.instance.label1.Text);
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(Form3.instance.label1.Text,EncryptionKey.KeyValue));
 
-                        string textValuesF = "";
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
-                                textValuesF = reader.GetString(0);
+                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
+                                string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
+                                richTextBox1.Text = toBase64Decoded;
                             }
                         }
 
-                        string decryptedTextValues = EncryptionModel.Decrypt(textValuesF, EncryptionKey.KeyValue);
-                        richTextBox1.Text = decryptedTextValues;
                     }
 
                     if (FileExt_ == ".py") {
@@ -480,7 +479,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
-                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = DirectoryName;
+                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue);
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }

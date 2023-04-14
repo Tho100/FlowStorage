@@ -66,7 +66,7 @@ namespace FlowSERVER1 {
             String fileDeletionQuery = "DELETE FROM " + TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", FileName);
+            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName, EncryptionKey.KeyValue));
             command.ExecuteNonQuery();
         }
         /// <summary>
@@ -76,8 +76,8 @@ namespace FlowSERVER1 {
             String fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", _FileName);
-            command.Parameters.AddWithValue("@dirname", DirectoryName);
+            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue));
             command.ExecuteNonQuery();
         }
         /// <summary>
@@ -89,7 +89,7 @@ namespace FlowSERVER1 {
             String fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", _FileName);
+            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
             command.Parameters.AddWithValue("@foldtitle", _FoldName);
             command.ExecuteNonQuery();
         }
@@ -100,9 +100,10 @@ namespace FlowSERVER1 {
             String fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-            command.Parameters.AddWithValue("@filename", _FileName);
+            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
             command.ExecuteNonQuery();
         }
+
         /// <summary>
         /// 
         /// (Button) Delete file that has been cancelled on upload and

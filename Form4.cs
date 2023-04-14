@@ -44,7 +44,9 @@ namespace FlowSERVER1
         /// <param name="currMain"></param>
         /// <param name="getDirTitle"></param>
         public void generateDir(int currMain, String getDirTitle) {
+
             try {
+
                 var flowlayout = Form1.instance.flowLayoutPanel1;
                 int top = 275;
                 int h_p = 100;
@@ -88,7 +90,7 @@ namespace FlowSERVER1
                 Guna2PictureBox picBanner = new Guna2PictureBox();
                 panel.Controls.Add(picBanner);
                 picBanner.Name = "PicBanner" + currMain;
-                picBanner.Image = FlowSERVER1.Properties.Resources.DirIcon;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icon1.png");
+                picBanner.Image = FlowSERVER1.Properties.Resources.DirIcon;
                 picBanner.SizeMode = PictureBoxSizeMode.CenterImage;
                 picBanner.BorderRadius = 8;
                 picBanner.Width = 240;
@@ -130,13 +132,13 @@ namespace FlowSERVER1
                         String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeDirQuery, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", getDirTitle);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle,EncryptionKey.KeyValue));
                         command.ExecuteNonQuery();
 
                         String _removeUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeUploadQuery, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", getDirTitle);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle,EncryptionKey.KeyValue));
                         command.ExecuteNonQuery();
 
                     }
@@ -237,7 +239,7 @@ namespace FlowSERVER1
             if (!String.IsNullOrEmpty(dirTitle)) {
                 try {
                     var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
-                    countSameDirCommand.Parameters.AddWithValue("@dirname", dirTitle);
+                    countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirTitle,EncryptionKey.KeyValue));
                     int countSameDir = Convert.ToInt32(countSameDirCommand.ExecuteScalar());
 
                     if (countSameDir < 1) {
@@ -277,7 +279,7 @@ namespace FlowSERVER1
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
-                                insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", dirTitle);
+                                insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(dirTitle, EncryptionKey.KeyValue));
                                 insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
                                 insertValuesCommand.ExecuteNonQuery();
                             }

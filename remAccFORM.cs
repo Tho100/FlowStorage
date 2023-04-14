@@ -375,6 +375,8 @@ namespace FlowSERVER1 {
                 DialogResult _confirmation = MessageBox.Show("Logout your account?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
                 if(_confirmation == DialogResult.Yes) {
 
+                    guna2Panel1.SendToBack();
+
                     Form1.instance.label2.Text = "Item Count";
                     Form1.instance.label10.Text = "Upload";
                     Form1.instance.guna2Button2.Text = "Upload File";

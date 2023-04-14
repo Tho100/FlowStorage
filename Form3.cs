@@ -100,7 +100,7 @@ namespace FlowSERVER1
                 string query = "SELECT COUNT(CUST_USERNAME) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                 using (var command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@dirname", dirname);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirname,EncryptionKey.KeyValue));
                     command.Parameters.AddWithValue("@ext", ext);
 
                     return Convert.ToInt32(command.ExecuteScalar());
@@ -179,7 +179,7 @@ namespace FlowSERVER1
 
                 using(var command = new MySqlCommand("SELECT UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext",con)) {
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);//Form1.instance.
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                     command.Parameters.AddWithValue("@ext", _extName);
                     using(var readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while(await readerDate.ReadAsync()) {
@@ -200,11 +200,11 @@ namespace FlowSERVER1
 
                 using(var command = new MySqlCommand("SELECT CUST_FILE_PATH FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext",con)) {
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                     command.Parameters.AddWithValue("@ext", _extName);
                     using(var readerTitle = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while(await readerTitle.ReadAsync()) {
-                            titleValues.Add(EncryptionModel.Decrypt(readerTitle.GetString("CUST_FILE_PATH"), "0123456789085746"));
+                            titleValues.Add(EncryptionModel.Decrypt(readerTitle.GetString("CUST_FILE_PATH"), label1.Text));
                         }
                     }
                 }
@@ -253,28 +253,33 @@ namespace FlowSERVER1
                 remBut.Location = new Point(189, 218);
 
                 remBut.Click += (sender_im, e_im) => {
+
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleLab.Text}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         using (var command = con.CreateCommand()) {
                             String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                             command.CommandText = noSafeUpdate;
                             command.ExecuteNonQuery();
+                        }
 
+                        using (var command = con.CreateCommand()) {
                             String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                             command.CommandText = removeQuery;
                             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                            command.Parameters.AddWithValue("@dirname", label1.Text);
+                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
                             command.ExecuteNonQuery();
-
-                            panelPic_Q.Dispose();
                         }
+
+                        panelPic_Q.Dispose();
 
                         if (flowLayoutPanel1.Controls.Count == 0) {
                             label8.Visible = true;
                             guna2Button6.Visible = true;
                         }
+
                     }
                 };
 
@@ -289,7 +294,7 @@ namespace FlowSERVER1
                     string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", label1.Text);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@ext", _extName);
 
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -387,7 +392,7 @@ namespace FlowSERVER1
                     string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext AND CUST_FILE_PATH = @filename";
                     using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", label1.Text);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@ext", _extName);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
                         using (var readBase64 = await command.ExecuteReaderAsync()) {
@@ -433,7 +438,7 @@ namespace FlowSERVER1
                     String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                     command.Parameters.AddWithValue("@ext",_extName);
 
                     MySqlDataReader _readBase64 = command.ExecuteReader();
@@ -599,7 +604,7 @@ namespace FlowSERVER1
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", label1.Text);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
                     command.ExecuteNonQuery();
                 }
@@ -663,7 +668,7 @@ namespace FlowSERVER1
                         retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
                         fileSizeInMB = 0;
 
-                        async Task containThumbUpload(object keyValMain) {//string nameTable, string getNamePath, 
+                        async Task containThumbUpload(object keyValMain) {
                             using (var command = new MySqlCommand()) {
                                 command.Connection = con;
                                 command.CommandText = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)"; ;
@@ -671,7 +676,7 @@ namespace FlowSERVER1
                                 command.Parameters.AddWithValue("@CUST_USERNAME", form1.label5.Text);
                                 command.Parameters.AddWithValue("@FILE_EXT", retrieved);
                                 command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                                command.Parameters.AddWithValue("@DIR_NAME", label1.Text);
+                                command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                                 command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
 
                                 using (var shellFile = ShellFile.FromFilePath(selectedItems))
@@ -680,8 +685,6 @@ namespace FlowSERVER1
                                     string base64Thumb = Convert.ToBase64String(stream.ToArray());
                                     command.Parameters.AddWithValue("@CUST_THUMB", base64Thumb);
                                 }
-
-                                //command.Prepare();
 
                                 await command.ExecuteNonQueryAsync();
                             }
@@ -705,11 +708,14 @@ namespace FlowSERVER1
                                             command.Parameters.AddWithValue("@CUST_USERNAME", form1.label5.Text);
                                             command.Parameters.AddWithValue("@FILE_EXT", retrieved);
                                             command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                                            command.Parameters.AddWithValue("@DIR_NAME", label1.Text);
+                                            command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                                             command.Parameters.AddWithValue("@CUST_FILE", setValue);
                                             command.Parameters.AddWithValue("@CUST_THUMB", "null");
 
                                             await command.ExecuteNonQueryAsync();
+
+                                            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+
                                         }
 
                                         Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
@@ -767,7 +773,7 @@ namespace FlowSERVER1
                                 remButTxt.BorderRadius = 6;
                                 remButTxt.BorderThickness = 1;
                                 remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
                                 remButTxt.Visible = true;
                                 remButTxt.Location = new Point(189, 218);
                                 remButTxt.BringToFront();
@@ -780,9 +786,6 @@ namespace FlowSERVER1
                                 textboxPic.MouseLeave += (_senderQ, _evQ) => {
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
-
-                                var _setupUploadAlertThread = new Thread(() => new UploadAlrt(getName, form1.label5.Text, "upload_info_directory", _controlName, label1.Text, _fileSize: fileSizeInMB).ShowDialog());
-                                _setupUploadAlertThread.Start();
 
                                 if (nameTable == "file_info") {
                                     await startSending(keyVal);
@@ -1283,7 +1286,7 @@ namespace FlowSERVER1
             command.Parameters.Add("@FILE_EXT", MySqlDbType.LongText);
             command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
 
-            command.Parameters["@CUST_FILE_PATH"].Value = getName;
+            command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(getName, EncryptionKey.KeyValue);
             command.Parameters["@CUST_USERNAME"].Value = Form1.instance.label5.Text;
             command.Parameters["@UPLOAD_DATE"].Value = varDate;
 
