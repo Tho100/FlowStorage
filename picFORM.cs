@@ -26,6 +26,7 @@ namespace FlowSERVER1 {
         private int brightnessValue { get; set; }
         private float saturationValue {get; set; }
 
+
         private static String TableName {get; set; }
         private static String Directoryname {get; set; }
         private static bool IsFromShared {get; set; } // @ Shared to others
@@ -392,7 +393,7 @@ namespace FlowSERVER1 {
             label11.Text = "0%";
             label13.Text = "0%";
             label8.Text = "0%";
-            guna2ToggleSwitch1.Checked = false;
+            //guna2ToggleSwitch1.Checked = false;
         }
     }
 }

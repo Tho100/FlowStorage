@@ -194,7 +194,7 @@ namespace FlowSERVER1
 
         public void DisplayErrorUpgrade(String accType) {
             Form bgBlur = new Form();
-            using (upgradeFORM displayPic = new upgradeFORM(accType)) {
+            using (DirErFORM displayPic = new DirErFORM(accType)) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                 bgBlur.Opacity = .24d;

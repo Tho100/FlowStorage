@@ -115,7 +115,9 @@ namespace FlowSERVER1 {
 
                         listBox1.Items.AddRange(updatesTitle.ToArray());
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
                         setupTime();
+
                     }
 
                     finally {
@@ -399,6 +401,14 @@ namespace FlowSERVER1 {
                             guna2Button6.Visible = true;
                         }
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                        int getCurrentCount = int.Parse(label4.Text);
+                        int getLimitedValue = int.Parse(label6.Text);
+                        int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
+                        label20.Text = calculatePercentageUsage.ToString() + "%";
+
+                        guna2ProgressBar1.Value = calculatePercentageUsage;
+
                     }
                 };
 
@@ -1332,6 +1342,12 @@ namespace FlowSERVER1 {
                 picturebox3.Visible = false;
             }
             lab1.Text = greeting;
+
+            int getCurrentCount = int.Parse(label4.Text);
+            int getLimitedValue = int.Parse(label6.Text);
+            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
+            label20.Text = calculatePercentageUsage.ToString() + "%";
+            guna2ProgressBar1.Value = calculatePercentageUsage;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -1390,6 +1406,14 @@ namespace FlowSERVER1 {
                     label8.Visible = true;
                     guna2Button6.Visible = true;
                 }
+
+                int getCurrentCount = int.Parse(label4.Text);
+                int getLimitedValue = int.Parse(label6.Text);
+                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) - 5;
+                label20.Text = calculatePercentageUsage.ToString() + "%";
+
+                guna2ProgressBar1.Value = calculatePercentageUsage;
+
             }
 
             var open = new OpenFileDialog {
@@ -1444,6 +1468,14 @@ namespace FlowSERVER1 {
                         fileSizeInMB = 0;
 
                         async Task containThumbUpload(string nameTable, string getNamePath, object keyValMain) {
+
+                            int getCurrentCount = int.Parse(label4.Text);
+                            int getLimitedValue = int.Parse(label6.Text);
+                            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
+                            label20.Text = calculatePercentageUsage.ToString() + "%";
+
+                            guna2ProgressBar1.Value = calculatePercentageUsage;
+
                             using (var command = new MySqlCommand()) {
                                 command.Connection = con;
                                 command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
@@ -1475,6 +1507,13 @@ namespace FlowSERVER1 {
                             if (fileSizeInMB < 1500) {
 
                                 async Task startSending(string setValue) {
+
+                                    int getCurrentCount = int.Parse(label4.Text);
+                                    int getLimitedValue = int.Parse(label6.Text);
+                                    int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100)+5;
+                                    label20.Text = calculatePercentageUsage.ToString() + "%";
+
+                                    guna2ProgressBar1.Value = calculatePercentageUsage;
 
                                     string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
 
@@ -2375,6 +2414,9 @@ namespace FlowSERVER1 {
                                                         guna2TextBox4.Text = String.Empty;
                                                         getCurrentLang();
                                                         setupTime();
+
+                                                        label20.Text = "0" + "%";
+                                                        guna2ProgressBar1.Value = 0;
 
                                                         String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
                                                         listBox1.Items.AddRange(itemsFolder);
@@ -6283,6 +6325,10 @@ namespace FlowSERVER1 {
             var remAccShow = new remAccFORM(label5.Text, label24.Text);
             remAccShow.Show();
             remAccFORM.instance.guna2TabControl1.SelectedTab = remAccFORM.instance.guna2TabControl1.TabPages["tabPage3"];
+        }
+
+        private void guna2ProgressBar1_ValueChanged(object sender, EventArgs e) {
+
         }
     }
 }

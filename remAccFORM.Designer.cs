@@ -25,19 +25,19 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(remAccFORM));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series56 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series57 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series58 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series59 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series60 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series61 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series62 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series63 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series64 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series65 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series66 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
@@ -286,12 +286,11 @@
             this.guna2TabControl1.Controls.Add(this.tabPage5);
             this.guna2TabControl1.Controls.Add(this.tabPage4);
             this.guna2TabControl1.Controls.Add(this.tabPage3);
-            this.guna2TabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.guna2TabControl1.ItemSize = new System.Drawing.Size(199, 40);
             this.guna2TabControl1.Location = new System.Drawing.Point(0, -2);
             this.guna2TabControl1.Name = "guna2TabControl1";
             this.guna2TabControl1.SelectedIndex = 0;
-            this.guna2TabControl1.Size = new System.Drawing.Size(1004, 570);
+            this.guna2TabControl1.Size = new System.Drawing.Size(1005, 570);
             this.guna2TabControl1.TabButtonHoverState.BorderColor = System.Drawing.Color.Empty;
             this.guna2TabControl1.TabButtonHoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
             this.guna2TabControl1.TabButtonHoverState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
@@ -326,7 +325,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 44);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(996, 522);
+            this.tabPage1.Size = new System.Drawing.Size(997, 522);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Account";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -760,7 +759,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 44);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(996, 522);
+            this.tabPage2.Size = new System.Drawing.Size(994, 522);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Statistics";
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
@@ -780,7 +779,7 @@
             this.guna2Panel3.Controls.Add(this.label31);
             this.guna2Panel3.Controls.Add(this.label32);
             this.guna2Panel3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Panel3.Location = new System.Drawing.Point(631, 193);
+            this.guna2Panel3.Location = new System.Drawing.Point(630, 193);
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(357, 122);
             this.guna2Panel3.TabIndex = 44;
@@ -879,7 +878,7 @@
             this.guna2Panel4.Controls.Add(this.label15);
             this.guna2Panel4.Controls.Add(this.label14);
             this.guna2Panel4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Panel4.Location = new System.Drawing.Point(631, 321);
+            this.guna2Panel4.Location = new System.Drawing.Point(630, 321);
             this.guna2Panel4.Name = "guna2Panel4";
             this.guna2Panel4.Size = new System.Drawing.Size(357, 46);
             this.guna2Panel4.TabIndex = 35;
@@ -947,7 +946,7 @@
             this.guna2Panel6.FillColor = System.Drawing.Color.White;
             this.guna2Panel6.Location = new System.Drawing.Point(14, 58);
             this.guna2Panel6.Name = "guna2Panel6";
-            this.guna2Panel6.Size = new System.Drawing.Size(608, 437);
+            this.guna2Panel6.Size = new System.Drawing.Size(607, 437);
             this.guna2Panel6.TabIndex = 42;
             this.guna2Panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel6_Paint);
             // 
@@ -977,7 +976,7 @@
             this.label25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.label25.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label25.Location = new System.Drawing.Point(-212, 17);
+            this.label25.Location = new System.Drawing.Point(-213, 17);
             this.label25.Name = "label25";
             this.label25.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label25.Size = new System.Drawing.Size(78, 21);
@@ -988,78 +987,78 @@
             // 
             this.chart1.BackColor = System.Drawing.Color.Empty;
             this.chart1.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart1.Legends.Add(legend6);
             this.chart1.Location = new System.Drawing.Point(4, 16);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             this.chart1.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))))};
-            series1.ChartArea = "ChartArea1";
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            series1.Legend = "Legend1";
-            series1.Name = "Image";
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series2.ChartArea = "ChartArea1";
-            series2.Color = System.Drawing.Color.MediumPurple;
-            series2.Legend = "Legend1";
-            series2.Name = "Text";
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Video";
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Exe";
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series5.ChartArea = "ChartArea1";
-            series5.Color = System.Drawing.Color.Crimson;
-            series5.Legend = "Legend1";
-            series5.Name = "PDF";
-            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series6.ChartArea = "ChartArea1";
-            series6.Color = System.Drawing.Color.YellowGreen;
-            series6.Legend = "Legend1";
-            series6.Name = "APK";
-            series6.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series7.ChartArea = "ChartArea1";
-            series7.Color = System.Drawing.Color.Gray;
-            series7.Legend = "Legend1";
-            series7.Name = "GIF";
-            series7.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series8.ChartArea = "ChartArea1";
-            series8.Color = System.Drawing.SystemColors.HotTrack;
-            series8.Legend = "Legend1";
-            series8.Name = "Document";
-            series8.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series9.ChartArea = "ChartArea1";
-            series9.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series9.Legend = "Legend1";
-            series9.Name = "Presentation";
-            series9.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series10.ChartArea = "ChartArea1";
-            series10.Color = System.Drawing.Color.Gold;
-            series10.Legend = "Legend1";
-            series10.Name = "Audio";
-            series11.ChartArea = "ChartArea1";
-            series11.Color = System.Drawing.Color.ForestGreen;
-            series11.Legend = "Legend1";
-            series11.Name = "Excel";
-            series11.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
-            this.chart1.Series.Add(series7);
-            this.chart1.Series.Add(series8);
-            this.chart1.Series.Add(series9);
-            this.chart1.Series.Add(series10);
-            this.chart1.Series.Add(series11);
+            series56.ChartArea = "ChartArea1";
+            series56.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            series56.Legend = "Legend1";
+            series56.Name = "Image";
+            series56.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series57.ChartArea = "ChartArea1";
+            series57.Color = System.Drawing.Color.MediumPurple;
+            series57.Legend = "Legend1";
+            series57.Name = "Text";
+            series57.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series58.ChartArea = "ChartArea1";
+            series58.Legend = "Legend1";
+            series58.Name = "Video";
+            series58.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series59.ChartArea = "ChartArea1";
+            series59.Legend = "Legend1";
+            series59.Name = "Exe";
+            series59.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series60.ChartArea = "ChartArea1";
+            series60.Color = System.Drawing.Color.Crimson;
+            series60.Legend = "Legend1";
+            series60.Name = "PDF";
+            series60.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series61.ChartArea = "ChartArea1";
+            series61.Color = System.Drawing.Color.YellowGreen;
+            series61.Legend = "Legend1";
+            series61.Name = "APK";
+            series61.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series62.ChartArea = "ChartArea1";
+            series62.Color = System.Drawing.Color.Gray;
+            series62.Legend = "Legend1";
+            series62.Name = "GIF";
+            series62.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series63.ChartArea = "ChartArea1";
+            series63.Color = System.Drawing.SystemColors.HotTrack;
+            series63.Legend = "Legend1";
+            series63.Name = "Document";
+            series63.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series64.ChartArea = "ChartArea1";
+            series64.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series64.Legend = "Legend1";
+            series64.Name = "Presentation";
+            series64.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series65.ChartArea = "ChartArea1";
+            series65.Color = System.Drawing.Color.Gold;
+            series65.Legend = "Legend1";
+            series65.Name = "Audio";
+            series66.ChartArea = "ChartArea1";
+            series66.Color = System.Drawing.Color.ForestGreen;
+            series66.Legend = "Legend1";
+            series66.Name = "Excel";
+            series66.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series56);
+            this.chart1.Series.Add(series57);
+            this.chart1.Series.Add(series58);
+            this.chart1.Series.Add(series59);
+            this.chart1.Series.Add(series60);
+            this.chart1.Series.Add(series61);
+            this.chart1.Series.Add(series62);
+            this.chart1.Series.Add(series63);
+            this.chart1.Series.Add(series64);
+            this.chart1.Series.Add(series65);
+            this.chart1.Series.Add(series66);
             this.chart1.Size = new System.Drawing.Size(602, 404);
             this.chart1.TabIndex = 31;
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -1081,7 +1080,7 @@
             this.guna2Panel5.Controls.Add(this.label9);
             this.guna2Panel5.Controls.Add(this.label10);
             this.guna2Panel5.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Panel5.Location = new System.Drawing.Point(631, 58);
+            this.guna2Panel5.Location = new System.Drawing.Point(630, 58);
             this.guna2Panel5.Name = "guna2Panel5";
             this.guna2Panel5.Size = new System.Drawing.Size(357, 129);
             this.guna2Panel5.TabIndex = 32;
@@ -1220,7 +1219,7 @@
             this.tabPage5.Controls.Add(this.guna2Button25);
             this.tabPage5.Location = new System.Drawing.Point(4, 44);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(996, 522);
+            this.tabPage5.Size = new System.Drawing.Size(994, 522);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "File Sharing";
             this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
@@ -1374,7 +1373,7 @@
             this.guna2Panel24.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel24.Location = new System.Drawing.Point(3, 285);
             this.guna2Panel24.Name = "guna2Panel24";
-            this.guna2Panel24.Size = new System.Drawing.Size(990, 44);
+            this.guna2Panel24.Size = new System.Drawing.Size(989, 44);
             this.guna2Panel24.TabIndex = 35;
             this.guna2Panel24.Visible = false;
             // 
@@ -1393,7 +1392,7 @@
             this.guna2Button28.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button28.ForeColor = System.Drawing.Color.White;
             this.guna2Button28.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
-            this.guna2Button28.Location = new System.Drawing.Point(122, 10);
+            this.guna2Button28.Location = new System.Drawing.Point(121, 10);
             this.guna2Button28.Name = "guna2Button28";
             this.guna2Button28.Size = new System.Drawing.Size(31, 26);
             this.guna2Button28.TabIndex = 36;
@@ -1414,7 +1413,7 @@
             this.guna2Button29.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button29.ForeColor = System.Drawing.Color.White;
             this.guna2Button29.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
-            this.guna2Button29.Location = new System.Drawing.Point(122, 9);
+            this.guna2Button29.Location = new System.Drawing.Point(121, 9);
             this.guna2Button29.Name = "guna2Button29";
             this.guna2Button29.Size = new System.Drawing.Size(31, 26);
             this.guna2Button29.TabIndex = 37;
@@ -1439,7 +1438,7 @@
             this.guna2TextBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2TextBox2.ForeColor = System.Drawing.Color.White;
             this.guna2TextBox2.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox2.Location = new System.Drawing.Point(501, 10);
+            this.guna2TextBox2.Location = new System.Drawing.Point(500, 10);
             this.guna2TextBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.guna2TextBox2.Name = "guna2TextBox2";
             this.guna2TextBox2.PasswordChar = '*';
@@ -1690,7 +1689,7 @@
             this.tabPage4.Controls.Add(this.guna2Button14);
             this.tabPage4.Location = new System.Drawing.Point(4, 44);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(996, 522);
+            this.tabPage4.Size = new System.Drawing.Size(994, 522);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Languages";
             this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
@@ -1707,7 +1706,7 @@
             this.guna2Panel21.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel21.Location = new System.Drawing.Point(752, 224);
             this.guna2Panel21.Name = "guna2Panel21";
-            this.guna2Panel21.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel21.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel21.TabIndex = 41;
             // 
             // guna2Button30
@@ -1763,7 +1762,7 @@
             this.guna2Panel28.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel28.Location = new System.Drawing.Point(577, 224);
             this.guna2Panel28.Name = "guna2Panel28";
-            this.guna2Panel28.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel28.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel28.TabIndex = 42;
             // 
             // guna2Button31
@@ -1820,7 +1819,7 @@
             this.guna2Panel20.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel20.Location = new System.Drawing.Point(401, 224);
             this.guna2Panel20.Name = "guna2Panel20";
-            this.guna2Panel20.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel20.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel20.TabIndex = 42;
             this.guna2Panel20.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel20_Paint);
             // 
@@ -1877,7 +1876,7 @@
             this.guna2Panel18.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel18.Location = new System.Drawing.Point(51, 224);
             this.guna2Panel18.Name = "guna2Panel18";
-            this.guna2Panel18.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel18.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel18.TabIndex = 42;
             // 
             // guna2Button20
@@ -1934,7 +1933,7 @@
             this.guna2Panel13.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel13.Location = new System.Drawing.Point(577, 68);
             this.guna2Panel13.Name = "guna2Panel13";
-            this.guna2Panel13.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel13.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel13.TabIndex = 40;
             this.guna2Panel13.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel13_Paint);
             // 
@@ -1993,7 +1992,7 @@
             this.guna2Panel19.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel19.Location = new System.Drawing.Point(226, 224);
             this.guna2Panel19.Name = "guna2Panel19";
-            this.guna2Panel19.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel19.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel19.TabIndex = 41;
             // 
             // guna2Button21
@@ -2049,7 +2048,7 @@
             this.guna2Panel17.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel17.Location = new System.Drawing.Point(51, 68);
             this.guna2Panel17.Name = "guna2Panel17";
-            this.guna2Panel17.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel17.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel17.TabIndex = 37;
             // 
             // guna2Button19
@@ -2106,7 +2105,7 @@
             this.guna2Panel14.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel14.Location = new System.Drawing.Point(752, 68);
             this.guna2Panel14.Name = "guna2Panel14";
-            this.guna2Panel14.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel14.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel14.TabIndex = 39;
             this.guna2Panel14.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel14_Paint);
             // 
@@ -2164,7 +2163,7 @@
             this.guna2Panel16.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel16.Location = new System.Drawing.Point(226, 68);
             this.guna2Panel16.Name = "guna2Panel16";
-            this.guna2Panel16.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel16.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel16.TabIndex = 37;
             // 
             // guna2Button18
@@ -2220,7 +2219,7 @@
             this.guna2Panel15.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel15.Location = new System.Drawing.Point(401, 68);
             this.guna2Panel15.Name = "guna2Panel15";
-            this.guna2Panel15.Size = new System.Drawing.Size(169, 150);
+            this.guna2Panel15.Size = new System.Drawing.Size(168, 150);
             this.guna2Panel15.TabIndex = 36;
             this.guna2Panel15.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel15_Paint);
             // 
@@ -2308,7 +2307,7 @@
             this.tabPage3.Controls.Add(this.guna2Panel8);
             this.tabPage3.Location = new System.Drawing.Point(4, 44);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(996, 522);
+            this.tabPage3.Size = new System.Drawing.Size(997, 522);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Upgrade";
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);

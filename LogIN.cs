@@ -808,15 +808,22 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
+
             try {
 
                 attemptCurr++;
 
                 loadUserData();
 
+                int getCurrentCount = int.Parse(Form1.instance.label4.Text);
+                int getLimitedValue = int.Parse(Form1.instance.label6.Text);
+                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
+                Form1.instance.label20.Text = calculatePercentageUsage.ToString() + "%";
+
             } catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         /// <summary>
