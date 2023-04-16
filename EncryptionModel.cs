@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public static class EncryptionModel {
-        //0123456789085746
+
         private static readonly Random _random = new Random();
         private static string IsOriginFrom = "";
         private static string RandomString(int size, bool lowerCase = true) {
@@ -80,40 +80,6 @@ namespace FlowSERVER1 {
             return toBase64;
 
         }
-         
-        public static string EncryptText(String _value) {
-            var _setupRandom = new Random();
-            var _setupRandInt = _setupRandom.Next(0, 15);
-            var _setupCustPs =  _setupRandInt + RandomString(15) + "ð " + _value + " ♀️" + _setupRandInt + RandomString(15);
-            return _setupCustPs;
-        }
-
-        public static string DecryptText(String _value) {
-            var _decrypted = "";
-            try {
-                var _setupCustDec = GetStringBetweenCharacters(_value, "ð ", " ♀️");
-                var _retrieveDec = "" + _setupCustDec.Remove(0,1);
-                _decrypted = _retrieveDec;
-            } catch (Exception) {
-                
-            }
-            return _decrypted;
-        }
-
-        private static string GetStringBetweenCharacters(string input, string charFrom, string charTo) {
-            int posFrom = input.IndexOf(charFrom);
-            if (posFrom != -1) 
-            {
-                int posTo = input.IndexOf(charTo, posFrom + 1);
-                if (posTo != -1) 
-                {
-                    return input.Substring(posFrom + 1, posTo - posFrom - 1);
-                }
-            }
-
-            return string.Empty;
-        }
-
-      
+        
     }
 }

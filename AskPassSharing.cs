@@ -192,7 +192,7 @@ namespace FlowSERVER1 {
                     using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
                         nonLine = ReadFileTxt.ReadToEnd();
                     }
-                    var encryptValue = EncryptionModel.EncryptText(nonLine);
+                    var encryptValue = EncryptionModel.Encrypt(nonLine,EncryptionKey.KeyValue);
                     command.Parameters["@CUST_FILE"].Value = encryptValue;
                     command.ExecuteNonQuery();
                 }

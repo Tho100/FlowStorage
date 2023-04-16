@@ -16,6 +16,7 @@ using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading;
 using System.Text.RegularExpressions;
+using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
@@ -60,7 +61,9 @@ namespace FlowSERVER1 {
         /// <summary>
         /// Load user files as soon they logged in
         /// </summary>
-        private void loadUserData() {
+        
+
+        private async Task loadUserData() {
 
             var form = Form1.instance;
             var flowlayout = form.flowLayoutPanel1;
@@ -140,19 +143,16 @@ namespace FlowSERVER1 {
             }
          
 
-            ///////////////////
-            ///
-
             if (_getPass == decryptMainKey && _getPin == pinDecryptionKey) {
 
-                Form1.instance.label3.Text = encryptionKeyVal;
                 setupRedundane();
+
                 this.Close();
 
                 Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Connecting to your account...","login").ShowDialog());
                 _retrievalAlertForm.Start();
 
-                getCurrentLang();
+                await getCurrentLang();
                 setupUILanguage(CurrentLang);
                 setupTime();
 
@@ -166,7 +166,7 @@ namespace FlowSERVER1 {
                     _form.label8.Visible = false;
                 }
 
-                async void _generateUserFolder(String userName,String passUser) {
+                async Task _generateUserFolder(String userName,String passUser) {
 
                     String[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
                     _form.listBox1.Items.AddRange(itemFolder);
@@ -189,13 +189,29 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                async void _generateUserDirectory(String userName, String passUser, int rowLength) {
-                    for(int i=0; i<rowLength-1; i++) {
-                        int top = 275;
-                        int h_p = 100;
+                async Task _generateUserDirectory(String userName, String passUser, int rowLength) {
 
-                        _form.flowLayoutPanel1.Location = new Point(13, 10);
-                        _form.flowLayoutPanel1.Size = new Size(1118, 579);
+                    _form.flowLayoutPanel1.Location = new Point(13, 10);
+                    _form.flowLayoutPanel1.Size = new Size(1118, 579);
+
+                    List<Tuple<string,string>> filesInfoDirs = new List<Tuple<string,string>>();
+                    string selectFileData = $"SELECT DIR_NAME, UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await reader.ReadAsync()) {
+                                string dirName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                                string uploadDate = reader.GetString(1);
+                                filesInfoDirs.Add(new Tuple<string,string>(dirName,uploadDate));
+                            }
+                        }
+                    }
+
+                    int top = 275;
+                    int h_p = 100;
+
+                    for (int i=0; i<rowLength-1; i++) {
 
                         var panelPic_Q = new Guna2Panel() {
                             Name = "ABC02" + i,
@@ -209,21 +225,7 @@ namespace FlowSERVER1 {
                         top += h_p;
                         _form.flowLayoutPanel1.Controls.Add(panelPic_Q);
 
-                        var panelF = ((Guna2Panel)_form.flowLayoutPanel1.Controls["ABC02" + i]);
-
-                        List<String> dateValues = new List<String>();
-                        List<String> titleValues = new List<String>();
-
-                        String getUpDate = "SELECT UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
-                        using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
-                            command.Parameters.AddWithValue("@username", userName);
-
-                            using (MySqlDataReader readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readerDate.ReadAsync()) {
-                                    dateValues.Add(readerDate.GetString(0));
-                                }
-                            }
-                        }
+                        var panelF = (Guna2Panel)panelPic_Q;//((Guna2Panel)_form.flowLayoutPanel1.Controls["ABC02" + i]);
 
                         Label dateLab = new Label();
                         panelF.Controls.Add(dateLab);
@@ -233,22 +235,11 @@ namespace FlowSERVER1 {
                         dateLab.Visible = true;
                         dateLab.Enabled = true;
                         dateLab.Location = new Point(12, 208);
-                        dateLab.Text = dateValues[i];
-
-                        String getTitleDir = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-                        using (MySqlCommand command = new MySqlCommand(getTitleDir, con)) {
-                            command.Parameters.AddWithValue("@username", userName);
-
-                            using (MySqlDataReader readerTitle = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readerTitle.ReadAsync()) {
-                                    titleValues.Add(readerTitle.GetString(0));
-                                }
-                            }
-                        }
+                        dateLab.Text = filesInfoDirs[i].Item2;//dateValues[i];
 
                         Label titleLab = new Label();
                         panelF.Controls.Add(titleLab);
-                        titleLab.Name = "titleImgL" + i;//Segoe UI Semibold, 11.25pt, style=Bold
+                        titleLab.Name = "titleImgL" + i;
                         titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                         titleLab.ForeColor = Color.Gainsboro;
                         titleLab.Visible = true;
@@ -256,7 +247,7 @@ namespace FlowSERVER1 {
                         titleLab.Location = new Point(12, 182);
                         titleLab.Width = 220;
                         titleLab.Height = 30;
-                        titleLab.Text = titleValues[i];
+                        titleLab.Text = filesInfoDirs[i].Item1;//titleValues[i];
 
                         Guna2PictureBox picMain_Q = new Guna2PictureBox();
                         panelF.Controls.Add(picMain_Q);
@@ -328,13 +319,29 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
-                    for (int i = 0; i < currItem; i++) {
-                        int top = 275;
-                        int h_p = 100;
+                async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
-                        _form.flowLayoutPanel1.Location = new Point(13, 10);
-                        _form.flowLayoutPanel1.Size = new Size(1118, 579);
+                    _form.flowLayoutPanel1.Location = new Point(13, 10);
+                    _form.flowLayoutPanel1.Size = new Size(1118, 579);
+
+                    int top = 275;
+                    int h_p = 100;
+
+                    List<Tuple<string, string>> filesInfo = new List<Tuple<string, string>>();
+                    string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await reader.ReadAsync()) {
+                                string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                                string uploadDate = reader.GetString(1);
+                                filesInfo.Add(new Tuple<string, string>(fileName, uploadDate));
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < currItem; i++) {
 
                         var panelPic_Q = new Guna2Panel() {
                             Name = parameterName + i,
@@ -345,23 +352,11 @@ namespace FlowSERVER1 {
                             BackColor = Color.Transparent,
                             Location = new Point(600, top)
                         };
+
                         top += h_p;
                         _form.flowLayoutPanel1.Controls.Add(panelPic_Q);
 
-                        var panelF = ((Guna2Panel)_form.flowLayoutPanel1.Controls[parameterName + i]);
-
-                        List<String> dateValues = new List<String>();
-                        List<String> titleValues = new List<String>();
-
-                        String getUpDate = $"SELECT UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
-                        using (MySqlCommand command = new MySqlCommand(getUpDate, con)) {
-                            command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            using (MySqlDataReader readerDate = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readerDate.ReadAsync()) {
-                                    dateValues.Add(readerDate.GetString(0));
-                                }
-                            }
-                        }
+                        var panelF = (Guna2Panel)panelPic_Q; // ((Guna2Panel)_form.flowLayoutPanel1.Controls[parameterName + i]);
 
                         Label dateLab = new Label();
                         panelF.Controls.Add(dateLab);
@@ -371,17 +366,7 @@ namespace FlowSERVER1 {
                         dateLab.Visible = true;
                         dateLab.Enabled = true;
                         dateLab.Location = new Point(12, 208);
-                        dateLab.Text = dateValues[i];
-
-                        String getTitleQue = $"SELECT CUST_FILE_PATH FROM {_tableName} WHERE CUST_USERNAME = @username";
-                        using (MySqlCommand command = new MySqlCommand(getTitleQue, con)) {
-                            command.Parameters.AddWithValue("@username", _form.label5.Text);
-                            using (MySqlDataReader titleReader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await titleReader.ReadAsync()) {
-                                    titleValues.Add(titleReader.GetString(0));
-                                }
-                            }
-                        }
+                        dateLab.Text = filesInfo[i].Item2;
 
                         Label titleLab = new Label();
                         panelF.Controls.Add(titleLab);
@@ -393,7 +378,7 @@ namespace FlowSERVER1 {
                         titleLab.Location = new Point(12, 182);
                         titleLab.Width = 220;
                         titleLab.Height = 30;
-                        titleLab.Text = titleValues[i];
+                        titleLab.Text = filesInfo[i].Item1;//titleValues[i];
 
                         Guna2PictureBox picMain_Q = new Guna2PictureBox();
                         panelF.Controls.Add(picMain_Q);
@@ -451,6 +436,7 @@ namespace FlowSERVER1 {
                         _form.guna2Button6.Visible = false;
                         _form.label8.Visible = false;
                         var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
+
                         if (_tableName == "file_info") {
 
                             List<string> base64Encoded = new List<string>();
@@ -764,15 +750,15 @@ namespace FlowSERVER1 {
                     foreach (string tableName in tableToFileType.Keys) {
                         if (_countRow(tableName) > 0) {
                             if (tableToFileType[tableName] == "dirFile") {
-                                _generateUserDirectory(tableName, tableToFileType[tableName], _countRow(tableName));
+                                await _generateUserDirectory(tableName, tableToFileType[tableName], _countRow(tableName));
                             }
                             else {
-                                _generateUserFiles(tableName, tableToFileType[tableName], _countRow(tableName));
+                                await _generateUserFiles(tableName, tableToFileType[tableName], _countRow(tableName));
                             }
                         }
                     }
 
-                    _generateUserFolder(custUsername,_getPass);
+                    await _generateUserFolder(custUsername,_getPass);
 
                     RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
                     retrievalAlertForm?.Close();
@@ -807,23 +793,50 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        string accountTypeStr = "";
+        private async void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
 
                 attemptCurr++;
 
-                loadUserData();
+                await loadUserData();
 
-                int getCurrentCount = int.Parse(Form1.instance.label4.Text);
-                int getLimitedValue = int.Parse(Form1.instance.label6.Text);
-                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-                Form1.instance.label20.Text = calculatePercentageUsage.ToString() + "%";
+                if (int.TryParse(Form1.instance.label4.Text, out int getCurrentCount) && int.TryParse(await getAccountTypeNumber(), out int getLimitedValue)) {
+                    int calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
+                    Form1.instance.label20.Text = calculatePercentageUsage.ToString() + "%";
+                    Form1.instance.label6.Text = await getAccountTypeNumber();
+                    Form1.instance.guna2ProgressBar1.Value = calculatePercentageUsage;
+                }
 
             } catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+        }
+
+        private async Task<string> getAccountTypeNumber() {
+            string accountType = "";
+            string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+            using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                accountType = Convert.ToString(await command.ExecuteScalarAsync());
+            }
+
+            if (accountType == "Basic") {
+                return "20";
+            }
+            else if (accountType == "Max") {
+                return "500";
+            }
+            else if (accountType == "Express") {
+                return "1000";
+            }
+            else if (accountType == "Supreme") {
+                return "2000";
+            }
+
+            return "0";
         }
 
         /// <summary>
@@ -959,16 +972,18 @@ namespace FlowSERVER1 {
         /// <summary>
         /// Retrieve user current language
         /// </summary>
-        private void getCurrentLang() {
-            String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_selectLang, con);
-            command.Parameters.AddWithValue("@username", custUsername);
+        private async Task getCurrentLang() {
 
-            MySqlDataReader _readLang = command.ExecuteReader();
-            if (_readLang.Read()) {
-                CurrentLang = _readLang.GetString(0);
+            String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
+            using (var command = new MySqlCommand(_selectLang, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                using (MySqlDataReader readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    if (await readLang.ReadAsync()) {
+                        CurrentLang = readLang.GetString(0);
+                    }
+                }
             }
-            _readLang.Close();
+
         }
 
         public void setupTime() {

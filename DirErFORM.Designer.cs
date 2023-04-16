@@ -138,6 +138,7 @@
             this.guna2Button1.Size = new System.Drawing.Size(128, 35);
             this.guna2Button1.TabIndex = 52;
             this.guna2Button1.Text = "Upgrade Plan";
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // DirErFORM
             // 

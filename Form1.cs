@@ -16,9 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Xml;
 using System.Runtime.Caching;
-using Stripe.Terminal;
 using Xamarin.Forms.Internals;
 
 namespace FlowSERVER1 {
@@ -55,86 +53,100 @@ namespace FlowSERVER1 {
             instance = this;
 
             var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
-            foreach (var form in form4Instances) {
-                form.Close();
-            }
-
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
+            form4Instances.ForEach(form => form.Close());
 
             this.TopMost = false;
 
             setupLabel = label5;
 
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
+            InitializeAsyncLoad();
+        }
 
-            if (Directory.Exists(path)) {
-                new DirectoryInfo(path).Attributes &= ~FileAttributes.Hidden;
-                
-                string authFile = Path.Combine(path, "CUST_DATAS.txt");
-                if (File.Exists(authFile) && new FileInfo(authFile).Length > 0) {
 
-                    string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), EncryptionKey.KeyValue);
+        /// <summary>
+        /// 
+        /// Load necessary data on program startup
+        /// including files information
+        /// 
+        /// </summary>
+        private async void InitializeAsyncLoad() {
 
-                    var alertForm = new LoadAlertFORM(); 
-                    alertForm.Show();
-                    var closeAlertAction = new Action(() => {
-                        getAccountTypeNumber();
-                        getCurrentLang();
-                        setupUILanguage(CurrentLang);
-                    });
-                    alertForm.Close();
+            try {
 
-                    try {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
 
-                        guna2Panel7.Visible = false;
-                        label5.Text = username;
-
-                        using (var command = new MySqlCommand("SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username", con)) {
-                            command.Parameters.AddWithValue("@username", username);
-                            using (var reader = command.ExecuteReader()) {
-                                if (reader.Read()) {
-                                    label24.Text = reader.GetString(0);
-                                }
-                            }
-                        }
-
-                        var itemsFolder = new[] { "Home", "Shared To Me", "Shared Files" };
-                        listBox1.Items.AddRange(itemsFolder);
-                        listBox1.SelectedIndex = 0;
-
-                        var updatesTitle = new List<string>();
-                        using (var command = new MySqlCommand("SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username", ConnectionModel.con)) {
-                            command.Parameters.AddWithValue("@username", username);
-                            using (var reader = command.ExecuteReader()) {
-                                while (reader.Read()) {
-                                    updatesTitle.Add(reader.GetString(0));
-                                }
-                            }
-                        }
-
-                        listBox1.Items.AddRange(updatesTitle.ToArray());
-                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-                        setupTime();
-
-                    }
-
-                    finally {
-                        closeAlertAction();
-                    }
-                   
-                    label5.Text = username;
-                    new DirectoryInfo(path).Attributes |= (FileAttributes.Directory | FileAttributes.Hidden);
+                if (!Directory.Exists(path)) {
+                    return;
                 }
-            }
-            else {
-                // @ Ignore "FlowstorageInfos not found" error
-            }
 
-            // Close any open LoadAlertFORM
-            Application.OpenForms.OfType<Form>().Where(form => form.Name == "LoadAlertFORM").ToList().ForEach(form => form.Close());
-     
+                new DirectoryInfo(path).Attributes &= ~FileAttributes.Hidden;
+
+                string authFile = Path.Combine(path, "CUST_DATAS.txt");
+                if (!File.Exists(authFile) || new FileInfo(authFile).Length == 0) {
+                    return;
+                }
+
+                string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), EncryptionKey.KeyValue);
+
+                guna2Panel7.Visible = false;
+                label5.Text = username;
+
+                using (var command = new MySqlCommand("SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username", con)) {
+                    command.Parameters.AddWithValue("@username", username);
+
+                    using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        if (await reader.ReadAsync()) {
+                            label24.Text = reader.GetString(0);
+                        }
+                    }
+                }
+
+                var itemsFolder = new[] { "Home", "Shared To Me", "Shared Files" };
+                var updatesTitle = new List<string>();
+
+                using (var command = new MySqlCommand("SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username", ConnectionModel.con)) {
+                    command.Parameters.AddWithValue("@username", username);
+
+                    using (var reader = await command.ExecuteReaderAsync()) {
+                        while (await reader.ReadAsync()) {
+                            updatesTitle.Add(reader.GetString(0));
+                        }
+                    }
+                }
+
+                listBox1.Items.AddRange(itemsFolder.Concat(updatesTitle).ToArray());
+                listBox1.SelectedIndex = 0;
+                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                setupTime();
+                await getAccountTypeNumber();
+                await getCurrentLang();
+
+                if (int.TryParse(label4.Text, out int getCurrentCount) && int.TryParse(label6.Text, out int getLimitedValue)) {
+                    int calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
+                    label20.Text = calculatePercentageUsage.ToString() + "%";
+                    guna2ProgressBar1.Value = calculatePercentageUsage;
+                }
+
+
+                setupUILanguage(CurrentLang);
+            }
+            catch (Exception FlowstorageDirNotFound) {
+                // TODO: Ignore
+            } finally {
+
+                try {
+
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
+
+                    new DirectoryInfo(path).Attributes |= (FileAttributes.Directory | FileAttributes.Hidden);
+                    Application.OpenForms.OfType<Form>().Where(form => form.Name == "LoadAlertFORM").ToList().ForEach(form => form.Close());
+
+                } catch (Exception FlowStorageDirNotFound) {
+                    // TODO: Ignore
+                }
+
+            }
         }
 
         /// <summary>
@@ -269,7 +281,7 @@ namespace FlowSERVER1 {
         /// <summary>
         /// Get user current language
         /// </summary>
-        private async void getCurrentLang() {
+        private async Task getCurrentLang() {
             String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using(var command = new MySqlCommand(_selectLang,con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
@@ -289,7 +301,7 @@ namespace FlowSERVER1 {
         /// <param name="currItem"></param>
         /// 
 
-        public async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+        public async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
             List<Tuple<string, string>> filesInfo = new List<Tuple<string, string>>();
             string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
@@ -391,7 +403,7 @@ namespace FlowSERVER1 {
                         string removeQuery = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
                             command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
+                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
                             command.ExecuteNonQuery();
                         }
 
@@ -696,7 +708,7 @@ namespace FlowSERVER1 {
         /// <param name="_foldTitle">Folder title</param>
         /// <param name="parameterName">Custom parameter name for panel</param>
         /// <param name="currItem"></param>
-        private async void _generateUserFold(List<String> _fileType, String _foldTitle, String parameterName, int currItem) {
+        private async Task _generateUserFold(List<String> _fileType, String _foldTitle, String parameterName, int currItem) {
 
             int top = 275;
             int h_p = 100;
@@ -811,7 +823,7 @@ namespace FlowSERVER1 {
 
                             using (MySqlCommand command = new MySqlCommand("DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
                                 command.Parameters.AddWithValue("@username", label5.Text);
-                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
+                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
                                 command.Parameters.AddWithValue("@foldername", _foldTitle);
                                 command.ExecuteNonQuery();
                             }
@@ -966,7 +978,7 @@ namespace FlowSERVER1 {
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                                 command.Parameters.AddWithValue("@username", label5.Text);
                                 command.Parameters.AddWithValue("@foldername", _foldTitle);
-                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, "0123456789085746"));
+                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
@@ -1011,7 +1023,7 @@ namespace FlowSERVER1 {
                             }
                         }
 
-                        var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[0], "0123456789085746"));
+                        var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[0], EncryptionKey.KeyValue));
                         MemoryStream _toMs = new MemoryStream(_getBytes);
 
                         img.Image = new Bitmap(_toMs);
@@ -1342,12 +1354,6 @@ namespace FlowSERVER1 {
                 picturebox3.Visible = false;
             }
             lab1.Text = greeting;
-
-            int getCurrentCount = int.Parse(label4.Text);
-            int getLimitedValue = int.Parse(label6.Text);
-            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-            label20.Text = calculatePercentageUsage.ToString() + "%";
-            guna2ProgressBar1.Value = calculatePercentageUsage;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -1398,7 +1404,7 @@ namespace FlowSERVER1 {
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, "0123456789085746"));
+                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
                     command.ExecuteNonQuery();
                 }
 
@@ -2355,7 +2361,6 @@ namespace FlowSERVER1 {
 
                                                                 MySqlCommand command = con.CreateCommand();
 
-                                                                // Insert user information
                                                                 command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK)
                             VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
                                                                 command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
@@ -2366,7 +2371,6 @@ namespace FlowSERVER1 {
                                                                 command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
                                                                 command.ExecuteNonQuery();
 
-                                                                // Insert customer type
                                                                 command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
                             VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
                                                                 command.Parameters.Clear();
@@ -2375,7 +2379,6 @@ namespace FlowSERVER1 {
                                                                 command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
                                                                 command.ExecuteNonQuery();
 
-                                                                // Insert customer language
                                                                 command.CommandText = @"INSERT INTO lang_info(CUST_USERNAME,CUST_LANG)
                             VALUES(@CUST_USERNAME,@CUST_LANG)";
                                                                 command.Parameters.Clear();
@@ -2383,7 +2386,6 @@ namespace FlowSERVER1 {
                                                                 command.Parameters.AddWithValue("@CUST_LANG", "US");
                                                                 command.ExecuteNonQuery();
 
-                                                                // Insert customer sharing info
                                                                 command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS)
                             VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
                                                                 command.Parameters.Clear();
@@ -2392,11 +2394,9 @@ namespace FlowSERVER1 {
                                                                 command.Parameters.AddWithValue("@SET_PASS", "DEF");
                                                                 command.ExecuteNonQuery();
 
-                                                                // Commit transaction
                                                                 transaction.Commit();
                                                             }
-                                                            catch (Exception eq) {
-                                                                    MessageBox.Show(eq.Message);
+                                                            catch (Exception) {
                                                                 transaction.Rollback();
                                                             }
                                                         }
@@ -2412,7 +2412,7 @@ namespace FlowSERVER1 {
                                                         guna2TextBox2.Text = String.Empty;
                                                         guna2TextBox3.Text = String.Empty;
                                                         guna2TextBox4.Text = String.Empty;
-                                                        getCurrentLang();
+                                                        await getCurrentLang();
                                                         setupTime();
 
                                                         label20.Text = "0" + "%";
@@ -3052,37 +3052,13 @@ namespace FlowSERVER1 {
 
         }
 
-        private int countSharingSharedTo() {
-            string countQuery = "SELECT COUNT(CUST_FROM) FROM cust_sharing WHERE CUST_FROM = @username";
-            using (var command = new MySqlCommand(countQuery, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
-                var startCounting = command.ExecuteScalar();
+        private async void buildHomeFiles() {
 
-                if (startCounting != null && startCounting != DBNull.Value) {
-                    if (int.TryParse(startCounting.ToString(), out int count)) {
-                        return count;
-                    }
-                }
-            }
-
-            return 0;
-        }
-
-        private int countSharingShared() {
-            string countQuery = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_TO = @username";
-            using (var command = new MySqlCommand(countQuery, ConnectionModel.con)) {
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                var startCounting = command.ExecuteScalar();
-                return Convert.ToInt32(startCounting);
-            }
-        }
-
-        private void buildHomeFiles() {
-            int _countRow(String _tableName) {
+            async Task<int> _countRow(String _tableName) {
                 using (var command = con.CreateCommand()) {
                     command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
                     command.Parameters.AddWithValue("@username", label5.Text);
-                    return Convert.ToInt32(command.ExecuteScalar());
+                    return Convert.ToInt32(await command.ExecuteScalarAsync());
                 }
             }
 
@@ -3103,12 +3079,12 @@ namespace FlowSERVER1 {
             };
 
             foreach (string tableName in tableNames.Keys) {
-                if (_countRow(tableName) > 0) {
+                if (await _countRow(tableName) > 0) {
                     if (tableNames[tableName] == "dirFile") {
-                        _generateUserDirectory(tableName, tableNames[tableName], _countRow(tableName));
+                        await _generateUserDirectory(tableName, tableNames[tableName], await _countRow(tableName));
                     }
                     else {
-                        _generateUserFiles(tableName, tableNames[tableName], _countRow(tableName));
+                        await _generateUserFiles(tableName, tableNames[tableName], await _countRow(tableName));
                     }
                 }
             }
@@ -3123,10 +3099,6 @@ namespace FlowSERVER1 {
         }
 
         private async void buildSharedToMe() {
-            int sharingSharedCount = countSharingShared();
-            if (sharingSharedCount >= 2) {
-                Task.Run(() => new LoadAlertFORM().ShowDialog());
-            }
 
             if (!_TypeValues.Any()) {
                 string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
@@ -3138,10 +3110,10 @@ namespace FlowSERVER1 {
                         }
                     }
                 }
-                generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
+                await generateUserShared(_TypeValues, "DirParMe", _TypeValues.Count);
             }
             else {
-                generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
+                await generateUserShared(_TypeValues, "DirParMe", _TypeValues.Count);
             }
 
             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -3154,9 +3126,6 @@ namespace FlowSERVER1 {
         }
 
         private async void buildSharedToOthers() {
-            if (countSharingSharedTo() >= 2) {
-                Task.Run(() => new LoadAlertFORM().ShowDialog());
-            }
 
             if (!_TypeValuesOthers.Any()) {
                 string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
@@ -3170,7 +3139,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
+            await generateUserSharedOthers(_TypeValuesOthers, "DirParOther", _TypeValuesOthers.Count);
 
             if (flowLayoutPanel1.Controls.Count == 0) {
                 showRedundane();
@@ -3232,7 +3201,7 @@ namespace FlowSERVER1 {
 
                     var mainTypes = typesValues.Distinct().ToList();
                     var currMainLength = typesValues.Count;
-                    _generateUserFold(typesValues, _selectedFolder, "TESTING", currMainLength);
+                    await _generateUserFold(typesValues, _selectedFolder, "TESTING", currMainLength);
 
                     label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     if (flowLayoutPanel1.Controls.Count == 0) {
@@ -3373,13 +3342,14 @@ namespace FlowSERVER1 {
             
         List<Tuple<string, string>> filesInfoSharedOthers = new List<Tuple<string, string>>();
         private async void _callFilesInformationOthers() {
+            filesInfoSharedOthers.Clear();
             string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746");
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
                         string uploadDate = reader.GetString(1);
                         filesInfoSharedOthers.Add(new Tuple<string, string>(fileName, uploadDate));
                     }
@@ -3387,7 +3357,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void generateUserSharedOthers(List<String> _extTypes, String parameterName, int itemCurr) {
+        private async Task generateUserSharedOthers(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
 
@@ -3398,8 +3368,9 @@ namespace FlowSERVER1 {
 
             for (int q = 0; q < itemCurr; q++) {
 
+
                 var panelTxt = new Guna2Panel() {
-                    Name = $"parameterName{q}",
+                    Name = $"{parameterName}{q}",
                     Width = 240,
                     Height = 262,
                     BorderRadius = 8,
@@ -3411,7 +3382,7 @@ namespace FlowSERVER1 {
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelTxt);
                 var mainPanelTxt = (Guna2Panel)panelTxt;  
-                _controlName = $"parameterName{q}";
+                _controlName = $"{parameterName}{q}";
 
                 var textboxPic = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxPic);
@@ -3448,7 +3419,7 @@ namespace FlowSERVER1 {
                 remButTxt.BorderRadius = 6;
                 remButTxt.BorderThickness = 1;
                 remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
                 remButTxt.Visible = true;
                 remButTxt.Location = new Point(189, 218);
                 remButTxt.BringToFront();
@@ -3686,7 +3657,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
 
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
                             }
@@ -3796,12 +3767,6 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                Application.OpenForms
-                             .OfType<Form>()
-                             .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                             .ToList()
-                             .ForEach(form => form.Close());
-
 
                 label4.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -3823,6 +3788,9 @@ namespace FlowSERVER1 {
 
         List<Tuple<string, string>> filesInfoShared = new List<Tuple<string, string>>();
         private async void _callFilesInformationShared() {
+
+            filesInfoShared.Clear();
+
             string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
@@ -3838,7 +3806,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void generateUserShared(List<String> _extTypes, String parameterName, int itemCurr) {
+        private async Task generateUserShared(List<String> _extTypes, String parameterName, int itemCurr) {
 
             var form1 = Form1.instance;
 
@@ -3846,9 +3814,10 @@ namespace FlowSERVER1 {
 
             List<String> typeValues = new List<String>(_extTypes);
 
+            int top = 275;
+            int h_p = 100;
+
             for (int q = 0; q < itemCurr; q++) {
-                int top = 275;
-                int h_p = 100;
                 var panelTxt = new Guna2Panel() {
                     Name = $"parameterName{q}",
                     Width = 240,
@@ -3876,7 +3845,7 @@ namespace FlowSERVER1 {
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = $"LabVidUp{q}";//Segoe UI Semibold, 11.25pt, style=Bold
+                titleLab.Name = $"LabVidUp{q}";
                 titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                 titleLab.ForeColor = Color.Gainsboro;
                 titleLab.Visible = true;
@@ -3912,7 +3881,7 @@ namespace FlowSERVER1 {
                         String removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                         using (var command = new MySqlCommand(removeQuery, con)) {
                             command.Parameters.AddWithValue("@username", form1.label5.Text);
-                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, "0123456789085746"));
+                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
                             command.ExecuteNonQuery();
                         }
 
@@ -3956,7 +3925,7 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0), "0123456789085746"));
+                                base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
                             }
                         }
                     }
@@ -4185,7 +4154,7 @@ namespace FlowSERVER1 {
                     }
                     _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[q], "0123456789085746"));
+                    var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[q], EncryptionKey.KeyValue));
                     MemoryStream _toMs = new MemoryStream(_getBytes);
 
                     textboxPic.Image = new Bitmap(_toMs);
@@ -4245,13 +4214,27 @@ namespace FlowSERVER1 {
         /// <param name="userName">Username of user</param>
         /// <param name="customParameter">Custom parameter for panel</param>
         /// <param name="rowLength"></param>
-        private async void _generateUserDirectory(String userName,String customParameter, int rowLength) {
+        private async Task _generateUserDirectory(String userName,String customParameter, int rowLength) {
+
+            List<Tuple<string>> filesInfo = new List<Tuple<string>>();
+            string selectFileData = $"SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        filesInfo.Add(new Tuple<string>(fileName));
+                    }
+                }
+            }
+
+            flowLayoutPanel1.Location = new Point(13, 10);
+            flowLayoutPanel1.Size = new Size(1118, 579);
+
             for (int i = 0; i < rowLength; i++) {
                 int top = 275;
                 int h_p = 100;
-
-                flowLayoutPanel1.Location = new Point(13, 10);
-                flowLayoutPanel1.Size = new Size(1118, 579);
 
                 var panelPic_Q = new Guna2Panel() {
                     Name = "ABC02" + i,
@@ -4265,10 +4248,7 @@ namespace FlowSERVER1 {
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
-                var panelF = ((Guna2Panel)flowLayoutPanel1.Controls["ABC02" + i]);
-
-                List<string> dateValues = new List<string>();
-                List<string> titleValues = new List<string>();
+                var panelF = (Guna2Panel)panelPic_Q;
 
                 Label directoryLab = new Label();
                 panelF.Controls.Add(directoryLab);
@@ -4282,15 +4262,6 @@ namespace FlowSERVER1 {
                 directoryLab.Width = 75;
                 directoryLab.Text = "Directory";
 
-                using (var command = new MySqlCommand("SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username", con)) {
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    using (var reader = await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            titleValues.Add(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
-                        }
-                    }
-                }
-
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
                 titleLab.Name = "titleImgL" + i;
@@ -4301,7 +4272,7 @@ namespace FlowSERVER1 {
                 titleLab.Location = new Point(12, 182);
                 titleLab.Width = 220;
                 titleLab.Height = 30;
-                titleLab.Text = titleValues[i];
+                titleLab.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 panelF.Controls.Add(picMain_Q);
@@ -4642,7 +4613,7 @@ namespace FlowSERVER1 {
                         String removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, "0123456789085746"));
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@foldername", _foldTitle);
                         command.ExecuteNonQuery();
 
@@ -4988,7 +4959,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@filename", $"%{guna2TextBox5.Text}%");
                         using (MySqlDataReader titleReader = command.ExecuteReader()) {
                             while (titleReader.Read()) {
-                                titleValues.Add(EncryptionModel.Decrypt(titleReader.GetString(0),"0123456789085746"));
+                                titleValues.Add(EncryptionModel.Decrypt(titleReader.GetString(0), EncryptionKey.KeyValue));
                             }
                         }
                     }
@@ -5773,7 +5744,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
+            await generateUserSharedOthers(_TypeValuesOthers, "DIRPAR", _TypeValuesOthers.Count);
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
@@ -5786,57 +5757,51 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void callGeneratorSearch() {
+        private async void callGeneratorSearch() {
 
-            int _countRow(String _tableName) {
-                using (var command = con.CreateCommand()) {
-                    command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    return Convert.ToInt32(command.ExecuteScalar());
+            string[] tableNames = { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk", "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_gif", "file_info_directory" };
+
+            foreach (string tableName in tableNames) {
+                if (await _countRow(tableName) > 0) {
+                    switch (tableName) {
+                        case "file_info":
+                            await _generateUserFiles(tableName, "imgFile", await _countRow(tableName));
+                            break;
+                        case "file_info_expand":
+                            await _generateUserFiles(tableName, "txtFile", await _countRow(tableName));
+                            break;
+                        case "file_info_exe":
+                            await _generateUserFiles(tableName, "exeFile", await _countRow(tableName));
+                            break;
+                        case "file_info_vid":
+                            await _generateUserFiles(tableName, "vidFile", await _countRow(tableName));
+                            break;
+                        case "file_info_excel":
+                            await _generateUserFiles(tableName, "exlFile", await _countRow(tableName));
+                            break;
+                        case "file_info_pdf":
+                            await _generateUserFiles(tableName, "pdfFile", await _countRow(tableName));
+                            break;
+                        case "file_info_apk":
+                            await _generateUserFiles(tableName, "apkFile", await _countRow(tableName));
+                            break;
+                        case "file_info_word":
+                            await _generateUserFiles(tableName, "wordFile", await _countRow(tableName));
+                            break;
+                        case "file_info_ptx":
+                            await _generateUserFiles(tableName, "ptxFile", await _countRow(tableName));
+                            break;
+                        case "file_info_gif":
+                            await _generateUserFiles(tableName, "gifFile", await _countRow(tableName));
+                            break;
+                        case "file_info_directory":
+                            await _generateUserDirectory(label5.Text, "dirPar", await _countRow(tableName));
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
-            }
-
-            if (_countRow("file_info") > 0) {
-                _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
-            }
-            // LOAD .TXT
-            if (_countRow("file_info_expand") > 0) {
-                _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
-            }
-            // LOAD EXE
-            if (_countRow("file_info_exe") > 0) {
-                _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
-            }
-            // LOAD VID
-            if (_countRow("file_info_vid") > 0) {
-                _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_vid"));
-            }
-            if (_countRow("file_info_excel") > 0) {
-                _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
-            }
-            if (_countRow("file_info_audi") > 0) {
-                _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
-            }
-            if (_countRow("file_info_gif") > 0) {
-                _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
-            }
-            if (_countRow("file_info_apk") > 0) {
-                _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
-            }
-            if (_countRow("file_info_pdf") > 0) {
-                _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
-            }
-            if (_countRow("file_info_ptx") > 0) {
-                _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
-            }
-            if (_countRow("file_info_msi") > 0) {
-                _generateUserFiles("file_info_msi", "msiFile", _countRow("file_info_msi"));
-            }
-            if (_countRow("file_info_word") > 0) {
-                _generateUserFiles("file_info_word", "docFile", _countRow("file_info_word"));
-            }
-            if (_countRow("file_info_directory") > 0) {
-                _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
             }
 
             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -5885,7 +5850,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            _generateUserFold(typesValues, _selectedFolder, "QWERTY", typesValues.Count);
+            await _generateUserFold(typesValues, _selectedFolder, "QWERTY", typesValues.Count);
 
         }
 
@@ -5962,86 +5927,94 @@ namespace FlowSERVER1 {
 
         }
 
+        
+
+        /// <summary>
+        /// 
+        /// Refresh Shared To Me panel
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="typeValues"></param>
+        /// <param name="dirName"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName, int count) {
+            if (typeValues.Count == 0) {
+                using (MySqlCommand command = con.CreateCommand()) {
+                    command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                    using (MySqlDataReader _readType = command.ExecuteReader()) {
+                        while (_readType.Read()) {
+                            typeValues.Add(_readType.GetString(0));
+                        }
+                    }
+                }
+            }
+
+            _callFilesInformationShared();
+
+            await generateUserShared(typeValues, dirName, typeValues.Count);
+        }
+
+        /// <summary>
+        /// 
+        /// Refresh Shared To Others panel
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="typeValuesOthers"></param>
+        /// <param name="dirName"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName, int count) {
+
+            if (typeValuesOthers.Count == 0) {
+                using (MySqlCommand command = con.CreateCommand()) {
+                    command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                    using (MySqlDataReader _readType = command.ExecuteReader()) {
+                        while (_readType.Read()) {
+                            typeValuesOthers.Add(_readType.GetString(0));
+                        }
+                    }
+                }
+            }
+
+            _callFilesInformationOthers();
+
+            await generateUserSharedOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
+        }
+
         /// <summary>
         /// Refresh Shared To Me/Shared To Others panel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button4_Click(object sender, EventArgs e) {
 
-            int _selectedIndex = listBox1.SelectedIndex;
+        private async void guna2Button4_Click(object sender, EventArgs e) {
+
+            int selectedIndex = listBox1.SelectedIndex;
+            string username = Form1.instance.label5.Text;
 
             _TypeValues.Clear();
             _TypeValuesOthers.Clear();
             flowLayoutPanel1.Controls.Clear();
 
-            Thread _showAlert = new Thread(() => new LoadAlertFORM().ShowDialog());
-            _showAlert.Start();
-
-            if(_selectedIndex == 1) {
-
-                if (_TypeValues.Count == 0) {
-
-                    using (MySqlCommand command = con.CreateCommand()) {
-                        command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-
-                        using (MySqlDataReader _readType = command.ExecuteReader()) {
-                            while (_readType.Read()) {
-                                _TypeValues.Add(_readType.GetString(0));// Append ToAr;
-                            }
-                        }
-                    }
-
-                    generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
-
-
-                }
-                else {
-                    generateUserShared(_TypeValues, "DIRPAR", _TypeValues.Count);
-                }
-
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    showRedundane();
-                }
-                else {
-                    clearRedundane();
-                }
+            if (selectedIndex == 1) {
+                await RefreshGenerateUserShared(_TypeValues, "DirParMe", _TypeValues.Count);
+            }
+            else if (selectedIndex == 2) {
+                await RefreshGenerateUserSharedOthers(_TypeValuesOthers, "DirParOther", _TypeValuesOthers.Count);
             }
 
-            if(_selectedIndex == 2) {
-
-                if (_TypeValuesOthers.Count == 0) {
-
-                    using (MySqlCommand command = con.CreateCommand()) {
-                        command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-
-                        using (MySqlDataReader _readType = command.ExecuteReader()) {
-                            while (_readType.Read()) {
-                                _TypeValuesOthers.Add(_readType.GetString(0));// Append ToAr;
-                            }
-                        }
-                    }
-
-                    generateUserSharedOthers(_TypeValuesOthers, "DIRPAROTHER", _TypeValuesOthers.Count);
-
-                }
-                else {
-
-                    Application.DoEvents();
-
-                    generateUserSharedOthers(_TypeValuesOthers, "DIRPAROTHER", _TypeValuesOthers.Count);
-
-                    Application.DoEvents();
-                }
-
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    showRedundane();
-                }
-                else {
-                    clearRedundane();
-                }
+            if (flowLayoutPanel1.Controls.Count == 0) {
+                showRedundane();
+            }
+            else {
+                clearRedundane();
             }
 
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
@@ -6125,7 +6098,7 @@ namespace FlowSERVER1 {
                             generateSearching("file_info_audi", "audFile", _countRowSearch("file_info_audi"));
                         }
                         if (_countRowSearch("file_info_directory") > 0) {
-                            _generateUserDirectory("file_info_directory", "dirFile", _countRowSearch("file_info_directory"));
+                            await _generateUserDirectory("file_info_directory", "dirFile", _countRowSearch("file_info_directory"));
                         }
 
                     } else if(label26.Text != "Shared Files" && label26.Text != "Home" && label26.Text != "Shared To Me") {
@@ -6202,61 +6175,63 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button8_Click(object sender, EventArgs e) {
+        async Task<int> _countRow(String _tableName) {
+            using (var command = con.CreateCommand()) {
+                command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
+                command.Parameters.AddWithValue("@username", label5.Text);
+                return Convert.ToInt32(await command.ExecuteScalarAsync());
+            }
+        }
+
+        private async void guna2Button8_Click(object sender, EventArgs e) {
+
             guna2Button19.Visible = false;
             guna2Button4.Visible = false;
             flowLayoutPanel1.Controls.Clear();
 
-            int _countRow(String _tableName) {
-                using (var command = con.CreateCommand()) {
-                    command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    return Convert.ToInt32(command.ExecuteScalar());
-                }
-            }
+            string[] tableNames = { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", "file_info_excel","file_info_msi","file_info_audi","file_info_apk","file_info_pdf","file_info_word","file_info_ptx","file_info_gif","file_info_directory"};
 
-            if (_countRow("file_info") > 0) {
-                _generateUserFiles("file_info", "imgFile", _countRow("file_info"));
-            }
-            // LOAD .TXT
-            if (_countRow("file_info_expand") > 0) {
-                //PropertyMine.Add("txtFile");
-                _generateUserFiles("file_info_expand", "txtFile", _countRow("file_info_expand"));
-            }
-            // LOAD EXE
-            if (_countRow("file_info_exe") > 0) {
-                _generateUserFiles("file_info_exe", "exeFile", _countRow("file_info_exe"));
-            }
-            // LOAD VID
-            if (_countRow("file_info_vid") > 0) {
-                _generateUserFiles("file_info_vid", "vidFile", _countRow("file_info_vid"));
-            }
-            if (_countRow("file_info_excel") > 0) {
-                _generateUserFiles("file_info_excel", "exlFile", _countRow("file_info_excel"));
-            }
-            if (_countRow("file_info_audi") > 0) {
-                _generateUserFiles("file_info_audi", "audiFile", _countRow("file_info_audi"));
-            }
-            if (_countRow("file_info_gif") > 0) {
-                _generateUserFiles("file_info_gif", "gifFile", _countRow("file_info_gif"));
-            }
-            if (_countRow("file_info_apk") > 0) {
-                _generateUserFiles("file_info_apk", "apkFile", _countRow("file_info_apk"));
-            }
-            if (_countRow("file_info_pdf") > 0) {
-                _generateUserFiles("file_info_pdf", "pdfFile", _countRow("file_info_pdf"));
-            }
-            if (_countRow("file_info_ptx") > 0) {
-                _generateUserFiles("file_info_ptx", "ptxFile", _countRow("file_info_ptx"));
-            }
-            if (_countRow("file_info_msi") > 0) {
-                _generateUserFiles("file_info_msi", "msiFile", _countRow("file_info_msi"));
-            }
-            if (_countRow("file_info_word") > 0) {
-                _generateUserFiles("file_info_word", "docFile", _countRow("file_info_word"));
-            }
-            if (_countRow("file_info_directory") > 0) {
-                _generateUserDirectory("file_info_directory", "dirFile", _countRow("file_info_directory"));
+            foreach (string tableName in tableNames) {
+                if (await _countRow(tableName) > 0) {
+                    switch (tableName) {
+                        case "file_info":
+                            await _generateUserFiles(tableName, "imgFile", await _countRow(tableName));
+                            break;
+                        case "file_info_expand":
+                            await _generateUserFiles(tableName, "txtFile", await _countRow(tableName));
+                            break;
+                        case "file_info_exe":
+                            await _generateUserFiles(tableName, "exeFile", await _countRow(tableName));
+                            break;
+                        case "file_info_vid":
+                            await _generateUserFiles(tableName, "vidFile", await _countRow(tableName));
+                            break;
+                        case "file_info_excel":
+                            await _generateUserFiles(tableName, "exlFile", await _countRow(tableName));
+                            break;
+                        case "file_info_pdf":
+                            await _generateUserFiles(tableName, "pdfFile", await _countRow(tableName));
+                            break;
+                        case "file_info_apk":
+                            await _generateUserFiles(tableName, "apkFile", await _countRow(tableName));
+                            break;
+                        case "file_info_word":
+                            await _generateUserFiles(tableName, "wordFile", await _countRow(tableName));
+                            break;
+                        case "file_info_ptx":
+                            await _generateUserFiles(tableName, "ptxFile", await _countRow(tableName));
+                            break;
+                        case "file_info_gif":
+                            await _generateUserFiles(tableName, "gifFile", await _countRow(tableName));
+                            break;
+                        case "file_info_directory":
+                            await _generateUserDirectory(label5.Text,"dirPar", await _countRow(tableName));
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
             }
 
             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -6270,20 +6245,17 @@ namespace FlowSERVER1 {
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
-        private void getAccountTypeNumber() {
-            
-            String accountType = "";
-            String querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+        private async Task<string> getAccountTypeNumber() {
+            string accountType = "";
+            string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
-
-                accountType = Convert.ToString(command.ExecuteScalar());
+                accountType = Convert.ToString(await command.ExecuteScalarAsync());
                 label6.Text = accountType;
             }
 
             if (accountType == "Basic") {
                 label6.Text = "20";
-
             }
             else if (accountType == "Max") {
                 label6.Text = "500";
@@ -6294,6 +6266,8 @@ namespace FlowSERVER1 {
             else if (accountType == "Supreme") {
                 label6.Text = "2000";
             }
+
+            return accountType;
         }
 
         private void guna2Button9_Click_1(object sender, EventArgs e) {

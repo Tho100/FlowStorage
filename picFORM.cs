@@ -39,11 +39,16 @@ namespace FlowSERVER1 {
             instance = this;
 
             filterPanel.MouseDown += filterPanel_MouseDown;
+            IntiailizePictureAsync(userImage,width,height,title,_TableName,_DirectoryName,_UploaderName,_IsFromShared, _isFromSharing);
+
+        }
+
+        private async void IntiailizePictureAsync(Image userImage, int width, int height, string title, string _TableName, string _DirectoryName, string _UploaderName, bool _IsFromShared = false, bool _isFromSharing = true) {
 
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            var setupImage = resizeUserImage(userImage, new Size(width, height));
+            var setupImage = new Bitmap(userImage);//resizeUserImage(userImage, new Size(width, height));
 
             defaultImage = setupImage;
             filteredImage = new Bitmap(defaultImage);
@@ -55,36 +60,35 @@ namespace FlowSERVER1 {
             Directoryname = _DirectoryName;
             IsFromShared = _IsFromShared;
             IsFromSharing = _isFromSharing;
-
             label7.Text = $"({width}x{height})";
-             
+
             if (_isShared == true) {
-                _getName = _UploaderName.Replace("Shared","");
+                _getName = _UploaderName.Replace("Shared", "");
                 label4.Text = "Shared To";
                 guna2Button5.Visible = false;
                 label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
+                label3.Text = await getCommentSharedToOthers() != "" ? await getCommentSharedToOthers() : "(No Comment)";
             }
             else {
                 _getName = " " + _UploaderName;
                 label4.Text = "Uploaded By";
                 label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
+                label3.Text = await getCommentSharedToMe() != "" ? await getCommentSharedToMe() : "(No Comment)";
             }
 
             label2.Text = _getName;
 
             ToolTip saveTip = new ToolTip();
-            saveTip.SetToolTip(this.guna2Button4,"Download Image");
+            saveTip.SetToolTip(this.guna2Button4, "Download Image");
         }
 
-        private string getCommentSharedToMe() {
+        private async Task<string> getCommentSharedToMe() {
             String returnComment = "";
             using(MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename",con)) {
                 command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
-                using(MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while(readerComment.Read()) {
+                using(MySqlDataReader readerComment = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while(await readerComment.ReadAsync()) {
                         returnComment = readerComment.GetString(0);
                     }
                 }
@@ -92,12 +96,12 @@ namespace FlowSERVER1 {
             return returnComment;
         }
 
-        private string getCommentSharedToOthers() {
+        private async Task<string> getCommentSharedToOthers() {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
+                    while (await readerComment.ReadAsync()) {
                         returnComment = readerComment.GetString(0);
                     }
                 }
@@ -161,8 +165,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            string[] parts = label1.Text.Split('.');
-            string getExtension = "." + parts[1];
+            string getExtension = label1.Text.Substring(label1.Text.Length - 4);
             shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text,getExtension,IsFromSharing, TableName, Directoryname);
             _showSharingFileFORM.Show();
         }

@@ -17,10 +17,10 @@ namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
         private static MySqlConnection con = ConnectionModel.con;
         private static MySqlCommand command = ConnectionModel.command;
-        public static String _FileName { get; set; }
-        public static String _FileExt {get; set ;}
-        public static String _IsFromTable {get; set;}
-        public static String _DirectoryName { get; set; }
+        public static string _FileName { get; set; }
+        public static string _FileExt {get; set ;}
+        public static string _IsFromTable {get; set;}
+        public static string _DirectoryName { get; set; }
         public static bool _IsFromShared { get; set; }
 
         public shareFileFORM(String FileName,String FileExtension,bool IsFromShared, String IsFrom,String DirectoryName) {
@@ -167,15 +167,15 @@ namespace FlowSERVER1 {
 
         }
 
-        private string getFileMetadata(String _fileName,String _TableName) {
+        private async Task<string> getFileMetadata(String _fileName,String _TableName) {
 
             String GetBase64String = "";
             String queryGetFileByte = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using(MySqlCommand command = new MySqlCommand(queryGetFileByte,con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", _fileName);
-                using(MySqlDataReader readData = (MySqlDataReader) command.ExecuteReader()) {
-                    while (readData.Read()) {
+                using(MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
                     }
                 }
@@ -184,14 +184,14 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private string getFileMetadataShared(String _custUsername, String _fileName) {
+        private async Task<string> getFileMetadataShared(String _custUsername, String _fileName) {
             String GetBase64String = "";
             String queryGetFileByte = $"SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.Parameters.AddWithValue("@filename", _fileName);
-                using (MySqlDataReader readData = (MySqlDataReader)command.ExecuteReader()) {
-                    while (readData.Read()) {
+                using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
                     }
                 }
@@ -200,7 +200,7 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private string getFileMetadataExtra(String _tableName,String _columnName, String _dirName, String _custUsername,String _fileName) {
+        private async Task<string> getFileMetadataExtra(String _tableName,String _columnName, String _dirName, String _custUsername,String _fileName) {
 
             String GetBase64String = "";
             String queryGetFileByte = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {_columnName} = @dirname";
@@ -208,8 +208,8 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.Parameters.AddWithValue("@filename",_fileName); 
                 command.Parameters.AddWithValue("@dirname", _dirName);
-                using (MySqlDataReader readData = (MySqlDataReader) command.ExecuteReader()) {
-                    while (readData.Read()) {
+                using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
                     }
                 }
@@ -218,15 +218,15 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private string retrieveThumbnails(String _tableName, String _custUsername, String _fileName) {
+        private async Task<string> retrieveThumbnails(String _tableName, String _custUsername, String _fileName) {
 
             String GetBase64String = "";
             String queryGetFileByte = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.Parameters.AddWithValue("@filename", _fileName);
-                using (MySqlDataReader readData = (MySqlDataReader) command.ExecuteReader()) {
-                    while (readData.Read()) {
+                using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
                     }
                 }
@@ -234,7 +234,7 @@ namespace FlowSERVER1 {
 
             return GetBase64String;
         }
-        private string retrieveThumbnailsExtra(String _tableName, String _columnName, String _dirName, String _custUsername, String _fileName) {
+        private async Task<string> retrieveThumbnailsExtra(String _tableName, String _columnName, String _dirName, String _custUsername, String _fileName) {
 
             String GetBase64String = "";
             String queryGetFileByte = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {_columnName} = @dirname";
@@ -242,8 +242,8 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.Parameters.AddWithValue("@filename", _fileName);
                 command.Parameters.AddWithValue("@dirname", _dirName);
-                using (MySqlDataReader readData = (MySqlDataReader) command.ExecuteReader()) {
-                    while (readData.Read()) {
+                using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
                     }
                 }
@@ -256,18 +256,18 @@ namespace FlowSERVER1 {
         /// </summary>
         private static String _controlName = null;
         private static String _currentFileName = "";
-        private void startSharing() {
+        long fileSizeInMB = 0;
+        private async void startSharing() {
 
             int _accType = accountType(guna2TextBox1.Text);
             int _countReceiverFile = countReceiverShared(guna2TextBox1.Text);
-            long fileSizeInMB = 0;
 
             if (_accType != _countReceiverFile) {
 
                 Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text, _fileSize: fileSizeInMB).ShowDialog());
                 showUploadAlert.Start();
 
-                void startSending(Object setValue, Object thumbnailValue = null) {
+                async Task startSending(Object setValue, Object thumbnailValue = null) {
 
                     using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
                         command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
@@ -279,7 +279,10 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@CUST_COMMENT", guna2TextBox4.Text);
                         command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
+
+                        var uploadAlertFormSucceededCase0 = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
+                        uploadAlertFormSucceededCase0?.Close();
                     }
 
                     var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
@@ -288,63 +291,67 @@ namespace FlowSERVER1 {
                     sucessShare _showSuccessfullyTransaction = new sucessShare(_FileName, guna2TextBox1.Text);
                     _showSuccessfullyTransaction.Show();
 
+                    var uploadAlertFormSucceededCase1 = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
+                    uploadAlertFormSucceededCase1?.Close();
+
                 }
 
                 if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
-                    string getThumbnails = retrieveThumbnails("cust_sharing",Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                    startSending(getFileMetadataShared(Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)),getThumbnails);
+                    string getThumbnails = await retrieveThumbnails("cust_sharing",Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    await startSending(getFileMetadataShared(Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)),getThumbnails);
                 } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
+
                     if (_FileExt == ".png" || _FileExt == ".jpg" || _FileExt == ".jpeg" || _FileExt == ".bmp") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue),"file_info"));  
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue),"file_info"));  
                     } 
                     
                     else if (_FileExt == ".xlsx" || _FileExt == ".xls") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_excel"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_excel"));
                     }
                     
                     else if (_FileExt == ".txt" || _FileExt == ".html" || _FileExt == ".sql" || _FileExt == ".csv" || _FileExt == ".css" || _FileExt == ".js") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_expand"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_expand"));
                     } 
                     
                     else if (_FileExt == ".pdf") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_pdf"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_pdf"));
                     } 
                     
                     else if (_FileExt == ".pptx" || _FileExt == ".ppt") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_ptx"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_ptx"));
                     } 
                     
                     else if (_FileExt == ".docx" || _FileExt == ".doc") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_doc"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_word"));
                     } 
                     
                     else if (_FileExt == ".wav" || _FileExt == ".mp3") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_audi"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_audi"));
                     } 
                     
                     else if (_FileExt == ".mp4" || _FileExt == ".mov" || _FileExt == ".avi" || _FileExt == ".webm" || _FileExt == ".wmv") {
-                        string getThumbnails = retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"),getThumbnails);
+                        string getThumbnails = await retrieveThumbnails("file_info_vid",Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"),getThumbnails);
                     }
                     
                     else if (_FileExt == ".exe") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_exe"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_exe"));
                     }
                     
                     else if (_FileExt == ".apk") {
-                        startSending(getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_apk"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_apk"));
                     }
 
                 } 
                 
                 else if (_IsFromTable == "upload_info_directory") {
-                    string getThumbnails = retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                    startSending(getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
+                    string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Form1.instance.label5.Text,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 } 
                 
                 else if (_IsFromTable == "folder_upload_info") {
-                    string getThumbnails = retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-                    startSending(getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
+                    string getThumbnails = await retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
+                    await startSending(await getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Form1.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 }
 
                 var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
@@ -395,8 +402,9 @@ namespace FlowSERVER1 {
                     MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            catch (Exception) {
-                MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                //MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

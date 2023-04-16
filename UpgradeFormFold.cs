@@ -22,5 +22,12 @@ namespace FlowSERVER1 {
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
         }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+            var remAccShow = new remAccFORM(label5.Text, Form1.instance.label24.Text);
+            remAccShow.Show();
+            remAccFORM.instance.guna2TabControl1.SelectedTab = remAccFORM.instance.guna2TabControl1.TabPages["tabPage3"];
+            this.Close();
+        }
     }
 }

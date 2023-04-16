@@ -74,104 +74,100 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
+        /// 
+        /// Start inserting values
+        /// 
+        /// </summary>
+        /// <param name="setValue"></param>
+        /// <param name="thumbnailValue"></param>
+        /// <returns></returns>
+        async Task startSending(Object setValue, Object thumbnailValue = null) {
+
+            String query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
+
+            try {
+
+                using (MySqlCommand command = new MySqlCommand(query, con)) {
+                    command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
+                    command.Parameters.AddWithValue("@CUST_FROM", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
+                    command.Parameters.AddWithValue("@CUST_FILE", setValue);
+                    command.Parameters.AddWithValue("@FILE_EXT", _retrieved);
+                    command.Parameters.AddWithValue("@CUST_COMMENT", guna2TextBox4.Text);
+                    command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
+                    command.Prepare();
+
+                    await command.ExecuteNonQueryAsync();
+                }
+
+            } catch (Exception) {
+                MessageBox.Show("Failed to share this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
         /// Main function for sharing file 
         /// </summary>
-        private void startSharing() {
+        private async Task startSharing() {
 
             int _accType = accountType(guna2TextBox1.Text);
             int _countReceiverFile = countReceiverShared(guna2TextBox1.Text);
-            long fileSizeInMB = 0;
 
             if (_accType != _countReceiverFile) {
                 if (_currentFileName != guna2TextBox2.Text) {
 
-                    Byte[] _getBytes = File.ReadAllBytes(_FilePath);
-                    fileSizeInMB = (_getBytes.Length / 1024) / 1024;
-
-                    Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text, _fileSize: fileSizeInMB).ShowDialog());
-                    showUploadAlert.Start();
-
-                    String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
-                    command = new MySqlCommand(insertQuery, con);
+                    Byte[] _getBytes = File.ReadAllBytes(_FilePath); 
 
                     _currentFileName = guna2TextBox2.Text;
-
-                    void startSending(Object setValue, Object thumbnailValue = null) {
-                        command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
-                        command.Parameters.AddWithValue("@CUST_FROM", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                        command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
-                        command.Parameters.AddWithValue("@CUST_FILE", setValue);
-                        command.Parameters.AddWithValue("@FILE_EXT", _retrieved);
-                        command.Parameters.AddWithValue("@CUST_COMMENT", guna2TextBox4.Text);
-                        command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
-
-                        command.Prepare();
-
-                        try {
-
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-
-                            if (Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt") is Form uploadAlertFormSucceeded) {
-                                uploadAlertFormSucceeded.Invoke(new Action(() => {
-                                    uploadAlertFormSucceeded.Close();
-                                }));
-                                var showSuccessfullyTransaction = new sucessShare(guna2TextBox2.Text, guna2TextBox1.Text);
-                                showSuccessfullyTransaction.Show();
-                            }
-                        } catch (Exception) {
-                            MessageBox.Show("Failed to share this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
-
-                        }
-                    }
 
                     if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".docx" || _retrieved == ".doc") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);                    }
+                        await startSending(encryptText);                    
+                    }
                     else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".exe") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.CommandTimeout = 12000;
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".msi") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         command.CommandTimeout = 12000;
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".mp3" || _retrieved == ".wav") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
 
                     else if (_retrieved == ".pdf") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".apk") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".xlsx" || _retrieved == ".xls") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        await startSending(encryptText);
                     }
                     else if (_retrieved == ".gif") {
                         ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
@@ -181,23 +177,29 @@ namespace FlowSERVER1 {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                             toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
+
                         var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText, toBase64Thumbnail);
+
+                        await startSending(encryptText, toBase64Thumbnail);
 
                     }
                     else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql" || _retrieved == ".csv") {
+
                         var nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { 
                             nonLine = ReadFileTxt.ReadToEnd();  
                         }
+
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         String getEncoded = Convert.ToBase64String(getBytes);
                         String encryptText = EncryptionModel.Encrypt(getEncoded, EncryptionKey.KeyValue);
-                        startSending(encryptText);
+                        
+                        await startSending(encryptText);
 
                     }
                     else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
+
                         ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                         String toBase64Thumbnail;
@@ -205,9 +207,11 @@ namespace FlowSERVER1 {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                             toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
+
                         var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-                        startSending(encryptText,toBase64Thumbnail);
+
+                        await startSending(encryptText,toBase64Thumbnail);
                     }
                 }
                 else {
@@ -343,51 +347,54 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private async void guna2Button2_Click(object sender, EventArgs e) {
             try {
+                string textBox1 = guna2TextBox1.Text;
+                string textBox2 = guna2TextBox2.Text;
 
-                if(guna2TextBox1.Text != Form1.instance.label5.Text) {
-                    if(guna2TextBox1.Text != String.Empty) {
-                        if(guna2TextBox2.Text != String.Empty) {
-                            if(userIsExists(guna2TextBox1.Text) > 0) {
+                if (textBox1 == Form1.instance.label5.Text) {
+                    MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                                if(fileIsUploaded(guna2TextBox1.Text,guna2TextBox2.Text) > 0) {
+                if (string.IsNullOrEmpty(textBox1) || string.IsNullOrEmpty(textBox2)) {
+                    MessageBox.Show("Please enter valid input in the text boxes.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                                    MessageBox.Show("This file is already shared.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                int userExists = userIsExists(textBox1);
 
-                                } else {
+                if (userExists == 0) {
+                    MessageBox.Show($"User '{textBox1}' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                                    if(!(retrieveDisabled(guna2TextBox1.Text) == "0")) {
-                                        MessageBox.Show("The user " + guna2TextBox1.Text + " disabled their file sharing.","Sharing Failed",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                                    } else {
+                if (fileIsUploaded(textBox1, textBox2) > 0) {
+                    MessageBox.Show("This file is already shared.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                                        if(hasPassword(guna2TextBox1.Text) != "") {
-                                            AskPassSharing _askPassForm = new AskPassSharing(guna2TextBox1.Text,guna2TextBox2.Text,_FilePath,_retrieved);
-                                            _askPassForm.Show();
+                string disabled = retrieveDisabled(textBox1);
+                if (disabled != "0") {
+                    MessageBox.Show($"The user {textBox1} disabled their file sharing.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                                        } else {
+                string password = hasPassword(textBox1);
+                if (!string.IsNullOrEmpty(password)) {
+                    AskPassSharing _askPassForm = new AskPassSharing(textBox1, textBox2, _FilePath, _retrieved);
+                    _askPassForm.Show();
+                }
+                else {
 
-                                            startSharing();
-
-                                            var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-                                            uploadAlertFormSucceeded?.Close();
-
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                MessageBox.Show("User '" + guna2TextBox1.Text + "' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                          }
-                        }
-                    } else {
-                        MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-            } catch (Exception) {
-                MessageBox.Show("An unknown error occurred.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    await startSharing();
+                }
+            }
+            catch (Exception) {
+                MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
 
         private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
 
