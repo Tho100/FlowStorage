@@ -38,66 +38,15 @@ namespace FlowSERVER1 {
                 }
 
                 else if (_TableName == "folder_upload_info") {
-
-                    string readGifFilesQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_TITLE = @foldtitle";
-                    using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-                        command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
-
-                        using (MySqlDataReader reader = command.ExecuteReader()) {
-                            if (reader.Read()) {
-
-                                var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                                retrievalAlertFormsOne.ForEach(form => form.Close());
-
-                                if (stopFileRetrievalLoad) {
-                                    reader.Close();
-                                    var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                                    retrievalAlertForms.ForEach(form => form.Close());
-                                    stopFileRetrievalLoad = false;
-                                }
-
-                                var base64Encoded = reader.GetString(0);
-                                var decryptValues = EncryptionModel.Decrypt(base64Encoded, "0123456789085746");
-                                var bytes = Convert.FromBase64String(decryptValues);
-                                universalBytes = bytes;
-                            }
-                        }
-                    }
+                    RetrieveFolderDataAsync(_DirectoryName);
+                    
 
                 } else if (_TableName == "cust_sharing" && _isFromSharedTo == true) {
-
-                    string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
-                    using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-
-                        using (MySqlDataReader reader = command.ExecuteReader()) {
-                            if (reader.Read()) {
-
-                                var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                                retrievalAlertFormsOne.ForEach(form => form.Close());
-
-                                if (stopFileRetrievalLoad) {
-                                    reader.Close();
-                                    var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                                    retrievalAlertForms.ForEach(form => form.Close());
-                                    stopFileRetrievalLoad = false;
-                                }
-
-
-                                var base64Encoded = reader.GetString(0);
-                                var decryptValues = EncryptionModel.Decrypt(base64Encoded, "0123456789085746");
-                                var bytes = Convert.FromBase64String(decryptValues);
-                                universalBytes = bytes;
-                            }
-                        }
-                    }
+                    RetrieveSharedTootherData();
                 }
 
                 else if (_TableName == "cust_sharing") {
-                    RetrieveSharedDataAsync();
+                    RetrieveSharedToMeData();
                 
                 }
 
@@ -105,6 +54,64 @@ namespace FlowSERVER1 {
                 // @ ignore exception                
             }
             return universalBytes;
+        }
+
+        private static async void RetrieveSharedTootherData() {
+            string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
+            using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, "0123456789085746"));
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+
+                        var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
+                        retrievalAlertFormsOne.ForEach(form => form.Close());
+
+                        if (stopFileRetrievalLoad) {
+                            reader.Close();
+                            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
+                            retrievalAlertForms.ForEach(form => form.Close());
+                            stopFileRetrievalLoad = false;
+                        }
+
+
+                        var base64Encoded = reader.GetString(0);
+                        var decryptValues = EncryptionModel.Decrypt(base64Encoded, EncryptionKey.KeyValue);
+                        var bytes = Convert.FromBase64String(decryptValues);
+                        universalBytes = bytes;
+                    }
+                }
+            }
+        }
+
+        private static async void RetrieveFolderDataAsync(string directoryName) {
+            string readGifFilesQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_TITLE = @foldtitle";
+            using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@foldtitle", directoryName);
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+
+                        var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
+                        retrievalAlertFormsOne.ForEach(form => form.Close());
+
+                        if (stopFileRetrievalLoad) {
+                            reader.Close();
+                            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
+                            retrievalAlertForms.ForEach(form => form.Close());
+                            stopFileRetrievalLoad = false;
+                        }
+
+                        var base64Encoded = reader.GetString(0);
+                        var decryptValues = EncryptionModel.Decrypt(base64Encoded, EncryptionKey.KeyValue);
+                        var bytes = Convert.FromBase64String(decryptValues);
+                        universalBytes = bytes;
+                    }
+                }
+            }
         }
 
         private static async void RetrieveDirectoryDataAsync(string directoryName) {
@@ -136,7 +143,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private static async void RetrieveSharedDataAsync() {
+        private static async void RetrieveSharedToMeData() {
 
             string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
 
@@ -180,7 +187,7 @@ namespace FlowSERVER1 {
                         }
 
                         string base64Encoded = reader.GetString(0);
-                        string decryptedValues = EncryptionModel.Decrypt(base64Encoded, "0123456789085746");
+                        string decryptedValues = EncryptionModel.Decrypt(base64Encoded, EncryptionKey.KeyValue);
                         byte[] bytes = Convert.FromBase64String(decryptedValues);
                         universalBytes = bytes;
                     }

@@ -1457,24 +1457,34 @@ namespace FlowSERVER1 {
 
                             guna2ProgressBar1.Value = calculatePercentageUsage;
 
-                            using (var command = new MySqlCommand()) {
-                                command.Connection = con;
-                                command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
-                                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath, "0123456789085746"));
-                                command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
-                                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                                command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
+                            try {
 
-                                using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
-                                    var toBitMap = shellFile.Thumbnail.Bitmap;
-                                    using (var stream = new MemoryStream()) {
-                                        toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                        var toBase64 = Convert.ToBase64String(stream.ToArray());
-                                        command.Parameters.AddWithValue("@CUST_THUMB", toBase64);
+                                using (var command = new MySqlCommand()) {
+
+                                    command.Connection = con;
+                                    command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
+                                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath, "0123456789085746"));
+                                    command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+                                    command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
+                                    command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
+
+                                    using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
+                                        var toBitMap = shellFile.Thumbnail.Bitmap;
+                                        using (var stream = new MemoryStream()) {
+                                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                            var toBase64 = Convert.ToBase64String(stream.ToArray());
+                                            command.Parameters.AddWithValue("@CUST_THUMB", toBase64);
+                                        }
                                     }
+
+                                    await command.ExecuteNonQueryAsync();
                                 }
 
-                                await command.ExecuteNonQueryAsync();
+                            } catch (Exception) {
+                                /* TODO: User has cancelled the insert operation
+                                 * then ignore 'object reference was not set to an object'
+                                 * exception
+                                 */
                             }
 
                             Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
@@ -6264,6 +6274,7 @@ namespace FlowSERVER1 {
             panel1.BringToFront();
             label9.Visible = false;
             listBox1.Visible = false;
+            guna2Button15.Visible = true;
             guna2VSeparator1.BringToFront();
         }
 
@@ -6274,6 +6285,7 @@ namespace FlowSERVER1 {
             panel3.BringToFront();
             label9.Visible = true;
             listBox1.Visible = true;
+            guna2Button15.Visible = false;
             guna2VSeparator1.BringToFront();
         }
 
@@ -6291,6 +6303,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button15_Click(object sender, EventArgs e) {
+
             try {
 
                 DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -6320,8 +6333,7 @@ namespace FlowSERVER1 {
                     Form1.instance.listBox1.Items.Clear();
                 }
             }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+            catch (Exception) {
                 MessageBox.Show("There's a problem while attempting to logout your account. Please try again.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

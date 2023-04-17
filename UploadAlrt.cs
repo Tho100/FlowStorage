@@ -127,7 +127,7 @@ namespace FlowSERVER1 {
 
                         // @ This will shows a form that alert user about the file upload 
                         // cancellation
-                        Thread waitForm = new Thread(() => new cancelFORM(FileName).ShowDialog());
+                        Thread waitForm = new Thread(() => new cancelFORM().ShowDialog());
                         waitForm.Start();
 
                         // @ Turn connection back on to delete the cancelled file
@@ -291,6 +291,7 @@ namespace FlowSERVER1 {
             } catch (Exception) {
                 MessageBox.Show("Cancellation failed, file is already uploaded.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
+
             this.Close();
         }
 

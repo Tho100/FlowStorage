@@ -21,13 +21,13 @@ namespace FlowSERVER1 {
         public static MySqlCommand command = ConnectionModel.command;
         public static MySqlConnection con = ConnectionModel.con;
 
-        private LibVLC _libVLC;
         private MediaPlayer _mp;
         private static String _TableName;
         private static String _DirName;
         private static String _UploaderName;
         private static bool _IsFromShared;
         private static bool IsFromSharing;
+        private static bool _IsEndReached;
 
         public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName, bool _isFromShared = false,bool _isFromSharing = true) {
 
@@ -110,6 +110,13 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
+        /// <summary>
+        /// 
+        /// Change form state size to normal
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
@@ -117,34 +124,84 @@ namespace FlowSERVER1 {
             guna2Button1.Visible = true;
         }
 
+        /// <summary>
+        /// 
+        /// Maximized form state 
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
             guna2Button3.Visible = true;
             guna2Button1.Visible = false;
         }
-        private void setupPlayer(Byte[] _retrieveBytesValue) {
-
-            Stream _toStream = new MemoryStream(_retrieveBytesValue);
-            _libVLC = new LibVLC();
-
-            var media = new Media(_libVLC, new StreamMediaInput(_toStream));
-
-            _mp = new MediaPlayer(media);
 
 
+        /// <summary>
+        /// 
+        /// Play the video from byte array
+        /// 
+        /// </summary>
+        /// <param name="_retrieveBytesValue"></param>
+        private void setupPlayer(byte[] _retrieveBytesValue) {
+
+            var _toStream = new MemoryStream(_retrieveBytesValue);
+
+            LibVLC _setLibVLC = new LibVLC();
+            var _setMedia = new Media(_setLibVLC, new StreamMediaInput(_toStream));
+
+            _mp?.Dispose();
+            _mp = new MediaPlayer(_setMedia);
+
+            videoView1.MediaPlayer?.Dispose();
             videoView1.MediaPlayer = _mp;
+
             _mp.Play();
+
             _mp.PositionChanged += MediaPlayer_PositionChanged;
             _mp.EndReached += MediaPlayer_EndReached;
+
+            _setLibVLC.Dispose();           
+
         }
 
-        // Play
+        /// <summary>
+        /// 
+        /// Check if _mp is null, if not null then play that current _mp value
+        /// else retrieve the values and assign it to _mp and play the video
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
 
             try {
 
                 if(_mp != null) {
+
+                    videoView1.Visible = true;
+
+                    if (_IsEndReached) {
+
+                        _mp.Position = 0;
+                        _IsEndReached = false;
+
+                        if (_TableName == "upload_info_directory") {
+                            setupPlayer(LoaderModel.LoadFile("upload_info_directory", _DirName, label1.Text));
+                        }
+                        else if (_TableName == "file_info_vid") {
+                            setupPlayer(LoaderModel.LoadFile("file_info_vid", _DirName, label1.Text));
+                        }
+                        else if (_TableName == "folder_upload_info") {
+                            setupPlayer(LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
+                        }
+                        else if (_TableName == "cust_sharing") {
+                            setupPlayer(LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text, _IsFromShared));
+                        }
+                    }
+
                     _mp.Play();
 
                 } else {
@@ -154,6 +211,7 @@ namespace FlowSERVER1 {
                         
                     guna2PictureBox1.Visible = false;
                     videoView1.Visible = true;
+
                     if (_TableName == "upload_info_directory") {
                         setupPlayer(LoaderModel.LoadFile("upload_info_directory",_DirName,label1.Text));
                     }
@@ -178,6 +236,13 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// 
+        /// Save video 
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             if (_TableName == "upload_info_directory") {
                 SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirName);
@@ -209,6 +274,15 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// 
+        /// Pause the video if _mp is not null and set play
+        /// button visibility to true, and if play button is pressed
+        /// then change pause button visibility to true
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button6_Click_1(object sender, EventArgs e) {
             if(_mp != null) {
                 _mp.Pause();
@@ -251,6 +325,7 @@ namespace FlowSERVER1 {
                 _mp.Position = position;
             }
         }
+
         /// <summary>
         ///
         /// Update trackbar value to make it sync with 
@@ -276,9 +351,10 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void MediaPlayer_EndReached(object sender, EventArgs e) {
             guna2TrackBar1.Value = 100;
-            guna2Button10.Visible = true;
-            guna2Button5.Visible = false;
+            //guna2Button10.Visible = true;
+            guna2Button5.Visible = true;
             guna2Button6.Visible = false;
+            _IsEndReached = true;
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {

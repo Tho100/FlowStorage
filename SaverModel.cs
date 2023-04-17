@@ -53,8 +53,10 @@ namespace FlowSERVER1 {
 
         }
 
-        public static void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName, bool _isFromShared = false) {
+        public static async void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName, bool _isFromShared = false) {
+
             _getExt = _FileTitle.Split('.').Last();
+
             try {
 
                 List<String> _base64Encoded = new List<string>();
@@ -69,7 +71,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_DirectoryName,EncryptionKey.KeyValue));
 
-                        using (var reader = command.ExecuteReader()) {
+                        using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             if (stopFileRetrieval) {
 
                                 reader.Close();
@@ -84,7 +86,7 @@ namespace FlowSERVER1 {
                                 return;
                             }
 
-                            if (reader.Read()) {
+                            if (await reader.ReadAsync()) {
                                 var base64Encoded = reader.GetString(0);
                                 var getBytes = Convert.FromBase64String(base64Encoded);
                                 _openDialog(_FileTitle, getBytes);
@@ -107,7 +109,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
                         command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
-                        using (var reader = command.ExecuteReader()) {
+                        using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
                             if (stopFileRetrieval) {
 
@@ -123,7 +125,7 @@ namespace FlowSERVER1 {
                                 return;
                             }
 
-                            if (reader.Read()) {
+                            if (await reader.ReadAsync()) {
                                 var base64Encoded = reader.GetString(0);
                                 var getBytes = Convert.FromBase64String(base64Encoded);
                                 _openDialog(_FileTitle, getBytes);
@@ -145,7 +147,7 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
-                        using (var reader = command.ExecuteReader()) {
+                        using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
                             if (stopFileRetrieval) {
 
@@ -161,7 +163,7 @@ namespace FlowSERVER1 {
                                 return;
                             }
 
-                            if (reader.Read()) {
+                            if (await reader.ReadAsync()) {
                                 var base64Encoded = EncryptionModel.Decrypt(reader.GetString(0), "0123456789085746");
                                 var getBytes = Convert.FromBase64String(base64Encoded);
                                 _openDialog(_FileTitle, getBytes);
@@ -174,8 +176,8 @@ namespace FlowSERVER1 {
                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
                     .ToList()
                     .ForEach(form => form.Close());
-
                 }
+
                 else if (_TableName == "cust_sharing" && _isFromShared == true) {
 
                     var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
@@ -184,7 +186,7 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
-                        using (var reader = command.ExecuteReader()) {
+                        using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
                             if (stopFileRetrieval) {
 
@@ -200,7 +202,7 @@ namespace FlowSERVER1 {
                                 return;
                             }
 
-                            if (reader.Read()) {
+                            if (await reader.ReadAsync()) {
                                 var base64Encoded = reader.GetString(0);
                                 var getBytes = Convert.FromBase64String(base64Encoded);
                                 _openDialog(_FileTitle, getBytes);
@@ -223,7 +225,7 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
-                        using (var reader = command.ExecuteReader()) {
+                        using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
                             if (stopFileRetrieval) {
 
@@ -239,7 +241,7 @@ namespace FlowSERVER1 {
                                 return;
                             }
 
-                            if (reader.Read()) {
+                            if (await reader.ReadAsync()) {
                                 var base64Encoded = reader.GetString(0);
                                 var getBytes = Convert.FromBase64String(base64Encoded);
                                 _openDialog(_FileTitle, getBytes);

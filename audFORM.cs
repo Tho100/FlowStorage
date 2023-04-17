@@ -87,47 +87,57 @@ namespace FlowSERVER1 {
             return returnComment;
         }
 
-        private void setupPlayer(String _audType, Byte[] _getByteAud) {
+        /// <summary>
+        /// 
+        /// Play the audio from byte array based on the 
+        /// file type (.wav, .mp3)
+        /// 
+        /// </summary>
+        /// <param name="_audType"></param>
+        /// <param name="_getByteAud"></param>
+        private async Task setupPlayer(String _audType, Byte[] _getByteAud) {
+
             if (_audType == "wav") {
-                using (MemoryStream _ms = new MemoryStream(_getByteAud)) {
-                    SoundPlayer player = new SoundPlayer(_ms);
+                using (MemoryStream ms = new MemoryStream(_getByteAud)) {
+                    SoundPlayer player = new SoundPlayer(ms);
                     _getSoundPlayer = player;
                     player.Play();
                 }
             }
             else if (_audType == "mp3") {
-                mp3ToWav(_getByteAud);
+                await Task.Run(() => mp3ToWav(_getByteAud));
             }
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e) {                
+        /// <summary>
+        /// 
+        /// Fetch audio byte array 
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void guna2Button5_Click(object sender, EventArgs e) {
+
             try {
-                String _audType = label1.Text.Substring(label1.Text.Length-3);
-                if(_mp3WaveOut != null) {
+
+                string audType = label1.Text.Substring(label1.Text.Length - 3);
+
+                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.", "Loader").ShowDialog());
+                ShowAlert.Start();
+
+                if (_mp3WaveOut != null) {
                     _mp3WaveOut.Resume();
                     pictureBox3.Enabled = true;
-                }
-                else {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.","Loader").ShowDialog());
-                    ShowAlert.Start();
+                } else {
 
-                    if (_TabName == "file_info_audi") {
-                        pictureBox3.Enabled = true;
-                        setupPlayer(_audType,LoaderModel.LoadFile("file_info_audi",_DirName,label1.Text));
-                    } else if (_TabName == "upload_info_directory") {
-                        pictureBox3.Enabled = true;
-                        setupPlayer(_audType, LoaderModel.LoadFile("upload_info_directory", _DirName, label1.Text));
-                    }
-                    else if (_TabName == "folder_upload_info") {
-                        pictureBox3.Enabled = true;
-                        setupPlayer(_audType, LoaderModel.LoadFile("folder_upload_info", _DirName, label1.Text));
-                    } else if (_TabName == "cust_sharing") {
-                        pictureBox3.Enabled = true;
-                        setupPlayer(_audType, LoaderModel.LoadFile("cust_sharing", _DirName, label1.Text,isFromShared));
-                    }
+                    pictureBox3.Enabled = true;
 
-                    if (LoaderModel.stopFileRetrievalLoad == true) {
+                    byte[] byteAud = LoaderModel.LoadFile(_TabName, _DirName, label1.Text, isFromShared);
+
+                    await setupPlayer(audType, byteAud);
+
+                    if (LoaderModel.stopFileRetrievalLoad) {
                         pictureBox3.Enabled = false;
                     }
                 }
@@ -142,6 +152,13 @@ namespace FlowSERVER1 {
             guna2Button5.Visible = false;
         }
 
+        /// <summary>
+        /// 
+        /// Convert .mp3 to .wav since the audio player only
+        /// support .wav format
+        /// 
+        /// </summary>
+        /// <param name="_mp3ByteIn"></param>
         private void mp3ToWav(Byte[] _mp3ByteIn) {
             Stream _setupStream = new MemoryStream(_mp3ByteIn);
             var _NReader = new NAudio.Wave.Mp3FileReader(_setupStream);
@@ -152,6 +169,13 @@ namespace FlowSERVER1 {
         }
 
 
+        /// <summary>
+        /// 
+        /// Pause audio if soundplayer is not null
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button6_Click(object sender, EventArgs e) {
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
@@ -164,8 +188,21 @@ namespace FlowSERVER1 {
             }
         }
 
+        /// <summary>
+        /// 
+        /// When the user closed the form, stop the audio
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
+
             this.Close();
+
+            if(Application.OpenForms["AudioSubFORM"] != null) {
+                Application.OpenForms["AudioSubFORM"].Close();
+            }
+
             if(_getSoundPlayer != null) {
                 _getSoundPlayer.Stop();
             }
@@ -222,32 +259,34 @@ namespace FlowSERVER1 {
 
         }
 
+        bool IsSubFormOpened = false;
         private void guna2Button8_Click(object sender, EventArgs e) {
 
-            AudioSubFORM subForm = new AudioSubFORM(label1.Text);
-            subForm.Show();
+            this.WindowState = FormWindowState.Minimized;
 
-            if(_TabName == "upload_info_directory") {
-                this.WindowState = FormWindowState.Minimized;
+            if (!IsSubFormOpened) {
+
+                IsSubFormOpened = true;
+
+                AudioSubFORM subForm = new AudioSubFORM(label1.Text);
+                subForm.FormClosed += (s, args) => IsSubFormOpened = false;
+                subForm.Show();
+            }
+
+            if (_TabName == "upload_info_directory") {
                 Application.OpenForms
                     .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, ""))
+                    .Where(form => form.Name == "" || form.Name == "Form3")
                     .ToList()
                     .ForEach(form => form.Hide());
-                Application.OpenForms
-                  .OfType<Form>()
-                  .Where(form => String.Equals(form.Name, "Form3"))
-                  .ToList()
-                  .ForEach(form => form.Hide());
                 this.TopMost = false;
             }
             else {
-                this.WindowState = FormWindowState.Minimized;
                 Application.OpenForms
-                  .OfType<Form>()
-                  .Where(form => String.Equals(form.Name, "bgBlurForm"))
-                  .ToList()
-                  .ForEach(form => form.Hide());
+                    .OfType<Form>()
+                    .Where(form => form.Name == "bgBlurForm")
+                    .ToList()
+                    .ForEach(form => form.Hide());
             }
         }
 
