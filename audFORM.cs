@@ -223,6 +223,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button8_Click(object sender, EventArgs e) {
+
+            AudioSubFORM subForm = new AudioSubFORM(label1.Text);
+            subForm.Show();
+
             if(_TabName == "upload_info_directory") {
                 this.WindowState = FormWindowState.Minimized;
                 Application.OpenForms

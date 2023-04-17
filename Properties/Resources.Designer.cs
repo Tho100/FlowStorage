@@ -103,16 +103,6 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap giphy__1_ {
-            get {
-                object obj = ResourceManager.GetObject("giphy (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap giphy__10_ {
             get {
                 object obj = ResourceManager.GetObject("giphy (10)", resourceCulture);
@@ -126,6 +116,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap giphy__9_ {
             get {
                 object obj = ResourceManager.GetObject("giphy (9)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Group_1 {
+            get {
+                object obj = ResourceManager.GetObject("Group 1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

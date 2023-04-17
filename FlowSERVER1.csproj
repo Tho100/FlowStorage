@@ -406,6 +406,12 @@
     <Compile Include="audFORM.Designer.cs">
       <DependentUpon>audFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="AudioSubFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AudioSubFORM.Designer.cs">
+      <DependentUpon>AudioSubFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="Button_WOC.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -688,6 +694,9 @@
     <EmbeddedResource Include="audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AudioSubFORM.resx">
+      <DependentUpon>AudioSubFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="cancelFORM.resx">
       <DependentUpon>cancelFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -845,6 +854,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\Group 1.png" />
     <None Include="Resources\icons8-edit-48.png" />
     <None Include="Resources\icons8-edit-48 %281%29.png" />
     <None Include="Resources\DirIcon.png" />
@@ -887,7 +897,6 @@
     <None Include="Resources\icons8-password-52.png" />
     <None Include="Resources\giphy %2810%29.gif" />
     <None Include="Resources\giphy %289%29.gif" />
-    <None Include="Resources\giphy %281%29.gif" />
     <None Include="Resources\icons8-share-641.png" />
     <None Include="Resources\icons8-update-left-rotation-24.png" />
     <None Include="Resources\icons8-share-64.png" />
