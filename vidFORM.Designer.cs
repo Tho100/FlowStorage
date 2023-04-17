@@ -52,6 +52,9 @@ namespace FlowSERVER1 {
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2TrackBar1 = new Guna.UI2.WinForms.Guna2TrackBar();
+            this.guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
+            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -112,6 +115,7 @@ namespace FlowSERVER1 {
             this.videoView1.TabIndex = 38;
             this.videoView1.Text = "videoView1";
             this.videoView1.Visible = false;
+            this.videoView1.Click += new System.EventHandler(this.videoView1_Click_2);
             // 
             // label4
             // 
@@ -288,7 +292,7 @@ namespace FlowSERVER1 {
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
             this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
             this.guna2Button6.ImageSize = new System.Drawing.Size(31, 31);
-            this.guna2Button6.Location = new System.Drawing.Point(1077, 570);
+            this.guna2Button6.Location = new System.Drawing.Point(1072, 575);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(46, 36);
             this.guna2Button6.TabIndex = 37;
@@ -323,7 +327,7 @@ namespace FlowSERVER1 {
             this.guna2Button5.ForeColor = System.Drawing.Color.White;
             this.guna2Button5.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button5.Image")));
             this.guna2Button5.ImageSize = new System.Drawing.Size(34, 34);
-            this.guna2Button5.Location = new System.Drawing.Point(1074, 570);
+            this.guna2Button5.Location = new System.Drawing.Point(1071, 575);
             this.guna2Button5.Name = "guna2Button5";
             this.guna2Button5.Size = new System.Drawing.Size(48, 36);
             this.guna2Button5.TabIndex = 27;
@@ -431,12 +435,60 @@ namespace FlowSERVER1 {
             this.guna2Button2.TabIndex = 21;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
+            // guna2TrackBar1
+            // 
+            this.guna2TrackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2TrackBar1.Location = new System.Drawing.Point(363, 582);
+            this.guna2TrackBar1.Name = "guna2TrackBar1";
+            this.guna2TrackBar1.Size = new System.Drawing.Size(698, 23);
+            this.guna2TrackBar1.TabIndex = 80;
+            this.guna2TrackBar1.ThumbColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2TrackBar1.Value = 0;
+            this.guna2TrackBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.guna2TrackBar1_Scroll);
+            // 
+            // guna2Separator3
+            // 
+            this.guna2Separator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Separator3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.guna2Separator3.Location = new System.Drawing.Point(343, 562);
+            this.guna2Separator3.Name = "guna2Separator3";
+            this.guna2Separator3.Size = new System.Drawing.Size(799, 10);
+            this.guna2Separator3.TabIndex = 81;
+            // 
+            // guna2Button10
+            // 
+            this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button10.Animated = true;
+            this.guna2Button10.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button10.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button10.BorderRadius = 6;
+            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button10.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button10.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.guna2Button10.ForeColor = System.Drawing.Color.White;
+            this.guna2Button10.Image = global::FlowSERVER1.Properties.Resources.icons8_restart_500__1_;
+            this.guna2Button10.ImageSize = new System.Drawing.Size(27, 27);
+            this.guna2Button10.Location = new System.Drawing.Point(1076, 576);
+            this.guna2Button10.Name = "guna2Button10";
+            this.guna2Button10.Size = new System.Drawing.Size(46, 36);
+            this.guna2Button10.TabIndex = 82;
+            this.guna2Button10.Visible = false;
+            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
+            // 
             // vidFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1136, 617);
+            this.Controls.Add(this.guna2Button10);
+            this.Controls.Add(this.guna2Separator3);
+            this.Controls.Add(this.guna2TrackBar1);
             this.Controls.Add(this.guna2Button9);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.pictureBox2);
@@ -504,5 +556,8 @@ namespace FlowSERVER1 {
         private System.Windows.Forms.Label label7;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
         public Guna.UI2.WinForms.Guna2Button guna2Button9;
+        private Guna.UI2.WinForms.Guna2TrackBar guna2TrackBar1;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
+        public Guna.UI2.WinForms.Guna2Button guna2Button10;
     }
 }

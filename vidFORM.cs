@@ -30,6 +30,7 @@ namespace FlowSERVER1 {
         private static bool IsFromSharing;
 
         public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName, bool _isFromShared = false,bool _isFromSharing = true) {
+
             InitializeComponent();
 
             String _getName = "";
@@ -131,9 +132,11 @@ namespace FlowSERVER1 {
 
             _mp = new MediaPlayer(media);
 
+
             videoView1.MediaPlayer = _mp;
             _mp.Play();
-
+            _mp.PositionChanged += MediaPlayer_PositionChanged;
+            _mp.EndReached += MediaPlayer_EndReached;
         }
 
         // Play
@@ -142,8 +145,6 @@ namespace FlowSERVER1 {
             try {
 
                 if(_mp != null) {
-
-                    videoView1.MediaPlayer = _mp;
                     _mp.Play();
 
                 } else {
@@ -237,6 +238,55 @@ namespace FlowSERVER1 {
         private void guna2Button9_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
             this.TopMost = false;
+        }
+
+        private void videoView1_Click_2(object sender, EventArgs e) {
+
+        }
+
+        private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
+            if (_mp != null) {
+                float percentage = guna2TrackBar1.Value / 100f;
+                long position = (long)(_mp.Length * percentage);
+                _mp.Position = position;
+            }
+        }
+        /// <summary>
+        ///
+        /// Update trackbar value to make it sync with 
+        /// the video 
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) {
+            guna2TrackBar1.Invoke((MethodInvoker)delegate {
+                guna2TrackBar1.Value = (int)(_mp.Position * 100);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// Set trackbar value to 100 when 
+        /// the video has ended and re-show the play button and clear
+        /// video media player to allow re-play
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MediaPlayer_EndReached(object sender, EventArgs e) {
+            guna2TrackBar1.Value = 100;
+            guna2Button10.Visible = true;
+            guna2Button5.Visible = false;
+            guna2Button6.Visible = false;
+        }
+
+        private void guna2Button10_Click(object sender, EventArgs e) {
+            guna2TrackBar1.Value = 0;
+            _mp.Stop();
+            _mp.Play();
+            guna2Button10.Visible = false;
+            guna2Button6.Visible = true;
         }
     }
 }

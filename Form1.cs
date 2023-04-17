@@ -911,21 +911,6 @@ namespace FlowSERVER1 {
 
 
                     if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql" || typeValues[i] == ".csv") {
-                        /*List<String> textValues_ = new List<String>();
-                        String retrieveImg = "SELECT CONVERT(CUST_FILE USING utf8) FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImg, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
-                            command.Parameters.AddWithValue("@foldername", _foldTitle);
-                            command.Parameters.AddWithValue("@filename", titleLab.Text);
-
-                            using (MySqlDataReader _ReadTexts = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await _ReadTexts.ReadAsync()) {
-                                    textValues_.Add(_ReadTexts.GetString(0));
-                                }
-                            }
-                        }*/
-
-                        //var getMainText = EncryptionModel.Decrypt(textValues_[0], EncryptionKey.KeyValue);
 
                         var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                         if (typeValues[i] == ".py") {
@@ -2269,7 +2254,9 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
-        /// Sign up process, insert all necessary data to DB
+        /// 
+        /// Sign up process for user information filling 
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2320,6 +2307,7 @@ namespace FlowSERVER1 {
                     }
                 }
                 else {
+
                     label22.Visible = false;
                     label12.Visible = false;
                     label11.Visible = false;
@@ -2345,15 +2333,13 @@ namespace FlowSERVER1 {
                                                             label.Location = new Point(3, 27);
                                                         }
 
-                                                        var _encryptPassVal = EncryptionModel.Encrypt(_getPass, "0123456789085746");
                                                         label5.Text = _getUser;
                                                         label24.Text = _getEmail;
 
-                                                        var _encryptPinVal = EncryptionModel.Encrypt(_getPin, "0123456789085746");
                                                         var _setupTok = RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12);
                                                         var _removeSpaces = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
                                                         var _encryptTok = EncryptionModel.Encrypt(_removeSpaces, "0123456789085746");
-                                                        String _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+                                                        string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
                                                         using (var transaction = con.BeginTransaction()) {
 
@@ -2364,10 +2350,10 @@ namespace FlowSERVER1 {
                                                                 command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK)
                             VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
                                                                 command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                                command.Parameters.AddWithValue("@CUST_PASSWORD", _encryptPassVal);
+                                                                command.Parameters.AddWithValue("@CUST_PASSWORD", computeAuthCase(_getPass));
                                                                 command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
                                                                 command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                                command.Parameters.AddWithValue("@CUST_PIN", _encryptPinVal);
+                                                                command.Parameters.AddWithValue("@CUST_PIN", computeAuthCase(_getPin));
                                                                 command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
                                                                 command.ExecuteNonQuery();
 
@@ -2471,6 +2457,18 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+        
+        private string computeAuthCase(string inputStr) {
+
+            SHA256 sha256 = SHA256.Create();
+
+            string _getAuthStrCase0 = inputStr;
+            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
+            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
+            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
+
+            return _authStrCase0;
         }
 
         /// <summary>

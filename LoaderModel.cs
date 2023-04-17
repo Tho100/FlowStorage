@@ -108,6 +108,7 @@ namespace FlowSERVER1 {
         }
 
         private static async void RetrieveDirectoryDataAsync(string directoryName) {
+
             string readGifFilesQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND DIR_NAME = @dirname";
 
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
