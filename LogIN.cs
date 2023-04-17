@@ -913,7 +913,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Perkongsian Fail";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
-                Form_1.guna2Button3.Text = "Log Masuk";
             }
 
             if (_custLang == "US") {
@@ -926,7 +925,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "File Sharing";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Sign In";
             }
 
             if (_custLang == "GER") {
@@ -938,7 +936,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Datenaustausch";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Anmelden";
             }
 
             if (_custLang == "JAP") {
@@ -950,7 +947,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "ファイル共有";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "必需品";
-                Form_1.guna2Button3.Text = "ログイン";
             }
 
             if (_custLang == "ESP") {
@@ -962,7 +958,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartición de archivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Esenciales";
-                Form_1.guna2Button3.Text = "Iniciar sesión";
             }
 
             if (_custLang == "FRE") {
@@ -974,7 +969,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Partage de fichiers";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentiel";
-                Form_1.guna2Button3.Text = "S'identifier";
                 Form_1.guna2Button5.Text = "Paramètres";
             }
 
@@ -987,7 +981,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essenciais";
-                Form_1.guna2Button3.Text = "Entrar";
             }
 
             if (_custLang == "CHI") {
@@ -999,7 +992,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "文件共享";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "要点";
-                Form_1.guna2Button3.Text = "登入";
             }
 
             if(_custLang == "RUS") {
@@ -1011,7 +1003,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Общий доступ к файлам";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Основные";
-                Form_1.guna2Button3.Text = "Войти";
             }
 
             if(_custLang == "DUT") {
@@ -1023,7 +1014,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Bestanden delen";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Aanmelden";
             }
         }
 

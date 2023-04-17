@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,7 +32,7 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private string verifyPassword(String _usernameEntered) {
+        private string authReturnOriginal(String _usernameEntered) {
             List<String> _passValues = new List<string>();
             String getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(getUsername, con);
@@ -44,17 +45,14 @@ namespace FlowSERVER1 {
             }
             _ReadPass.Close();
             String _passValuesString = _passValues[0];
-            String _decryptIt = EncryptionModel.Decrypt(_passValuesString, "0123456789085746");
-            return _decryptIt;
+            return _passValuesString;
         }
 
         private void setupInformationUpdate(String _custUsername,String _newPass) {
 
-            var _encryptionModel = EncryptionModel.Encrypt(_newPass, "0123456789085746");
-
             String updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(updatePasswordQuery,con);
-            command.Parameters.AddWithValue("@newpass",_encryptionModel);
+            command.Parameters.AddWithValue("@newpass",computeAuthCase(_newPass));
             command.Parameters.AddWithValue("@username",_custUsername);
             command.ExecuteNonQuery();
         }
@@ -67,7 +65,7 @@ namespace FlowSERVER1 {
                 if (_getNewPass == _getVerify) {
                     if (_getNewPass != String.Empty) {
                         if (_getVerify != String.Empty) {
-                            if (verifyPassword(CurrentUsername) == _getOldPass) {
+                            if (authReturnOriginal(CurrentUsername) == computeAuthCase(_getOldPass)) {
                                 if(MessageBox.Show("Do you want to proceed your action?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes) {
 
                                     setupInformationUpdate(CurrentUsername,_getNewPass);
@@ -111,6 +109,18 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 MessageBox.Show("There's a problem while attempting to change your password.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private string computeAuthCase(string inputStr) {
+
+            SHA256 sha256 = SHA256.Create();
+
+            string _getAuthStrCase0 = inputStr;
+            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
+            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
+            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
+
+            return _authStrCase0;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {

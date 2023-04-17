@@ -165,7 +165,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Perkongsian Fail";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
-                Form_1.guna2Button3.Text = "Log Masuk";
             }
 
             if (_custLang == "US") {
@@ -178,7 +177,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "File Sharing";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Sign In";
             }
 
             if(_custLang == "GER") {
@@ -190,7 +188,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Datenaustausch";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Anmelden";
             }
 
             if(_custLang == "JAP") {
@@ -202,7 +199,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "ファイル共有";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "必需品";
-                Form_1.guna2Button3.Text = "ログイン";
             }
 
             if(_custLang == "ESP") {
@@ -214,7 +210,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartición de archivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Esenciales";
-                Form_1.guna2Button3.Text = "Iniciar sesión";
             }
 
             if(_custLang == "FRE") {
@@ -226,7 +221,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Partage de fichiers";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentiel";
-                Form_1.guna2Button3.Text = "S'identifier";
             }
 
             if(_custLang == "POR") {
@@ -238,7 +232,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essenciais";
-                Form_1.guna2Button3.Text = "Entrar";
             }
 
             if(_custLang == "CHI") {
@@ -250,7 +243,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "文件共享";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "要点";
-                Form_1.guna2Button3.Text = "登入";
             }
 
             if(_custLang == "RUS") {
@@ -262,7 +254,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Общий доступ к файлам";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Основные";
-                Form_1.guna2Button3.Text = "Войти";
             }
 
             if(_custLang == "DUT") {
@@ -274,7 +265,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Bestanden delen";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Aanmelden";
             }
         }
 
@@ -2909,7 +2899,6 @@ namespace FlowSERVER1 {
 
             guna2Button13.FillColor = Color.FromArgb(255, 71, 19, 191);
             guna2Button9.FillColor = Color.Transparent;
-            guna2Button3.Visible = false;
             panel1.SendToBack();
             panel3.BringToFront();
             label9.Visible = true;
@@ -6271,7 +6260,6 @@ namespace FlowSERVER1 {
         private void guna2Button9_Click_1(object sender, EventArgs e) {
             guna2Button9.FillColor = Color.FromArgb(255,71, 19, 191);
             guna2Button13.FillColor = Color.Transparent;
-            guna2Button3.Visible = true;
             panel3.SendToBack();
             panel1.BringToFront();
             label9.Visible = false;
@@ -6282,7 +6270,6 @@ namespace FlowSERVER1 {
         private void guna2Button13_Click(object sender, EventArgs e) {
             guna2Button13.FillColor = Color.FromArgb(255, 71, 19, 191);
             guna2Button9.FillColor = Color.Transparent;
-            guna2Button3.Visible = false;
             panel1.SendToBack();
             panel3.BringToFront();
             label9.Visible = true;
@@ -6301,6 +6288,42 @@ namespace FlowSERVER1 {
 
         private void guna2ProgressBar1_ValueChanged(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button15_Click(object sender, EventArgs e) {
+            try {
+
+                DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (_confirmation == DialogResult.Yes) {
+
+                    panel1.SendToBack();
+
+                    Form1.instance.label2.Text = "Item Count";
+                    Form1.instance.label10.Text = "Upload";
+                    Form1.instance.guna2Button2.Text = "Upload File";
+                    Form1.instance.guna2Button12.Text = "Upload Folder";
+                    Form1.instance.guna2Button1.Text = "Create Directory";
+                    Form1.instance.guna2Button7.Text = "File Sharing";
+                    Form1.instance.guna2Button7.Size = new Size(125, 47);
+                    Form1.instance.label28.Text = "Essentials";
+
+                    String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                    String _getAuth = _getPath + "\\CUST_DATAS.txt";
+
+                    if (File.Exists(_getAuth)) {
+                        if (Directory.Exists(_getPath)) {
+                            Directory.Delete(_getPath, true);
+                        }
+                    }
+
+                    Form1.instance.guna2Panel7.Visible = true;
+                    Form1.instance.listBox1.Items.Clear();
+                }
+            }
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                MessageBox.Show("There's a problem while attempting to logout your account. Please try again.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

@@ -370,12 +370,14 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
+            
             try {
                 
                 DialogResult _confirmation = MessageBox.Show("Logout your account?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
                 if(_confirmation == DialogResult.Yes) {
 
                     guna2Panel1.SendToBack();
+                    Form1.instance.panel1.SendToBack();
 
                     Form1.instance.label2.Text = "Item Count";
                     Form1.instance.label10.Text = "Upload";
@@ -385,7 +387,6 @@ namespace FlowSERVER1 {
                     Form1.instance.guna2Button7.Text = "File Sharing";
                     Form1.instance.guna2Button7.Size = new Size(125, 47);
                     Form1.instance.label28.Text = "Essentials";
-                    Form1.instance.guna2Button3.Text = "Sign In";
 
                     String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                     String _getAuth = _getPath + "\\CUST_DATAS.txt";
@@ -939,7 +940,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Perkongsian Fail";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Kepentingan";
-                Form_1.guna2Button3.Text = "Log Masuk";
                 Form_1.label2.Text = "Kiraan Item";
             }
 
@@ -1000,7 +1000,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "File Sharing";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Sign in";
             }
 
             if(_custLang == "DUT") {
@@ -1060,7 +1059,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Bestanden delen";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Aanmelden";
             }
 
             if(_custLang == "RUS") {
@@ -1120,7 +1118,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Общий доступ к файлам";
                 Form_1.guna2Button7.Size = new Size(129, 47);
                 Form_1.label28.Text = "Основные";
-                Form_1.guna2Button3.Text = "Войти";
             }
 
             if(_custLang == "GER") {
@@ -1181,7 +1178,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Datenaustausch";
                 Form_1.guna2Button7.Size = new Size(159, 47);
                 Form_1.label28.Text = "Essentials";
-                Form_1.guna2Button3.Text = "Anmelden";
             }
 
             if (_custLang == "JAP") {
@@ -1241,7 +1237,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "ファイル共有";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "必需品";
-                Form_1.guna2Button3.Text = "ログイン\r\n";
             }
 
             if (_custLang == "ESP") {
@@ -1302,7 +1297,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartición de archivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Esenciales";
-                Form_1.guna2Button3.Text = "Iniciar sesión";
             }
 
             if (_custLang == "FRE") {
@@ -1362,7 +1356,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Partage de fichiers";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essentiel";
-                Form_1.guna2Button3.Text = "S'identifier";
             }
 
             if (_custLang == "POR") {
@@ -1422,7 +1415,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "Essenciais";
-                Form_1.guna2Button3.Text = "Entrar";
             }
 
             if (_custLang == "CHI") {
@@ -1483,7 +1475,6 @@ namespace FlowSERVER1 {
                 Form_1.guna2Button7.Text = "文件共享";
                 Form_1.guna2Button7.Size = new Size(125, 47);
                 Form_1.label28.Text = "要点";
-                Form_1.guna2Button3.Text = "登入";
             }
         }
 

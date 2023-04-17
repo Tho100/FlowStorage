@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -64,7 +65,7 @@ namespace FlowSERVER1 {
             _ReadUsername.Close();
             return _usernameValues.Count();
         }
-        private string verifyPassword(String _usernameEntered) {
+        private string authReturnOriginal(String _usernameEntered) {
             List<String> _passValues = new List<string>();
             String getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(getUsername, con);
@@ -77,11 +78,22 @@ namespace FlowSERVER1 {
             }
             _ReadPass.Close();
             String _passValuesString = _passValues[0];
-            String _decryptIt = EncryptionModel.Decrypt(_passValuesString, "0123456789085746");
-            return _decryptIt;
+            return _passValuesString;
         }
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
+        }
+
+        private string computeAuthCase(string inputStr) {
+
+            SHA256 sha256 = SHA256.Create();
+
+            string _getAuthStrCase0 = inputStr;
+            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
+            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
+            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
+
+            return _authStrCase0;
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -95,7 +107,7 @@ namespace FlowSERVER1 {
                                 label4.Text = "Username is taken.";
                                 label4.Visible = true;
                             } else {
-                                if(verifyPassword(CurrentUsername) == _getCustPass) {
+                                if(authReturnOriginal(CurrentUsername) == computeAuthCase(_getCustPass)) {
                                     NewUsername = _getNewUsername;
                                     setupChangeUsername("information", NewUsername);
                                     setupChangeUsername("cust_type",NewUsername);
@@ -142,7 +154,8 @@ namespace FlowSERVER1 {
                         } else {
                             label4.Text = "Please enter your password.";
 
-                        label4.Visible = true;                            label4.Visible = true;
+                            label4.Visible = true;                            
+                            label4.Visible = true;
                         }
                     } else {
                         label4.Text = "Please enter a username.";
