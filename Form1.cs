@@ -2312,146 +2312,146 @@ namespace FlowSERVER1 {
                     label12.Visible = false;
                     label11.Visible = false;
 
-                    if (!(_getPass.Contains("!") || _getPass.Contains("!"))) {
-                        if(!(_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%"))) {
-                            if(!String.IsNullOrEmpty(_getPin)) {
-                            if(_getPin.Length == 3) {
-                                if (validateEmailUser(_getEmail) == true) {
-                                    if (_getUser.Length <= 20) {
-                                        if (_getPass.Length > 5) {
-                                            if (!String.IsNullOrEmpty(_getEmail)) {
-                                                if (!String.IsNullOrEmpty(_getPass)) {
-                                                    if (!String.IsNullOrEmpty(_getUser)) {
-                                                        flowlayout.Controls.Clear();
-                                                        if (flowlayout.Controls.Count == 0) {
-                                                            Form1.instance.label8.Visible = true;
-                                                            Form1.instance.guna2Button6.Visible = true;
-                                                        }
-                                                        if (Form1.instance.setupLabel.Text.Length > 14) {
-                                                            var label = Form1.instance.setupLabel;
-                                                            label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                                                            label.Location = new Point(3, 27);
-                                                        }
-
-                                                        label5.Text = _getUser;
-                                                        label24.Text = _getEmail;
-
-                                                        var _setupTok = RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12);
-                                                        var _removeSpaces = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
-                                                        var _encryptTok = EncryptionModel.Encrypt(_removeSpaces, "0123456789085746");
-                                                        string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-                                                        using (var transaction = con.BeginTransaction()) {
-
-                                                            try {
-
-                                                                MySqlCommand command = con.CreateCommand();
-
-                                                                command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK)
-                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
-                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                                command.Parameters.AddWithValue("@CUST_PASSWORD", computeAuthCase(_getPass));
-                                                                command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                                                                command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                                command.Parameters.AddWithValue("@CUST_PIN", computeAuthCase(_getPin));
-                                                                command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
-                                                                command.ExecuteNonQuery();
-
-                                                                command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
-                            VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                                                                command.Parameters.Clear();
-                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                                command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                                                                command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                                                                command.ExecuteNonQuery();
-
-                                                                command.CommandText = @"INSERT INTO lang_info(CUST_USERNAME,CUST_LANG)
-                            VALUES(@CUST_USERNAME,@CUST_LANG)";
-                                                                command.Parameters.Clear();
-                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                                command.Parameters.AddWithValue("@CUST_LANG", "US");
-                                                                command.ExecuteNonQuery();
-
-                                                                command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS)
-                            VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
-                                                                command.Parameters.Clear();
-                                                                command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                                                                command.Parameters.AddWithValue("@DISABLED", "0");
-                                                                command.Parameters.AddWithValue("@SET_PASS", "DEF");
-                                                                command.ExecuteNonQuery();
-
-                                                                transaction.Commit();
-                                                            }
-                                                            catch (Exception) {
-                                                                transaction.Rollback();
-                                                            }
-                                                        }
-
-                                                        setupAutoLogin(_getUser);
-
-                                                        label11.Visible = false;
-                                                        label12.Visible = false;
-                                                        label30.Visible = false;
-                                                        label6.Text = "20";
-                                                        guna2Panel7.Visible = false;
-                                                        guna2TextBox1.Text = String.Empty;
-                                                        guna2TextBox2.Text = String.Empty;
-                                                        guna2TextBox3.Text = String.Empty;
-                                                        guna2TextBox4.Text = String.Empty;
-                                                        await getCurrentLang();
-                                                        setupTime();
-
-                                                        label20.Text = "0" + "%";
-                                                        guna2ProgressBar1.Value = 0;
-
-                                                        String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
-                                                        listBox1.Items.AddRange(itemsFolder);
-                                                        listBox1.SelectedIndex = 0;
-                                                    }
-                                                    else {
-                                                        label11.Visible = true;
-                                                    }
-                                                }
-                                                else {
-                                                    label12.Visible = true;
-                                                }
-                                            }
-                                            else {
-                                                label22.Visible = true;
-                                                label22.Text = "Please add your email";
-                                            }
-
-                                        }
-                                        else {
-                                            label12.Visible = true;
-                                            label12.Text = "Password must be longer than 5 characters.";
-                                        }
-                                    }
-                                    else {
-                                        label11.Visible = true;
-                                        label11.Text = "Username character length limit is 20.";
-                                    }
-                                }
-                                else {
-                                    label22.Visible = true;
-                                    label22.Text = "Entered email is not valid.";
-                                }
-                            } else {
-                                label30.Visible = true;
-                                label30.Text = "PIN Number must have 3 digits.";
-                                }
-                            } else {
-                                label30.Visible = true;
-                                label30.Text = "Please add a PIN number.";
-                            }
-                        } else {
-                            label11.Visible = true;
-                            label11.Text = "Special characters is not allowed.";
-                        }
-                    } else {
-                        label12.Visible = true;
-                        label12.Text = "Special characters is not allowed.";
+                    if(_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%")) {
+                        label11.Visible = true;
+                        label11.Text = "Special characters is not allowed.";
+                        return;
                     }
+
+                    if(String.IsNullOrEmpty(_getPin)) {
+                        label30.Visible = true;
+                        label30.Text = "Please add a PIN number.";
+                        return;
+                    }
+
+                    if(_getPin.Length != 3) {
+                        label30.Visible = true;
+                        label30.Text = "PIN Number must have 3 digits.";
+                        return;
+                    }
+
+                    if(!validateEmailUser(_getEmail) == true) {
+                        label22.Visible = true;
+                        label22.Text = "Entered email is not valid.";
+                        return;
+                    }
+
+                    if(_getUser.Length > 20) {
+                        label11.Visible = true;
+                        label11.Text = "Username character length limit is 20.";
+                        return;
+                    }
+
+                    if(_getPass.Length < 5) {
+                        label12.Visible = true;
+                        label12.Text = "Password must be longer than 5 characters.";
+                        return;
+                    }
+
+                    if(String.IsNullOrEmpty(_getEmail)) {
+                        label22.Visible = true;
+                        label22.Text = "Please add your email";
+                        return;
+                    }
+
+                    if (String.IsNullOrEmpty(_getPass)) {
+                        label12.Visible = true;
+                        return;
+
+                    }
+
+                    if (String.IsNullOrEmpty(_getUser)) {
+                        label11.Visible = true;
+                        return;
+                    }
+
+                    flowlayout.Controls.Clear();
+
+                    if (flowlayout.Controls.Count == 0) {
+                        Form1.instance.label8.Visible = true;
+                        Form1.instance.guna2Button6.Visible = true;
+                    }
+                    if (Form1.instance.setupLabel.Text.Length > 14) {
+                        var label = Form1.instance.setupLabel;
+                        label.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                        label.Location = new Point(3, 27);
+                    }
+
+                    label5.Text = _getUser;
+                    label24.Text = _getEmail;
+
+                    var _setupTok = RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12);
+                    var _removeSpaces = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+                    var _encryptTok = EncryptionModel.Encrypt(_removeSpaces, "0123456789085746");
+                    string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                    using (var transaction = con.BeginTransaction()) {
+
+                        try {
+
+                            MySqlCommand command = con.CreateCommand();
+
+                            command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK)
+                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
+                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                            command.Parameters.AddWithValue("@CUST_PASSWORD", computeAuthCase(_getPass));
+                            command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
+                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                            command.Parameters.AddWithValue("@CUST_PIN", computeAuthCase(_getPin));
+                            command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
+                            command.ExecuteNonQuery();
+
+                            command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
+                            VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
+                            command.Parameters.Clear();
+                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                            command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                            command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
+                            command.ExecuteNonQuery();
+
+                            command.CommandText = @"INSERT INTO lang_info(CUST_USERNAME,CUST_LANG)
+                            VALUES(@CUST_USERNAME,@CUST_LANG)";
+                            command.Parameters.Clear();
+                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                            command.Parameters.AddWithValue("@CUST_LANG", "US");
+                            command.ExecuteNonQuery();
+
+                            command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS)
+                            VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
+                            command.Parameters.Clear();
+                            command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                            command.Parameters.AddWithValue("@DISABLED", "0");
+                            command.Parameters.AddWithValue("@SET_PASS", "DEF");
+                            command.ExecuteNonQuery();
+
+                            transaction.Commit();
+                        }
+                        catch (Exception) {
+                            transaction.Rollback();
+                        }
+                    }
+
+                    setupAutoLogin(_getUser);
+
+                    label11.Visible = false;
+                    label12.Visible = false;
+                    label30.Visible = false;
+                    label6.Text = "20";
+                    guna2Panel7.Visible = false;
+                    guna2TextBox1.Text = String.Empty;
+                    guna2TextBox2.Text = String.Empty;
+                    guna2TextBox3.Text = String.Empty;
+                    guna2TextBox4.Text = String.Empty;
+                    await getCurrentLang();
+                    setupTime();
+
+                    label20.Text = "0" + "%";
+                    guna2ProgressBar1.Value = 0;
+
+                    String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
+                    listBox1.Items.AddRange(itemsFolder);
+                    listBox1.SelectedIndex = 0;
+
                 }
             }
             catch (Exception) {

@@ -95,12 +95,12 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_audType"></param>
         /// <param name="_getByteAud"></param>
-        private async Task setupPlayer(String _audType, Byte[] _getByteAud) {
-
+        private async Task setupPlayer(String _audType, Byte[] _getByteAud, int startPosition = 0) {
             if (_audType == "wav") {
                 using (MemoryStream ms = new MemoryStream(_getByteAud)) {
                     SoundPlayer player = new SoundPlayer(ms);
                     _getSoundPlayer = player;
+                    player.Stream.Position = startPosition;
                     player.Play();
                 }
             }
@@ -122,14 +122,14 @@ namespace FlowSERVER1 {
 
                 string audType = label1.Text.Substring(label1.Text.Length - 3);
 
-                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.", "Loader").ShowDialog());
-                ShowAlert.Start();
-
                 if (_mp3WaveOut != null) {
                     _mp3WaveOut.Resume();
                     pictureBox3.Enabled = true;
 
                 } else {
+
+                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.", "Loader").ShowDialog());
+                    ShowAlert.Start();
 
                     pictureBox3.Enabled = true;
 
@@ -160,14 +160,15 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_mp3ByteIn"></param>
         private void mp3ToWav(Byte[] _mp3ByteIn) {
+
             Stream _setupStream = new MemoryStream(_mp3ByteIn);
             var _NReader = new NAudio.Wave.Mp3FileReader(_setupStream);
             var _setupWaveOut = new WaveOut();
             _setupWaveOut.Init(_NReader);
             _setupWaveOut.Play();
             _mp3WaveOut = _setupWaveOut;
-        }
 
+        }
 
         /// <summary>
         /// 
@@ -255,10 +256,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
-
-        }
-
         bool IsSubFormOpened = false;
         private void guna2Button8_Click(object sender, EventArgs e) {
 
@@ -298,6 +295,12 @@ namespace FlowSERVER1 {
 
         private void label7_Click(object sender, EventArgs e) {
 
+        }
+
+        private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
+            //int position = guna2TrackBar1.Value;
+            //_getSoundPlayer.Stop(); // Stop the current playing audio
+            //setupPlayer(_audType, _getByteAud, position);
         }
     }
 }

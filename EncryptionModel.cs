@@ -11,20 +11,8 @@ namespace FlowSERVER1 {
     public static class EncryptionModel {
 
         private static readonly Random _random = new Random();
-        private static string IsOriginFrom = "";
-        private static string RandomString(int size, bool lowerCase = true) {
-            var builder = new StringBuilder(size);
-            char offset = lowerCase ? 'a' : 'A';
-            const int lettersOffset = 26;
 
-            for (var i = 0; i < size; i++) {
-                var @char = (char)_random.Next(offset, offset + lettersOffset);
-                builder.Append(@char);
-            }
-
-            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
-        }
-        public static string Encrypt(String _value, String _key) {
+        public static string Encrypt(String _value, String _key = "") {
             String toBase64 = "";
 
             try {
@@ -46,13 +34,13 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                // @
+                // TODO: Ignore exception since it's unecesary
             }
 
             return toBase64;
         }
 
-        public static string Decrypt(String _value, String _key) {
+        public static string Decrypt(String _value, String _key = "") {
 
             String toBase64 = "";
 
@@ -74,7 +62,7 @@ namespace FlowSERVER1 {
                     }
                 }
             } catch (Exception) {
-                // @
+                // TODO: Ignore exception since it's unecesary
             }
 
             return toBase64;

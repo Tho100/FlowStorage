@@ -109,9 +109,7 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "AudioSubFORM";
-            this.Text = "AudioSubFORM";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.AudioSubFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
