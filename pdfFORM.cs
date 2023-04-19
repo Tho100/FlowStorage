@@ -108,6 +108,7 @@ namespace FlowSERVER1 {
         // @SUMMARY Convert bytes of PDF file to stream
         public void setupPdf(byte[] pdfBytes) {
             if(pdfBytes != null) {
+                label16.Text = $"{FileSize.fileSize(pdfBytes):F2}Mb";
                 var _getStream = new MemoryStream(pdfBytes);
                 LoadPdf(_getStream);
             }
@@ -200,6 +201,14 @@ namespace FlowSERVER1 {
         }
 
         private void label6_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e) {
 
         }
     }

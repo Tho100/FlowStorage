@@ -147,6 +147,8 @@ namespace FlowSERVER1 {
         /// <param name="_retrieveBytesValue"></param>
         private void setupPlayer(byte[] _retrieveBytesValue) {
 
+            label16.Text = $"{FileSize.fileSize(_retrieveBytesValue):F2}Mb";
+
             var _toStream = new MemoryStream(_retrieveBytesValue);
 
             LibVLC _setLibVLC = new LibVLC();

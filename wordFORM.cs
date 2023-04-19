@@ -106,6 +106,9 @@ namespace FlowSERVER1 {
             return returnComment;
         }
         public void setupDocx(Byte[] _getByte) {
+
+            label16.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
+
             var _getStream = new MemoryStream(_getByte);
             loadDocx(_getStream);
             

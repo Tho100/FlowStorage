@@ -478,6 +478,7 @@
     <Compile Include="failedPas.Designer.cs">
       <DependentUpon>failedPas.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileSize.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

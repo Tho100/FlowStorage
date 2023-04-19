@@ -55,6 +55,8 @@ namespace FlowSERVER1 {
             this.guna2TrackBar1 = new Guna.UI2.WinForms.Guna2TrackBar();
             this.guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -75,7 +77,7 @@ namespace FlowSERVER1 {
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(10, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(313, 102);
+            this.label1.Size = new System.Drawing.Size(318, 87);
             this.label1.TabIndex = 25;
             this.label1.Text = "Video";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -84,7 +86,7 @@ namespace FlowSERVER1 {
             // 
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(7, 159);
+            this.label2.Location = new System.Drawing.Point(7, 189);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(266, 36);
             this.label2.TabIndex = 29;
@@ -121,7 +123,7 @@ namespace FlowSERVER1 {
             // 
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(11, 267);
+            this.label4.Location = new System.Drawing.Point(11, 297);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(324, 302);
             this.label4.TabIndex = 39;
@@ -140,7 +142,7 @@ namespace FlowSERVER1 {
             // guna2Separator2
             // 
             this.guna2Separator2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.guna2Separator2.Location = new System.Drawing.Point(-7, 200);
+            this.guna2Separator2.Location = new System.Drawing.Point(-7, 230);
             this.guna2Separator2.Name = "guna2Separator2";
             this.guna2Separator2.Size = new System.Drawing.Size(349, 10);
             this.guna2Separator2.TabIndex = 72;
@@ -171,7 +173,7 @@ namespace FlowSERVER1 {
             this.label5.AutoEllipsis = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(12, 132);
+            this.label5.Location = new System.Drawing.Point(12, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(117, 17);
             this.label5.TabIndex = 74;
@@ -182,7 +184,7 @@ namespace FlowSERVER1 {
             this.label6.AutoEllipsis = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Silver;
-            this.label6.Location = new System.Drawing.Point(11, 234);
+            this.label6.Location = new System.Drawing.Point(11, 264);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 17);
             this.label6.TabIndex = 75;
@@ -480,12 +482,38 @@ namespace FlowSERVER1 {
             this.guna2Button10.Visible = false;
             this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
             // 
+            // label15
+            // 
+            this.label15.AutoEllipsis = true;
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.Silver;
+            this.label15.Location = new System.Drawing.Point(13, 107);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(55, 17);
+            this.label15.TabIndex = 86;
+            this.label15.Text = "File Size";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label16.Location = new System.Drawing.Point(15, 131);
+            this.label16.Name = "label16";
+            this.label16.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label16.Size = new System.Drawing.Size(32, 17);
+            this.label16.TabIndex = 85;
+            this.label16.Text = "N/A";
+            // 
             // vidFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1136, 617);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.guna2Button10);
             this.Controls.Add(this.guna2Separator3);
             this.Controls.Add(this.guna2TrackBar1);
@@ -559,5 +587,7 @@ namespace FlowSERVER1 {
         private Guna.UI2.WinForms.Guna2TrackBar guna2TrackBar1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
         public Guna.UI2.WinForms.Guna2Button guna2Button10;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
     }
 }

@@ -6365,76 +6365,70 @@ namespace FlowSERVER1 {
             e.Effect = DragDropEffects.Copy;
         }
 
+        /// <summary>
+        /// 
+        /// Drag-drop upload feature is implemented here
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_DragDrop(object sender, DragEventArgs e) {
-
             string accountTypeStr = "";
             int accountTypeInt = 0;
 
-            if (label6.Text == "20") {
-                accountTypeStr = "Basic";
-            } else if (label6.Text == "500") {
-                accountTypeStr = "Max";
+            switch (label6.Text) {
+                case "20":
+                    accountTypeStr = "Basic";
+                    break;
+                case "500":
+                    accountTypeStr = "Max";
+                    break;
+                case "1000":
+                    accountTypeStr = "Express";
+                    break;
+                case "2000":
+                    accountTypeStr = "Supreme";
+                    break;
+                default:
+                    return; 
             }
-            else if (label6.Text == "1000") {
-                accountTypeStr = "Express";
-            }
-            else if (label6.Text == "2000") {
-                accountTypeStr = "Supreme";
-            }
 
-            accountTypeInt = int.Parse(label6.Text);
+            if (!int.TryParse(label6.Text, out accountTypeInt)) return; 
 
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return; 
 
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                int curFilesCount = flowLayoutPanel1.Controls.Count;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                if (files.Length + curFilesCount > accountTypeInt) {
+            if (files.Length + flowLayoutPanel1.Controls.Count > accountTypeInt) {
+                using (Form bgBlur = new Form()) {
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.FormBorderStyle = FormBorderStyle.None;
+                    bgBlur.Opacity = .24d;
+                    bgBlur.BackColor = Color.Black;
+                    bgBlur.Name = "bgBlurForm";
+                    bgBlur.WindowState = FormWindowState.Maximized;
+                    bgBlur.TopMost = true;
+                    bgBlur.Location = this.Location;
+                    bgBlur.StartPosition = FormStartPosition.Manual;
+                    bgBlur.ShowInTaskbar = false;
+                    bgBlur.Show();
 
-                    Form bgBlur = new Form();
                     using (upgradeFORM displayUpgrade = new upgradeFORM(accountTypeStr)) {
-                        bgBlur.StartPosition = FormStartPosition.Manual;
-                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                        bgBlur.Opacity = .24d;
-                        bgBlur.BackColor = Color.Black;
-                        bgBlur.Name = "bgBlurForm";
-                        bgBlur.WindowState = FormWindowState.Maximized;
-                        bgBlur.TopMost = true;
-                        bgBlur.Location = this.Location;
-                        bgBlur.StartPosition = FormStartPosition.Manual;
-                        bgBlur.ShowInTaskbar = false;
-                        bgBlur.Show();
-
                         displayUpgrade.Owner = bgBlur;
                         displayUpgrade.ShowDialog();
-
-                        bgBlur.Dispose();
-                    };
-
-                } else {
-
-                    List<string> filePathList = new List<string>();
-                    foreach (string file in files) {
-                        string getFilepath = Path.GetFullPath(file);
-                        filePathList.Add(getFilepath);
                     }
-
-                    DragDropHandleFiles(filePathList.ToArray());
-
-                }
+                };
+            }
+            else {
+                DragDropHandleFiles(files);
             }
         }
 
         private void DragDropHandleFiles(string[] files) {
 
-            List<string> filePathList = new List<string>();
-            foreach (string file in files) {
-                filePathList.Add(file);
-            }
+            List<string> filePathList = new List<string>(files);
 
             varDate = DateTime.Now.ToString("dd/MM/yyyy");
-
-            int curFilesCount = flowLayoutPanel1.Controls.Count;
 
             foreach (var selectedItems in filePathList) {
 

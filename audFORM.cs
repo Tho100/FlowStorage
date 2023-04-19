@@ -101,6 +101,9 @@ namespace FlowSERVER1 {
         /// <param name="_audType"></param>
         /// <param name="_getByteAud"></param>
         private async Task setupPlayer(String _audType, Byte[] _getByteAud, int startPosition = 0) {
+
+            label16.Text = $"{FileSize.fileSize(_getByteAud):F2}Mb";
+
             if (_audType == "wav") {
                 using (MemoryStream ms = new MemoryStream(_getByteAud)) {
                     SoundPlayer player = new SoundPlayer(ms);
