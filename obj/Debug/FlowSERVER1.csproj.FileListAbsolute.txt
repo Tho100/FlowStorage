@@ -1347,3 +1347,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Imaging.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Math.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AudioSubFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AudioHelp.resources

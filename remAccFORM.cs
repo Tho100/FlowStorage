@@ -393,6 +393,7 @@ namespace FlowSERVER1 {
                     if (File.Exists(_getAuth)) {
                         Directory.Delete(_getPath, true);
                     }
+
                     Application.OpenForms["remAccFORM"].Close();
                     Form1.instance.guna2Panel7.Visible = true;
                     Form1.instance.listBox1.Items.Clear();

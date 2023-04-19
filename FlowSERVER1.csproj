@@ -406,6 +406,12 @@
     <Compile Include="audFORM.Designer.cs">
       <DependentUpon>audFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="AudioHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AudioHelp.Designer.cs">
+      <DependentUpon>AudioHelp.cs</DependentUpon>
+    </Compile>
     <Compile Include="AudioSubFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -693,6 +699,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AudioHelp.resx">
+      <DependentUpon>AudioHelp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AudioSubFORM.resx">
       <DependentUpon>AudioSubFORM.cs</DependentUpon>

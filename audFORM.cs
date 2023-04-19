@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Text.RegularExpressions;
+using Stripe.Terminal;
+using System.Timers;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
@@ -22,8 +24,11 @@ namespace FlowSERVER1 {
         private static String _DirName = "";
         private static audFORM instance;
         private static bool isFromShared;
-        private static bool IsFromSharing; 
+        private static bool IsFromSharing;
 
+        private System.Windows.Forms.Timer _timer;
+        private TimeSpan _elapsedTime;
+        private static Mp3FileReader _NReader;
         public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
@@ -162,13 +167,46 @@ namespace FlowSERVER1 {
         private void mp3ToWav(Byte[] _mp3ByteIn) {
 
             Stream _setupStream = new MemoryStream(_mp3ByteIn);
-            var _NReader = new NAudio.Wave.Mp3FileReader(_setupStream);
+            _NReader = new NAudio.Wave.Mp3FileReader(_setupStream);
+
+            double getDurationSeconds = _NReader.TotalTime.TotalSeconds;
+            int minutes = (int)(getDurationSeconds / 60);
+            int seconds = (int)(getDurationSeconds % 60);
+            label8.Text = $"{minutes}:{seconds}";
+
             var _setupWaveOut = new WaveOut();
             _setupWaveOut.Init(_NReader);
             _setupWaveOut.Play();
             _mp3WaveOut = _setupWaveOut;
 
+            _timer = new System.Windows.Forms.Timer();
+            _timer.Interval = 1000; 
+            _timer.Tick += new EventHandler(timer_Tick);
+            _timer.Start();
+
+            // Show this form to start timer 
+            AudioHelp breakFixedValue = new AudioHelp();
+            breakFixedValue.ShowDialog();
+
+            if(Application.OpenForms["AudioHelp"] != null) {
+                Application.OpenForms["AudioHelp"].Close();
+            }
+
+            Application.OpenForms
+            .OfType<Form>()
+            .Where(form => String.Equals(form.Name, "AudioHelp"))
+            .ToList()
+            .ForEach(form => form.Close());
         }
+
+        private void timer_Tick(object sender, EventArgs e) {
+            _elapsedTime = _elapsedTime.Add(TimeSpan.FromSeconds(1));
+            var remainingTime = _NReader.TotalTime.Subtract(_elapsedTime);
+            int minutes = remainingTime.Minutes;
+            int seconds = remainingTime.Seconds;
+            label4.Text = $"{minutes}:{seconds}";
+        }
+
 
         /// <summary>
         /// 
@@ -260,25 +298,31 @@ namespace FlowSERVER1 {
         private void guna2Button8_Click(object sender, EventArgs e) {
 
             this.WindowState = FormWindowState.Minimized;
+             
+            if(_getSoundPlayer != null || _NReader != null) {
 
-            if (!IsSubFormOpened) {
+                if (!IsSubFormOpened) {
 
-                IsSubFormOpened = true;
+                    IsSubFormOpened = true;
 
-                AudioSubFORM subForm = new AudioSubFORM(label1.Text);
-                subForm.FormClosed += (s, args) => IsSubFormOpened = false;
-                subForm.Show();
+                    AudioSubFORM subForm = new AudioSubFORM(label1.Text);
+                    subForm.FormClosed += (s, args) => IsSubFormOpened = false;
+                    subForm.Show();
+                }
             }
 
             if (_TabName == "upload_info_directory") {
+
                 Application.OpenForms
                     .OfType<Form>()
                     .Where(form => form.Name == "" || form.Name == "Form3")
                     .ToList()
                     .ForEach(form => form.Hide());
+
                 this.TopMost = false;
             }
             else {
+
                 Application.OpenForms
                     .OfType<Form>()
                     .Where(form => form.Name == "bgBlurForm")
@@ -301,6 +345,10 @@ namespace FlowSERVER1 {
             //int position = guna2TrackBar1.Value;
             //_getSoundPlayer.Stop(); // Stop the current playing audio
             //setupPlayer(_audType, _getByteAud, position);
+        }
+
+        private void label4_Click(object sender, EventArgs e) {
+
         }
     }
 }
