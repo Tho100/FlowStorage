@@ -683,6 +683,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Untitled__80_ {
+            get {
+                object obj = ResourceManager.GetObject("Untitled (80)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Untitled__82_1 {
             get {
                 object obj = ResourceManager.GetObject("Untitled (82)1", resourceCulture);

@@ -110,6 +110,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AudioSubFORM";
+            this.ShowInTaskbar = false;
             this.TopMost = true;
             this.Load += new System.EventHandler(this.AudioSubFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
