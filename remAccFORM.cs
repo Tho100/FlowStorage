@@ -47,13 +47,15 @@ namespace FlowSERVER1 {
         private string JoinedDate = "";
 
         public remAccFORM(String _accName,String _emailAddr) {
+
             InitializeComponent();
 
             instance = this;
             label5.Text = _accName;
-  
+
             int indexOfAllias = _emailAddr.IndexOf("@");
-            label76.Text = _emailAddr.Substring(0, 1) + new String('*', indexOfAllias - 2) + _emailAddr.Substring(indexOfAllias - 1);
+            string maskedEmail = _emailAddr.Substring(0, 1) + new String('*', indexOfAllias - 2) + _emailAddr.Substring(indexOfAllias - 1);
+            label76.Text = maskedEmail;
 
             foreach (var axis in chart1.ChartAreas[0].Axes) {
                 axis.MajorGrid.Enabled = false;
@@ -63,25 +65,30 @@ namespace FlowSERVER1 {
             ToolTip ToolTip1 = new ToolTip();
             ToolTip1.SetToolTip(guna2Button11, "Item upload indicate how many file/directory you can upload.");
 
+            initializeSettingsAsync();
+        }
+
+        private async void initializeSettingsAsync() {
+
             try {
 
-                getCurrentLang();
+                await getCurrentLang();
                 setupUILanguage(CurrentLang);
                 setupRedundane(label6.Text);
-                GetAccountType();
-                countTotalAll();
+                await GetAccountType();
+                await countTotalAll();
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
                 string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_gif", "info_word", "info_ptx", "info_audi", "info_excel" };
                 string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "GIF", "Document", "Presentation", "Audio", "Excel" };
                 foreach ((string tableName, string chartName) in tableNames.Zip(chartTypes, (a, b) => (a, b))) {
-                    generateChart(chartName, "file_" + tableName.ToLower());
-                    TotalUploadFileTodayCount("file_" + tableName.ToLower());
-                    TotalUploadFile("file_" + tableName.ToLower());
+                    await generateChart(chartName, "file_" + tableName.ToLower());
+                    await TotalUploadFileTodayCount("file_" + tableName.ToLower());
+                    await TotalUploadFile("file_" + tableName.ToLower());
                 }
 
-                TotalUploadDirectoryTodayCount();
+                await TotalUploadDirectoryTodayCount();
 
                 int _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
                 label26.Text = _totalUploadTodayCount.ToString();
@@ -89,7 +96,8 @@ namespace FlowSERVER1 {
                 int _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
                 label12.Text = _totalUploadOvertime.ToString();
 
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 using (var bgBlur = new Form {
                     StartPosition = FormStartPosition.Manual,
                     FormBorderStyle = FormBorderStyle.None,
@@ -128,12 +136,12 @@ namespace FlowSERVER1 {
         /// they have uploaded (in total)
         /// </summary>
         /// <param name="_tableName"></param>
-        private void TotalUploadFile(String _tableName) {
+        private async Task TotalUploadFile(String _tableName) {
             String countQuery = $"SELECT COUNT(*) FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countQuery, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
-                int totalCount = Convert.ToInt32(command.ExecuteScalar());
+                int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
                 _TotalUploadOvertime.Add(totalCount);
             }
         }
@@ -143,14 +151,14 @@ namespace FlowSERVER1 {
         /// files they've uploaded a day
         /// </summary>
         /// <param name="_TableName"></param>
-        private void TotalUploadFileTodayCount(String _TableName) {
+        private async Task TotalUploadFileTodayCount(String _TableName) {
             String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
             String queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@date", currentDate);
 
-                int totalCount = Convert.ToInt32(command.ExecuteScalar());
+                int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
                 _TotalUploadToday.Add(totalCount);
             }
         }
@@ -159,7 +167,7 @@ namespace FlowSERVER1 {
         /// This function will tells user the number
         /// of directory they have created a day
         /// </summary>
-        private async void TotalUploadDirectoryTodayCount() {
+        private async Task TotalUploadDirectoryTodayCount() {
             String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
             String querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
@@ -177,14 +185,14 @@ namespace FlowSERVER1 {
             label30.Text = distinctDirCount.ToString();
         }
 
-        private void GetAccountType() {
+        private async Task GetAccountType() {
 
             String accountType = "";
             String querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
-                accountType = Convert.ToString(command.ExecuteScalar());
+                accountType = Convert.ToString(await command.ExecuteScalarAsync());
                 label6.Text = accountType;
             }
 
@@ -272,12 +280,12 @@ namespace FlowSERVER1 {
                 guna2Button7.Enabled = false;
             }
         }
-        public void countTotalAll() {
+        private async Task countTotalAll() {
 
             String countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
-                int totalDir = Convert.ToInt32(command.ExecuteScalar());
+                int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
                 label19.Text = totalDir.ToString();
             }
 
@@ -285,7 +293,7 @@ namespace FlowSERVER1 {
             label20.Text = countTotalFolders.ToString();
         }
 
-        
+
         /// <summary>
         /// This will generates statistical chart
         /// that tells user how many files they've
@@ -294,26 +302,20 @@ namespace FlowSERVER1 {
         /// <param name="_serName"></param>
         /// <param name="_tableName"></param>
 
-        private async void generateChart(String _serName, String _tableName) {
-
-            List<int> totalRows = new List<int>();
-            List<string> uploadDates = new List<string>();
-
+        private async Task generateChart(String _serName, String _tableName) {
             string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
+
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        totalRows.Add(reader.GetInt32(1));
-                        uploadDates.Add(reader.GetString(0));
+                        string date = reader.GetString(0);
+                        int count = reader.GetInt32(1);
+                        chart1.Series[_serName].Points.AddXY(date, count);
                     }
                 }
             }
-
-            for (int i = 0; i < totalRows.Count; i++) {
-                chart1.Series[_serName].Points.AddXY(uploadDates[i], totalRows[i]);
-            }
-
         }
 
         private void remAccFORM_Load(object sender, EventArgs e) {
@@ -539,18 +541,18 @@ namespace FlowSERVER1 {
                 guna2Button7.Enabled = false;
                 guna2Button5.Enabled = false;
                 guna2Button10.Visible = false;
-                label37.Text = "Limited to 1000";
+                label37.Text = "Limited to 2000";
             }
             else if (_selectedAcc == "Express") {
                 guna2Button6.Enabled = false;
                 guna2Button5.Enabled = false;
                 guna2Button9.Visible = false;
-                label37.Text = "Limited to 450";
+                label37.Text = "Limited to 1000";
             }
             else if (_selectedAcc == "Max") {
                 guna2Button5.Enabled = false;
                 guna2Button8.Visible = false;
-                label37.Text = "Limited to 99";
+                label37.Text = "Limited to 500";
             }
         }
         private static string DecryptApi(string key, string cipherText) {
@@ -1479,7 +1481,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void getCurrentLang() {
+        private async Task getCurrentLang() {
             string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
@@ -2212,7 +2214,7 @@ namespace FlowSERVER1 {
 
             if(guna2TabControl1.SelectedIndex == 2) {
                 
-                guna2TextBox2.Text = getAccessToken(label5.Text);
+                //guna2TextBox2.Text = getAccessToken(label5.Text);
 
                 if(retrieveFileSharingPas() != "DEF") {
 
