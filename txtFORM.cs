@@ -54,6 +54,10 @@ namespace FlowSERVER1 {
                 var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
 
                 if (_isShared == true) {
+
+                    guna2Button11.Visible = true;
+                    guna2Button12.Visible = true;
+
                     _getName = _UploaderUsername.Replace("Shared", "");
                     IsFromSharing = true;
                     label4.Text = "Shared To";
@@ -511,6 +515,40 @@ namespace FlowSERVER1 {
                 _saveChangesUpdate(encryptedEncoded);
             }
 
+        }
+
+        private async Task saveChangesComment(String updatedComment) {
+
+            string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            using (var command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@updatedComment", updatedComment);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                await command.ExecuteNonQueryAsync();
+            }
+
+        }
+
+        private void guna2Button11_Click(object sender, EventArgs e) {
+            guna2TextBox4.Enabled = true;
+            guna2TextBox4.Visible = true;
+            guna2Button11.Visible = false;
+            guna2Button12.Visible = true;
+            label3.Visible = false;
+            guna2TextBox4.Text = label3.Text;
+        }
+
+        private async void guna2Button12_Click(object sender, EventArgs e) {
+            if (label3.Text != guna2TextBox4.Text) {
+                await saveChangesComment(guna2TextBox4.Text);
+            }
+
+            label3.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label3.Text;
+            guna2Button11.Visible = true;
+            guna2Button12.Visible = false;
+            guna2TextBox4.Visible = false;
+            label3.Visible = true;
+            label3.Refresh();
         }
     }
 }

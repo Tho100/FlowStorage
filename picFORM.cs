@@ -398,5 +398,43 @@ namespace FlowSERVER1 {
             label8.Text = "0%";
             //guna2ToggleSwitch1.Checked = false;
         }
+
+        private void guna2VSeparator1_Click(object sender, EventArgs e) {
+
+        }
+
+        private async Task saveChangesComment(String updatedComment) {
+
+            string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            using (var command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@updatedComment", updatedComment);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                await command.ExecuteNonQueryAsync();
+            }
+
+        }
+
+        private void guna2Button9_Click(object sender, EventArgs e) {
+            guna2TextBox4.Enabled = true;
+            guna2TextBox4.Visible = true;
+            guna2Button9.Visible = false;
+            guna2Button10.Visible = true;
+            label3.Visible = false;
+            guna2TextBox4.Text = label3.Text;
+        }
+
+        private async void guna2Button10_Click(object sender, EventArgs e) {
+            if (label3.Text != guna2TextBox4.Text) {
+                await saveChangesComment(guna2TextBox4.Text);
+            }
+
+            label3.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label3.Text;
+            guna2Button9.Visible = true;
+            guna2Button10.Visible = false;
+            guna2TextBox4.Visible = false;
+            label3.Visible = true;
+            label3.Refresh();
+        }
     }
 }

@@ -264,9 +264,6 @@ namespace FlowSERVER1 {
 
             if (_accType != _countReceiverFile) {
 
-                Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, guna2TextBox1.Text, _fileSize: fileSizeInMB).ShowDialog());
-                showUploadAlert.Start();
-
                 async Task startSending(Object setValue, Object thumbnailValue = null) {
 
                     using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
@@ -280,19 +277,11 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
                         await command.ExecuteNonQueryAsync();
-
-                        var uploadAlertFormSucceededCase0 = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-                        uploadAlertFormSucceededCase0?.Close();
                     }
 
-                    var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-                    uploadAlertFormSucceeded?.Close();
 
                     sucessShare _showSuccessfullyTransaction = new sucessShare(_FileName, guna2TextBox1.Text);
                     _showSuccessfullyTransaction.Show();
-
-                    var uploadAlertFormSucceededCase1 = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-                    uploadAlertFormSucceededCase1?.Close();
 
                 }
 

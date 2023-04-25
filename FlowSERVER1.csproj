@@ -656,6 +656,12 @@
     <Compile Include="txtFORM.Designer.cs">
       <DependentUpon>txtFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="UnknownFileFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UnknownFileFORM.Designer.cs">
+      <DependentUpon>UnknownFileFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="upgradeFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -833,6 +839,9 @@
     <EmbeddedResource Include="txtFORM.resx">
       <DependentUpon>txtFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UnknownFileFORM.resx">
+      <DependentUpon>UnknownFileFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="upgradeFORM.resx">
       <DependentUpon>upgradeFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -873,6 +882,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-done-26.png" />
     <None Include="Resources\Untitled %2880%29.png" />
     <None Include="Resources\Group 1.png" />
     <None Include="Resources\icons8-edit-48.png" />

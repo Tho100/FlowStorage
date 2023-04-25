@@ -1961,6 +1961,11 @@ namespace FlowSERVER1 {
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                                 createPanelMain("file_info_word", "PanDoc", docxCurr, encryptText);
+
+                            } else {
+
+                                UnknownFileFORM unsupportedFileFormartForm = new UnknownFileFORM(getName);
+                                unsupportedFileFormartForm.Show();
                             }
 
                             Application.OpenForms

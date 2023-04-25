@@ -38,6 +38,10 @@ namespace FlowSERVER1 {
             IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
+
+                guna2Button3.Visible = true;
+                guna2Button9.Visible = true;
+
                 _getName = _UploaderUsername.Replace("Shared", "");
                 label6.Text = "Shared To";
                 guna2Button5.Visible = false;
@@ -124,5 +128,40 @@ namespace FlowSERVER1 {
             shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
             _showSharingFileFORM.Show();
         }
+
+        private async Task saveChangesComment(String updatedComment) {
+
+            string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            using (var command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@updatedComment", updatedComment);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                await command.ExecuteNonQueryAsync();
+            }
+
+        }
+
+        private void guna2Button3_Click(object sender, EventArgs e) {
+            guna2TextBox4.Enabled = true;
+            guna2TextBox4.Visible = true;
+            guna2Button3.Visible = false;
+            guna2Button9.Visible = true;
+            label3.Visible = false;
+            guna2TextBox4.Text = label3.Text;
+        }
+
+        private async void guna2Button9_Click(object sender, EventArgs e) {
+            if (label3.Text != guna2TextBox4.Text) {
+                await saveChangesComment(guna2TextBox4.Text);
+            }
+
+            label3.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label3.Text;
+            guna2Button3.Visible = true;
+            guna2Button9.Visible = false;
+            guna2TextBox4.Visible = false;
+            label3.Visible = true;
+            label3.Refresh();
+        }
+
     }
 }

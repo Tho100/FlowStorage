@@ -48,6 +48,10 @@ namespace FlowSERVER1 {
             IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
+
+                guna2Button11.Visible = true;
+                guna2Button12.Visible = true;
+
                 _getName = _UploaderName.Replace("Shared", "");
                 label5.Text = "Shared To";
                 guna2Button7.Visible = false;
@@ -272,10 +276,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button6_Click(object sender, EventArgs e) {
-
-        }
-
         /// <summary>
         /// 
         /// Pause the video if _mp is not null and set play
@@ -365,6 +365,44 @@ namespace FlowSERVER1 {
             _mp.Play();
             guna2Button10.Visible = false;
             guna2Button6.Visible = true;
+        }
+
+        private async Task saveChangesComment(String updatedComment) {
+
+            string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            using (var command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@updatedComment", updatedComment);
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                await command.ExecuteNonQueryAsync();
+            }
+
+        }
+
+        private void guna2Button11_Click(object sender, EventArgs e) {
+            guna2TextBox4.Enabled = true;
+            guna2TextBox4.Visible = true;
+            guna2Button11.Visible = false;
+            guna2Button12.Visible = true;
+            label4.Visible = false;
+            guna2TextBox4.Text = label4.Text;
+        }
+
+        private async void guna2Button12_Click(object sender, EventArgs e) {
+            if (label4.Text != guna2TextBox4.Text) {
+                await saveChangesComment(guna2TextBox4.Text);
+            }
+
+            label4.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label4.Text;
+            guna2Button11.Visible = true;
+            guna2Button12.Visible = false;
+            guna2TextBox4.Visible = false;
+            label4.Visible = true;
+            label4.Refresh();
+        }
+
+        private void label7_Click(object sender, EventArgs e) {
+
         }
     }
 }
