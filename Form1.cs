@@ -2402,9 +2402,8 @@ namespace FlowSERVER1 {
                     label5.Text = _getUser;
                     label24.Text = _getEmail;
 
-                    var _setupTok = RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12);
+                    var _setupTok = (RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12)).ToLower();
                     var _removeSpaces = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
-                    var _encryptTok = EncryptionModel.Encrypt(_removeSpaces, "0123456789085746");
                     string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
                     using (var transaction = con.BeginTransaction()) {
@@ -2413,14 +2412,14 @@ namespace FlowSERVER1 {
 
                             MySqlCommand command = con.CreateCommand();
 
-                            command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,ACCESS_TOK)
-                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@ACCESS_TOK)";
+                            command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK)
+                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK)";
                             command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                            command.Parameters.AddWithValue("@CUST_PASSWORD", computeAuthCase(_getPass));
+                            command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(_getPass));
                             command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
                             command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                            command.Parameters.AddWithValue("@CUST_PIN", computeAuthCase(_getPin));
-                            command.Parameters.AddWithValue("@ACCESS_TOK", _encryptTok);
+                            command.Parameters.AddWithValue("@CUST_PIN", EncryptionModel.computeAuthCase(_getPin));
+                            command.Parameters.AddWithValue("@RECOV_TOK", EncryptionModel.computeAuthCase(_setupTok));
                             command.ExecuteNonQuery();
 
                             command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
@@ -2479,18 +2478,6 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-        
-        private string computeAuthCase(string inputStr) {
-
-            SHA256 sha256 = SHA256.Create();
-
-            string _getAuthStrCase0 = inputStr;
-            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
-            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
-            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
-
-            return _authStrCase0;
         }
 
         /// <summary>

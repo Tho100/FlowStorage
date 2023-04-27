@@ -1308,13 +1308,17 @@ namespace FlowSERVER1 {
 
             emailValidate _showPasswordRecovery = new emailValidate();
             _showPasswordRecovery.Show();
-
+            
             this.Close();
 
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e) {
 
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            this.Close();
         }
     }
 }

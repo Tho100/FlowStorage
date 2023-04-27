@@ -68,6 +68,18 @@ namespace FlowSERVER1 {
             return toBase64;
 
         }
-        
+
+        static public string computeAuthCase(string inputStr) {
+
+            SHA256 sha256 = SHA256.Create();
+
+            string _getAuthStrCase0 = inputStr;
+            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
+            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
+            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
+
+            return _authStrCase0;
+        }
+
     }
 }

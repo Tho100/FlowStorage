@@ -571,6 +571,12 @@
     <Compile Include="ptxFORM.Designer.cs">
       <DependentUpon>ptxFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="RecovFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecovFORM.Designer.cs">
+      <DependentUpon>RecovFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="remAccFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -795,6 +801,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ptxFORM.resx">
       <DependentUpon>ptxFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecovFORM.resx">
+      <DependentUpon>RecovFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>

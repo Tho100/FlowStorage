@@ -2356,5 +2356,15 @@ namespace FlowSERVER1 {
         private void label22_Click(object sender, EventArgs e) {
 
         }
+
+        private void guna2Button32_Click(object sender, EventArgs e) {
+            RecovFORM showRecoveryForm = new RecovFORM();
+            showRecoveryForm.Show();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            RecovFORM showRecoveryForm = new RecovFORM();
+            showRecoveryForm.Show();
+        }
     }
 }
