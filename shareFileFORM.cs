@@ -273,7 +273,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                         command.Parameters.AddWithValue("@CUST_FILE", setValue);
                         command.Parameters.AddWithValue("@FILE_EXT", _FileExt);
-                        command.Parameters.AddWithValue("@CUST_COMMENT", guna2TextBox4.Text);
+                        command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(guna2TextBox4.Text));
                         command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
                         await command.ExecuteNonQueryAsync();

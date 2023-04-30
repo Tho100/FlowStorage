@@ -18,6 +18,7 @@ namespace FlowSERVER1 {
 
         private bool IsDragging {get; set; } = false;
         private bool IsVisibleFilterPanel {get; set; } = false;
+        private bool ImageisRotated {get; set; } = false;
         private Point dragStartPosition {get; set; }
         private Image defaultImage {get; set; } 
         private Bitmap filteredImage {get; set; }
@@ -89,7 +90,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
                 using(MySqlDataReader readerComment = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while(await readerComment.ReadAsync()) {
-                        returnComment = readerComment.GetString(0);
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
                 }
             }
@@ -102,7 +103,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (await readerComment.ReadAsync()) {
-                        returnComment = readerComment.GetString(0);
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
                 }
             }
@@ -276,6 +277,9 @@ namespace FlowSERVER1 {
             filter.ApplyInPlace(filteredImage);
         }
 
+
+        int rotateValue = 0;
+        Bitmap rotatedImage;
         private void applyFilters() {
 
             guna2Button7.Visible = true;
@@ -284,7 +288,6 @@ namespace FlowSERVER1 {
             try {
 
                 filteredImage = new Bitmap(defaultImage);
-
 
                 if (isGrayed) {
                     filterGrayscale();
@@ -302,6 +305,7 @@ namespace FlowSERVER1 {
                     filterSaturation(saturationValue);
                 }
 
+           
                 guna2PictureBox1.Image = filteredImage;
 
             } catch (Exception) {
@@ -435,6 +439,36 @@ namespace FlowSERVER1 {
             guna2TextBox4.Visible = false;
             label3.Visible = true;
             label3.Refresh();
+        }
+
+        private void guna2Button11_Click(object sender, EventArgs e) {
+            rotateValue += 90;
+
+            // Reset the rotation angle to 0 after it reaches 360 degrees
+            if (rotateValue >= 360) {
+                rotateValue = 0;
+                guna2PictureBox1.Image = filteredImage; // reset image
+            }
+            else {
+                // Create a new Bitmap object with the rotated dimensions
+                if (rotatedImage == null) {
+                    rotatedImage = new Bitmap(filteredImage.Height, filteredImage.Width);
+                }
+
+                // Create a Graphics object from the rotated image
+                using (Graphics g = Graphics.FromImage(rotatedImage)) {
+                    // Rotate the image by the current rotation angle
+                    g.Clear(Color.Transparent);
+                    g.RotateTransform(rotateValue);
+
+                    // Draw the original image onto the rotated image, adjusting for the new dimensions
+                    g.DrawImage(filteredImage, new Rectangle(0, -filteredImage.Height, filteredImage.Width, filteredImage.Height));
+
+                    // Set the PictureBox control's Image property to the rotated image
+                    guna2PictureBox1.Image = rotatedImage;
+                }
+            }
+            applyFilters();
         }
     }
 }

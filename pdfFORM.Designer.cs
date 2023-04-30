@@ -156,6 +156,7 @@
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(726, 10);
             this.guna2Separator1.TabIndex = 59;
+            this.guna2Separator1.Click += new System.EventHandler(this.guna2Separator1_Click);
             // 
             // guna2Separator2
             // 

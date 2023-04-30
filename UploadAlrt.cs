@@ -6,6 +6,7 @@ using System.Threading;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Drawing;
 
 namespace FlowSERVER1 {
 
@@ -34,6 +35,10 @@ namespace FlowSERVER1 {
         private static String FileName;
         private static String DirectoryName;
         private static String FileExt;
+
+        private System.Windows.Forms.Timer timer;
+        private int progressValue = 0;
+
         public UploadAlrt(String _fileName,String _uploaderName,String _tableName,String _controlName,String _dirName, long _fileSize = 0) {
             InitializeComponent();
             instance = this;
@@ -44,7 +49,6 @@ namespace FlowSERVER1 {
             FileName = _fileName;
             DirectoryName = _dirName;
             FileExt = _fileName.Substring(_fileName.Length-3);
-            guna2TextBox1.Text = label1.Text;
 
             if(_fileSize != 101) {
                 label3.Text = _fileSize.ToString() + "MB";
@@ -52,9 +56,32 @@ namespace FlowSERVER1 {
             } else {
                 label3.Visible = false;
             }
+
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = 5;
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e) {
+            // Update the progress bar value
+            guna2ProgressBar1.Value = progressValue;
+
+            // Increment the progress value
+            progressValue++;
+            if (progressValue > guna2ProgressBar1.Maximum) {
+                progressValue = 0; // Reset the progress value when it reaches the maximum
+            }
         }
 
         private void UploadAlrt_Load(object sender, EventArgs e) {
+
+            Rectangle screenBounds = Screen.GetBounds(this);
+
+            int x = screenBounds.Right - this.Width - 10;
+            int y = screenBounds.Bottom - this.Height - 45;
+            this.Location = new Point(x, y);
 
         }
         /// <summary>
@@ -117,7 +144,6 @@ namespace FlowSERVER1 {
 
             try {
 
-                label9.Text = "Cancelling Operation...";
                 if(con.State == System.Data.ConnectionState.Open) {
 
                     // @ Close connection before turning it back on for file deletion
@@ -312,6 +338,18 @@ namespace FlowSERVER1 {
         }
 
         private void label3_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e) {
 
         }
     }

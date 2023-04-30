@@ -76,7 +76,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
-                        returnComment = readerComment.GetString(0);
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
                 }
             }
@@ -90,7 +90,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
-                        returnComment = readerComment.GetString(0);
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
                 }
             }

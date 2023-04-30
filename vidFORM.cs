@@ -75,7 +75,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
-                        returnComment = readerComment.GetString(0);
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
                 }
             }
@@ -89,7 +89,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
-                        returnComment = readerComment.GetString(0);
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
                 }
             }
@@ -320,11 +320,18 @@ namespace FlowSERVER1 {
 
         }
 
+
+        /// <summary>
+        /// 
+        /// Apply seek-part of a video
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
-            if (_mp != null) {
-                float percentage = guna2TrackBar1.Value / 100f;
-                long position = (long)(_mp.Length * percentage);
-                _mp.Position = position;
+            if (_mp != null && _mp.IsPlaying) {
+                long newPosition = (long)(_mp.Length * guna2TrackBar1.Value / 100.0);
+                _mp.Time = newPosition;
             }
         }
 

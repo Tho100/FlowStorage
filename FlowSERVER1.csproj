@@ -891,6 +891,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\download_ico.png" />
     <None Include="Resources\icons8-done-26.png" />
     <None Include="Resources\Untitled %2880%29.png" />
     <None Include="Resources\Group 1.png" />
