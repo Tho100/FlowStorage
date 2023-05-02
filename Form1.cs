@@ -354,8 +354,9 @@ namespace FlowSERVER1 {
                     Name = $"{parameterName + i}",
                     Width = 240,
                     Height = 262,
+                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    BorderThickness = 1,
                     BorderRadius = 8,
-                    FillColor = ColorTranslator.FromHtml("#121212"),
                     BackColor = Color.Transparent,
                     Location = new Point(600, top)
                 };
@@ -390,10 +391,16 @@ namespace FlowSERVER1 {
                 panelF.Controls.Add(picMain_Q);
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                picMain_Q.BorderRadius = 6;
-                picMain_Q.Width = 241;
+                picMain_Q.BorderRadius = 8;
+                picMain_Q.Width = 226;
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
+
+                picMain_Q.Anchor = AnchorStyles.None;
+
+                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+
+                picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
                     panelF.ShadowDecoration.Enabled = true;
@@ -486,24 +493,45 @@ namespace FlowSERVER1 {
                         }
                     }*/
 
-                   List<string> base64Encoded = new List<string>();
+                    List<string> base64Encoded = new List<string>();
 
                     string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
+                                string base64String = EncryptionModel.Decrypt(readBase64.GetString(0), "0123456789085746");
+                                base64Encoded.Add(base64String);
                             }
                         }
                     }
-              
+
                     if (base64Encoded.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
                             img.Image = Image.FromStream(toMs);
                         }
                     }
+
+                    /*List<string> base64Encoded = new List<string>();
+
+                     string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                             while (await readBase64.ReadAsync()) {
+                                 base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
+                             }
+                         }
+                     }
+
+
+                     if (base64Encoded.Count > i) {
+                         byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                             img.Image = Image.FromStream(toMs);
+                         }
+                     }*/
 
                     picMain_Q.Click += (sender, e) => {
                         var getImgName = (Guna2PictureBox)sender;
@@ -774,8 +802,9 @@ namespace FlowSERVER1 {
                         Name = $"panelf{i}",
                         Width = 240,
                         Height = 262,
+                        BorderColor = ColorTranslator.FromHtml("#212121"),
+                        BorderThickness = 1,
                         BorderRadius = 8,
-                        FillColor = ColorTranslator.FromHtml("#121212"),
                         BackColor = Color.Transparent,
                         Location = new Point(600, top)
                     };
@@ -810,10 +839,15 @@ namespace FlowSERVER1 {
                     panelF.Controls.Add(picMain_Q);
                     picMain_Q.Name = "imgf" + i;
                     picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                    picMain_Q.BorderRadius = 6;
-                    picMain_Q.Width = 241;
+                    picMain_Q.BorderRadius = 8;
+                    picMain_Q.Width = 226;
                     picMain_Q.Height = 165;
                     picMain_Q.Visible = true;
+
+                    picMain_Q.Anchor = AnchorStyles.None;
+
+                    int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+                    picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                     picMain_Q.MouseHover += (_senderM, _ev) => {
                         panelF.ShadowDecoration.Enabled = true;
@@ -873,37 +907,37 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string cacheKeySetFold = $"user_images_folder";
-                        MemoryCache cache = MemoryCache.Default;
+                        string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@foldtitle", _foldTitle);
 
-                        if (cache.Contains(cacheKeySetFold)) {
-                            base64Encoded = (List<string>)cache.Get(cacheKeySetFold);
-                        }
-                        else {
+                            string cacheKey = $"folder_{_foldTitle}_images";
+                            MemoryCache cache = MemoryCache.Default;
+                            if (cache.Contains(cacheKey)) {
+                                base64Encoded = (List<string>)cache.Get(cacheKey);
+                            } else {
 
-                            string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                                command.Parameters.AddWithValue("@username", label5.Text);
-                                command.Parameters.AddWithValue("@foldtitle", _foldTitle);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
                                     }
                                 }
+                                CacheItemPolicy cachePolicy = new CacheItemPolicy {
+                                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
+                                };
+                                cache.Add(cacheKey, base64Encoded, cachePolicy);
                             }
-
-                            CacheItemPolicy cachePolicy = new CacheItemPolicy {
-                                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30) 
-                            };
-                            cache.Add(cacheKeySetFold, base64Encoded, cachePolicy);
                         }
 
                         if (base64Encoded.Count > i) {
                             byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                img.Image = new Bitmap(toMs);
+                                Image newImage = new Bitmap(toMs);
+                                img.Image = newImage;
                             }
                         }
+
 
                         picMain_Q.Click += (sender, e) => {
                             var getImgName = (Guna2PictureBox)sender;
@@ -977,35 +1011,34 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string cacheKeyThumbnailVid = $"user_thumb_folder";
-                        MemoryCache cache = MemoryCache.Default;
+                        string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@foldername", _foldTitle);
+                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
 
-                        if (cache.Contains(cacheKeyThumbnailVid)) {
-                            base64Encoded = (List<string>)cache.Get(cacheKeyThumbnailVid);
-                        } else {
-
-                            string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                                command.Parameters.AddWithValue("@username", label5.Text);
-                                command.Parameters.AddWithValue("@foldername", _foldTitle);
-                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
-                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                            string cacheKey = $"folder_{_foldTitle}_thumb";
+                            MemoryCache cache = MemoryCache.Default;
+                            if (cache.Contains(cacheKey)) {
+                                base64Encoded = (List<string>)cache.Get(cacheKey);
+                            } else {
+                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
                                     }
                                 }
+                                CacheItemPolicy cachePolicy = new CacheItemPolicy {
+                                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
+                                };
+                                cache.Add(cacheKey, base64Encoded, cachePolicy);
                             }
-
-                            CacheItemPolicy cachePolicy = new CacheItemPolicy {
-                                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(12)
-                            };
-                            cache.Add(cacheKeyThumbnailVid, base64Encoded, cachePolicy);
                         }
 
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
                             img.Image = new Bitmap(toMs);
                         }
+
 
                         img.Click += (sender_vid, e_vid) => {
                             var getImgName = (Guna2PictureBox)sender_vid;
@@ -1175,14 +1208,10 @@ namespace FlowSERVER1 {
             var form = Form1.instance;
             var lab1 = form.label1;
             var lab5 = form.label5;
-            var picturebox2 = form.pictureBox2;
-            var picturebox3 = form.pictureBox3;
-            var picturebox1 = form.pictureBox1;
 
             DateTime now = DateTime.Now;
             var hours = now.Hour;
             String greeting = "Good Night " + label5.Text;
-            picturebox1.Visible = true;
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {
                     greeting = "Good Morning, " + lab5.Text;
@@ -1215,9 +1244,6 @@ namespace FlowSERVER1 {
                     greeting = "Goedemorgen " + lab5.Text + " :)";
                 }
 
-                picturebox2.Visible = true;
-                picturebox1.Visible = false;
-                picturebox3.Visible = false;
             }
 
             else if (hours >= 12 && hours <= 16) {
@@ -1251,10 +1277,6 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "DUT") {
                     greeting = "Goedemiddag " + lab5.Text + " :)";
                 }
-
-                picturebox2.Visible = true;
-                picturebox1.Visible = false;
-                picturebox3.Visible = false;
             }
             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
@@ -1323,9 +1345,6 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                picturebox3.Visible = true;
-                picturebox2.Visible = false;
-                picturebox1.Visible = false;
             }
             else if (hours >= 21 && hours <= 24) {
                 if (CurrentLang == "US") {
@@ -1359,10 +1378,8 @@ namespace FlowSERVER1 {
                     greeting = "Welterusten " + lab5.Text + " :)";
                 }
 
-                picturebox1.Visible = true;
-                picturebox2.Visible = false;
-                picturebox3.Visible = false;
             }
+
             lab1.Text = greeting;
         }
 
@@ -1577,8 +1594,9 @@ namespace FlowSERVER1 {
                                     Name = panName + itemCurr,
                                     Width = 240,
                                     Height = 262,
+                                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                                    BorderThickness = 1,
                                     BorderRadius = 8,
-                                    FillColor = ColorTranslator.FromHtml("#121212"),
                                     BackColor = Color.Transparent,
                                     Location = new Point(600, top)
                                 };
@@ -1590,12 +1608,17 @@ namespace FlowSERVER1 {
                                 var textboxPic = new Guna2PictureBox();
                                 mainPanelTxt.Controls.Add(textboxPic);
                                 textboxPic.Name = "TxtBox" + itemCurr;
-                                textboxPic.Width = 240;
-                                textboxPic.Height = 164;
+                                textboxPic.Width = 226;
+                                textboxPic.Height = 165;
                                 textboxPic.BorderRadius = 8;
                                 textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
                                 textboxPic.Enabled = true;
                                 textboxPic.Visible = true;
+
+                                textboxPic.Anchor = AnchorStyles.None;
+
+                                int textboxPic_x = (mainPanelTxt.Width - textboxPic.Width) / 2;
+                                textboxPic.Location = new Point(textboxPic_x, 10);
 
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
@@ -2625,8 +2648,9 @@ namespace FlowSERVER1 {
                     Name = $"PanExlFold{_IntCurr}",
                     Width = 240,
                     Height = 262,
+                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    BorderThickness = 1,
                     BorderRadius = 8,
-                    FillColor = ColorTranslator.FromHtml("#121212"),
                     BackColor = Color.Transparent,
                     Location = new Point(600, top)
                 };
@@ -2651,13 +2675,19 @@ namespace FlowSERVER1 {
                 var textboxExl = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxExl);
                 textboxExl.Name = $"ExeExlFold{_IntCurr}";
-                textboxExl.Width = 240;
-                textboxExl.Height = 164;
+                textboxExl.Width = 165; ;
+                textboxExl.Height = 165;
                 textboxExl.FillColor = ColorTranslator.FromHtml("#232323");
                 textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
                 textboxExl.BorderRadius = 8;
                 textboxExl.Enabled = true;
                 textboxExl.Visible = true;
+
+                textboxExl.Anchor = AnchorStyles.None;
+
+                int picMain_Q_x = (mainPanelTxt.Width - textboxExl.Width) / 2;
+
+                textboxExl.Location = new Point(picMain_Q_x, 10);
 
                 textboxExl.Click += (sender_w, ev_w) => {
 
@@ -3210,6 +3240,7 @@ namespace FlowSERVER1 {
 
                     guna2Button19.Visible = false;
                     guna2Button4.Visible = false;
+                    guna2Button3.Visible = false;
                     guna2Button8.Visible = true;
                     flowLayoutPanel1.Controls.Clear();
 
@@ -3221,7 +3252,9 @@ namespace FlowSERVER1 {
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
 
                     guna2Button19.Visible = true;
+                    guna2Button3.Visible = true;
                     guna2Button8.Visible = false;
+                    guna2Panel4.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
 
@@ -3252,6 +3285,7 @@ namespace FlowSERVER1 {
                 } else if (_selectedIndex == 1) {
 
                     guna2Button4.Visible = true;
+                    guna2Button3.Visible = false;
                     guna2Button8.Visible = false;
                     guna2Button19.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
@@ -3270,6 +3304,7 @@ namespace FlowSERVER1 {
                     guna2Button4.Visible = true;
                     guna2Button8.Visible = false;
                     guna2Button19.Visible = false;
+                    guna2Button3.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
@@ -4278,8 +4313,9 @@ namespace FlowSERVER1 {
                     Name = "ABC02" + i,
                     Width = 240,
                     Height = 262,
+                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    BorderThickness = 1,
                     BorderRadius = 8,
-                    FillColor = ColorTranslator.FromHtml("#121212"),
                     BackColor = Color.Transparent,
                     Location = new Point(600, top)
                 };
@@ -4316,10 +4352,15 @@ namespace FlowSERVER1 {
                 panelF.Controls.Add(picMain_Q);
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                picMain_Q.BorderRadius = 6;
-                picMain_Q.Width = 241;
+                picMain_Q.BorderRadius = 8;
+                picMain_Q.Width = 226;
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
+
+                picMain_Q.Anchor = AnchorStyles.None;
+
+                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+                picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
                     panelF.ShadowDecoration.Enabled = true;
@@ -6284,6 +6325,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button9_Click_1(object sender, EventArgs e) {
+            guna2Panel4.Visible = true;
             guna2Button9.FillColor = Color.FromArgb(255,71, 19, 191);
             guna2Button13.FillColor = Color.Transparent;
             panel3.SendToBack();
@@ -6295,6 +6337,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button13_Click(object sender, EventArgs e) {
+            guna2Panel4.Visible = false;
             guna2Button13.FillColor = Color.FromArgb(255, 71, 19, 191);
             guna2Button9.FillColor = Color.Transparent;
             panel1.SendToBack();
@@ -6971,6 +7014,12 @@ namespace FlowSERVER1 {
 
             }
             
+        }
+
+        private void guna2Button3_Click_1(object sender, EventArgs e) {
+
+            renameFoldFORM renameFolderForm = new renameFoldFORM(listBox1.GetItemText(listBox1.SelectedItem));
+            renameFolderForm.Show();
         }
     }
 }

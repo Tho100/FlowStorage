@@ -54,8 +54,9 @@ namespace FlowSERVER1
                     Name = "DirPan" + currMain,
                     Width = 240,
                     Height = 262,
+                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    BorderThickness = 1,
                     BorderRadius = 8,
-                    FillColor = ColorTranslator.FromHtml("#121212"),
                     BackColor = Color.Transparent,
                     Location = new Point(600, top)
                 };
@@ -93,10 +94,15 @@ namespace FlowSERVER1
                 picBanner.Image = FlowSERVER1.Properties.Resources.DirIcon;
                 picBanner.SizeMode = PictureBoxSizeMode.CenterImage;
                 picBanner.BorderRadius = 8;
-                picBanner.Width = 240;
-                picBanner.Height = 164;
+                picBanner.Width = 226;
+                picBanner.Height = 165;
                 picBanner.Visible = true;
                 picBanner.Enabled = true;
+
+                picBanner.Anchor = AnchorStyles.None;
+
+                int picMain_Q_x = (panel.Width - picBanner.Width) / 2;
+                picBanner.Location = new Point(picMain_Q_x, 10);
 
                 picBanner.MouseHover += (_senderM, _ev) => {
                     panel.ShadowDecoration.Enabled = true;

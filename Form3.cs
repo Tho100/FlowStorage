@@ -163,8 +163,9 @@ namespace FlowSERVER1
                     Name = parameterName + i,
                     Width = 240,
                     Height = 262,
+                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    BorderThickness = 1,
                     BorderRadius = 8,
-                    FillColor = ColorTranslator.FromHtml("#121212"),
                     BackColor = Color.Transparent,
                     Location = new Point(600, top)
                 };
@@ -199,10 +200,16 @@ namespace FlowSERVER1
                 panelF.Controls.Add(picMain_Q);
                 picMain_Q.Name = $"ImgG{i}";
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                picMain_Q.BorderRadius = 6;
-                picMain_Q.Width = 241;
+                picMain_Q.BorderRadius = 8;
+                picMain_Q.Width = 226;
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
+
+                picMain_Q.Anchor = AnchorStyles.None;
+
+                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+
+                picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
                     panelF.ShadowDecoration.Enabled = true;
@@ -705,8 +712,9 @@ namespace FlowSERVER1
                                     Name = panName + itemCurr,
                                     Width = 240,
                                     Height = 262,
+                                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                                    BorderThickness = 1,
                                     BorderRadius = 8,
-                                    FillColor = ColorTranslator.FromHtml("#121212"),
                                     BackColor = Color.Transparent,
                                     Location = new Point(600, top)
                                 };
@@ -719,12 +727,18 @@ namespace FlowSERVER1
                                 var textboxPic = new Guna2PictureBox();
                                 mainPanelTxt.Controls.Add(textboxPic);
                                 textboxPic.Name = "TxtBox" + itemCurr;
-                                textboxPic.Width = 240;
-                                textboxPic.Height = 164;
+                                textboxPic.Width = 226;
+                                textboxPic.Height = 165;
                                 textboxPic.BorderRadius = 8;
                                 textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
                                 textboxPic.Enabled = true;
                                 textboxPic.Visible = true;
+
+                                textboxPic.Anchor = AnchorStyles.None;
+
+                                int picMain_Q_x = (mainPanelTxt.Width - textboxPic.Width) / 2;
+
+                                textboxPic.Location = new Point(picMain_Q_x, 10);
 
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);

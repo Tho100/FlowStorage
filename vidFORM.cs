@@ -323,7 +323,7 @@ namespace FlowSERVER1 {
 
         /// <summary>
         /// 
-        /// Apply seek-part of a video
+        /// Apply seekbar function for video
         /// 
         /// </summary>
         /// <param name="sender"></param>

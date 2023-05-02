@@ -698,9 +698,6 @@ namespace FlowSERVER1 {
             var form = Form1.instance;
             var lab1 = form.label1;
             var lab5 = form.label5;
-            var picturebox2 = form.pictureBox2;
-            var picturebox3 = form.pictureBox3;
-            var picturebox1 = form.pictureBox1;
        
             DateTime now = DateTime.Now;
             var hours = now.Hour;
@@ -736,10 +733,6 @@ namespace FlowSERVER1 {
                 else if (NewLang == "DUT") {
                     greeting = "Goedemorgen " + lab5.Text + " :)";
                 }
-
-                picturebox2.Visible = true;
-                picturebox1.Visible = false;
-                picturebox3.Visible = false;
             }
 
             else if (hours >= 12 && hours <= 16) {
@@ -773,10 +766,6 @@ namespace FlowSERVER1 {
                 else if (NewLang == "DUT") {
                     greeting = "Goedemiddag " + lab5.Text + " :)";
                 }
-
-                picturebox2.Visible = true;
-                picturebox1.Visible = false;
-                picturebox3.Visible = false;
             }
             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
@@ -842,9 +831,6 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                picturebox3.Visible = true;
-                picturebox2.Visible = false;
-                picturebox1.Visible = false;
             }
             else if (hours >= 21 && hours <= 24) {
                 if (NewLang == "US") {
@@ -877,11 +863,8 @@ namespace FlowSERVER1 {
                 else if (NewLang == "DUT") {
                     greeting = "Welterusten " + lab5.Text + " :)";
                 }
-
-                picturebox1.Visible = true;
-                picturebox2.Visible = false;
-                picturebox3.Visible = false;
             }
+
             lab1.Text = greeting;
         }
         private void setupUILanguage(String _custLang) {

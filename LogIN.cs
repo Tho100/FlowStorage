@@ -1035,17 +1035,14 @@ namespace FlowSERVER1 {
         }
 
         public void setupTime() {
+
             Form1 form = Form1.instance;
             var lab1 = form.label1;
             var lab5 = form.label5;
-            var picturebox2 = form.pictureBox2;
-            var picturebox3 = form.pictureBox3;
-            var picturebox1 = form.pictureBox1;
 
             DateTime now = DateTime.Now;
             int hours = now.Hour;
             string greeting = "";
-            picturebox1.Visible = true;
 
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {
@@ -1078,10 +1075,6 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "DUT") {
                     greeting = "Goedemorgen " + lab5.Text + " :)";
                 }
-
-                picturebox2.Visible = true;
-                picturebox1.Visible = false;
-                picturebox3.Visible = false;
             }
 
             else if (hours >= 12 && hours <= 16) {
@@ -1116,11 +1109,8 @@ namespace FlowSERVER1 {
                     greeting = "Goedemiddag " + lab5.Text + " :)";
                 }
 
-                picturebox2.Visible = true;
-                picturebox1.Visible = false;
-                picturebox3.Visible = false;
             }
-            else if (hours >= 16 && hours <= 21) {
+             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
                     if (CurrentLang == "US") {
                         greeting = "Good Late Evening, " + lab5.Text;
@@ -1187,9 +1177,6 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                picturebox3.Visible = true;
-                picturebox2.Visible = false;
-                picturebox1.Visible = false;
             }
             else if (hours >= 21 && hours <= 24) {
                 if (CurrentLang == "US") {
@@ -1223,9 +1210,6 @@ namespace FlowSERVER1 {
                     greeting = "Welterusten " + lab5.Text + " :)";
                 }
 
-                picturebox1.Visible = true;
-                picturebox2.Visible = false;
-                picturebox3.Visible = false;
             }
             lab1.Text = greeting;
         }

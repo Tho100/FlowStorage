@@ -583,6 +583,12 @@
     <Compile Include="remAccFORM.Designer.cs">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="renameFoldFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="renameFoldFORM.Designer.cs">
+      <DependentUpon>renameFoldFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="resetPas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -808,6 +814,9 @@
     <EmbeddedResource Include="remAccFORM.resx">
       <DependentUpon>remAccFORM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="renameFoldFORM.resx">
+      <DependentUpon>renameFoldFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="resetPas.resx">
       <DependentUpon>resetPas.cs</DependentUpon>
     </EmbeddedResource>
@@ -891,6 +900,7 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-sort-down-50.png" />
     <None Include="Resources\download_ico.png" />
     <None Include="Resources\icons8-done-26.png" />
     <None Include="Resources\Untitled %2880%29.png" />
