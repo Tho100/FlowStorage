@@ -42,6 +42,34 @@ namespace FlowSERVER1
         private long fileSizeInMB { get; set; }
         private object keyValMain { get; set; }
 
+        /// <summary>
+        /// Initialize panel data
+        /// </summary>
+
+        // Date label
+        private const string DateLabelFontName = "Segoe UI Semibold";
+        private const float DateLabelFontSize = 10f;
+        private static readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
+
+        // Title label
+        private const string TitleLabelFontName = "Segoe UI Semibold";
+        private const float TitleLabelFontSize = 12f;
+        private static readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
+
+        // Panel
+        private static readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
+        private static readonly Color DarkGrayColor = Color.DarkGray;
+        private static readonly Color GainsboroColor = Color.Gainsboro;
+        private static readonly Color TransparentColor = Color.Transparent;
+        private static readonly Point TitleLabelLoc = new Point(12, 182);
+        private static readonly Point DateLabelLoc = new Point(12, 208);
+
+        // Garbage button
+        private static readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
+        private static readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
+        private static readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66;
+        private static readonly Point GarbageButtonLoc = new Point(189, 218);
+
         public Form3(String sendTitle_)
         {
             InitializeComponent();
@@ -137,20 +165,17 @@ namespace FlowSERVER1
         /// <param name="currItem"></param>
         private async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
-            flowLayoutPanel1.Location = new Point(13, 10);
-            flowLayoutPanel1.Size = new Size(1118, 579);
-
-            List<Tuple<string,string>> filesInfo = new List<Tuple<string,string>>();
+            List<(string, string)> filesInfo = new List<(string, string)>();
             string selectFileDataDir = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-            using(MySqlCommand command = new MySqlCommand(selectFileDataDir,con)) {
+            using (MySqlCommand command = new MySqlCommand(selectFileDataDir, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
-                command.Parameters.AddWithValue("@ext", _extName);
-                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                command.Parameters.AddWithValue("@ext", _extName); 
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue);
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
-                        filesInfo.Add(new Tuple<string, string>(fileName,uploadDate));
+                        filesInfo.Add((fileName, uploadDate));
                     }
                 }
             }
@@ -163,10 +188,10 @@ namespace FlowSERVER1
                     Name = parameterName + i,
                     Width = 240,
                     Height = 262,
-                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    BorderColor = BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
-                    BackColor = Color.Transparent,
+                    BackColor = TransparentColor,
                     Location = new Point(600, top)
                 };
                 top += h_p;
@@ -177,21 +202,21 @@ namespace FlowSERVER1
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
                 dateLab.Name = $"LabG{i}";
-                dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                dateLab.ForeColor = Color.DarkGray;
+                dateLab.Font = DateLabelFont;
+                dateLab.ForeColor = DarkGrayColor;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
-                dateLab.Location = new Point(12, 208);
+                dateLab.Location = DateLabelLoc;
                 dateLab.Text = filesInfo[i].Item2;
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
                 titleLab.Name = $"titleImgL{i}";
-                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                titleLab.ForeColor = Color.Gainsboro;
+                titleLab.Font = TitleLabelFont;
+                titleLab.ForeColor = GainsboroColor;
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
-                titleLab.Location = new Point(12, 182);
+                titleLab.Location = TitleLabelLoc;
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = filesInfo[i].Item1;
@@ -225,13 +250,13 @@ namespace FlowSERVER1
                 remBut.Name = "Rem" + i;
                 remBut.Width = 39;
                 remBut.Height = 35;
-                remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
+                remBut.FillColor = FillColor;
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
-                remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
+                remBut.BorderColor = BorderColor2;
+                remBut.Image = GarbageImage;
                 remBut.Visible = true;
-                remBut.Location = new Point(189, 218);
+                remBut.Location = GarbageButtonLoc;
 
                 remBut.Click += (sender_im, e_im) => {
 
@@ -712,10 +737,10 @@ namespace FlowSERVER1
                                     Name = panName + itemCurr,
                                     Width = 240,
                                     Height = 262,
-                                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                                    BorderColor = BorderColor,
                                     BorderThickness = 1,
                                     BorderRadius = 8,
-                                    BackColor = Color.Transparent,
+                                    BackColor = TransparentColor,
                                     Location = new Point(600, top)
                                 };
                  
@@ -743,11 +768,11 @@ namespace FlowSERVER1
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
                                 titleLab.Name = "LabVidUp" + itemCurr;
-                                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                                titleLab.ForeColor = Color.Gainsboro;
+                                titleLab.Font = TitleLabelFont;
+                                titleLab.ForeColor = GainsboroColor;
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
-                                titleLab.Location = new Point(12, 182);
+                                titleLab.Location = TitleLabelLoc;
                                 titleLab.Width = 220;
                                 titleLab.Height = 30;
                                 titleLab.Text = getName;
@@ -757,13 +782,13 @@ namespace FlowSERVER1
                                 remButTxt.Name = "RemTxtBut" + itemCurr;
                                 remButTxt.Width = 39;
                                 remButTxt.Height = 35;
-                                remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
+                                remButTxt.FillColor = FillColor;
                                 remButTxt.BorderRadius = 6;
                                 remButTxt.BorderThickness = 1;
-                                remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
+                                remButTxt.BorderColor = BorderColor2;
+                                remButTxt.Image = GarbageImage;
                                 remButTxt.Visible = true;
-                                remButTxt.Location = new Point(189, 218);
+                                remButTxt.Location = GarbageButtonLoc;
                                 remButTxt.BringToFront();
 
                                 textboxPic.MouseHover += (_senderM, _ev) => {
@@ -1026,7 +1051,7 @@ namespace FlowSERVER1
                                 var imgHeight = getImg.Height;
                                 if (retrieved != ".ico") {
                                     String _tempToBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                    String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64, EncryptionKey.KeyValue);
+                                    String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
                                     createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                                 }
                                 else {
@@ -1036,7 +1061,7 @@ namespace FlowSERVER1
                                         retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                         dataIco = msIco.ToArray();
                                         String _tempToBase64 = Convert.ToBase64String(dataIco);
-                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64, EncryptionKey.KeyValue);
+                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
                                         createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                                     }
                                 }
@@ -1050,69 +1075,69 @@ namespace FlowSERVER1
 
                                 byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                                 String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptText = EncryptionModel.Encrypt(getEncoded, EncryptionKey.KeyValue);
+                                String encryptText = EncryptionModel.Encrypt(getEncoded);
 
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, encryptText);
                             }
                             else if (retrieved == ".exe") {
                                 exeCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_exe", "PanExe", exeCurr, _encryptValue);
 
                             }
                             else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
                                 vidCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_vid", "PanVid", vidCurr, _encryptValue);
                             }
                             else if (retrieved == ".xlsx" || retrieved == ".xls") {
                                 exlCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_excel", "PanExl", exlCurr, _encryptValue);
                             }
                             else if (retrieved == ".mp3" || retrieved == ".wav") {
                                 audCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_audi", "PanAud", audCurr, _encryptValue); 
                             }
                             else if (retrieved == ".gif") {
                                 gifCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_gif", "PanGif", gifCurr, _encryptValue);
                             }
                             else if (retrieved == ".apk") {
                                 apkCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_apk", "PanApk", apkCurr, _encryptValue);
                             }
                             else if (retrieved == ".pdf") {
                                 pdfCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_pdf", "PanPdf", pdfCurr, _encryptValue);
                             }
                             else if (retrieved == ".pptx" || retrieved == ".ppt") {
                                 ptxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_ptx", "PanPtx", ptxCurr, _encryptValue);
                             }
                             else if (retrieved == ".msi") {
                                 msiCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_msi", "PanMsi", msiCurr, _encryptValue);
                             }
                             else if (retrieved == ".docx") {
                                 docxCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_word", "PanDoc", docxCurr, _encryptValue);
                             }
 

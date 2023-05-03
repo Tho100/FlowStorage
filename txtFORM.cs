@@ -112,7 +112,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@foldername", Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
+                        command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem)));
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
 
                         using (MySqlDataReader reader = command.ExecuteReader()) {
@@ -494,9 +494,21 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
+
+                } else if (TableName == "folder_upload_info") {
+
+                    string updateQue = $"UPDATE folder_upload_info SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
+                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
+                        command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
+                        command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(Form1.instance.listBox1.GetItemText(Form1.instance.listBox1.SelectedItem));
+                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.ExecuteNonQuery();
+                    }
+
                 }
 
-                } catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to save changes.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }

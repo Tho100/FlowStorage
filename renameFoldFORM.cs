@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +11,9 @@ using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class renameFoldFORM : Form {
+
+        private static MySqlConnection con = ConnectionModel.con;
+        private static MySqlCommand command = ConnectionModel.command;
         private static string folderTitle {get; set; }
         public renameFoldFORM(String foldTitle) {
             InitializeComponent();
@@ -28,6 +32,70 @@ namespace FlowSERVER1 {
         }
 
         private void renameFoldFORM_Load(object sender, EventArgs e) {
+
+        }
+
+        /// <summary>
+        /// 
+        /// On Confirm button click, verify any problem like if folder name
+        /// already exists then alert the user, else rename the folder.
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        
+        private async Task renameFolderAsync(string newFolderName,string oldFolderName) {
+
+            string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
+            using (MySqlCommand command = new MySqlCommand(queryRename, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@newtitle", EncryptionModel.Encrypt(newFolderName));
+                command.Parameters.AddWithValue("@oldtitle", EncryptionModel.Encrypt(oldFolderName));
+
+                try {
+
+                    await command.ExecuteNonQueryAsync();
+
+                    int indexOld = Form1.instance.listBox1.FindString(oldFolderName);
+                    if(indexOld != ListBox.NoMatches) {
+                        Form1.instance.listBox1.Items[indexOld] = newFolderName;
+                    }
+
+                    label5.Visible = true;
+                    label5.ForeColor = ColorTranslator.FromHtml("#50a832");
+                    label5.Text = $"Folder has been renamed to {newFolderName}.";
+
+                } catch (Exception) {
+                    label5.Visible = true;
+                    label5.ForeColor = Color.Firebrick;
+                    label5.Text = "Failed to rename this folder. Please try again.";
+                }
+            }
+        }
+
+        private async void guna2Button2_Click(object sender, EventArgs e) {
+
+            string newFolderName = guna2TextBox1.Text;
+            string oldFolderName = label2.Text;
+
+            if(String.IsNullOrEmpty(newFolderName)) {
+                return;
+            }
+
+            if(newFolderName == oldFolderName) {
+                label5.Visible = true;
+                label5.Text = "New folder name cannot be the same with old one.";
+                return;
+            }
+
+            if (Form1.instance.listBox1.Items.Contains(newFolderName)) {
+                label5.Visible = true;
+                label5.Text = "Folder with this name already exists.";
+                return;
+            }
+
+            label5.Visible = false;
+            await renameFolderAsync(newFolderName,oldFolderName);
 
         }
     }

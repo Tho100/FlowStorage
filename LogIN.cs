@@ -36,6 +36,33 @@ namespace FlowSERVER1 {
         private static string inputGetEmail {get; set; }
         private static Form1 _form {get; set; } =  Form1.instance;
 
+        /// <summary>
+        /// Initialize panel data
+        /// </summary>
+
+        // Date label
+        private const string DateLabelFontName = "Segoe UI Semibold";
+        private const float DateLabelFontSize = 10f;
+        private static readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
+
+        // Title label
+        private const string TitleLabelFontName = "Segoe UI Semibold";
+        private const float TitleLabelFontSize = 12f;
+        private static readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
+
+        // Panel
+        private static readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
+        private static readonly Color DarkGrayColor = Color.DarkGray;
+        private static readonly Color GainsboroColor = Color.Gainsboro;
+        private static readonly Color TransparentColor = Color.Transparent;
+        private static readonly Point TitleLabelLoc = new Point(12, 182);
+        private static readonly Point DateLabelLoc = new Point(12, 208);
+
+        // Garbage button
+        private static readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
+        private static readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
+        private static readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66;
+        private static readonly Point GarbageButtonLoc = new Point(189, 218);
         public LogIN() {
             InitializeComponent();
             instance = this;
@@ -143,7 +170,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", userName);
                 using (MySqlDataReader fold_Reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await fold_Reader.ReadAsync()) {
-                        updatesTitle.Add(fold_Reader.GetString(0));
+                        updatesTitle.Add(EncryptionModel.Decrypt(fold_Reader.GetString(0)));
                     }
                 }
             }
@@ -313,22 +340,19 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
-            _form.flowLayoutPanel1.Location = new Point(13, 10);
-            _form.flowLayoutPanel1.Size = new Size(1118, 579);
-
             int top = 275;
             int h_p = 100;
 
-            List<Tuple<string, string>> filesInfo = new List<Tuple<string, string>>();
+            List<(string, string)> filesInfo = new List<(string, string)>();
             string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
                         string uploadDate = reader.GetString(1);
-                        filesInfo.Add(new Tuple<string, string>(fileName, uploadDate));
+                        filesInfo.Add((fileName, uploadDate));
                     }
                 }
             }
@@ -339,47 +363,54 @@ namespace FlowSERVER1 {
                     Name = parameterName + i,
                     Width = 240,
                     Height = 262,
+                    BorderColor = BorderColor,
+                    BorderThickness = 1,
                     BorderRadius = 8,
-                    FillColor = ColorTranslator.FromHtml("#121212"),
-                    BackColor = Color.Transparent,
+                    BackColor = TransparentColor,
                     Location = new Point(600, top)
                 };
 
                 top += h_p;
                 _form.flowLayoutPanel1.Controls.Add(panelPic_Q);
 
-                var panelF = (Guna2Panel)panelPic_Q; // ((Guna2Panel)_form.flowLayoutPanel1.Controls[parameterName + i]);
+                var panelF = (Guna2Panel)panelPic_Q; 
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
                 dateLab.Name = "LabG" + i;
-                dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                dateLab.ForeColor = Color.DarkGray;
+                dateLab.Font = DateLabelFont;
+                dateLab.ForeColor = DarkGrayColor;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
-                dateLab.Location = new Point(12, 208);
+                dateLab.Location = DateLabelLoc;
                 dateLab.Text = filesInfo[i].Item2;
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
                 titleLab.Name = "titleImgL" + i;
-                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                titleLab.ForeColor = Color.Gainsboro;
+                titleLab.Font = TitleLabelFont;
+                titleLab.ForeColor = GainsboroColor;
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
-                titleLab.Location = new Point(12, 182);
+                titleLab.Location = TitleLabelLoc;
                 titleLab.Width = 220;
                 titleLab.Height = 30;
-                titleLab.Text = filesInfo[i].Item1;//titleValues[i];
+                titleLab.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 panelF.Controls.Add(picMain_Q);
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                 picMain_Q.BorderRadius = 6;
-                picMain_Q.Width = 241;
+                picMain_Q.Width = 226;
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
+
+                picMain_Q.Anchor = AnchorStyles.None;
+
+                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+
+                picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
                     panelF.ShadowDecoration.Enabled = true;
@@ -395,15 +426,16 @@ namespace FlowSERVER1 {
                 remBut.Name = "Rem" + i;
                 remBut.Width = 39;
                 remBut.Height = 35;
-                remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
+                remBut.FillColor = FillColor;
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
-                remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remBut.BorderColor = BorderColor2;
+                remBut.Image = GarbageImage;
                 remBut.Visible = true;
-                remBut.Location = new Point(189, 218);
+                remBut.Location = GarbageButtonLoc;
 
                 remBut.Click += (sender_im, e_im) => {
+
                     var titleFile = titleLab.Text;
                     DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
@@ -427,6 +459,7 @@ namespace FlowSERVER1 {
 
                 _form.guna2Button6.Visible = false;
                 _form.label8.Visible = false;
+
                 var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
                 if (_tableName == "file_info") {
