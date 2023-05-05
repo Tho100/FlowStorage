@@ -83,7 +83,7 @@ namespace FlowSERVER1 {
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragOver += new DragEventHandler(Form1_DragOver);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
-
+            this.DragLeave += new EventHandler(Form1_DragLeave);
             instance = this;
 
             var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
@@ -3201,8 +3201,6 @@ namespace FlowSERVER1 {
                 int _selectedIndex = listBox1.SelectedIndex;
                 String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
                 label26.Text = _selectedFolder;
-                guna2Panel17.Visible = true;
-                label27.Visible = true;
                 label26.Visible = true;
                 guna2Button19.Visible = true;
 
@@ -3212,6 +3210,7 @@ namespace FlowSERVER1 {
                     guna2Button4.Visible = false;
                     guna2Button3.Visible = false;
                     guna2Button8.Visible = true;
+                    flowLayoutPanel1.WrapContents = true;
                     flowLayoutPanel1.Controls.Clear();
 
                     buildHomeFiles();
@@ -4992,7 +4991,12 @@ namespace FlowSERVER1 {
         }
 
         private void Form1_DragOver(object sender, DragEventArgs e) {
+            guna2Panel2.Visible = true;
             e.Effect = DragDropEffects.Copy;
+        }
+
+        private void Form1_DragLeave(object sender, EventArgs e) {
+            guna2Panel2.Visible = false;
         }
 
         /// <summary>
@@ -5002,7 +5006,11 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// 
         private void Form1_DragDrop(object sender, DragEventArgs e) {
+
+            guna2Panel2.Visible = false;
+
             string accountTypeStr = "";
             int accountTypeInt = 0;
 
@@ -5147,9 +5155,9 @@ namespace FlowSERVER1 {
 
                                 if (showSubNotify) {
 
-                                    NotifySubFORM notifySubForm = new NotifySubFORM();
+                                    /*NotifySubFORM notifySubForm = new NotifySubFORM();
                                     notifySubForm.Show();
-                                    showSubNotify = false;
+                                    showSubNotify = false;*/
                                 }
 
 
@@ -5664,6 +5672,24 @@ namespace FlowSERVER1 {
 
         private void guna2Button25_Click(object sender, EventArgs e) {
             guna2TextBox5.Text = String.Empty;
+        }
+
+        private void guna2Panel2_Paint_1(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label26_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2CircleButton1_Click(object sender, EventArgs e) {
+            apiFORM apiFORMShow = new apiFORM();
+            apiFORMShow.Show();
+        }
+
+        private void guna2CircleButton2_Click(object sender, EventArgs e) {
+            mobileFORM mobileFORMShow = new mobileFORM();
+            mobileFORMShow.Show();
         }
     }
 }

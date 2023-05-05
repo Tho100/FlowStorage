@@ -113,6 +113,16 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fs_logo {
+            get {
+                object obj = ResourceManager.GetObject("fs_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap giphy__10_ {
             get {
                 object obj = ResourceManager.GetObject("giphy (10)", resourceCulture);
@@ -143,9 +153,39 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Group_15__2_ {
+            get {
+                object obj = ResourceManager.GetObject("Group 15 (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_android_os_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-android-os-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_api_32__1_ {
+            get {
+                object obj = ResourceManager.GetObject("icons8-api-32 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_api_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-api-64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -366,6 +406,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_html_filetype_48__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-html-filetype-48 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_iphone_se_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-iphone-se-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

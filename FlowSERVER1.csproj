@@ -388,6 +388,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="apiFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="apiFORM.Designer.cs">
+      <DependentUpon>apiFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="apkFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -516,6 +522,12 @@
       <DependentUpon>LoadAlertFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="LoaderModel.cs" />
+    <Compile Include="mobileFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mobileFORM.Designer.cs">
+      <DependentUpon>mobileFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="msiFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -716,6 +728,9 @@
     <Compile Include="wordFORM.Designer.cs">
       <DependentUpon>wordFORM.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="apiFORM.resx">
+      <DependentUpon>apiFORM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="apkFORM.resx">
       <DependentUpon>apkFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -777,6 +792,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoadAlertFORM.resx">
       <DependentUpon>LoadAlertFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mobileFORM.resx">
+      <DependentUpon>mobileFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
@@ -900,6 +918,11 @@
   <ItemGroup>
     <Content Include="garbageImg.png" />
     <Content Include="MainIco.ico" />
+    <None Include="Resources\Group 15 %282%29.png" />
+    <None Include="Resources\fs_logo.png" />
+    <None Include="Resources\icons8-api-64.png" />
+    <None Include="Resources\icons8-iphone-se-24.png" />
+    <None Include="Resources\icons8-api-32 %281%29.png" />
     <None Include="Resources\icons8-sort-down-50.png" />
     <None Include="Resources\download_ico.png" />
     <None Include="Resources\icons8-done-26.png" />

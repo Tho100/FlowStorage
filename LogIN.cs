@@ -201,9 +201,6 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task _generateUserDirectory(String userName, String passUser, int rowLength) {
 
-            _form.flowLayoutPanel1.Location = new Point(13, 10);
-            _form.flowLayoutPanel1.Size = new Size(1118, 579);
-
             List<Tuple<string, string>> filesInfoDirs = new List<Tuple<string, string>>();
             string selectFileData = $"SELECT DIR_NAME, UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {

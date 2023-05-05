@@ -348,7 +348,9 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void guna2Button2_Click(object sender, EventArgs e) {
+
             try {
+
                 string textBox1 = guna2TextBox1.Text;
                 string textBox2 = guna2TextBox2.Text;
 
