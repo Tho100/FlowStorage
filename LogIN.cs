@@ -226,7 +226,7 @@ namespace FlowSERVER1 {
                     Height = 262,
                     BorderRadius = 8,
                     FillColor = ColorTranslator.FromHtml("#121212"),
-                    BackColor = Color.Transparent,
+                    BackColor = TransparentColor,
                     Location = new Point(600, top)
                 };
                 top += h_p;
@@ -237,21 +237,21 @@ namespace FlowSERVER1 {
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
                 dateLab.Name = "LabG" + i;
-                dateLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                dateLab.ForeColor = Color.DarkGray;
+                dateLab.Font = DateLabelFont;
+                dateLab.ForeColor = DarkGrayColor;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
-                dateLab.Location = new Point(12, 208);
+                dateLab.Location = DateLabelLoc;
                 dateLab.Text = filesInfoDirs[i].Item2;
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
                 titleLab.Name = "titleImgL" + i;
-                titleLab.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                titleLab.ForeColor = Color.Gainsboro;
+                titleLab.Font = TitleLabelFont;
+                titleLab.ForeColor = GainsboroColor;
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
-                titleLab.Location = new Point(12, 182);
+                titleLab.Location = TitleLabelLoc;
                 titleLab.Width = 220;
                 titleLab.Height = 30;
                 titleLab.Text = filesInfoDirs[i].Item1;
@@ -279,13 +279,13 @@ namespace FlowSERVER1 {
                 remBut.Name = "Rem" + i;
                 remBut.Width = 39;
                 remBut.Height = 35;
-                remBut.FillColor = ColorTranslator.FromHtml("#4713BF");
+                remBut.FillColor = FillColor;
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
-                remBut.BorderColor = ColorTranslator.FromHtml("#232323");
-                remBut.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;//Image.FromFile(@"C:\Users\USER\Downloads\Gallery\icons8-garbage-66.png");
+                remBut.BorderColor = BorderColor2;
+                remBut.Image = GarbageImage;
                 remBut.Visible = true;
-                remBut.Location = new Point(189, 218);
+                remBut.Location = GarbageButtonLoc;
 
                 remBut.Click += (sender_im, e_im) => {
                     var titleFile = titleLab.Text;

@@ -48,7 +48,7 @@ namespace FlowSERVER1 {
 
                     String _customizeQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(_customizeQuery,con);
-                    command.Parameters.AddWithValue("@getval",EncryptionModel.Encrypt(guna2TextBox2.Text, "0123456789085746"));
+                    command.Parameters.AddWithValue("@getval",EncryptionModel.computeAuthCase(guna2TextBox2.Text));
                     command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
                     command.ExecuteNonQuery();
 
