@@ -20,8 +20,8 @@ namespace FlowSERVER1
     {
         public static Form4 instance;
 
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
+        public MySqlConnection con = ConnectionModel.con;
+        public MySqlCommand command = ConnectionModel.command;
 
         public Form4() {
             InitializeComponent();
@@ -138,13 +138,13 @@ namespace FlowSERVER1
                         String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeDirQuery, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle,EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle));
                         command.ExecuteNonQuery();
 
                         String _removeUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
                         command = new MySqlCommand(_removeUploadQuery, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle,EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle));
                         command.ExecuteNonQuery();
 
                     }
@@ -224,7 +224,7 @@ namespace FlowSERVER1
         /// </summary>
 
         public static int value_Dir = 0;
-        public static string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+        private string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
         private async void guna2Button2_Click(object sender, EventArgs e) {
             String filesCount = Form1.instance.label4.Text;
             int totalFiles = int.Parse(filesCount);
@@ -245,7 +245,7 @@ namespace FlowSERVER1
             if (!String.IsNullOrEmpty(dirTitle)) {
                 try {
                     var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
-                    countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirTitle,EncryptionKey.KeyValue));
+                    countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirTitle));
                     int countSameDir = Convert.ToInt32(countSameDirCommand.ExecuteScalar());
 
                     if (countSameDir < 1) {
@@ -285,7 +285,7 @@ namespace FlowSERVER1
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
-                                insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(dirTitle, EncryptionKey.KeyValue));
+                                insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(dirTitle));
                                 insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
                                 insertValuesCommand.ExecuteNonQuery();
                             }

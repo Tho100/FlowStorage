@@ -15,12 +15,15 @@ namespace FlowSERVER1 {
     /// GIF viewer form
     /// </summary>
     public partial class gifFORM : Form {
+
         public static gifFORM instance;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static String _TableName;
-        public static String _Directory;
-        private static bool _IsFromShared;
+
+        public MySqlCommand command = ConnectionModel.command;
+        public MySqlConnection con = ConnectionModel.con;
+
+        public string _TableName;
+        public string _Directory;
+        private bool _IsFromShared;
         /// <summary>
         /// 
         /// Load GIF based on table name

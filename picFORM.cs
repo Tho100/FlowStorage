@@ -14,6 +14,7 @@ using AForge.Imaging.Filters;
 
 namespace FlowSERVER1 {
     public partial class picFORM : Form {
+
         public static picFORM instance; 
 
         private bool IsDragging {get; set; } = false;
@@ -28,11 +29,11 @@ namespace FlowSERVER1 {
         private float saturationValue {get; set; }
 
 
-        private static String TableName {get; set; }
-        private static String Directoryname {get; set; }
-        private static bool IsFromShared {get; set; } // @ Shared to others
-        private static bool IsFromSharing {get; set; }  // @ Shared to me 
-        private static MySqlConnection con {get; set; } = ConnectionModel.con;
+        private String TableName {get; set; }
+        private String Directoryname {get; set; }
+        private bool IsFromShared {get; set; } // @ Shared to others
+        private bool IsFromSharing {get; set; }  // @ Shared to me 
+        private MySqlConnection con {get; set; } = ConnectionModel.con;
 
         public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            var setupImage = new Bitmap(userImage);//resizeUserImage(userImage, new Size(width, height));
+            var setupImage = new Bitmap(userImage);
 
             defaultImage = setupImage;
             filteredImage = new Bitmap(defaultImage);

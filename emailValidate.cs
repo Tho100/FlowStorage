@@ -11,8 +11,8 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class emailValidate : Form {
-        private static MySqlCommand command = ConnectionModel.command;
-        private static MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
         public emailValidate() {
             InitializeComponent();
         }

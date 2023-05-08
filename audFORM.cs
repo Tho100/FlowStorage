@@ -19,17 +19,20 @@ using System.Data.SqlClient;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static String _TabName = "";
-        private static String _DirName = "";
+
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+
+        private String _TabName = "";
+        private String _DirName = "";
+
         private static audFORM instance;
-        private static bool isFromShared;
-        private static bool IsFromSharing;
+        private bool isFromShared;
+        private bool IsFromSharing;
 
         private System.Windows.Forms.Timer _timer;
         private TimeSpan _elapsedTime;
-        private static Mp3FileReader _NReader;
+        private Mp3FileReader _NReader;
         public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
@@ -73,7 +76,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -87,7 +90,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));

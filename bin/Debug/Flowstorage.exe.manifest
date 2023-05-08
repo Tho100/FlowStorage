@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Oi15ljH67XkMT3aYZCyoNlzlE0LEuaGvQFVlQMq1oso=</dsig:DigestValue>
+        <dsig:DigestValue>TzmGjtQsane7i7Qqr7JIHU5UFFxXZqxlTNLHraZbUKE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -187,14 +187,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="8860160">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="9013760">
       <assemblyIdentity name="Flowstorage" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>v159IcEmsaGcV6gEYlTWVzASTlbB5pFVksBJDz0hmDE=</dsig:DigestValue>
+        <dsig:DigestValue>sb9+w2YZfgtcl3uLDerIlqmLPSHaQAQMREAVjC61EIE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -230,7 +230,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SdFoED9qnTdengk8QVZFUnJ2z3AaQJxlcz1zyFypqGI=</dsig:DigestValue>
+        <dsig:DigestValue>W0VboxTREitrv2r7hzmiNVCctrfPQ+PsuM+gSzNULBM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1104,7 +1104,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>sGfqZk+g3FMHogG/rxAlI4hKuUQZofU/bRV8nIPOg7o=</dsig:DigestValue>
+      <dsig:DigestValue>Ty96PcVynSSvxaGo9GzsWyKkj0DkHq1s6gYLKC4DaX8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="garbageImg.png" size="835">

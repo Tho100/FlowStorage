@@ -2344,5 +2344,9 @@ namespace FlowSERVER1 {
             RecovFORM showRecoveryForm = new RecovFORM();
             showRecoveryForm.Show();
         }
+
+        private void label52_Click(object sender, EventArgs e) {
+
+        }
     }
 }

@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class confirmPas : Form {
-        private static int attemptCurr = 0;        
+        private int attemptCurr = 0;        
         private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
         public confirmPas(String _custEmail = "") {

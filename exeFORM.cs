@@ -15,14 +15,18 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class exeFORM : Form {
+
         public static exeFORM instance;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static Byte[] GlobalByte;
-        public static String _TableName;
-        public static String _DirectoryName;
-        private static bool _isFromShared;
-        private static bool IsFromSharing;  // Shared to me 
+
+        public MySqlConnection con = ConnectionModel.con;
+        public MySqlCommand command = ConnectionModel.command;
+
+        public Byte[] GlobalByte;
+        public String _TableName;
+        public String _DirectoryName;
+
+        private bool _isFromShared;
+        private bool IsFromSharing;  // Shared to me 
 
         public exeFORM(String getTitle,String tableName, String directoryName, String _UploaderUsername,bool isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
@@ -62,7 +66,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -76,7 +80,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));

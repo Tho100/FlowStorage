@@ -12,10 +12,11 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class chagneUserForm : Form {
-        private static String CurrentUsername;
-        private static String NewUsername;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static MySqlConnection con = ConnectionModel.con;
+
+        private String CurrentUsername;
+        private String NewUsername;
+        private MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
         public chagneUserForm(String _CurrentUsername) {
             InitializeComponent();
             CurrentUsername = _CurrentUsername;
@@ -63,7 +64,7 @@ namespace FlowSERVER1 {
                 _usernameValues.Add(_getString);
             }
             _ReadUsername.Close();
-            return _usernameValues.Count();
+            return _usernameValues.Count;
         }
         private string authReturnOriginal(String _usernameEntered) {
             List<String> _passValues = new List<string>();

@@ -26,18 +26,17 @@ namespace FlowSERVER1 {
     
     public partial class exlFORM : Form {
 
-        public static exlFORM instance;
-        private static String DirectoryName;
-        private static String TableName;
+        public exlFORM instance;
+        private String DirectoryName;
+        private String TableName;
 
-        private static int _currentSheetIndex = 1;
-        private static int _changedIndex = 0;
-        private static Byte[] _sheetsByte;
-        private static bool _isFromShared;
-        private static bool IsFromSharing;  // Shared to me 
+        private int _currentSheetIndex = 1;
+        private int _changedIndex = 0;
+        private byte[] _sheetsByte;
+        private bool _isFromShared;
+        private bool IsFromSharing;
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
 
         /// <summary>
         /// 
@@ -114,7 +113,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -128,7 +127,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -307,7 +306,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -318,7 +317,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -329,7 +328,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -340,8 +339,8 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
-                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName, EncryptionKey.KeyValue);
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -361,7 +360,7 @@ namespace FlowSERVER1 {
 
             byte[] _getByte = _stream.ToArray();
             string _toBase64Encoded = Convert.ToBase64String(_getByte);
-            string _encryptedString = EncryptionModel.Encrypt(_toBase64Encoded, EncryptionKey.KeyValue);
+            string _encryptedString = EncryptionModel.Encrypt(_toBase64Encoded);
 
             _saveChangesUpdate(_encryptedString);
 

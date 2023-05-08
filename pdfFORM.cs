@@ -15,12 +15,13 @@ namespace FlowSERVER1 {
     /// </summary>
     /// 
     public partial class pdfFORM : Form {
-        private static String _TableName;
-        private static String _DirName;
-        private static bool _IsFromShared;
-        private static bool IsFromSharing;
 
-        private static MySqlConnection con = ConnectionModel.con;
+        private String _TableName;
+        private String _DirName;
+        private bool _IsFromShared;
+        private bool IsFromSharing;
+
+        private MySqlConnection con = ConnectionModel.con;
 
         /// <summary>
         /// Load file based on table name 

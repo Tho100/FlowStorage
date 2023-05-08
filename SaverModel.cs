@@ -108,7 +108,7 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle, "0123456789085746"));
-                        command.Parameters.AddWithValue("@foldtitle", _DirectoryName);
+                        command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_DirectoryName));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
                             if (stopFileRetrieval) {

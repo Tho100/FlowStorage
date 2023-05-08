@@ -13,11 +13,14 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class msiFORM : Form {
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static String _TableName;
-        public static String _DirectoryName;
-        private static bool _IsFromShared;
+
+        public MySqlConnection con = ConnectionModel.con;
+        public MySqlCommand command = ConnectionModel.command;
+
+        public String _TableName;
+        public String _DirectoryName;
+
+        private bool _IsFromShared;
         public msiFORM(String _fileName,String tabName, String dirName,String _UploaderUsername, bool _isFromShared = false) {
             InitializeComponent();
 

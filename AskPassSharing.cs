@@ -14,14 +14,14 @@ using Microsoft.WindowsAPICodePack.Shell;
 
 namespace FlowSERVER1 {
     public partial class AskPassSharing : Form {
-        private static String CustUsername {get; set; }
-        private static String _currentFileName {get; set; }
-        private static String _FileName { get; set; }
-        private static String _FilePath { get; set; }
-        private static String _retrieved { get; set; }
+        private String CustUsername {get; set; }
+        private String _currentFileName {get; set; }
+        private String _FileName { get; set; }
+        private String _FilePath { get; set; }
+        private String _retrieved { get; set; }
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
 
         public AskPassSharing(String _custUsername,String _fileName,String _filePath,String _RETRIEVED) {
             InitializeComponent();

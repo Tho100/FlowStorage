@@ -24,17 +24,20 @@ namespace FlowSERVER1 {
     public partial class LogIN : Form {
         public static LogIN instance;
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static String decryptMainKey;
-        private static String encryptionKeyVal;
-        private static String pinDecryptionKey;
-        private static String CurrentLang = "";
-        private static int attemptCurr = 0;
-        private static String custEmail {get; set; }
-        private static String custUsername { get; set; }
-        private static string inputGetEmail {get; set; }
-        private static Form1 _form {get; set; } =  Form1.instance;
+        private MySqlConnection con = ConnectionModel.con;
+
+        private MySqlCommand command = ConnectionModel.command;
+
+        private string accType;
+        private string decryptMainKey;
+        private string encryptionKeyVal;
+        private string pinDecryptionKey;
+        private string CurrentLang = "";
+        private int attemptCurr = 0;
+        private string custEmail {get; set; }
+        private string custUsername { get; set; }
+        private string inputGetEmail {get; set; }
+        private Form1 _form {get; set; } =  Form1.instance;
 
         /// <summary>
         /// Initialize panel data
@@ -43,26 +46,26 @@ namespace FlowSERVER1 {
         // Date label
         private const string DateLabelFontName = "Segoe UI Semibold";
         private const float DateLabelFontSize = 10f;
-        private static readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
+        private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
 
         // Title label
         private const string TitleLabelFontName = "Segoe UI Semibold";
         private const float TitleLabelFontSize = 12f;
-        private static readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
+        private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
 
         // Panel
-        private static readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
-        private static readonly Color DarkGrayColor = Color.DarkGray;
-        private static readonly Color GainsboroColor = Color.Gainsboro;
-        private static readonly Color TransparentColor = Color.Transparent;
-        private static readonly Point TitleLabelLoc = new Point(12, 182);
-        private static readonly Point DateLabelLoc = new Point(12, 208);
+        private readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
+        private readonly Color DarkGrayColor = Color.DarkGray;
+        private readonly Color GainsboroColor = Color.Gainsboro;
+        private readonly Color TransparentColor = Color.Transparent;
+        private readonly Point TitleLabelLoc = new Point(12, 182);
+        private readonly Point DateLabelLoc = new Point(12, 208);
 
         // Garbage button
-        private static readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
-        private static readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
-        private static readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66;
-        private static readonly Point GarbageButtonLoc = new Point(189, 218);
+        private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
+        private readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
+        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66;
+        private readonly Point GarbageButtonLoc = new Point(189, 218);
         public LogIN() {
             InitializeComponent();
             instance = this;
@@ -143,6 +146,7 @@ namespace FlowSERVER1 {
                 }
             }
 
+            Form1.instance.accountTypeString = accType;
             flowlayout.Controls.Clear();
             form.listBox1.Items.Clear();
             form.label5.Text = custUsername;
@@ -157,7 +161,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task _generateUserFolder(String userName, String passUser) {
+        private async Task _generateUserFolder(String userName) {
 
             String[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
             _form.listBox1.Items.AddRange(itemFolder);
@@ -199,7 +203,7 @@ namespace FlowSERVER1 {
         /// <param name="passUser"></param>
         /// <param name="rowLength"></param>
         /// <returns></returns>
-        private async Task _generateUserDirectory(String userName, String passUser, int rowLength) {
+        private async Task _generateUserDirectory(String userName, int rowLength) {
 
             List<Tuple<string, string>> filesInfoDirs = new List<Tuple<string, string>>();
             string selectFileData = $"SELECT DIR_NAME, UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
@@ -334,11 +338,11 @@ namespace FlowSERVER1 {
         /// <param name="_tableName"></param>
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
-        /// <returns></returns>
-        private async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
+        
+        int top = 275;
+        int h_p = 100;
 
-            int top = 275;
-            int h_p = 100;
+        private async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
             List<(string, string)> filesInfo = new List<(string, string)>();
             string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
@@ -474,10 +478,12 @@ namespace FlowSERVER1 {
                     }
 
                     if (base64Encoded.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            img.Image = new Bitmap(toMs);
-                        }
+                        await Task.Run(async () => {
+                            byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                                img.Image = await Task.Run(() => new Bitmap(toMs));
+                            }
+                        });
                     }
 
 
@@ -522,7 +528,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_exe") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
                         using (exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Form1.instance.label5.Text)) {
@@ -561,10 +567,12 @@ namespace FlowSERVER1 {
                     }
 
                     if (base64Encoded.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            img.Image = new Bitmap(toMs);
-                        }
+                        await Task.Run(async () => {
+                            byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                                img.Image = await Task.Run(() => new Bitmap(toMs));
+                            }
+                        });
                     }
 
                     picMain_Q.Click += (sender_vq, e_vq) => {
@@ -612,6 +620,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_gif") {
+
                     String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(getImgQue, con);
                     command.Parameters.AddWithValue("@username", _form.label5.Text);
@@ -749,6 +758,15 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
 
+        private int _countRow(String _tableName) {
+            String countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                int totalRowInt = Convert.ToInt32(command.ExecuteScalar());
+                return totalRowInt;
+            }
+        }
+
         private async Task fetchUserData() {
 
             var form = Form1.instance;
@@ -773,7 +791,6 @@ namespace FlowSERVER1 {
                 label4.Visible = true;
             }
          
-
             if (computeAuthCase(_getPass) == decryptMainKey && computeAuthCase(_getPin) == pinDecryptionKey) {
 
                 setupRedundane();
@@ -795,15 +812,6 @@ namespace FlowSERVER1 {
 
                 try {
 
-                    int _countRow(String _tableName) {
-                         String countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-                         using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
-                             command.Parameters.AddWithValue("@username", label5.Text);
-                             int totalRowInt = Convert.ToInt32(command.ExecuteScalar());
-                             return totalRowInt;
-                         }
-                     }
-
                     Dictionary<string, string> tableToFileType = new Dictionary<string, string>
                         {
                         {"file_info", "imgFile"},
@@ -824,7 +832,7 @@ namespace FlowSERVER1 {
                     foreach (string tableName in tableToFileType.Keys) {
                         if (_countRow(tableName) > 0) {
                             if (tableToFileType[tableName] == "dirFile") {
-                                await _generateUserDirectory(tableName, tableToFileType[tableName], _countRow(tableName));
+                                await _generateUserDirectory(tableName, _countRow(tableName));
                             }
                             else {
                                 await _generateUserFiles(tableName, tableToFileType[tableName], _countRow(tableName));
@@ -832,7 +840,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    await _generateUserFolder(custUsername,_getPass);
+                    await _generateUserFolder(custUsername);
 
                     RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
                     retrievalAlertForm?.Close();
@@ -844,6 +852,7 @@ namespace FlowSERVER1 {
                     if (guna2CheckBox2.Checked) {
                         setupAutoLogin(Form1.instance.label5.Text);
                     }
+
                 } catch (Exception) {
                     MessageBox.Show("An error occurred. Please hit the refresh button to resolve this.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
@@ -910,6 +919,8 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
             }
+
+            accType = accountType;
 
             if (accountType == "Basic") {
                 return "20";

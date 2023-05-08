@@ -14,12 +14,13 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class apkFORM : Form {
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static String _TableName;
-        private static String _DirName;
-        private static bool IsFromSharing;  // Shared to me 
-        private static bool isFromShared = false;
+
+        private MySqlConnection con = ConnectionModel.con;
+        private string _TableName;
+        private string _DirName;
+        private bool IsFromSharing;   
+        private bool isFromShared = false;
+
         public apkFORM(String _titleFile, String _userName,String _tabName, String _dirName, bool _isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
@@ -58,7 +59,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -72,7 +73,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -102,6 +103,7 @@ namespace FlowSERVER1 {
 
         }
         private void guna2Button4_Click(object sender, EventArgs e) {
+
             try {
 
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
@@ -118,6 +120,7 @@ namespace FlowSERVER1 {
                 else if (_TableName == "cust_sharing") {
                     SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName,isFromShared);
                 }
+
             } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
             }

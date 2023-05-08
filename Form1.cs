@@ -27,8 +27,8 @@ namespace FlowSERVER1 {
     
     public partial class Form1 : Form {
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
 
         public static Form1 instance { get; set;} = new Form1();
         public Label setupLabel { get; set; }
@@ -45,34 +45,53 @@ namespace FlowSERVER1 {
         private long fileSizeInMB;
         private string varDate;
         private string tableName;
+        public string accountTypeString;
 
         /// <summary>
+        /// 
         /// Initialize panel data
+        /// 
         /// </summary>
         
         // Date label
         private const string DateLabelFontName = "Segoe UI Semibold";
-        private const float DateLabelFontSize = 10f;
-        private static readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
+        private const float DateLabelFontSize = 9f; // 10f
+        private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
 
         // Title label
         private const string TitleLabelFontName = "Segoe UI Semibold";
-        private const float TitleLabelFontSize = 12f;
-        private static readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
+        private const float TitleLabelFontSize = 11f; // 12f
+        private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
 
         // Panel
-        private static readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
-        private static readonly Color DarkGrayColor = Color.DarkGray;
-        private static readonly Color GainsboroColor = Color.Gainsboro;
-        private static readonly Color TransparentColor = Color.Transparent;
-        private static readonly Point TitleLabelLoc = new Point(12,182);
-        private static readonly Point DateLabelLoc = new Point(12,208);
+        private readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
+        private readonly Color DarkGrayColor = Color.DarkGray;
+        private readonly Color GainsboroColor = Color.Gainsboro;
+        private readonly Color TransparentColor = Color.Transparent;
+        private readonly Point TitleLabelLoc = new Point(12,166); // 12,182
+        private readonly Point DateLabelLoc = new Point(12,192); // 12,208
 
         // Garbage button
-        private static readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
-        private static readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
-        private static readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66;
-        private static readonly Point GarbageButtonLoc = new Point(189, 218);
+        private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
+        private readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
+        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+        private readonly Point GarbageButtonLoc = new Point(165, 188);
+        private readonly Point GarbageOffset = new Point(2, 0); 
+
+        // File Images
+        private readonly Image TextImage = FlowSERVER1.Properties.Resources.icons8_txt_48;
+        private readonly Image PDFImage = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+        private readonly Image AudioImage = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+
+        private readonly Image DOCImage = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+        private readonly Image PTXImage = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+        private readonly Image APKImage = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+
+        private readonly Image EXCELImage = FlowSERVER1.Properties.Resources.excelIcon;
+        private readonly Image CSVImage = FlowSERVER1.Properties.Resources.icons8_csv_48;
+        private readonly Image MSIImage = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+        private readonly Image EXEImage = FlowSERVER1.Properties.Resources.icons8_exe_48;
+
 
         public Form1() {
 
@@ -84,10 +103,21 @@ namespace FlowSERVER1 {
             this.DragOver += new DragEventHandler(Form1_DragOver);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
             this.DragLeave += new EventHandler(Form1_DragLeave);
+
             instance = this;
 
             var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
             form4Instances.ForEach(form => form.Close());
+
+            flowLayoutPanel1.HorizontalScroll.Maximum = 0;
+            flowLayoutPanel1.VerticalScroll.Maximum = 0;
+            flowLayoutPanel1.AutoScrollMinSize = new Size(0, 0);
+
+            flowLayoutPanel1.BorderStyle = BorderStyle.None;
+
+            flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.HorizontalScroll.Visible = false;
+            flowLayoutPanel1.VerticalScroll.Visible = false;
 
             this.TopMost = false;
 
@@ -120,7 +150,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First(), EncryptionKey.KeyValue);
+                string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
 
                 if(accountStartupValidation(username) == String.Empty) {
                     guna2Panel7.Visible = true;
@@ -167,7 +197,6 @@ namespace FlowSERVER1 {
                     label20.Text = calculatePercentageUsage.ToString() + "%";
                     guna2ProgressBar1.Value = calculatePercentageUsage;
                 }
-
 
                 setupUILanguage(CurrentLang);
             }
@@ -345,16 +374,40 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
+        /// 
         /// Generate user files on startup
+        /// 
         /// </summary>
         /// <param name="_tableName"></param>
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
-        /// 
-        
+
+
+        int top = 275;
+        int h_p = 100;
+
+        List<string> base64EncodedImage = new List<string>();
+        List<string> base64EncodedThumbnail = new List<string>();
+
         public async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
             List<(string, string)> filesInfo = new List<(string, string)>();
+            string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", label5.Text);
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    List<(string, string)> tuplesList = new List<(string, string)>();
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        string uploadDate = reader.GetString(1);
+                        tuplesList.Add((fileName, uploadDate));
+                    }
+                    filesInfo.AddRange(tuplesList);
+                }
+            }
+
+
+            /*List<(string, string)> filesInfo = new List<(string, string)>();
             string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
@@ -365,20 +418,17 @@ namespace FlowSERVER1 {
                         filesInfo.Add((fileName, uploadDate));
                     }
                 }
-            }
+            }*/
 
             guna2Button6.Visible = false;
             label8.Visible = false;
-
-            int top = 275;
-            int h_p = 100;
 
             for (int i = 0; i < currItem; i++) {
 
                 var panelPic_Q = new Guna2Panel() {
                     Name = $"{parameterName + i}",
-                    Width = 240,
-                    Height = 262,
+                    Width = 200, // 240
+                    Height = 222, // 262
                     BorderColor = BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
@@ -408,8 +458,9 @@ namespace FlowSERVER1 {
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
                 titleLab.Location = TitleLabelLoc;
-                titleLab.Width = 220;
-                titleLab.Height = 30;
+                titleLab.AutoEllipsis = true;
+                titleLab.Width = 160; // 220
+                titleLab.Height = 20; // 30
                 titleLab.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
@@ -417,8 +468,8 @@ namespace FlowSERVER1 {
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                 picMain_Q.BorderRadius = 8;
-                picMain_Q.Width = 226;
-                picMain_Q.Height = 165;
+                picMain_Q.Width = 190; 
+                picMain_Q.Height = 145; 
                 picMain_Q.Visible = true;
 
                 picMain_Q.Anchor = AnchorStyles.None;
@@ -439,21 +490,27 @@ namespace FlowSERVER1 {
                 Guna2Button remBut = new Guna2Button();
                 panelF.Controls.Add(remBut);
                 remBut.Name = "Rem" + i;
-                remBut.Width = 39;
-                remBut.Height = 35;
-                remBut.FillColor = FillColor;
+                remBut.Width = 29;
+                remBut.Height = 26;
+                remBut.ImageOffset = GarbageOffset;
+                remBut.FillColor = TransparentColor;
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
-                remBut.BorderColor = BorderColor2;
+                remBut.BorderColor = TransparentColor;
                 remBut.Image = GarbageImage; 
                 remBut.Visible = true;
                 remBut.Location = GarbageButtonLoc; 
 
                 remBut.Click += (sender_im, e_im) => {
 
-                    var titleFile = titleLab.Text;
+                    label27.Text = titleLab.Text;
+                    label31.Text = _tableName;
+                    label29.Text = panelPic_Q.Name;
+                    guna2Panel3.Visible = true;
 
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    /*var titleFile = titleLab.Text;
+
+                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
                         String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);
@@ -467,6 +524,7 @@ namespace FlowSERVER1 {
                         }
 
                         panelPic_Q.Dispose();
+
                         if (flowLayoutPanel1.Controls.Count == 0) {
                             label8.Visible = true; 
                             guna2Button6.Visible = true;
@@ -480,32 +538,33 @@ namespace FlowSERVER1 {
 
                         guna2ProgressBar1.Value = calculatePercentageUsage;
 
-                    }
+                    }*/
                 };
 
                 var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
                 if (_tableName == "file_info") {
 
-                    List<string> base64Encoded = new List<string>();
-
                     string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
                         using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                string base64String = EncryptionModel.Decrypt(readBase64.GetString(0), "0123456789085746");
-                                base64Encoded.Add(base64String);
+                                string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
+                                base64EncodedImage.Add(base64String);
                             }
                         }
                     }
 
-                    if (base64Encoded.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                    if (base64EncodedImage.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            img.Image = Image.FromStream(toMs);
+                            Image setImageStream = Image.FromStream(toMs);
+                            picMain_Q.Image = setImageStream;
                         }
                     }
+
+                    base64EncodedImage.Clear();
 
                     picMain_Q.Click += (sender, e) => {
                         var getImgName = (Guna2PictureBox)sender;
@@ -533,7 +592,6 @@ namespace FlowSERVER1 {
                         }
 
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_expand") {
@@ -542,7 +600,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                     }
                     else if (_extTypes == ".txt") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
+                        img.Image = TextImage;
                     }
                     else if (_extTypes == ".html") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
@@ -556,7 +614,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
                     }
                     else if (_extTypes == ".csv") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
+                        img.Image = CSVImage;
                     }
 
                     picMain_Q.Click += (sender_t, e_t) => {
@@ -573,18 +631,15 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_exe") {
-                    img.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                    img.Image = EXEImage;
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
                         exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text);
                         displayExe.Show();
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_vid") {
-
-                    List<string> base64Encoded = new List<string>();
 
                     string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (var command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -592,17 +647,19 @@ namespace FlowSERVER1 {
 
                         using (var readBase64 = await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(readBase64.GetString(0));
+                                base64EncodedThumbnail.Add(readBase64.GetString(0));
                             }
                         }
                     }
 
-                    if (base64Encoded.Count > i && !string.IsNullOrEmpty(base64Encoded[i])) {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                    if (base64EncodedThumbnail.Count > i && !string.IsNullOrEmpty(base64EncodedThumbnail[i])) {
+                        byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail[i]);
                         using (var toMs = new MemoryStream(getBytes)) {
                             img.Image = Image.FromStream(toMs);
                         }
                     }
+
+                    base64EncodedThumbnail.Clear();
 
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         var getImgName = (Guna2PictureBox)sender_vq;
@@ -612,30 +669,29 @@ namespace FlowSERVER1 {
                         vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid","null",label5.Text);
                         vidFormShow.Show();
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_excel") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                    picMain_Q.Image = EXCELImage;
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         exlFORM exlForm = new exlFORM(titleLab.Text,"file_info_excel","null",label5.Text);
                         exlForm.Show();
                     };
                 }
                 if (_tableName == "file_info_audi") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                    picMain_Q.Image = AudioImage;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
                         audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null",label5.Text);
                         displayPic.Show();
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_gif") {
+
                     List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_FILE FROM  " + _tableName + " WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(retrieveImg, con);
+                    string retrieveGifQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    command = new MySqlCommand(retrieveGifQuery, con);
                     command.Parameters.AddWithValue("@username", label5.Text);
 
                     MySqlDataReader _readBase64 = command.ExecuteReader();
@@ -670,21 +726,19 @@ namespace FlowSERVER1 {
                             bgBlur.Dispose();
                         }
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_apk") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    picMain_Q.Image = APKImage;
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
                         apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null");
                         displayPic.Show();
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_pdf") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                    picMain_Q.Image = PDFImage;
                     picMain_Q.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
                         pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",label5.Text);
@@ -694,17 +748,16 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_ptx") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                    picMain_Q.Image = PTXImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
                         ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",label5.Text);
                         displayPtx.Show();
                     };
-                    clearRedundane();
                 }
 
                 if (_tableName == "file_info_msi") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                    picMain_Q.Image = MSIImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
                         msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null",label5.Text);
@@ -714,15 +767,19 @@ namespace FlowSERVER1 {
                 }
 
                 if (_tableName == "file_info_word") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                    picMain_Q.Image = DOCImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
                         wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word","null",label5.Text);
                         displayMsi.Show();
                     };
-                    clearRedundane();
                 }
             }
+
+            if(flowLayoutPanel1.Controls.Count > 0) {
+                clearRedundane();
+            }
+
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
@@ -736,9 +793,6 @@ namespace FlowSERVER1 {
         /// <param name="parameterName">Custom parameter name for panel</param>
         /// <param name="currItem"></param>
         private async Task _generateUserFold(List<String> _fileType, String _foldTitle, String parameterName, int currItem) {
-
-            int top = 275;
-            int h_p = 100;
 
             guna2Button6.Visible = false;
             label8.Visible = false;
@@ -756,15 +810,24 @@ namespace FlowSERVER1 {
                 List<String> typeValues = new List<String>(_fileType);
 
                 List<(string, string)> filesInfo = new List<(string, string)>();
+                HashSet<string> filePaths = new HashSet<string>();
+
                 string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(_foldTitle));
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+
+                            string filePath = EncryptionModel.Decrypt(reader.GetString(0));
                             string uploadDate = reader.GetString(1);
-                            filesInfo.Add((fileName, uploadDate));
+
+                            if (filePaths.Contains(filePath)) {
+                                continue;
+                            }
+
+                            filePaths.Add(filePath);
+                            filesInfo.Add((filePath, uploadDate));
                         }
                     }
                 }
@@ -773,8 +836,8 @@ namespace FlowSERVER1 {
 
                     var panelPic_Q = new Guna2Panel() {
                         Name = $"panelf{i}",
-                        Width = 240,
-                        Height = 262,
+                        Width = 200,
+                        Height = 222,
                         BorderColor = BorderColor,
                         BorderThickness = 1,
                         BorderRadius = 8,
@@ -804,8 +867,9 @@ namespace FlowSERVER1 {
                     titleLab.Visible = true;
                     titleLab.Enabled = true;
                     titleLab.Location = TitleLabelLoc;
-                    titleLab.Width = 220;
-                    titleLab.Height = 30;
+                    titleLab.Width = 160;
+                    titleLab.Height = 20;
+                    titleLab.AutoEllipsis = true;
                     titleLab.Text = filesInfo[i].Item1;
 
                     Guna2PictureBox picMain_Q = new Guna2PictureBox();
@@ -813,8 +877,8 @@ namespace FlowSERVER1 {
                     picMain_Q.Name = "imgf" + i;
                     picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                     picMain_Q.BorderRadius = 8;
-                    picMain_Q.Width = 226;
-                    picMain_Q.Height = 165;
+                    picMain_Q.Width = 190;
+                    picMain_Q.Height = 145;
                     picMain_Q.Visible = true;
 
                     picMain_Q.Anchor = AnchorStyles.None;
@@ -834,19 +898,20 @@ namespace FlowSERVER1 {
                     Guna2Button remBut = new Guna2Button();
                     panelF.Controls.Add(remBut);
                     remBut.Name = $"remf{i}";
-                    remBut.Width = 39;
-                    remBut.Height = 35;
-                    remBut.FillColor = FillColor;
+                    remBut.Width = 29;
+                    remBut.Height = 26;
+                    remBut.ImageOffset = GarbageOffset;
+                    remBut.FillColor = TransparentColor;
                     remBut.BorderRadius = 6;
                     remBut.BorderThickness = 1;
-                    remBut.BorderColor = BorderColor2;
+                    remBut.BorderColor = TransparentColor;
                     remBut.Image = GarbageImage;
                     remBut.Visible = true;
                     remBut.Location = GarbageButtonLoc;
 
                     remBut.Click += (sender_im, e_im) => {
                         var titleFile = titleLab.Text;
-                        DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (verifyDialog == DialogResult.Yes) {
 
                             using (MySqlCommand command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
@@ -885,17 +950,22 @@ namespace FlowSERVER1 {
                             string cacheKey = $"folder_{_foldTitle}_images";
                             MemoryCache cache = MemoryCache.Default;
                             if (cache.Contains(cacheKey)) {
+
                                 base64Encoded = (List<string>)cache.Get(cacheKey);
+
                             } else {
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
-                                        base64Encoded.Add(readBase64.GetString(0));
+                                        string encryptedString = readBase64.GetString(0);
+                                        string decryptedString = EncryptionModel.Decrypt(encryptedString);
+                                        base64Encoded.Add(decryptedString);
                                     }
                                 }
                                 CacheItemPolicy cachePolicy = new CacheItemPolicy {
                                     AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
                                 };
+
                                 cache.Add(cacheKey, base64Encoded, cachePolicy);
                             }
                         }
@@ -907,6 +977,7 @@ namespace FlowSERVER1 {
                                 img.Image = newImage;
                             }
                         }
+
 
 
                         picMain_Q.Click += (sender, e) => {
@@ -1558,16 +1629,14 @@ namespace FlowSERVER1 {
                                     }
                                 }
 
-                                int top = 275;
-                                int h_p = 100;
                                 var panelTxt = new Guna2Panel() {
                                     Name = panName + itemCurr,
                                     Width = 240,
                                     Height = 262,
-                                    BorderColor = BorderColor,//ColorTranslator.FromHtml("#212121"),
+                                    BorderColor = BorderColor,
                                     BorderThickness = 1,
                                     BorderRadius = 8,
-                                    BackColor = TransparentColor,//Color.Transparent,
+                                    BackColor = TransparentColor,
                                     Location = new Point(600, top)
                                 };
 
@@ -1849,7 +1918,7 @@ namespace FlowSERVER1 {
 
                                 remButTxt.Click += (sender_tx, e_tx) => {
                                     var titleFile = titleLab.Text;
-                                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                                     if (verifyDialog == DialogResult.Yes) {
                                         deletionMethod(titleFile, nameTable);
                                         panelTxt.Dispose();
@@ -1952,7 +2021,7 @@ namespace FlowSERVER1 {
                             else if (retrieved == ".gif") {
                                 gifCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_gif", "PanGif", gifCurr, encryptText);
                             }
 
@@ -2061,54 +2130,41 @@ namespace FlowSERVER1 {
 
                 if(_currentFolder == "Home") {
 
-                    String _accType = "";
-                    String getAccTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-                    using (var command = new MySqlCommand(getAccTypeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        List<String> types = new List<String>();
-                        using (var reader = command.ExecuteReader()) {
-                            while (reader.Read()) {
-                                types.Add(reader.GetString(0));
-                            }
-                        }
-                        _accType = types.FirstOrDefault();
-                    }
-
                     int CurrentUploadCount = Convert.ToInt32(label4.Text);
 
-                    if (_accType == "Basic") {
+                    if (accountTypeString == "Basic") {
                         if (CurrentUploadCount != 20) {
-                            _mainFileGenerator(20, _accType);
+                            _mainFileGenerator(20, accountTypeString);
                         }
                         else {
-                            DisplayError(_accType);
+                            DisplayError(accountTypeString);
                         }
                     }
 
-                    if (_accType == "Max") {
+                    if (accountTypeString == "Max") {
                         if (CurrentUploadCount != 500) {
-                            _mainFileGenerator(500, _accType);
+                            _mainFileGenerator(500, accountTypeString);
                         }
                         else {
-                            DisplayError(_accType);
+                            DisplayError(accountTypeString);
                         }
                     }
 
-                    if (_accType == "Express") {
+                    if (accountTypeString == "Express") {
                         if (CurrentUploadCount != 1000) {
-                            _mainFileGenerator(1000, _accType);
+                            _mainFileGenerator(1000, accountTypeString);
                         }
                         else {
-                            DisplayError(_accType);
+                            DisplayError(accountTypeString);
                         }
                     }
 
-                    if (_accType == "Supreme") {
+                    if (accountTypeString == "Supreme") {
                         if (CurrentUploadCount != 2000) {
-                            _mainFileGenerator(2000, _accType);
+                            _mainFileGenerator(2000, accountTypeString);
                         }
                         else {
-                            DisplayError(_accType);
+                            DisplayError(accountTypeString);
                         }
                     }
                 } else {
@@ -2344,12 +2400,12 @@ namespace FlowSERVER1 {
 
                 }
 
-                if (existsInfosUser.Count() >= 1 || existsInfosMail.Count() >= 1) {
-                    if(existsInfosUser.Count() >= 1) {
+                if (existsInfosUser.Count >= 1 || existsInfosMail.Count >= 1) {
+                    if(existsInfosUser.Count >= 1) {
                         label11.Visible = true;
                         label11.Text = "Username is taken.";
                     }
-                    if (existsInfosMail.Count() >= 1) {
+                    if (existsInfosMail.Count >= 1) {
                         label22.Visible = true;
                         label22.Text = "Email already exists.";
                     }
@@ -2428,8 +2484,12 @@ namespace FlowSERVER1 {
                     label5.Text = _getUser;
                     label24.Text = _getEmail;
 
+                    var _setupRecov = (RandomInt(10) + RandomString(20) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12)).ToLower();
+                    var _removeSpacesRecov = new string(_setupRecov.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+
                     var _setupTok = (RandomInt(10) + RandomString(12) + "&/" + RandomInt(12) + "^*" + _getUser + RandomInt(12) + RandomString(12)).ToLower();
-                    var _removeSpaces = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+                    var _removeSpacesTok = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+
                     string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
                     using (var transaction = con.BeginTransaction()) {
@@ -2438,14 +2498,16 @@ namespace FlowSERVER1 {
 
                             MySqlCommand command = con.CreateCommand();
 
-                            command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK)
-                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK)";
+                            command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK,ACCESS_TOK)
+                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK,@ACCESS_TOK)";
                             command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
                             command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(_getPass));
                             command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
                             command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
                             command.Parameters.AddWithValue("@CUST_PIN", EncryptionModel.computeAuthCase(_getPin));
-                            command.Parameters.AddWithValue("@RECOV_TOK", EncryptionModel.computeAuthCase(_setupTok));
+                            command.Parameters.AddWithValue("@RECOV_TOK", EncryptionModel.computeAuthCase(_removeSpacesRecov));
+                            command.Parameters.AddWithValue("@ACCESS_TOK", EncryptionModel.computeAuthCase(_removeSpacesTok));
+
                             command.ExecuteNonQuery();
 
                             command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
@@ -2557,36 +2619,34 @@ namespace FlowSERVER1 {
         /// <summary>
         /// 
         /// Insert and generate file panel
-        /// from dialog for folder
+        /// from dialog for o
         /// 
         /// </summary>
         /// <param name="_getDirPath"></param>
         /// <param name="_getDirTitle"></param>
         /// <param name="_TitleValues"></param>
         /// 
+
+        private void _deletionFoldFile(String _Username, String _fileName, String _foldTitle) {
+            using (MySqlCommand command = new MySqlCommand()) {
+                String _remQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND CUST_FILE_PATH = @filename";
+                command.Connection = con;
+                command.CommandText = _remQue;
+                command.Parameters.AddWithValue("@username", _Username);
+                command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                if (command.ExecuteNonQuery() != 1) {
+                    MessageBox.Show("There's an unknown error while attempting to delete this file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
         private async void folderDialog(String _getDirPath,String _getDirTitle,String[] _TitleValues) {
 
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
 
-            void deletionFoldFile(String _Username, String _fileName, String _foldTitle) {
-                using (MySqlCommand command = new MySqlCommand()) {
-                    String _remQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle AND CUST_FILE_PATH = @filename";
-                    command.Connection = con;
-                    command.CommandText = _remQue;
-                    command.Parameters.AddWithValue("@username", _Username);
-                    command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
-                    if (command.ExecuteNonQuery() != 1) {
-                        MessageBox.Show("There's an unknown error while attempting to delete this file.", "Error",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    }
-                }
-            }
-
             int _IntCurr = 0;
             long fileSizeInMB = 0;
-
-            int top = 275;
-            int h_p = 100;
 
             var _setupUploadAlertThread = new Thread(() => new UploadAlrt(_getDirTitle, label5.Text, "folder_upload_info", "PanExlFold" + _IntCurr, _getDirTitle, _fileSize: fileSizeInMB).ShowDialog());
             _setupUploadAlertThread.Start();
@@ -2616,8 +2676,8 @@ namespace FlowSERVER1 {
 
                 var panelVid = new Guna2Panel() {
                     Name = $"PanExlFold{_IntCurr}",
-                    Width = 240,
-                    Height = 262,
+                    Width = 200, 
+                    Height = 222, 
                     BorderColor = BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
@@ -2637,16 +2697,17 @@ namespace FlowSERVER1 {
                 titleLab.ForeColor = GainsboroColor;
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
-                titleLab.Location = TitleLabelLoc; 
-                titleLab.Width = 220;
-                titleLab.Height = 30;
+                titleLab.Location = TitleLabelLoc;
+                titleLab.AutoEllipsis = true;
+                titleLab.Width = 160; 
+                titleLab.Height = 20; 
                 titleLab.Text = _TitleValues[_IntCurr - 1]; 
 
                 var textboxExl = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxExl);
                 textboxExl.Name = $"ExeExlFold{_IntCurr}";
-                textboxExl.Width = 165;
-                textboxExl.Height = 165;
+                textboxExl.Width = 190;
+                textboxExl.Height = 145;
                 textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
                 textboxExl.BorderRadius = 8;
                 textboxExl.Enabled = true;
@@ -2678,9 +2739,11 @@ namespace FlowSERVER1 {
                 Guna2Button remButExl = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButExl);
                 remButExl.Name = $"RemExlButFold{_IntCurr}";
-                remButExl.Width = 39;
-                remButExl.Height = 35;
-                remButExl.FillColor = FillColor;
+                remButExl.Width = 29;
+                remButExl.Height = 26;
+                remButExl.ImageOffset = GarbageOffset;
+                remButExl.BorderColor = TransparentColor;
+                remButExl.FillColor = TransparentColor;
                 remButExl.BorderRadius = 6;
                 remButExl.BorderThickness = 1;
                 remButExl.BorderColor = BorderColor2;
@@ -2691,9 +2754,9 @@ namespace FlowSERVER1 {
                 remButExl.Click += (sender_vid, e_vid) => {
 
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
-                        deletionFoldFile(label5.Text, titleLab.Text, label26.Text);
+                        _deletionFoldFile(label5.Text, titleLab.Text, label26.Text);
                         panelVid.Dispose();
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
@@ -2713,7 +2776,6 @@ namespace FlowSERVER1 {
                 dateLabExl.Visible = true;
                 dateLabExl.Enabled = true;
                 dateLabExl.Location = DateLabelLoc;
-                dateLabExl.Width = 1000;
                 dateLabExl.Text = varDate;
 
                 label8.Visible = false;
@@ -2732,7 +2794,7 @@ namespace FlowSERVER1 {
 
                         var _imgContent = new Bitmap(_Files);
 
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
+                        String _tobase64 = EncryptionModel.Encrypt(Convert.ToBase64String(_getBytes));
                         await setupUpload(_tobase64);
 
                         textboxExl.Image = _imgContent;
@@ -2790,6 +2852,7 @@ namespace FlowSERVER1 {
                         using (StreamReader ReadFileTxt = new StreamReader(_Files)) {
                             nonLine = ReadFileTxt.ReadToEnd();
                         }
+
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         String getEncoded = Convert.ToBase64String(getBytes);
                         String encryptEncoded = EncryptionModel.Encrypt(getEncoded);
@@ -2812,10 +2875,10 @@ namespace FlowSERVER1 {
                     if (_extTypes == ".apk") {
 
                         String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64, EncryptionKey.KeyValue);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
+                        textboxExl.Image = APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
                             apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk", "null");
@@ -2823,6 +2886,7 @@ namespace FlowSERVER1 {
                         };
                     }
                     if (_extTypes == ".mp4" || _extTypes == ".mov" || _extTypes == ".webm" || _extTypes == ".avi" || _extTypes == ".wmv") {
+
                         ShellFile shellFile = ShellFile.FromFilePath(_Files);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                         String toBase64BitmapThumbnail;
@@ -2832,7 +2896,7 @@ namespace FlowSERVER1 {
                             toBase64BitmapThumbnail = toBase64;
                         }
 
-                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(_getBytes), EncryptionKey.KeyValue);
+                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(_getBytes));
                         await setupUpload(_tempToBase64, toBase64BitmapThumbnail);
 
                         textboxExl.Image = toBitMap;
@@ -2875,10 +2939,10 @@ namespace FlowSERVER1 {
                     if (_extTypes == ".pdf") {
 
                         String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64, EncryptionKey.KeyValue);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                        textboxExl.Image = PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
@@ -2888,10 +2952,10 @@ namespace FlowSERVER1 {
 
                     if (_extTypes == ".docx" || _extTypes == ".doc") {
                         String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64, EncryptionKey.KeyValue);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                        textboxExl.Image = DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
@@ -2901,10 +2965,10 @@ namespace FlowSERVER1 {
 
                     if (_extTypes == ".xlsx" || _extTypes == ".xls") {
                         String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64, EncryptionKey.KeyValue);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
                         
-                        textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                        textboxExl.Image = DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             exlFORM displayPic = new exlFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
@@ -2915,10 +2979,10 @@ namespace FlowSERVER1 {
 
                     if (_extTypes == ".pptx" || _extTypes == ".ppt") {
                         String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64, EncryptionKey.KeyValue);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
                         
-                        textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                        textboxExl.Image = PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
@@ -2928,10 +2992,10 @@ namespace FlowSERVER1 {
 
                     if (_extTypes == ".mp3" || _extTypes == ".wav") {
                         String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64, EncryptionKey.KeyValue);
+                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                        textboxExl.Image = AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
@@ -2981,80 +3045,96 @@ namespace FlowSERVER1 {
         /// 
         /// Open FileDialog and ask user
         /// to select file and send those file 
-        /// metadata into DB and generate panel file on folderDialog
+        /// metadata into DB and generate panel file on folderDialog.
+        /// 
+        /// If condition is met then alert user to upgrade their account.
+        /// The condition; Trying to upload more than the number of 
+        /// folder they can upload according to their account plan
         /// 
         /// </summary>
+        /// 
+
         private String _titleText;
         private String _controlName;
         private void guna2Button12_Click(object sender, EventArgs e) {
 
+            limitFolderFORM folderUploadFailed = new limitFolderFORM(accountTypeString, "it looks like you've reached the max \r\namount of folder you can upload",true);
+
+            List<string> foldersItems = listBox1.Items.Cast<string>().ToList();
+            List<string> execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
+            int countTotalFolders = foldersItems.Count(item => !execludedStringsItem.Contains(item));
+
+            if (accountTypeString == "Max" && countTotalFolders == 5) {
+                folderUploadFailed.Show();
+                return;
+            }
+
+            if (accountTypeString == "Express" && countTotalFolders == 10) {
+                folderUploadFailed.Show();
+                return;
+            }
+
+            if (accountTypeString == "Supreme" && countTotalFolders == 20) {
+                folderUploadFailed.Show();
+                return;
+            }
+
+            if (accountTypeString == "Basic" && countTotalFolders == 3) {
+                folderUploadFailed.Show();
+                return;
+            }
+
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.InitialDirectory = "";
             dialog.IsFolderPicker = true;
+
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
 
                 var _getDirPath = dialog.FileName;
-                var _accType = getAccountType();
                 int _countFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.TopDirectoryOnly).Length;
                 var _getDirTitle = new DirectoryInfo(_getDirPath).Name;
 
-                if(!(listBox1.Items.Contains(_getDirTitle))) {
+                if(!listBox1.Items.Contains(_getDirTitle)) {
 
                     String[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
                     int _numberOfFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.AllDirectories).Length;
 
-                    if (_accType == "Basic") {
-                        if (_numberOfFiles <= 20) {
-                            flowLayoutPanel1.Controls.Clear();
-                            listBox1.Items.Add(_getDirTitle);
-                            folderDialog(_getDirPath,_getDirTitle,_TitleValues);
-                            var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                            listBox1.SelectedIndex = _dirPosition;
-                        }
-                        else {
-                            listBox1.SelectedIndex = 0;
-                            DisplayErrorFolder(_accType);
-                        }
+                    if (accountTypeString == "Basic" && _numberOfFiles <= 20) {
+                        flowLayoutPanel1.Controls.Clear();
+                        listBox1.Items.Add(_getDirTitle);
+                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
+                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
+                        listBox1.SelectedIndex = _dirPosition;
                     }
 
-                    if (_accType == "Max") {
-                        if (_numberOfFiles <= 500) {
-                            flowLayoutPanel1.Controls.Clear();
-                            listBox1.Items.Add(_getDirTitle);
-                            folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                        }
-                        else {
-                            listBox1.SelectedIndex = 0;
-                            DisplayErrorFolder(_accType);
-                        }
+                    else if (accountTypeString == "Max" && _numberOfFiles <= 500) {
+                        flowLayoutPanel1.Controls.Clear();
+                        listBox1.Items.Add(_getDirTitle);
+                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
+                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
+                        listBox1.SelectedIndex = _dirPosition;
                     }
 
-                    if (_accType == "Express") {
-                        if (_numberOfFiles <= 1000) {
-                            flowLayoutPanel1.Controls.Clear();
-                            listBox1.Items.Add(_getDirTitle);
-                            folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                            var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                            listBox1.SelectedIndex = _dirPosition;
-                        }
-                        else {
-                            DisplayErrorFolder(_accType);
-                            listBox1.SelectedItem = "Home";
-                        }
+                    else if (accountTypeString == "Express" && _numberOfFiles <= 1000) {
+                        flowLayoutPanel1.Controls.Clear();
+                        listBox1.Items.Add(_getDirTitle);
+                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
+                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
+                        listBox1.SelectedIndex = _dirPosition;
                     }
 
-                    if (_accType == "Supreme") {
-                        if (_numberOfFiles <= 2000) {
-                            listBox1.Items.Add(_getDirTitle);
-                            folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                            var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                            listBox1.SelectedIndex = _dirPosition;
-                        }
-                        else {
-                            DisplayErrorFolder(_accType);
-                            listBox1.SelectedItem = "Home";
-                        }
+                    else if (accountTypeString == "Supreme" && _numberOfFiles <= 2000) {
+                        listBox1.Items.Add(_getDirTitle);
+                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
+                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
+                        listBox1.SelectedIndex = _dirPosition;
                     }
+
+                    else {
+                        DisplayErrorFolder(accountTypeString);
+                        listBox1.SelectedItem = "Home";
+                    }
+
                 } else {
                     MessageBox.Show("Folder already exists","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
@@ -3206,6 +3286,7 @@ namespace FlowSERVER1 {
 
                 if (_selectedFolder == "Home") {
 
+                    guna2Button27.Visible = false;
                     guna2Button19.Visible = false;
                     guna2Button4.Visible = false;
                     guna2Button3.Visible = false;
@@ -3224,6 +3305,7 @@ namespace FlowSERVER1 {
                     guna2Button3.Visible = true;
                     guna2Button8.Visible = false;
                     guna2Panel4.Visible = false;
+                    guna2Button27.Visible = true;
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
 
@@ -3257,6 +3339,7 @@ namespace FlowSERVER1 {
                     guna2Button3.Visible = false;
                     guna2Button8.Visible = false;
                     guna2Button19.Visible = false;
+                    guna2Button27.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
@@ -3272,6 +3355,8 @@ namespace FlowSERVER1 {
 
                     guna2Button4.Visible = true;
                     guna2Button8.Visible = false;
+                    guna2Button27.Visible = false;
+
                     guna2Button19.Visible = false;
                     guna2Button3.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
@@ -3306,26 +3391,23 @@ namespace FlowSERVER1 {
         /// Garbage (delete folder) button is clicked
         /// </summary>
         /// <param name="foldName"></param>
-        public void _removeFoldFunc(String foldName) {
+        private async void _removeFoldFunc(String foldName) {
 
-            DialogResult verifyDeletion = MessageBox.Show("Delete " + foldName + " folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult verifyDeletion = MessageBox.Show($"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (verifyDeletion == DialogResult.Yes) {
 
-                String removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-                command = new MySqlCommand(removeFoldQue, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
-                command.Parameters.AddWithValue("@foldername", foldName);
-                command.ExecuteNonQuery();
-               
-                listBox1.Items.Remove(foldName);
-                foreach (var _DupeItem in listBox1.Items) {
-                    if (_DupeItem.ToString() == foldName) {
-                        listBox1.Items.Remove(_DupeItem.ToString());
-                    }
+                string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+                using (MySqlCommand command = new MySqlCommand(removeFoldQue, con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldName));
+                    await command.ExecuteNonQueryAsync();
                 }
+
+                listBox1.Items.Remove(foldName);
 
                 int indexSelected = listBox1.Items.IndexOf("Home");
                 listBox1.SelectedIndex = indexSelected;
+
                 Application.OpenForms
                     .OfType<Form>()
                     .Where(form => String.Equals(form.Name, "RetrievalAlert"))
@@ -3391,7 +3473,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
                         filesInfoSharedOthers.Add((fileName, uploadDate));
                     }
@@ -3404,9 +3486,6 @@ namespace FlowSERVER1 {
             var form1 = Form1.instance;
 
             List<String> typeValues = new List<String>(_extTypes);
-
-            int top = 275;
-            int h_p = 100;
 
             for (int q = 0; q < itemCurr; q++) {
 
@@ -3468,7 +3547,7 @@ namespace FlowSERVER1 {
 
                 remButTxt.Click += (sender_im, e_im) => {
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("'" + titleFile + "' Delete this shared file?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show($"'{titleFile}' Delete this shared file?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
 
                         string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
@@ -3479,7 +3558,7 @@ namespace FlowSERVER1 {
                         string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                         using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
                             cmd.Parameters.AddWithValue("@username", label5.Text);
-                            cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
+                            cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                             cmd.Parameters.AddWithValue("@sharedname", setupSharedUsername);
 
                             int rowsAffected = cmd.ExecuteNonQuery();
@@ -3504,11 +3583,11 @@ namespace FlowSERVER1 {
                 Label dateLabTxt = new Label();
                 mainPanelTxt.Controls.Add(dateLabTxt);
                 dateLabTxt.Name = $"LabTxtUp{q}";
-                dateLabTxt.Font = DateLabelFont;//new Font("Segoe UI Semibold", 12, FontStyle.Bold);
+                dateLabTxt.Font = DateLabelFont;
                 dateLabTxt.ForeColor = DarkGrayColor;
                 dateLabTxt.Visible = true;
                 dateLabTxt.Enabled = true;
-                dateLabTxt.Location = DateLabelLoc;//new Point(12, 208);
+                dateLabTxt.Location = DateLabelLoc;
                 dateLabTxt.Width = 1000;
                 dateLabTxt.Text = filesInfoSharedOthers[q].Item2;
 
@@ -3531,7 +3610,7 @@ namespace FlowSERVER1 {
 
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
+                                base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
                             }
                         }
                     }
@@ -3663,7 +3742,7 @@ namespace FlowSERVER1 {
                     string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text, EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
 
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
@@ -3803,7 +3882,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
                         filesInfoShared.Add((fileName, uploadDate));
                     }
@@ -3819,9 +3898,6 @@ namespace FlowSERVER1 {
             var UploaderUsername = uploaderName();
 
             List<String> typeValues = new List<String>(_extTypes);
-
-            int top = 275;
-            int h_p = 100;
 
             for (int q = 0; q < itemCurr; q++) {
                 var panelTxt = new Guna2Panel() {
@@ -3888,7 +3964,7 @@ namespace FlowSERVER1 {
                         String removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                         using (var command = new MySqlCommand(removeQuery, con)) {
                             command.Parameters.AddWithValue("@username", form1.label5.Text);
-                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile, EncryptionKey.KeyValue));
+                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                             command.ExecuteNonQuery();
                         }
 
@@ -4161,7 +4237,7 @@ namespace FlowSERVER1 {
                     }
                     _readBase64.Close();
 
-                    var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[q], EncryptionKey.KeyValue));
+                    var _getBytes = Convert.FromBase64String(EncryptionModel.Decrypt(_base64Encoded[q]));
                     MemoryStream _toMs = new MemoryStream(_getBytes);
 
                     textboxPic.Image = new Bitmap(_toMs);
@@ -4203,13 +4279,23 @@ namespace FlowSERVER1 {
             }
         }
 
-        // REMOVE DIR BUT
+        /// <summary>
+        /// 
+        /// Mini Garbage button which should remove 
+        /// user folder based on the currently selected item in 
+        /// listBox
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button19_Click(object sender, EventArgs e) {
+
             Application.OpenForms
               .OfType<Form>()
               .Where(form => String.Equals(form.Name, "RetrievalAlert"))
               .ToList()
               .ForEach(form => form.Close());
+
             String _currentFold = listBox1.GetItemText(listBox1.SelectedItem);
             _removeFoldFunc(_currentFold);
         }
@@ -4237,8 +4323,6 @@ namespace FlowSERVER1 {
             }
 
             for (int i = 0; i < rowLength; i++) {
-                int top = 275;
-                int h_p = 100;
 
                 var panelPic_Q = new Guna2Panel() {
                     Name = "ABC02" + i,
@@ -4886,6 +4970,7 @@ namespace FlowSERVER1 {
         }
 
         private async Task<string> getAccountTypeNumber() {
+
             string accountType = "";
             string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
@@ -4893,6 +4978,8 @@ namespace FlowSERVER1 {
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
                 label6.Text = accountType;
             }
+
+            accountTypeString = accountType;
 
             if (accountType == "Basic") {
                 label6.Text = "20";
@@ -5143,7 +5230,7 @@ namespace FlowSERVER1 {
                             try {
 
                                 using (var command = new MySqlCommand(insertQuery, con)) {
-                                    command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName, EncryptionKey.KeyValue);
+                                    command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName);
                                     command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
                                     command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
                                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
@@ -5167,8 +5254,6 @@ namespace FlowSERVER1 {
                             }
                         }
 
-                        int top = 275;
-                        int h_p = 100;
                         var panelTxt = new Guna2Panel() {
                             Name = panName + itemCurr,
                             Width = 240,
@@ -5501,8 +5586,8 @@ namespace FlowSERVER1 {
                             using (MemoryStream msIco = new MemoryStream()) {
                                 retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                 dataIco = msIco.ToArray();
-                                String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco), EncryptionKey.KeyValue);
-                                String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64, EncryptionKey.KeyValue);
+                                String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
+                                String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
                                 createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                             }
                         }
@@ -5552,40 +5637,40 @@ namespace FlowSERVER1 {
                     else if (retrieved == ".gif") {
                         gifCurr++;
                         var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_gif", "PanGif", gifCurr, encryptText);
                     }
 
                     else if (retrieved == ".apk") {
                         apkCurr++;
                         var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_apk", "PanApk", apkCurr, encryptText);
                     }
 
                     else if (retrieved == ".pdf") {
                         pdfCurr++;
                         var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_pdf", "PanPdf", pdfCurr, encryptText);
                     }
 
                     else if (retrieved == ".pptx" || retrieved == ".ppt") {
                         ptxCurr++;
                         var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_ptx", "PanPtx", ptxCurr, encryptText);
                     }
                     else if (retrieved == ".msi") {
                         msiCurr++;
                         var _toBase64 = Convert.ToBase64String(convertFileToByte(selectedItems));
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptText);
                     }
                     else if (retrieved == ".docx") {
                         docxCurr++;
                         var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_word", "PanDoc", docxCurr, encryptText);
                     }
 
@@ -5690,6 +5775,122 @@ namespace FlowSERVER1 {
         private void guna2CircleButton2_Click(object sender, EventArgs e) {
             mobileFORM mobileFORMShow = new mobileFORM();
             mobileFORMShow.Show();
+        }
+
+        private void guna2Button26_Click(object sender, EventArgs e) {
+
+        }
+
+        private void _openFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
+
+            var retrievalAlertForm = Application.OpenForms
+                .OfType<Form>()
+                .FirstOrDefault(form => form.Name == "RetrievalAlert");
+
+            retrievalAlertForm?.Close();
+
+            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), EncryptionModel.Decrypt(folderTitle));
+            Directory.CreateDirectory(folderPath);
+
+            foreach (var (fileName, fileBytes) in files) {
+                var filePath = Path.Combine(folderPath, $"{fileName}");
+                File.WriteAllBytes(filePath, fileBytes);
+            }
+
+            Process.Start(folderPath);
+        }
+
+        private async Task _downloadUserFolder(string folderTitle) {
+
+            var files = new List<(string fileName, byte[] fileBytes)>();
+
+            using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@foldtitle", folderTitle);
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        var fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
+                        var fileBytes = Convert.FromBase64String(base64Encoded);
+                        files.Add((fileName, fileBytes));
+                    }
+                }
+            }
+
+            _openFolderDownloadDialog(folderTitle, files);
+        }
+
+        /// <summary>
+        /// 
+        /// Download folder button.
+        /// Only user with paid plan has this feature enabled, else
+        /// alert the user to upgrade their plan if their account is Basic plan
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void guna2Button27_Click(object sender, EventArgs e) {
+
+            if (accountTypeString == "Max" || accountTypeString == "Express" || accountTypeString == "Supreme") {
+                string folderTitleGet = EncryptionModel.Encrypt(listBox1.GetItemText(listBox1.SelectedItem));
+                await _downloadUserFolder(folderTitleGet);
+            }
+            else {
+                limitFolderFORM upgradeAccountFolderFORM = new limitFolderFORM(accountTypeString, "Please upgrade your account \r\nplan to download folder.", false);
+                upgradeAccountFolderFORM.Show();
+            }
+        }
+
+
+        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Button28_Click(object sender, EventArgs e) {
+            guna2Panel3.Visible = false;
+        }
+
+        private void guna2Button26_Click_1(object sender, EventArgs e) {
+
+            string titleFile = label27.Text;
+            string tableName = label31.Text;
+            string panelName = label29.Text;
+
+            DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (verifyDialog == DialogResult.Yes) {
+                String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                command = new MySqlCommand(noSafeUpdate, con);
+                command.ExecuteNonQuery();
+
+                string removeQuery = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
+                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
+                    command.ExecuteNonQuery();
+                }
+
+                Control[] matches = this.Controls.Find(panelName, true);
+                if (matches.Length > 0 && matches[0] is Panel) {
+                    Panel myPanel = (Panel)matches[0];
+                    myPanel.Dispose();
+                }
+
+                if (flowLayoutPanel1.Controls.Count == 0) {
+                    label8.Visible = true;
+                    guna2Button6.Visible = true;
+                }
+                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                int getCurrentCount = int.Parse(label4.Text);
+                int getLimitedValue = int.Parse(label6.Text);
+                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
+                label20.Text = calculatePercentageUsage.ToString() + "%";
+
+                guna2ProgressBar1.Value = calculatePercentageUsage;
+
+                guna2Panel3.Visible = false;
+
+            }
         }
     }
 }
