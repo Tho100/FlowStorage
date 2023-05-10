@@ -20,8 +20,39 @@ namespace FlowSERVER1
     {
         public static Form4 instance;
 
-        public MySqlConnection con = ConnectionModel.con;
-        public MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+
+        /// <summary>
+        /// 
+        /// Initialize panel data
+        /// 
+        /// </summary>
+
+        // Date label
+        private const string DateLabelFontName = "Segoe UI Semibold";
+        private const float DateLabelFontSize = 9f; // 10f
+        private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
+
+        // Title label
+        private const string TitleLabelFontName = "Segoe UI Semibold";
+        private const float TitleLabelFontSize = 11f; // 12f
+        private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
+
+        // Panel
+        private readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
+        private readonly Color DarkGrayColor = Color.DarkGray;
+        private readonly Color GainsboroColor = Color.Gainsboro;
+        private readonly Color TransparentColor = Color.Transparent;
+        private readonly Point TitleLabelLoc = new Point(12, 166); // 12,182
+        private readonly Point DateLabelLoc = new Point(12, 192); // 12,208
+
+        // Garbage button
+        private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
+        private readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
+        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+        private readonly Point GarbageButtonLoc = new Point(165, 188);
+        private readonly Point GarbageOffset = new Point(2, 0);
 
         public Form4() {
             InitializeComponent();
@@ -52,12 +83,12 @@ namespace FlowSERVER1
                 int h_p = 100;
                 var panelPic = new Guna2Panel() {
                     Name = "DirPan" + currMain,
-                    Width = 240,
-                    Height = 262,
-                    BorderColor = ColorTranslator.FromHtml("#212121"),
+                    Width = 200,
+                    Height = 222,
+                    BorderColor = BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
-                    BackColor = Color.Transparent,
+                    BackColor = TransparentColor,
                     Location = new Point(600, top)
                 };
 
@@ -71,21 +102,25 @@ namespace FlowSERVER1
                 dirName.Text = getDirTitle;
                 dirName.Visible = true;
                 dirName.Enabled = true;
-                dirName.Width = 220;
-                dirName.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                dirName.ForeColor = Color.Gainsboro;
-                dirName.Location = new Point(12, 182);
+                dirName.Font = TitleLabelFont;
+                dirName.ForeColor = GainsboroColor;
+                dirName.Visible = true;
+                dirName.Enabled = true;
+                dirName.Location = TitleLabelLoc;
+                dirName.Width = 160;
+                dirName.Height = 20;
+                dirName.AutoEllipsis = true;
 
                 Label directoryLab = new Label();
                 panel.Controls.Add(directoryLab);
                 directoryLab.Name = "DirLab" + currMain;
                 directoryLab.Visible = true;
                 directoryLab.Enabled = true;
-                directoryLab.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-                directoryLab.ForeColor = Color.DarkGray;
-                directoryLab.Location = new Point(12, 208);
-                directoryLab.BackColor = Color.Transparent;
-                directoryLab.Width = 1000;
+                directoryLab.Font = DateLabelFont;
+                directoryLab.ForeColor = DarkGrayColor;
+                directoryLab.Visible = true;
+                directoryLab.Enabled = true;
+                directoryLab.Location = DateLabelLoc;
                 directoryLab.Text = "Directory";
 
                 Guna2PictureBox picBanner = new Guna2PictureBox();
@@ -116,15 +151,16 @@ namespace FlowSERVER1
                 Guna2Button remButTxt = new Guna2Button();
                 panel.Controls.Add(remButTxt);
                 remButTxt.Name = "RemTxtBut" + currMain;
-                remButTxt.Width = 39;
-                remButTxt.Height = 35;
-                remButTxt.FillColor = ColorTranslator.FromHtml("#4713BF");
+                remButTxt.Width = 29;
+                remButTxt.Height = 26;
+                remButTxt.ImageOffset = GarbageOffset;
+                remButTxt.FillColor = TransparentColor;
                 remButTxt.BorderRadius = 6;
                 remButTxt.BorderThickness = 1;
-                remButTxt.BorderColor = ColorTranslator.FromHtml("#232323");
-                remButTxt.Image = FlowSERVER1.Properties.Resources.icons8_garbage_66;
+                remButTxt.BorderColor = TransparentColor;
+                remButTxt.Image = GarbageImage;
                 remButTxt.Visible = true;
-                remButTxt.Location = new Point(189, 218);
+                remButTxt.Location = GarbageButtonLoc;
                 remButTxt.BringToFront();
 
                 remButTxt.Click += (sender_tx, e_tx) => {

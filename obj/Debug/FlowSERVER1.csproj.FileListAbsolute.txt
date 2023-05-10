@@ -1355,3 +1355,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.renameF
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.apiFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.mobileFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.limitFolderFORM.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.renameFORM.resources

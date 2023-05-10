@@ -43,17 +43,19 @@ namespace FlowSERVER1
         private object keyValMain { get; set; }
 
         /// <summary>
+        /// 
         /// Initialize panel data
+        /// 
         /// </summary>
 
         // Date label
         private const string DateLabelFontName = "Segoe UI Semibold";
-        private const float DateLabelFontSize = 10f;
+        private const float DateLabelFontSize = 9f; // 10f
         private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
 
         // Title label
         private const string TitleLabelFontName = "Segoe UI Semibold";
-        private const float TitleLabelFontSize = 12f;
+        private const float TitleLabelFontSize = 11f; // 12f
         private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
 
         // Panel
@@ -61,14 +63,15 @@ namespace FlowSERVER1
         private readonly Color DarkGrayColor = Color.DarkGray;
         private readonly Color GainsboroColor = Color.Gainsboro;
         private readonly Color TransparentColor = Color.Transparent;
-        private readonly Point TitleLabelLoc = new Point(12, 182);
-        private readonly Point DateLabelLoc = new Point(12, 208);
+        private readonly Point TitleLabelLoc = new Point(12, 166); // 12,182
+        private readonly Point DateLabelLoc = new Point(12, 192); // 12,208
 
         // Garbage button
         private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
         private readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
-        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66;
-        private readonly Point GarbageButtonLoc = new Point(189, 218);
+        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+        private readonly Point GarbageButtonLoc = new Point(165, 188);
+        private readonly Point GarbageOffset = new Point(2, 0);
 
         public Form3(String sendTitle_)
         {
@@ -188,8 +191,8 @@ namespace FlowSERVER1
 
                 var panelPic_Q = new Guna2Panel() {
                     Name = parameterName + i,
-                    Width = 240,
-                    Height = 262,
+                    Width = 200,
+                    Height = 222,
                     BorderColor = BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
@@ -219,8 +222,9 @@ namespace FlowSERVER1
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
                 titleLab.Location = TitleLabelLoc;
-                titleLab.Width = 220;
-                titleLab.Height = 30;
+                titleLab.Width = 160;
+                titleLab.Height = 20;
+                titleLab.AutoEllipsis = true;
                 titleLab.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
@@ -228,8 +232,8 @@ namespace FlowSERVER1
                 picMain_Q.Name = $"ImgG{i}";
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                 picMain_Q.BorderRadius = 8;
-                picMain_Q.Width = 226;
-                picMain_Q.Height = 165;
+                picMain_Q.Width = 190;
+                picMain_Q.Height = 145;
                 picMain_Q.Visible = true;
 
                 picMain_Q.Anchor = AnchorStyles.None;
@@ -250,19 +254,24 @@ namespace FlowSERVER1
                 Guna2Button remBut = new Guna2Button();
                 panelF.Controls.Add(remBut);
                 remBut.Name = "Rem" + i;
-                remBut.Width = 39;
-                remBut.Height = 35;
-                remBut.FillColor = FillColor;
+                remBut.Width = 29;
+                remBut.Height = 26;
+                remBut.ImageOffset = new Point(2,0);
+                remBut.FillColor = TransparentColor;
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
-                remBut.BorderColor = BorderColor2;
+                remBut.BorderColor = TransparentColor;
                 remBut.Image = GarbageImage;
                 remBut.Visible = true;
                 remBut.Location = GarbageButtonLoc;
 
                 remBut.Click += (sender_im, e_im) => {
 
-                    var titleFile = titleLab.Text;
+                    guna2Panel1.Visible = true;
+                    label27.Text = titleLab.Text;
+                    label29.Text = panelF.Name;
+
+                    /*var titleFile = titleLab.Text;
 
                     DialogResult verifyDialog = MessageBox.Show($"Delete '{titleLab.Text}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
@@ -288,7 +297,7 @@ namespace FlowSERVER1
                             guna2Button6.Visible = true;
                         }
 
-                    }
+                    }*/
                 };
 
                 guna2Button6.Visible = false;
@@ -743,8 +752,8 @@ namespace FlowSERVER1
                                 int h_p = 100;
                                 var panelTxt = new Guna2Panel() {
                                     Name = panName + itemCurr,
-                                    Width = 240,
-                                    Height = 262,
+                                    Width = 200,
+                                    Height = 222,
                                     BorderColor = BorderColor,
                                     BorderThickness = 1,
                                     BorderRadius = 8,
@@ -760,9 +769,9 @@ namespace FlowSERVER1
                                 var textboxPic = new Guna2PictureBox();
                                 mainPanelTxt.Controls.Add(textboxPic);
                                 textboxPic.Name = "TxtBox" + itemCurr;
-                                textboxPic.Width = 226;
-                                textboxPic.Height = 165;
                                 textboxPic.BorderRadius = 8;
+                                textboxPic.Width = 190;
+                                textboxPic.Height = 145;
                                 textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
                                 textboxPic.Enabled = true;
                                 textboxPic.Visible = true;
@@ -773,6 +782,16 @@ namespace FlowSERVER1
 
                                 textboxPic.Location = new Point(picMain_Q_x, 10);
 
+                                Label dateLabTxt = new Label();
+                                mainPanelTxt.Controls.Add(dateLabTxt);
+                                dateLabTxt.Name = "LabTxtUp" + itemCurr;
+                                dateLabTxt.Font = DateLabelFont;
+                                dateLabTxt.ForeColor = DarkGrayColor;
+                                dateLabTxt.Visible = true;
+                                dateLabTxt.Enabled = true;
+                                dateLabTxt.Location = DateLabelLoc;
+                                dateLabTxt.Text = varDate;
+
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
                                 titleLab.Name = "LabVidUp" + itemCurr;
@@ -781,19 +800,21 @@ namespace FlowSERVER1
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
                                 titleLab.Location = TitleLabelLoc;
-                                titleLab.Width = 220;
-                                titleLab.Height = 30;
+                                titleLab.Width = 160;
+                                titleLab.Height = 20;
+                                titleLab.AutoEllipsis = true;
                                 titleLab.Text = getName;
 
                                 Guna2Button remButTxt = new Guna2Button();
                                 mainPanelTxt.Controls.Add(remButTxt);
                                 remButTxt.Name = "RemTxtBut" + itemCurr;
-                                remButTxt.Width = 39;
-                                remButTxt.Height = 35;
-                                remButTxt.FillColor = FillColor;
+                                remButTxt.Width = 29;
+                                remButTxt.Height = 26;
+                                remButTxt.ImageOffset = new Point(2,0);
+                                remButTxt.FillColor = TransparentColor;
                                 remButTxt.BorderRadius = 6;
                                 remButTxt.BorderThickness = 1;
-                                remButTxt.BorderColor = BorderColor2;
+                                remButTxt.BorderColor = TransparentColor;
                                 remButTxt.Image = GarbageImage;
                                 remButTxt.Visible = true;
                                 remButTxt.Location = GarbageButtonLoc;
@@ -1014,29 +1035,11 @@ namespace FlowSERVER1
                                 }
 
                                 remButTxt.Click += (sender_tx, e_tx) => {
-                                    var titleFile = titleLab.Text;
-                                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                                    if (verifyDialog == DialogResult.Yes) {
-                                        deletionMethod(titleFile);
-                                        panelTxt.Dispose();
-                                    }
 
-                                    if (flowLayoutPanel1.Controls.Count == 0) {
-                                        label8.Visible = true;
-                                        guna2Button6.Visible = true;
-                                    }
+                                    guna2Panel1.Visible = true;
+                                    label27.Text = titleLab.Text;
+                                    label29.Text = panelTxt.Name;
                                 };
-
-                                Label dateLabTxt = new Label();
-                                mainPanelTxt.Controls.Add(dateLabTxt);
-                                dateLabTxt.Name = "LabTxtUp" + itemCurr;
-                                dateLabTxt.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-                                dateLabTxt.ForeColor = Color.DarkGray;
-                                dateLabTxt.Visible = true;
-                                dateLabTxt.Enabled = true;
-                                dateLabTxt.Location = new Point(12, 208);
-                                dateLabTxt.Width = 1000;
-                                dateLabTxt.Text = varDate;
 
                             } else {
                                 MessageBox.Show("File is too large, max file size is 8GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1316,6 +1319,80 @@ namespace FlowSERVER1
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 
+        }
+
+        private void guna2Button26_Click(object sender, EventArgs e) {
+
+            string fileName = label27.Text;
+            string panelname = label29.Text;
+
+            DialogResult verifyDialog = MessageBox.Show($"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (verifyDialog == DialogResult.Yes) {
+                using (var command = con.CreateCommand()) {
+                    String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                    command.CommandText = noSafeUpdate;
+                    command.ExecuteNonQuery();
+                }
+
+                using (var command = con.CreateCommand()) {
+                    String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    command.CommandText = removeQuery;
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
+                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
+                    command.ExecuteNonQuery();
+                }
+
+                Control[] matches = this.Controls.Find(panelname,true);
+                if(matches.Length > 0 && matches[0] is Panel) {
+                    Panel myPanel = (Panel)matches[0];
+                    myPanel.Dispose();
+                }
+
+
+                if (flowLayoutPanel1.Controls.Count == 0) {
+                    label8.Visible = true;
+                    guna2Button6.Visible = true;
+                }
+
+                guna2Panel1.Visible = false;
+
+            }
+        }
+
+        private void guna2Button28_Click(object sender, EventArgs e) {
+            guna2Panel1.Visible = false;
+        }
+
+        private void guna2Button30_Click(object sender, EventArgs e) {
+
+            string titleFile = label27.Text;
+            string tableName = "file_info_directory";
+            string panelName = label29.Text;
+            string dirName = label1.Text;
+
+            renameFORM renameFileFORM = new renameFORM(titleFile, tableName, panelName, dirName);
+            renameFileFORM.Show();
+        }
+
+        private void guna2Button32_Click(object sender, EventArgs e) {
+
+            string titleFile = label27.Text;
+            string dirName = label1.Text;
+
+            SaverModel.SaveSelectedFile(titleFile, "upload_info_directory", dirName);
+            
+        }
+
+        private void guna2Button29_Click(object sender, EventArgs e) {
+
+            string titleFile = label27.Text;
+            string dirName = label1.Text;
+
+            string fileExtensions = titleFile.Substring(titleFile.Length - 4);
+
+            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, false, label5.Text, dirName);
+            sharingFileFORM.Show();
         }
     }
 }

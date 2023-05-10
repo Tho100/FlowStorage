@@ -12,9 +12,9 @@ using System.Windows.Forms;
 namespace FlowSERVER1 {
     public partial class renameFoldFORM : Form {
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static string folderTitle {get; set; }
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+        private string folderTitle {get; set; }
         public renameFoldFORM(String foldTitle) {
             InitializeComponent();
 

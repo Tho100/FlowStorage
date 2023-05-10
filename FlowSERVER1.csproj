@@ -607,6 +607,12 @@
     <Compile Include="renameFoldFORM.Designer.cs">
       <DependentUpon>renameFoldFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="renameFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="renameFORM.Designer.cs">
+      <DependentUpon>renameFORM.cs</DependentUpon>
+    </Compile>
     <Compile Include="resetPas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -843,6 +849,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="renameFoldFORM.resx">
       <DependentUpon>renameFoldFORM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="renameFORM.resx">
+      <DependentUpon>renameFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="resetPas.resx">
       <DependentUpon>resetPas.cs</DependentUpon>
