@@ -18,11 +18,11 @@ namespace FlowSERVER1 {
 
         public static gifFORM instance;
 
-        public MySqlCommand command = ConnectionModel.command;
-        public MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
 
-        public string _TableName;
-        public string _Directory;
+        private string _TableName;
+        private string _Directory;
         private bool _IsFromShared;
         /// <summary>
         /// 

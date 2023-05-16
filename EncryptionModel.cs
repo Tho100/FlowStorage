@@ -9,9 +9,6 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public static class EncryptionModel {
-
-        private static readonly Random _random = new Random();
-
         public static string Encrypt(String _value, String _key = "") {
             String toBase64 = "";
 

@@ -27,14 +27,16 @@ namespace FlowSERVER1 {
         /// </summary>
 
         public static UploadAlrt instance;
-        public static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
-        private static String UploaderName;
-        private static String ControlName;
-        private static String TableName;
-        private static String FileName;
-        private static String DirectoryName;
-        private static String FileExt;
+
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+
+        private string UploaderName;
+        private string ControlName;
+        private string TableName;
+        private string FileName;
+        private string DirectoryName;
+        private string FileExt;
 
         private System.Windows.Forms.Timer timer;
         private int progressValue = 0;
@@ -123,7 +125,7 @@ namespace FlowSERVER1 {
         /// <summary>
         /// File deletion function for sharing
         /// </summary>
-        private void FileDeletionSharing(String _CustTo,String _FileName) {
+        private void FileDeletionSharing(String _FileName) {
             String fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
             command = new MySqlCommand(fileDeletionQuery, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -253,7 +255,7 @@ namespace FlowSERVER1 {
                             }
                         } else if (TableName == "cust_sharing") {
                             // @ Note: Directory name refer to receiver name
-                            FileDeletionSharing(DirectoryName,getName);
+                            FileDeletionSharing(getName);
                         }
                     }
                 }

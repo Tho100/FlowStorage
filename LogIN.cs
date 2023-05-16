@@ -22,6 +22,7 @@ using Org.BouncyCastle.Asn1.X509;
 
 namespace FlowSERVER1 {
     public partial class LogIN : Form {
+
         public static LogIN instance;
 
         private MySqlConnection con = ConnectionModel.con;
@@ -119,7 +120,7 @@ namespace FlowSERVER1 {
             return _authStrCase0;
         }
 
-        void setupRedundane() {
+        private void setupRedundane() {
 
             var form = Form1.instance;
             var flowlayout = form.flowLayoutPanel1;

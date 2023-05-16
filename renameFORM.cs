@@ -13,8 +13,8 @@ using System.Windows.Forms;
 namespace FlowSERVER1 {
     public partial class renameFORM : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+        
         private string titleFile {get; set; }
         private string tableName{ get; set; }
         private string panelName { get; set; }
@@ -39,7 +39,6 @@ namespace FlowSERVER1 {
         }
 
         private async Task renameFileAsync(String newFileName) {
-
 
             if (tableName != "cust_sharing" && tableName != "folder_upload_info" && tableName != "file_info_directory") {
 
@@ -72,7 +71,7 @@ namespace FlowSERVER1 {
                     cmd.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     cmd.Parameters.AddWithValue("@sharedname", sharedToName);
 
-                    await command.ExecuteNonQueryAsync();
+                    await cmd.ExecuteNonQueryAsync();
                 }
 
             }
@@ -85,7 +84,7 @@ namespace FlowSERVER1 {
                     cmd.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     cmd.Parameters.AddWithValue("@sharedname", sharedToName);
 
-                    cmd.ExecuteNonQuery();
+                    await cmd.ExecuteNonQueryAsync();
                 }
             }
             else if (tableName == "file_info_directory") {
@@ -131,6 +130,10 @@ namespace FlowSERVER1 {
             }
 
             await renameFileAsync(newFileName);
+
+        }
+
+        private void label2_Click(object sender, EventArgs e) {
 
         }
     }

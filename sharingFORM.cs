@@ -17,14 +17,19 @@ using System.Threading;
 
 namespace FlowSERVER1 {
     public partial class sharingFORM : Form {
-        private static String _FileName;
-        private static String _FilePath;
-        private static String _retrieved;
-        private static String _getExt;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static sharingFORM instance;
-        public String _verifySetPas = "";
+
+        private string _FileName;
+        private string _FilePath;
+        private string _retrieved;
+        private string _getExt;
+
+        public MySqlConnection con = ConnectionModel.con;
+        public MySqlCommand command = ConnectionModel.command;
+
+        public sharingFORM instance;
+
+        public string _verifySetPas = "";
+
         public sharingFORM() {
             InitializeComponent();
             instance = this;
@@ -339,8 +344,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private static String _controlName = null;
-        private static String _currentFileName = "";
+        private string _currentFileName = "";
 
         /// <summary>
         /// Button to start file sharing 

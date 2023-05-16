@@ -11,8 +11,9 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class verificationTokenFORM : Form {
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+
+        readonly private MySqlConnection con = ConnectionModel.con;
+
         public verificationTokenFORM() {
             InitializeComponent();
         }
@@ -29,27 +30,32 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
-            String _queStr = "";
-            String _selectQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_selectQue,con);
-            command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
 
-            MySqlDataReader _readQue = command.ExecuteReader();
-            while(_readQue.Read()) {
-                _queStr = _readQue.GetString(0);
+            string _queStr = "";
+
+            string _selectQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(_selectQue, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    while (reader.Read()) {
+                        _queStr = reader.GetString(0);
+                    }
+                }
             }
-            _readQue.Close();
 
-            if(EncryptionModel.Decrypt(_queStr, "0123456789085746") == guna2TextBox1.Text) {
+            if (EncryptionModel.Decrypt(_queStr) == guna2TextBox1.Text) {
                 remAccFORM.instance.guna2Button28.Visible = false;
                 remAccFORM.instance.guna2Button29.Visible = true;
                 remAccFORM.instance.guna2TextBox2.PasswordChar = '\0';
                 remAccFORM.instance.guna2TextBox2.Enabled = true;
                 remAccFORM.instance.tokenCheckCurr++;
                 this.Close();
-            } else {
+            }
+            else {
                 label1.Visible = true;
             }
+
         }
 
         private void label2_Click(object sender, EventArgs e) {

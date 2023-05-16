@@ -12,9 +12,11 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class resPasFORM : Form {
-        private static MySqlCommand command = ConnectionModel.command;
-        private static MySqlConnection con = ConnectionModel.con;
-        private static String CurrentUsername;
+
+        readonly private MySqlConnection con = ConnectionModel.con;
+
+        private string CurrentUsername;
+
         public resPasFORM(String _currentUsername) {
             InitializeComponent();
             CurrentUsername = _currentUsername;
@@ -33,35 +35,45 @@ namespace FlowSERVER1 {
         }
 
         private string authReturnOriginal(String _usernameEntered) {
-            List<String> _passValues = new List<string>();
-            String getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(getUsername, con);
-            command.Parameters.AddWithValue("@username", _usernameEntered);
 
-            MySqlDataReader _ReadPass = command.ExecuteReader();
-            if (_ReadPass.Read()) {
-                var _getStringPassword = _ReadPass.GetString(0);
-                _passValues.Add(_getStringPassword);
+            List<string> _passValues = new List<string>();
+
+            string getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
+                command.Parameters.AddWithValue("@username", _usernameEntered);
+
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    if (reader.Read()) {
+                        string getStringPassword = reader.GetString(0);
+                        _passValues.Add(getStringPassword);
+                    }
+                }
             }
-            _ReadPass.Close();
-            String _passValuesString = _passValues[0];
-            return _passValuesString;
+
+            string passValuesString = _passValues[0];
+            return passValuesString;
+
         }
 
         private void setupInformationUpdate(String _custUsername,String _newPass) {
 
-            String updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(updatePasswordQuery,con);
-            command.Parameters.AddWithValue("@newpass",computeAuthCase(_newPass));
-            command.Parameters.AddWithValue("@username",_custUsername);
-            command.ExecuteNonQuery();
+            string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(updatePasswordQuery, con)) {
+                command.Parameters.AddWithValue("@newpass", computeAuthCase(_newPass));
+                command.Parameters.AddWithValue("@username", _custUsername);
+                command.ExecuteNonQuery();
+            }
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+
             try {
+
                 var _getNewPass = guna2TextBox1.Text;
                 var _getVerify = guna2TextBox3.Text;
                 var _getOldPass = guna2TextBox2.Text;
+
                 if (_getNewPass == _getVerify) {
                     if (_getNewPass != String.Empty) {
                         if (_getVerify != String.Empty) {

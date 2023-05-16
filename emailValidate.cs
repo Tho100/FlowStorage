@@ -11,7 +11,6 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class emailValidate : Form {
-        private MySqlCommand command = ConnectionModel.command;
         private MySqlConnection con = ConnectionModel.con;
         public emailValidate() {
             InitializeComponent();
@@ -26,7 +25,7 @@ namespace FlowSERVER1 {
         }
 
         string _valueToReturn = "";
-        string returnValues(String _WhichColumn) {
+        private string returnValues(String _WhichColumn) {
 
             List<String> _concludeValue = new List<String>();
 
@@ -50,7 +49,33 @@ namespace FlowSERVER1 {
             return _valueToReturn;
         }
 
+        string _recovTok = "";
+        private string returnValuesRecov() {
+
+            List<String> _concludeValue = new List<String>();
+
+            String checkPassword_Query = "SELECT RECOV_TOK FROM information WHERE CUST_EMAIL = @email";
+
+            using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
+                command.CommandText = checkPassword_Query;
+                command.Parameters.AddWithValue("@email", guna2TextBox1.Text);
+
+                using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
+                    while (readerPass_.Read()) {
+                        _concludeValue.Add(readerPass_.GetString(0));
+                    }
+                }
+            }
+
+            if (_concludeValue.Count > 0 && _concludeValue[0] != "") {
+                _recovTok = EncryptionModel.Decrypt(_concludeValue[0]);
+            }
+
+            return _recovTok;
+        }
+
         private string emailExistsCheck() {
+
             String _custEmail = "";
             List<String> _concludeValue = new List<String>();
 
@@ -83,7 +108,7 @@ namespace FlowSERVER1 {
                     if (returnValues("CUST_PIN") != "") {
                         if(EncryptionModel.computeAuthCase(guna2TextBox4.Text) == returnValues("CUST_PIN")) {
                              
-                            if(guna2TextBox2.Text == returnValues("RECOV_TOK")) {
+                            if(guna2TextBox2.Text == returnValuesRecov()) {
 
                                  resPasFORM _showPasswordRecovery = new resPasFORM(Form1.instance.label5.Text);
                                 _showPasswordRecovery.Show();

@@ -439,12 +439,6 @@
     <Compile Include="chagneUserForm.Designer.cs">
       <DependentUpon>chagneUserForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="confirmPas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="confirmPas.Designer.cs">
-      <DependentUpon>confirmPas.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConfirmRemFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -613,12 +607,6 @@
     <Compile Include="renameFORM.Designer.cs">
       <DependentUpon>renameFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="resetPas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="resetPas.Designer.cs">
-      <DependentUpon>resetPas.cs</DependentUpon>
-    </Compile>
     <Compile Include="resPasFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -764,9 +752,6 @@
     <EmbeddedResource Include="chagneUserForm.resx">
       <DependentUpon>chagneUserForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="confirmPas.resx">
-      <DependentUpon>confirmPas.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ConfirmRemFORM.resx">
       <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
     </EmbeddedResource>
@@ -852,9 +837,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="renameFORM.resx">
       <DependentUpon>renameFORM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="resetPas.resx">
-      <DependentUpon>resetPas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="resPasFORM.resx">
       <DependentUpon>resPasFORM.cs</DependentUpon>

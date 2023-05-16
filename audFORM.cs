@@ -20,8 +20,8 @@ using System.Data.SqlClient;
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlCommand command = ConnectionModel.command;
 
         private String _TabName = "";
         private String _DirName = "";
@@ -33,6 +33,7 @@ namespace FlowSERVER1 {
         private System.Windows.Forms.Timer _timer;
         private TimeSpan _elapsedTime;
         private Mp3FileReader _NReader;
+
         public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 

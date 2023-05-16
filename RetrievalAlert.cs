@@ -12,9 +12,13 @@ using System.Diagnostics;
 
 namespace FlowSERVER1 {
     public partial class RetrievalAlert : Form {
+
         public static RetrievalAlert instance;
-        private static String OriginFrom = "";
-        private static MySqlConnection con = ConnectionModel.con;
+
+        private string OriginFrom = "";
+
+        readonly private MySqlConnection con = ConnectionModel.con;
+
         public RetrievalAlert(String alertMessage,String _orignFrom) {
             InitializeComponent();
             label8.Text = alertMessage;

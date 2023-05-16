@@ -21,9 +21,9 @@ namespace FlowSERVER1 {
         public MySqlConnection con = ConnectionModel.con;
         public MySqlCommand command = ConnectionModel.command;
 
-        public Byte[] GlobalByte;
-        public String _TableName;
-        public String _DirectoryName;
+        public byte[] GlobalByte;
+        public string _TableName;
+        public string _DirectoryName;
 
         private bool _isFromShared;
         private bool IsFromSharing;  // Shared to me 

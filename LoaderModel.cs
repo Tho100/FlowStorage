@@ -22,8 +22,6 @@ namespace FlowSERVER1 {
         private static MySqlConnection con = ConnectionModel.con;
         public static byte[] universalBytes { get; set; }
         public static bool stopFileRetrievalLoad { get; set; } = false;
-        public static string originalFileName { get; set; }
-
         private static string fileName { get; set; }
 
         public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName, bool _isFromSharedTo = false) {

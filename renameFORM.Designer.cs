@@ -34,7 +34,6 @@
             this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -69,6 +68,7 @@
             this.label2.Size = new System.Drawing.Size(534, 25);
             this.label2.TabIndex = 53;
             this.label2.Text = "djwajfuowdwadawd.mp4";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -174,18 +174,6 @@
             this.guna2TextBox1.Size = new System.Drawing.Size(380, 44);
             this.guna2TextBox1.TabIndex = 48;
             // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(-21, 4);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(130, 20);
-            this.label4.TabIndex = 46;
-            this.label4.Text = "Share To";
-            // 
             // renameFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,7 +188,6 @@
             this.Controls.Add(this.guna2Button6);
             this.Controls.Add(this.guna2Button2);
             this.Controls.Add(this.guna2TextBox1);
-            this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "renameFORM";
@@ -222,6 +209,5 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         public Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
-        private System.Windows.Forms.Label label4;
     }
 }

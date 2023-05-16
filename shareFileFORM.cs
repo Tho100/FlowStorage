@@ -15,8 +15,10 @@ using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+
         public static string _FileName { get; set; }
         public static string _FileExt {get; set ;}
         public static string _IsFromTable {get; set;}
@@ -42,30 +44,36 @@ namespace FlowSERVER1 {
         private int accountType(String _receiverUsername) {
 
             int _allowedReturn = 20;
-            String _accType = "";
+            string _accType = "";
 
-            String _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_getAccountTypeQue, con);
-            command.Parameters.AddWithValue("@username", _receiverUsername);
+            string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(_getAccountTypeQue, con)) {
+                command.Parameters.AddWithValue("@username", _receiverUsername);
 
-            MySqlDataReader _readAccType = command.ExecuteReader();
-            if (_readAccType.Read()) {
-                _accType = _readAccType.GetString(0);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    if (reader.Read()) {
+                        _accType = reader.GetString(0);
+                    }
+                }
             }
-            _readAccType.Close();
-            if (_accType == "Max") {
-                _allowedReturn = 500;
+
+            switch (_accType) {
+                case "Max":
+                    _allowedReturn = 500;
+                    break;
+                case "Express":
+                    _allowedReturn = 1000;
+                    break;
+                case "Supreme":
+                    _allowedReturn = 2000;
+                    break;
+                case "Basic":
+                    _allowedReturn = 20;
+                    break;
             }
-            else if (_accType == "Express") {
-                _allowedReturn = 1000;
-            }
-            else if (_accType == "Supreme") {
-                _allowedReturn = 2000;
-            }
-            else if (_accType == "Basic") {
-                _allowedReturn = 20;
-            }
+
             return _allowedReturn;
+
         }
 
         /// <summary>
@@ -251,12 +259,11 @@ namespace FlowSERVER1 {
 
             return GetBase64String;
         }
+
         /// <summary>
         /// Main function for sharing file 
         /// </summary>
-        private static String _controlName = null;
-        private static String _currentFileName = "";
-        long fileSizeInMB = 0;
+
         private async void startSharing() {
 
             int _accType = accountType(guna2TextBox1.Text);

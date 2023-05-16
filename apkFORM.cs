@@ -15,7 +15,8 @@ using System.Text.RegularExpressions;
 namespace FlowSERVER1 {
     public partial class apkFORM : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
+
         private string _TableName;
         private string _DirName;
         private bool IsFromSharing;   

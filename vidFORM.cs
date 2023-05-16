@@ -17,17 +17,18 @@ using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
+
         public static vidFORM instance;
-        public static MySqlCommand command = ConnectionModel.command;
-        public static MySqlConnection con = ConnectionModel.con;
+
+        readonly private static MySqlConnection con = ConnectionModel.con;
 
         private MediaPlayer _mp;
-        private static String _TableName;
-        private static String _DirName;
-        private static String _UploaderName;
-        private static bool _IsFromShared;
-        private static bool IsFromSharing;
-        private static bool _IsEndReached;
+        private string _TableName;
+        private string _DirName;
+        private string _UploaderName;
+        private bool _IsFromShared;
+        private bool IsFromSharing;
+        private bool _IsEndReached;
 
         public vidFORM(Image getThumb, int width, int height, String getTitle,String tableName, String dirName,String uploaderName, bool _isFromShared = false,bool _isFromSharing = true) {
 

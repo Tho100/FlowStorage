@@ -15,8 +15,8 @@ using System.Windows.Forms;
 namespace FlowSERVER1 {
     public partial class RecovFORM : Form {
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlCommand command = ConnectionModel.command;
 
         public RecovFORM() {
             InitializeComponent();
@@ -74,7 +74,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            return concludeStrings;
+            return EncryptionModel.Decrypt(concludeStrings);
 
         }
 

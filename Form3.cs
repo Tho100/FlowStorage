@@ -29,6 +29,7 @@ namespace FlowSERVER1
     public partial class Form3 : Form {
 
         public static Form3 instance;
+
         private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
         private string _extName { get; set; }
@@ -50,12 +51,12 @@ namespace FlowSERVER1
 
         // Date label
         private const string DateLabelFontName = "Segoe UI Semibold";
-        private const float DateLabelFontSize = 9f; // 10f
+        private const float DateLabelFontSize = 9f; 
         private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
 
         // Title label
         private const string TitleLabelFontName = "Segoe UI Semibold";
-        private const float TitleLabelFontSize = 11f; // 12f
+        private const float TitleLabelFontSize = 11f; 
         private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
 
         // Panel
@@ -63,8 +64,8 @@ namespace FlowSERVER1
         private readonly Color DarkGrayColor = Color.DarkGray;
         private readonly Color GainsboroColor = Color.Gainsboro;
         private readonly Color TransparentColor = Color.Transparent;
-        private readonly Point TitleLabelLoc = new Point(12, 166); // 12,182
-        private readonly Point DateLabelLoc = new Point(12, 192); // 12,208
+        private readonly Point TitleLabelLoc = new Point(12, 166); 
+        private readonly Point DateLabelLoc = new Point(12, 192);
 
         // Garbage button
         private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
@@ -79,8 +80,6 @@ namespace FlowSERVER1
             instance = this;
             this.Text = $"{sendTitle_} (Directory)";
             label1.Text = sendTitle_;
-
-            var form1 = Form1.instance;
 
             Dictionary<string, (string, string)> fileExtensions = new Dictionary<string, (string, string)> {
                 { ".png", ("imgFilePng", "file_info") },
@@ -271,33 +270,6 @@ namespace FlowSERVER1
                     label27.Text = titleLab.Text;
                     label29.Text = panelF.Name;
 
-                    /*var titleFile = titleLab.Text;
-
-                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleLab.Text}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (verifyDialog == DialogResult.Yes) {
-                        using (var command = con.CreateCommand()) {
-                            String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                            command.CommandText = noSafeUpdate;
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = con.CreateCommand()) {
-                            String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                            command.CommandText = removeQuery;
-                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
-                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                            command.ExecuteNonQuery();
-                        }
-
-                        panelPic_Q.Dispose();
-
-                        if (flowLayoutPanel1.Controls.Count == 0) {
-                            label8.Visible = true;
-                            guna2Button6.Visible = true;
-                        }
-
-                    }*/
                 };
 
                 guna2Button6.Visible = false;
@@ -321,14 +293,13 @@ namespace FlowSERVER1
                         }
                     }
 
-                    string base64String = base64Encoded.ElementAtOrDefault(i);
-                    if (base64String != null) {
-                        await Task.Run(async () => {
-                            byte[] getBytes = Convert.FromBase64String(base64String);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                img.Image = await Task.Run(() => new Bitmap(toMs));
-                            }
-                        });
+
+                    if (base64Encoded.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            Image setImageStream = Image.FromStream(toMs);
+                            picMain_Q.Image = setImageStream;
+                        }
                     }
 
                     base64Encoded.Clear();
@@ -618,25 +589,9 @@ namespace FlowSERVER1
         int msiCurr = 0;
         int docxCurr = 0;
         private string _controlName;
-        private async void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
+        private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
 
             var form1 = Form1.instance;
-
-            void deletionMethod(string fileName) {
-                string query = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-
-                using (MySqlCommand command = new MySqlCommand(query, con)) {
-                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                    command.ExecuteNonQuery();
-                }
-
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    label8.Visible = true;
-                    guna2Button6.Visible = true;
-                }
-            }
 
             var open = new OpenFileDialog {
                 Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
@@ -1391,7 +1346,7 @@ namespace FlowSERVER1
 
             string fileExtensions = titleFile.Substring(titleFile.Length - 4);
 
-            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, false, label5.Text, dirName);
+            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, false, Form1.instance.label5.Text, dirName);
             sharingFileFORM.Show();
         }
     }

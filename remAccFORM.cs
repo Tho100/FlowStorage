@@ -32,16 +32,19 @@ namespace FlowSERVER1 {
     public partial class remAccFORM : Form {
 
         public static remAccFORM instance;
-        public static String _selectedAcc;
+        public static string _selectedAcc;
+
         public int tokenCheckCurr = 0;
 
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+
         private List<int> _TotalUploadToday = new List<int>();
         private List<int> _TotalUploadOvertime = new List<int>();
-        private List<String> _TotalUploadDirectoryToday = new List<String>();
-        private String CurrentLang = "";
-        private String NewLang = "";
+        private List<string> _TotalUploadDirectoryToday = new List<string>();
+
+        private string CurrentLang = "";
+        private string NewLang = "";
 
         private int CurrDateStats = 0;
         private string JoinedDate = "";

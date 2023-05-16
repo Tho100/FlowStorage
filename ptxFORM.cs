@@ -19,12 +19,14 @@ namespace FlowSERVER1 {
     /// Presentation viewer form
     /// </summary>
     public partial class ptxFORM : Form {
-        public static MySqlCommand command = ConnectionModel.command;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static String _TableName;
-        public static String _DirectoryName;
-        private static bool _IsFromShared;
-        private static bool IsFromSharing;  // Shared to me 
+
+        private MySqlConnection con = ConnectionModel.con;
+
+        private string _TableName;
+        private string _DirectoryName;
+        private bool _IsFromShared;
+        private bool IsFromSharing;  
+
         /// <summary>
         /// 
         /// Load file based on table name

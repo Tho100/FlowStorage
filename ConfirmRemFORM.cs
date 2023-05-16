@@ -12,47 +12,54 @@ using System.IO;
 
 namespace FlowSERVER1 {
     public partial class ConfirmRemFORM : Form {
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+
+        readonly private MySqlConnection con = ConnectionModel.con;
+
         public ConfirmRemFORM() {
             InitializeComponent();
+        }
+
+        private void remove_ItemsTab(String _tableName) {
+
+            if (_tableName != "cust_sharing") {
+                string _remQueryBegin = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(_remQueryBegin, con)) {
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.ExecuteNonQuery();
+                }
+            }
+            else {
+
+                string _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
+                using (MySqlCommand command = new MySqlCommand(_remSharingBeings, con)) {
+                    command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                    command.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+        private string returnValues(String _WhichColumn) {
+
+            List<string> _concludeValue = new List<string>();
+
+            string checkPassword_Query = $"SELECT {_WhichColumn} FROM information WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
+                    while (readerPass_.Read()) {
+                        _concludeValue.Add(readerPass_.GetString(0));
+                    }
+                }
+            }
+
+            return _concludeValue[0];
+
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
-
-                void remove_ItemsTab(String _tableName) {
-                    if(_tableName != "cust_sharing") {
-                        String _remQueryBegin = "DELETE FROM " + _tableName +  " WHERE CUST_USERNAME = @username";
-                        command = new MySqlCommand(_remQueryBegin, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.ExecuteNonQuery();
-                    } else {
-                        String _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
-                        command = new MySqlCommand(_remSharingBeings, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.ExecuteNonQuery();
-                    }
-                }
-
-                String returnValues(String _WhichColumn) {
-
-                    List<string> _concludeValue = new List<string>();
-
-                    String checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(checkPassword_Query,con);
-                    command = ConnectionModel.con.CreateCommand();
-                    command.CommandText = checkPassword_Query;
-                    command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);
-                    MySqlDataReader readerPass_ = command.ExecuteReader();
-
-                    while(readerPass_.Read()) {
-                        _concludeValue.Add(readerPass_.GetString(0));
-                    }
-                    readerPass_.Close();
-                    return _concludeValue[0];
-                }
 
                 var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
                 var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");

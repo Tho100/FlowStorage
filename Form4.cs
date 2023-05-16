@@ -23,6 +23,8 @@ namespace FlowSERVER1
         private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
+        readonly private string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+
         /// <summary>
         /// 
         /// Initialize panel data
@@ -259,8 +261,7 @@ namespace FlowSERVER1
         /// Verify necessary stuff before allowing user to create directory
         /// </summary>
 
-        public static int value_Dir = 0;
-        private string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+        private int value_Dir = 0;
         private async void guna2Button2_Click(object sender, EventArgs e) {
             String filesCount = Form1.instance.label4.Text;
             int totalFiles = int.Parse(filesCount);
@@ -313,7 +314,7 @@ namespace FlowSERVER1
                         if (totalFiles != maxFilesCount && countTotalDir != maxDirCount) {
                             value_Dir++;
 
-                            if(Form1.instance.listBox1.Items[Form1.instance.listBox1.SelectedIndex] != "Home") {
+                            if( (string) Form1.instance.listBox1.Items[Form1.instance.listBox1.SelectedIndex] != "Home") {
                                 MessageBox.Show("You can only create a directory on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                             } else {
 

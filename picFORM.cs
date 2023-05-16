@@ -19,7 +19,6 @@ namespace FlowSERVER1 {
 
         private bool IsDragging {get; set; } = false;
         private bool IsVisibleFilterPanel {get; set; } = false;
-        private bool ImageisRotated {get; set; } = false;
         private Point dragStartPosition {get; set; }
         private Image defaultImage {get; set; } 
         private Bitmap filteredImage {get; set; }
@@ -110,10 +109,6 @@ namespace FlowSERVER1 {
             }
             return returnComment;
         }
-
-        public static Image resizeUserImage(Image userImage, Size size) {
-            return (Image)(new Bitmap(userImage,size));
-        }    
 
         private void picFORM_Load(object sender, EventArgs e) {
 

@@ -21,12 +21,16 @@ namespace FlowSERVER1 {
     /// </summary>
 
     public partial class txtFORM : Form {
-        public static txtFORM instance;
-        private static MySqlConnection con = ConnectionModel.con;
-        private static MySqlCommand command = ConnectionModel.command;
+
+        public txtFORM instance;
+
+        private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
+
         public static bool IsFromSharing {get; set; }
         public static String DirectoryName {get; set; }
         public static String TableName { get; set; }
+
         /// <summary>
         /// 
         /// Retrieve text data based on table name 

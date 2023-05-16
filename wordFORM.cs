@@ -13,12 +13,15 @@ using System.Threading;
 
 namespace FlowSERVER1 {
     public partial class wordFORM : Form {
-        public static MySqlCommand command = ConnectionModel.command;
-        public static MySqlConnection con = ConnectionModel.con;
-        public static String _TableName;
-        public static String _DirectoryName;
-        private static bool _IsFromShared;
-        private static bool IsFromSharing;  // Shared to me
+
+        readonly private MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+
+        public string _TableName;
+        public string _DirectoryName;
+        private bool _IsFromShared;
+        private bool IsFromSharing;  
+
         /// <summary>
         /// 
         /// Load user docx,doc, document based on table name
@@ -30,9 +33,10 @@ namespace FlowSERVER1 {
         /// <param name="_UploaderName"></param>
 
         public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
+
             InitializeComponent();
 
-            String _getName = "";
+            string _getName = "";
             bool _isShared = System.Text.RegularExpressions.Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
             label1.Text = _docName;
