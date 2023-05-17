@@ -3058,10 +3058,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void label25_Click(object sender, EventArgs e) {
-
-        }
-
         private async void buildHomeFiles() {
 
             async Task<int> _countRow(String _tableName) {
@@ -5830,8 +5826,6 @@ namespace FlowSERVER1 {
             string panelName = label29.Text;
             string sharedToName = label33.Text;
             string dirName = label32.Text;
-
-            MessageBox.Show(dirName + "\n" + tableName,titleFile);
 
             renameFORM renameFileFORM = new renameFORM(titleFile,tableName,panelName, dirName,sharedToName);
             renameFileFORM.Show();

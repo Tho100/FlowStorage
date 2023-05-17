@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +11,10 @@ using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class apiFORM : Form {
+
+        readonly private MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+
         public apiFORM() {
             InitializeComponent();
         }
@@ -38,8 +43,40 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) {
+        private async Task getAccessToken() {
+            string query = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                using (MySqlDataReader read =  (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await read.ReadAsync()) {
+                        guna2TextBox2.Text = read.GetString(0);
+                    }
+                    read.Close();
+                }
+            }
+        }
 
+        private async void guna2Button3_Click(object sender, EventArgs e) {
+
+            string query = "SELECT CUST_PIN FROM information WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                using (MySqlDataReader read = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    if (await read.ReadAsync()) {
+                        if(EncryptionModel.computeAuthCase(guna2TextBox1.Text) == read.GetString(0)) {
+                            read.Close();
+                            await getAccessToken(); 
+                        } else {
+                            MessageBox.Show("PIN is incorrect.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e) {
+            Clipboard.SetText(guna2TextBox2.Text);
+            label13.Visible = true;
         }
     }
 }

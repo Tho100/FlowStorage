@@ -280,6 +280,7 @@ namespace FlowSERVER1
 
             String dirTitle = guna2TextBox1.Text.Trim();
             if (!String.IsNullOrEmpty(dirTitle)) {
+
                 try {
                     var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
                     countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirTitle));
