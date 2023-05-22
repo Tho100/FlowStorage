@@ -16,7 +16,7 @@ using System.Windows.Forms;
 namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
         public static string _FileName { get; set; }

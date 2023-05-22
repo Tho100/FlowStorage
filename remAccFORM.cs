@@ -36,7 +36,7 @@ namespace FlowSERVER1 {
 
         public int tokenCheckCurr = 0;
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
         private List<int> _TotalUploadToday = new List<int>();
@@ -123,8 +123,9 @@ namespace FlowSERVER1 {
         /// This function will retrieve the 
         /// current status of user file sharing (disabled, or enabled)
         /// </summary>
-        private String retrieveDisabled(String _custUsername) {
-            String querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+        private string retrieveDisabled(String _custUsername) {
+
+            const string  querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
 
@@ -140,7 +141,8 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_tableName"></param>
         private async Task TotalUploadFile(String _tableName) {
-            String countQuery = $"SELECT COUNT(*) FROM {_tableName} WHERE CUST_USERNAME = @username";
+
+            string countQuery = $"SELECT COUNT(*) FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countQuery, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
@@ -155,8 +157,10 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_TableName"></param>
         private async Task TotalUploadFileTodayCount(String _TableName) {
-            String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-            String queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+
+            string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+            string queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@date", currentDate);
@@ -171,8 +175,10 @@ namespace FlowSERVER1 {
         /// of directory they have created a day
         /// </summary>
         private async Task TotalUploadDirectoryTodayCount() {
-            String currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-            String querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+
+            string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+            string querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@date", currentDate);
@@ -190,8 +196,8 @@ namespace FlowSERVER1 {
 
         private async Task GetAccountType() {
 
-            String accountType = "";
-            String querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+            string accountType = "";
+            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
@@ -285,7 +291,7 @@ namespace FlowSERVER1 {
         }
         private async Task countTotalAll() {
 
-            String countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
+            const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
@@ -597,9 +603,11 @@ namespace FlowSERVER1 {
                 }
 
                 List<String> CustUserValues = new List<String>();
-                String _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
+
+                const string _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(_selectCustEmail, con);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+
                 MySqlDataReader _readEmail = command.ExecuteReader();
                 if (_readEmail.Read()) {
                     CustUserValues.Add(_readEmail.GetString(0));
@@ -607,11 +615,13 @@ namespace FlowSERVER1 {
                 _readEmail.Close();
 
                 if (_custEmails.Contains(CustUserValues[0])) {
-                    String _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
+
+                    const string _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     command = new MySqlCommand(_insertNew, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
+
                     if (command.ExecuteNonQuery() == 1) {
 
                         String _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
@@ -2078,8 +2088,9 @@ namespace FlowSERVER1 {
 
  
         private string retrieveFileSharingPas() {
-            String hasPass = "";
-            String selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+
+            string hasPass = "";
+            const string selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectQuery, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 

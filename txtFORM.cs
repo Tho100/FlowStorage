@@ -24,8 +24,7 @@ namespace FlowSERVER1 {
 
         public txtFORM instance;
 
-        private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
 
         public static bool IsFromSharing {get; set; }
         public static String DirectoryName {get; set; }
@@ -80,7 +79,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "upload_info_directory" && getText == "") {
 
-                    string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -112,7 +111,7 @@ namespace FlowSERVER1 {
 
                 } else if (getText == "" && tableName == "folder_upload_info") {
 
-                    string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                    const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -146,13 +145,13 @@ namespace FlowSERVER1 {
                     }
 
                 } else if (tableName == "file_info_expand") {
-                    string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_);
                 } else if (tableName == "cust_sharing" && _isShared == false) {
-                    string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_);
                 } else if (tableName == "cust_sharing" && _isShared == true) {
-                    string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                    const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_);
                 }
 

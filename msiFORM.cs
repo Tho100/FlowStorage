@@ -14,9 +14,6 @@ using System.Text.RegularExpressions;
 namespace FlowSERVER1 {
     public partial class msiFORM : Form {
 
-        public MySqlConnection con = ConnectionModel.con;
-        public MySqlCommand command = ConnectionModel.command;
-
         public String _TableName;
         public String _DirectoryName;
 

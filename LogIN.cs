@@ -25,16 +25,14 @@ namespace FlowSERVER1 {
 
         public static LogIN instance;
 
-        private MySqlConnection con = ConnectionModel.con;
+        private readonly MySqlConnection con = ConnectionModel.con;
 
         private MySqlCommand command = ConnectionModel.command;
 
-        private string accType;
-        private string decryptMainKey;
-        private string encryptionKeyVal;
-        private string pinDecryptionKey;
-        private string CurrentLang = "";
-        private int attemptCurr = 0;
+        private string decryptMainKey {get; set; }
+        private string pinDecryptionKey {get; set; }
+        private string CurrentLang {get; set; } = "";
+        private int attemptCurr {get; set; } = 0;
         private string custEmail {get; set; }
         private string custUsername { get; set; }
         private string inputGetEmail {get; set; }
@@ -93,6 +91,7 @@ namespace FlowSERVER1 {
         }
 
         private string returnAuthValues(string whichColumn) {
+
             var concludeValue = new List<string>();
 
             string checkPasswordQuery = $"SELECT {whichColumn} FROM information WHERE CUST_EMAIL = @email";
@@ -108,36 +107,24 @@ namespace FlowSERVER1 {
             return concludeValue.FirstOrDefault() ?? string.Empty;
         }
 
-        private string computeAuthCase(string inputStr) {
-
-            SHA256 sha256 = SHA256.Create();
-
-            string _getAuthStrCase0 = inputStr;
-            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
-            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
-            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
-
-            return _authStrCase0;
-        }
-
-        private void setupRedundane() {
+        private async void setupRedundane() {
 
             var form = Form1.instance;
-            var flowlayout = form.flowLayoutPanel1;
-            var but6 = form.guna2Button6;
-            var lab8 = form.label8;
+            var flowLayout = form.flowLayoutPanel1;
+            var button6 = form.guna2Button6;
+            var label8 = form.label8;
 
             const string selectUserQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
             const string selectEmailQuery = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
 
             using (var command = new MySqlCommand(selectUserQuery, con)) {
                 command.Parameters.AddWithValue("@email", inputGetEmail);
-                var username = command.ExecuteScalar() as string;
+                var username = await command.ExecuteScalarAsync() as string;
 
                 if (username != null) {
                     using (var emailCommand = new MySqlCommand(selectEmailQuery, con)) {
                         emailCommand.Parameters.AddWithValue("@username", username);
-                        var email = emailCommand.ExecuteScalar() as string;
+                        var email = await emailCommand.ExecuteScalarAsync() as string;
 
                         if (email != null) {
                             custUsername = username;
@@ -147,30 +134,30 @@ namespace FlowSERVER1 {
                 }
             }
 
-            Form1.instance.accountTypeString = accType;
-            flowlayout.Controls.Clear();
+            flowLayout.Controls.Clear();
             form.listBox1.Items.Clear();
             form.label5.Text = custUsername;
             form.label24.Text = custEmail;
-            but6.Visible = lab8.Visible = label4.Visible = Form1.instance.guna2Panel7.Visible = false;
+            button6.Visible = label8.Visible = label4.Visible = Form1.instance.guna2Panel7.Visible = false;
 
             setupTime();
 
-            if (flowlayout.Controls.Count == 0) {
-                Form1.instance.label8.Visible = true;
-                Form1.instance.guna2Button6.Visible = true;
+            if (flowLayout.Controls.Count == 0) {
+                form.label8.Visible = true;
+                form.guna2Button6.Visible = true;
             }
         }
 
+
         private async Task _generateUserFolder(String userName) {
 
-            String[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
+            string[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
             _form.listBox1.Items.AddRange(itemFolder);
             _form.listBox1.SelectedIndex = 0;
 
-            List<String> updatesTitle = new List<String>();
+            List<string> updatesTitle = new List<string>();
 
-            String getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+            const string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
                 command.Parameters.AddWithValue("@username", userName);
                 using (MySqlDataReader fold_Reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -180,7 +167,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            foreach (String titleEach in updatesTitle) {
+            foreach (string titleEach in updatesTitle) {
                 _form.listBox1.Items.Add(titleEach);
             }
         }
@@ -207,7 +194,7 @@ namespace FlowSERVER1 {
         private async Task _generateUserDirectory(String userName, int rowLength) {
 
             List<Tuple<string, string>> filesInfoDirs = new List<Tuple<string, string>>();
-            string selectFileData = $"SELECT DIR_NAME, UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
+            const string selectFileData = "SELECT DIR_NAME, UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
 
@@ -792,7 +779,7 @@ namespace FlowSERVER1 {
                 label4.Visible = true;
             }
          
-            if (computeAuthCase(_getPass) == decryptMainKey && computeAuthCase(_getPin) == pinDecryptionKey) {
+            if (EncryptionModel.computeAuthCase(_getPass) == decryptMainKey && EncryptionModel.computeAuthCase(_getPin) == pinDecryptionKey) {
 
                 setupRedundane();
 
@@ -914,17 +901,19 @@ namespace FlowSERVER1 {
         }
 
         private async Task<string> getAccountTypeNumber() {
+
             string accountType = "";
-            string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+
+            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
             }
 
-            accType = accountType;
+            Form1.instance.accountTypeString = accountType;
 
             if (accountType == "Basic") {
-                return "20";
+                return "30";
             }
             else if (accountType == "Max") {
                 return "500";
@@ -1064,7 +1053,7 @@ namespace FlowSERVER1 {
         /// </summary>
         private async Task getCurrentLang() {
 
-            String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
+            const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (var command = new MySqlCommand(_selectLang, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 using (MySqlDataReader readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {

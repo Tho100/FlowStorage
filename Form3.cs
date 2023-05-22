@@ -30,7 +30,7 @@ namespace FlowSERVER1
 
         public static Form3 instance;
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
         private string _extName { get; set; }
 
@@ -127,7 +127,7 @@ namespace FlowSERVER1
             }
 
             int _countRow(string ext) {
-                string query = "SELECT COUNT(CUST_USERNAME) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                const string query = "SELECT COUNT(CUST_USERNAME) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                 using (var command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", username);
                     command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirname));
@@ -172,7 +172,8 @@ namespace FlowSERVER1
         private async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
             List<(string, string)> filesInfo = new List<(string, string)>();
-            string selectFileDataDir = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+
+            const string selectFileDataDir = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
             using (MySqlCommand command = new MySqlCommand(selectFileDataDir, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
@@ -198,6 +199,7 @@ namespace FlowSERVER1
                     BackColor = TransparentColor,
                     Location = new Point(600, top)
                 };
+
                 top += h_p;
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
@@ -280,7 +282,7 @@ namespace FlowSERVER1
 
                     List<string> base64Encoded = new List<string>();
 
-                    string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                    const string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
@@ -381,7 +383,7 @@ namespace FlowSERVER1
                 if (_tableName == "file_info_vid") {
 
                     var base64Encoded = new List<string>();
-                    string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext AND CUST_FILE_PATH = @filename";
+                    const string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext AND CUST_FILE_PATH = @filename";
                     using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
@@ -428,8 +430,10 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_gif") {
+
                     List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+
+                    const string retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));
@@ -647,6 +651,7 @@ namespace FlowSERVER1
                         fileSizeInMB = 0;
 
                         async Task containThumbUpload(object keyValMain) {
+
                             using (var command = new MySqlCommand()) {
                                 command.Connection = con;
                                 command.CommandText = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)"; ;
@@ -677,7 +682,7 @@ namespace FlowSERVER1
 
                                 async Task startSending(string setValue) {
 
-                                    string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
+                                    const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
 
                                     try {
 
@@ -1148,8 +1153,10 @@ namespace FlowSERVER1
             try {
 
                 int CurrentUploadCount = 0;
-                String _accType = "";
-                String getAccTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+
+                string _accType = "";
+
+                const string getAccTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
                 using (var command = new MySqlCommand(getAccTypeQuery, con)) {
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     List<String> types = new List<String>();
@@ -1237,7 +1244,8 @@ namespace FlowSERVER1
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
-            String insertTxtQuery = "INSERT INTO upload_info_directory(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
+
+            const string insertTxtQuery = "INSERT INTO upload_info_directory(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
             command = new MySqlCommand(insertTxtQuery, con);
 
             command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);

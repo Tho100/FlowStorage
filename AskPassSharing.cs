@@ -20,7 +20,7 @@ namespace FlowSERVER1 {
         private String _FilePath { get; set; }
         private String _retrieved { get; set; }
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
         public AskPassSharing(String _custUsername,String _fileName,String _filePath,String _RETRIEVED) {

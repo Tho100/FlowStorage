@@ -15,8 +15,9 @@ namespace FlowSERVER1 {
 
         private String CurrentUsername;
         private String NewUsername;
+
         private MySqlCommand command = ConnectionModel.command;
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         public chagneUserForm(String _CurrentUsername) {
             InitializeComponent();
             CurrentUsername = _CurrentUsername;

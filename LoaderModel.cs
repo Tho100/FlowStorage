@@ -59,7 +59,8 @@ namespace FlowSERVER1 {
         }
 
         private static async void RetrieveSharedTootherData() {
-            string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
+
+            const string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, "0123456789085746"));
@@ -88,7 +89,8 @@ namespace FlowSERVER1 {
         }
 
         private static async void RetrieveFolderDataAsync(string directoryName) {
-            string readGifFilesQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_TITLE = @foldtitle";
+
+            const string readGifFilesQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_TITLE = @foldtitle";
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
@@ -118,7 +120,7 @@ namespace FlowSERVER1 {
 
         private static async void RetrieveDirectoryDataAsync(string directoryName) {
 
-            string readGifFilesQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND DIR_NAME = @dirname";
+            const string readGifFilesQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND DIR_NAME = @dirname";
 
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -147,7 +149,7 @@ namespace FlowSERVER1 {
 
         private static async void RetrieveSharedToMeData() {
 
-            string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
+            const string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
 
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
@@ -174,6 +176,7 @@ namespace FlowSERVER1 {
         }
 
         private static async void RetrieveHomeDataAsync(String TableName) {
+
             string readFilesQuery = $"SELECT CUST_FILE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(readFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);

@@ -23,8 +23,8 @@ namespace FlowSERVER1 {
         private string _retrieved;
         private string _getExt;
 
-        public MySqlConnection con = ConnectionModel.con;
-        public MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
 
         public sharingFORM instance;
 
@@ -55,7 +55,8 @@ namespace FlowSERVER1 {
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
         private int userIsExists(String _receiverUsername) {
-            String countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
+
+            const string countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(countUser,con);
             command.Parameters.AddWithValue("@username",_receiverUsername);
             var setupCount = command.ExecuteScalar();
@@ -64,6 +65,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
+
             OpenFileDialog _OpenDialog = new OpenFileDialog();
             _OpenDialog.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
             if (_OpenDialog.ShowDialog() == DialogResult.OK) {
@@ -88,7 +90,7 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         async Task startSending(Object setValue, Object thumbnailValue = null) {
 
-            String query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
+            const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
 
             try {
 
@@ -126,7 +128,7 @@ namespace FlowSERVER1 {
 
                     _currentFileName = guna2TextBox2.Text;
 
-                    if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
+                    if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp" || _retrieved == ".webp") {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         await startSending(encryptText);

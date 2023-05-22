@@ -11,13 +11,11 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class emailValidate : Form {
-        private MySqlConnection con = ConnectionModel.con;
+
+        readonly private MySqlConnection con = ConnectionModel.con;
+
         public emailValidate() {
             InitializeComponent();
-        }
-
-        private void guna2Button4_Click(object sender, EventArgs e) {
-            this.Close();
         }
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
@@ -29,7 +27,7 @@ namespace FlowSERVER1 {
 
             List<String> _concludeValue = new List<String>();
 
-            String checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_EMAIL = @email";
+            string checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_EMAIL = @email";
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;

@@ -18,8 +18,8 @@ namespace FlowSERVER1 {
 
         public static exeFORM instance;
 
-        public MySqlConnection con = ConnectionModel.con;
-        public MySqlCommand command = ConnectionModel.command;
+        readonly private MySqlConnection con = ConnectionModel.con;
+        private MySqlCommand command = ConnectionModel.command;
 
         public byte[] GlobalByte;
         public string _TableName;
@@ -135,7 +135,7 @@ namespace FlowSERVER1 {
 
         private async Task saveChangesComment(String updatedComment) {
 
-            string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);

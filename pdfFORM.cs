@@ -21,7 +21,7 @@ namespace FlowSERVER1 {
         private bool _IsFromShared;
         private bool IsFromSharing;
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
 
         /// <summary>
         /// Load file based on table name 

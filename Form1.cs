@@ -23,7 +23,7 @@ namespace FlowSERVER1 {
 
     public partial class Form1 : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
         public static Form1 instance { get; set;} = new Form1();
@@ -80,6 +80,8 @@ namespace FlowSERVER1 {
         private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
         private readonly Point GarbageButtonLoc = new Point(165, 188);
         private readonly Point GarbageOffset = new Point(2, 0); 
+
+        private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
 
         // File Images
         private readonly Image TextImage = FlowSERVER1.Properties.Resources.icons8_txt_48;
@@ -235,7 +237,8 @@ namespace FlowSERVER1 {
         /// <param name="username"></param>
         /// <returns></returns>
         private string accountStartupValidation(string username) {
-            string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+
+            const string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
                 command.Parameters.AddWithValue("@username", username);
                 string concludeUsername = (string)command.ExecuteScalar();
@@ -367,7 +370,7 @@ namespace FlowSERVER1 {
         /// Get user current language
         /// </summary>
         private async Task getCurrentLang() {
-            String _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
+            const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using(var command = new MySqlCommand(_selectLang,con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 using(MySqlDataReader readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -794,7 +797,7 @@ namespace FlowSERVER1 {
                 List<(string, string)> filesInfo = new List<(string, string)>();
                 HashSet<string> filePaths = new HashSet<string>();
 
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
+                const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(_foldTitle));
@@ -907,7 +910,7 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+                        const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", label5.Text);
                             command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
@@ -1017,7 +1020,7 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", label5.Text);
                             command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_foldTitle));
@@ -1058,8 +1061,10 @@ namespace FlowSERVER1 {
                     }
 
                     if (typeValues[i] == ".gif") {
+
                         List<String> _base64Encoded = new List<string>();
-                        String retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+
+                        const string retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(retrieveImg, con)) {
                             command.Parameters.AddWithValue("@username", label5.Text);
                             command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_foldTitle));
@@ -2301,7 +2306,7 @@ namespace FlowSERVER1 {
                 List<string> existsInfosUser = new List<string>();
 
                 using (MySqlCommand command = con.CreateCommand()) {
-                    string verifyQueryUser = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+                    const string verifyQueryUser = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
                     command.CommandText = verifyQueryUser;
                     command.Parameters.AddWithValue("@username", _getUser);
 
@@ -2311,7 +2316,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    string verifyQueryMail = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
+                    const string verifyQueryMail = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
                     command.CommandText = verifyQueryMail;
                     command.Parameters.AddWithValue("@email", _getEmail);
 
@@ -2542,7 +2547,7 @@ namespace FlowSERVER1 {
 
         private async void folderDialog(String _getDirPath,String _getDirTitle,String[] _TitleValues) {
 
-            String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
+            string _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
 
             int _IntCurr = 0;
             long fileSizeInMB = 0;
@@ -2554,7 +2559,7 @@ namespace FlowSERVER1 {
 
                 async Task setupUpload(String _tempToBase64,String thumbnailValue = null) {
 
-                    string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
+                    const string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
                     using (var command = new MySqlCommand(insertFoldQue, con)) {
                         command.Parameters.AddWithValue("@FOLDER_TITLE", EncryptionModel.Encrypt(_getDirTitle));
                         command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
@@ -3106,7 +3111,7 @@ namespace FlowSERVER1 {
         private async void buildSharedToMe() {
 
             if (!_TypeValues.Any()) {
-                string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
+                const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -3133,7 +3138,7 @@ namespace FlowSERVER1 {
         private async void buildSharedToOthers() {
 
             if (!_TypeValuesOthers.Any()) {
-                string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
+                const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
                 using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     using (var readTypeOthers = await command.ExecuteReaderAsync()) {
@@ -3204,7 +3209,7 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.WrapContents = true;
 
                     var typesValues = new List<string>();
-                    var getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+                    const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                     using (var command = new MySqlCommand(getFileType, con)) {
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_selectedFolder));
@@ -3318,7 +3323,8 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <returns></returns>
         private string uploaderName() {
-            String selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
+
+            const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 using (MySqlDataReader reader = command.ExecuteReader()) {
@@ -3338,7 +3344,8 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         String getUploaderNameShared = "";
         private string sharedToName() {
-            String selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+
+            const string selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(getUploaderNameShared, "0123456789085746"));
@@ -3365,7 +3372,7 @@ namespace FlowSERVER1 {
         private async void _callFilesInformationOthers() {
 
             filesInfoSharedOthers.Clear();
-            string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
+            const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -3487,7 +3494,7 @@ namespace FlowSERVER1 {
 
                         if(base64EncodedImageSharedOthers.Count == 0) {
 
-                            string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
+                            const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                                 command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
 
@@ -3633,7 +3640,7 @@ namespace FlowSERVER1 {
 
                         List<string> base64Encoded = new List<string>();
 
-                        string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", form1.label5.Text);
                             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
@@ -3711,8 +3718,10 @@ namespace FlowSERVER1 {
                     }
 
                     if (typeValues[q] == ".gif") {
+
                         List<String> _base64Encoded = new List<string>();
-                        String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
+
+                        const string retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                         command = new MySqlCommand(retrieveImg, con);
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
 
@@ -3773,7 +3782,7 @@ namespace FlowSERVER1 {
         private async void _callFilesInformationShared() {
 
             filesInfoShared.Clear();
-            string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
+            const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -3888,7 +3897,7 @@ namespace FlowSERVER1 {
 
                     List<string> base64Encoded = new List<string>();
 
-                    string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
+                    const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -4030,7 +4039,7 @@ namespace FlowSERVER1 {
 
                     List<string> base64Encoded = new List<string>();
 
-                    string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", form1.label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
@@ -4111,8 +4120,10 @@ namespace FlowSERVER1 {
                 }
 
                 if (typeValues[q] == ".gif") {
+
                     List<String> _base64Encoded = new List<string>();
-                    String retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
+
+                    const string retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     command = new MySqlCommand(retrieveImg, con);
                     command.Parameters.AddWithValue("@username", form1.label5.Text);
 
@@ -4195,7 +4206,8 @@ namespace FlowSERVER1 {
         private async Task _generateUserDirectory(int rowLength) {
 
             List<Tuple<string>> filesInfo = new List<Tuple<string>>();
-            string selectFileData = $"SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
+
+            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
@@ -4282,35 +4294,41 @@ namespace FlowSERVER1 {
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = TransparentColor;
-                remBut.Image = GarbageImage;
+                remBut.Image = DirectoryGarbageImage;
                 remBut.Visible = true;
                 remBut.Location = GarbageButtonLoc;
 
                 remBut.Click += (sender_im, e_im) => {
+
                     var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' Directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                     if (verifyDialog == DialogResult.Yes) {
-                        String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                        command = new MySqlCommand(noSafeUpdate, con);
-                        command.ExecuteNonQuery();
 
-                        String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
-                        command = new MySqlCommand(_removeDirQuery, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
-                        command.ExecuteNonQuery();
+                        using (var command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
+                            command.ExecuteNonQuery();
+                        }
 
-                        String _removeDirUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
-                        command = new MySqlCommand(_removeDirUploadQuery, con);
-                        command.Parameters.AddWithValue("@username", label5.Text);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
-                        command.ExecuteNonQuery();
+                        using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
+                            command.ExecuteNonQuery();
+                        }
+
+                        using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
+                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
+                            command.ExecuteNonQuery();
+                        }
 
                         panelPic_Q.Dispose();
+
                         if (flowLayoutPanel1.Controls.Count == 0) {
                             label8.Visible = true;
                             guna2Button6.Visible = true;
                         }
+
                         label4.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
                 };
@@ -4698,7 +4716,8 @@ namespace FlowSERVER1 {
             String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
 
             var typesValues = new List<string>();
-            var getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+
+            const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
             using (var command = new MySqlCommand(getFileType, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_selectedFolder));
@@ -4859,7 +4878,8 @@ namespace FlowSERVER1 {
         private async Task<string> getAccountTypeNumber() {
 
             string accountType = "";
-            string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+
+            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
@@ -5775,7 +5795,7 @@ namespace FlowSERVER1 {
 
                 } else if (tableName == "cust_sharing" && sharedToName != "sharedToName") {
 
-                    string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
+                    const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                     using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
                         cmd.Parameters.AddWithValue("@username", label5.Text);
                         cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
@@ -5786,7 +5806,7 @@ namespace FlowSERVER1 {
 
                 } else if (tableName == "cust_sharing" && sharedToName == "sharedToName") {
 
-                    String removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (var command = new MySqlCommand(removeQuery, con)) {
                         command.Parameters.AddWithValue("@username", label5.Text);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));

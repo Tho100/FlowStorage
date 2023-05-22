@@ -56,6 +56,8 @@ namespace FlowSERVER1
         private readonly Point GarbageButtonLoc = new Point(165, 188);
         private readonly Point GarbageOffset = new Point(2, 0);
 
+        private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
+
         public Form4() {
             InitializeComponent();
             this.Text = "Create New Directory";
@@ -76,7 +78,7 @@ namespace FlowSERVER1
         /// </summary>
         /// <param name="currMain"></param>
         /// <param name="getDirTitle"></param>
-        public void generateDir(int currMain, String getDirTitle) {
+        public void generateDirectory(int currMain, String getDirTitle) {
 
             try {
 
@@ -160,37 +162,47 @@ namespace FlowSERVER1
                 remButTxt.BorderRadius = 6;
                 remButTxt.BorderThickness = 1;
                 remButTxt.BorderColor = TransparentColor;
-                remButTxt.Image = GarbageImage;
+                remButTxt.Image = DirectoryGarbageImage;
                 remButTxt.Visible = true;
                 remButTxt.Location = GarbageButtonLoc;
                 remButTxt.BringToFront();
 
                 remButTxt.Click += (sender_tx, e_tx) => {
+
+
                     var titleFile = dirName.Text;
-                    DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                     if (verifyDialog == DialogResult.Yes) {
 
+                        using (var command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
+                            command.ExecuteNonQuery();
+                        }
+
+                        using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
+                            command.ExecuteNonQuery();
+                        }
+
+                        using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
+                            command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
+                            command.ExecuteNonQuery();
+                        }
+
                         panel.Dispose();
+
+
+                        if (Form1.instance.flowLayoutPanel1.Controls.Count == 0) {
+                            Form1.instance.label8.Visible = true;
+                            Form1.instance.guna2Button6.Visible = true;
+                        }
+
                         Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
-
-                        String _removeDirQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
-                        command = new MySqlCommand(_removeDirQuery, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle));
-                        command.ExecuteNonQuery();
-
-                        String _removeUploadQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
-                        command = new MySqlCommand(_removeUploadQuery, con);
-                        command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(getDirTitle));
-                        command.ExecuteNonQuery();
-
                     }
 
-                    if (Form1.instance.flowLayoutPanel1.Controls.Count == 0) {
-                        Form1.instance.label8.Visible = true;
-                        Form1.instance.guna2Button6.Visible = true;
-                    }
                 };
 
                 picBanner.Click += (sender_f, e_f) => {
@@ -263,7 +275,8 @@ namespace FlowSERVER1
 
         private int value_Dir = 0;
         private async void guna2Button2_Click(object sender, EventArgs e) {
-            String filesCount = Form1.instance.label4.Text;
+
+            string filesCount = Form1.instance.label4.Text;
             int totalFiles = int.Parse(filesCount);
 
             String username = Form1.instance.label5.Text;
@@ -278,7 +291,7 @@ namespace FlowSERVER1
                 }
             }
 
-            String dirTitle = guna2TextBox1.Text.Trim();
+            string dirTitle = guna2TextBox1.Text.Trim();
             if (!String.IsNullOrEmpty(dirTitle)) {
 
                 try {
@@ -319,7 +332,7 @@ namespace FlowSERVER1
                                 MessageBox.Show("You can only create a directory on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                             } else {
 
-                                generateDir(value_Dir, dirTitle);
+                                generateDirectory(value_Dir, dirTitle);
                                 Form1.instance.label4.Text = Form1.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                                 var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
