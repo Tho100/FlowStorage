@@ -239,9 +239,9 @@ namespace FlowSERVER1 {
         private int accountType(String _receiverUsername) {
 
             int _allowedReturn = 20;
-            String _accType = "";
+            string _accType = "";
 
-            String _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
+            const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_getAccountTypeQue,con);
             command.Parameters.AddWithValue("@username",_receiverUsername);
             
@@ -268,8 +268,9 @@ namespace FlowSERVER1 {
         /// </summary>
         private static string _hasPas = "DEF";
         private string hasPassword(String _custUsername) {
-            String storeVal = "";
-            String queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+
+            string storeVal = "";
+            const string queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(queryGet, con);
             command.Parameters.AddWithValue("@username", _custUsername);
 
@@ -292,7 +293,8 @@ namespace FlowSERVER1 {
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
         private int countReceiverShared(String _receiverUsername) {
-            string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+
+            const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
             int fileCount = 0;
 
             using (MySqlCommand command = new MySqlCommand(countFileSharedQuery, con)) {
@@ -312,9 +314,10 @@ namespace FlowSERVER1 {
         /// This function will retrieve user current 
         /// file sharing status (enabeled or disabled)
         /// </summary>
-        private String retrieveDisabled(String _custUsername) {
-            String querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-            String isEnabled = "0";
+        private string retrieveDisabled(String _custUsername) {
+
+            string isEnabled = "0";
+            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
@@ -335,7 +338,9 @@ namespace FlowSERVER1 {
         /// <param name="_fileName">File name to be send</param>
         /// <returns></returns>
         private int fileIsUploaded(String _custUsername,String _fileName) {
-            String queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+
+            const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+
             command = new MySqlCommand(queryRetrieveCount, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@receiver", _custUsername);

@@ -624,7 +624,7 @@ namespace FlowSERVER1 {
 
                     if (command.ExecuteNonQuery() == 1) {
 
-                        String _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
+                        const string _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
                         command = new MySqlCommand(_insertPayment, con);
                         command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                         command.Parameters.AddWithValue("@email", CustUserValues[0]);
@@ -1478,7 +1478,8 @@ namespace FlowSERVER1 {
         }
 
         private async Task getCurrentLang() {
-            string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
+
+            const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
                 command.Parameters.AddWithValue("@username", label5.Text);
 
@@ -1491,7 +1492,9 @@ namespace FlowSERVER1 {
         }
 
         private void updateLang(String _custLang) {
-            String _updateQuery = "UPDATE lang_info SET CUST_LANG = @lang WHERE CUST_USERNAME = @username";
+
+            const string _updateQuery = "UPDATE lang_info SET CUST_LANG = @lang WHERE CUST_USERNAME = @username";
+
             command = new MySqlCommand(_updateQuery,con);
             command.Parameters.AddWithValue("@lang",_custLang);
             command.Parameters.AddWithValue("@username", label5.Text);
@@ -2109,16 +2112,19 @@ namespace FlowSERVER1 {
         /// <param name="custUsername"></param>
         /// <returns></returns>
         private string getAccessToken(String custUsername) {
-            String _localTok = "";
-            String _selecTokQue = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
+
+            string _localTok = "";
+            const string _selecTokQue = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
+
             command = new MySqlCommand(_selecTokQue,con);
             command.Parameters.AddWithValue("@username",custUsername);
 
             MySqlDataReader _readTok = command.ExecuteReader();
             while(_readTok.Read()) {
-                _localTok = EncryptionModel.Decrypt(_readTok.GetString(0), "0123456789085746");
+                _localTok = EncryptionModel.Decrypt(_readTok.GetString(0));
             }
             _readTok.Close();
+
             return _localTok.ToLower();
         }
 

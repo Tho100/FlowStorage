@@ -283,11 +283,12 @@ namespace FlowSERVER1 {
                     var titleFile = titleLab.Text;
                     DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
-                        String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+
+                        const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                        const string removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", userName);
                         command.Parameters.AddWithValue("@filename", titleFile);
@@ -428,11 +429,12 @@ namespace FlowSERVER1 {
                     var titleFile = titleLab.Text;
                     DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
-                        String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+
+                        const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                         command = new MySqlCommand(noSafeUpdate, con);
                         command.ExecuteNonQuery();
 
-                        String removeQuery = "DELETE FROM " + _tableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                        string removeQuery = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
                         command.Parameters.AddWithValue("@username", _form.label5.Text);
                         command.Parameters.AddWithValue("@filename", titleFile);

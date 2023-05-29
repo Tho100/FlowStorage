@@ -1015,7 +1015,7 @@ namespace FlowSERVER1
                             Byte[] _getBytesSelectedFiles = File.ReadAllBytes(selectedItems);
                             fileSizeInMB = (_getBytesSelectedFiles.Length / 1024) / 1024;
 
-                            if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".svg") {
+                            if (Globals.imageTypes.Contains(retrieved)) {
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
@@ -1037,7 +1037,7 @@ namespace FlowSERVER1
                                     }
                                 }
                             }
-                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
+                            else if (Globals.textTypes.Contains(retrieved)) {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { 
@@ -1057,7 +1057,7 @@ namespace FlowSERVER1
                                 createPanelMain("file_info_exe", "PanExe", exeCurr, _encryptValue);
 
                             }
-                            else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
+                            else if (Globals.videoTypes.Contains(retrieved)) {
                                 vidCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
                                 var _encryptValue = EncryptionModel.Encrypt(_toBase64);
@@ -1292,13 +1292,13 @@ namespace FlowSERVER1
             DialogResult verifyDialog = MessageBox.Show($"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (verifyDialog == DialogResult.Yes) {
                 using (var command = con.CreateCommand()) {
-                    String noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
+                    const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
                     command.CommandText = noSafeUpdate;
                     command.ExecuteNonQuery();
                 }
 
                 using (var command = con.CreateCommand()) {
-                    String removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    const string removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     command.CommandText = removeQuery;
                     command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(label1.Text));

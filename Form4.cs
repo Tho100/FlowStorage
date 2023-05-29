@@ -306,6 +306,7 @@ namespace FlowSERVER1
 
                         int maxFilesCount = 0;
                         int maxDirCount = 0;
+
                         switch (accType) {
                             case "Supreme":
                                 maxFilesCount = 2000;

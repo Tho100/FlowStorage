@@ -302,7 +302,7 @@ namespace FlowSERVER1 {
             try {
 
                 if (TableName == "file_info_excel") {
-                    string updateQue = $"UPDATE file_info_excel SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    const string updateQue = "UPDATE file_info_excel SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
@@ -313,7 +313,7 @@ namespace FlowSERVER1 {
                 }
                 else if (TableName == "cust_sharing" && IsFromSharing == false) {
 
-                    string updateQue = $"UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                    const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
@@ -324,7 +324,7 @@ namespace FlowSERVER1 {
                 }
                 else if (TableName == "cust_sharing" && IsFromSharing == true) {
 
-                    string updateQue = $"UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                    const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
@@ -335,7 +335,7 @@ namespace FlowSERVER1 {
                 }
                 else if (TableName == "upload_info_directory") {
 
-                    string updateQue = $"UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+                    const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Form1.instance.label5.Text;
@@ -376,7 +376,7 @@ namespace FlowSERVER1 {
 
         private async Task saveChangesComment(String updatedComment) {
 
-            string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+            const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);

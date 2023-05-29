@@ -64,7 +64,7 @@ namespace FlowSERVER1 {
             }
             else if (tableName == "cust_sharing" && sharedToName != "sharedToName") {
 
-                string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
+                const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
                     cmd.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
@@ -77,7 +77,7 @@ namespace FlowSERVER1 {
             }
             else if (tableName == "cust_sharing" && sharedToName == "sharedToName") {
 
-                string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
                     cmd.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                     cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));

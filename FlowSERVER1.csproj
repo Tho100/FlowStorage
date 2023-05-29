@@ -509,6 +509,7 @@
     <Compile Include="gifFORM.Designer.cs">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="limitFolderFORM.cs">
       <SubType>Form</SubType>
     </Compile>

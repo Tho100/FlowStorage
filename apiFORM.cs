@@ -44,7 +44,8 @@ namespace FlowSERVER1 {
         }
 
         private async Task getAccessToken() {
-            string query = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
+
+            const string query = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 using (MySqlDataReader read =  (MySqlDataReader) await command.ExecuteReaderAsync()) {

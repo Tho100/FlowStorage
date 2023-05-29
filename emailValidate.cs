@@ -52,7 +52,7 @@ namespace FlowSERVER1 {
 
             List<String> _concludeValue = new List<String>();
 
-            String checkPassword_Query = "SELECT RECOV_TOK FROM information WHERE CUST_EMAIL = @email";
+            const string checkPassword_Query = "SELECT RECOV_TOK FROM information WHERE CUST_EMAIL = @email";
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;
@@ -74,10 +74,10 @@ namespace FlowSERVER1 {
 
         private string emailExistsCheck() {
 
-            String _custEmail = "";
             List<String> _concludeValue = new List<String>();
 
-            String checkPassword_Query = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
+            string _custEmail = "";
+            const string checkPassword_Query = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;

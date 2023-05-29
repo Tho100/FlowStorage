@@ -126,9 +126,10 @@ namespace FlowSERVER1 {
         /// This function will retrieve user current 
         /// file sharing status (enabeled or disabled)
         /// </summary>
-        private String retrieveDisabled(String _custUsername) {
-            String querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-            String isEnabled = "0";
+        private string retrieveDisabled(String _custUsername) {
+
+            string isEnabled = "0";
+            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
@@ -149,7 +150,9 @@ namespace FlowSERVER1 {
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
         private int userIsExists(String _receiverUsername) {
-            String countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
+
+            const string  countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
+
             command = new MySqlCommand(countUser, con);
             command.Parameters.AddWithValue("@username", _receiverUsername);
             var setupCount = command.ExecuteScalar();
@@ -164,7 +167,9 @@ namespace FlowSERVER1 {
         /// <param name="_fileName">File name to be send</param>
         /// <returns></returns>
         private int fileIsUploaded(String _custUsername, String _fileName) {
-            String queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+
+            const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+
             command = new MySqlCommand(queryRetrieveCount, con);
             command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
             command.Parameters.AddWithValue("@receiver", _custUsername);
@@ -177,8 +182,9 @@ namespace FlowSERVER1 {
 
         private async Task<string> getFileMetadata(String _fileName,String _TableName) {
 
-            String GetBase64String = "";
-            String queryGetFileByte = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            string GetBase64String = "";
+            string queryGetFileByte = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+
             using(MySqlCommand command = new MySqlCommand(queryGetFileByte,con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@filename", _fileName);
@@ -193,8 +199,10 @@ namespace FlowSERVER1 {
         }
 
         private async Task<string> getFileMetadataShared(String _custUsername, String _fileName) {
-            String GetBase64String = "";
-            String queryGetFileByte = $"SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+
+            string GetBase64String = "";
+            const string queryGetFileByte = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.Parameters.AddWithValue("@filename", _fileName);

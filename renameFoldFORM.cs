@@ -46,7 +46,7 @@ namespace FlowSERVER1 {
         
         private async Task renameFolderAsync(string newFolderName,string oldFolderName) {
 
-            string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
+            const string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
             using (MySqlCommand command = new MySqlCommand(queryRename, con)) {
                 command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
                 command.Parameters.AddWithValue("@newtitle", EncryptionModel.Encrypt(newFolderName));

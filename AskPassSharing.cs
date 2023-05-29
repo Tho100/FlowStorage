@@ -57,9 +57,9 @@ namespace FlowSERVER1 {
         private int accountType(String _receiverUsername) {
 
             int _allowedReturn = 12;
-            String _accType = "";
+            string _accType = "";
 
-            String _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
+            const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_getAccountTypeQue, con);
             command.Parameters.AddWithValue("@username", _receiverUsername);
 
@@ -90,7 +90,8 @@ namespace FlowSERVER1 {
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
         private int countReceiverShared(String _receiverUsername) {
-            String _countFileShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+
+            const string _countFileShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
             command = new MySqlCommand(_countFileShared, con);
             command.Parameters.AddWithValue("@username", _receiverUsername);
 
@@ -105,6 +106,7 @@ namespace FlowSERVER1 {
         /// </summary>
         String _controlName = null;
         private async void startSharing() {
+
             int _accType = accountType(CustUsername);
             int _countReceiverFile = countReceiverShared(CustUsername);
             long fileSizeInMB = 0;
@@ -117,8 +119,8 @@ namespace FlowSERVER1 {
                 Thread showUploadAlert = new Thread(() => new UploadAlrt(_FileName, Form1.instance.label5.Text, "cust_sharing", _controlName, CustUsername, _fileSize: fileSizeInMB).ShowDialog());
                 showUploadAlert.Start();
 
-                String varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                String insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
+                string varDate = DateTime.Now.ToString("dd/MM/yyyy");
+                const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
 
                 async Task startSending(string encryptedFileValue,string thumbValue = "") {
 
@@ -232,8 +234,9 @@ namespace FlowSERVER1 {
         }
 
         private string getInformationSharing(String _custUsername) {
-            String _storeVal = "";
-            String _queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+
+            string _storeVal = "";
+            const string _queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(_queryGet, con);
             command.Parameters.AddWithValue("@username", _custUsername);
 

@@ -38,7 +38,7 @@ namespace FlowSERVER1 {
 
             List<string> _passValues = new List<string>();
 
-            string getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            const string getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
                 command.Parameters.AddWithValue("@username", _usernameEntered);
 
@@ -57,7 +57,7 @@ namespace FlowSERVER1 {
 
         private void setupInformationUpdate(String _custUsername,String _newPass) {
 
-            string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
+            const string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(updatePasswordQuery, con)) {
                 command.Parameters.AddWithValue("@newpass", computeAuthCase(_newPass));
                 command.Parameters.AddWithValue("@username", _custUsername);

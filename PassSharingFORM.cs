@@ -48,7 +48,7 @@ namespace FlowSERVER1 {
                     remAccFORM.instance.guna2Button27.Visible = true;
                     remAccFORM.instance.guna2Button27.Enabled = true;
 
-                    String _customizeQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
+                    const string _customizeQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(_customizeQuery,con);
                     command.Parameters.AddWithValue("@getval",EncryptionModel.computeAuthCase(guna2TextBox2.Text));
                     command.Parameters.AddWithValue("@username",Form1.instance.label5.Text);

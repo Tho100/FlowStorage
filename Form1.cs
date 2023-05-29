@@ -906,7 +906,7 @@ namespace FlowSERVER1 {
 
                     var img = ((Guna2PictureBox)panelF.Controls["imgf" + i]);
 
-                    if (typeValues[i] == ".png" || typeValues[i] == ".jpg" || typeValues[i] == ".jpeg" || typeValues[i] == ".webp") {
+                    if (Globals.imageTypes.Contains(typeValues[i])) {
 
                         List<string> base64Encoded = new List<string>();
 
@@ -978,7 +978,7 @@ namespace FlowSERVER1 {
                     }
 
 
-                    if (typeValues[i] == ".txt" || typeValues[i] == ".py" || typeValues[i] == ".html" || typeValues[i] == ".css" || typeValues[i] == ".js" || typeValues[i] == ".sql" || typeValues[i] == ".csv") {
+                    if (Globals.textTypes.Contains(typeValues[i])) {
 
                         var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                         if (typeValues[i] == ".py") {
@@ -1016,7 +1016,7 @@ namespace FlowSERVER1 {
                         clearRedundane();
                     }
 
-                    if(typeValues[i] == ".mp4" || typeValues[i] == ".mov" || typeValues[i] == ".webm" || typeValues[i] == ".avi" || typeValues[i] == ".wmv") {
+                    if(Globals.videoTypes.Contains(typeValues[i])) {
 
                         List<string> base64Encoded = new List<string>();
 
@@ -1128,7 +1128,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (typeValues[i] == ".apk") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                         img.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
                             apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk",_foldTitle);
@@ -1137,7 +1137,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (typeValues[i] == ".exe") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                        img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;
                         img.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
                             exeFORM displayPic = new exeFORM(titleLab.Text, "file_info_exe", _foldTitle,"null");
@@ -1221,8 +1221,10 @@ namespace FlowSERVER1 {
             var lab5 = form.label5;
 
             DateTime now = DateTime.Now;
+
             var hours = now.Hour;
-            String greeting = "Good Night " + label5.Text;
+            string greeting = $"Good Night {label5.Text}";
+
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {
                     greeting = "Good Morning, " + lab5.Text;
@@ -1698,16 +1700,16 @@ namespace FlowSERVER1 {
                                     await startSending(keyVal,nameTable);
                                     
                                     if (_extTypes == ".py") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                                     }
                                     else if (_extTypes == ".txt") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                                     }
                                     else if (_extTypes == ".html") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                                     }
                                     else if (_extTypes == ".css") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                                     }
                                     else if (_extTypes == ".js") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
@@ -1738,7 +1740,7 @@ namespace FlowSERVER1 {
 
                                     await startSending(keyVal, nameTable);
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
                                         exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text);
@@ -1820,7 +1822,7 @@ namespace FlowSERVER1 {
                                 if (nameTable == "file_info_apk") {
                                     await startSending(keyVal, nameTable);
       
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
                                         apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null");
@@ -1871,8 +1873,6 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
 
-                                /// ORINGALLY HERE
-
                             } else {
                                 MessageBox.Show("File is too large, max file size is 1.5GB.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                             }
@@ -1883,7 +1883,7 @@ namespace FlowSERVER1 {
                             Byte[] _toByte = File.ReadAllBytes(selectedItems);
                             fileSizeInMB = (_toByte.Length/1024)/1024;
 
-                            if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".webp") {
+                            if (Globals.imageTypes.Contains(retrieved)) {
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
@@ -1907,7 +1907,7 @@ namespace FlowSERVER1 {
                                 }
                             }
 
-                            else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
+                            else if (Globals.textTypes.Contains(retrieved)) {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { 
@@ -1926,7 +1926,7 @@ namespace FlowSERVER1 {
                                 createPanelMain("file_info_exe", "PanExe", exeCurr, encryptText);
 
                             }
-                            else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
+                            else if (Globals.videoTypes.Contains(retrieved)) {
                                 vidCurr++;
                                 var _toBase64 = Convert.ToBase64String(_toByte);
                                 String encryptText = EncryptionModel.Encrypt(_toBase64);
@@ -2261,7 +2261,7 @@ namespace FlowSERVER1 {
         /// <param name="_custEmail"></param>
         /// <returns></returns>
         private bool validateEmailUser(String _custEmail) {
-            string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            const string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(_custEmail);
         }
@@ -2468,22 +2468,12 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    setupAutoLogin(_getUser);
-
-                    label11.Visible = false;
-                    label12.Visible = false;
-                    label30.Visible = false;
-                    label6.Text = "20";
-                    guna2Panel7.Visible = false;
-                    accountTypeString = "Basic";
-                    guna2TextBox1.Text = String.Empty;
-                    guna2TextBox2.Text = String.Empty;
-                    guna2TextBox3.Text = String.Empty;
-                    guna2TextBox4.Text = String.Empty;
                     await getCurrentLang();
+                    clearRegistrationValue();
+                    setupAutoLogin(_getUser);
                     setupTime();
 
-                    label20.Text = "0" + "%";
+                    label20.Text = "0%";
                     guna2ProgressBar1.Value = 0;
 
                     String[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
@@ -2495,6 +2485,19 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void clearRegistrationValue() {
+            label11.Visible = false;
+            label12.Visible = false;
+            label30.Visible = false;
+            label6.Text = "20";
+            guna2Panel7.Visible = false;
+            accountTypeString = "Basic";
+            guna2TextBox1.Text = String.Empty;
+            guna2TextBox2.Text = String.Empty;
+            guna2TextBox3.Text = String.Empty;
+            guna2TextBox4.Text = String.Empty;
         }
 
         /// <summary>
@@ -2665,19 +2668,6 @@ namespace FlowSERVER1 {
                     label32.Text = listBox1.GetItemText(listBox1.SelectedItem);
                     guna2Panel3.Visible = true;
 
-                    /*var titleFile = titleLab.Text;
-                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (verifyDialog == DialogResult.Yes) {
-                        _deletionFoldFile(label5.Text, titleLab.Text, label26.Text);
-                        panelVid.Dispose();
-                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-                    }
-
-                    if (flowLayoutPanel1.Controls.Count == 0) {
-                        label8.Visible = true;
-                        guna2Button6.Visible = true;
-                    }*/
-
                 };
 
                 Label dateLabExl = new Label();
@@ -2702,7 +2692,7 @@ namespace FlowSERVER1 {
                     Byte[] _getBytes = File.ReadAllBytes(_Files);
                     fileSizeInMB = (_getBytes.Length / 1024) / 1024;
 
-                    if (_extTypes == ".png" || _extTypes == ".jpg" || _extTypes == ".jpeg" || _extTypes == ".bmp" || _extTypes == ".webp") {
+                    if (Globals.imageTypes.Contains(_extTypes)) {
 
                         var _imgContent = new Bitmap(_Files);
 
@@ -2737,7 +2727,9 @@ namespace FlowSERVER1 {
 
                         };
                     }
-                    if (_extTypes == ".txt" || _extTypes == ".py" || _extTypes == ".html" || _extTypes == ".css" || _extTypes == ".js" || _extTypes == ".sql" || _extTypes == ".csv") {
+
+                    if (Globals.textTypes.Contains(_extTypes)) {
+
                         if (_extTypes == ".py") {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                         }
@@ -2797,7 +2789,7 @@ namespace FlowSERVER1 {
                             displayPic.ShowDialog();
                         };
                     }
-                    if (_extTypes == ".mp4" || _extTypes == ".mov" || _extTypes == ".webm" || _extTypes == ".avi" || _extTypes == ".wmv") {
+                    if (Globals.videoTypes.Contains(_extTypes)) {
 
                         ShellFile shellFile = ShellFile.FromFilePath(_Files);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -3298,7 +3290,7 @@ namespace FlowSERVER1 {
             DialogResult verifyDeletion = MessageBox.Show($"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (verifyDeletion == DialogResult.Yes) {
 
-                string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+                const string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 using (MySqlCommand command = new MySqlCommand(removeFoldQue, con)) {
                     command.Parameters.AddWithValue("@username", label5.Text);
                     command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldName));
@@ -3490,7 +3482,7 @@ namespace FlowSERVER1 {
                         panelTxt.ShadowDecoration.Enabled = false;
                     };
 
-                    if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp" || typeValues[q] == ".webp") {
+                    if (Globals.imageTypes.Contains(typeValues[q])) {
 
                         if(base64EncodedImageSharedOthers.Count == 0) {
 
@@ -3636,7 +3628,7 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    if (typeValues[q] == ".mp4" || typeValues[q] == ".mov" || typeValues[q] == ".webm" || typeValues[q] == ".avi" || typeValues[q] == ".wmv") {
+                    if (Globals.videoTypes.Contains(typeValues[q])) {
 
                         List<string> base64Encoded = new List<string>();
 
@@ -3658,7 +3650,6 @@ namespace FlowSERVER1 {
                                 textboxPic.Image = new Bitmap(toMs);
                             }
                         }
-
 
                         textboxPic.Click += (sender_im, e_im) => {
                             var getImgName = (Guna2PictureBox)sender_im;
@@ -3686,7 +3677,7 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    if (typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".xml" || typeValues[q] == ".py" || typeValues[q] == ".css" || typeValues[q] == ".js" || typeValues[q] == ".sql" || typeValues[q] == ".csv") {
+                    if (Globals.textTypes.Contains(typeValues[q])) {
 
                         if (typeValues[q] == ".py") {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
@@ -3893,7 +3884,7 @@ namespace FlowSERVER1 {
                     panelTxt.ShadowDecoration.Enabled = false;
                 };
 
-                if (typeValues[q] == ".png" || typeValues[q] == ".jpeg" || typeValues[q] == ".jpg" || typeValues[q] == ".bmp" || typeValues[q] == ".webp") {
+                if (Globals.imageTypes.Contains(typeValues[q])) {
 
                     List<string> base64Encoded = new List<string>();
 
@@ -4035,7 +4026,7 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                if (typeValues[q] == ".mp4" || typeValues[q] == ".mov" || typeValues[q] == ".webm" || typeValues[q] == ".avi" || typeValues[q] == ".wmv") {
+                if (Globals.videoTypes.Contains(typeValues[q])) {
 
                     List<string> base64Encoded = new List<string>();
 
@@ -4084,19 +4075,19 @@ namespace FlowSERVER1 {
                     };
                 }
 
-                if (typeValues[q] == ".txt" || typeValues[q] == ".html" || typeValues[q] == ".xml" || typeValues[q] == ".py" || typeValues[q] == ".css" || typeValues[q] == ".js" || typeValues[q] == ".sql" || typeValues[q] == ".csv") {
+                if (Globals.textTypes.Contains(typeValues[q])) {
 
                     if (typeValues[q] == ".py") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                     }
                     else if (typeValues[q] == ".txt") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                     }
                     else if (typeValues[q] == ".html") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                     }
                     else if (typeValues[q] == ".css") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                     }
                     else if (typeValues[q] == ".js") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
@@ -4657,9 +4648,7 @@ namespace FlowSERVER1 {
             guna2Button4.Visible = false;
             flowLayoutPanel1.Controls.Clear();
                     
-            string[] tableNames = { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk", "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_gif", "file_info_directory" };
-
-            foreach (string tableName in tableNames) {
+            foreach (string tableName in Globals.publicTables) {
                 switch (tableName) {
                     case "file_info":
                         await _generateUserFiles(tableName, "imgFile", await _countRow(tableName));
@@ -4820,9 +4809,7 @@ namespace FlowSERVER1 {
             guna2Button4.Visible = false;
             flowLayoutPanel1.Controls.Clear();
 
-            string[] tableNames = { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", "file_info_excel","file_info_msi","file_info_audi","file_info_apk","file_info_pdf","file_info_word","file_info_ptx","file_info_gif","file_info_directory"};
-
-            foreach (string tableName in tableNames) {
+            foreach (string tableName in Globals.publicTables) {
                 switch (tableName) {
                     case "file_info":
                         await _generateUserFiles(tableName, "imgFile", await _countRow(tableName));
@@ -5259,16 +5246,16 @@ namespace FlowSERVER1 {
                             await startSending(keyVal);
 
                             if (_extTypes == ".py") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                             }
                             else if (_extTypes == ".txt") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                             }
                             else if (_extTypes == ".html") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                             }
                             else if (_extTypes == ".css") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                             }
                             else if (_extTypes == ".js") {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
@@ -5301,7 +5288,7 @@ namespace FlowSERVER1 {
                             tableName = "file_info_exe";
                             backgroundWorker1.RunWorkerAsync();
 
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;//Image.FromFile(@"C:\USERS\USER\Downloads\Gallery\icons8-exe-48.png");
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 Form bgBlur = new Form();
                                 exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", label5.Text);
@@ -5383,7 +5370,7 @@ namespace FlowSERVER1 {
                             tableName = "file_info_apk";
                             backgroundWorker1.RunWorkerAsync();
 
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                             textboxPic.Click += (sender_gi, e_gi) => {
                                 Form bgBlur = new Form();
                                 apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk", "null");
@@ -5472,7 +5459,7 @@ namespace FlowSERVER1 {
                     Byte[] _toByte = File.ReadAllBytes(selectedItems);
                     fileSizeInMB = (_toByte.Length / 1024) / 1024;
 
-                    if (retrieved == ".png" || retrieved == ".jpeg" || retrieved == ".jpg" || retrieved == ".ico" || retrieved == ".bmp" || retrieved == ".webp") {
+                    if (Globals.imageTypes.Contains(retrieved)) {
                         curr++;
                         var getImg = new Bitmap(selectedItems);
                         var imgWidth = getImg.Width;
@@ -5496,7 +5483,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    else if (retrieved == ".txt" || retrieved == ".html" || retrieved == ".xml" || retrieved == ".py" || retrieved == ".css" || retrieved == ".js" || retrieved == ".sql" || retrieved == ".csv") {
+                    else if (Globals.textTypes.Contains(retrieved)) {
                         txtCurr++;
                         String nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
@@ -5515,7 +5502,7 @@ namespace FlowSERVER1 {
                         createPanelMain("file_info_exe", "PanExe", exeCurr, encryptText);
 
                     }
-                    else if (retrieved == ".mp4" || retrieved == ".mov" || retrieved == ".webm" || retrieved == ".avi" || retrieved == ".wmv") {
+                    else if (Globals.videoTypes.Contains(retrieved)) {
                         vidCurr++;
                         var _toBase64 = Convert.ToBase64String(_toByte);
                         String encryptText = EncryptionModel.Encrypt(_toBase64);

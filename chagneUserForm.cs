@@ -46,7 +46,7 @@ namespace FlowSERVER1 {
 
         private void setupChangeUsernameSharing(String _setUsername) {
 
-            String updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + _setUsername + "' WHERE CUST_FROM = @username";
+            string updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + _setUsername + "' WHERE CUST_FROM = @username";
             command = new MySqlCommand(updateQuery, con);
             command.Parameters.AddWithValue("@username", CurrentUsername);
             command.ExecuteNonQuery();
@@ -54,8 +54,10 @@ namespace FlowSERVER1 {
         }
 
         private int verifyIfNotExists(String _newUsername) {
+
             List<String> _usernameValues = new List<string>();
-            String getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+
+            const string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(getUsername,con);
             command.Parameters.AddWithValue("@username",_newUsername);
 
@@ -65,11 +67,14 @@ namespace FlowSERVER1 {
                 _usernameValues.Add(_getString);
             }
             _ReadUsername.Close();
+
             return _usernameValues.Count;
         }
         private string authReturnOriginal(String _usernameEntered) {
+
             List<String> _passValues = new List<string>();
-            String getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+
+            const string  getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(getUsername, con);
             command.Parameters.AddWithValue("@username", _usernameEntered);
 
@@ -79,8 +84,11 @@ namespace FlowSERVER1 {
                 _passValues.Add(_getStringPassword);
             }
             _ReadPass.Close();
-            String _passValuesString = _passValues[0];
+
+            string _passValuesString = _passValues[0];
+
             return _passValuesString;
+
         }
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
