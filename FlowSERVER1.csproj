@@ -388,28 +388,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="apiFORM.cs">
+    <Compile Include="Authentication\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="apiFORM.Designer.cs">
-      <DependentUpon>apiFORM.cs</DependentUpon>
+    <Compile Include="Authentication\SignUpForm.Designer.cs">
+      <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="apkFORM.cs">
+    <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="apkFORM.Designer.cs">
+    <Compile Include="ExtraForms\ApiPageForm.Designer.cs">
+      <DependentUpon>ApiPageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewerForms\apkFORM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewerForms\apkFORM.Designer.cs">
       <DependentUpon>apkFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="AskPassSharing.cs">
+    <Compile Include="Sharing\AskSharingAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AskPassSharing.Designer.cs">
-      <DependentUpon>AskPassSharing.cs</DependentUpon>
+    <Compile Include="Sharing\AskSharingAuthForm.Designer.cs">
+      <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="audFORM.cs">
+    <Compile Include="ViewerForms\audFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="audFORM.Designer.cs">
+    <Compile Include="ViewerForms\audFORM.Designer.cs">
       <DependentUpon>audFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="AudioHelp.cs">
@@ -418,128 +424,128 @@
     <Compile Include="AudioHelp.Designer.cs">
       <DependentUpon>AudioHelp.cs</DependentUpon>
     </Compile>
-    <Compile Include="AudioSubFORM.cs">
+    <Compile Include="ExtraForms\AudioPlayingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AudioSubFORM.Designer.cs">
-      <DependentUpon>AudioSubFORM.cs</DependentUpon>
+    <Compile Include="ExtraForms\AudioPlayingForm.Designer.cs">
+      <DependentUpon>AudioPlayingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Button_WOC.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="cancelFORM.cs">
+    <Compile Include="AlertForms\CancellingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="cancelFORM.Designer.cs">
-      <DependentUpon>cancelFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\CancellingAlert.Designer.cs">
+      <DependentUpon>CancellingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="chagneUserForm.cs">
+    <Compile Include="Settings\ChangeUsernameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="chagneUserForm.Designer.cs">
-      <DependentUpon>chagneUserForm.cs</DependentUpon>
+    <Compile Include="Settings\ChangeUsernameForm.Designer.cs">
+      <DependentUpon>ChangeUsernameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConfirmRemFORM.cs">
+    <Compile Include="Settings\RemoveAccountForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfirmRemFORM.Designer.cs">
-      <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
+    <Compile Include="Settings\RemoveAccountForm.Designer.cs">
+      <DependentUpon>RemoveAccountForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ConnectionModel.cs" />
-    <Compile Include="DirErFORM.cs">
+    <Compile Include="AlertForms\LimitedDirAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DirErFORM.Designer.cs">
-      <DependentUpon>DirErFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\LimitedDirAlert.Designer.cs">
+      <DependentUpon>LimitedDirAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="emailValidate.cs">
+    <Compile Include="Recovery\ValidateRecoveryEmail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="emailValidate.Designer.cs">
-      <DependentUpon>emailValidate.cs</DependentUpon>
+    <Compile Include="Recovery\ValidateRecoveryEmail.Designer.cs">
+      <DependentUpon>ValidateRecoveryEmail.cs</DependentUpon>
     </Compile>
     <Compile Include="EncryptionKey.cs" />
     <Compile Include="EncryptionModel.cs" />
-    <Compile Include="errorLoad.cs">
+    <Compile Include="AlertForms\ErrorLoadAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="errorLoad.Designer.cs">
-      <DependentUpon>errorLoad.cs</DependentUpon>
+    <Compile Include="AlertForms\ErrorLoadAlert.Designer.cs">
+      <DependentUpon>ErrorLoadAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="exeFORM.cs">
+    <Compile Include="ViewerForms\exeFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="exeFORM.Designer.cs">
+    <Compile Include="ViewerForms\exeFORM.Designer.cs">
       <DependentUpon>exeFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="failedPas.cs">
+    <Compile Include="AlertForms\RecoveryFailedAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="failedPas.Designer.cs">
-      <DependentUpon>failedPas.cs</DependentUpon>
+    <Compile Include="AlertForms\RecoveryFailedAlert.Designer.cs">
+      <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="FileSize.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="HomePage.Designer.cs">
+      <DependentUpon>HomePage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form3.cs">
+    <Compile Include="Directory\DirectoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Directory\DirectoryForm.Designer.cs">
+      <DependentUpon>DirectoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form4.cs">
+    <Compile Include="Directory\CreateDirectoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form4.Designer.cs">
-      <DependentUpon>Form4.cs</DependentUpon>
+    <Compile Include="Directory\CreateDirectoryForm.Designer.cs">
+      <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="exlFORM.cs">
+    <Compile Include="ViewerForms\exlFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="exlFORM.Designer.cs">
+    <Compile Include="ViewerForms\exlFORM.Designer.cs">
       <DependentUpon>exlFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="gifFORM.cs">
+    <Compile Include="ViewerForms\gifFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="gifFORM.Designer.cs">
+    <Compile Include="ViewerForms\gifFORM.Designer.cs">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
-    <Compile Include="limitFolderFORM.cs">
+    <Compile Include="AlertForms\LimitedFolderAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="limitFolderFORM.Designer.cs">
-      <DependentUpon>limitFolderFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\LimitedFolderAlert.Designer.cs">
+      <DependentUpon>LimitedFolderAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoadAlertFORM.cs">
+    <Compile Include="AlertForms\LoadingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoadAlertFORM.Designer.cs">
-      <DependentUpon>LoadAlertFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\LoadingAlert.Designer.cs">
+      <DependentUpon>LoadingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoaderModel.cs" />
-    <Compile Include="mobileFORM.cs">
+    <Compile Include="Model\LoaderModel.cs" />
+    <Compile Include="ExtraForms\MobilePageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mobileFORM.Designer.cs">
-      <DependentUpon>mobileFORM.cs</DependentUpon>
+    <Compile Include="ExtraForms\MobilePageForm.Designer.cs">
+      <DependentUpon>MobilePageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="msiFORM.cs">
+    <Compile Include="ViewerForms\msiFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="msiFORM.Designer.cs">
+    <Compile Include="ViewerForms\msiFORM.Designer.cs">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="noPayment.cs">
+    <Compile Include="AlertForms\PaymentFailedAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="noPayment.Designer.cs">
-      <DependentUpon>noPayment.cs</DependentUpon>
+    <Compile Include="AlertForms\PaymentFailedAlert.Designer.cs">
+      <DependentUpon>PaymentFailedAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="NotifySubFORM.cs">
       <SubType>Form</SubType>
@@ -547,163 +553,163 @@
     <Compile Include="NotifySubFORM.Designer.cs">
       <DependentUpon>NotifySubFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="PassSharingFORM.cs">
+    <Compile Include="Sharing\PassSharingFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PassSharingFORM.Designer.cs">
+    <Compile Include="Sharing\PassSharingFORM.Designer.cs">
       <DependentUpon>PassSharingFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="pdfFORM.cs">
+    <Compile Include="ViewerForms\pdfFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pdfFORM.Designer.cs">
+    <Compile Include="ViewerForms\pdfFORM.Designer.cs">
       <DependentUpon>pdfFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="picFORM.cs">
+    <Compile Include="ViewerForms\picFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="picFORM.Designer.cs">
+    <Compile Include="ViewerForms\picFORM.Designer.cs">
       <DependentUpon>picFORM.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LogIN.cs">
+    <Compile Include="Authentication\SignInForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogIN.Designer.cs">
-      <DependentUpon>LogIN.cs</DependentUpon>
+    <Compile Include="Authentication\SignInForm.Designer.cs">
+      <DependentUpon>SignInForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ptxFORM.cs">
+    <Compile Include="ViewerForms\ptxFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ptxFORM.Designer.cs">
+    <Compile Include="ViewerForms\ptxFORM.Designer.cs">
       <DependentUpon>ptxFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="RecovFORM.cs">
+    <Compile Include="Recovery\RecoveryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RecovFORM.Designer.cs">
-      <DependentUpon>RecovFORM.cs</DependentUpon>
+    <Compile Include="Recovery\RecoveryForm.Designer.cs">
+      <DependentUpon>RecoveryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="remAccFORM.cs">
+    <Compile Include="Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="remAccFORM.Designer.cs">
-      <DependentUpon>remAccFORM.cs</DependentUpon>
+    <Compile Include="Settings\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="renameFoldFORM.cs">
+    <Compile Include="Rename\RenameFolderFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="renameFoldFORM.Designer.cs">
-      <DependentUpon>renameFoldFORM.cs</DependentUpon>
+    <Compile Include="Rename\RenameFolderFileForm.Designer.cs">
+      <DependentUpon>RenameFolderFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="renameFORM.cs">
+    <Compile Include="Rename\RenameFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="renameFORM.Designer.cs">
-      <DependentUpon>renameFORM.cs</DependentUpon>
+    <Compile Include="Rename\RenameFileForm.Designer.cs">
+      <DependentUpon>RenameFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="resPasFORM.cs">
+    <Compile Include="Settings\ResetAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="resPasFORM.Designer.cs">
-      <DependentUpon>resPasFORM.cs</DependentUpon>
+    <Compile Include="Settings\ResetAuthForm.Designer.cs">
+      <DependentUpon>ResetAuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RetrievalAlert.cs">
+    <Compile Include="AlertForms\RetrievalAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RetrievalAlert.Designer.cs">
+    <Compile Include="AlertForms\RetrievalAlert.Designer.cs">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="SaverModel.cs" />
-    <Compile Include="settingsAlert.cs">
+    <Compile Include="Model\SaverModel.cs" />
+    <Compile Include="AlertForms\SettingsLoadingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="settingsAlert.Designer.cs">
-      <DependentUpon>settingsAlert.cs</DependentUpon>
+    <Compile Include="AlertForms\SettingsLoadingAlert.Designer.cs">
+      <DependentUpon>SettingsLoadingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="shareFileFORM.cs">
+    <Compile Include="Sharing\ShareFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="shareFileFORM.Designer.cs">
-      <DependentUpon>shareFileFORM.cs</DependentUpon>
+    <Compile Include="Sharing\shareFileFORM.Designer.cs">
+      <DependentUpon>ShareFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="sharingFORM.cs">
+    <Compile Include="Sharing\MainSharingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sharingFORM.Designer.cs">
-      <DependentUpon>sharingFORM.cs</DependentUpon>
+    <Compile Include="Sharing\MainSharingForm.Designer.cs">
+      <DependentUpon>MainSharingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SheetRetrieval.cs">
+    <Compile Include="AlertForms\SheetRetrievalAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SheetRetrieval.Designer.cs">
-      <DependentUpon>SheetRetrieval.cs</DependentUpon>
+    <Compile Include="AlertForms\SheetRetrievalAlert.Designer.cs">
+      <DependentUpon>SheetRetrievalAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="splashFORM.cs">
+    <Compile Include="ExtraForms\SplashForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="splashFORM.Designer.cs">
-      <DependentUpon>splashFORM.cs</DependentUpon>
+    <Compile Include="ExtraForms\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="successChangeUser.cs">
+    <Compile Include="AlertForms\UsernameUpdatedAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="successChangeUser.Designer.cs">
-      <DependentUpon>successChangeUser.cs</DependentUpon>
+    <Compile Include="AlertForms\UsernameUpdatedAlert.Designer.cs">
+      <DependentUpon>UsernameUpdatedAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="successPay.cs">
+    <Compile Include="AlertForms\PaymentSuceededAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="successPay.Designer.cs">
-      <DependentUpon>successPay.cs</DependentUpon>
+    <Compile Include="AlertForms\PaymentSuceededAlert.Designer.cs">
+      <DependentUpon>PaymentSuceededAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="successResPas.cs">
+    <Compile Include="AlertForms\SuccessResetAuthAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="successResPas.Designer.cs">
-      <DependentUpon>successResPas.cs</DependentUpon>
+    <Compile Include="AlertForms\SuccessResetAuthAlert.Designer.cs">
+      <DependentUpon>SuccessResetAuthAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="sucessShare.cs">
+    <Compile Include="Sharing\SucessSharedAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sucessShare.Designer.cs">
-      <DependentUpon>sucessShare.cs</DependentUpon>
+    <Compile Include="Sharing\SucessSharedAlert.Designer.cs">
+      <DependentUpon>SucessSharedAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="txtFORM.cs">
+    <Compile Include="ViewerForms\txtFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="txtFORM.Designer.cs">
+    <Compile Include="ViewerForms\txtFORM.Designer.cs">
       <DependentUpon>txtFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="UnknownFileFORM.cs">
+    <Compile Include="AlertForms\UnknownTypeAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UnknownFileFORM.Designer.cs">
-      <DependentUpon>UnknownFileFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\UnknownTypeAlert.Designer.cs">
+      <DependentUpon>UnknownTypeAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="upgradeFORM.cs">
+    <Compile Include="AlertForms\UpgradeAccountAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="upgradeFORM.Designer.cs">
-      <DependentUpon>upgradeFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\UpgradeAccountAlert.Designer.cs">
+      <DependentUpon>UpgradeAccountAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="UpgradeFormFold.cs">
+    <Compile Include="AlertForms\LimitedFolderFileAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpgradeFormFold.Designer.cs">
-      <DependentUpon>UpgradeFormFold.cs</DependentUpon>
+    <Compile Include="AlertForms\LimitedFolderFileAlert.Designer.cs">
+      <DependentUpon>LimitedFolderFileAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="UploadAlrt.cs">
+    <Compile Include="AlertForms\UploadingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UploadAlrt.Designer.cs">
-      <DependentUpon>UploadAlrt.cs</DependentUpon>
+    <Compile Include="AlertForms\UploadingAlert.Designer.cs">
+      <DependentUpon>UploadingAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="verificationTokenFORM.cs">
       <SubType>Form</SubType>
@@ -711,112 +717,115 @@
     <Compile Include="verificationTokenFORM.Designer.cs">
       <DependentUpon>verificationTokenFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="vidFORM.cs">
+    <Compile Include="ViewerForms\vidFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vidFORM.Designer.cs">
+    <Compile Include="ViewerForms\vidFORM.Designer.cs">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="waitFORM.cs">
+    <Compile Include="AlertForms\WaitAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="waitFORM.Designer.cs">
-      <DependentUpon>waitFORM.cs</DependentUpon>
+    <Compile Include="AlertForms\WaitAlert.Designer.cs">
+      <DependentUpon>WaitAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="wordFORM.cs">
+    <Compile Include="ViewerForms\wordFORM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="wordFORM.Designer.cs">
+    <Compile Include="ViewerForms\wordFORM.Designer.cs">
       <DependentUpon>wordFORM.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="apiFORM.resx">
-      <DependentUpon>apiFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Authentication\SignUpForm.resx">
+      <DependentUpon>SignUpForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="apkFORM.resx">
+    <EmbeddedResource Include="ExtraForms\ApiPageForm.resx">
+      <DependentUpon>ApiPageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewerForms\apkFORM.resx">
       <DependentUpon>apkFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AskPassSharing.resx">
-      <DependentUpon>AskPassSharing.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\AskSharingAuthForm.resx">
+      <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="audFORM.resx">
+    <EmbeddedResource Include="ViewerForms\audFORM.resx">
       <DependentUpon>audFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AudioHelp.resx">
       <DependentUpon>AudioHelp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AudioSubFORM.resx">
-      <DependentUpon>AudioSubFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ExtraForms\AudioPlayingForm.resx">
+      <DependentUpon>AudioPlayingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="cancelFORM.resx">
-      <DependentUpon>cancelFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\CancellingAlert.resx">
+      <DependentUpon>CancellingAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="chagneUserForm.resx">
-      <DependentUpon>chagneUserForm.cs</DependentUpon>
+    <EmbeddedResource Include="Settings\ChangeUsernameForm.resx">
+      <DependentUpon>ChangeUsernameForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfirmRemFORM.resx">
-      <DependentUpon>ConfirmRemFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Settings\RemoveAccountForm.resx">
+      <DependentUpon>RemoveAccountForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DirErFORM.resx">
-      <DependentUpon>DirErFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\LimitedDirAlert.resx">
+      <DependentUpon>LimitedDirAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="emailValidate.resx">
-      <DependentUpon>emailValidate.cs</DependentUpon>
+    <EmbeddedResource Include="Recovery\ValidateRecoveryEmail.resx">
+      <DependentUpon>ValidateRecoveryEmail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="errorLoad.resx">
-      <DependentUpon>errorLoad.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\ErrorLoadAlert.resx">
+      <DependentUpon>ErrorLoadAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="exeFORM.resx">
+    <EmbeddedResource Include="ViewerForms\exeFORM.resx">
       <DependentUpon>exeFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="failedPas.resx">
-      <DependentUpon>failedPas.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\RecoveryFailedAlert.resx">
+      <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="HomePage.resx">
+      <DependentUpon>HomePage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Directory\DirectoryForm.resx">
+      <DependentUpon>DirectoryForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form4.resx">
-      <DependentUpon>Form4.cs</DependentUpon>
+    <EmbeddedResource Include="Directory\CreateDirectoryForm.resx">
+      <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="exlFORM.resx">
+    <EmbeddedResource Include="ViewerForms\exlFORM.resx">
       <DependentUpon>exlFORM.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="gifFORM.resx">
+    <EmbeddedResource Include="ViewerForms\gifFORM.resx">
       <DependentUpon>gifFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="limitFolderFORM.resx">
-      <DependentUpon>limitFolderFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\LimitedFolderAlert.resx">
+      <DependentUpon>LimitedFolderAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoadAlertFORM.resx">
-      <DependentUpon>LoadAlertFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\LoadingAlert.resx">
+      <DependentUpon>LoadingAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mobileFORM.resx">
-      <DependentUpon>mobileFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ExtraForms\MobilePageForm.resx">
+      <DependentUpon>MobilePageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="msiFORM.resx">
+    <EmbeddedResource Include="ViewerForms\msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="noPayment.resx">
-      <DependentUpon>noPayment.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\PaymentFailedAlert.resx">
+      <DependentUpon>PaymentFailedAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotifySubFORM.resx">
       <DependentUpon>NotifySubFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PassSharingFORM.resx">
+    <EmbeddedResource Include="Sharing\PassSharingFORM.resx">
       <DependentUpon>PassSharingFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pdfFORM.resx">
+    <EmbeddedResource Include="ViewerForms\pdfFORM.resx">
       <DependentUpon>pdfFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="picFORM.resx">
+    <EmbeddedResource Include="ViewerForms\picFORM.resx">
       <DependentUpon>picFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogIN.resx">
-      <DependentUpon>LogIN.cs</DependentUpon>
+    <EmbeddedResource Include="Authentication\SignInForm.resx">
+      <DependentUpon>SignInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -824,80 +833,80 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ptxFORM.resx">
+    <EmbeddedResource Include="ViewerForms\ptxFORM.resx">
       <DependentUpon>ptxFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RecovFORM.resx">
-      <DependentUpon>RecovFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Recovery\RecoveryForm.resx">
+      <DependentUpon>RecoveryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="remAccFORM.resx">
-      <DependentUpon>remAccFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Settings\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="renameFoldFORM.resx">
-      <DependentUpon>renameFoldFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Rename\RenameFolderFileForm.resx">
+      <DependentUpon>RenameFolderFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="renameFORM.resx">
-      <DependentUpon>renameFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Rename\RenameFileForm.resx">
+      <DependentUpon>RenameFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="resPasFORM.resx">
-      <DependentUpon>resPasFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Settings\ResetAuthForm.resx">
+      <DependentUpon>ResetAuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RetrievalAlert.resx">
+    <EmbeddedResource Include="AlertForms\RetrievalAlert.resx">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="settingsAlert.resx">
-      <DependentUpon>settingsAlert.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\SettingsLoadingAlert.resx">
+      <DependentUpon>SettingsLoadingAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="shareFileFORM.resx">
-      <DependentUpon>shareFileFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\shareFileFORM.resx">
+      <DependentUpon>ShareFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sharingFORM.resx">
-      <DependentUpon>sharingFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\MainSharingForm.resx">
+      <DependentUpon>MainSharingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SheetRetrieval.resx">
-      <DependentUpon>SheetRetrieval.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\SheetRetrievalAlert.resx">
+      <DependentUpon>SheetRetrievalAlert.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="splashFORM.resx">
-      <DependentUpon>splashFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ExtraForms\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="successChangeUser.resx">
-      <DependentUpon>successChangeUser.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\UsernameUpdatedAlert.resx">
+      <DependentUpon>UsernameUpdatedAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="successPay.resx">
-      <DependentUpon>successPay.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\PaymentSuceededAlert.resx">
+      <DependentUpon>PaymentSuceededAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="successResPas.resx">
-      <DependentUpon>successResPas.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\SuccessResetAuthAlert.resx">
+      <DependentUpon>SuccessResetAuthAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sucessShare.resx">
-      <DependentUpon>sucessShare.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\SucessSharedAlert.resx">
+      <DependentUpon>SucessSharedAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="txtFORM.resx">
+    <EmbeddedResource Include="ViewerForms\txtFORM.resx">
       <DependentUpon>txtFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UnknownFileFORM.resx">
-      <DependentUpon>UnknownFileFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\UnknownTypeAlert.resx">
+      <DependentUpon>UnknownTypeAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="upgradeFORM.resx">
-      <DependentUpon>upgradeFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\UpgradeAccountAlert.resx">
+      <DependentUpon>UpgradeAccountAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpgradeFormFold.resx">
-      <DependentUpon>UpgradeFormFold.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\LimitedFolderFileAlert.resx">
+      <DependentUpon>LimitedFolderFileAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UploadAlrt.resx">
-      <DependentUpon>UploadAlrt.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\UploadingAlert.resx">
+      <DependentUpon>UploadingAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="verificationTokenFORM.resx">
       <DependentUpon>verificationTokenFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="vidFORM.resx">
+    <EmbeddedResource Include="ViewerForms\vidFORM.resx">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="waitFORM.resx">
-      <DependentUpon>waitFORM.cs</DependentUpon>
+    <EmbeddedResource Include="AlertForms\WaitAlert.resx">
+      <DependentUpon>WaitAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="wordFORM.resx">
+    <EmbeddedResource Include="ViewerForms\wordFORM.resx">
       <DependentUpon>wordFORM.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="mycert.pfx" />
@@ -990,7 +999,6 @@
     <None Include="Resources\icons8-python-file-48.png" />
     <None Include="Resources\icons8-html-filetype-48 %281%29.png" />
     <None Include="Resources\icons8-css-filetype-48 %281%29.png" />
-    <None Include="icons8-closed-eye-24.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

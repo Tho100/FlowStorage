@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlowSERVER1.Authentication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,9 @@ namespace FlowSERVER1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new splashFORM());
-            Application.Run(new Form1());
+            Application.Run(new SplashForm());
+            Application.Run(new SignUpForm());
+
         }
     }
 }

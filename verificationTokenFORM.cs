@@ -35,7 +35,7 @@ namespace FlowSERVER1 {
 
             string _selectQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectQue, con)) {
-                command.Parameters.AddWithValue("@username", Form1.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
 
                 using (MySqlDataReader reader = command.ExecuteReader()) {
                     while (reader.Read()) {
@@ -45,11 +45,11 @@ namespace FlowSERVER1 {
             }
 
             if (EncryptionModel.Decrypt(_queStr) == guna2TextBox1.Text) {
-                remAccFORM.instance.guna2Button28.Visible = false;
-                remAccFORM.instance.guna2Button29.Visible = true;
-                remAccFORM.instance.guna2TextBox2.PasswordChar = '\0';
-                remAccFORM.instance.guna2TextBox2.Enabled = true;
-                remAccFORM.instance.tokenCheckCurr++;
+                SettingsForm.instance.guna2Button28.Visible = false;
+                SettingsForm.instance.guna2Button29.Visible = true;
+                SettingsForm.instance.guna2TextBox2.PasswordChar = '\0';
+                SettingsForm.instance.guna2TextBox2.Enabled = true;
+                SettingsForm.instance.tokenCheckCurr++;
                 this.Close();
             }
             else {
