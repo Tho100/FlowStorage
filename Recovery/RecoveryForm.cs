@@ -66,7 +66,7 @@ namespace FlowSERVER1 {
             string concludeStrings = "";
             const string query = "SELECT RECOV_TOK FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader read = command.ExecuteReader()) {
                     while (read.Read()) {
                         concludeStrings = read.GetString(0);
@@ -84,7 +84,7 @@ namespace FlowSERVER1 {
 
             const string query = "SELECT CUST_PASSWORD, CUST_PIN FROM information WHERE CUST_USERNAME = @username";
             using(MySqlCommand command = new MySqlCommand(query,con)) {
-                command.Parameters.AddWithValue("@username",HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username",Globals.custUsername);
                 using(MySqlDataReader read = command.ExecuteReader()) {
                     while(read.Read()) { 
                         concludeStrings.Add(read.GetString(0));

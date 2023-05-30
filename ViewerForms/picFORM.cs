@@ -86,7 +86,7 @@ namespace FlowSERVER1 {
         private async Task<string> getCommentSharedToMe() {
             String returnComment = "";
             using(MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename",con)) {
-                command.Parameters.AddWithValue("@username",HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username",Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
                 using(MySqlDataReader readerComment = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while(await readerComment.ReadAsync()) {
@@ -100,7 +100,7 @@ namespace FlowSERVER1 {
         private async Task<string> getCommentSharedToOthers() {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (await readerComment.ReadAsync()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
@@ -382,7 +382,7 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand(que, con)) {
                 command.Parameters.AddWithValue("@newval", values);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 if (await command.ExecuteNonQueryAsync() == 1) {
                     MessageBox.Show("Changes saved successfully. Please hit the refresh button on the top of folder tab to see changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -408,7 +408,7 @@ namespace FlowSERVER1 {
             const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 await command.ExecuteNonQueryAsync();
             }

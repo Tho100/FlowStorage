@@ -93,13 +93,14 @@ namespace FlowSERVER1 {
         /// <param name="TableName"></param>
         private void FileDeletionNormal(String FileName, String TableName) {
 
-            string fileDeletionQuery = "DELETE FROM " + TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            string fileDeletionQuery = $"DELETE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
 
             command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName, EncryptionKey.KeyValue));
             command.ExecuteNonQuery();
         }
+
         /// <summary>
         /// File deletion function for directory
         /// </summary>
@@ -108,7 +109,7 @@ namespace FlowSERVER1 {
             const string fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
 
             command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue));
             command.ExecuteNonQuery();
@@ -123,7 +124,7 @@ namespace FlowSERVER1 {
             const string fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
 
             command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
             command.Parameters.AddWithValue("@foldtitle", _FoldName);
             command.ExecuteNonQuery();
@@ -136,7 +137,7 @@ namespace FlowSERVER1 {
             const string fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
 
             command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
             command.ExecuteNonQuery();
         }

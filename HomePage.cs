@@ -27,6 +27,8 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
+        private Crud crudClass = new Crud();
+
         public static HomePage instance { get; set;} = new HomePage();
         public Label setupLabel { get; set; }
         public string CurrentLang { get; set; }
@@ -95,6 +97,8 @@ namespace FlowSERVER1 {
         private readonly Image MSIImage = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
         private readonly Image EXEImage = FlowSERVER1.Properties.Resources.icons8_exe_48;
 
+        private int top = 275; private int h_p = 100;
+
         public HomePage() {
 
             InitializeComponent();
@@ -122,30 +126,6 @@ namespace FlowSERVER1 {
             flowLayoutPanel1.VerticalScroll.Visible = false;
 
             this.TopMost = false;
-
-            setupLabel = label5;
-
-        }
-
-        private void SecondaryForm_FormClosing(object sender, FormClosingEventArgs e) {
-            
-        }
-
-        /// <summary>
-        /// 
-        /// Get user default language
-        /// 
-        /// </summary>
-        private async Task getCurrentLang() {
-            const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
-            using(var command = new MySqlCommand(_selectLang,con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
-                using(MySqlDataReader readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if(await readLang.ReadAsync()) {
-                        CurrentLang = readLang.GetString(0);
-                    }
-                }   
-            }
         }
 
         /// <summary>
@@ -157,17 +137,12 @@ namespace FlowSERVER1 {
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
 
-
-        int top = 275;
-        int h_p = 100;
-
- 
         public async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
 
             List<(string, string)> filesInfo = new List<(string, string)>();
             string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     List<(string, string)> tuplesList = new List<(string, string)>();
                     while (await reader.ReadAsync()) {
@@ -277,8 +252,8 @@ namespace FlowSERVER1 {
 
                         string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
                                     base64EncodedImageHome.Add(base64String);
@@ -314,7 +289,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info","null",label5.Text)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info","null",Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -365,7 +340,7 @@ namespace FlowSERVER1 {
                             _showRetrievalCsvAlert.Start();
                         }
 
-                        txtFORM displayPic = new txtFORM("IGNORETHIS", "file_info_expand", titleLab.Text,"null",label5.Text);
+                        txtFORM displayPic = new txtFORM("IGNORETHIS", "file_info_expand", titleLab.Text,"null",Globals.custUsername);
                          displayPic.Show();
                     };
                     clearRedundane();
@@ -375,7 +350,7 @@ namespace FlowSERVER1 {
                     img.Image = EXEImage;
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
-                        exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text);
+                        exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",Globals.custUsername);
                         displayExe.Show();
                     };
                 }
@@ -386,7 +361,7 @@ namespace FlowSERVER1 {
 
                         string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
                         using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                             using (var readBase64 = await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
@@ -418,7 +393,7 @@ namespace FlowSERVER1 {
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid","null",label5.Text);
+                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid","null",Globals.custUsername);
                         vidFormShow.Show();
                     };
                 }
@@ -426,7 +401,7 @@ namespace FlowSERVER1 {
                 if (_tableName == "file_info_excel") {
                     picMain_Q.Image = EXCELImage;
                     picMain_Q.Click += (sender_vq, e_vq) => {
-                        exlFORM exlForm = new exlFORM(titleLab.Text,"file_info_excel","null",label5.Text);
+                        exlFORM exlForm = new exlFORM(titleLab.Text,"file_info_excel","null",Globals.custUsername);
                         exlForm.Show();
                     };
                 }
@@ -434,7 +409,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = AudioImage;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
-                        audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null",label5.Text);
+                        audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null",Globals.custUsername);
                         displayPic.Show();
                     };
                 }
@@ -444,7 +419,7 @@ namespace FlowSERVER1 {
                     List<String> _base64Encoded = new List<string>();
                     string retrieveGifQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(retrieveGifQuery, con);
-                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                     MySqlDataReader _readBase64 = command.ExecuteReader();
                     while (_readBase64.Read()) {
@@ -460,7 +435,7 @@ namespace FlowSERVER1 {
 
                     picMain_Q.Click += (sender_gi, ex_gi) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif","null",label5.Text)) {
+                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif","null",Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -484,7 +459,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = APKImage;
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
-                        apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null");
+                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk","null");
                         displayPic.Show();
                     };
                 }
@@ -493,7 +468,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = PDFImage;
                     picMain_Q.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
-                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",label5.Text);
+                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",Globals.custUsername);
                         displayPdf.Show();
                     };
                     clearRedundane();
@@ -503,7 +478,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = PTXImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",label5.Text);
+                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",Globals.custUsername);
                         displayPtx.Show();
                     };
                 }
@@ -512,7 +487,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = MSIImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null",label5.Text);
+                        msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null",Globals.custUsername);
                         displayMsi.Show();
                     };
                     clearRedundane();
@@ -522,7 +497,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = DOCImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
-                        wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word","null",label5.Text);
+                        wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word","null",Globals.custUsername);
                         displayMsi.Show();
                     };
                 }
@@ -566,7 +541,7 @@ namespace FlowSERVER1 {
 
                 const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(_foldTitle));
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
@@ -679,7 +654,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
 
                             string cacheKey = $"folder_{_foldTitle}_images";
@@ -722,7 +697,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"folder_upload_info","null",label5.Text)) {
+                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"folder_upload_info","null",Globals.custUsername)) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -777,7 +752,7 @@ namespace FlowSERVER1 {
                                 _showRetrievalCsvAlert.Start();
                             }
 
-                            txtFORM displayPic = new txtFORM("", "folder_upload_info", titleLab.Text,"null",label5.Text);
+                            txtFORM displayPic = new txtFORM("", "folder_upload_info", titleLab.Text,"null",Globals.custUsername);
                             displayPic.Show();
                         };
                         clearRedundane();
@@ -789,7 +764,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_foldTitle));
                             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
 
@@ -822,7 +797,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImg = new Bitmap(getImgName.Image);
                             Form bgBlur = new Form();
-                            vidFORM displayVid = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text, "folder_upload_info", _foldTitle,label5.Text);
+                            vidFORM displayVid = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
                             displayVid.Show();
                         };
                     }
@@ -833,7 +808,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImg = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(retrieveImg, con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_foldTitle));
                             command.Parameters.AddWithValue("@filename", titleLab.Text);
 
@@ -854,7 +829,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImg = new Bitmap(getImgName.Image);
                             Form bgBlur = new Form();
-                            using(gifFORM displayVid = new gifFORM(titleLab.Text, "folder_upload_info", _foldTitle, label5.Text)) {
+                            using(gifFORM displayVid = new gifFORM(titleLab.Text, "folder_upload_info", _foldTitle, Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -879,7 +854,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.excelIcon;
                         img.Click += (sender_aud, e_aud) => {
                             Form bgBlur = new Form();
-                            exlFORM displayExl = new exlFORM(titleLab.Text, "folder_upload_info", _foldTitle, label5.Text);
+                            exlFORM displayExl = new exlFORM(titleLab.Text, "folder_upload_info", _foldTitle, Globals.custUsername);
                             displayExl.Show();
                         };
                     }
@@ -889,7 +864,7 @@ namespace FlowSERVER1 {
                         var _getHeight = this.Height;
                         img.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                         img.Click += (sender_aud, e_aud) => {
-                            audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _foldTitle,label5.Text);
+                            audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
                             displayPic.Show();
                         };
                     }
@@ -898,7 +873,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                         img.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
-                            apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk",_foldTitle);
+                            apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk",_foldTitle);
                             displayPic.Show();
                         };
                     }
@@ -916,7 +891,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                         img.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info",_foldTitle,label5.Text);
+                            pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info",_foldTitle,Globals.custUsername);
                             displayPic.Show();
                         };
                     }
@@ -925,7 +900,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                         img.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle,label5.Text);
+                            wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
                             displayDoc.Show();
                         };
                     }
@@ -934,7 +909,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                         img.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle,label5.Text);
+                            wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
                             displayDoc.Show();
                         };
                     }
@@ -943,7 +918,7 @@ namespace FlowSERVER1 {
                         picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                         picMain_Q.Click += (sender_pt, e_pt) => {
                             Form bgBlur = new Form();
-                            msiFORM displayMsi = new msiFORM(titleLab.Text, "folder_upload_info", _foldTitle,label5.Text);
+                            msiFORM displayMsi = new msiFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
                             displayMsi.Show();
                         };
                     }
@@ -989,177 +964,177 @@ namespace FlowSERVER1 {
 
             var form = HomePage.instance;
             var lab1 = form.label1;
-            var lab5 = form.label5;
+            var lab5 = Globals.custUsername;
 
             DateTime now = DateTime.Now;
 
             var hours = now.Hour;
-            string greeting = $"Good Night {label5.Text}";
+            string greeting = $"Good Night {Globals.custUsername}";
 
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {
-                    greeting = "Good Morning, " + lab5.Text;
+                    greeting = "Good Morning, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "MY") {
-                    greeting = "Selemat Pagi, " + lab5.Text;
+                    greeting = "Selemat Pagi, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "GER") {
-                    greeting = "Guten Morgen, " + lab5.Text;
+                    greeting = "Guten Morgen, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "JAP") {
-                    greeting = "おはよう " + lab5.Text + " :)";
+                    greeting = "おはよう " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "ESP") {
-                    greeting = "Buen día " + lab5.Text + " :)";
+                    greeting = "Buen día " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "FRE") {
-                    greeting = "Bonjour " + lab5.Text + " :)";
+                    greeting = "Bonjour " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "POR") {
-                    greeting = "Bom dia " + lab5.Text + " :)";
+                    greeting = "Bom dia " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "CHI") {
-                    greeting = "早上好 " + lab5.Text + " :)";
+                    greeting = "早上好 " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "RUS") {
-                    greeting = "Доброе утро " + lab5.Text + " :)";
+                    greeting = "Доброе утро " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "DUT") {
-                    greeting = "Goedemorgen " + lab5.Text + " :)";
+                    greeting = "Goedemorgen " + Globals.custUsername + " :)";
                 }
 
             }
 
             else if (hours >= 12 && hours <= 16) {
                 if (CurrentLang == "US") {
-                    greeting = "Good Afternoon, " + lab5.Text;
+                    greeting = "Good Afternoon, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "MY") {
-                    greeting = "Selamat Petang, " + lab5.Text;
+                    greeting = "Selamat Petang, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "GER") {
-                    greeting = "Guten Tag, " + lab5.Text;
+                    greeting = "Guten Tag, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "JAP") {
-                    greeting = "こんにちは " + lab5.Text + " :)";
+                    greeting = "こんにちは " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "ESP") {
-                    greeting = "Buenas tardes " + lab5.Text + " :)";
+                    greeting = "Buenas tardes " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "FRE") {
-                    greeting = "Bon après-midi " + lab5.Text + " :)";
+                    greeting = "Bon après-midi " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "POR") {
-                    greeting = "Boa tarde " + lab5.Text + " :)";
+                    greeting = "Boa tarde " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "CHI") {
-                    greeting = "下午好 " + lab5.Text + " :)";
+                    greeting = "下午好 " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "RUS") {
-                    greeting = "Добрый день " + lab5.Text + " :)";
+                    greeting = "Добрый день " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "DUT") {
-                    greeting = "Goedemiddag " + lab5.Text + " :)";
+                    greeting = "Goedemiddag " + Globals.custUsername + " :)";
                 }
             }
             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
                     if (CurrentLang == "US") {
-                        greeting = "Good Late Evening, " + lab5.Text;
+                        greeting = "Good Late Evening, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "MY") {
-                        greeting = "Selamat Lewat-Petang, " + lab5.Text;
+                        greeting = "Selamat Lewat-Petang, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "GER") {
-                        greeting = "Guten späten Abend " + lab5.Text + " :)";
+                        greeting = "Guten späten Abend " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "JAP") {
-                        greeting = "こんばんは " + lab5.Text + " :)";
+                        greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "ESP") {
-                        greeting = "buenas tardes " + lab5.Text + " :)";
+                        greeting = "buenas tardes " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "FRE") {
-                        greeting = "bonne soirée " + lab5.Text + " :)";
+                        greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "POR") {
-                        greeting = "Boa noite " + lab5.Text + " :)";
+                        greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "CHI") {
-                        greeting = "晚上好 " + lab5.Text + " :)";
+                        greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "RUS") {
-                        greeting = "Добрый день " + lab5.Text + " :)";
+                        greeting = "Добрый день " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "DUT") {
-                        greeting = "Goedeavond " + lab5.Text + " :)";
+                        greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
 
                 }
                 else {
                     if (CurrentLang == "US") {
-                        greeting = "Good Evening, " + lab5.Text;
+                        greeting = "Good Evening, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "MY") {
-                        greeting = "Selamat Petang, " + lab5.Text;
+                        greeting = "Selamat Petang, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "GER") {
-                        greeting = "Guten Abend, " + lab5.Text;
+                        greeting = "Guten Abend, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "JAP") {
-                        greeting = "こんばんは " + lab5.Text + " :)";
+                        greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "ESP") {
-                        greeting = "Buenas terdes " + lab5.Text + " :)";
+                        greeting = "Buenas terdes " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "FRE") {
-                        greeting = "bonne soirée " + lab5.Text + " :)";
+                        greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "POR") {
-                        greeting = "Boa noite " + lab5.Text + " :)";
+                        greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "CHI") {
-                        greeting = "晚上好 " + lab5.Text + " :)";
+                        greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "RUS") {
-                        greeting = "Добрый вечер " + lab5.Text + " :)";
+                        greeting = "Добрый вечер " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "DUT") {
-                        greeting = "Goedeavond " + lab5.Text + " :)";
+                        greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
                 }
 
             }
             else if (hours >= 21 && hours <= 24) {
                 if (CurrentLang == "US") {
-                    greeting = "Good Night, " + lab5.Text;
+                    greeting = "Good Night, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "MY") {
-                    greeting = "Selamat Malam, " + lab5.Text;
+                    greeting = "Selamat Malam, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "GER") {
-                    greeting = "Guten Nacth, " + lab5.Text;
+                    greeting = "Guten Nacth, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "JAP") {
-                    greeting = "おやすみ " + lab5.Text + " :)";
+                    greeting = "おやすみ " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "ESP") {
-                    greeting = "Buenas noches " + lab5.Text + " :)";
+                    greeting = "Buenas noches " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "FRE") {
-                    greeting = "bonne nuit " + lab5.Text + " :)";
+                    greeting = "bonne nuit " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "POR") {
-                    greeting = "Boa noite " + lab5.Text + " :)";
+                    greeting = "Boa noite " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "CHI") {
-                    greeting = "晚安 " + lab5.Text + " :)";
+                    greeting = "晚安 " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "RUS") {
-                    greeting = "Спокойной ночи " + lab5.Text + " :)";
+                    greeting = "Спокойной ночи " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "DUT") {
-                    greeting = "Welterusten " + lab5.Text + " :)";
+                    greeting = "Welterusten " + Globals.custUsername + " :)";
                 }
 
             }
@@ -1220,7 +1195,7 @@ namespace FlowSERVER1 {
                     command.Connection = con;
                     command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
                     command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath, "0123456789085746"));
-                    command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+                    command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
                     command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
                     command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
 
@@ -1263,7 +1238,7 @@ namespace FlowSERVER1 {
 
                 using (var command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName);
-                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
+                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = Globals.custUsername;
                     command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
 
@@ -1428,7 +1403,7 @@ namespace FlowSERVER1 {
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
 
-                                var _setupUploadAlertThread = new Thread(() => new UploadingAlert(getName, label5.Text, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog());
+                                var _setupUploadAlertThread = new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog());
                                 _setupUploadAlertThread.Start();
 
                                 if (nameTable == "file_info") {
@@ -1444,7 +1419,7 @@ namespace FlowSERVER1 {
                                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                                         Form bgBlur = new Form();
-                                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null",label5.Text)) {
+                                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null",Globals.custUsername)) {
                                             bgBlur.StartPosition = FormStartPosition.Manual;
                                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                                             bgBlur.Opacity = .24d;
@@ -1501,7 +1476,7 @@ namespace FlowSERVER1 {
                                             _showRetrievalCsvAlert.Start();
                                         }
 
-                                        txtFORM txtFormShow = new txtFORM("IGNORETHIS", "file_info_expand", filePath,"null",label5.Text);
+                                        txtFORM txtFormShow = new txtFORM("IGNORETHIS", "file_info_expand", filePath,"null",Globals.custUsername);
                                         txtFormShow.Show();
                                     };
                                     clearRedundane();
@@ -1514,7 +1489,7 @@ namespace FlowSERVER1 {
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
-                                        exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",label5.Text);
+                                        exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",Globals.custUsername);
                                         displayExe.Show();
                                     };
                                     clearRedundane();
@@ -1534,7 +1509,7 @@ namespace FlowSERVER1 {
                                         var getHeight = getImgName.Image.Height;
                                         Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                        vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "file_info_vid","null",label5.Text);
+                                        vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "file_info_vid","null",Globals.custUsername);
                                         vidShow.Show();
                                     };
                                     clearRedundane();
@@ -1546,7 +1521,7 @@ namespace FlowSERVER1 {
                                     var _getHeight = this.Height;
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null",label5.Text);
+                                        audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null",Globals.custUsername);
                                         displayPic.Show();
                                     };
                                     clearRedundane();
@@ -1556,7 +1531,7 @@ namespace FlowSERVER1 {
                                     await startSending(keyVal, nameTable);
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", label5.Text);
+                                        exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
                                         displayPic.Show();
                                     };
                                     clearRedundane();
@@ -1570,7 +1545,7 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
-                                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif","null",label5.Text)) {
+                                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif","null",Globals.custUsername)) {
                                             bgBlur.StartPosition = FormStartPosition.Manual;
                                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                                             bgBlur.Opacity = .24d;
@@ -1596,7 +1571,7 @@ namespace FlowSERVER1 {
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
-                                        apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk","null");
+                                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk","null");
                                         displayPic.Show();
                                     };
                                     clearRedundane();
@@ -1606,7 +1581,7 @@ namespace FlowSERVER1 {
                                     await startSending(keyVal, nameTable);
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                                     textboxPic.Click += (sender_pd, e_pd) => {
-                                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",label5.Text);
+                                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",Globals.custUsername);
                                         displayPdf.ShowDialog();
                                     };
                                     clearRedundane();
@@ -1616,7 +1591,7 @@ namespace FlowSERVER1 {
                                     await startSending(keyVal, nameTable);
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",label5.Text);
+                                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",Globals.custUsername);
                                         displayPtx.ShowDialog();                                       
                                     };
                                     clearRedundane();
@@ -1628,7 +1603,7 @@ namespace FlowSERVER1 {
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         Form bgBlur = new Form();
-                                        msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null",label5.Text);
+                                        msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null",Globals.custUsername);
                                         displayMsi.Show();
                                     };
                                     clearRedundane();
@@ -1638,7 +1613,7 @@ namespace FlowSERVER1 {
                                     await startSending(keyVal, nameTable);
                                     textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word","null",label5.Text);
+                                        wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word","null",Globals.custUsername);
                                         displayWord.ShowDialog();
                                     };
                                     clearRedundane();
@@ -1924,7 +1899,7 @@ namespace FlowSERVER1 {
 
             Task.Run(() => new SettingsLoadingAlert().ShowDialog());
 
-            var remAccShow = new SettingsForm(label5.Text, label24.Text);
+            var remAccShow = new SettingsForm(Globals.custUsername, Globals.custEmail);
             remAccShow.Show();
 
             var settingsAlertForms = Application.OpenForms
@@ -1998,82 +1973,13 @@ namespace FlowSERVER1 {
 
         }
 
-
         private void guna2Button7_Click(object sender, EventArgs e) {
 
             MainSharingForm _ShowSharing = new MainSharingForm();
             _ShowSharing.Show();
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e) {
-
-        }
-
         private void label3_Click(object sender, EventArgs e) {
-
-        }
-
-        /// <summary>
-        /// Validate user entered email address format
-        /// </summary>
-        /// <param name="_custEmail"></param>
-        /// <returns></returns>
-        private bool validateEmailUser(String _custEmail) {
-            const string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
-            var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
-            return regex.IsMatch(_custEmail);
-        }
-
-        /// <summary>
-        /// Generate random string within range
-        /// </summary>
-        private string RandomString(int size, bool lowerCase = true) {
-
-            Random _setRandom = new Random();
-
-            var builder = new StringBuilder(size);
-            char offset = lowerCase ? 'a' : 'A';
-            const int lettersOffset = 26;
-
-            for (var i = 0; i < size; i++) {
-                var @char = (char)_setRandom.Next(offset, offset + lettersOffset);
-                builder.Append(@char);
-            }
-
-            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
-        }
-
-        /// <summary>
-        /// Create file and insert user username into that file in a sub folder 
-        /// called FlowStorageInfos located in %appdata%
-        /// </summary>
-        /// <param name="_custUsername">Username of user</param>
-        private void setupAutoLogin(String _custUsername) {
-
-            String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            if(!Directory.Exists(appDataPath)) {
-
-                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
-                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
-                }
-                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-
-            } else {
-                Directory.Delete(appDataPath,true);
-                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
-                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
-                }
-                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-            }
-        }
-
-        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button17_Click(object sender, EventArgs e) {
 
         }
 
@@ -2084,7 +1990,7 @@ namespace FlowSERVER1 {
             int _IntCurr = 0;
             long fileSizeInMB = 0;
 
-            var _setupUploadAlertThread = new Thread(() => new UploadingAlert(_getDirTitle, label5.Text, "folder_upload_info", "PanExlFold" + _IntCurr, _getDirTitle, _fileSize: fileSizeInMB).ShowDialog());
+            var _setupUploadAlertThread = new Thread(() => new UploadingAlert(_getDirTitle, Globals.custUsername, "folder_upload_info", "PanExlFold" + _IntCurr, _getDirTitle, _fileSize: fileSizeInMB).ShowDialog());
             _setupUploadAlertThread.Start();
 
             foreach (var _Files in Directory.EnumerateFiles(_getDirPath, "*")) {
@@ -2094,7 +2000,7 @@ namespace FlowSERVER1 {
                     const string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
                     using (var command = new MySqlCommand(insertFoldQue, con)) {
                         command.Parameters.AddWithValue("@FOLDER_TITLE", EncryptionModel.Encrypt(_getDirTitle));
-                        command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+                        command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
                         command.Parameters.AddWithValue("@FILE_TYPE", Path.GetExtension(_Files));
                         command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                         command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(Path.GetFileName(_Files)));
@@ -2236,7 +2142,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null", label5.Text)) {
+                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null", Globals.custUsername)) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -2299,7 +2205,7 @@ namespace FlowSERVER1 {
                                 _showRetrievalCsvAlert.Start();
                             }
 
-                            txtFORM displayPic = new txtFORM("", "folder_upload_info", titleLab.Text, "null", label5.Text);
+                            txtFORM displayPic = new txtFORM("", "folder_upload_info", titleLab.Text, "null", Globals.custUsername);
                             displayPic.Show();
                         };
 
@@ -2314,7 +2220,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
-                            apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk", "null");
+                            apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null");
                             displayPic.ShowDialog();
                         };
                     }
@@ -2339,7 +2245,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
                             Form bgBlur = new Form();
-                            vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayVid.ShowDialog();
                         };
                     }
@@ -2364,7 +2270,7 @@ namespace FlowSERVER1 {
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            gifFORM displayVid = new gifFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            gifFORM displayVid = new gifFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayVid.ShowDialog();
                         };
                     }
@@ -2378,7 +2284,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
@@ -2391,7 +2297,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
@@ -2404,7 +2310,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            exlFORM displayPic = new exlFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            exlFORM displayPic = new exlFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
@@ -2418,7 +2324,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
@@ -2431,7 +2337,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
-                            audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _selectedFolder, label5.Text);
+                            audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
@@ -2586,38 +2492,16 @@ namespace FlowSERVER1 {
 
         private async void buildHomeFiles() {
 
-            async Task<int> _countRow(String _tableName) {
-                using (var command = con.CreateCommand()) {
-                    command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    command.Parameters.AddWithValue("@username", label5.Text);
-                    return Convert.ToInt32(await command.ExecuteScalarAsync());
+            foreach (string tableName in Globals.publicTables) {
+                if (Globals.tableToFileType.ContainsKey(tableName)) {
+                    string fileType = Globals.tableToFileType[tableName];
+                    if (fileType != null) {
+                        await _generateUserFiles(tableName, fileType, await crudClass.countRow(tableName));
+                    }
+                    else {
+                        await _generateUserDirectory(await crudClass.countRow(tableName));
+                    }
                 }
-            }
-
-            var tableNames = new Dictionary<string, string> {
-                { "file_info", "imgFile" },
-                { "file_info_expand", "txtFile" },
-                { "file_info_exe", "exeFile" },
-                { "file_info_vid", "vidFile" },
-                { "file_info_excel", "exlFile" },
-                { "file_info_audi", "audiFile" },
-                { "file_info_gif", "gifFile" },
-                { "file_info_apk", "apkFile" },
-                { "file_info_pdf", "pdfFile" },
-                { "file_info_ptx", "ptxFile" },
-                { "file_info_msi", "msiFile" },
-                { "file_info_word", "docFile" },
-                { "file_info_directory", "dirFile" }
-            };
-
-            foreach (string tableName in tableNames.Keys) {
-                if (tableNames[tableName] == "dirFile") {
-                    await _generateUserDirectory(await _countRow(tableName));
-                }
-                else {
-                    await _generateUserFiles(tableName, tableNames[tableName], await _countRow(tableName));
-                }
-
             }
 
             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -2634,7 +2518,7 @@ namespace FlowSERVER1 {
             if (!_TypeValues.Any()) {
                 const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
                             _TypeValues.Add(reader.GetString(0));
@@ -2661,7 +2545,7 @@ namespace FlowSERVER1 {
             if (!_TypeValuesOthers.Any()) {
                 const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
                 using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (var readTypeOthers = await command.ExecuteReaderAsync()) {
                         while (await readTypeOthers.ReadAsync()) {
                             _TypeValuesOthers.Add(readTypeOthers.GetString(0));
@@ -2732,7 +2616,7 @@ namespace FlowSERVER1 {
                     var typesValues = new List<string>();
                     const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                     using (var command = new MySqlCommand(getFileType, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_selectedFolder));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await reader.ReadAsync()) {
@@ -2821,7 +2705,7 @@ namespace FlowSERVER1 {
 
                 const string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 using (MySqlCommand command = new MySqlCommand(removeFoldQue, con)) {
-                    command.Parameters.AddWithValue("@username", label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldName));
                     await command.ExecuteNonQueryAsync();
                 }
@@ -2847,7 +2731,7 @@ namespace FlowSERVER1 {
 
             const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader reader = command.ExecuteReader()) {
                     if (reader.Read()) {
                         return reader.GetString(0);
@@ -2868,7 +2752,7 @@ namespace FlowSERVER1 {
 
             const string selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(getUploaderNameShared, "0123456789085746"));
                 using (MySqlDataReader reader = command.ExecuteReader()) {
                     if (reader.Read()) {
@@ -2895,7 +2779,7 @@ namespace FlowSERVER1 {
             filesInfoSharedOthers.Clear();
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -3017,7 +2901,7 @@ namespace FlowSERVER1 {
 
                             const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                                command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                                command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
@@ -3163,7 +3047,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", form1.label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -3243,7 +3127,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                         command = new MySqlCommand(retrieveImg, con);
-                        command.Parameters.AddWithValue("@username", form1.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                         MySqlDataReader _readBase64 = command.ExecuteReader();
                         while (_readBase64.Read()) {
@@ -3304,7 +3188,7 @@ namespace FlowSERVER1 {
             filesInfoShared.Clear();
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -3419,7 +3303,7 @@ namespace FlowSERVER1 {
 
                     const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = label5.Text;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
@@ -3561,7 +3445,7 @@ namespace FlowSERVER1 {
 
                     const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", form1.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
 
                         using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -3645,7 +3529,7 @@ namespace FlowSERVER1 {
 
                     const string retrieveImg = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                     command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", form1.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                     MySqlDataReader _readBase64 = command.ExecuteReader();
                     while (_readBase64.Read()) {
@@ -3729,7 +3613,7 @@ namespace FlowSERVER1 {
 
             const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -3831,13 +3715,13 @@ namespace FlowSERVER1 {
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
                             command.ExecuteNonQuery();
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
                             command.ExecuteNonQuery();
                         }
@@ -3981,7 +3865,7 @@ namespace FlowSERVER1 {
                 {
                     command.CommandText = $"INSERT INTO {tableName} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
                     command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName));
-                    command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+                    command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
                     command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
                     command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
                     command.CommandTimeout = 15000;
@@ -4060,7 +3944,7 @@ namespace FlowSERVER1 {
             if (typeValues.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
                     command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                     using (MySqlDataReader _readType = command.ExecuteReader()) {
                         while (_readType.Read()) {
@@ -4090,7 +3974,7 @@ namespace FlowSERVER1 {
             if (typeValuesOthers.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
                     command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                     using (MySqlDataReader _readType = command.ExecuteReader()) {
                         while (_readType.Read()) {
@@ -4147,45 +4031,16 @@ namespace FlowSERVER1 {
             guna2Button19.Visible = false;
             guna2Button4.Visible = false;
             flowLayoutPanel1.Controls.Clear();
-                    
-            foreach (string tableName in Globals.publicTables) {
-                switch (tableName) {
-                    case "file_info":
-                        await _generateUserFiles(tableName, "imgFile", await _countRow(tableName));
-                        break;
-                    case "file_info_expand":
-                        await _generateUserFiles(tableName, "txtFile", await _countRow(tableName));
-                        break;
-                    case "file_info_exe":
-                        await _generateUserFiles(tableName, "exeFile", await _countRow(tableName));
-                        break;
-                    case "file_info_vid":
-                        await _generateUserFiles(tableName, "vidFile", await _countRow(tableName));
-                        break;
-                    case "file_info_excel":
-                        await _generateUserFiles(tableName, "exlFile", await _countRow(tableName));
-                        break;
-                    case "file_info_pdf":
-                        await _generateUserFiles(tableName, "pdfFile", await _countRow(tableName));
-                        break;
-                    case "file_info_apk":
-                        await _generateUserFiles(tableName, "apkFile", await _countRow(tableName));
-                        break;
-                    case "file_info_word":
-                        await _generateUserFiles(tableName, "wordFile", await _countRow(tableName));
-                        break;
-                    case "file_info_ptx":
-                        await _generateUserFiles(tableName, "ptxFile", await _countRow(tableName));
-                        break;
-                    case "file_info_gif":
-                        await _generateUserFiles(tableName, "gifFile", await _countRow(tableName));
-                        break;
-                    case "file_info_directory":
-                        await _generateUserDirectory(await _countRow(tableName));
-                        break;
 
-                    default:
-                        break;
+            foreach (string tableName in Globals.publicTables) {
+                if (Globals.tableToFileType.ContainsKey(tableName)) {
+                    string fileType = Globals.tableToFileType[tableName];
+                    if (fileType != null) {
+                        await _generateUserFiles(tableName, fileType, await crudClass.countRow(tableName));
+                    }
+                    else {
+                        await _generateUserDirectory(await crudClass.countRow(tableName));
+                    }
                 }
             }
 
@@ -4195,7 +4050,6 @@ namespace FlowSERVER1 {
             else {
                 clearRedundane();
             }
-
 
             label4.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
@@ -4208,7 +4062,7 @@ namespace FlowSERVER1 {
 
             const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
             using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_selectedFolder));
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -4295,14 +4149,6 @@ namespace FlowSERVER1 {
 
         }
 
-        async Task<int> _countRow(String _tableName) {
-            using (var command = con.CreateCommand()) {
-                command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-                command.Parameters.AddWithValue("@username", label5.Text);
-                return Convert.ToInt32(await command.ExecuteScalarAsync());
-            }
-        }
-
         private async void guna2Button8_Click(object sender, EventArgs e) {
 
             guna2Button19.Visible = false;
@@ -4310,45 +4156,15 @@ namespace FlowSERVER1 {
             flowLayoutPanel1.Controls.Clear();
 
             foreach (string tableName in Globals.publicTables) {
-                switch (tableName) {
-                    case "file_info":
-                        await _generateUserFiles(tableName, "imgFile", await _countRow(tableName));
-                        break;
-                    case "file_info_expand":
-                        await _generateUserFiles(tableName, "txtFile", await _countRow(tableName));
-                        break;
-                    case "file_info_exe":
-                        await _generateUserFiles(tableName, "exeFile", await _countRow(tableName));
-                        break;
-                    case "file_info_vid":
-                        await _generateUserFiles(tableName, "vidFile", await _countRow(tableName));
-                        break;
-                    case "file_info_excel":
-                        await _generateUserFiles(tableName, "exlFile", await _countRow(tableName));
-                        break;
-                    case "file_info_pdf":
-                        await _generateUserFiles(tableName, "pdfFile", await _countRow(tableName));
-                        break;
-                    case "file_info_apk":
-                        await _generateUserFiles(tableName, "apkFile", await _countRow(tableName));
-                        break;
-                    case "file_info_word":
-                        await _generateUserFiles(tableName, "wordFile", await _countRow(tableName));
-                        break;
-                    case "file_info_ptx":
-                        await _generateUserFiles(tableName, "ptxFile", await _countRow(tableName));
-                        break;
-                    case "file_info_gif":
-                        await _generateUserFiles(tableName, "gifFile", await _countRow(tableName));
-                        break;
-                    case "file_info_directory":
-                        await _generateUserDirectory(await _countRow(tableName));
-                        break;
-
-                    default:
-                        break;
+                if (Globals.tableToFileType.ContainsKey(tableName)) {
+                    string fileType = Globals.tableToFileType[tableName];
+                    if (fileType != null) {
+                        await _generateUserFiles(tableName, fileType, await crudClass.countRow(tableName));
+                    }
+                    else {
+                        await _generateUserDirectory(await crudClass.countRow(tableName));
+                    }
                 }
-               
             }
 
             if (flowLayoutPanel1.Controls.Count == 0) {
@@ -4390,8 +4206,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button14_Click(object sender, EventArgs e) {
-            var remAccShow = new SettingsForm(label5.Text, label24.Text);
+
+            var remAccShow = new SettingsForm(_accName: Globals.custUsername, _emailAddr: Globals.custEmail);
             remAccShow.Show();
+
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
         }
 
@@ -4555,7 +4373,7 @@ namespace FlowSERVER1 {
                             command.Connection = con;
                             command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
                             command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath, "0123456789085746"));
-                            command.Parameters.AddWithValue("@CUST_USERNAME", label5.Text);
+                            command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
                             command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
                             command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
 
@@ -4604,7 +4422,7 @@ namespace FlowSERVER1 {
 
                                 using (var command = new MySqlCommand(insertQuery, con)) {
                                     command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName);
-                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = label5.Text;
+                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = Globals.custUsername;
                                     command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
                                     command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
 
@@ -4679,7 +4497,7 @@ namespace FlowSERVER1 {
                             panelTxt.ShadowDecoration.Enabled = false;
                         };
 
-                        var _setupUploadAlertThread = new Thread(() => new UploadingAlert(getName, label5.Text, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog());
+                        var _setupUploadAlertThread = new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog());
                         _setupUploadAlertThread.Start();
 
                         if (nameTable == "file_info") {
@@ -4693,7 +4511,7 @@ namespace FlowSERVER1 {
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                                 Form bgBlur = new Form();
-                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null", label5.Text)) {
+                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null", Globals.custUsername)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -4750,7 +4568,7 @@ namespace FlowSERVER1 {
                                     _showRetrievalCsvAlert.Start();
                                 }
 
-                                txtFORM txtFormShow = new txtFORM("IGNORETHIS", "file_info_expand", filePath, "null", label5.Text);
+                                txtFORM txtFormShow = new txtFORM("IGNORETHIS", "file_info_expand", filePath, "null", Globals.custUsername);
                                 txtFormShow.Show();
                             };
                             clearRedundane();
@@ -4765,7 +4583,7 @@ namespace FlowSERVER1 {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 Form bgBlur = new Form();
-                                exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", label5.Text);
+                                exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Globals.custUsername);
                                 displayExe.Show();
                             };
                             clearRedundane();
@@ -4783,7 +4601,7 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "file_info_vid", "null", label5.Text);
+                                vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "file_info_vid", "null", Globals.custUsername);
                                 vidShow.Show();
                             };
                             clearRedundane();
@@ -4795,7 +4613,7 @@ namespace FlowSERVER1 {
                             var _getHeight = this.Height;
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                             textboxPic.Click += (sender_ex, e_ex) => {
-                                audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", label5.Text);
+                                audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", Globals.custUsername);
                                 displayPic.Show();
                             };
                             clearRedundane();
@@ -4805,7 +4623,7 @@ namespace FlowSERVER1 {
                             await startSending(keyVal);
                             textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                             textboxPic.Click += (sender_ex, e_ex) => {
-                                exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", label5.Text);
+                                exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
                                 displayPic.Show();
                             };
                             clearRedundane();
@@ -4819,7 +4637,7 @@ namespace FlowSERVER1 {
 
                             textboxPic.Click += (sender_gi, e_gi) => {
                                 Form bgBlur = new Form();
-                                using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif", "null", label5.Text)) {
+                                using (gifFORM displayPic = new gifFORM(titleLab.Text, "file_info_gif", "null", Globals.custUsername)) {
                                     bgBlur.StartPosition = FormStartPosition.Manual;
                                     bgBlur.FormBorderStyle = FormBorderStyle.None;
                                     bgBlur.Opacity = .24d;
@@ -4847,7 +4665,7 @@ namespace FlowSERVER1 {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
                             textboxPic.Click += (sender_gi, e_gi) => {
                                 Form bgBlur = new Form();
-                                apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk", "null");
+                                apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null");
                                 displayPic.Show();
                             };
                             clearRedundane();
@@ -4857,7 +4675,7 @@ namespace FlowSERVER1 {
                             await startSending(keyVal);
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                             textboxPic.Click += (sender_pd, e_pd) => {
-                                pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", label5.Text);
+                                pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", Globals.custUsername);
                                 displayPdf.ShowDialog();
                             };
                             clearRedundane();
@@ -4867,7 +4685,7 @@ namespace FlowSERVER1 {
                             await startSending(keyVal);
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
-                                ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx", "null", label5.Text);
+                                ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx", "null", Globals.custUsername);
                                 displayPtx.ShowDialog();
                             };
                             clearRedundane();
@@ -4880,7 +4698,7 @@ namespace FlowSERVER1 {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
                                 Form bgBlur = new Form();
-                                msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", label5.Text);
+                                msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername);
                                 displayMsi.Show();
                             };
                             clearRedundane();
@@ -4890,7 +4708,7 @@ namespace FlowSERVER1 {
                             await startSending(keyVal);
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
-                                wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word", "null", label5.Text);
+                                wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word", "null", Globals.custUsername);
                                 displayWord.ShowDialog();
                             };
                             clearRedundane();
@@ -5169,7 +4987,7 @@ namespace FlowSERVER1 {
             var files = new List<(string fileName, byte[] fileBytes)>();
 
             using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@foldtitle", folderTitle);
                 using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -5240,7 +5058,7 @@ namespace FlowSERVER1 {
 
                     string removeQuery = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.ExecuteNonQuery();
                     }
@@ -5248,7 +5066,7 @@ namespace FlowSERVER1 {
                 } else if (tableName == "folder_upload_info") {
 
                     using (MySqlCommand command = new MySqlCommand("DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(dirName));
                         command.ExecuteNonQuery();
@@ -5258,7 +5076,7 @@ namespace FlowSERVER1 {
 
                     const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                     using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
-                        cmd.Parameters.AddWithValue("@username", label5.Text);
+                        cmd.Parameters.AddWithValue("@username", Globals.custUsername);
                         cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         cmd.Parameters.AddWithValue("@sharedname", sharedToName);
 
@@ -5269,7 +5087,7 @@ namespace FlowSERVER1 {
 
                     const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (var command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.ExecuteNonQuery();
                     }
@@ -5339,7 +5157,7 @@ namespace FlowSERVER1 {
 
             string fileExtensions = titleFile.Substring(titleFile.Length-4);
 
-            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile,fileExtensions,false,label5.Text,dirName);
+            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile,fileExtensions,false,Globals.custUsername,dirName);
             sharingFileFORM.Show();
         }
     }

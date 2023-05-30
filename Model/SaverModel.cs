@@ -67,7 +67,7 @@ namespace FlowSERVER1 {
                     retrievalThread.Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_DirectoryName));
 
@@ -106,7 +106,7 @@ namespace FlowSERVER1 {
                     retrievalThread.Start();
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_DirectoryName));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -145,7 +145,7 @@ namespace FlowSERVER1 {
                     retrievalThread.Start();
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
@@ -184,7 +184,7 @@ namespace FlowSERVER1 {
                     retrievalThread.Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
@@ -223,7 +223,7 @@ namespace FlowSERVER1 {
                     retrievalThread.Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 

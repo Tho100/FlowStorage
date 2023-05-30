@@ -96,7 +96,7 @@ namespace FlowSERVER1 {
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
-                    command.Parameters.AddWithValue("@CUST_FROM", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
                     command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
                     command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                     command.Parameters.AddWithValue("@CUST_FILE", setValue);
@@ -342,7 +342,7 @@ namespace FlowSERVER1 {
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
 
             command = new MySqlCommand(queryRetrieveCount, con);
-            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.Parameters.AddWithValue("@receiver", _custUsername);
             command.Parameters.AddWithValue("@filename", _fileName);
 
@@ -365,7 +365,7 @@ namespace FlowSERVER1 {
                 string textBox1 = guna2TextBox1.Text;
                 string textBox2 = guna2TextBox2.Text;
 
-                if (textBox1 == HomePage.instance.label5.Text) {
+                if (textBox1 == Globals.custUsername) {
                     MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }

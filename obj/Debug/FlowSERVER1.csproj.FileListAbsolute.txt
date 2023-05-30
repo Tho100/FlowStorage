@@ -169,7 +169,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.applica
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.exe
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.PassSharingFORM.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.verificationTokenFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Memory.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Buffers.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Memory.xml
@@ -1355,3 +1354,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.WaitAle
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.HomePage.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Authentication.SignUpForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.SignInForm.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AccessTokenVerifyForm.resources

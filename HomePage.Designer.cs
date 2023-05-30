@@ -40,6 +40,7 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
             this.label20 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -58,11 +59,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.label24 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel2 = new System.Windows.Forms.Panel();
             this.guna2Button13 = new Guna.UI2.WinForms.Guna2Button();
@@ -292,6 +290,17 @@
             this.panel3.Size = new System.Drawing.Size(207, 669);
             this.panel3.TabIndex = 36;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(30, 293);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 51;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // guna2Panel4
             // 
@@ -552,17 +561,6 @@
             this.label1.Text = "Good morning Aqweqweshy :)";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(30, 293);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 51;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(792, -1);
@@ -572,19 +570,6 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.Visible = false;
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.BackColor = System.Drawing.Color.Transparent;
-            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.DarkGray;
-            this.label24.Location = new System.Drawing.Point(1025, -2);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(153, 15);
-            this.label24.TabIndex = 45;
-            this.label24.Text = "emailLabel (Do not modify)";
-            this.label24.Visible = false;
             // 
             // label26
             // 
@@ -598,19 +583,6 @@
             this.label26.TabIndex = 21;
             this.label26.Text = "Home";
             this.label26.Click += new System.EventHandler(this.label26_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.DarkGray;
-            this.label5.Location = new System.Drawing.Point(1148, -2);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(174, 15);
-            this.label5.TabIndex = 25;
-            this.label5.Text = "usernameLabel (do not modify)";
-            this.label5.Visible = false;
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // backgroundWorker1
             // 
@@ -1431,13 +1403,11 @@
             this.Controls.Add(this.guna2Panel2);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.guna2Panel1);
-            this.Controls.Add(this.label24);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.guna2Button6);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
@@ -1486,12 +1456,10 @@
         public System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label26;
         public Guna.UI2.WinForms.Guna2Button guna2Button19;
-        public System.Windows.Forms.Label label5;
         public System.Windows.Forms.ListBox listBox1;
         public System.Windows.Forms.Label label10;
         public System.Windows.Forms.Label label28;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        public System.Windows.Forms.Label label24;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox5;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         public Guna.UI2.WinForms.Guna2Button guna2Button12;

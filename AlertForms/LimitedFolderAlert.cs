@@ -24,7 +24,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            var remAccShow = new SettingsForm(HomePage.instance.label5.Text, HomePage.instance.label24.Text);
+            var remAccShow = new SettingsForm(Globals.custUsername, Globals.custEmail);
             remAccShow.Show();
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
             this.Close();

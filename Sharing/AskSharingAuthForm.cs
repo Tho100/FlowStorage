@@ -116,7 +116,7 @@ namespace FlowSERVER1 {
                 Byte[] _getBytes = File.ReadAllBytes(_FilePath);
                 fileSizeInMB = (_getBytes.Length / 1024) / 1024;
 
-                Thread showUploadAlert = new Thread(() => new UploadingAlert(_FileName, HomePage.instance.label5.Text, "cust_sharing", _controlName, CustUsername, _fileSize: fileSizeInMB).ShowDialog());
+                Thread showUploadAlert = new Thread(() => new UploadingAlert(_FileName, Globals.custUsername, "cust_sharing", _controlName, CustUsername, _fileSize: fileSizeInMB).ShowDialog());
                 showUploadAlert.Start();
 
                 string varDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -133,7 +133,7 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
                         command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
 
-                        command.Parameters["@CUST_FROM"].Value = HomePage.instance.label5.Text;
+                        command.Parameters["@CUST_FROM"].Value = Globals.custUsername;
                         command.Parameters["@CUST_TO"].Value = CustUsername;
                         command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName);
                         command.Parameters["@UPLOAD_DATE"].Value = varDate;

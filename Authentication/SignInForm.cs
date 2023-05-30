@@ -18,7 +18,6 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 using System.Security.Cryptography;
-using Org.BouncyCastle.Asn1.X509;
 using FlowSERVER1.Authentication;
 
 namespace FlowSERVER1 {
@@ -26,14 +25,19 @@ namespace FlowSERVER1 {
 
         public static SignInForm instance;
 
-        private SignUpForm mainForm;
+        private readonly SignUpForm mainForm;
+
+        private readonly HomePage accessHomePage = HomePage.instance;
 
         private readonly MySqlConnection con = ConnectionModel.con;
 
         private MySqlCommand command = ConnectionModel.command;
 
-        private string decryptMainKey {get; set; }
-        private string pinDecryptionKey {get; set; }
+        private Crud crudClass = new Crud();
+
+
+        private string returnedAuth0 {get; set; }
+        private string returnedAuth1 {get; set; }
         private string CurrentLang {get; set; } = "";
         private int attemptCurr {get; set; } = 0;
         private string custEmail {get; set; }
@@ -115,10 +119,9 @@ namespace FlowSERVER1 {
 
         private async void setupRedundane() {
 
-            var form = HomePage.instance;
-            var flowLayout = form.flowLayoutPanel1;
-            var button6 = form.guna2Button6;
-            var label8 = form.label8;
+            var flowLayout = accessHomePage.flowLayoutPanel1;
+            var garbageButton = accessHomePage.guna2Button6;
+            var itsEmptyHereLabel = accessHomePage.label8;
 
             const string selectUserQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
             const string selectEmailQuery = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
@@ -141,19 +144,24 @@ namespace FlowSERVER1 {
             }
 
             flowLayout.Controls.Clear();
-            form.listBox1.Items.Clear();
-            form.label5.Text = custUsername;
-            form.label24.Text = custEmail;
-            button6.Visible = label8.Visible = label4.Visible = false;
+            accessHomePage.listBox1.Items.Clear();
+            Globals.custUsername = custUsername;
+            Globals.custEmail = custEmail;
+
+            garbageButton.Visible = itsEmptyHereLabel.Visible = label4.Visible = false;
 
             buildGreetingLabel();
 
-            if (flowLayout.Controls.Count == 0) {
-                form.label8.Visible = true;
-                form.guna2Button6.Visible = true;
+            if(flowLayout.Controls.Count == 0) {
+                buildEmptyBody();
             }
+
         }
 
+        private void buildEmptyBody() {
+            accessHomePage.label8.Visible = true;
+            accessHomePage.guna2Button6.Visible = true;
+        }
 
         private async Task _generateUserFolder(String userName) {
 
@@ -197,12 +205,12 @@ namespace FlowSERVER1 {
         /// <param name="passUser"></param>
         /// <param name="rowLength"></param>
         /// <returns></returns>
-        private async Task _generateUserDirectory(String userName, int rowLength) {
+        private async Task _generateUserDirectory(int rowLength) {
 
             List<Tuple<string, string>> filesInfoDirs = new List<Tuple<string, string>>();
             const string selectFileData = "SELECT DIR_NAME, UPLOAD_DATE FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -296,7 +304,7 @@ namespace FlowSERVER1 {
 
                         const string removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
-                        command.Parameters.AddWithValue("@username", userName);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", titleFile);
                         command.ExecuteNonQuery();
 
@@ -342,7 +350,7 @@ namespace FlowSERVER1 {
             List<(string, string)> filesInfo = new List<(string, string)>();
             string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -442,7 +450,7 @@ namespace FlowSERVER1 {
 
                         string removeQuery = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                         command = new MySqlCommand(removeQuery, con);
-                        command.Parameters.AddWithValue("@username", _form.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", titleFile);
                         command.ExecuteNonQuery();
 
@@ -465,7 +473,7 @@ namespace FlowSERVER1 {
 
                     string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(EncryptionModel.Encrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
@@ -489,7 +497,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null", HomePage.instance.label5.Text);
+                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null", Globals.custUsername);
                         displayPic.Show();
 
                     };
@@ -517,7 +525,7 @@ namespace FlowSERVER1 {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
                     }
                     picMain_Q.Click += (sender_t, e_t) => {
-                        txtFORM txtFormShow = new txtFORM("LOLOL", "file_info_expand", titleLab.Text, "null", HomePage.instance.label5.Text);
+                        txtFORM txtFormShow = new txtFORM("LOLOL", "file_info_expand", titleLab.Text, "null", Globals.custUsername);
                         txtFormShow.Show();
                     };
                     clearRedundane();
@@ -527,7 +535,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
-                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", HomePage.instance.label5.Text)) {
+                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -554,7 +562,7 @@ namespace FlowSERVER1 {
 
                     string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64Encoded.Add(readBase64.GetString(0));
@@ -575,7 +583,7 @@ namespace FlowSERVER1 {
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid", "null", HomePage.instance.label5.Text);
+                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid", "null", Globals.custUsername);
                         vidFormShow.Show();
                     };
                     clearRedundane();
@@ -584,7 +592,7 @@ namespace FlowSERVER1 {
                 if (_tableName == "file_info_excel") {
                     img.Image = FlowSERVER1.Properties.Resources.excelIcon;
                     picMain_Q.Click += (sender_vq, e_vq) => {
-                        exlFORM exlForm = new exlFORM(titleLab.Text, "file_info_excel", "null", HomePage.instance.label5.Text);
+                        exlFORM exlForm = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
                         exlForm.Show();
                     };
                 }
@@ -593,7 +601,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                     picMain_Q.Click += (sender_aud, e_aud) => {
                         Form bgBlur = new Form();
-                        using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", HomePage.instance.label5.Text)) {
+                        using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -618,7 +626,7 @@ namespace FlowSERVER1 {
 
                     String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(getImgQue, con);
-                    command.Parameters.AddWithValue("@username", _form.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                     MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
                     DataSet ds_Read = new DataSet();
@@ -628,7 +636,7 @@ namespace FlowSERVER1 {
 
                     picMain_Q.Click += (sender_gi, ex_gi) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "file_info_gif", "null", HomePage.instance.label5.Text)) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "file_info_gif", "null", Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -652,7 +660,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, label5.Text, "file_info_apk", "null")) {
+                        using (apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null")) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -676,7 +684,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
                     picMain_Q.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
-                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", HomePage.instance.label5.Text)) {
+                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -700,7 +708,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
                     picMain_Q.Click += (sender_ptx, e_ptx) => {
                         Form bgBlur = new Form();
-                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", HomePage.instance.label5.Text)) {
+                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -724,7 +732,7 @@ namespace FlowSERVER1 {
                     picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
                     picMain_Q.Click += (sender_ptx, e_ptx) => {
                         Form bgBlur = new Form();
-                        using (wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word", "null", HomePage.instance.label5.Text)) {
+                        using (wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word", "null", Globals.custUsername)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -748,91 +756,53 @@ namespace FlowSERVER1 {
 
         /// <summary>
         /// 
-        /// Perform authentication and if authentication failed alert the user else
-        /// load user files information on login e.g Directory, folders, files
+        /// Verify user input authentication and process
+        /// sign in verification and load user data
         /// 
         /// </summary>
+        /// <returns>verifyStatus</returns>
+        private async Task<bool> verifyAuthentication() {
 
-        private int _countRow(string _tableName) {
-
-            string countRowTableQuery = $"SELECT COUNT(CUST_USERNAME) FROM {_tableName} WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(countRowTableQuery, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
-                int totalRowInt = Convert.ToInt32(command.ExecuteScalar());
-                return totalRowInt;
-            }
-        }
-
-        private async Task fetchUserData() {
-
-            var form = HomePage.instance;
-            var flowlayout = form.flowLayoutPanel1;
-            var but6 = form.guna2Button6;
-            var lab8 = form.label8;
             var _getEmail = guna2TextBox1.Text;
             inputGetEmail = _getEmail;
-            var _getPass = guna2TextBox2.Text;
-            var _getPin = guna2TextBox4.Text;
+
+            var inputAuth0 = guna2TextBox2.Text;
+            var inputAuth1 = guna2TextBox4.Text;
+
+            bool authenticationSuccessful = false;
 
             try {
 
-                if(!string.IsNullOrEmpty(returnAuthValues("CUST_PASSWORD"))) {
-                    decryptMainKey = returnAuthValues("CUST_PASSWORD");
-                    if(!string.IsNullOrEmpty(returnAuthValues("CUST_PIN"))) {
-                        pinDecryptionKey = returnAuthValues("CUST_PIN");
+                if (!string.IsNullOrEmpty(returnAuthValues("CUST_PASSWORD"))) {
+                    returnedAuth0 = returnAuthValues("CUST_PASSWORD");
+                    if (!string.IsNullOrEmpty(returnAuthValues("CUST_PIN"))) {
+                        returnedAuth1 = returnAuthValues("CUST_PIN");
                     }
                 }
 
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 label4.Visible = true;
             }
-         
-            if (EncryptionModel.computeAuthCase(_getPass) == decryptMainKey && EncryptionModel.computeAuthCase(_getPin) == pinDecryptionKey) {
+
+            if (EncryptionModel.computeAuthCase(inputAuth0) == returnedAuth0 &&
+                EncryptionModel.computeAuthCase(inputAuth1) == returnedAuth1) {
+
+                authenticationSuccessful = true;
 
                 setupRedundane();
-
                 this.Close();
 
-                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Connecting to your account...","login").ShowDialog());
+                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Connecting to your account...", "login").ShowDialog());
                 _retrievalAlertForm.Start();
 
                 await getCurrentLang();
                 setupUILanguage(CurrentLang);
                 buildGreetingLabel();
 
-                var _form = HomePage.instance;
-
                 try {
 
-                    Dictionary<string, string> tableToFileType = new Dictionary<string, string>
-                        {
-                        {"file_info", "imgFile"},
-                        {"file_info_expand", "txtFile"},
-                        {"file_info_exe", "exeFile"},
-                        {"file_info_vid", "vidFile"},
-                        {"file_info_excel", "exlFile"},
-                        {"file_info_audi", "audiFile"},
-                        {"file_info_gif", "gifFile"},
-                        {"file_info_apk", "apkFile"},
-                        {"file_info_pdf", "pdfFile"},
-                        {"file_info_ptx", "ptxFile"},
-                        {"file_info_msi", "msiFile"},
-                        {"file_info_word", "docFile"},
-                        {"file_info_directory", "dirFile"}
-                    };
-
-                    foreach (string tableName in tableToFileType.Keys) {
-                        if (_countRow(tableName) > 0) {
-                            if (tableToFileType[tableName] == "dirFile") {
-                                await _generateUserDirectory(tableName, _countRow(tableName));
-                            }
-                            else {
-                                await _generateUserFiles(tableName, tableToFileType[tableName], _countRow(tableName));
-                            }
-                        }
-                    }
-
-                    await _generateUserFolder(custUsername);
+                    await generateUserData();
 
                     RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
                     retrievalAlertForm?.Close();
@@ -842,27 +812,50 @@ namespace FlowSERVER1 {
                     HomePage.instance._TypeValuesOthers.Clear();
 
                     if (guna2CheckBox2.Checked) {
-                        setupAutoLogin(HomePage.instance.label5.Text);
+                        setupAutoLogin(Globals.custUsername);
                     }
 
-
-
-                } catch (Exception) {
-                    MessageBox.Show("An error occurred. Please hit the refresh button to resolve this.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
-
-            } else {
-
-                label4.Visible = true;
-
-                if(attemptCurr == 5) {
-                    this.Close();
+                catch (Exception) {
+                    MessageBox.Show(
+                        "An error occurred. Check your internet connection and try again.",
+                        "Flowstorage",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
+            }
+            else {
+                closeFormOnLimit();
+            }
+
+            return authenticationSuccessful;
+        }
+
+        /// <summary>
+        /// 
+        /// Login failed for 5 attempts then close the form.
+        /// 
+        /// </summary>
+        private void closeFormOnLimit() {
+            label4.Visible = true;
+            if (attemptCurr == 5) {
+                this.Close();
             }
         }
 
+        /// <summary>
+        /// 
+        /// Generate user data into HomePage 
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private async Task generateUserData() {
+
+            await _generateUserFolder(custUsername);
+        }
+
         private void HomePage_HomePageClosed(object sender, FormClosedEventArgs e) {
-            if (Application.OpenForms.Count == 1) {
+            if (Application.OpenForms.Count >= 1) {
                 Application.Exit(); 
             }
         }
@@ -888,25 +881,28 @@ namespace FlowSERVER1 {
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
-
+                
                 attemptCurr++;
 
-                await fetchUserData();
+                var verifyAuthenticaton = await verifyAuthentication();
+                if(verifyAuthenticaton) {
 
-                int calculatePercentageUsage = 0;
-                if (int.TryParse(HomePage.instance.label4.Text, out int getCurrentCount) && int.TryParse(await getAccountTypeNumber(), out int getLimitedValue)) {
-                    if (getLimitedValue == 0) {
-                        HomePage.instance.label20.Text = "0%";
+                    int calculatePercentageUsage = 0;
+                    if (int.TryParse(HomePage.instance.label4.Text, out int getCurrentCount) && int.TryParse(await getAccountTypeNumber(), out int getLimitedValue)) {
+                        if (getLimitedValue == 0) {
+                            HomePage.instance.label20.Text = "0%";
+                        }
+                        else {
+                            calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
+                            HomePage.instance.label20.Text = calculatePercentageUsage.ToString() + "%";
+                        }
+                        HomePage.instance.label6.Text = await getAccountTypeNumber();
+                        HomePage.instance.guna2ProgressBar1.Value = calculatePercentageUsage;
                     }
-                    else {
-                        calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
-                        HomePage.instance.label20.Text = calculatePercentageUsage.ToString() + "%";
-                    }
-                    HomePage.instance.label6.Text = await getAccountTypeNumber();
-                    HomePage.instance.guna2ProgressBar1.Value = calculatePercentageUsage;
+
+                    showHomePage();
+
                 }
-
-                showHomePage();
 
             }
             catch (Exception) {
@@ -921,7 +917,7 @@ namespace FlowSERVER1 {
 
             const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
             }
 
@@ -1070,7 +1066,7 @@ namespace FlowSERVER1 {
 
             const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (var command = new MySqlCommand(_selectLang, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await readLang.ReadAsync()) {
                         CurrentLang = readLang.GetString(0);
@@ -1084,7 +1080,6 @@ namespace FlowSERVER1 {
 
             HomePage form = HomePage.instance;
             var lab1 = form.label1;
-            var lab5 = form.label5;
 
             DateTime now = DateTime.Now;
             int hours = now.Hour;
@@ -1092,168 +1087,168 @@ namespace FlowSERVER1 {
 
             if (hours >= 1 && hours <= 12) {
                 if (CurrentLang == "US") {
-                    greeting = "Good Morning, " + lab5.Text;
+                    greeting = "Good Morning, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "MY") {
-                    greeting = "Selemat Pagi, " + lab5.Text;
+                    greeting = "Selemat Pagi, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "GER") {
-                    greeting = "Guten Morgen, " + lab5.Text ;
+                    greeting = "Guten Morgen, " + Globals.custUsername ;
                 }
                 else if (CurrentLang == "JAP") {
-                    greeting = "おはよう " + lab5.Text + " :)";
+                    greeting = "おはよう " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "ESP") {
-                    greeting = "Buen día " + lab5.Text + " :)";
+                    greeting = "Buen día " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "FRE") {
-                    greeting = "Bonjour " + lab5.Text + " :)";
+                    greeting = "Bonjour " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "POR") {
-                    greeting = "Bom dia " + lab5.Text + " :)";
+                    greeting = "Bom dia " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "CHI") {
-                    greeting = "早上好 " + lab5.Text + " :)";
+                    greeting = "早上好 " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "RUS") {
-                    greeting = "Доброе утро " + lab5.Text + " :)";
+                    greeting = "Доброе утро " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "DUT") {
-                    greeting = "Goedemorgen " + lab5.Text + " :)";
+                    greeting = "Goedemorgen " + Globals.custUsername + " :)";
                 }
             }
 
             else if (hours >= 12 && hours <= 16) {
                 if (CurrentLang == "US") {
-                    greeting = "Good Afternoon, " + lab5.Text;
+                    greeting = "Good Afternoon, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "MY") {
-                    greeting = "Selamat Petang, " + lab5.Text;
+                    greeting = "Selamat Petang, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "GER") {
-                    greeting = "Guten Tag, " + lab5.Text;
+                    greeting = "Guten Tag, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "JAP") {
-                    greeting = "こんにちは, " + lab5.Text;
+                    greeting = "こんにちは, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "ESP") {
-                    greeting = "Buenas tardes " + lab5.Text + " :)";
+                    greeting = "Buenas tardes " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "FRE") {
-                    greeting = "Bon après-midi " + lab5.Text + " :)";
+                    greeting = "Bon après-midi " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "POR") {
-                    greeting = "Boa tarde " + lab5.Text + " :)";
+                    greeting = "Boa tarde " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "CHI") {
-                    greeting = "下午好 " + lab5.Text + " :)";
+                    greeting = "下午好 " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "RUS") {
-                    greeting = "Добрый день " + lab5.Text + " :)";
+                    greeting = "Добрый день " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "DUT") {
-                    greeting = "Goedemiddag " + lab5.Text + " :)";
+                    greeting = "Goedemiddag " + Globals.custUsername + " :)";
                 }
 
             }
              else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
                     if (CurrentLang == "US") {
-                        greeting = "Good Late Evening, " + lab5.Text;
+                        greeting = "Good Late Evening, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "MY") {
-                        greeting = "Selamat Lewat-Petang, " + lab5.Text;
+                        greeting = "Selamat Lewat-Petang, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "GER") {
-                        greeting = "Guten späten Abend, " + lab5.Text;
+                        greeting = "Guten späten Abend, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "JAP") {
-                        greeting = "こんばんは " + lab5.Text + " :)";
+                        greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "ESP") {
-                        greeting = "buenas tardes " + lab5.Text + " :)";
+                        greeting = "buenas tardes " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "FRE") {
-                        greeting = "bonne soirée " + lab5.Text + " :)";
+                        greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "POR") {
-                        greeting = "Boa noite " + lab5.Text + " :)";
+                        greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "CHI") {
-                        greeting = "晚上好 " + lab5.Text + " :)";
+                        greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "RUS") {
-                        greeting = "Добрый день " + lab5.Text + " :)";
+                        greeting = "Добрый день " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "DUT") {
-                        greeting = "Goedeavond " + lab5.Text + " :)";
+                        greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
 
                 }
                 else {
                     if (CurrentLang == "US") {
-                        greeting = "Good Evening, " + lab5.Text;
+                        greeting = "Good Evening, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "MY") {
-                        greeting = "Selamat Petang, " + lab5.Text;
+                        greeting = "Selamat Petang, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "GER") {
-                        greeting = "Guten Abend, " + lab5.Text;
+                        greeting = "Guten Abend, " + Globals.custUsername;
                     }
                     else if (CurrentLang == "JAP") {
-                        greeting = "こんばんは " + lab5.Text + " :)";
+                        greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "ESP") {
-                        greeting = "Buenas terdes " + lab5.Text + " :)";
+                        greeting = "Buenas terdes " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "FRE") {
-                        greeting = "bonne soirée " + lab5.Text + " :)";
+                        greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "POR") {
-                        greeting = "Boa noite " + lab5.Text + " :)";
+                        greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "CHI") {
-                        greeting = "晚上好 " + lab5.Text + " :)";
+                        greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "RUS") {
-                        greeting = "Добрый вечер " + lab5.Text + " :)";
+                        greeting = "Добрый вечер " + Globals.custUsername + " :)";
                     }
                     else if (CurrentLang == "DUT") {
-                        greeting = "Goedeavond " + lab5.Text + " :)";
+                        greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
                 }
 
             }
             else if (hours >= 21 && hours <= 24) {
                 if (CurrentLang == "US") {
-                    greeting = "Good Night, " + lab5.Text;
+                    greeting = "Good Night, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "MY") {
-                    greeting = "Selamat Malam, " + lab5.Text;
+                    greeting = "Selamat Malam, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "GER") {
-                    greeting = "Guten Nacth, " + lab5.Text;
+                    greeting = "Guten Nacth, " + Globals.custUsername;
                 }
                 else if (CurrentLang == "JAP") {
-                    greeting = "おやすみ " + lab5.Text + " :)";
+                    greeting = "おやすみ " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "ESP") {
-                    greeting = "Buenas noches " + lab5.Text + " :)";
+                    greeting = "Buenas noches " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "FRE") {
-                    greeting = "bonne nuit " + lab5.Text + " :)";
+                    greeting = "bonne nuit " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "POR") {
-                    greeting = "Boa noite " + lab5.Text + " :)";
+                    greeting = "Boa noite " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "CHI") {
-                    greeting = "晚安 " + lab5.Text + " :)";
+                    greeting = "晚安 " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "RUS") {
-                    greeting = "Спокойной ночи " + lab5.Text + " :)";
+                    greeting = "Спокойной ночи " + Globals.custUsername + " :)";
                 }
                 else if (CurrentLang == "DUT") {
-                    greeting = "Welterusten " + lab5.Text + " :)";
+                    greeting = "Welterusten " + Globals.custUsername + " :)";
                 }
 
             }

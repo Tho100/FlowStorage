@@ -59,7 +59,7 @@ namespace FlowSERVER1 {
         private string getCommentSharedToMe() {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
@@ -73,7 +73,7 @@ namespace FlowSERVER1 {
         private string getCommentSharedToOthers() {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
@@ -138,7 +138,7 @@ namespace FlowSERVER1 {
             string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 await command.ExecuteNonQueryAsync();
             }

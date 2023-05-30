@@ -10,14 +10,11 @@ using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class LimitedDirAlert : Form {
-        public LimitedDirAlert(String curAcc) {
+        public LimitedDirAlert() {
             InitializeComponent();
-           // label3.Text = "Current Account: " + curAcc;
+            label7.Text = $"Current Account: {Globals.accountType}";
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
 
         private void DirErFORM_Load(object sender, EventArgs e) {
 
@@ -32,7 +29,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            var remAccShow = new SettingsForm(HomePage.instance.label5.Text, HomePage.instance.label24.Text);
+            var remAccShow = new SettingsForm(Globals.custUsername, Globals.custEmail);
             remAccShow.Show();
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
             this.Close();

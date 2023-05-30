@@ -62,7 +62,7 @@ namespace FlowSERVER1 {
 
             const string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, "0123456789085746"));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -92,7 +92,7 @@ namespace FlowSERVER1 {
 
             const string readGifFilesQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_TITLE = @foldtitle";
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
                 command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(directoryName));
 
@@ -123,7 +123,7 @@ namespace FlowSERVER1 {
             const string readGifFilesQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND DIR_NAME = @dirname";
 
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
 
@@ -152,7 +152,7 @@ namespace FlowSERVER1 {
             const string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filepath";
 
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -179,7 +179,7 @@ namespace FlowSERVER1 {
 
             string readFilesQuery = $"SELECT CUST_FILE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(readFilesQuery, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {

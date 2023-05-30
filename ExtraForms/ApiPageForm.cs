@@ -47,7 +47,7 @@ namespace FlowSERVER1 {
 
             const string query = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader read =  (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await read.ReadAsync()) {
                         guna2TextBox2.Text = read.GetString(0);
@@ -61,7 +61,7 @@ namespace FlowSERVER1 {
 
             string query = "SELECT CUST_PIN FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader read = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await read.ReadAsync()) {
                         if(EncryptionModel.computeAuthCase(guna2TextBox1.Text) == read.GetString(0)) {

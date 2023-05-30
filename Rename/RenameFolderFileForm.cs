@@ -48,7 +48,7 @@ namespace FlowSERVER1 {
 
             const string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
             using (MySqlCommand command = new MySqlCommand(queryRename, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@newtitle", EncryptionModel.Encrypt(newFolderName));
                 command.Parameters.AddWithValue("@oldtitle", EncryptionModel.Encrypt(oldFolderName));
 

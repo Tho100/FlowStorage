@@ -51,7 +51,7 @@ namespace FlowSERVER1 {
                     const string _customizeQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
                     command = new MySqlCommand(_customizeQuery,con);
                     command.Parameters.AddWithValue("@getval",EncryptionModel.computeAuthCase(guna2TextBox2.Text));
-                    command.Parameters.AddWithValue("@username",HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username",Globals.custUsername);
                     command.ExecuteNonQuery();
 
                     MessageBox.Show("You've successfully added a password for File Sharing.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);

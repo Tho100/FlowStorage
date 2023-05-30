@@ -19,11 +19,7 @@ namespace FlowSERVER1
     public partial class CreateDirectoryForm : Form
     {
         public static CreateDirectoryForm instance;
-
         private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
-
-        readonly private string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
         /// <summary>
         /// 
@@ -33,12 +29,12 @@ namespace FlowSERVER1
 
         // Date label
         private const string DateLabelFontName = "Segoe UI Semibold";
-        private const float DateLabelFontSize = 9f; // 10f
+        private const float DateLabelFontSize = 9f; 
         private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
 
         // Title label
         private const string TitleLabelFontName = "Segoe UI Semibold";
-        private const float TitleLabelFontSize = 11f; // 12f
+        private const float TitleLabelFontSize = 11f; 
         private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
 
         // Panel
@@ -46,8 +42,8 @@ namespace FlowSERVER1
         private readonly Color DarkGrayColor = Color.DarkGray;
         private readonly Color GainsboroColor = Color.Gainsboro;
         private readonly Color TransparentColor = Color.Transparent;
-        private readonly Point TitleLabelLoc = new Point(12, 166); // 12,182
-        private readonly Point DateLabelLoc = new Point(12, 192); // 12,208
+        private readonly Point TitleLabelLoc = new Point(12, 166); 
+        private readonly Point DateLabelLoc = new Point(12, 192); 
 
         // Garbage button
         private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
@@ -181,13 +177,13 @@ namespace FlowSERVER1
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
                             command.ExecuteNonQuery();
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
                             command.ExecuteNonQuery();
                         }
@@ -227,30 +223,10 @@ namespace FlowSERVER1
                 MessageBox.Show("Are you conneted to the internet?","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
-        public void DisplayError(String accType) {
+     
+        private void DisplayErrorUpgrade(String accType) {
             Form bgBlur = new Form();
-            using (LimitedDirAlert displayPic = new LimitedDirAlert(accType)) {
-                bgBlur.StartPosition = FormStartPosition.Manual;
-                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                bgBlur.Opacity = .24d;
-                bgBlur.BackColor = Color.Black;
-                bgBlur.WindowState = FormWindowState.Maximized;
-                bgBlur.TopMost = true;
-                bgBlur.Location = this.Location;
-                bgBlur.StartPosition = FormStartPosition.Manual;
-                bgBlur.ShowInTaskbar = false;
-                bgBlur.Show();
-
-                displayPic.Owner = bgBlur;
-                displayPic.ShowDialog();
-
-                bgBlur.Dispose();
-            }
-        }
-
-        public void DisplayErrorUpgrade(String accType) {
-            Form bgBlur = new Form();
-            using (LimitedDirAlert displayPic = new LimitedDirAlert(accType)) {
+            using (LimitedDirAlert displayPic = new LimitedDirAlert()) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                 bgBlur.Opacity = .24d;
@@ -270,7 +246,10 @@ namespace FlowSERVER1
         }
 
         /// <summary>
-        /// Verify necessary stuff before allowing user to create directory
+        /// 
+        /// Check if directory with the same name already exist if not,
+        /// then create the directory
+        /// 
         /// </summary>
 
         private int value_Dir = 0;
@@ -279,7 +258,7 @@ namespace FlowSERVER1
             string filesCount = HomePage.instance.label4.Text;
             int totalFiles = int.Parse(filesCount);
 
-            String username = HomePage.instance.label5.Text;
+            string username = Globals.custUsername;
 
             string accType = "";
             using (var command = new MySqlCommand("SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username", con)) {
@@ -355,6 +334,7 @@ namespace FlowSERVER1
                 }
             }
         }
+
         private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
 
         }

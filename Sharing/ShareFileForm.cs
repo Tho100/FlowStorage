@@ -171,7 +171,7 @@ namespace FlowSERVER1 {
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
 
             command = new MySqlCommand(queryRetrieveCount, con);
-            command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.Parameters.AddWithValue("@receiver", _custUsername);
             command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName, EncryptionKey.KeyValue));
 
@@ -186,7 +186,7 @@ namespace FlowSERVER1 {
             string queryGetFileByte = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
 
             using(MySqlCommand command = new MySqlCommand(queryGetFileByte,con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", _fileName);
                 using(MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
@@ -283,7 +283,7 @@ namespace FlowSERVER1 {
 
                     using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
                         command.Parameters.AddWithValue("@CUST_TO", guna2TextBox1.Text);
-                        command.Parameters.AddWithValue("@CUST_FROM", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
                         command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                         command.Parameters.AddWithValue("@CUST_FILE", setValue);
@@ -301,8 +301,8 @@ namespace FlowSERVER1 {
                 }
 
                 if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
-                    string getThumbnails = await retrieveThumbnails("cust_sharing",HomePage.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                    await startSending(getFileMetadataShared(HomePage.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)),getThumbnails);
+                    string getThumbnails = await retrieveThumbnails("cust_sharing",Globals.custUsername, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    await startSending(getFileMetadataShared(Globals.custUsername, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)),getThumbnails);
                 } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
 
                     if (_FileExt == ".png" || _FileExt == ".jpg" || _FileExt == ".jpeg" || _FileExt == ".bmp") {
@@ -334,7 +334,7 @@ namespace FlowSERVER1 {
                     } 
                     
                     else if (_FileExt == ".mp4" || _FileExt == ".mov" || _FileExt == ".avi" || _FileExt == ".webm" || _FileExt == ".wmv") {
-                        string getThumbnails = await retrieveThumbnails("file_info_vid",HomePage.instance.label5.Text,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
+                        string getThumbnails = await retrieveThumbnails("file_info_vid",Globals.custUsername,EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue), "file_info_vid"),getThumbnails);
                     }
                     
@@ -349,13 +349,13 @@ namespace FlowSERVER1 {
                 } 
                 
                 else if (_IsFromTable == "upload_info_directory") {
-                    string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, HomePage.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                    await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,HomePage.instance.label5.Text,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
+                    string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Globals.custUsername, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Globals.custUsername,EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 } 
                 
                 else if (_IsFromTable == "folder_upload_info") {
-                    string getThumbnails = await retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, HomePage.instance.label5.Text, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
-                    await startSending(await getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, HomePage.instance.label5.Text, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
+                    string getThumbnails = await retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Globals.custUsername, EncryptionModel.Encrypt(_FileName, "0123456789085746"));
+                    await startSending(await getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Globals.custUsername, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue)));
                 }
 
                 var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
@@ -368,7 +368,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                if (guna2TextBox1.Text != HomePage.instance.label5.Text) {
+                if (guna2TextBox1.Text != Globals.custUsername) {
                     if (guna2TextBox1.Text != String.Empty) {
                         if (userIsExists(guna2TextBox1.Text) > 0) {
                             if (fileIsUploaded(guna2TextBox1.Text, _FileName) > 0) {

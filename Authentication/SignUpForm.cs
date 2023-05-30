@@ -52,18 +52,17 @@ namespace FlowSERVER1.Authentication {
 
                 if (accountStartupValidation(username) == String.Empty) {
                     guna2Panel7.Visible = true;
-                    accessHomePage.label5.Text = "Guest";
                     return;
                 }
 
-                accessHomePage.label5.Text = username;
+                Globals.custUsername = username;
 
                 using (var command = new MySqlCommand("SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username", con)) {
                     command.Parameters.AddWithValue("@username", username);
 
-                    using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         if (await reader.ReadAsync()) {
-                            accessHomePage.label24.Text = reader.GetString(0);
+                            Globals.custEmail = reader.GetString(0);
                         }
                     }
                 }
@@ -84,7 +83,6 @@ namespace FlowSERVER1.Authentication {
                 accessHomePage.listBox1.Items.AddRange(itemsFolder.Concat(updatesTitle).ToArray());
                 accessHomePage.listBox1.SelectedIndex = 0;
                 accessHomePage.label4.Text = accessHomePage.flowLayoutPanel1.Controls.Count.ToString();
-
 
                 buildGreetingLabel();
                 await getAccountTypeNumber();
@@ -121,6 +119,12 @@ namespace FlowSERVER1.Authentication {
             }
         }
 
+        /// <summary>
+        /// 
+        /// Hide and close current registration form and 
+        /// display the HomePage
+        /// 
+        /// </summary>
         private void showHomePage() {
             Hide();
             accessHomePage.ShowDialog();
@@ -128,8 +132,16 @@ namespace FlowSERVER1.Authentication {
             Close();
         }
 
+        /// <summary>
+        /// 
+        /// Verify if there's one more more forms is opened,
+        /// if true then close them all and terminate the program on exit
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HomePage_HomePageClosed(object sender, FormClosedEventArgs e) {
-            if (Application.OpenForms.Count == 1) {
+            if (Application.OpenForms.Count >= 1) {
                 Application.Exit();
             }
         }
@@ -141,7 +153,7 @@ namespace FlowSERVER1.Authentication {
 
             const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", accessHomePage.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
                 accessHomePage.label6.Text = accountType;
             }
@@ -460,8 +472,8 @@ namespace FlowSERVER1.Authentication {
                         HomePage.instance.guna2Button6.Visible = true;
                     }
 
-                    accessHomePage.label5.Text = _getUser;
-                    accessHomePage.label24.Text = _getEmail;
+                    Globals.custUsername = _getUser;
+                    Globals.custEmail = _getEmail;
 
                     insertRegistrationData(_getUser,_getEmail,_getPass,_getPin);
 
@@ -552,27 +564,23 @@ namespace FlowSERVER1.Authentication {
         /// </summary>
         private void buildGreetingLabel() {
 
-            var form = HomePage.instance;
-            var lab1 = form.label1;
-            var lab5 = form.label5;
-
             DateTime now = DateTime.Now;
 
             var hours = now.Hour;
-            string greeting = $"Good Night {accessHomePage.label5.Text}";
+            string greeting = $"Good Night {Globals.custUsername}";
 
             if (hours >= 1 && hours <= 12) {
-                greeting = "Good Morning, " + lab5.Text;
+                greeting = "Good Morning, " + Globals.custUsername;
             } else if (hours >= 12 && hours <= 16) {
-                greeting = "Good Afternoon, " + lab5.Text;
+                greeting = "Good Afternoon, " + Globals.custUsername;
             } else if (hours >= 16 && hours <= 21) {
 
                 if (hours == 20 || hours == 21) {
-                    greeting = "Good Late Evening, " + lab5.Text;
+                    greeting = "Good Late Evening, " + Globals.custUsername;
                 }
 
             } else if (hours >= 21 && hours <= 24) {
-                greeting = "Good Night, " + lab5.Text;
+                greeting = "Good Night, " + Globals.custUsername;
             }
 
             accessHomePage.label1.Text = greeting;
@@ -609,7 +617,7 @@ namespace FlowSERVER1.Authentication {
         private async Task getCurrentLang() {
             const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (var command = new MySqlCommand(_selectLang, con)) {
-                command.Parameters.AddWithValue("@username", accessHomePage.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await readLang.ReadAsync()) {
                         accessHomePage.CurrentLang = readLang.GetString(0);

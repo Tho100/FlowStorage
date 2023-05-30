@@ -82,7 +82,7 @@ namespace FlowSERVER1 {
                     const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.label1.Text,EncryptionKey.KeyValue));
 
@@ -114,7 +114,7 @@ namespace FlowSERVER1 {
                     const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.listBox1.GetItemText(HomePage.instance.listBox1.SelectedItem)));
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
 
@@ -171,7 +171,7 @@ namespace FlowSERVER1 {
 
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -204,7 +204,7 @@ namespace FlowSERVER1 {
         private string getCommentSharedToMe() {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
@@ -218,7 +218,7 @@ namespace FlowSERVER1 {
         private string getCommentSharedToOthers() {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
@@ -463,7 +463,7 @@ namespace FlowSERVER1 {
                     const string updateQue = "UPDATE file_info_expand SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using(MySqlCommand command = new MySqlCommand(updateQue,con)) {
                         command.Parameters.Add("@update",MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username",MySqlDbType.Text).Value = HomePage.instance.label5.Text;
+                        command.Parameters.Add("@username",MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
@@ -473,7 +473,7 @@ namespace FlowSERVER1 {
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = HomePage.instance.label5.Text;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
@@ -483,7 +483,7 @@ namespace FlowSERVER1 {
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = HomePage.instance.label5.Text;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
@@ -493,7 +493,7 @@ namespace FlowSERVER1 {
                     const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = HomePage.instance.label5.Text;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue);
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
@@ -504,7 +504,7 @@ namespace FlowSERVER1 {
                     const string updateQue = "UPDATE folder_upload_info SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = HomePage.instance.label5.Text;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(HomePage.instance.listBox1.GetItemText(HomePage.instance.listBox1.SelectedItem));
                         command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
@@ -538,7 +538,7 @@ namespace FlowSERVER1 {
             const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
                 await command.ExecuteNonQueryAsync();
             }

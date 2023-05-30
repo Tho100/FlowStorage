@@ -57,7 +57,6 @@ namespace FlowSERVER1 {
             InitializeComponent();
 
             instance = this;
-            label5.Text = _accName;
 
             int indexOfAllias = _emailAddr.IndexOf("@");
             string maskedEmail = _emailAddr.Substring(0, 1) + new String('*', indexOfAllias - 2) + _emailAddr.Substring(indexOfAllias - 1);
@@ -145,7 +144,7 @@ namespace FlowSERVER1 {
 
             string countQuery = $"SELECT COUNT(*) FROM {_tableName} WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countQuery, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
                 _TotalUploadOvertime.Add(totalCount);
@@ -163,7 +162,7 @@ namespace FlowSERVER1 {
 
             string queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@date", currentDate);
 
                 int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
@@ -181,7 +180,7 @@ namespace FlowSERVER1 {
 
             string querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@date", currentDate);
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -200,7 +199,7 @@ namespace FlowSERVER1 {
             string accountType = "";
             const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
                 label6.Text = accountType;
@@ -294,7 +293,7 @@ namespace FlowSERVER1 {
 
             const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
                 label19.Text = totalDir.ToString();
             }
@@ -316,7 +315,7 @@ namespace FlowSERVER1 {
             string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -605,7 +604,7 @@ namespace FlowSERVER1 {
 
                 const string _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(_selectCustEmail, con);
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 MySqlDataReader _readEmail = command.ExecuteReader();
                 if (_readEmail.Read()) {
@@ -617,7 +616,7 @@ namespace FlowSERVER1 {
 
                     const string _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     command = new MySqlCommand(_insertNew, con);
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
 
@@ -625,7 +624,7 @@ namespace FlowSERVER1 {
 
                         const string _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
                         command = new MySqlCommand(_insertPayment, con);
-                        command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@email", CustUserValues[0]);
                         command.Parameters.AddWithValue("@type", _selectedAcc);
                         command.Parameters.AddWithValue("@id", lastId);
@@ -669,7 +668,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button13_Click(object sender, EventArgs e) {
-            ChangeUsernameForm _ShowUsernameChangerForm = new ChangeUsernameForm(label5.Text);
+            ChangeUsernameForm _ShowUsernameChangerForm = new ChangeUsernameForm(Globals.custUsername);
             _ShowUsernameChangerForm.Show();
         }
 
@@ -686,12 +685,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button12_Click(object sender, EventArgs e) {
-            ResetAuthForm _showChangePassForm = new ResetAuthForm(label5.Text);
+            ResetAuthForm _showChangePassForm = new ResetAuthForm(Globals.custUsername);
             _showChangePassForm.Show();
-        }
-
-        private void label57_Click(object sender, EventArgs e) {
-
         }
 
         private void guna2Panel15_Paint(object sender, PaintEventArgs e) {
@@ -707,177 +702,177 @@ namespace FlowSERVER1 {
         }
 
         private void setupTime() {
+
             var form = HomePage.instance;
-            var lab1 = form.label1;
-            var lab5 = form.label5;
        
             DateTime now = DateTime.Now;
             var hours = now.Hour;
             String greeting = null;
             if (hours >= 1 && hours <= 12) {
                 if (NewLang == "US") {
-                    greeting = "Good Morning, " + lab5.Text;
+                    greeting = "Good Morning, " + Globals.custUsername;
                 }
                 else if (NewLang == "MY") {
-                    greeting = "Selemat Pagi, " + lab5.Text;
+                    greeting = "Selemat Pagi, " + Globals.custUsername;
                 }
                 else if (NewLang == "GER") {
-                    greeting = "Guten Morgen, " + lab5.Text;
+                    greeting = "Guten Morgen, " + Globals.custUsername;
                 }
                 else if (NewLang == "JAP") {
-                    greeting = "おはよう " + lab5.Text + " :)";
+                    greeting = "おはよう " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "ESP") {
-                    greeting = "Buen día " + lab5.Text + " :)";
+                    greeting = "Buen día " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "FRE") {
-                    greeting = "Bonjour " + lab5.Text + " :)";
+                    greeting = "Bonjour " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "POR") {
-                    greeting = "Bom dia " + lab5.Text + " :)";
+                    greeting = "Bom dia " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "CHI") {
-                    greeting = "早上好 " + lab5.Text + " :)";
+                    greeting = "早上好 " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "RUS") {
-                    greeting = "Доброе утро " + lab5.Text + " :)";
+                    greeting = "Доброе утро " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "DUT") {
-                    greeting = "Goedemorgen " + lab5.Text + " :)";
+                    greeting = "Goedemorgen " + Globals.custUsername + " :)";
                 }
             }
 
             else if (hours >= 12 && hours <= 16) {
                 if (NewLang == "US") {
-                    greeting = "Good Afternoon " + lab5.Text + " :)";
+                    greeting = "Good Afternoon " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "MY") {
-                    greeting = "Selamat Petang " + lab5.Text + " :)";
+                    greeting = "Selamat Petang " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "GER") {
-                    greeting = "Guten Tag " + lab5.Text + " :)";
+                    greeting = "Guten Tag " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "JAP") {
-                    greeting = "こんにちは " + lab5.Text + " :)";
+                    greeting = "こんにちは " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "ESP") {
-                    greeting = "Buenas tardes " + lab5.Text + " :)";
+                    greeting = "Buenas tardes " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "FRE") {
-                    greeting = "Bon après-midi " + lab5.Text + " :)";
+                    greeting = "Bon après-midi " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "POR") {
-                    greeting = "Boa tarde " + lab5.Text + " :)";
+                    greeting = "Boa tarde " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "CHI") {
-                    greeting = "下午好 " + lab5.Text + " :)";
+                    greeting = "下午好 " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "RUS") {
-                    greeting = "Добрый день " + lab5.Text + " :)";
+                    greeting = "Добрый день " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "DUT") {
-                    greeting = "Goedemiddag " + lab5.Text + " :)";
+                    greeting = "Goedemiddag " + Globals.custUsername + " :)";
                 }
             }
             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
                     if (NewLang == "US") {
-                        greeting = "Good Late Evening, " + lab5.Text;
+                        greeting = "Good Late Evening, " + Globals.custUsername;
                     }
                     else if (NewLang == "MY") {
-                        greeting = "Selamat Lewat-Petang, " + lab5.Text;
+                        greeting = "Selamat Lewat-Petang, " + Globals.custUsername;
                     } else if (NewLang == "GER") {
-                        greeting = "Guten späten Abend, " + lab5.Text;
+                        greeting = "Guten späten Abend, " + Globals.custUsername;
                     }
                     else if (NewLang == "JAP") {
-                        greeting = "こんばんは " + lab5.Text + " :)";
+                        greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "ESP") {
-                        greeting = "buenas tardes " + lab5.Text + " :)";
+                        greeting = "buenas tardes " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "FRE") {
-                        greeting = "bonne soirée " + lab5.Text + " :)";
+                        greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "POR") {
-                        greeting = "Boa noite " + lab5.Text + " :)";
+                        greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "CHI") {
-                        greeting = "晚上好 " + lab5.Text + " :)";
+                        greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "RUS") {
-                        greeting = "Добрый день " + lab5.Text + " :)";
+                        greeting = "Добрый день " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "DUT") {
-                        greeting = "Goedeavond " + lab5.Text + " :)";
+                        greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
 
                 }
                 else {
                     if (NewLang == "US") {
-                        greeting = "Good Evening, " + lab5.Text;
+                        greeting = "Good Evening, " + Globals.custUsername;
                     }
                     else if (NewLang == "MY") {
-                        greeting = "Selamat Petang, " + lab5.Text;
+                        greeting = "Selamat Petang, " + Globals.custUsername;
                     } else if (NewLang == "GER") {
-                        greeting = "Guten Abend, " + lab5.Text;
+                        greeting = "Guten Abend, " + Globals.custUsername;
                     } else if (NewLang == "JAP") {
-                        greeting = "こんばんは " + lab5.Text + " :)";
+                        greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "ESP") {
-                        greeting = "Buenas terdes " + lab5.Text + " :)";
+                        greeting = "Buenas terdes " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "FRE") {
-                        greeting = "bonne soirée " + lab5.Text + " :)";
+                        greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "POR") {
-                        greeting = "Boa noite " + lab5.Text + " :)";
+                        greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "CHI") {
-                        greeting = "晚上好 " + lab5.Text + " :)";
+                        greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "RUS") {
-                        greeting = "Добрый вечер " + lab5.Text + " :)";
+                        greeting = "Добрый вечер " + Globals.custUsername + " :)";
                     }
                     else if (NewLang == "DUT") {
-                        greeting = "Goedeavond " + lab5.Text + " :)";
+                        greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
                 }
 
             }
             else if (hours >= 21 && hours <= 24) {
                 if (NewLang == "US") {
-                    greeting = "Good Night, " + lab5.Text;
+                    greeting = "Good Night, " + Globals.custUsername;
                 }
                 else if (NewLang == "MY") {
-                    greeting = "Selamat Malam, " + lab5.Text;
+                    greeting = "Selamat Malam, " + Globals.custUsername;
                 }
                 else if (NewLang == "GER") {
-                    greeting = "Guten Nacth, " + lab5.Text;
+                    greeting = "Guten Nacth, " + Globals.custUsername;
                 }
                 else if (NewLang == "JAP") {
-                    greeting = "おやすみ " + lab5.Text + " :)";
+                    greeting = "おやすみ " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "ESP") {
-                    greeting = "Buenas noches " + lab5.Text + " :)";
+                    greeting = "Buenas noches " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "FRE") {
-                    greeting = "bonne nuit " + lab5.Text + " :)";
+                    greeting = "bonne nuit " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "POR") {
-                    greeting = "Boa noite " + lab5.Text + " :)";
+                    greeting = "Boa noite " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "CHI") {
-                    greeting = "晚安 " + lab5.Text + " :)";
+                    greeting = "晚安 " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "RUS") {
-                    greeting = "Спокойной ночи " + lab5.Text + " :)";
+                    greeting = "Спокойной ночи " + Globals.custUsername + " :)";
                 }
                 else if (NewLang == "DUT") {
-                    greeting = "Welterusten " + lab5.Text + " :)";
+                    greeting = "Welterusten " + Globals.custUsername + " :)";
                 }
             }
 
-            lab1.Text = greeting;
+            string greetingLabel = HomePage.instance.label1.Text;
+            greetingLabel = greeting;
         }
         private void setupUILanguage(String _custLang) {
             var Form_1 = HomePage.instance;
@@ -1480,7 +1475,7 @@ namespace FlowSERVER1 {
 
             const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 using (MySqlDataReader _readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await _readLang.ReadAsync()) {
@@ -1496,7 +1491,7 @@ namespace FlowSERVER1 {
 
             command = new MySqlCommand(_updateQuery,con);
             command.Parameters.AddWithValue("@lang",_custLang);
-            command.Parameters.AddWithValue("@username", label5.Text);
+            command.Parameters.AddWithValue("@username", Globals.custUsername);
             command.ExecuteNonQuery();
         }
 
@@ -2060,7 +2055,7 @@ namespace FlowSERVER1 {
                 label69.Text = "Enable File Sharing";
                 label68.Text = "Enabling file sharing will allows people to share a file to you";
 
-                disableSharing(label5.Text);
+                disableSharing(Globals.custUsername);
 
             }
         }
@@ -2081,7 +2076,7 @@ namespace FlowSERVER1 {
             label69.Text = "Disable File Sharing";
             label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
 
-            enableSharing(label5.Text);
+            enableSharing(Globals.custUsername);
 
         }
 
@@ -2094,7 +2089,7 @@ namespace FlowSERVER1 {
             string hasPass = "";
             const string selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectQuery, con)) {
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 object result = command.ExecuteScalar();
                 if (result != null) {
@@ -2139,7 +2134,7 @@ namespace FlowSERVER1 {
                 CurrDateStats++;
                 String getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
                 command = new MySqlCommand(getJoinDateQuery, con);
-                command.Parameters.AddWithValue("@username", label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 String joinedDate = command.ExecuteScalar()?.ToString();
                 if (joinedDate != null) {
@@ -2215,8 +2210,6 @@ namespace FlowSERVER1 {
             }
 
             if(guna2TabControl1.SelectedIndex == 2) {
-                
-                //guna2TextBox2.Text = getAccessToken(label5.Text);
 
                 if(retrieveFileSharingPas() != "DEF") {
 
@@ -2234,7 +2227,7 @@ namespace FlowSERVER1 {
                     guna2Button23.Enabled = true;
                 }
 
-                if (retrieveDisabled(label5.Text) == "1") {
+                if (retrieveDisabled(Globals.custUsername) == "1") {
                     guna2Button24.Enabled = false;
                     guna2Button24.Visible = false;
 
@@ -2274,7 +2267,7 @@ namespace FlowSERVER1 {
         private void guna2Button27_Click(object sender, EventArgs e) {
             if(MessageBox.Show("Remove File Sharing password?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes) {
 
-                removePasSharing(label5.Text);
+                removePasSharing(Globals.custUsername);
                 guna2Button23.Visible = true;
                 guna2Button23.Enabled = true;
 
@@ -2290,7 +2283,7 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button28_Click(object sender, EventArgs e) {
             if(tokenCheckCurr == 0) {
-                verificationTokenFORM _showVerForm = new verificationTokenFORM();
+                AccessTokenVerifyForm _showVerForm = new AccessTokenVerifyForm();
                 _showVerForm.Show();
             } else {
                 guna2TextBox2.Enabled = true;
@@ -2365,6 +2358,10 @@ namespace FlowSERVER1 {
         }
 
         private void label52_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label76_Click(object sender, EventArgs e) {
 
         }
     }

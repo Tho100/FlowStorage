@@ -24,7 +24,7 @@ namespace FlowSERVER1 {
             if (_tableName != "cust_sharing") {
                 string _remQueryBegin = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(_remQueryBegin, con)) {
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.ExecuteNonQuery();
                 }
             }
@@ -32,7 +32,7 @@ namespace FlowSERVER1 {
 
                 string _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
                 using (MySqlCommand command = new MySqlCommand(_remSharingBeings, con)) {
-                    command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.ExecuteNonQuery();
                 }
             }
@@ -45,7 +45,7 @@ namespace FlowSERVER1 {
 
             string checkPassword_Query = $"SELECT {_WhichColumn} FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
-                command.Parameters.AddWithValue("@username", HomePage.instance.label5.Text);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
                     while (readerPass_.Read()) {
                         _concludeValue.Add(readerPass_.GetString(0));

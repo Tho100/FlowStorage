@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 namespace FlowSERVER1 {
     public class Globals {
 
+        static public String custUsername = "";
+        static public String custEmail = "";
+        static public String accountType = "";
+
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
         {".png",".jpg",".jpeg",".webp",".bmp",".ico"};
 
@@ -20,6 +24,21 @@ namespace FlowSERVER1 {
         { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", 
           "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk", 
           "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_gif", "file_info_directory" 
+        };
+
+        static public readonly Dictionary<string, string> tableToFileType = new Dictionary<string, string>
+        {
+            { "file_info", "imgFile" },
+            { "file_info_expand", "txtFile" },
+            { "file_info_exe", "exeFile" },
+            { "file_info_vid", "vidFile" },
+            { "file_info_excel", "exlFile" },
+            { "file_info_pdf", "pdfFile" },
+            { "file_info_apk", "apkFile" },
+            { "file_info_word", "wordFile" },
+            { "file_info_ptx", "ptxFile" },
+            { "file_info_gif", "gifFile" },
+            { "file_info_directory", null }
         };
 
     }
