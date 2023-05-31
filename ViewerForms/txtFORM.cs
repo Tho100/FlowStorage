@@ -84,7 +84,7 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.label1.Text,EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text,EncryptionKey.KeyValue));
 
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
@@ -115,7 +115,7 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.listBox1.GetItemText(HomePage.instance.listBox1.SelectedItem)));
+                        command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem)));
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
 
                         using (MySqlDataReader reader = command.ExecuteReader()) {
@@ -505,7 +505,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(HomePage.instance.listBox1.GetItemText(HomePage.instance.listBox1.SelectedItem));
+                        command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem));
                         command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }

@@ -48,7 +48,6 @@ namespace FlowSERVER1 {
         private long fileSizeInMB;
         private string varDate;
         private string tableName;
-        public string accountTypeString;
 
         /// <summary>
         /// 
@@ -154,8 +153,8 @@ namespace FlowSERVER1 {
                 }
             }
 
-            guna2Button6.Visible = false;
-            label8.Visible = false;
+            btnGarbageImage.Visible = false;
+            lblEmptyHere.Visible = false;
 
             for (int i = 0; i < currItem; i++) {
 
@@ -237,10 +236,10 @@ namespace FlowSERVER1 {
 
                 remBut.Click += (sender_im, e_im) => {
 
-                    label27.Text = titleLab.Text;
-                    label31.Text = _tableName;
-                    label29.Text = panelPic_Q.Name;
-                    guna2Panel3.Visible = true;
+                    lblFileNameOnPanel.Text = titleLab.Text;
+                    lblFileTableName.Text = _tableName;
+                    lblFilePanelName.Text = panelPic_Q.Name;
+                    pnlFileOptions.Visible = true;
 
                 };
 
@@ -507,7 +506,7 @@ namespace FlowSERVER1 {
                 clearRedundane();
             }
 
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
         /// <summary>
@@ -521,8 +520,8 @@ namespace FlowSERVER1 {
         /// <param name="currItem"></param>
         private async Task _generateUserFold(List<String> _fileType, String _foldTitle, int currItem) {
 
-            guna2Button6.Visible = false;
-            label8.Visible = false;
+            btnGarbageImage.Visible = false;
+            lblEmptyHere.Visible = false;
 
             var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
             uploadAlertFormSucceeded?.Close();
@@ -638,11 +637,11 @@ namespace FlowSERVER1 {
 
                     remBut.Click += (sender_im, e_im) => {
 
-                        label27.Text = titleLab.Text;
-                        label31.Text = "folder_upload_info";
-                        label32.Text = listBox1.GetItemText(listBox1.SelectedItem);
-                        label29.Text = panelPic_Q.Name;
-                        guna2Panel3.Visible = true;
+                        lblFileNameOnPanel.Text = titleLab.Text;
+                        lblFileTableName.Text = "folder_upload_info";
+                        lblSelectedDirName.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+                        lblFilePanelName.Text = panelPic_Q.Name;
+                        pnlFileOptions.Visible = true;
 
                     };
 
@@ -940,13 +939,13 @@ namespace FlowSERVER1 {
         }
 
         private void clearRedundane() {
-            guna2Button6.Visible = false;
-            label8.Visible = false;
+            btnGarbageImage.Visible = false;
+            lblEmptyHere.Visible = false;
         }
 
         private void showRedundane() {
-            guna2Button6.Visible = true;
-            label8.Visible = true;
+            btnGarbageImage.Visible = true;
+            lblEmptyHere.Visible = true;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -963,7 +962,7 @@ namespace FlowSERVER1 {
         private void buildGreetingLabel() {
 
             var form = HomePage.instance;
-            var lab1 = form.label1;
+            var lab1 = form.lblGreetingText;
             var lab5 = Globals.custUsername;
 
             DateTime now = DateTime.Now;
@@ -1181,12 +1180,12 @@ namespace FlowSERVER1 {
 
         private async Task containThumbUpload(string selectedItems,string nameTable, string getNamePath, object keyValMain) {
 
-            int getCurrentCount = int.Parse(label4.Text);
-            int getLimitedValue = int.Parse(label6.Text);
+            int getCurrentCount = int.Parse(lblItemCountText.Text);
+            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
             int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
-            label20.Text = calculatePercentageUsage.ToString() + "%";
+            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
-            guna2ProgressBar1.Value = calculatePercentageUsage;
+            progressBarUsageStorage.Value = calculatePercentageUsage;
 
             try {
 
@@ -1225,12 +1224,12 @@ namespace FlowSERVER1 {
         }
         private async Task startSending(string setValue,string nameTable) {
 
-            int getCurrentCount = int.Parse(label4.Text);
-            int getLimitedValue = int.Parse(label6.Text);
+            int getCurrentCount = int.Parse(lblItemCountText.Text);
+            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
             int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
-            label20.Text = calculatePercentageUsage.ToString() + "%";
+            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
-            guna2ProgressBar1.Value = calculatePercentageUsage;
+            progressBarUsageStorage.Value = calculatePercentageUsage;
 
             string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
 
@@ -1388,10 +1387,10 @@ namespace FlowSERVER1 {
                                 remButTxt.BringToFront();
 
                                 remButTxt.Click += (sender_tx, e_tx) => {
-                                    label27.Text = titleLab.Text;
-                                    label31.Text = nameTable;
-                                    label29.Text = mainPanelTxt.Name;
-                                    guna2Panel3.Visible = true;
+                                    lblFileNameOnPanel.Text = titleLab.Text;
+                                    lblFileTableName.Text = nameTable;
+                                    lblFilePanelName.Text = mainPanelTxt.Name;
+                                    pnlFileOptions.Visible = true;
                                 };
 
                                 textboxPic.MouseHover += (_senderM, _ev) => {
@@ -1755,7 +1754,7 @@ namespace FlowSERVER1 {
 
                         searchCurr = curr;
 
-                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
                 }
             }
@@ -1802,45 +1801,45 @@ namespace FlowSERVER1 {
 
             try {
 
-                String _currentFolder = listBox1.GetItemText(listBox1.SelectedItem);
+                string _currentFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
                 if (_currentFolder == "Home") {
 
-                    int CurrentUploadCount = Convert.ToInt32(label4.Text);
+                    int CurrentUploadCount = Convert.ToInt32(lblItemCountText.Text);
 
-                    if (accountTypeString == "Basic") {
+                    if (Globals.accountType == "Basic") {
                         if (CurrentUploadCount != 20) {
-                            _mainFileGenerator(20, accountTypeString);
+                            _mainFileGenerator(20, Globals.accountType);
                         }
                         else {
-                            DisplayError(accountTypeString);
+                            DisplayError(Globals.accountType);
                         }
                     }
 
-                    if (accountTypeString == "Max") {
+                    if (Globals.accountType == "Max") {
                         if (CurrentUploadCount != 500) {
-                            _mainFileGenerator(500, accountTypeString);
+                            _mainFileGenerator(500, Globals.accountType);
                         }
                         else {
-                            DisplayError(accountTypeString);
+                            DisplayError(Globals.accountType);
                         }
                     }
 
-                    if (accountTypeString == "Express") {
+                    if (Globals.accountType == "Express") {
                         if (CurrentUploadCount != 1000) {
-                            _mainFileGenerator(1000, accountTypeString);
+                            _mainFileGenerator(1000, Globals.accountType);
                         }
                         else {
-                            DisplayError(accountTypeString);
+                            DisplayError(Globals.accountType);
                         }
                     }
 
-                    if (accountTypeString == "Supreme") {
+                    if (Globals.accountType == "Supreme") {
                         if (CurrentUploadCount != 2000) {
-                            _mainFileGenerator(2000, accountTypeString);
+                            _mainFileGenerator(2000, Globals.accountType);
                         }
                         else {
-                            DisplayError(accountTypeString);
+                            DisplayError(Globals.accountType);
                         }
                     }
                 } else {
@@ -1985,7 +1984,7 @@ namespace FlowSERVER1 {
 
         private async void folderDialog(String _getDirPath,String _getDirTitle,String[] _TitleValues) {
 
-            string _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
+            string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             int _IntCurr = 0;
             long fileSizeInMB = 0;
@@ -2097,11 +2096,11 @@ namespace FlowSERVER1 {
 
                 remButExl.Click += (sender_vid, e_vid) => {
 
-                    label27.Text = titleLab.Text;
-                    label31.Text = "folder_upload_info";
-                    label29.Text = mainPanelTxt.Name;
-                    label32.Text = listBox1.GetItemText(listBox1.SelectedItem);
-                    guna2Panel3.Visible = true;
+                    lblFileNameOnPanel.Text = titleLab.Text;
+                    lblFileTableName.Text = "folder_upload_info";
+                    lblFilePanelName.Text = mainPanelTxt.Name;
+                    lblSelectedDirName.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+                    pnlFileOptions.Visible = true;
 
                 };
 
@@ -2115,8 +2114,8 @@ namespace FlowSERVER1 {
                 dateLabExl.Location = DateLabelLoc;
                 dateLabExl.Text = varDate;
 
-                label8.Visible = false;
-                guna2Button6.Visible = false;
+                lblEmptyHere.Visible = false;
+                btnGarbageImage.Visible = false;
 
                 _titleText = titleLab.Text;
 
@@ -2352,15 +2351,15 @@ namespace FlowSERVER1 {
             var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
             uploadAlertForm?.Close();
 
-            guna2Button13.FillColor = Color.FromArgb(255, 71, 19, 191);
-            guna2Button9.FillColor = Color.Transparent;
+            btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
+            btnGoHomePage.FillColor = Color.Transparent;
             panel1.SendToBack();
             panel3.BringToFront();
             label9.Visible = true;
-            listBox1.Visible = true;
+            lstFoldersPage.Visible = true;
 
             clearRedundane();
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
             
         }
 
@@ -2381,28 +2380,13 @@ namespace FlowSERVER1 {
         private String _controlName;
         private void guna2Button12_Click(object sender, EventArgs e) {
 
-            LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(accountTypeString, "it looks like you've reached the max \r\namount of folder you can upload",true);
+            LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload",true);
 
-            List<string> foldersItems = listBox1.Items.Cast<string>().ToList();
+            List<string> foldersItems = lstFoldersPage.Items.Cast<string>().ToList();
             List<string> execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
             int countTotalFolders = foldersItems.Count(item => !execludedStringsItem.Contains(item));
 
-            if (accountTypeString == "Max" && countTotalFolders == 5) {
-                folderUploadFailed.Show();
-                return;
-            }
-
-            if (accountTypeString == "Express" && countTotalFolders == 10) {
-                folderUploadFailed.Show();
-                return;
-            }
-
-            if (accountTypeString == "Supreme" && countTotalFolders == 20) {
-                folderUploadFailed.Show();
-                return;
-            }
-
-            if (accountTypeString == "Basic" && countTotalFolders == 3) {
+            if(Globals.uploadFolderLimit[Globals.accountType] == countTotalFolders) {
                 folderUploadFailed.Show();
                 return;
             }
@@ -2417,45 +2401,24 @@ namespace FlowSERVER1 {
                 int _countFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.TopDirectoryOnly).Length;
                 var _getDirTitle = new DirectoryInfo(_getDirPath).Name;
 
-                if(!listBox1.Items.Contains(_getDirTitle)) {
+                if(!lstFoldersPage.Items.Contains(_getDirTitle)) {
 
-                    String[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
+                    string[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
                     int _numberOfFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.AllDirectories).Length;
 
-                    if (accountTypeString == "Basic" && _numberOfFiles <= 20) {
+                    if(_numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
+
                         flowLayoutPanel1.Controls.Clear();
-                        listBox1.Items.Add(_getDirTitle);
-                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                        listBox1.SelectedIndex = _dirPosition;
-                    }
+                        lstFoldersPage.Items.Add(_getDirTitle);
 
-                    else if (accountTypeString == "Max" && _numberOfFiles <= 500) {
-                        flowLayoutPanel1.Controls.Clear();
-                        listBox1.Items.Add(_getDirTitle);
                         folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                        listBox1.SelectedIndex = _dirPosition;
-                    }
+                        var _dirPosition = lstFoldersPage.Items.IndexOf(_getDirTitle);
 
-                    else if (accountTypeString == "Express" && _numberOfFiles <= 1000) {
-                        flowLayoutPanel1.Controls.Clear();
-                        listBox1.Items.Add(_getDirTitle);
-                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                        listBox1.SelectedIndex = _dirPosition;
-                    }
+                        lstFoldersPage.SelectedIndex = _dirPosition;
 
-                    else if (accountTypeString == "Supreme" && _numberOfFiles <= 2000) {
-                        listBox1.Items.Add(_getDirTitle);
-                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                        var _dirPosition = listBox1.Items.IndexOf(_getDirTitle);
-                        listBox1.SelectedIndex = _dirPosition;
-                    }
-
-                    else {
-                        DisplayErrorFolder(accountTypeString);
-                        listBox1.SelectedItem = "Home";
+                    } else {
+                        DisplayErrorFolder(Globals.accountType);
+                        lstFoldersPage.SelectedItem = "Home";
                     }
 
                 } else {
@@ -2577,39 +2540,39 @@ namespace FlowSERVER1 {
 
         private async void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
 
-            guna2Panel3.Visible = false;
+            pnlFileOptions.Visible = false;
 
             try {
 
-                int _selectedIndex = listBox1.SelectedIndex;
-                string _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
+                int _selectedIndex = lstFoldersPage.SelectedIndex;
+                string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-                label26.Text = _selectedFolder;
-                label26.Visible = true;
-                guna2Button19.Visible = true;
+                lblCurrentPageText.Text = _selectedFolder;
+                lblCurrentPageText.Visible = true;
+                btnDeleteFolder.Visible = true;
 
                 if (_selectedFolder == "Home") {
 
-                    guna2Button27.Visible = false;
-                    guna2Button19.Visible = false;
-                    guna2Button4.Visible = false;
-                    guna2Button3.Visible = false;
-                    guna2Button8.Visible = true;
+                    btnDownloadFolder.Visible = false;
+                    btnDeleteFolder.Visible = false;
+                    btnRefreshSharedFiles.Visible = false;
+                    btnOpenRenameFolderPage.Visible = false;
+                    btnRefreshFiles.Visible = true;
                     flowLayoutPanel1.WrapContents = true;
                     flowLayoutPanel1.Controls.Clear();
 
                     buildHomeFiles();
 
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 }
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
 
-                    guna2Button19.Visible = true;
-                    guna2Button3.Visible = true;
-                    guna2Button8.Visible = false;
+                    btnDeleteFolder.Visible = true;
+                    btnOpenRenameFolderPage.Visible = true;
+                    btnRefreshFiles.Visible = false;
                     guna2Panel4.Visible = false;
-                    guna2Button27.Visible = true;
+                    btnDownloadFolder.Visible = true;
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
 
@@ -2629,7 +2592,7 @@ namespace FlowSERVER1 {
                     var currMainLength = typesValues.Count;
                     await _generateUserFold(typesValues, _selectedFolder, currMainLength);
 
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     if (flowLayoutPanel1.Controls.Count == 0) {
                         showRedundane();
                     }
@@ -2640,11 +2603,11 @@ namespace FlowSERVER1 {
                 } else if (_selectedIndex == 1) {
 
 
-                    guna2Button4.Visible = true;
-                    guna2Button3.Visible = false;
-                    guna2Button8.Visible = false;
-                    guna2Button19.Visible = false;
-                    guna2Button27.Visible = false;
+                    btnRefreshSharedFiles.Visible = true;
+                    btnOpenRenameFolderPage.Visible = false;
+                    btnRefreshFiles.Visible = false;
+                    btnDeleteFolder.Visible = false;
+                    btnDownloadFolder.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
@@ -2653,18 +2616,18 @@ namespace FlowSERVER1 {
 
                     buildSharedToMe();
 
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     
 
                 }
                 else if (_selectedIndex == 2) {
 
-                    guna2Button4.Visible = true;
-                    guna2Button8.Visible = false;
-                    guna2Button27.Visible = false;
+                    btnRefreshSharedFiles.Visible = true;
+                    btnRefreshFiles.Visible = false;
+                    btnDownloadFolder.Visible = false;
 
-                    guna2Button19.Visible = false;
-                    guna2Button3.Visible = false;
+                    btnDeleteFolder.Visible = false;
+                    btnOpenRenameFolderPage.Visible = false;
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
@@ -2673,7 +2636,7 @@ namespace FlowSERVER1 {
 
                     buildSharedToOthers();
 
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     
 
                 }
@@ -2710,10 +2673,10 @@ namespace FlowSERVER1 {
                     await command.ExecuteNonQueryAsync();
                 }
 
-                listBox1.Items.Remove(foldName);
+                lstFoldersPage.Items.Remove(foldName);
 
-                int indexSelected = listBox1.Items.IndexOf("Home");
-                listBox1.SelectedIndex = indexSelected;
+                int indexSelected = lstFoldersPage.Items.IndexOf("Home");
+                lstFoldersPage.SelectedIndex = indexSelected;
 
                 Application.OpenForms
                     .OfType<Form>()
@@ -2878,11 +2841,11 @@ namespace FlowSERVER1 {
 
                     remButTxt.Click += (sender_im, e_im) => {
 
-                        label27.Text = titleLab.Text;
-                        label31.Text = "cust_sharing";
-                        label33.Text = setupSharedUsername;
-                        label29.Text = mainPanelTxt.Name;
-                        guna2Panel3.Visible = true;
+                        lblFileNameOnPanel.Text = titleLab.Text;
+                        lblFileTableName.Text = "cust_sharing";
+                        lblSharedToName.Text = setupSharedUsername;
+                        lblFilePanelName.Text = mainPanelTxt.Name;
+                        pnlFileOptions.Visible = true;
 
                     };
 
@@ -2935,7 +2898,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, "Shared "  + sharedToName(),true)) {
+                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared "  + sharedToName(),true)) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -2964,7 +2927,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text, sharedToName(),true);
+                            ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, sharedToName(),true);
                             displayPtx.Show();
                         };
                     }
@@ -2978,7 +2941,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared " + sharedToName(),true);
+                            pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
                             displayPtx.Show();
                         };
                     }
@@ -2992,7 +2955,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            apkFORM displayApk = new apkFORM(titleLab.Text, "Shared To " + sharedToName(), "cust_sharing", label1.Text,true);
+                            apkFORM displayApk = new apkFORM(titleLab.Text, "Shared To " + sharedToName(), "cust_sharing", lblGreetingText.Text,true);
                             displayApk.Show();
                         };
                     }
@@ -3006,7 +2969,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            msiFORM displayMsi = new msiFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared " + sharedToName(),true);
+                            msiFORM displayMsi = new msiFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
                             displayMsi.Show();
                         };
                     }
@@ -3020,7 +2983,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared " + sharedToName(),true);
+                            wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
                             displayDoc.Show();
                         };
                     }
@@ -3028,7 +2991,7 @@ namespace FlowSERVER1 {
                     if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                         textboxPic.Click += (sender_im, e_im) => {
-                            exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared " + sharedToName(),true);
+                            exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
                             displayXls.Show();
                         };
                     }
@@ -3036,7 +2999,7 @@ namespace FlowSERVER1 {
                     if (typeValues[q] == ".wav" || typeValues[q] == ".mp3") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
                         textboxPic.Click += (sender_im, e_im) => {
-                            audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared " + sharedToName(),true);
+                            audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
                             displayAud.Show();
                         };
                     }
@@ -3071,7 +3034,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, "Shared " + sharedToName(),true);
+                            vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
                             displayAud.Show();
                         };
                     }
@@ -3085,7 +3048,7 @@ namespace FlowSERVER1 {
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                             Form bgBlur = new Form();
-                            exeFORM displayExe = new exeFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared To " + sharedToName(),true);
+                            exeFORM displayExe = new exeFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared To " + sharedToName(),true);
                             displayExe.Show();
                         };
                     }
@@ -3116,7 +3079,7 @@ namespace FlowSERVER1 {
 
                         textboxPic.Click += (sender_im, e_im) => {
 
-                            txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, label1.Text, "Shared " +  sharedToName());
+                            txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, lblGreetingText.Text, "Shared " +  sharedToName());
                             displayTxt.Show();
                         };
                     }
@@ -3141,7 +3104,7 @@ namespace FlowSERVER1 {
                         textboxPic.Image = new Bitmap(_toMs);
                         textboxPic.Click += (sender_im, e_im) => {
                             Form bgBlur = new Form();
-                            using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", label1.Text, "Shared To " + sharedToName(),true)) {
+                            using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared To " + sharedToName(),true)) {
                                 bgBlur.StartPosition = FormStartPosition.Manual;
                                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                                 bgBlur.Opacity = .24d;
@@ -3161,11 +3124,11 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                     if (flowLayoutPanel1.Controls.Count > 0) {
-                        label8.Visible = false;
-                        guna2Button6.Visible = false;
+                        lblEmptyHere.Visible = false;
+                        btnGarbageImage.Visible = false;
                     }
                 } 
 
@@ -3271,10 +3234,10 @@ namespace FlowSERVER1 {
 
                 remButTxt.Click += (sender_im, e_im) => {
 
-                    label27.Text = titleLab.Text;
-                    label31.Text = "cust_sharing";
-                    label29.Text = mainPanelTxt.Name;
-                    guna2Panel3.Visible = true;
+                    lblFileNameOnPanel.Text = titleLab.Text;
+                    lblFileTableName.Text = "cust_sharing";
+                    lblFilePanelName.Text = mainPanelTxt.Name;
+                    pnlFileOptions.Visible = true;
 
                 };
 
@@ -3325,7 +3288,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false)) {
+                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -3355,7 +3318,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false);
+                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false);
                         displayPtx.Show();
                     };
                 }
@@ -3369,7 +3332,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false);
+                        pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false);
                         displayPtx.Show();
                     };
                 }
@@ -3383,7 +3346,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        using (apkFORM displayApk = new apkFORM(titleLab.Text, UploaderUsername, "cust_sharing", label1.Text,true)) {
+                        using (apkFORM displayApk = new apkFORM(titleLab.Text, UploaderUsername, "cust_sharing", lblGreetingText.Text,true)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -3412,7 +3375,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false);
+                        wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
                         displayDoc.Show();
                     };
                 }
@@ -3420,7 +3383,7 @@ namespace FlowSERVER1 {
                 if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls") {
                     textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
                     textboxPic.Click += (sender_im, e_im) => {
-                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false);
+                        exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
                         displayXls.Show();
                     };
                 }
@@ -3434,7 +3397,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false);
+                        audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
                         displayAud.Show();
                     };
                 }
@@ -3469,7 +3432,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", label1.Text, UploaderUsername,false);
+                        vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false);
                         displayAud.Show();
                     };
                 }
@@ -3483,7 +3446,7 @@ namespace FlowSERVER1 {
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
                         Form bgBlur = new Form();
-                        exeFORM displayExe = new exeFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername);
+                        exeFORM displayExe = new exeFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername);
                         displayExe.Show();
                     };
                 }
@@ -3518,7 +3481,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, label1.Text, UploaderUsername, false);
+                        txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, lblGreetingText.Text, UploaderUsername, false);
                         displayTxt.Show();
                     };
                 }
@@ -3543,7 +3506,7 @@ namespace FlowSERVER1 {
                     textboxPic.Image = new Bitmap(_toMs);
                     textboxPic.Click += (sender_im, e_im) => {
                         Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", label1.Text, UploaderUsername, false)) {
+                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false)) {
                             bgBlur.StartPosition = FormStartPosition.Manual;
                             bgBlur.FormBorderStyle = FormBorderStyle.None;
                             bgBlur.Opacity = .24d;
@@ -3570,11 +3533,11 @@ namespace FlowSERVER1 {
                           .ForEach(form => form.Close());
 
 
-                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 if (flowLayoutPanel1.Controls.Count > 0) {
-                    label8.Visible = false;
-                    guna2Button6.Visible = false;
+                    lblEmptyHere.Visible = false;
+                    btnGarbageImage.Visible = false;
                 }
             }
         }
@@ -3596,7 +3559,7 @@ namespace FlowSERVER1 {
               .ToList()
               .ForEach(form => form.Close());
 
-            String _currentFold = listBox1.GetItemText(listBox1.SelectedItem);
+            String _currentFold = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             _removeFoldFunc(_currentFold);
         }
 
@@ -3729,11 +3692,11 @@ namespace FlowSERVER1 {
                         panelPic_Q.Dispose();
 
                         if (flowLayoutPanel1.Controls.Count == 0) {
-                            label8.Visible = true;
-                            guna2Button6.Visible = true;
+                            lblEmptyHere.Visible = true;
+                            btnGarbageImage.Visible = true;
                         }
 
-                        label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
                 };
 
@@ -3753,7 +3716,7 @@ namespace FlowSERVER1 {
                     .ForEach(form => form.Close());
                 };
             }
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
         private void guna2Panel16_Paint(object sender, PaintEventArgs e) {
@@ -3997,7 +3960,7 @@ namespace FlowSERVER1 {
 
         private async void guna2Button4_Click(object sender, EventArgs e) {
 
-            int selectedIndex = listBox1.SelectedIndex;
+            int selectedIndex = lstFoldersPage.SelectedIndex;
 
             _TypeValues.Clear();
             _TypeValuesOthers.Clear();
@@ -4017,7 +3980,7 @@ namespace FlowSERVER1 {
                 clearRedundane();
             }
 
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
         }
 
@@ -4028,8 +3991,8 @@ namespace FlowSERVER1 {
 
         private async Task refreshHomePanels() {
 
-            guna2Button19.Visible = false;
-            guna2Button4.Visible = false;
+            btnDeleteFolder.Visible = false;
+            btnRefreshSharedFiles.Visible = false;
             flowLayoutPanel1.Controls.Clear();
 
             foreach (string tableName in Globals.publicTables) {
@@ -4051,12 +4014,12 @@ namespace FlowSERVER1 {
                 clearRedundane();
             }
 
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
         private async Task RefreshFolder() {
 
-            String _selectedFolder = listBox1.GetItemText(listBox1.SelectedItem);
+            String _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             var typesValues = new List<string>();
 
@@ -4086,7 +4049,7 @@ namespace FlowSERVER1 {
         bool _isSearched = false;
         private async void guna2TextBox5_TextChanged(object sender, EventArgs e) {
 
-            string searchText = guna2TextBox5.Text.Trim().ToLower();
+            string searchText = txtBoxSearchFile.Text.Trim().ToLower();
 
             string[] searchTerms = searchText.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -4121,7 +4084,7 @@ namespace FlowSERVER1 {
 
             if (string.IsNullOrEmpty(searchText)) {
 
-                string _selectedFolderSearch = listBox1.GetItemText(listBox1.SelectedItem);
+                string _selectedFolderSearch = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
                 if (_selectedFolderSearch == "Home") {
                     await refreshHomePanels();
                 } else if (_selectedFolderSearch == "Shared To Me") {
@@ -4138,9 +4101,9 @@ namespace FlowSERVER1 {
                 }
             }
 
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
-            if (label4.Text == "0") {
+            if (lblItemCountText.Text == "0") {
                 showRedundane();
             }
         }
@@ -4151,8 +4114,8 @@ namespace FlowSERVER1 {
 
         private async void guna2Button8_Click(object sender, EventArgs e) {
 
-            guna2Button19.Visible = false;
-            guna2Button4.Visible = false;
+            btnDeleteFolder.Visible = false;
+            btnRefreshSharedFiles.Visible = false;
             flowLayoutPanel1.Controls.Clear();
 
             foreach (string tableName in Globals.publicTables) {
@@ -4175,30 +4138,30 @@ namespace FlowSERVER1 {
             }
 
 
-            label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
         private void guna2Button9_Click_1(object sender, EventArgs e) {
             guna2Panel4.Visible = true;
-            guna2Button9.FillColor = Color.FromArgb(255,71, 19, 191);
-            guna2Button13.FillColor = Color.Transparent;
+            btnGoHomePage.FillColor = Color.FromArgb(255,71, 19, 191);
+            btnShowFolderPage.FillColor = Color.Transparent;
             panel3.SendToBack();
             panel1.BringToFront();
             label9.Visible = false;
-            listBox1.Visible = false;
-            guna2Button15.Visible = true;
+            lstFoldersPage.Visible = false;
+            btnLogout.Visible = true;
             guna2VSeparator1.BringToFront();
         }
 
         private void guna2Button13_Click(object sender, EventArgs e) {
             guna2Panel4.Visible = false;
-            guna2Button13.FillColor = Color.FromArgb(255, 71, 19, 191);
-            guna2Button9.FillColor = Color.Transparent;
+            btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
+            btnGoHomePage.FillColor = Color.Transparent;
             panel1.SendToBack();
             panel3.BringToFront();
             label9.Visible = true;
-            listBox1.Visible = true;
-            guna2Button15.Visible = false;
+            lstFoldersPage.Visible = true;
+            btnLogout.Visible = false;
             guna2VSeparator1.BringToFront();
         }
 
@@ -4227,13 +4190,13 @@ namespace FlowSERVER1 {
                     panel1.SendToBack();
 
                     HomePage.instance.label2.Text = "Item Count";
-                    HomePage.instance.label10.Text = "Upload";
-                    HomePage.instance.guna2Button2.Text = "Upload File";
-                    HomePage.instance.guna2Button12.Text = "Upload Folder";
-                    HomePage.instance.guna2Button1.Text = "Create Directory";
-                    HomePage.instance.guna2Button7.Text = "File Sharing";
-                    HomePage.instance.guna2Button7.Size = new Size(125, 47);
-                    HomePage.instance.label28.Text = "Essentials";
+                    HomePage.instance.lblUpload.Text = "Upload";
+                    HomePage.instance.btnUploadFile.Text = "Upload File";
+                    HomePage.instance.btnUploadFolder.Text = "Upload Folder";
+                    HomePage.instance.btnCreateDirectory.Text = "Create Directory";
+                    HomePage.instance.btnFileSharing.Text = "File Sharing";
+                    HomePage.instance.btnFileSharing.Size = new Size(125, 47);
+                    HomePage.instance.lblEssentials.Text = "Essentials";
 
                     String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                     String _getAuth = _getPath + "\\CUST_DATAS.txt";
@@ -4247,7 +4210,7 @@ namespace FlowSERVER1 {
                     base64EncodedImageHome.Clear();
                     base64EncodedThumbnailHome.Clear();
                     base64EncodedImageSharedOthers.Clear();
-                    HomePage.instance.listBox1.Items.Clear();
+                    HomePage.instance.lstFoldersPage.Items.Clear();
 
                     Hide();
 
@@ -4269,12 +4232,12 @@ namespace FlowSERVER1 {
         }
 
         private void Form1_DragOver(object sender, DragEventArgs e) {
-            guna2Panel2.Visible = true;
+            pnlDragAndDropUpload.Visible = true;
             e.Effect = DragDropEffects.Copy;
         }
 
         private void Form1_DragLeave(object sender, EventArgs e) {
-            guna2Panel2.Visible = false;
+            pnlDragAndDropUpload.Visible = false;
         }
 
         /// <summary>
@@ -4287,35 +4250,13 @@ namespace FlowSERVER1 {
         /// 
         private void Form1_DragDrop(object sender, DragEventArgs e) {
 
-            guna2Panel2.Visible = false;
-
-            string accountTypeStr = "";
-            int accountTypeInt = 0;
-
-            switch (label6.Text) {
-                case "20":
-                    accountTypeStr = "Basic";
-                    break;
-                case "500":
-                    accountTypeStr = "Max";
-                    break;
-                case "1000":
-                    accountTypeStr = "Express";
-                    break;
-                case "2000":
-                    accountTypeStr = "Supreme";
-                    break;
-                default:
-                    return; 
-            }
-
-            if (!int.TryParse(label6.Text, out accountTypeInt)) return; 
+            pnlDragAndDropUpload.Visible = false;
 
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return; 
 
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (files.Length + flowLayoutPanel1.Controls.Count > accountTypeInt) {
+            if (files.Length + flowLayoutPanel1.Controls.Count > Globals.uploadFileLimit[Globals.accountType]) {
                 using (Form bgBlur = new Form()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -4329,7 +4270,7 @@ namespace FlowSERVER1 {
                     bgBlur.ShowInTaskbar = false;
                     bgBlur.Show();
 
-                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(accountTypeStr)) {
+                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(Globals.accountType)) {
                         displayUpgrade.Owner = bgBlur;
                         displayUpgrade.ShowDialog();
                     }
@@ -4349,8 +4290,8 @@ namespace FlowSERVER1 {
             foreach (var selectedItems in filePathList) {
 
                 void clearRedundane() {
-                    label8.Visible = false;
-                    guna2Button6.Visible = false;
+                    lblEmptyHere.Visible = false;
+                    btnGarbageImage.Visible = false;
                 }
                     
                 getName = Path.GetFileName(selectedItems);
@@ -4359,12 +4300,12 @@ namespace FlowSERVER1 {
 
                 async Task containThumbUpload(string nameTable, string getNamePath, object keyValMain) {
 
-                    int getCurrentCount = int.Parse(label4.Text);
-                    int getLimitedValue = int.Parse(label6.Text);
+                    int getCurrentCount = int.Parse(lblItemCountText.Text);
+                    int getLimitedValue = int.Parse(lblLimitUploadText.Text);
                     int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
-                    label20.Text = calculatePercentageUsage.ToString() + "%";
+                    lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
-                    guna2ProgressBar1.Value = calculatePercentageUsage;
+                    progressBarUsageStorage.Value = calculatePercentageUsage;
 
                     try {
 
@@ -4409,12 +4350,12 @@ namespace FlowSERVER1 {
 
                         async Task startSending(string setValue) {
 
-                            int getCurrentCount = int.Parse(label4.Text);
-                            int getLimitedValue = int.Parse(label6.Text);
+                            int getCurrentCount = int.Parse(lblItemCountText.Text);
+                            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
                             int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
-                            label20.Text = calculatePercentageUsage.ToString() + "%";
+                            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
-                            guna2ProgressBar1.Value = calculatePercentageUsage;
+                            progressBarUsageStorage.Value = calculatePercentageUsage;
 
                             string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
 
@@ -4439,8 +4380,8 @@ namespace FlowSERVER1 {
 
                         var panelTxt = new Guna2Panel() {
                             Name = panName + itemCurr,
-                            Width = 240,
-                            Height = 262,
+                            Width = 200,
+                            Height = 222,
                             BorderColor = BorderColor,
                             BorderThickness = 1,
                             BorderRadius = 8,
@@ -4452,15 +4393,15 @@ namespace FlowSERVER1 {
                         flowLayoutPanel1.Controls.Add(panelTxt);
                         var mainPanelTxt = (Guna2Panel)panelTxt;
 
-                        var textboxPic = new Guna2PictureBox();
-                        mainPanelTxt.Controls.Add(textboxPic);
-                        textboxPic.Name = "TxtBox" + itemCurr;
-                        textboxPic.Width = 240;
-                        textboxPic.Height = 164;
-                        textboxPic.BorderRadius = 8;
-                        textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
-                        textboxPic.Enabled = true;
-                        textboxPic.Visible = true;
+                        Label dateLabTxt = new Label();
+                        mainPanelTxt.Controls.Add(dateLabTxt);
+                        dateLabTxt.Name = "LabTxtUp" + itemCurr;
+                        dateLabTxt.Font = DateLabelFont;
+                        dateLabTxt.ForeColor = DarkGrayColor;
+                        dateLabTxt.Visible = true;
+                        dateLabTxt.Enabled = true;
+                        dateLabTxt.Location = DateLabelLoc;
+                        dateLabTxt.Text = varDate;
 
                         Label titleLab = new Label();
                         mainPanelTxt.Controls.Add(titleLab);
@@ -4470,23 +4411,48 @@ namespace FlowSERVER1 {
                         titleLab.Visible = true;
                         titleLab.Enabled = true;
                         titleLab.Location = TitleLabelLoc;
-                        titleLab.Width = 220;
-                        titleLab.Height = 30;
+                        titleLab.AutoEllipsis = true;
+                        titleLab.Width = 160;
+                        titleLab.Height = 20;
                         titleLab.Text = getName;
+
+                        var textboxPic = new Guna2PictureBox();
+                        mainPanelTxt.Controls.Add(textboxPic);
+                        textboxPic.Name = "TxtBox" + itemCurr;
+                        textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
+                        textboxPic.BorderRadius = 8;
+                        textboxPic.Width = 190;
+                        textboxPic.Height = 145;
+                        textboxPic.Visible = true;
+
+                        textboxPic.Anchor = AnchorStyles.None;
+
+                        int picMain_Q_x = (panelTxt.Width - textboxPic.Width) / 2;
+
+                        textboxPic.Location = new Point(picMain_Q_x, 10);
 
                         Guna2Button remButTxt = new Guna2Button();
                         mainPanelTxt.Controls.Add(remButTxt);
                         remButTxt.Name = "RemTxtBut" + itemCurr;
-                        remButTxt.Width = 39;
-                        remButTxt.Height = 35;
-                        remButTxt.FillColor = FillColor;
+                        remButTxt.Width = 29;
+                        remButTxt.Height = 26;
+                        remButTxt.ImageOffset = GarbageOffset;
+                        remButTxt.FillColor = TransparentColor;
                         remButTxt.BorderRadius = 6;
                         remButTxt.BorderThickness = 1;
-                        remButTxt.BorderColor = BorderColor2;
+                        remButTxt.BorderColor = TransparentColor;
                         remButTxt.Image = GarbageImage;
                         remButTxt.Visible = true;
                         remButTxt.Location = GarbageButtonLoc;
-                        remButTxt.BringToFront();
+
+                        remButTxt.Click += (sender_im, e_im) => {
+
+                            lblFileNameOnPanel.Text = titleLab.Text;
+                            lblFileTableName.Text = nameTable;
+                            lblFilePanelName.Text = mainPanelTxt.Name;
+                            pnlFileOptions.Visible = true;
+
+                        };
 
                         textboxPic.MouseHover += (_senderM, _ev) => {
                             panelTxt.ShadowDecoration.Enabled = true;
@@ -4714,34 +4680,7 @@ namespace FlowSERVER1 {
                             clearRedundane();
                         }
 
-                        remButTxt.Click += (sender_tx, e_tx) => {
-                            var titleFile = titleLab.Text;
-                            DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (verifyDialog == DialogResult.Yes) {
-                                //deletionMethod(titleFile, nameTable);
-                                panelTxt.Dispose();
-                                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-                            }
-
-                            if (flowLayoutPanel1.Controls.Count == 0) {
-                                label8.Visible = true;
-                                guna2Button6.Visible = true;
-                            }
-                        };
-
-                        Label dateLabTxt = new Label();
-                        mainPanelTxt.Controls.Add(dateLabTxt);
-                        dateLabTxt.Name = "LabTxtUp" + itemCurr;
-                        dateLabTxt.Font = DateLabelFont;
-                        dateLabTxt.ForeColor = DarkGrayColor;
-                        dateLabTxt.Visible = true;
-                        dateLabTxt.Enabled = true;
-                        dateLabTxt.Location = DateLabelLoc;
-                        dateLabTxt.Text = varDate;
-
-                    }
-                    else {
+                    } else {
                         MessageBox.Show("File is too large, max file size is 1.5GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
@@ -4873,7 +4812,7 @@ namespace FlowSERVER1 {
 
                 searchCurr = curr;
 
-                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
             }
             
@@ -4881,7 +4820,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button3_Click_1(object sender, EventArgs e) {
 
-            RenameFolderFileForm renameFolderForm = new RenameFolderFileForm(listBox1.GetItemText(listBox1.SelectedItem));
+            RenameFolderFileForm renameFolderForm = new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
             renameFolderForm.Show();
         }
 
@@ -4900,45 +4839,45 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button18_Click(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".png,.jpeg,.jpg";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".png,.jpeg,.jpg";
         }
 
         private void guna2Button17_Click_2(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".txt";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".txt";
         }
 
         private void guna2Button22_Click_1(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".doc,docx";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".doc,docx";
 
         }
 
         private void guna2Button20_Click(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".mp3,.wav";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".mp3,.wav";
 
         }
 
         private void guna2Button21_Click(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".xlsx,xls";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".xlsx,xls";
         }
 
         private void guna2Button23_Click(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".csv";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".csv";
 
         }
 
         private void guna2Button24_Click(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
-            guna2TextBox5.Text = ".pdf";
+            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = ".pdf";
         }
 
         private void guna2Button25_Click(object sender, EventArgs e) {
-            guna2TextBox5.Text = String.Empty;
+            txtBoxSearchFile.Text = String.Empty;
         }
 
         private void guna2Panel2_Paint_1(object sender, PaintEventArgs e) {
@@ -5013,12 +4952,12 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private async void guna2Button27_Click(object sender, EventArgs e) {
 
-            if (accountTypeString == "Max" || accountTypeString == "Express" || accountTypeString == "Supreme") {
-                string folderTitleGet = EncryptionModel.Encrypt(listBox1.GetItemText(listBox1.SelectedItem));
+            if (Globals.accountType == "Max" || Globals.accountType == "Express" || Globals.accountType == "Supreme") {
+                string folderTitleGet = EncryptionModel.Encrypt(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
                 await _downloadUserFolder(folderTitleGet);
             }
             else {
-                LimitedFolderAlert upgradeAccountFolderFORM = new LimitedFolderAlert(accountTypeString, "Please upgrade your account \r\nplan to download folder.", false);
+                LimitedFolderAlert upgradeAccountFolderFORM = new LimitedFolderAlert(Globals.accountType, "Please upgrade your account \r\nplan to download folder.", false);
                 upgradeAccountFolderFORM.Show();
             }
         }
@@ -5029,7 +4968,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button28_Click(object sender, EventArgs e) {
-            guna2Panel3.Visible = false;
+            pnlFileOptions.Visible = false;
         }
 
         /// <summary>
@@ -5041,11 +4980,11 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button26_Click_1(object sender, EventArgs e) {
 
-            string titleFile = label27.Text;
-            string tableName = label31.Text;
-            string panelName = label29.Text;
-            string sharedToName = label33.Text;
-            string dirName = label32.Text;
+            string titleFile = lblFileNameOnPanel.Text;
+            string tableName = lblFileTableName.Text;
+            string panelName = lblFilePanelName.Text;
+            string sharedToName = lblSharedToName.Text;
+            string dirName = lblSelectedDirName.Text;
 
             DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (verifyDialog == DialogResult.Yes) {
@@ -5099,32 +5038,32 @@ namespace FlowSERVER1 {
                     myPanel.Dispose();
                 }
 
-                label4.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 if (flowLayoutPanel1.Controls.Count == 0) {
-                    label8.Visible = true;
-                    guna2Button6.Visible = true;
+                    lblEmptyHere.Visible = true;
+                    btnGarbageImage.Visible = true;
                 }
 
-                int getCurrentCount = int.Parse(label4.Text);
-                int getLimitedValue = int.Parse(label6.Text);
+                int getCurrentCount = int.Parse(lblItemCountText.Text);
+                int getLimitedValue = int.Parse(lblLimitUploadText.Text);
                 int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-                label20.Text = calculatePercentageUsage.ToString() + "%";
+                lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
-                guna2ProgressBar1.Value = calculatePercentageUsage;
+                progressBarUsageStorage.Value = calculatePercentageUsage;
 
-                guna2Panel3.Visible = false;
+                pnlFileOptions.Visible = false;
 
             }
         }
 
         private void guna2Button30_Click(object sender, EventArgs e) {
 
-            string titleFile = label27.Text;
-            string tableName = label31.Text;
-            string panelName = label29.Text;
-            string sharedToName = label33.Text;
-            string dirName = label32.Text;
+            string titleFile = lblFileNameOnPanel.Text;
+            string tableName = lblFileTableName.Text;
+            string panelName = lblFilePanelName.Text;
+            string sharedToName = lblSharedToName.Text;
+            string dirName = lblSelectedDirName.Text;
 
             RenameFileForm renameFileFORM = new RenameFileForm(titleFile,tableName,panelName, dirName,sharedToName);
             renameFileFORM.Show();
@@ -5132,9 +5071,9 @@ namespace FlowSERVER1 {
 
         private void guna2Button32_Click(object sender, EventArgs e) {
 
-            string titleFile = label27.Text;
-            string tableName = label31.Text;
-            string dirName = label32.Text;
+            string titleFile = lblFileNameOnPanel.Text;
+            string tableName = lblFileTableName.Text;
+            string dirName = lblSelectedDirName.Text;
 
             if (tableName == "folder_upload_info") {
                 SaverModel.SaveSelectedFile(titleFile, "folder_upload_info", dirName);
@@ -5152,8 +5091,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button29_Click(object sender, EventArgs e) {
 
-            string titleFile = label27.Text;
-            string dirName = label32.Text;
+            string titleFile = lblFileNameOnPanel.Text;
+            string dirName = lblSelectedDirName.Text;
 
             string fileExtensions = titleFile.Substring(titleFile.Length-4);
 

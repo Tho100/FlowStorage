@@ -80,18 +80,18 @@ namespace FlowSERVER1.Authentication {
                     }
                 }
 
-                accessHomePage.listBox1.Items.AddRange(itemsFolder.Concat(updatesTitle).ToArray());
-                accessHomePage.listBox1.SelectedIndex = 0;
-                accessHomePage.label4.Text = accessHomePage.flowLayoutPanel1.Controls.Count.ToString();
+                accessHomePage.lstFoldersPage.Items.AddRange(itemsFolder.Concat(updatesTitle).ToArray());
+                accessHomePage.lstFoldersPage.SelectedIndex = 0;
+                accessHomePage.lblItemCountText.Text = accessHomePage.flowLayoutPanel1.Controls.Count.ToString();
 
                 buildGreetingLabel();
                 await getAccountTypeNumber();
                 await getCurrentLang();
 
-                if (int.TryParse(accessHomePage.label4.Text, out int getCurrentCount) && int.TryParse(accessHomePage.label6.Text, out int getLimitedValue)) {
+                if (int.TryParse(accessHomePage.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(accessHomePage.lblLimitUploadText.Text, out int getLimitedValue)) {
                     int calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
-                    accessHomePage.label20.Text = calculatePercentageUsage.ToString() + "%";
-                    accessHomePage.guna2ProgressBar1.Value = calculatePercentageUsage;
+                    accessHomePage.lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
+                    accessHomePage.progressBarUsageStorage.Value = calculatePercentageUsage;
                 }
 
                 guna2Panel7.Visible = false;
@@ -155,22 +155,22 @@ namespace FlowSERVER1.Authentication {
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
-                accessHomePage.label6.Text = accountType;
+                accessHomePage.lblLimitUploadText.Text = accountType;
             }
 
-            accessHomePage.accountTypeString = accountType;
+            Globals.accountType = accountType;
 
             if (accountType == "Basic") {
-                accessHomePage.label6.Text = "20";
+                accessHomePage.lblLimitUploadText.Text = "20";
             }
             else if (accountType == "Max") {
-                accessHomePage.label6.Text = "500";
+                accessHomePage.lblLimitUploadText.Text = "500";
             }
             else if (accountType == "Express") {
-                accessHomePage.label6.Text = "1000";
+                accessHomePage.lblLimitUploadText.Text = "1000";
             }
             else if (accountType == "Supreme") {
-                accessHomePage.label6.Text = "2000";
+                accessHomePage.lblLimitUploadText.Text = "2000";
             }
 
             return accountType;
@@ -238,113 +238,113 @@ namespace FlowSERVER1.Authentication {
             if (_custLang == "MY") {
 
                 Form_1.label2.Text = "Kiraan Item";
-                Form_1.label10.Text = "Muat-Naik";
-                Form_1.guna2Button2.Text = "Muat-Naik Fail";
-                Form_1.guna2Button12.Text = "Muat-Naik Folder";
-                Form_1.guna2Button1.Text = "Buat Direktori";
-                Form_1.guna2Button7.Text = "Perkongsian Fail";
-                Form_1.guna2Button7.Size = new Size(159, 47);
-                Form_1.label28.Text = "Kepentingan";
+                Form_1.lblUpload.Text = "Muat-Naik";
+                Form_1.btnUploadFile.Text = "Muat-Naik Fail";
+                Form_1.btnUploadFolder.Text = "Muat-Naik Folder";
+                Form_1.btnCreateDirectory.Text = "Buat Direktori";
+                Form_1.btnFileSharing.Text = "Perkongsian Fail";
+                Form_1.btnFileSharing.Size = new Size(159, 47);
+                Form_1.lblEssentials.Text = "Kepentingan";
             }
 
             if (_custLang == "US") {
 
                 Form_1.label2.Text = "Item Count";
-                Form_1.label10.Text = "Upload";
-                Form_1.guna2Button2.Text = "Upload File";
-                Form_1.guna2Button12.Text = "Upload Folder";
-                Form_1.guna2Button1.Text = "Create Directory";
-                Form_1.guna2Button7.Text = "File Sharing";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "Essentials";
+                Form_1.lblUpload.Text = "Upload";
+                Form_1.btnUploadFile.Text = "Upload File";
+                Form_1.btnUploadFolder.Text = "Upload Folder";
+                Form_1.btnCreateDirectory.Text = "Create Directory";
+                Form_1.btnFileSharing.Text = "File Sharing";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "Essentials";
             }
 
             if (_custLang == "GER") {
-                Form_1.label10.Text = "Hochladen";
+                Form_1.lblUpload.Text = "Hochladen";
                 Form_1.label2.Text = "Stückzahl";
-                Form_1.guna2Button2.Text = "Datei hochladen";
-                Form_1.guna2Button12.Text = "Ordner hochladen";
-                Form_1.guna2Button1.Text = "Verzeichnis erstellen";
-                Form_1.guna2Button7.Text = "Datenaustausch";
-                Form_1.guna2Button7.Size = new Size(159, 47);
-                Form_1.label28.Text = "Essentials";
+                Form_1.btnUploadFile.Text = "Datei hochladen";
+                Form_1.btnUploadFolder.Text = "Ordner hochladen";
+                Form_1.btnCreateDirectory.Text = "Verzeichnis erstellen";
+                Form_1.btnFileSharing.Text = "Datenaustausch";
+                Form_1.btnFileSharing.Size = new Size(159, 47);
+                Form_1.lblEssentials.Text = "Essentials";
             }
 
             if (_custLang == "JAP") {
-                Form_1.label10.Text = "アップロード";
+                Form_1.lblUpload.Text = "アップロード";
                 Form_1.label2.Text = "アイテム数";
-                Form_1.guna2Button2.Text = "ファイルをアップロードする";
-                Form_1.guna2Button12.Text = "フォルダのアップロード";
-                Form_1.guna2Button1.Text = "ディレクトリの作成";
-                Form_1.guna2Button7.Text = "ファイル共有";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "必需品";
+                Form_1.btnUploadFile.Text = "ファイルをアップロードする";
+                Form_1.btnUploadFolder.Text = "フォルダのアップロード";
+                Form_1.btnCreateDirectory.Text = "ディレクトリの作成";
+                Form_1.btnFileSharing.Text = "ファイル共有";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "必需品";
             }
 
             if (_custLang == "ESP") {
-                Form_1.label10.Text = "Subir";
+                Form_1.lblUpload.Text = "Subir";
                 Form_1.label2.Text = "Recuento de elementos";
-                Form_1.guna2Button2.Text = "Subir archivo";
-                Form_1.guna2Button12.Text = "Cargar carpeta";
-                Form_1.guna2Button1.Text = "Crear directorio";
-                Form_1.guna2Button7.Text = "Compartición de archivos";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "Esenciales";
+                Form_1.btnUploadFile.Text = "Subir archivo";
+                Form_1.btnUploadFolder.Text = "Cargar carpeta";
+                Form_1.btnCreateDirectory.Text = "Crear directorio";
+                Form_1.btnFileSharing.Text = "Compartición de archivos";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "Esenciales";
             }
 
             if (_custLang == "FRE") {
-                Form_1.label10.Text = "Télécharger";
+                Form_1.lblUpload.Text = "Télécharger";
                 Form_1.label2.Text = "Nombre d'éléments";
-                Form_1.guna2Button2.Text = "Téléverser un fichier";
-                Form_1.guna2Button12.Text = "Télécharger le dossier";
-                Form_1.guna2Button1.Text = "Créer le répertoire";
-                Form_1.guna2Button7.Text = "Partage de fichiers";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "Essentiel";
+                Form_1.btnUploadFile.Text = "Téléverser un fichier";
+                Form_1.btnUploadFolder.Text = "Télécharger le dossier";
+                Form_1.btnCreateDirectory.Text = "Créer le répertoire";
+                Form_1.btnFileSharing.Text = "Partage de fichiers";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "Essentiel";
             }
 
             if (_custLang == "POR") {
-                Form_1.label10.Text = "Carregar";
+                Form_1.lblUpload.Text = "Carregar";
                 Form_1.label2.Text = "Contagem de itens";
-                Form_1.guna2Button2.Text = "Subir arquivo";
-                Form_1.guna2Button12.Text = "Carregar Pasta";
-                Form_1.guna2Button1.Text = "Criar diretório";
-                Form_1.guna2Button7.Text = "Compartilhamento de arquivos";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "Essenciais";
+                Form_1.btnUploadFile.Text = "Subir arquivo";
+                Form_1.btnUploadFolder.Text = "Carregar Pasta";
+                Form_1.btnCreateDirectory.Text = "Criar diretório";
+                Form_1.btnFileSharing.Text = "Compartilhamento de arquivos";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "Essenciais";
             }
 
             if (_custLang == "CHI") {
-                Form_1.label10.Text = "上传";
+                Form_1.lblUpload.Text = "上传";
                 Form_1.label2.Text = "物品数量";
-                Form_1.guna2Button2.Text = "上传文件";
-                Form_1.guna2Button12.Text = "上传文件夹";
-                Form_1.guna2Button1.Text = "创建目录";
-                Form_1.guna2Button7.Text = "文件共享";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "要点";
+                Form_1.btnUploadFile.Text = "上传文件";
+                Form_1.btnUploadFolder.Text = "上传文件夹";
+                Form_1.btnCreateDirectory.Text = "创建目录";
+                Form_1.btnFileSharing.Text = "文件共享";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "要点";
             }
 
             if (_custLang == "RUS") {
-                Form_1.label10.Text = "Загрузить";
+                Form_1.lblUpload.Text = "Загрузить";
                 Form_1.label2.Text = "Количество предметов";
-                Form_1.guna2Button2.Text = "Загрузить файл";
-                Form_1.guna2Button12.Text = "Загрузить папку";
-                Form_1.guna2Button1.Text = "Создать каталог";
-                Form_1.guna2Button7.Text = "Общий доступ к файлам";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "Основные";
+                Form_1.btnUploadFile.Text = "Загрузить файл";
+                Form_1.btnUploadFolder.Text = "Загрузить папку";
+                Form_1.btnCreateDirectory.Text = "Создать каталог";
+                Form_1.btnFileSharing.Text = "Общий доступ к файлам";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "Основные";
             }
 
             if (_custLang == "DUT") {
-                Form_1.label10.Text = "Uploaden";
+                Form_1.lblUpload.Text = "Uploaden";
                 Form_1.label2.Text = "Aantal artikelen";
-                Form_1.guna2Button2.Text = "Bestand uploaden";
-                Form_1.guna2Button12.Text = "Map uploaden";
-                Form_1.guna2Button1.Text = "Directory aanmaken";
-                Form_1.guna2Button7.Text = "Bestanden delen";
-                Form_1.guna2Button7.Size = new Size(125, 47);
-                Form_1.label28.Text = "Essentials";
+                Form_1.btnUploadFile.Text = "Bestand uploaden";
+                Form_1.btnUploadFolder.Text = "Map uploaden";
+                Form_1.btnCreateDirectory.Text = "Directory aanmaken";
+                Form_1.btnFileSharing.Text = "Bestanden delen";
+                Form_1.btnFileSharing.Size = new Size(125, 47);
+                Form_1.lblEssentials.Text = "Essentials";
             }
         }
 
@@ -468,8 +468,8 @@ namespace FlowSERVER1.Authentication {
                     flowlayout.Controls.Clear();
 
                     if (flowlayout.Controls.Count == 0) {
-                        HomePage.instance.label8.Visible = true;
-                        HomePage.instance.guna2Button6.Visible = true;
+                        HomePage.instance.lblEmptyHere.Visible = true;
+                        HomePage.instance.btnGarbageImage.Visible = true;
                     }
 
                     Globals.custUsername = _getUser;
@@ -482,12 +482,12 @@ namespace FlowSERVER1.Authentication {
                     setupAutoLogin(_getUser);
                     buildGreetingLabel();
 
-                    accessHomePage.label20.Text = "0%";
-                    accessHomePage.guna2ProgressBar1.Value = 0;
+                    accessHomePage.lblUsagePercentage.Text = "0%";
+                    accessHomePage.progressBarUsageStorage.Value = 0;
 
                     string[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
-                    accessHomePage.listBox1.Items.AddRange(itemsFolder);
-                    accessHomePage.listBox1.SelectedIndex = 0;
+                    accessHomePage.lstFoldersPage.Items.AddRange(itemsFolder);
+                    accessHomePage.lstFoldersPage.SelectedIndex = 0;
 
                     showHomePage();
                 }
@@ -583,7 +583,7 @@ namespace FlowSERVER1.Authentication {
                 greeting = "Good Night, " + Globals.custUsername;
             }
 
-            accessHomePage.label1.Text = greeting;
+            accessHomePage.lblGreetingText.Text = greeting;
 
         }
 
@@ -633,8 +633,7 @@ namespace FlowSERVER1.Authentication {
             label30.Visible = false;
             guna2Panel7.Visible = false;
 
-            accessHomePage.label6.Text = "20";
-            accessHomePage.accountTypeString = "Basic";
+            accessHomePage.lblLimitUploadText.Text = "20";
 
             guna2TextBox1.Text = String.Empty;
             guna2TextBox2.Text = String.Empty;

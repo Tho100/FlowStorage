@@ -56,9 +56,9 @@ namespace FlowSERVER1 {
 
                     await command.ExecuteNonQueryAsync();
 
-                    int indexOld = HomePage.instance.listBox1.FindString(oldFolderName);
+                    int indexOld = HomePage.instance.lstFoldersPage.FindString(oldFolderName);
                     if(indexOld != ListBox.NoMatches) {
-                        HomePage.instance.listBox1.Items[indexOld] = newFolderName;
+                        HomePage.instance.lstFoldersPage.Items[indexOld] = newFolderName;
                     }
 
                     label5.Visible = true;
@@ -88,7 +88,7 @@ namespace FlowSERVER1 {
                 return;
             }
 
-            if (HomePage.instance.listBox1.Items.Contains(newFolderName)) {
+            if (HomePage.instance.lstFoldersPage.Items.Contains(newFolderName)) {
                 label5.Visible = true;
                 label5.Text = "Folder with this name already exists.";
                 return;

@@ -41,5 +41,29 @@ namespace FlowSERVER1 {
             { "file_info_directory", null }
         };
 
+        static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
+        {
+            { "Basic", 25 },
+            { "Max", 500 },
+            { "Express", 1000 },
+            { "Supreme", 2000 },
+        };
+
+        static public readonly Dictionary<string, int> uploadDirectoryLimit = new Dictionary<string, int>
+        {
+            { "Basic", 2 },
+            { "Max", 2 },
+            { "Express", 2},
+            { "Supreme", 5},
+        };
+
+        static public readonly Dictionary<string, int> uploadFolderLimit = new Dictionary<string, int>
+       {
+            { "Basic", 3 },
+            { "Max", 5 },
+            { "Express", 10 },
+            { "Supreme", 20 },
+        };
+
     }
 }

@@ -284,11 +284,11 @@ namespace FlowSERVER1 {
                         foundControl.Dispose();
                     }
                 
-                    HomePage.instance.label4.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
 
                     if(HomePage.instance.flowLayoutPanel1.Controls.Count == 0) {
-                        HomePage.instance.guna2Button6.Visible = true;
-                        HomePage.instance.label8.Visible = true;
+                        HomePage.instance.btnGarbageImage.Visible = true;
+                        HomePage.instance.lblEmptyHere.Visible = true;
                     }
 
                 } else if (TableName == "upload_info_directory") {

@@ -99,7 +99,7 @@ namespace FlowSERVER1 {
                             this.Close();
 
                             Application.OpenForms["remAccFORM"].Close();
-                            HomePage.instance.listBox1.Items.Clear();
+                            HomePage.instance.lstFoldersPage.Items.Clear();
                         }
                     } else {
                         label1.Visible = true;

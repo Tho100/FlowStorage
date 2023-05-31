@@ -64,8 +64,8 @@ namespace FlowSERVER1
         }
 
         public void clearRedundane() {
-            HomePage.instance.guna2Button6.Visible = false;
-            HomePage.instance.label8.Visible = false;
+            HomePage.instance.btnGarbageImage.Visible = false;
+            HomePage.instance.lblEmptyHere.Visible = false;
         }
         
 
@@ -192,11 +192,11 @@ namespace FlowSERVER1
 
 
                         if (HomePage.instance.flowLayoutPanel1.Controls.Count == 0) {
-                            HomePage.instance.label8.Visible = true;
-                            HomePage.instance.guna2Button6.Visible = true;
+                            HomePage.instance.lblEmptyHere.Visible = true;
+                            HomePage.instance.btnGarbageImage.Visible = true;
                         }
 
-                        HomePage.instance.label4.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                        HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
                     }
 
                 };
@@ -255,74 +255,49 @@ namespace FlowSERVER1
         private int value_Dir = 0;
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
-            string filesCount = HomePage.instance.label4.Text;
+            string filesCount = HomePage.instance.lblItemCountText.Text;
             int totalFiles = int.Parse(filesCount);
 
             string username = Globals.custUsername;
-
-            string accType = "";
-            using (var command = new MySqlCommand("SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username", con)) {
-                command.Parameters.AddWithValue("@username", username);
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        accType = reader.GetString(0);
-                    }
-                }
-            }
 
             string dirTitle = guna2TextBox1.Text.Trim();
             if (!String.IsNullOrEmpty(dirTitle)) {
 
                 try {
+
                     var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
                     countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirTitle));
                     int countSameDir = Convert.ToInt32(countSameDirCommand.ExecuteScalar());
 
                     if (countSameDir < 1) {
+
                         var countTotalDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username", con);
                         countTotalDirCommand.Parameters.AddWithValue("@username", username);
                         int countTotalDir = Convert.ToInt32(countTotalDirCommand.ExecuteScalar());
 
-                        int maxFilesCount = 0;
-                        int maxDirCount = 0;
-
-                        switch (accType) {
-                            case "Supreme":
-                                maxFilesCount = 2000;
-                                maxDirCount = 5;
-                                break;
-                            case "Basic":
-                                maxFilesCount = 20;
-                                maxDirCount = 2;
-                                break;
-                            case "Max":
-                                maxFilesCount = 500;
-                                maxDirCount = 2;
-                                break;
-                            case "Express":
-                                maxFilesCount = 1000;
-                                maxDirCount = 2;
-                                break;
-                        }
+                        int maxFilesCount = Globals.uploadFileLimit[Globals.accountType];
+                        int maxDirCount = Globals.uploadDirectoryLimit[Globals.accountType];
 
                         if (totalFiles != maxFilesCount && countTotalDir != maxDirCount) {
+
                             value_Dir++;
 
-                            if( (string) HomePage.instance.listBox1.Items[HomePage.instance.listBox1.SelectedIndex] != "Home") {
+                            if( (string) HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
                                 MessageBox.Show("You can only create a directory on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                             } else {
 
                                 generateDirectory(value_Dir, dirTitle);
-                                HomePage.instance.label4.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                                HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con);
-                                insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(dirTitle));
-                                insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
-                                insertValuesCommand.ExecuteNonQuery();
+                                using (var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con)) {
+                                    insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(dirTitle));
+                                    insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
+                                    await insertValuesCommand.ExecuteNonQueryAsync();
+                                }
                             }
                         }
                         else {
-                            DisplayErrorUpgrade(accType);
+                            DisplayErrorUpgrade(Globals.accountType);
                         }
                     }
                     else {
