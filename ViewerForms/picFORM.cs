@@ -49,19 +49,19 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
+            this.label1.Text = title;
+            this.TableName = _TableName;
+            this.Directoryname = _DirectoryName;
+            this.IsFromShared = _IsFromShared;
+            this.IsFromSharing = _isFromSharing;
+            this.label7.Text = $"({width}x{height})";
+
             var setupImage = new Bitmap(userImage);
 
-            defaultImage = setupImage;
-            filteredImage = new Bitmap(defaultImage);
+            this.defaultImage = setupImage;
+            this.filteredImage = new Bitmap(defaultImage);
 
             guna2PictureBox1.Image = setupImage;
-
-            label1.Text = title;
-            TableName = _TableName;
-            Directoryname = _DirectoryName;
-            IsFromShared = _IsFromShared;
-            IsFromSharing = _isFromSharing;
-            label7.Text = $"({width}x{height})";
 
             if (_isShared == true) {
                 _getName = _UploaderName.Replace("Shared", "");
@@ -465,6 +465,10 @@ namespace FlowSERVER1 {
                 }
             }
             applyFilters();
+        }
+
+        private void guna2Button11_Click_1(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

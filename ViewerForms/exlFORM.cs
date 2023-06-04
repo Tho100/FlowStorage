@@ -58,10 +58,11 @@ namespace FlowSERVER1 {
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
             instance = this;
-            label1.Text = titleName;
-            DirectoryName = _DirectoryName;
-            TableName = _TableName;
-            _isFromShared = isFromShared;
+
+            this.label1.Text = titleName;
+            this.DirectoryName = _DirectoryName;
+            this.TableName = _TableName;
+            this._isFromShared = isFromShared;
 
             if (_isShared == true) {
 

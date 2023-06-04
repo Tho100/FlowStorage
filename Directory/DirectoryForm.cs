@@ -77,9 +77,11 @@ namespace FlowSERVER1
         public DirectoryForm(String sendTitle_)
         {
             InitializeComponent();
+
             instance = this;
+
             this.Text = $"{sendTitle_} (Directory)";
-            lblDirectoryName.Text = sendTitle_;
+            this.lblDirectoryName.Text = sendTitle_;
 
             Dictionary<string, (string, string)> fileExtensions = new Dictionary<string, (string, string)> {
                 { ".png", ("imgFilePng", "file_info") },
@@ -138,12 +140,10 @@ namespace FlowSERVER1
             }
 
             if (flowLayoutPanel1.Controls.Count == 0) {
-                label8.Visible = true;
-                guna2Button6.Visible = true;
+                showRedundane();
             }
             else {
-                label8.Visible = false;
-                guna2Button6.Visible = false;
+                clearRedundane();
             }
         }
 
@@ -339,7 +339,7 @@ namespace FlowSERVER1
                     if (_extTypes == ".py") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                     }
-                    else if (_extTypes == ".txt") {
+                    else if (_extTypes == ".txt" || _extTypes == ".md") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                     }
                     else if (_extTypes == ".html") {
@@ -598,7 +598,7 @@ namespace FlowSERVER1
             var form1 = HomePage.instance;
 
             var open = new OpenFileDialog {
-                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
+                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
                 Multiselect = true
             };
 
@@ -826,16 +826,16 @@ namespace FlowSERVER1
 
                                     var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                                     if (_extTypes == ".py") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;//Image.FromFile(@"C:\Users\USER\Downloads\icons8-python-file-48.png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                                     }
-                                    else if (_extTypes == ".txt") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;//Image.FromFile(@"C:\users\USER\downloads\gallery\icons8-txt-48.png");
+                                    else if (_extTypes == ".txt" || _extTypes == ".md") {
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                                     }
                                     else if (_extTypes == ".html") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-html-filetype-48 (1).png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
                                     }
                                     else if (_extTypes == ".css") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-css-filetype-48 (1).png");
+                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
                                     }
                                     else if (_extTypes == ".js") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;

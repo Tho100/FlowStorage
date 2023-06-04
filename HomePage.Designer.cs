@@ -730,6 +730,7 @@
             this.label25.Size = new System.Drawing.Size(183, 64);
             this.label25.TabIndex = 42;
             this.label25.Text = "Drag and Drop \r\n  upload here";
+            this.label25.Click += new System.EventHandler(this.label25_Click);
             // 
             // guna2Panel1
             // 

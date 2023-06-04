@@ -37,14 +37,14 @@ namespace FlowSERVER1 {
         public audFORM(String titleName,String _TableName,String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
-            String _getName = "";
+            string _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            label1.Text = titleName;
-            _TabName = _TableName;
-            _DirName = _DirectoryName;
-            isFromShared = _isFromShared;
-            IsFromSharing = _isFromSharing;
+            this.label1.Text = titleName;
+            this._TabName = _TableName;
+            this._DirName = _DirectoryName;
+            this.isFromShared = _isFromShared;
+            this.IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
 

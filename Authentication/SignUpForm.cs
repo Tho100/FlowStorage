@@ -365,10 +365,10 @@ namespace FlowSERVER1.Authentication {
 
                 Control flowlayout = accessHomePage.flowLayoutPanel1;
 
-                string _getUser = guna2TextBox1.Text;
-                string _getPass = guna2TextBox2.Text;
-                string _getEmail = guna2TextBox3.Text;
-                String _getPin = guna2TextBox4.Text;
+                string _getUser = txtBoxUsernameField.Text;
+                string _getEmail = txtBoxEmailField.Text;
+                string _getPass = txtBoxAuth0Field.Text;
+                string _getPin = txtBoxAuth1Field.Text;
 
                 List<string> existsInfosMail = new List<string>();
                 List<string> existsInfosUser = new List<string>();
@@ -635,10 +635,10 @@ namespace FlowSERVER1.Authentication {
 
             accessHomePage.lblLimitUploadText.Text = "20";
 
-            guna2TextBox1.Text = String.Empty;
-            guna2TextBox2.Text = String.Empty;
-            guna2TextBox3.Text = String.Empty;
-            guna2TextBox4.Text = String.Empty;
+            txtBoxUsernameField.Text = String.Empty;
+            txtBoxAuth0Field.Text = String.Empty;
+            txtBoxEmailField.Text = String.Empty;
+            txtBoxAuth1Field.Text = String.Empty;
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {

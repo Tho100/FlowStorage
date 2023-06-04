@@ -12,8 +12,8 @@ namespace FlowSERVER1 {
     public partial class UsernameUpdatedAlert : Form {
         public UsernameUpdatedAlert(String _newUsername, String _oldUsername) {
             InitializeComponent();
-            label1.Text = _newUsername;
-            label3.Text = _oldUsername;
+            this.label1.Text = _newUsername;
+            this.label3.Text = _oldUsername;
             SettingsForm.instance.label5.Text = _newUsername;
         }
 

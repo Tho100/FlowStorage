@@ -719,6 +719,7 @@
             this.guna2Button11.Name = "guna2Button11";
             this.guna2Button11.Size = new System.Drawing.Size(38, 31);
             this.guna2Button11.TabIndex = 98;
+            this.guna2Button11.Click += new System.EventHandler(this.guna2Button11_Click_1);
             // 
             // picFORM
             // 

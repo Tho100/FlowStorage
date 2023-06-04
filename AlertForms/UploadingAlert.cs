@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
 
         public static UploadingAlert instance;
 
-        private MySqlConnection con = ConnectionModel.con;
+        private readonly MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
         private string UploaderName;
@@ -42,15 +42,18 @@ namespace FlowSERVER1 {
         private int progressValue = 0;
 
         public UploadingAlert(String _fileName,String _uploaderName,String _tableName,String _controlName,String _dirName, long _fileSize = 0) {
+
             InitializeComponent();
+
             instance = this;
-            label1.Text = _fileName;
-            UploaderName = _uploaderName;
-            ControlName = _controlName;
-            TableName = _tableName;
-            FileName = _fileName;
-            DirectoryName = _dirName;
-            FileExt = _fileName.Substring(_fileName.Length-3);
+
+            this.label1.Text = _fileName;
+            this.UploaderName = _uploaderName;
+            this.ControlName = _controlName;
+            this.TableName = _tableName;
+            this.FileName = _fileName;
+            this.DirectoryName = _dirName;
+            this.FileExt = _fileName.Substring(_fileName.Length-3);
 
             if(_fileSize != 101) {
                 label3.Text = _fileSize.ToString() + "MB";

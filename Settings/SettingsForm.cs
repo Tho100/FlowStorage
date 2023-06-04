@@ -39,9 +39,9 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
-        private List<int> _TotalUploadToday = new List<int>();
-        private List<int> _TotalUploadOvertime = new List<int>();
-        private List<string> _TotalUploadDirectoryToday = new List<string>();
+        private List<int> TotalUploadToday = new List<int>();
+        private List<int> TotalUploadOvertime = new List<int>();
+        private List<string> TotalUploadDirectoryToday = new List<string>();
 
         private string CurrentLang = "";
         private string NewLang = "";
@@ -52,7 +52,7 @@ namespace FlowSERVER1 {
         readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_gif", "info_word", "info_ptx", "info_audi", "info_excel" };
         readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "GIF", "Document", "Presentation", "Audio", "Excel" };
 
-        public SettingsForm(String _accName,String _emailAddr) {
+        public SettingsForm(String _emailAddr) {
 
             InitializeComponent();
 
@@ -93,10 +93,10 @@ namespace FlowSERVER1 {
 
                 await TotalUploadDirectoryTodayCount();
 
-                int _totalUploadTodayCount = _TotalUploadToday.Sum(x => Convert.ToInt32(x));
+                int _totalUploadTodayCount = this.TotalUploadToday.Sum(x => Convert.ToInt32(x));
                 label26.Text = _totalUploadTodayCount.ToString();
 
-                int _totalUploadOvertime = _TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
+                int _totalUploadOvertime = this.TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
                 label12.Text = _totalUploadOvertime.ToString();
 
             }
@@ -147,7 +147,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                _TotalUploadOvertime.Add(totalCount);
+                this.TotalUploadOvertime.Add(totalCount);
             }
         }
 
@@ -166,7 +166,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@date", currentDate);
 
                 int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                _TotalUploadToday.Add(totalCount);
+                this.TotalUploadToday.Add(totalCount);
             }
         }
 
@@ -185,12 +185,12 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        _TotalUploadDirectoryToday.Add(reader.GetString(0));
+                        this.TotalUploadDirectoryToday.Add(reader.GetString(0));
                     }
                 }
             }
 
-            int distinctDirCount = _TotalUploadDirectoryToday.Distinct().Count();
+            int distinctDirCount = this.TotalUploadDirectoryToday.Distinct().Count();
             label30.Text = distinctDirCount.ToString();
         }
 
@@ -206,7 +206,7 @@ namespace FlowSERVER1 {
             }
 
             if (accountType == "Basic") {
-                if(CurrentLang == "US") {
+                if(this.CurrentLang == "US") {
                     label37.Text = "Limited to 20";
                 } else if (CurrentLang == "MY") {
                     label37.Text = "Terhad Kepada 20";

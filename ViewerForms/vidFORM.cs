@@ -38,15 +38,17 @@ namespace FlowSERVER1 {
             bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
 
             instance = this;
+
             var setupImage = resizeImage(getThumb, new Size(width, height));
             guna2PictureBox1.Image = setupImage;
-            label1.Text = getTitle;
-            label3.Text = tableName;
-            _TableName = tableName;
-            _DirName = dirName;
-            _UploaderName = uploaderName;
-            _IsFromShared = _isFromShared;
-            IsFromSharing = _isFromSharing;
+
+            this.label1.Text = getTitle;
+            this.label3.Text = tableName;
+            this._TableName = tableName;
+            this._DirName = dirName;
+            this._UploaderName = uploaderName;
+            this._IsFromShared = _isFromShared;
+            this.IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
 

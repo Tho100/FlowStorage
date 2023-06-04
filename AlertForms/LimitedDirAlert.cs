@@ -12,7 +12,7 @@ namespace FlowSERVER1 {
     public partial class LimitedDirAlert : Form {
         public LimitedDirAlert() {
             InitializeComponent();
-            label7.Text = $"Current Account: {Globals.accountType}";
+            this.label7.Text = $"Current Account: {Globals.accountType}";
         }
 
 
@@ -29,7 +29,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            var remAccShow = new SettingsForm(Globals.custUsername, Globals.custEmail);
+            var remAccShow = new SettingsForm(Globals.custEmail);
             remAccShow.Show();
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
             this.Close();

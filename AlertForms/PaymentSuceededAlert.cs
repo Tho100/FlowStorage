@@ -14,7 +14,7 @@ namespace FlowSERVER1 {
         public PaymentSuceededAlert(String _accType) {
             InitializeComponent();
             instance = this;
-            label1.Text = _accType;
+            this.label1.Text = _accType;
         }
 
         private void label1_Click(object sender, EventArgs e) {

@@ -13,7 +13,7 @@ namespace FlowSERVER1 {
         public UnknownTypeAlert(String invalidFileName) {
             InitializeComponent();
 
-            label1.Text = $"File Name: {invalidFileName}";
+            this.label1.Text = $"File Name: {invalidFileName}";
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {

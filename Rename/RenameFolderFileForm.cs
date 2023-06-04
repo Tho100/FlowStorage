@@ -14,12 +14,10 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
-        private string folderTitle {get; set; }
         public RenameFolderFileForm(String foldTitle) {
             InitializeComponent();
 
-            folderTitle = foldTitle;
-            label2.Text = foldTitle;
+            this.label2.Text = foldTitle;
 
         }
 

@@ -20,8 +20,8 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
         public ChangeUsernameForm(String _CurrentUsername) {
             InitializeComponent();
-            CurrentUsername = _CurrentUsername;
-            guna2TextBox3.Text = CurrentUsername;
+            this.CurrentUsername = _CurrentUsername;
+            this.guna2TextBox3.Text = CurrentUsername;
         }
 
         private void chagneUserForm_Load(object sender, EventArgs e) {
@@ -37,7 +37,7 @@ namespace FlowSERVER1 {
         }
         private void setupChangeUsername(String _tableName, String _setUsername) {
     
-            String updateQuery = "UPDATE " + _tableName + " SET CUST_USERNAME = '" + _setUsername + "' WHERE CUST_USERNAME = @username";
+            String updateQuery = $"UPDATE {_tableName} SET CUST_USERNAME = '" + _setUsername + "' WHERE CUST_USERNAME = @username";
             command = new MySqlCommand(updateQuery,con);
             command.Parameters.AddWithValue("@username",CurrentUsername);
             command.ExecuteNonQuery();

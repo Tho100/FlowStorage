@@ -37,18 +37,19 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-
         public ptxFORM(String _Title,String _Table, String _Directory,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
+
             InitializeComponent();
 
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            label1.Text = _Title;
-            _TableName = _Table;
-            _DirectoryName = _Directory;
-            _IsFromShared = _isFromShared;
-            IsFromSharing = _isFromSharing;
+            this.label1.Text = _Title;
+            this._TableName = _Table;
+            this._DirectoryName = _Directory;
+            this._IsFromShared = _isFromShared;
+            this.IsFromSharing = _isFromSharing;
+
             if (_isShared == true) {
 
                 guna2Button6.Visible = true;
@@ -95,7 +96,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text)); using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
@@ -108,7 +109,7 @@ namespace FlowSERVER1 {
             String returnComment = "";
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text)); using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
@@ -122,7 +123,6 @@ namespace FlowSERVER1 {
             LoadPtx(_memoryStream);
         }
         public void LoadPtx(Stream _getStream) {
-            //var _ptxSetup = PdfDocument.Load(_getStream);
             officeViewer1.LoadFromStream(_getStream);
            
         }

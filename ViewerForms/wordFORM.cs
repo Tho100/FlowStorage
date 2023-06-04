@@ -39,11 +39,11 @@ namespace FlowSERVER1 {
             string _getName = "";
             bool _isShared = System.Text.RegularExpressions.Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            label1.Text = _docName;
-            _TableName = _Table;
-            _DirectoryName = _Directory;
-            _IsFromShared = _isFromShared;
-            IsFromSharing = _isFromSharing;
+            this.label1.Text = _docName;
+            this._TableName = _Table;
+            this._DirectoryName = _Directory;
+            this._IsFromShared = _isFromShared;
+            this.IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
                 _getName = _UploaderName.Replace("Shared", "");

@@ -19,11 +19,7 @@ namespace FlowSERVER1 {
 
         public ResetAuthForm(String _currentUsername) {
             InitializeComponent();
-            CurrentUsername = _currentUsername;
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
-
+            this.CurrentUsername = _currentUsername;
         }
 
         private void label4_Click(object sender, EventArgs e) {
@@ -74,49 +70,54 @@ namespace FlowSERVER1 {
                 var _getVerify = guna2TextBox3.Text;
                 var _getOldPass = guna2TextBox2.Text;
 
-                if (_getNewPass == _getVerify) {
-                    if (_getNewPass != String.Empty) {
-                        if (_getVerify != String.Empty) {
-                            if (authReturnOriginal(CurrentUsername) == computeAuthCase(_getOldPass)) {
-                                if(MessageBox.Show("Do you want to proceed your action?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes) {
-
-                                    setupInformationUpdate(CurrentUsername,_getNewPass);
-
-                                    Form bgBlur = new Form();
-                                    using (SuccessResetAuthAlert displayDirectory = new SuccessResetAuthAlert()) {
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                        bgBlur.Opacity = .24d;
-                                        bgBlur.BackColor = Color.Black;
-                                        bgBlur.WindowState = FormWindowState.Maximized;
-                                        bgBlur.TopMost = true;
-                                        bgBlur.Location = this.Location;
-                                        bgBlur.StartPosition = FormStartPosition.Manual;
-                                        bgBlur.ShowInTaskbar = false;
-                                        bgBlur.Show();
-
-                                        displayDirectory.Owner = bgBlur;
-                                        displayDirectory.ShowDialog();
-
-                                        bgBlur.Dispose();
-                                    }
-                                }
-                            } else {
-                                label4.Visible = true;
-                                label4.Text = "Password is incorrect.";
-                            }
-                        } else {
-                            label4.Visible = true;
-                            label4.Text = "New password does not match.";
-                        }
-                    } else {
-                        label4.Visible = true;
-                        label4.Text = "Please add a new password.";
-                    }
-                } else {
+                if(_getNewPass != _getVerify) {
                     label4.Visible = true;
                     label4.Text = "New password does not match.";
+                    return;
                 }
+
+                if(_getNewPass == String.Empty) {
+                    label4.Visible = true;
+                    label4.Text = "Please add a new password.";
+                    return;
+                }
+
+                if(_getVerify == String.Empty) {
+                    label4.Visible = true;
+                    label4.Text = "New password does not match.";
+                    return;
+                }
+
+                if(authReturnOriginal(CurrentUsername) != computeAuthCase(_getOldPass)) {
+                    label4.Visible = true;
+                    label4.Text = "Password is incorrect.";
+                    return;
+                }
+
+                if (MessageBox.Show("Do you want to proceed your action?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes) {
+
+                    setupInformationUpdate(CurrentUsername, _getNewPass);
+
+                    Form bgBlur = new Form();
+                    using (SuccessResetAuthAlert displayDirectory = new SuccessResetAuthAlert()) {
+                        bgBlur.StartPosition = FormStartPosition.Manual;
+                        bgBlur.FormBorderStyle = FormBorderStyle.None;
+                        bgBlur.Opacity = .24d;
+                        bgBlur.BackColor = Color.Black;
+                        bgBlur.WindowState = FormWindowState.Maximized;
+                        bgBlur.TopMost = true;
+                        bgBlur.Location = this.Location;
+                        bgBlur.StartPosition = FormStartPosition.Manual;
+                        bgBlur.ShowInTaskbar = false;
+                        bgBlur.Show();
+
+                        displayDirectory.Owner = bgBlur;
+                        displayDirectory.ShowDialog();
+
+                        bgBlur.Dispose();
+                    }
+                }
+
             }
             catch (Exception) {
                 MessageBox.Show("There's a problem while attempting to change your password.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);

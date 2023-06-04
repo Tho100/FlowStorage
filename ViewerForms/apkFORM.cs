@@ -29,11 +29,11 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(_userName, @"^([\w\-]+)").Value == "Shared";
 
-            label1.Text = _titleFile;
-            _TableName = _tabName;
-            _DirName = _dirName;
-            isFromShared = _isFromShared;
-            IsFromSharing = _isFromSharing;
+            this.label1.Text = _titleFile;
+            this._TableName = _tabName;
+            this._DirName = _dirName;
+            this.isFromShared = _isFromShared;
+            this.IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
 

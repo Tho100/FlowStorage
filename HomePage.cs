@@ -114,15 +114,15 @@ namespace FlowSERVER1 {
             var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
             form4Instances.ForEach(form => form.Close());
 
-            flowLayoutPanel1.HorizontalScroll.Maximum = 0;
-            flowLayoutPanel1.VerticalScroll.Maximum = 0;
-            flowLayoutPanel1.AutoScrollMinSize = new Size(0, 0);
+            this.flowLayoutPanel1.HorizontalScroll.Maximum = 0;
+            this.flowLayoutPanel1.VerticalScroll.Maximum = 0;
+            this.flowLayoutPanel1.AutoScrollMinSize = new Size(0, 0);
 
-            flowLayoutPanel1.BorderStyle = BorderStyle.None;
+            this.flowLayoutPanel1.BorderStyle = BorderStyle.None;
 
-            flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.HorizontalScroll.Visible = false;
-            flowLayoutPanel1.VerticalScroll.Visible = false;
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.HorizontalScroll.Visible = false;
+            this.flowLayoutPanel1.VerticalScroll.Visible = false;
 
             this.TopMost = false;
         }
@@ -314,7 +314,7 @@ namespace FlowSERVER1 {
                     if (_extTypes == ".py") {
                         img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                     }
-                    else if (_extTypes == ".txt") {
+                    else if (_extTypes == ".txt" || _extTypes == ".md") {
                         img.Image = TextImage;
                     }
                     else if (_extTypes == ".html") {
@@ -725,7 +725,7 @@ namespace FlowSERVER1 {
                         if (typeValues[i] == ".py") {
                             img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                         }
-                        else if (typeValues[i] == ".txt") {
+                        else if (typeValues[i] == ".txt" || typeValues[i] == ".md") {
                             img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                         }
                         else if (_extTypes == ".html") {
@@ -1255,7 +1255,7 @@ namespace FlowSERVER1 {
         private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
 
             var open = new OpenFileDialog {
-                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;.webp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
+                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;.webp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
                 Multiselect = true
             };
 
@@ -1447,7 +1447,7 @@ namespace FlowSERVER1 {
                                     if (_extTypes == ".py") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                                     }
-                                    else if (_extTypes == ".txt") {
+                                    else if (_extTypes == ".txt" || _extTypes == ".md") {
                                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                                     }
                                     else if (_extTypes == ".html") {
@@ -1898,7 +1898,7 @@ namespace FlowSERVER1 {
 
             Task.Run(() => new SettingsLoadingAlert().ShowDialog());
 
-            var remAccShow = new SettingsForm(Globals.custUsername, Globals.custEmail);
+            var remAccShow = new SettingsForm(Globals.custEmail);
             remAccShow.Show();
 
             var settingsAlertForms = Application.OpenForms
@@ -2167,7 +2167,7 @@ namespace FlowSERVER1 {
                         if (_extTypes == ".py") {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                         }
-                        else if (_extTypes == ".txt") {
+                        else if (_extTypes == ".txt" || _extTypes == ".md") {
                             textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                         }
                         else if (_extTypes == ".html") {
@@ -3058,7 +3058,7 @@ namespace FlowSERVER1 {
                         if (typeValues[q] == ".py") {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                         }
-                        else if (typeValues[q] == ".txt") {
+                        else if (typeValues[q] == ".txt" || typeValues[q] == ".md") {
                             textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                         }
                         else if (typeValues[q] == ".html") {
@@ -3456,7 +3456,7 @@ namespace FlowSERVER1 {
                     if (typeValues[q] == ".py") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                     }
-                    else if (typeValues[q] == ".txt") {
+                    else if (typeValues[q] == ".txt" || typeValues[q] == ".md") {
                         textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                     }
                     else if (typeValues[q] == ".html") {
@@ -4170,7 +4170,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button14_Click(object sender, EventArgs e) {
 
-            var remAccShow = new SettingsForm(_accName: Globals.custUsername, _emailAddr: Globals.custEmail);
+            var remAccShow = new SettingsForm(_emailAddr: Globals.custEmail);
             remAccShow.Show();
 
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
@@ -4506,7 +4506,7 @@ namespace FlowSERVER1 {
                             if (_extTypes == ".py") {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
                             }
-                            else if (_extTypes == ".txt") {
+                            else if (_extTypes == ".txt" || _extTypes == ".md") {
                                 textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
                             }
                             else if (_extTypes == ".html") {
@@ -4845,12 +4845,12 @@ namespace FlowSERVER1 {
 
         private void guna2Button17_Click_2(object sender, EventArgs e) {
             txtBoxSearchFile.Text = String.Empty;
-            txtBoxSearchFile.Text = ".txt";
+            txtBoxSearchFile.Text = ".txt,.html,.md,.sql,.css,.js";
         }
 
         private void guna2Button22_Click_1(object sender, EventArgs e) {
             txtBoxSearchFile.Text = String.Empty;
-            txtBoxSearchFile.Text = ".doc,docx";
+            txtBoxSearchFile.Text = ".doc,.docx";
 
         }
 
@@ -5098,6 +5098,10 @@ namespace FlowSERVER1 {
 
             shareFileFORM sharingFileFORM = new shareFileFORM(titleFile,fileExtensions,false,Globals.custUsername,dirName);
             sharingFileFORM.Show();
+        }
+
+        private void label25_Click(object sender, EventArgs e) {
+
         }
     }
 }

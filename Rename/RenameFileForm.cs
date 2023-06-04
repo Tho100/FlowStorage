@@ -25,13 +25,13 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            titleFile = _fileName;
-            tableName = _tableName;
-            panelName = _panelName;
-            sharedToName = _sharedToName;
-            dirName = _dirName;
+            this.titleFile = _fileName;
+            this.tableName = _tableName;
+            this.panelName = _panelName;
+            this.sharedToName = _sharedToName;
+            this.dirName = _dirName;
 
-            label2.Text = titleFile;
+            this.label2.Text = titleFile;
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {

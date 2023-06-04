@@ -38,11 +38,12 @@ namespace FlowSERVER1 {
             String _getName = "";
             bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            label1.Text = _FileTitle;
-            _TableName = _tableName;
-            _DirName = _DirectoryName;
-            _IsFromShared = _isFromShared;
-            IsFromSharing = _isFromSharing;
+            this.label1.Text = _FileTitle;
+            this._TableName = _tableName;
+            this._DirName = _DirectoryName;
+            this._IsFromShared = _isFromShared;
+            this.IsFromSharing = _isFromSharing;
+
             if (_isShared == true) {
 
                 guna2Button6.Visible = true;

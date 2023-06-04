@@ -12,15 +12,15 @@ namespace FlowSERVER1 {
     public partial class UpgradeAccountAlert : Form {
         public UpgradeAccountAlert(String _curAcc) {
             InitializeComponent();
-            label3.Text = "Current Account: " + _curAcc; 
+            this.label3.Text = "Current Account: " + _curAcc; 
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
             Application.OpenForms
-                              .OfType<Form>()
-                              .Where(form => String.Equals(form.Name, "upgradeFORM"))
-                              .ToList()
-                              .ForEach(form => form.Close());
+            .OfType<Form>()
+            .Where(form => String.Equals(form.Name, "upgradeFORM"))
+            .ToList()
+            .ForEach(form => form.Close());
         }
 
         private void upgradeFORM_Load(object sender, EventArgs e) {
@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            var remAccShow = new SettingsForm(Globals.custUsername,Globals.custEmail);
+            var remAccShow = new SettingsForm(Globals.custEmail);
             remAccShow.Show();
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
             this.Close();

@@ -30,21 +30,19 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.guna2TextBox4 = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label24 = new System.Windows.Forms.Label();
+            this.txtBoxAuth1Field = new Guna.UI2.WinForms.Guna2TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.guna2TextBox3 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtBoxEmailField = new Guna.UI2.WinForms.Guna2TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnOpenLoginForm = new Guna.UI2.WinForms.Guna2Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.guna2TextBox2 = new Guna.UI2.WinForms.Guna2TextBox();
-            this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtBoxAuth0Field = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtBoxUsernameField = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.guna2Panel7.SuspendLayout();
@@ -72,21 +70,19 @@
             this.guna2Panel7.Controls.Add(this.richTextBox1);
             this.guna2Panel7.Controls.Add(this.label30);
             this.guna2Panel7.Controls.Add(this.label15);
-            this.guna2Panel7.Controls.Add(this.guna2TextBox4);
-            this.guna2Panel7.Controls.Add(this.label24);
+            this.guna2Panel7.Controls.Add(this.txtBoxAuth1Field);
             this.guna2Panel7.Controls.Add(this.label21);
             this.guna2Panel7.Controls.Add(this.label22);
-            this.guna2Panel7.Controls.Add(this.guna2TextBox3);
+            this.guna2Panel7.Controls.Add(this.txtBoxEmailField);
             this.guna2Panel7.Controls.Add(this.label14);
             this.guna2Panel7.Controls.Add(this.label13);
-            this.guna2Panel7.Controls.Add(this.label19);
             this.guna2Panel7.Controls.Add(this.label16);
             this.guna2Panel7.Controls.Add(this.label23);
-            this.guna2Panel7.Controls.Add(this.guna2Button10);
+            this.guna2Panel7.Controls.Add(this.btnOpenLoginForm);
             this.guna2Panel7.Controls.Add(this.label11);
             this.guna2Panel7.Controls.Add(this.label12);
-            this.guna2Panel7.Controls.Add(this.guna2TextBox2);
-            this.guna2Panel7.Controls.Add(this.guna2TextBox1);
+            this.guna2Panel7.Controls.Add(this.txtBoxAuth0Field);
+            this.guna2Panel7.Controls.Add(this.txtBoxUsernameField);
             this.guna2Panel7.Controls.Add(this.guna2Button11);
             this.guna2Panel7.Location = new System.Drawing.Point(1, -1);
             this.guna2Panel7.Name = "guna2Panel7";
@@ -95,7 +91,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(717, 303);
+            this.button1.Location = new System.Drawing.Point(668, 128);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 51;
@@ -105,7 +101,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(598, 175);
+            this.richTextBox1.Location = new System.Drawing.Point(549, 0);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(407, 213);
             this.richTextBox1.TabIndex = 50;
@@ -135,45 +131,32 @@
             this.label15.TabIndex = 47;
             this.label15.Text = "PIN ";
             // 
-            // guna2TextBox4
+            // txtBoxAuth1Field
             // 
-            this.guna2TextBox4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.BorderRadius = 8;
-            this.guna2TextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox4.DefaultText = "";
-            this.guna2TextBox4.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2TextBox4.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox4.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Location = new System.Drawing.Point(988, 414);
-            this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.guna2TextBox4.MaxLength = 3;
-            this.guna2TextBox4.Name = "guna2TextBox4";
-            this.guna2TextBox4.PasswordChar = '\0';
-            this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox4.PlaceholderText = "Set a PIN number";
-            this.guna2TextBox4.SelectedText = "";
-            this.guna2TextBox4.Size = new System.Drawing.Size(147, 47);
-            this.guna2TextBox4.TabIndex = 46;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.BackColor = System.Drawing.Color.Transparent;
-            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.DarkGray;
-            this.label24.Location = new System.Drawing.Point(697, 46);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(158, 20);
-            this.label24.TabIndex = 45;
-            this.label24.Text = "Register your account";
-            this.label24.Visible = false;
+            this.txtBoxAuth1Field.BackColor = System.Drawing.Color.Transparent;
+            this.txtBoxAuth1Field.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxAuth1Field.BorderRadius = 8;
+            this.txtBoxAuth1Field.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtBoxAuth1Field.DefaultText = "";
+            this.txtBoxAuth1Field.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtBoxAuth1Field.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtBoxAuth1Field.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxAuth1Field.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxAuth1Field.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxAuth1Field.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxAuth1Field.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxAuth1Field.ForeColor = System.Drawing.Color.White;
+            this.txtBoxAuth1Field.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxAuth1Field.Location = new System.Drawing.Point(988, 414);
+            this.txtBoxAuth1Field.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtBoxAuth1Field.MaxLength = 3;
+            this.txtBoxAuth1Field.Name = "txtBoxAuth1Field";
+            this.txtBoxAuth1Field.PasswordChar = '\0';
+            this.txtBoxAuth1Field.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtBoxAuth1Field.PlaceholderText = "Set a PIN number";
+            this.txtBoxAuth1Field.SelectedText = "";
+            this.txtBoxAuth1Field.Size = new System.Drawing.Size(147, 47);
+            this.txtBoxAuth1Field.TabIndex = 46;
             // 
             // label21
             // 
@@ -198,31 +181,31 @@
             this.label22.Text = "Please add email";
             this.label22.Visible = false;
             // 
-            // guna2TextBox3
+            // txtBoxEmailField
             // 
-            this.guna2TextBox3.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox3.BorderRadius = 8;
-            this.guna2TextBox3.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox3.DefaultText = "";
-            this.guna2TextBox3.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox3.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox3.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox3.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2TextBox3.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox3.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox3.Location = new System.Drawing.Point(629, 303);
-            this.guna2TextBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox3.Name = "guna2TextBox3";
-            this.guna2TextBox3.PasswordChar = '\0';
-            this.guna2TextBox3.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox3.PlaceholderText = "Enter your email address";
-            this.guna2TextBox3.SelectedText = "";
-            this.guna2TextBox3.Size = new System.Drawing.Size(504, 47);
-            this.guna2TextBox3.TabIndex = 42;
+            this.txtBoxEmailField.BackColor = System.Drawing.Color.Transparent;
+            this.txtBoxEmailField.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxEmailField.BorderRadius = 8;
+            this.txtBoxEmailField.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtBoxEmailField.DefaultText = "";
+            this.txtBoxEmailField.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtBoxEmailField.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtBoxEmailField.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxEmailField.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxEmailField.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxEmailField.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxEmailField.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxEmailField.ForeColor = System.Drawing.Color.White;
+            this.txtBoxEmailField.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxEmailField.Location = new System.Drawing.Point(629, 303);
+            this.txtBoxEmailField.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxEmailField.Name = "txtBoxEmailField";
+            this.txtBoxEmailField.PasswordChar = '\0';
+            this.txtBoxEmailField.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtBoxEmailField.PlaceholderText = "Enter your email address";
+            this.txtBoxEmailField.SelectedText = "";
+            this.txtBoxEmailField.Size = new System.Drawing.Size(504, 47);
+            this.txtBoxEmailField.TabIndex = 42;
             // 
             // label14
             // 
@@ -245,19 +228,6 @@
             this.label13.Size = new System.Drawing.Size(99, 20);
             this.label13.TabIndex = 7;
             this.label13.Text = "Password";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.BackColor = System.Drawing.Color.Transparent;
-            this.label19.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.DarkGray;
-            this.label19.Location = new System.Drawing.Point(628, 118);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(158, 20);
-            this.label19.TabIndex = 40;
-            this.label19.Text = "Register your account";
-            this.label19.Visible = false;
             // 
             // label16
             // 
@@ -282,26 +252,26 @@
             this.label23.TabIndex = 34;
             this.label23.Text = "Already have an account?";
             // 
-            // guna2Button10
+            // btnOpenLoginForm
             // 
-            this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button10.Animated = true;
-            this.guna2Button10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button10.BorderRadius = 7;
-            this.guna2Button10.BorderThickness = 2;
-            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button10.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button10.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button10.ForeColor = System.Drawing.Color.White;
-            this.guna2Button10.Location = new System.Drawing.Point(1191, 24);
-            this.guna2Button10.Name = "guna2Button10";
-            this.guna2Button10.Size = new System.Drawing.Size(104, 36);
-            this.guna2Button10.TabIndex = 18;
-            this.guna2Button10.Text = "Sign In";
-            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
+            this.btnOpenLoginForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenLoginForm.Animated = true;
+            this.btnOpenLoginForm.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnOpenLoginForm.BorderRadius = 7;
+            this.btnOpenLoginForm.BorderThickness = 2;
+            this.btnOpenLoginForm.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnOpenLoginForm.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnOpenLoginForm.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnOpenLoginForm.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnOpenLoginForm.FillColor = System.Drawing.Color.Empty;
+            this.btnOpenLoginForm.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenLoginForm.ForeColor = System.Drawing.Color.White;
+            this.btnOpenLoginForm.Location = new System.Drawing.Point(1191, 24);
+            this.btnOpenLoginForm.Name = "btnOpenLoginForm";
+            this.btnOpenLoginForm.Size = new System.Drawing.Size(104, 36);
+            this.btnOpenLoginForm.TabIndex = 18;
+            this.btnOpenLoginForm.Text = "Sign In";
+            this.btnOpenLoginForm.Click += new System.EventHandler(this.guna2Button10_Click);
             // 
             // label11
             // 
@@ -327,57 +297,57 @@
             this.label12.Text = "Please add password";
             this.label12.Visible = false;
             // 
-            // guna2TextBox2
+            // txtBoxAuth0Field
             // 
-            this.guna2TextBox2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox2.BorderRadius = 8;
-            this.guna2TextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox2.DefaultText = "";
-            this.guna2TextBox2.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox2.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox2.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2TextBox2.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox2.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox2.Location = new System.Drawing.Point(631, 413);
-            this.guna2TextBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox2.Name = "guna2TextBox2";
-            this.guna2TextBox2.PasswordChar = '*';
-            this.guna2TextBox2.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox2.PlaceholderText = "Must contain +5 characters";
-            this.guna2TextBox2.SelectedText = "";
-            this.guna2TextBox2.Size = new System.Drawing.Size(350, 47);
-            this.guna2TextBox2.TabIndex = 17;
+            this.txtBoxAuth0Field.BackColor = System.Drawing.Color.Transparent;
+            this.txtBoxAuth0Field.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxAuth0Field.BorderRadius = 8;
+            this.txtBoxAuth0Field.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtBoxAuth0Field.DefaultText = "";
+            this.txtBoxAuth0Field.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtBoxAuth0Field.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtBoxAuth0Field.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxAuth0Field.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxAuth0Field.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxAuth0Field.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxAuth0Field.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxAuth0Field.ForeColor = System.Drawing.Color.White;
+            this.txtBoxAuth0Field.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxAuth0Field.Location = new System.Drawing.Point(631, 413);
+            this.txtBoxAuth0Field.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxAuth0Field.Name = "txtBoxAuth0Field";
+            this.txtBoxAuth0Field.PasswordChar = '*';
+            this.txtBoxAuth0Field.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtBoxAuth0Field.PlaceholderText = "Must contain +5 characters";
+            this.txtBoxAuth0Field.SelectedText = "";
+            this.txtBoxAuth0Field.Size = new System.Drawing.Size(350, 47);
+            this.txtBoxAuth0Field.TabIndex = 17;
             // 
-            // guna2TextBox1
+            // txtBoxUsernameField
             // 
-            this.guna2TextBox1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox1.BorderRadius = 8;
-            this.guna2TextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox1.DefaultText = "";
-            this.guna2TextBox1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.guna2TextBox1.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox1.Location = new System.Drawing.Point(631, 197);
-            this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox1.Name = "guna2TextBox1";
-            this.guna2TextBox1.PasswordChar = '\0';
-            this.guna2TextBox1.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox1.PlaceholderText = "Enter a username";
-            this.guna2TextBox1.SelectedText = "";
-            this.guna2TextBox1.Size = new System.Drawing.Size(504, 47);
-            this.guna2TextBox1.TabIndex = 16;
+            this.txtBoxUsernameField.BackColor = System.Drawing.Color.Transparent;
+            this.txtBoxUsernameField.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxUsernameField.BorderRadius = 8;
+            this.txtBoxUsernameField.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtBoxUsernameField.DefaultText = "";
+            this.txtBoxUsernameField.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtBoxUsernameField.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtBoxUsernameField.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxUsernameField.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxUsernameField.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtBoxUsernameField.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxUsernameField.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.txtBoxUsernameField.ForeColor = System.Drawing.Color.White;
+            this.txtBoxUsernameField.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtBoxUsernameField.Location = new System.Drawing.Point(631, 197);
+            this.txtBoxUsernameField.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxUsernameField.Name = "txtBoxUsernameField";
+            this.txtBoxUsernameField.PasswordChar = '\0';
+            this.txtBoxUsernameField.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtBoxUsernameField.PlaceholderText = "Enter a username";
+            this.txtBoxUsernameField.SelectedText = "";
+            this.txtBoxUsernameField.Size = new System.Drawing.Size(504, 47);
+            this.txtBoxUsernameField.TabIndex = 16;
             // 
             // guna2Button11
             // 
@@ -425,21 +395,19 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label15;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox4;
-        public System.Windows.Forms.Label label24;
+        public Guna.UI2.WinForms.Guna2TextBox txtBoxAuth1Field;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox3;
+        public Guna.UI2.WinForms.Guna2TextBox txtBoxEmailField;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label23;
-        public Guna.UI2.WinForms.Guna2Button guna2Button10;
+        public Guna.UI2.WinForms.Guna2Button btnOpenLoginForm;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
+        public Guna.UI2.WinForms.Guna2TextBox txtBoxAuth0Field;
+        public Guna.UI2.WinForms.Guna2TextBox txtBoxUsernameField;
         public Guna.UI2.WinForms.Guna2Button guna2Button11;
     }
 }

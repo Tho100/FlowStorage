@@ -12,7 +12,7 @@ namespace FlowSERVER1 {
     public partial class LimitedFolderFileAlert : Form {
         public LimitedFolderFileAlert(String _currentAccount) {
             InitializeComponent();
-            label3.Text = $"Current Account: {_currentAccount}";
+            this.label3.Text = $"Current Account: {_currentAccount}";
         }
 
         private void UpgradeFormFold_Load(object sender, EventArgs e) {
@@ -24,7 +24,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            var remAccShow = new SettingsForm(Globals.custUsername, Globals.custEmail);
+            var remAccShow = new SettingsForm(Globals.custEmail);
             remAccShow.Show();
             SettingsForm.instance.guna2TabControl1.SelectedTab = SettingsForm.instance.guna2TabControl1.TabPages["tabPage3"];
             this.Close();
