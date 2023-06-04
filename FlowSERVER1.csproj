@@ -401,6 +401,7 @@
     <Compile Include="ExtraForms\ApiPageForm.Designer.cs">
       <DependentUpon>ApiPageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GetComment.cs" />
     <Compile Include="ViewerForms\apkFORM.cs">
       <SubType>Form</SubType>
     </Compile>

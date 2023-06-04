@@ -32,34 +32,34 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public wordFORM(String _docName,String _Table, String _Directory, String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
+        public wordFORM(String fileName,String tableName, String directoryName, String uploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
 
             string _getName = "";
-            bool _isShared = System.Text.RegularExpressions.Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+            bool _isShared = System.Text.RegularExpressions.Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            this.label1.Text = _docName;
-            this._TableName = _Table;
-            this._DirectoryName = _Directory;
+            this.lblFileName.Text = fileName;
+            this._TableName = tableName;
+            this._DirectoryName = directoryName;
             this._IsFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
-                _getName = _UploaderName.Replace("Shared", "");
+                _getName = uploaderName.Replace("Shared", "");
                 label4.Text = "Shared To";
-                guna2Button5.Visible = false;
-                label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
+                btnShareFile.Visible = false;
+                lblUserComment.Visible = true;
+                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + _UploaderName;
+                _getName = " " + uploaderName;
                 label4.Text = "Uploaded By";
-                label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
+                lblUserComment.Visible = true;
+                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            label2.Text = _getName;
+            lblUploaderName.Text = _getName;
 
             try {
 
@@ -67,51 +67,23 @@ namespace FlowSERVER1 {
                 ShowAlert.Start();
 
                 if (_TableName == "file_info_word") {
-                    setupDocx(LoaderModel.LoadFile("file_info_word","null",label1.Text));
+                    setupDocx(LoaderModel.LoadFile("file_info_word","null",lblFileName.Text));
                 } else if (_TableName == "upload_info_directory") {
-                    setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
+                    setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, lblFileName.Text));
                 }
                 else if (_TableName == "folder_upload_info") {
-                    setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
+                    setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,lblFileName.Text));
                 } else if (_TableName == "cust_sharing") {
-                    setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text,_isFromShared));
+                    setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, lblFileName.Text,_isFromShared));
                 }
             }
             catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-        private string getCommentSharedToMe() {
-            String returnComment = "";
-            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
-                using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
-                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
-                    }
-                }
-            }
-            return returnComment;
-        }
-
-        private string getCommentSharedToOthers() {
-            String returnComment = "";
-            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746"));
-                using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
-                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
-                    }
-                }
-            }
-            return returnComment;
-        }
         public void setupDocx(Byte[] _getByte) {
 
-            label16.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
+            lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
 
             var _getStream = new MemoryStream(_getByte);
             loadDocx(_getStream);
@@ -137,13 +109,13 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
             if(_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(label1.Text,"upload_info_directory",_DirectoryName);
+                SaverModel.SaveSelectedFile(lblFileName.Text,"upload_info_directory",_DirectoryName);
             } else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirectoryName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirectoryName);
             } else if (_TableName == "file_info_word") {
-                SaverModel.SaveSelectedFile(label1.Text, "file_info_word", _DirectoryName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_word", _DirectoryName);
             } else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirectoryName,_IsFromShared);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirectoryName,_IsFromShared);
             }
             this.TopMost = true;
         }
@@ -172,8 +144,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            string getExtension = label1.Text.Substring(label1.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
+            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
             _showSharingFileFORM.Show();
 
         }
@@ -188,7 +160,7 @@ namespace FlowSERVER1 {
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 await command.ExecuteNonQueryAsync();
             }
 
@@ -197,23 +169,23 @@ namespace FlowSERVER1 {
         private void guna2Button11_Click(object sender, EventArgs e) {
             guna2TextBox4.Enabled = true;
             guna2TextBox4.Visible = true;
-            guna2Button11.Visible = false;
+            btnEditComment.Visible = false;
             guna2Button12.Visible = true;
-            label3.Visible = false;
-            guna2TextBox4.Text = label3.Text;
+            lblUserComment.Visible = false;
+            guna2TextBox4.Text = lblUserComment.Text;
         }
 
         private async void guna2Button12_Click(object sender, EventArgs e) {
-            if (label3.Text != guna2TextBox4.Text) {
+            if (lblUserComment.Text != guna2TextBox4.Text) {
                 await saveChangesComment(guna2TextBox4.Text);
             }
 
-            label3.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label3.Text;
-            guna2Button11.Visible = true;
+            lblUserComment.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : lblUserComment.Text;
+            btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             guna2TextBox4.Visible = false;
-            label3.Visible = true;
-            label3.Refresh();
+            lblUserComment.Visible = true;
+            lblUserComment.Refresh();
         }
     }
 }

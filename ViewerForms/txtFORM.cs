@@ -26,9 +26,9 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public static bool IsFromSharing {get; set; }
-        public static String DirectoryName {get; set; }
-        public static String TableName { get; set; }
+        private bool IsFromSharing {get; set; }
+        private string DirectoryName {get; set; }
+        private string TableName { get; set; }
 
         /// <summary>
         /// 
@@ -41,42 +41,42 @@ namespace FlowSERVER1 {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public txtFORM(String getText,String tableName,String fileName,String _directory,String _UploaderUsername, bool _isFromSharing = true) {
+        public txtFORM(String getText,String tableName,String fileName,String directoryName,String uploaderName, bool _isFromSharing = true) {
             InitializeComponent();
 
             try {
 
                 String _getName = "";
-                bool _isShared = Regex.Match(_UploaderUsername, @"^([\w\-]+)").Value == "Shared";
+                bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
 
                 instance = this;
 
-                this.label1.Text = fileName;
+                this.lblFileName.Text = fileName;
                 this.TableName = tableName;
-                this.DirectoryName = _directory;
+                this.DirectoryName = directoryName;
 
-                var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
+                var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
 
                 if (_isShared == true) {
 
-                    guna2Button11.Visible = true;
+                    btnEditComment.Visible = true;
                     guna2Button12.Visible = true;
 
-                    _getName = _UploaderUsername.Replace("Shared", "");
-                    IsFromSharing = true;
+                    _getName = uploaderName.Replace("Shared", "");
+                    this.IsFromSharing = true;
                     label4.Text = "Shared To";
-                    guna2Button5.Visible = false;
-                    label3.Visible = true;
-                    label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
+                    btnShareFile.Visible = false;
+                    lblUserComment.Visible = true;
+                    lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
                 }
                 else {
-                    _getName = " " + _UploaderUsername;
+                    _getName = " " + uploaderName;
                     label4.Text = "Uploaded By";
-                    label3.Visible = true;
-                    label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
+                    lblUserComment.Visible = true;
+                    lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
                 }
 
-                label2.Text = _getName;
+                lblUploaderName.Text = _getName;
 
                 if (tableName == "upload_info_directory" && getText == "") {
 
@@ -84,14 +84,14 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue));
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text,EncryptionKey.KeyValue));
 
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
                                 byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
 
-                                label16.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
+                                lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
 
                                 string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
                                 richTextBox1.Text = toBase64Decoded;
@@ -122,7 +122,7 @@ namespace FlowSERVER1 {
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
                                 byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
-                                label16.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
+                                lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
 
                                 string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
                                 richTextBox1.Text = toBase64Decoded;
@@ -173,13 +173,13 @@ namespace FlowSERVER1 {
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
                         Byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue));
 
-                        label16.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
+                        lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
 
                         String toDecodedBase64 = Encoding.UTF8.GetString(toBytes);
                         richTextBox1.Text = toDecodedBase64;
@@ -200,34 +200,6 @@ namespace FlowSERVER1 {
                 jsSyntax();
             }
 
-        }
-
-        private string getCommentSharedToMe() {
-            String returnComment = "";
-            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
-                using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
-                        returnComment = readerComment.GetString(0);
-                    }
-                }
-            }
-            return returnComment;
-        }
-
-        private string getCommentSharedToOthers() {
-            String returnComment = "";
-            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue));
-                using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
-                        returnComment = readerComment.GetString(0);
-                    }
-                }
-            }
-            return returnComment;
         }
 
         /// <summary>
@@ -399,7 +371,7 @@ namespace FlowSERVER1 {
             this.WindowState = FormWindowState.Maximized;
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
-            label1.AutoSize = true;
+            lblFileName.AutoSize = true;
         }
 
         private void haha_TextChanged(object sender, EventArgs e) {
@@ -415,9 +387,9 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
-            var FileExt_ = label1.Text.Substring(label1.Text.LastIndexOf('.')).TrimStart();
+            var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
             SaveFileDialog _OpenDialog = new SaveFileDialog();
-            _OpenDialog.FileName = label1.Text;
+            _OpenDialog.FileName = lblFileName.Text;
             _OpenDialog.Filter = "Files|*" + FileExt_;
             try {
                 if(_OpenDialog.ShowDialog() == DialogResult.OK) {
@@ -450,8 +422,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            string getExtension = label1.Text.Substring(label1.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, TableName, DirectoryName);
+            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
             _showSharingFileFORM.Show();
         }
 
@@ -465,7 +437,7 @@ namespace FlowSERVER1 {
                     using(MySqlCommand command = new MySqlCommand(updateQue,con)) {
                         command.Parameters.Add("@update",MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username",MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text,EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text,EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
 
@@ -475,7 +447,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
 
@@ -485,7 +457,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
 
@@ -496,7 +468,7 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue);
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
 
@@ -507,7 +479,7 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem));
-                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(label1.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
                         command.ExecuteNonQuery();
                     }
 
@@ -540,7 +512,7 @@ namespace FlowSERVER1 {
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 await command.ExecuteNonQueryAsync();
             }
 
@@ -549,23 +521,23 @@ namespace FlowSERVER1 {
         private void guna2Button11_Click(object sender, EventArgs e) {
             guna2TextBox4.Enabled = true;
             guna2TextBox4.Visible = true;
-            guna2Button11.Visible = false;
+            btnEditComment.Visible = false;
             guna2Button12.Visible = true;
-            label3.Visible = false;
-            guna2TextBox4.Text = label3.Text;
+            lblUserComment.Visible = false;
+            guna2TextBox4.Text = lblUserComment.Text;
         }
 
         private async void guna2Button12_Click(object sender, EventArgs e) {
-            if (label3.Text != guna2TextBox4.Text) {
+            if (lblUserComment.Text != guna2TextBox4.Text) {
                 await saveChangesComment(guna2TextBox4.Text);
             }
 
-            label3.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label3.Text;
-            guna2Button11.Visible = true;
+            lblUserComment.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : lblUserComment.Text;
+            btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             guna2TextBox4.Visible = false;
-            label3.Visible = true;
-            label3.Refresh();
+            lblUserComment.Visible = true;
+            lblUserComment.Refresh();
         }
     }
 }

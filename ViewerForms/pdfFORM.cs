@@ -31,53 +31,53 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public pdfFORM(String _FileTitle, String _tableName, String _DirectoryName,String _UploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
+        public pdfFORM(String fileName, String tableName, String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
 
             String _getName = "";
-            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
+            bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
 
-            this.label1.Text = _FileTitle;
-            this._TableName = _tableName;
-            this._DirName = _DirectoryName;
+            this.lblFileName.Text = fileName;
+            this._TableName = tableName;
+            this._DirName = directoryName;
             this._IsFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
             if (_isShared == true) {
 
-                guna2Button6.Visible = true;
-                guna2Button6.Visible = true;
+                btnEditComment.Visible = true;
+                btnEditComment.Visible = true;
 
-                _getName = _UploaderName.Replace("Shared", "");
+                _getName = uploaderName.Replace("Shared", "");
                 label4.Text = "Shared To";
-                guna2Button5.Visible = false;
-                label3.Visible = true;
-                label3.Text = getCommentSharedToOthers() != "" ? getCommentSharedToOthers() : "(No Comment)";
+                btnShareFile.Visible = false;
+                lblUserComment.Visible = true;
+                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + _UploaderName;
+                _getName = " " + uploaderName;
                 label4.Text = "Uploaded By";
-                label3.Visible = true;
-                label3.Text = getCommentSharedToMe() != "" ? getCommentSharedToMe() : "(No Comment)";
+                lblUserComment.Visible = true;
+                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            label2.Text = _getName;
+            lblUploaderName.Text = _getName;
 
             try {
 
                 Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").ShowDialog());
                 ShowAlert.Start();
 
-                if (_tableName == "file_info_pdf") {
-                    setupPdf(LoaderModel.LoadFile("file_info_pdf", _DirectoryName, label1.Text));
-                } else if (_tableName == "upload_info_directory") {
-                    setupPdf(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, label1.Text));
-                } else if (_tableName == "folder_upload_info") {
-                    setupPdf(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,label1.Text));
+                if (tableName == "file_info_pdf") {
+                    setupPdf(LoaderModel.LoadFile("file_info_pdf", directoryName, lblFileName.Text));
+                } else if (tableName == "upload_info_directory") {
+                    setupPdf(LoaderModel.LoadFile("upload_info_directory", directoryName, lblFileName.Text));
+                } else if (tableName == "folder_upload_info") {
+                    setupPdf(LoaderModel.LoadFile("folder_upload_info", directoryName, lblFileName.Text));
                 }
-                else if (_tableName == "cust_sharing") {
-                    setupPdf(LoaderModel.LoadFile("cust_sharing", _DirectoryName, label1.Text,_isFromShared));
+                else if (tableName == "cust_sharing") {
+                    setupPdf(LoaderModel.LoadFile("cust_sharing", directoryName, lblFileName.Text,_isFromShared));
                 }
 
             } catch (Exception) {
@@ -85,42 +85,25 @@ namespace FlowSERVER1 {
             }
         }
 
-        private string getCommentSharedToMe() {
-            String returnComment = "";
-            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
-                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
-                    }
-                }
-            }
-            return returnComment;
-        }
-
-        private string getCommentSharedToOthers() {
-            String returnComment = "";
-            using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text, "0123456789085746")); using (MySqlDataReader readerComment = command.ExecuteReader()) {
-                    while (readerComment.Read()) {
-                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
-                    }
-                }
-            }
-            return returnComment;
-        }
-
-
-        // @SUMMARY Convert bytes of PDF file to stream
+        /// <summary>
+        /// 
+        /// Convert PDF bytes to stream and load it into viewer
+        /// 
+        /// </summary>
+        /// <param name="pdfBytes"></param>
         public void setupPdf(byte[] pdfBytes) {
             if(pdfBytes != null) {
-                label16.Text = $"{FileSize.fileSize(pdfBytes):F2}Mb";
+                lblFileSize.Text = $"{FileSize.fileSize(pdfBytes):F2}Mb";
                 var _getStream = new MemoryStream(pdfBytes);
                 LoadPdf(_getStream);
             }
         }
-        // @SUMMARY Load stream of bytes to pdf renderer
+        /// <summary>
+        /// 
+        /// Load stream of PDF bytes into viewer
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
         public void LoadPdf(Stream stream) {
             pdfDocumentViewer1.LoadFromStream(stream);
         }
@@ -154,16 +137,16 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
             if (_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirName);
             }
             else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirName);
             }
             else if (_TableName == "file_info_pdf") {
-                SaverModel.SaveSelectedFile(label1.Text, "file_info_pdf", _DirName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_pdf", _DirName);
             }
             else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "cust_sharing", _DirName,_IsFromShared);
+                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirName,_IsFromShared);
             }
             this.TopMost = true;
         }
@@ -202,8 +185,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            string getExtension = label1.Text.Substring(label1.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(label1.Text, getExtension, IsFromSharing, _TableName, _DirName);
+            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirName);
             _showSharingFileFORM.Show();
         }
 
@@ -225,7 +208,7 @@ namespace FlowSERVER1 {
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@updatedComment", updatedComment);
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(label1.Text));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 await command.ExecuteNonQueryAsync();
             }
 
@@ -234,23 +217,23 @@ namespace FlowSERVER1 {
         private void guna2Button6_Click(object sender, EventArgs e) {
             guna2TextBox4.Enabled = true;
             guna2TextBox4.Visible = true;
-            guna2Button6.Visible = false;
+            btnEditComment.Visible = false;
             guna2Button7.Visible = true;
-            label3.Visible = false;
-            guna2TextBox4.Text = label3.Text;
+            lblUserComment.Visible = false;
+            guna2TextBox4.Text = lblUserComment.Text;
         }
 
         private async void guna2Button7_Click(object sender, EventArgs e) {
-            if (label3.Text != guna2TextBox4.Text) {
+            if (lblUserComment.Text != guna2TextBox4.Text) {
                 await saveChangesComment(guna2TextBox4.Text);
             }
 
-            label3.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : label3.Text;
-            guna2Button6.Visible = true;
+            lblUserComment.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : lblUserComment.Text;
+            btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             guna2TextBox4.Visible = false;
-            label3.Visible = true;
-            label3.Refresh();
+            lblUserComment.Visible = true;
+            lblUserComment.Refresh();
         }
 
         private void guna2Separator1_Click(object sender, EventArgs e) {
