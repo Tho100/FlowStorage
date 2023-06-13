@@ -56,7 +56,7 @@
             this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(139, 184);
+            this.guna2Button1.Location = new System.Drawing.Point(142, 180);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(128, 35);
             this.guna2Button1.TabIndex = 59;
@@ -84,7 +84,6 @@
             this.label6.Size = new System.Drawing.Size(305, 17);
             this.label6.TabIndex = 57;
             this.label6.Text = "Upgrade to any Paid plan to upload more folder!";
-            this.label6.Visible = false;
             // 
             // label7
             // 
@@ -134,18 +133,18 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(487, 12);
+            this.guna2Button2.Location = new System.Drawing.Point(476, 18);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 53;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // limitFolderFORM
+            // LimitedFolderAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(537, 239);
+            this.ClientSize = new System.Drawing.Size(536, 239);
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
@@ -155,7 +154,7 @@
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "limitFolderFORM";
+            this.Name = "LimitedFolderAlert";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Folder Upload Limit";

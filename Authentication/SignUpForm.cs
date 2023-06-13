@@ -474,6 +474,7 @@ namespace FlowSERVER1.Authentication {
 
                     Globals.custUsername = _getUser;
                     Globals.custEmail = _getEmail;
+                    Globals.accountType = "Basic";
 
                     insertRegistrationData(_getUser,_getEmail,_getPass,_getPin);
 

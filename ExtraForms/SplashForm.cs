@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
                 con.Open();
 
                 keepAliveTimer = new System.Timers.Timer();
-                keepAliveTimer.Interval = 30000; // 30 seconds
+                keepAliveTimer.Interval = 23100; 
                 keepAliveTimer.Elapsed += new ElapsedEventHandler(KeepAliveTimer_Elapsed);
                 keepAliveTimer.Enabled = true;
 

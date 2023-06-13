@@ -289,11 +289,18 @@ namespace FlowSERVER1
                                 generateDirectory(value_Dir, dirTitle);
                                 HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
 
-                                using (var insertValuesCommand = new MySqlCommand("INSERT INTO file_info_directory(DIR_NAME,CUST_USERNAME) VALUES (@DIR_NAME,@CUST_USERNAME)", con)) {
-                                    insertValuesCommand.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(dirTitle));
-                                    insertValuesCommand.Parameters.AddWithValue("@CUST_USERNAME", username);
-                                    await insertValuesCommand.ExecuteNonQueryAsync();
-                                }
+                                var crud = new Crud();
+
+                                const string addDirQuery = "INSERT INTO file_info_directory VALUES (@dirname,@username)";
+                                var param = new Dictionary<string, string>
+                                {
+                                    { "@dirname", EncryptionModel.Encrypt(dirTitle)},
+                                    { "@username",Globals.custUsername}
+                                };
+
+
+                                await crud.Insert(addDirQuery, param);
+
                             }
                         }
                         else {

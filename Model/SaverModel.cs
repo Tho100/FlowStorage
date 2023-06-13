@@ -21,7 +21,6 @@ namespace FlowSERVER1 {
     public partial class SaverModel {
 
         private static readonly MySqlConnection con = ConnectionModel.con;
-        private static readonly MySqlCommand command = ConnectionModel.command;
         public static readonly SaverModel Instance = new SaverModel();
         public static bool stopFileRetrieval { get; set; } = false;
         private static string _getExt { get; set; }

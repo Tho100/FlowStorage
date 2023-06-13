@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.Caching;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1
 {
@@ -30,8 +31,11 @@ namespace FlowSERVER1
 
         public static DirectoryForm instance;
 
+        readonly private Crud crud = new Crud();
+
         readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
+
         private string _extName { get; set; }
 
         private string get_ex { get; set; }
@@ -48,31 +52,6 @@ namespace FlowSERVER1
         /// Initialize panel data
         /// 
         /// </summary>
-
-        // Date label
-        private const string DateLabelFontName = "Segoe UI Semibold";
-        private const float DateLabelFontSize = 9f; 
-        private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
-
-        // Title label
-        private const string TitleLabelFontName = "Segoe UI Semibold";
-        private const float TitleLabelFontSize = 11f; 
-        private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
-
-        // Panel
-        private readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
-        private readonly Color DarkGrayColor = Color.DarkGray;
-        private readonly Color GainsboroColor = Color.Gainsboro;
-        private readonly Color TransparentColor = Color.Transparent;
-        private readonly Point TitleLabelLoc = new Point(12, 166); 
-        private readonly Point DateLabelLoc = new Point(12, 192);
-
-        // Garbage button
-        private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
-        private readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
-        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
-        private readonly Point GarbageButtonLoc = new Point(165, 188);
-        private readonly Point GarbageOffset = new Point(2, 0);
 
         public DirectoryForm(String sendTitle_)
         {
@@ -193,10 +172,10 @@ namespace FlowSERVER1
                     Name = parameterName + i,
                     Width = 200,
                     Height = 222,
-                    BorderColor = BorderColor,
+                    BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
-                    BackColor = TransparentColor,
+                    BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, top)
                 };
 
@@ -208,21 +187,21 @@ namespace FlowSERVER1
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
                 dateLab.Name = $"LabG{i}";
-                dateLab.Font = DateLabelFont;
-                dateLab.ForeColor = DarkGrayColor;
+                dateLab.Font = GlobalStyle.DateLabelFont;
+                dateLab.ForeColor = GlobalStyle.DarkGrayColor;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
-                dateLab.Location = DateLabelLoc;
+                dateLab.Location = GlobalStyle.DateLabelLoc;
                 dateLab.Text = filesInfo[i].Item2;
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
                 titleLab.Name = $"titleImgL{i}";
-                titleLab.Font = TitleLabelFont;
-                titleLab.ForeColor = GainsboroColor;
+                titleLab.Font = GlobalStyle.TitleLabelFont;
+                titleLab.ForeColor = GlobalStyle.GainsboroColor;
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
-                titleLab.Location = TitleLabelLoc;
+                titleLab.Location = GlobalStyle.TitleLabelLoc;
                 titleLab.Width = 160;
                 titleLab.Height = 20;
                 titleLab.AutoEllipsis = true;
@@ -258,13 +237,13 @@ namespace FlowSERVER1
                 remBut.Width = 29;
                 remBut.Height = 26;
                 remBut.ImageOffset = new Point(2,0);
-                remBut.FillColor = TransparentColor;
+                remBut.FillColor = GlobalStyle.TransparentColor;
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
-                remBut.BorderColor = TransparentColor;
-                remBut.Image = GarbageImage;
+                remBut.BorderColor = GlobalStyle.TransparentColor;
+                remBut.Image = GlobalStyle.GarbageImage;
                 remBut.Visible = true;
-                remBut.Location = GarbageButtonLoc;
+                remBut.Location = GlobalStyle.GarbageButtonLoc;
 
                 remBut.Click += (sender_im, e_im) => {
 
@@ -682,24 +661,21 @@ namespace FlowSERVER1
 
                                 async Task startSending(string setValue) {
 
-                                    const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
-
                                     try {
 
-                                        using (var command = new MySqlCommand(insertQuery, con)) {
-                                            command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName));
-                                            command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                                            command.Parameters.AddWithValue("@FILE_EXT", retrieved);
-                                            command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                                            command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                                            command.Parameters.AddWithValue("@CUST_FILE", setValue);
-                                            command.Parameters.AddWithValue("@CUST_THUMB", "null");
+                                        const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
+                                        var param = new Dictionary<string, string>
+                                        {
+                                            { "@CUST_USERNAME", Globals.custUsername},
+                                            { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
+                                            { "@UPLOAD_DATE", varDate},
+                                            { "@CUST_FILE", setValue},
+                                            { "@CUST_THUMB", "null"},
+                                            { "@FILE_EXT", retrieved},
+                                            { "@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text)}
+                                        };
 
-                                            await command.ExecuteNonQueryAsync();
-
-                                            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
-                                        }
+                                        await crud.Insert(insertQuery, param);
 
                                         Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
 
@@ -714,10 +690,10 @@ namespace FlowSERVER1
                                     Name = panName + itemCurr,
                                     Width = 200,
                                     Height = 222,
-                                    BorderColor = BorderColor,
+                                    BorderColor = GlobalStyle.BorderColor,
                                     BorderThickness = 1,
                                     BorderRadius = 8,
-                                    BackColor = TransparentColor,
+                                    BackColor = GlobalStyle.TransparentColor,
                                     Location = new Point(600, top)
                                 };
                  
@@ -745,21 +721,21 @@ namespace FlowSERVER1
                                 Label dateLabTxt = new Label();
                                 mainPanelTxt.Controls.Add(dateLabTxt);
                                 dateLabTxt.Name = "LabTxtUp" + itemCurr;
-                                dateLabTxt.Font = DateLabelFont;
-                                dateLabTxt.ForeColor = DarkGrayColor;
+                                dateLabTxt.Font = GlobalStyle.DateLabelFont;
+                                dateLabTxt.ForeColor = GlobalStyle.DarkGrayColor;
                                 dateLabTxt.Visible = true;
                                 dateLabTxt.Enabled = true;
-                                dateLabTxt.Location = DateLabelLoc;
+                                dateLabTxt.Location = GlobalStyle.DateLabelLoc;
                                 dateLabTxt.Text = varDate;
 
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
                                 titleLab.Name = "LabVidUp" + itemCurr;
-                                titleLab.Font = TitleLabelFont;
-                                titleLab.ForeColor = GainsboroColor;
+                                titleLab.Font = GlobalStyle.TitleLabelFont;
+                                titleLab.ForeColor = GlobalStyle.GainsboroColor;
                                 titleLab.Visible = true;
                                 titleLab.Enabled = true;
-                                titleLab.Location = TitleLabelLoc;
+                                titleLab.Location = GlobalStyle.TitleLabelLoc;
                                 titleLab.Width = 160;
                                 titleLab.Height = 20;
                                 titleLab.AutoEllipsis = true;
@@ -771,13 +747,13 @@ namespace FlowSERVER1
                                 remButTxt.Width = 29;
                                 remButTxt.Height = 26;
                                 remButTxt.ImageOffset = new Point(2,0);
-                                remButTxt.FillColor = TransparentColor;
+                                remButTxt.FillColor = GlobalStyle.TransparentColor;
                                 remButTxt.BorderRadius = 6;
                                 remButTxt.BorderThickness = 1;
-                                remButTxt.BorderColor = TransparentColor;
-                                remButTxt.Image = GarbageImage;
+                                remButTxt.BorderColor = GlobalStyle.TransparentColor;
+                                remButTxt.Image = GlobalStyle.GarbageImage;
                                 remButTxt.Visible = true;
-                                remButTxt.Location = GarbageButtonLoc;
+                                remButTxt.Location = GlobalStyle.GarbageButtonLoc;
                                 remButTxt.BringToFront();
 
                                 textboxPic.MouseHover += (_senderM, _ev) => {
@@ -1214,24 +1190,8 @@ namespace FlowSERVER1
                      .ToList()
                      .ForEach(form => form.Close());
 
-                Form bgBlur = new Form();
-                using (WaitAlert displayWait = new WaitAlert()) {
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                    bgBlur.Opacity = .24d;
-                    bgBlur.BackColor = Color.Black;
-                    bgBlur.WindowState = FormWindowState.Maximized;
-                    bgBlur.TopMost = true;
-                    bgBlur.Location = this.Location;
-                    bgBlur.StartPosition = FormStartPosition.Manual;
-                    bgBlur.ShowInTaskbar = false;
-                    bgBlur.Show();
-
-                    displayWait.Owner = bgBlur;
-                    displayWait.ShowDialog();
-
-                    bgBlur.Dispose();
-                }
+                CustomAlert showAlert = new CustomAlert(title: "An error occurred", "Something went wrong while trying to upload files.");
+                showAlert.Show();
             }
         }
 

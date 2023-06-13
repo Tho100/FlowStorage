@@ -36,6 +36,7 @@
             // 
             // guna2BorderlessForm1
             // 
+            this.guna2BorderlessForm1.BorderRadius = 25;
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
@@ -100,7 +101,7 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(504, 12);
+            this.guna2Button2.Location = new System.Drawing.Point(488, 13);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 28;
@@ -120,19 +121,19 @@
             this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(414, 145);
+            this.guna2Button1.Location = new System.Drawing.Point(139, 155);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(128, 35);
             this.guna2Button1.TabIndex = 34;
             this.guna2Button1.Text = "Upgrade Plan";
             this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
-            // UpgradeFormFold
+            // LimitedFolderFileAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(554, 192);
+            this.ClientSize = new System.Drawing.Size(539, 209);
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
@@ -141,7 +142,7 @@
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "UpgradeFormFold";
+            this.Name = "LimitedFolderFileAlert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UpgradeFormFold";
             this.TopMost = true;

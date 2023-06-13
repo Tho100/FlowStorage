@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class ChangeUsernameForm : Form {
 
         private String CurrentUsername;
-        private String NewUsername;
 
         private MySqlCommand command = ConnectionModel.command;
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private Crud crud = new Crud();
+
         public ChangeUsernameForm(String _CurrentUsername) {
             InitializeComponent();
             this.CurrentUsername = _CurrentUsername;
@@ -35,21 +38,30 @@ namespace FlowSERVER1 {
         private void label4_Click(object sender, EventArgs e) {
 
         }
-        private void setupChangeUsername(String _tableName, String _setUsername) {
-    
-            String updateQuery = $"UPDATE {_tableName} SET CUST_USERNAME = '" + _setUsername + "' WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(updateQuery,con);
-            command.Parameters.AddWithValue("@username",CurrentUsername);
-            command.ExecuteNonQuery();
+        private async Task setupChangeUsername(String _tableName, String _setUsername) {
+
+            string updateUsernameQuery = $"UPDATE {_tableName} SET CUST_USERNAME = '" + _setUsername + "'WHERE CUST_USERNAME = @username";
+
+            var param = new Dictionary<string, string>
+            {
+                { "@username",CurrentUsername},
+            };
+
+
+            await crud.Insert(updateUsernameQuery, param);
            
         }
 
-        private void setupChangeUsernameSharing(String _setUsername) {
+        private async Task setupChangeUsernameSharing(String _setUsername) {
 
             string updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + _setUsername + "' WHERE CUST_FROM = @username";
-            command = new MySqlCommand(updateQuery, con);
-            command.Parameters.AddWithValue("@username", CurrentUsername);
-            command.ExecuteNonQuery();
+            var param = new Dictionary<string, string>
+{
+                { "@username", CurrentUsername}
+            };
+
+
+            await crud.Insert(updateQuery, param);
 
         }
 
@@ -94,86 +106,87 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private string computeAuthCase(string inputStr) {
+        private void updateLocalUsername(String _custUsername) {
 
-            SHA256 sha256 = SHA256.Create();
+            String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            if (!Directory.Exists(appDataPath)) {
 
-            string _getAuthStrCase0 = inputStr;
-            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
-            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
-            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
+                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
+                }
+                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
-            return _authStrCase0;
+            }
+            else {
+                Directory.Delete(appDataPath, true);
+                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
+                }
+                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+            }
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) {
+        private async void guna2Button1_Click(object sender, EventArgs e) {
+
             try {
+
                 var _getNewUsername = guna2TextBox1.Text;
                 var _getCustPass = guna2TextBox2.Text;
-                if(_getNewUsername != CurrentUsername) {
-                    if(_getNewUsername != String.Empty) {
-                        if(_getCustPass != String.Empty) {
-                            if(verifyIfNotExists(_getNewUsername) > 0) {
-                                label4.Text = "Username is taken.";
-                                label4.Visible = true;
-                            } else {
-                                if(authReturnOriginal(CurrentUsername) == computeAuthCase(_getCustPass)) {
-                                    NewUsername = _getNewUsername;
-                                    setupChangeUsername("information", NewUsername);
-                                    setupChangeUsername("cust_type",NewUsername);
-                                    setupChangeUsername("file_info", NewUsername);
-                                    setupChangeUsername("file_info_expand", NewUsername);
-                                    setupChangeUsername("file_info_word", NewUsername);
-                                    setupChangeUsername("file_info_audi", NewUsername);
-                                    setupChangeUsername("file_info_ptx", NewUsername);
-                                    setupChangeUsername("file_info_pdf", NewUsername);
-                                    setupChangeUsername("file_info_gif", NewUsername);
-                                    setupChangeUsername("file_info_vid", NewUsername);
-                                    setupChangeUsername("file_info_exe", NewUsername);
-                                    setupChangeUsername("file_info_apk", NewUsername);
-                                    setupChangeUsername("file_info_directory", NewUsername);
 
-                                    setupChangeUsername("upload_info_directory", NewUsername);
-                                    setupChangeUsername("folder_upload_info", NewUsername);
-                                    setupChangeUsernameSharing(NewUsername);
-
-                                    Form bgBlur = new Form();
-                                    using (UsernameUpdatedAlert displayDirectory = new UsernameUpdatedAlert(_getNewUsername,CurrentUsername)) {
-                                              bgBlur.StartPosition = FormStartPosition.Manual;
-                                              bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                              bgBlur.Opacity = .24d;
-                                              bgBlur.BackColor = Color.Black;
-                                              bgBlur.WindowState = FormWindowState.Maximized;
-                                              bgBlur.TopMost = true;
-                                              bgBlur.Location = this.Location;
-                                              bgBlur.StartPosition = FormStartPosition.Manual;
-                                              bgBlur.ShowInTaskbar = false;
-                                              bgBlur.Show();
-
-                                              displayDirectory.Owner = bgBlur;
-                                              displayDirectory.ShowDialog();
-
-                                              bgBlur.Dispose();
-                                          }
-                                }
-                                else {
-                                    label4.Text = "Password is incorrect.";
-                                    label4.Visible = true;
-                                }
-                            }
-                        } else {
-                            label4.Text = "Please enter your password.";
-
-                            label4.Visible = true;                            
-                            label4.Visible = true;
-                        }
-                    } else {
-                        label4.Text = "Please enter a username.";
-                    }
-                } else {
+                if(_getNewUsername == CurrentUsername) {
                     label4.Text = "Please enter a new username.";
                     label4.Visible = true;
+                    return;
                 }
+
+                if(_getNewUsername == String.Empty) {
+                    label4.Text = "Please enter a username.";
+                    label4.Visible = true;
+                    return;
+                }
+
+                if(_getCustPass == String.Empty) {
+                    label4.Text = "Please enter your password.";
+                    label4.Visible = true;
+                    return;
+                }
+
+                if(verifyIfNotExists(_getNewUsername) > 0) {
+                    label4.Text = "Username is taken.";
+                    label4.Visible = true;
+                    return;
+                }
+
+                if(authReturnOriginal(CurrentUsername) == EncryptionModel.computeAuthCase(_getCustPass)) {
+
+
+                    string[] tableNames = {
+                        "information","cust_type","file_info", "file_info_expand", 
+                        "file_info_word", "file_info_excel", "file_info_pdf", "file_info_audi", 
+                        "file_info_vid", "sharing_info","lang_info","file_info_apk","file_info_exe",
+                        "file_info_msi","file_info_directory","upload_info_directory","folder_upload_info"
+                    };
+
+                    for(int i=0; i<tableNames.Length; i++) {
+                        await setupChangeUsername(tableNames[i], _getNewUsername);
+                    }
+
+                    await setupChangeUsernameSharing(_getNewUsername);
+
+                    updateLocalUsername(_getNewUsername);
+
+                    CustomAlert alert = new CustomAlert(title: "Username Updated",$"You've changed your username to '{_getNewUsername}' from {CurrentUsername}. Restart to fully apply changes.");
+                    alert.Show();
+
+                    Globals.custUsername = _getNewUsername;
+
+                } else {
+                    label4.Visible = true;
+                    label4.Text = "Password is incorrect.";
+                }
+
             } catch (Exception) {
                 MessageBox.Show("There's a problem while attempting to change your username.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }

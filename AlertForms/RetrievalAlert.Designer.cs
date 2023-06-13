@@ -35,8 +35,10 @@
             // 
             // guna2BorderlessForm1
             // 
+            this.guna2BorderlessForm1.BorderRadius = 25;
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
+            this.guna2BorderlessForm1.HasFormShadow = false;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
             // label8
@@ -75,7 +77,7 @@
             this.guna2Button10.FillColor = System.Drawing.Color.Empty;
             this.guna2Button10.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button10.Location = new System.Drawing.Point(420, 94);
+            this.guna2Button10.Location = new System.Drawing.Point(419, 93);
             this.guna2Button10.Name = "guna2Button10";
             this.guna2Button10.Size = new System.Drawing.Size(75, 25);
             this.guna2Button10.TabIndex = 60;

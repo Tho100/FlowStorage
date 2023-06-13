@@ -388,13 +388,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertForms\CustomAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlertForms\CustomAlert.Designer.cs">
+      <DependentUpon>CustomAlert.cs</DependentUpon>
+    </Compile>
     <Compile Include="Authentication\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Authentication\SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Crud.cs" />
+    <Compile Include="GlobalStyle.cs" />
+    <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -402,6 +409,12 @@
       <DependentUpon>ApiPageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GetComment.cs" />
+    <Compile Include="Settings\FeedbackForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\FeedbackForm.Designer.cs">
+      <DependentUpon>FeedbackForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewerForms\apkFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -542,12 +555,6 @@
     </Compile>
     <Compile Include="ViewerForms\msiFORM.Designer.cs">
       <DependentUpon>msiFORM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AlertForms\PaymentFailedAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\PaymentFailedAlert.Designer.cs">
-      <DependentUpon>PaymentFailedAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="NotifySubFORM.cs">
       <SubType>Form</SubType>
@@ -725,23 +732,23 @@
     <Compile Include="ViewerForms\vidFORM.Designer.cs">
       <DependentUpon>vidFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="AlertForms\WaitAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\WaitAlert.Designer.cs">
-      <DependentUpon>WaitAlert.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewerForms\wordFORM.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ViewerForms\wordFORM.Designer.cs">
       <DependentUpon>wordFORM.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AlertForms\CustomAlert.resx">
+      <DependentUpon>CustomAlert.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Authentication\SignUpForm.resx">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\ApiPageForm.resx">
       <DependentUpon>ApiPageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\FeedbackForm.resx">
+      <DependentUpon>FeedbackForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\apkFORM.resx">
       <DependentUpon>apkFORM.cs</DependentUpon>
@@ -810,9 +817,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\PaymentFailedAlert.resx">
-      <DependentUpon>PaymentFailedAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotifySubFORM.resx">
       <DependentUpon>NotifySubFORM.cs</DependentUpon>
@@ -904,9 +908,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\vidFORM.resx">
       <DependentUpon>vidFORM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\WaitAlert.resx">
-      <DependentUpon>WaitAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\wordFORM.resx">
       <DependentUpon>wordFORM.cs</DependentUpon>

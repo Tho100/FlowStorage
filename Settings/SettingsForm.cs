@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using System.Configuration;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using FlowSERVER1.AlertForms;
 //using Stripe;
 
 namespace FlowSERVER1 {
@@ -52,15 +53,23 @@ namespace FlowSERVER1 {
         readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_gif", "info_word", "info_ptx", "info_audi", "info_excel" };
         readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "GIF", "Document", "Presentation", "Audio", "Excel" };
 
-        public SettingsForm(String _emailAddr) {
+        public SettingsForm() {
 
             InitializeComponent();
 
+            var settingsAlertForms = Application.OpenForms
+              .OfType<Form>()
+              .Where(form => form.Name == "SettingsLoadingAlert")
+              .ToList();
+
+            foreach (var form in settingsAlertForms) {
+                form.Close();
+            }
+
             instance = this;
 
-            int indexOfAllias = _emailAddr.IndexOf("@");
-            string maskedEmail = _emailAddr.Substring(0, 1) + new String('*', indexOfAllias - 2) + _emailAddr.Substring(indexOfAllias - 1);
-            label76.Text = maskedEmail;
+            label76.Text = Globals.custEmail;
+            label5.Text = Globals.custUsername;
 
             foreach (var axis in chart1.ChartAreas[0].Axes) {
                 axis.MajorGrid.Enabled = false;
@@ -99,23 +108,9 @@ namespace FlowSERVER1 {
                 int _totalUploadOvertime = this.TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
                 label12.Text = _totalUploadOvertime.ToString();
 
-            }
-            catch (Exception) {
-                using (var bgBlur = new Form {
-                    StartPosition = FormStartPosition.Manual,
-                    FormBorderStyle = FormBorderStyle.None,
-                    Opacity = .24d,
-                    BackColor = Color.Black,
-                    WindowState = FormWindowState.Maximized,
-                    TopMost = true,
-                    Location = this.Location,
-                    ShowInTaskbar = false
-                }) {
-                    using (var displayWait = new WaitAlert { Owner = bgBlur }) {
-                        bgBlur.Show();
-                        displayWait.ShowDialog();
-                    }
-                }
+            } catch (Exception) {
+                CustomAlert showAlert = new CustomAlert(title: "An error occurred","Something went wrong while trying to open Settings.");
+                showAlert.Show();
             }
         }
 
@@ -579,7 +574,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void setupAccount() {
+        private async void setupAccount() {
 
             try {
 
@@ -620,7 +615,7 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@email", CustUserValues[0]);
                     command.Parameters.AddWithValue("@type", _selectedAcc);
 
-                    if (command.ExecuteNonQuery() == 1) {
+                    if (await command.ExecuteNonQueryAsync() == 1) {
 
                         const string _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
                         command = new MySqlCommand(_insertPayment, con);
@@ -628,7 +623,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@email", CustUserValues[0]);
                         command.Parameters.AddWithValue("@type", _selectedAcc);
                         command.Parameters.AddWithValue("@id", lastId);
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
 
                         // @ IF PAYMENT IS DONE THEN REMOVE THE CUSTOMER FROM DASHBOARD
                         var delService = new Stripe.CustomerService();
@@ -641,13 +636,13 @@ namespace FlowSERVER1 {
                         setupRedundane(_selectedAcc);
                     }
                 } else {
-                    PaymentFailedAlert _showFailed = new PaymentFailedAlert();
+                    CustomAlert _showFailed = new CustomAlert(title: "Cannot proceed",subheader: "You have to make payment on the web first before you can use this plan.");
                     _showFailed.Show();
                 }
-                // @ ERROR OCCURS WHEN BUYER IS A GUEST ACCOUNT
+
             }
             catch (Exception) {
-                PaymentFailedAlert _showFailed = new PaymentFailedAlert();
+                CustomAlert _showFailed = new CustomAlert(title: "Cannot proceed", subheader: "Failed to make a payment.");
                 _showFailed.Show();
             }
         }
@@ -2363,6 +2358,14 @@ namespace FlowSERVER1 {
         }
 
         private void label76_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Panel12_Paint(object sender, PaintEventArgs e) {
 
         }
     }

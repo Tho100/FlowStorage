@@ -18,8 +18,7 @@ namespace FlowSERVER1 {
 
     public partial class LoaderModel {
 
-        private static MySqlCommand command = ConnectionModel.command;
-        private static MySqlConnection con = ConnectionModel.con;
+        readonly private static MySqlConnection con = ConnectionModel.con;
         public static byte[] universalBytes { get; set; }
         public static bool stopFileRetrievalLoad { get; set; } = false;
         private static string fileName { get; set; }
