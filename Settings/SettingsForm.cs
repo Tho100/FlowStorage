@@ -18,13 +18,14 @@ namespace FlowSERVER1 {
     
     public partial class SettingsForm : Form {
 
-        public static SettingsForm instance;
-        public static string _selectedAcc;
-
-        public int tokenCheckCurr = 0;
+        static public SettingsForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
+
+        public static string _selectedAcc;
+
+        public int tokenCheckCurr = 0;
 
         private List<int> TotalUploadToday = new List<int>();
         private List<int> TotalUploadOvertime = new List<int>();
@@ -74,7 +75,7 @@ namespace FlowSERVER1 {
 
                 await getCurrentLang();
                 setupUILanguage(CurrentLang);
-                setupRedundane(label6.Text);
+                setupRedundane(lblAccountType.Text);
                 await GetAccountType();
                 await countTotalAll();
 
@@ -183,7 +184,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
-                label6.Text = accountType;
+                lblAccountType.Text = accountType;
             }
 
             if (accountType == "Basic") {
@@ -368,7 +369,7 @@ namespace FlowSERVER1 {
                 if (_confirmation == DialogResult.Yes) {
 
                     guna2Panel1.SendToBack();
-                    HomePage.instance.panel1.SendToBack();
+                    HomePage.instance.pnlMain.SendToBack();
 
                     HomePage.instance.label2.Text = "Item Count";
                     HomePage.instance.lblUpload.Text = "Upload";
@@ -407,7 +408,7 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             _selectedAcc = "Max";
             guna2Button8.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
+            System.Diagnostics.Process.Start("https://buy.stripe.com/test_9AQ16Y9Hb6GbfKwcMP"); // Live mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -423,10 +424,6 @@ namespace FlowSERVER1 {
         }
 
         private void label38_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator7_Click(object sender, EventArgs e) {
 
         }
 
@@ -563,89 +560,81 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void setupAccount() {
+        private async void validatePayment() {
 
             try {
 
-                var _setupApiKey = DecryptApi("0afe74-gksuwpe8r", ConfigurationManager.ConnectionStrings["asfhuwdajdwdwpo=#k"].ConnectionString);
-                Stripe.StripeConfiguration.SetApiKey(_setupApiKey);
+                ///var _setupApiKey = DecryptApi("0afe74-gksuwpe8r", ConfigurationManager.ConnectionStrings["asfhuwdajdwdwpo=#k"].ConnectionString);
+
+                const string key = "sk_test_"; // Replace with valid KEY
+                Stripe.StripeConfiguration.SetApiKey(key);
+
                 var service = new Stripe.CustomerService();
                 var customers = service.List();
 
-                String lastId = null;
-                String LastEmail = null;
+                string lastId = null;
+                string lastEmail = null;
 
-                List<String> _custEmails = new List<String>();
+                List<string> custEmails = new List<string>();
 
-                // @ Enumerate the first page of the list
                 foreach (Stripe.Customer customer in customers) {
-                    _custEmails.Add(customer.Id);
+                    custEmails.Add(customer.Email);
                     lastId = customer.Id;
-                    LastEmail = customer.Email;
+                    lastEmail = customer.Email;
                 }
 
-                List<String> CustUserValues = new List<String>();
+                if (custEmails.Contains(Globals.custEmail)) {
 
-                const string _selectCustEmail = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(_selectCustEmail, con);
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                MySqlDataReader _readEmail = command.ExecuteReader();
-                if (_readEmail.Read()) {
-                    CustUserValues.Add(_readEmail.GetString(0));
-                }
-                _readEmail.Close();
-
-                if (_custEmails.Contains(CustUserValues[0])) {
-
-                    const string _insertNew = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
-                    command = new MySqlCommand(_insertNew, con);
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@email", CustUserValues[0]);
-                    command.Parameters.AddWithValue("@type", _selectedAcc);
-
-                    if (await command.ExecuteNonQueryAsync() == 1) {
-
-                        const string _insertPayment = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
-                        command = new MySqlCommand(_insertPayment, con);
+                    const string updateUserAccountQuery = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@email", CustUserValues[0]);
+                        command.Parameters.AddWithValue("@email", Globals.custEmail);
                         command.Parameters.AddWithValue("@type", _selectedAcc);
-                        command.Parameters.AddWithValue("@id", lastId);
                         await command.ExecuteNonQueryAsync();
-
-                        // @ IF PAYMENT IS DONE THEN REMOVE THE CUSTOMER FROM DASHBOARD
-                        var delService = new Stripe.CustomerService();
-                        delService.Delete(lastId);
-
-                        PaymentSuceededAlert _showSucceeded = new PaymentSuceededAlert(_selectedAcc);
-                        _showSucceeded.Show();
-                        label6.Text = _selectedAcc;
-                        Globals.accountType = _selectedAcc;
-                        setupRedundane(_selectedAcc);
                     }
+
+
+                    const string insertBuyerQuery = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
+                    using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
+                        commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
+                        commandSecond.Parameters.AddWithValue("@email", Globals.custEmail);
+                        commandSecond.Parameters.AddWithValue("@type", _selectedAcc);
+                        commandSecond.Parameters.AddWithValue("@id", lastId);
+                        await commandSecond.ExecuteNonQueryAsync();
+                    }
+
+                    var delService = new Stripe.CustomerService();
+                    delService.Delete(lastId);
+
+                    PaymentSuceededAlert _showSucceeded = new PaymentSuceededAlert(_selectedAcc);
+                    _showSucceeded.Show();
+
+                    lblAccountType.Text = _selectedAcc;
+                    Globals.accountType = _selectedAcc;
+
+                    setupRedundane(_selectedAcc);
+
                 } else {
-                    CustomAlert _showFailed = new CustomAlert(title: "Cannot proceed",subheader: "You have to make payment on the web first before you can use this plan.");
-                    _showFailed.Show();
+                    new CustomAlert(
+                        title: "Cannot proceed",
+                        subheader: "You have to make a payment on the web first to use this plan.").Show();
                 }
 
-            }
-            catch (Exception) {
-                CustomAlert _showFailed = new CustomAlert(title: "Cannot proceed", subheader: "Failed to make a payment.");
-                _showFailed.Show();
+            } catch (Exception) {
+                new CustomAlert(title: "Cannot proceed", subheader: "Failed to make a payment.").Show();
             }
         }
 
         private void guna2Button8_Click(object sender, EventArgs e) {
-            setupAccount();
+            validatePayment();
         }
 
         private void guna2Button9_Click(object sender, EventArgs e) {
-            setupAccount();
+            validatePayment();
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {
-            setupAccount();
+            validatePayment();
         }
 
         private void guna2Panel7_Paint_1(object sender, PaintEventArgs e) {

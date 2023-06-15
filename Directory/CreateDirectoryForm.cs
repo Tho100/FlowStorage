@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using MySql.Data;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1
 {
@@ -220,7 +221,7 @@ namespace FlowSERVER1
                 this.Close();
 
             } catch (Exception) {
-                MessageBox.Show("Are you conneted to the internet?","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                new CustomAlert(title: "Failed to create directory", subheader: "Are you connected to the internet?").Show();
             }
         }
      

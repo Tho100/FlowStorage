@@ -158,6 +158,7 @@
             this.txtBoxAuth1Field.SelectedText = "";
             this.txtBoxAuth1Field.Size = new System.Drawing.Size(147, 47);
             this.txtBoxAuth1Field.TabIndex = 46;
+            this.txtBoxAuth1Field.TextChanged += new System.EventHandler(this.txtBoxAuth1Field_TextChanged);
             // 
             // label21
             // 

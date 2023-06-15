@@ -26,7 +26,7 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            String _getName = "";
+            string _getName = "";
             bool _isShared = Regex.Match(uploaderUsername, @"^([\w\-]+)").Value == "Shared";
 
             this.lblFileName.Text = fileName;

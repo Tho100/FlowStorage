@@ -22,7 +22,7 @@ namespace FlowSERVER1 {
 
     public partial class txtFORM : Form {
 
-        public txtFORM instance;
+        public readonly txtFORM instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
 

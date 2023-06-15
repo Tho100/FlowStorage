@@ -19,16 +19,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FlowSERVER1 {
 
-
-    /// <summary>
-    /// Excel viewer form
-    /// </summary>
-    
     public partial class exlFORM : Form {
 
-        public exlFORM instance;
-        private String DirectoryName;
-        private String TableName;
+        readonly public exlFORM instance;
+
+        private string DirectoryName;
+        private string TableName;
 
         private int _currentSheetIndex = 1;
         private int _changedIndex = 0;

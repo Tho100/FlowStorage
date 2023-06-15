@@ -14,7 +14,6 @@ using System.Threading;
 namespace FlowSERVER1 {
     public partial class wordFORM : Form {
 
-        readonly private MySqlCommand command = ConnectionModel.command;
         readonly private MySqlConnection con = ConnectionModel.con;
 
         public string _TableName;
@@ -120,6 +119,13 @@ namespace FlowSERVER1 {
             this.TopMost = true;
         }
 
+        /// <summary>
+        /// 
+        /// Maximize form
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
@@ -127,6 +133,13 @@ namespace FlowSERVER1 {
             guna2Button3.Visible = true;
         }
 
+        /// <summary>
+        ///
+        /// Set form to normal size
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
@@ -134,6 +147,13 @@ namespace FlowSERVER1 {
             guna2Button3.Visible = false;
         }
 
+        /// <summary>
+        /// 
+        /// Minimize form
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button8_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
             this.TopMost = false;
@@ -143,6 +163,13 @@ namespace FlowSERVER1 {
 
         }
 
+        /// <summary>
+        /// 
+        /// Open share file form
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
             shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
@@ -154,6 +181,14 @@ namespace FlowSERVER1 {
 
         }
 
+
+        /// <summary>
+        /// 
+        /// Update comment
+        /// 
+        /// </summary>
+        /// <param name="updatedComment"></param>
+        /// <returns></returns>
         private async Task saveChangesComment(String updatedComment) {
 
             const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";

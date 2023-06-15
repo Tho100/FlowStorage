@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -143,7 +144,6 @@ namespace FlowSERVER1.Authentication {
                 Application.Exit();
             }
         }
-
 
         private async Task<string> getAccountTypeNumber() {
 
@@ -422,6 +422,12 @@ namespace FlowSERVER1.Authentication {
                         return;
                     }
 
+                    if (!(_getPin.All(char.IsDigit))) {
+                        label30.Visible = true;
+                        label30.Text = "PIN must be a number.";
+                        return;
+                    }
+
                     if (_getPin.Length != 3) {
                         label30.Visible = true;
                         label30.Text = "PIN Number must have 3 digits.";
@@ -492,7 +498,7 @@ namespace FlowSERVER1.Authentication {
                 }
             }
             catch (Exception) {
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(title: "Failed to register your account",subheader: "Are you connected to the internet?").Show();
             }
         }
 
@@ -646,6 +652,10 @@ namespace FlowSERVER1.Authentication {
         }
 
         private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void txtBoxAuth1Field_TextChanged(object sender, EventArgs e) {
 
         }
     }

@@ -18,7 +18,7 @@ using System.Text.RegularExpressions;
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
 
-        public static vidFORM instance;
+        public readonly vidFORM instance;
 
         readonly private static MySqlConnection con = ConnectionModel.con;
 

@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 namespace FlowSERVER1 {
     public partial class exeFORM : Form {
 
-        public static exeFORM instance;
+        readonly public exeFORM instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
@@ -33,7 +33,7 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            String _getName = "";
+            string _getName = "";
             bool _isShared = Regex.Match(uploaderUsername, @"^([\w\-]+)").Value == "Shared";
 
             lblFileName.Text = fileName;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using System.Windows.Forms;
+using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
@@ -22,7 +23,7 @@ namespace FlowSERVER1 {
                 keepAliveTimer.Enabled = true;
 
             } catch (Exception) {
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(title: "Failed to start Flowstorage", subheader: "Are you connected to the internet?").Show();
             }
 
         }

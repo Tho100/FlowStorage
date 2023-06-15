@@ -15,7 +15,7 @@ using AForge.Imaging.Filters;
 namespace FlowSERVER1 {
     public partial class picFORM : Form {
 
-        public static picFORM instance; 
+        public readonly picFORM instance; 
 
         private bool IsDragging {get; set; } = false;
         private bool IsVisibleFilterPanel {get; set; } = false;

@@ -21,7 +21,6 @@ using System.Xml;
 using FlowSERVER1.Authentication;
 using FlowSERVER1.Settings;
 using FlowSERVER1.AlertForms;
-using DocumentFormat.OpenXml.Bibliography;
 
 namespace FlowSERVER1 {
 
@@ -79,14 +78,14 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
+            instance = this;
+
             this.AllowDrop = true;
 
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragOver += new DragEventHandler(Form1_DragOver);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
             this.DragLeave += new EventHandler(Form1_DragLeave);
-
-            instance = this;
 
             var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
             form4Instances.ForEach(form => form.Close());
@@ -104,9 +103,66 @@ namespace FlowSERVER1 {
             this.TopMost = false;
         }
 
-        private void showAlert(String title, String subheader) {
+        private void buildButtonsOnHomePageSelected() {
+
+            btnDownloadFolder.Visible = false;
+            btnDeleteFolder.Visible = false;
+            btnRefreshSharedFiles.Visible = false;
+            btnOpenRenameFolderPage.Visible = false;
+            btnRefreshFiles.Visible = true;
+        }
+
+        private void buildButtonOnSharedFilesSelected() {
+            btnRefreshSharedFiles.Visible = true;
+            btnOpenRenameFolderPage.Visible = false;
+            btnRefreshFiles.Visible = false;
+            btnDeleteFolder.Visible = false;
+            btnDownloadFolder.Visible = false;
+        }
+
+        private void buildButtonsOnSharedToMeSelected() {
+            btnRefreshSharedFiles.Visible = true;
+            btnRefreshFiles.Visible = false;
+            btnDownloadFolder.Visible = false;
+            btnDeleteFolder.Visible = false;
+            btnOpenRenameFolderPage.Visible = false;
+        }
+
+        private void buildButtonsOnFolderNameSelected() {
+            btnDeleteFolder.Visible = true;
+            btnOpenRenameFolderPage.Visible = true;
+            btnRefreshFiles.Visible = false;
+            pnlSubPanelDetails.Visible = false;
+            btnDownloadFolder.Visible = true;
+        }
+
+        private void closeRetrievalAlert() {
+            var retrievalAlertForm = Application.OpenForms
+            .OfType<Form>()
+            .FirstOrDefault(form => form.Name == "RetrievalAlert");
+            retrievalAlertForm?.Close();
+        }
+
+        private void closeUploadAlert() {
+            Application.OpenForms
+            .OfType<Form>()
+            .Where(form => String.Equals(form.Name, "UploadAlrt"))
+            .ToList()
+            .ForEach(form => form.Close());
+        }
+
+        private void buildShowAlert(String title, String subheader) {
             CustomAlert alert = new CustomAlert(title: title, subheader: subheader);
             alert.Show();
+        }
+
+        private void buildRedundaneVisibility() {
+            if (flowLayoutPanel1.Controls.Count == 0) {
+                showRedundane();
+            }
+            else {
+                clearRedundane();
+            }
         }
 
         private void clearRedundane() {
@@ -442,11 +498,10 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if(flowLayoutPanel1.Controls.Count > 0) {
-                clearRedundane();
-            }
+            buildRedundaneVisibility();
 
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+
         }
 
         /// <summary>
@@ -1054,9 +1109,6 @@ namespace FlowSERVER1 {
         int msiCurr = 0;
         int docxCurr = 0;
 
-        private int searchCurr = 0;
-        private string searchPan = "";
-
         private async Task containThumbUpload(string selectedItems,string nameTable, string getNamePath, object keyValMain) {
 
             int getCurrentCount = int.Parse(lblItemCountText.Text);
@@ -1098,7 +1150,7 @@ namespace FlowSERVER1 {
                  */
             }
 
-            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+            closeUploadAlert();
 
         }
         private async Task startSending(string setValue,string nameTable) {
@@ -1124,15 +1176,14 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
+                closeUploadAlert();
             }
             catch (Exception) {
-                showAlert(title: "Upload failed",subheader: $"Failed to upload {getName}");
+                buildShowAlert(title: "Upload failed",subheader: $"Failed to upload {getName}");
             }
         }
 
-        private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
+        private void _mainFileGenerator() {
 
             var open = new OpenFileDialog {
                 Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;.webp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
@@ -1146,9 +1197,9 @@ namespace FlowSERVER1 {
 
                 List<string> _filValues = open.FileNames.Select(Path.GetFileName).ToList();
 
-                if (open.FileNames.Length + curFilesCount > AccountType_) {
+                if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     Form bgBlur = new Form();
-                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(_AccountTypeStr_)) {
+                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(Globals.accountType)) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                         bgBlur.Opacity = .24d;
@@ -1193,7 +1244,6 @@ namespace FlowSERVER1 {
 
                         async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                            searchPan = panName;
                             nameTableInsert = nameTable;
 
                             if (fileSizeInMB < 1500) {
@@ -1583,31 +1633,20 @@ namespace FlowSERVER1 {
                                 unsupportedFileFormartForm.Show();
                             }
 
-                            Application.OpenForms
-                            .OfType<Form>()
-                            .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                            .ToList()
-                            .ForEach(form => form.Close());
-                           
-                        } catch (Exception) {
-                            Application.OpenForms
-                            .OfType<Form>()
-                            .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                            .ToList()
-                            .ForEach(form => form.Close());
-                        }
+                            closeUploadAlert();
 
-                        searchCurr = curr;
+                        } catch (Exception) {
+
+                            closeUploadAlert();
+
+                        }
 
                         lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     }
                 }
             }
-            Application.OpenForms
-             .OfType<Form>()
-             .Where(form => String.Equals(form.Name, "UploadAlrt"))
-             .ToList()
-             .ForEach(form => form.Close());
+
+            closeUploadAlert();
         }
   
         /// <summary>
@@ -1653,7 +1692,7 @@ namespace FlowSERVER1 {
                     int currentUploadCount = Convert.ToInt32(lblItemCountText.Text);
 
                     if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
-                        _mainFileGenerator(Globals.uploadFileLimit[Globals.accountType], Globals.accountType);
+                        _mainFileGenerator();
                     } else {
                         DisplayError(Globals.accountType);
                     }
@@ -1662,7 +1701,7 @@ namespace FlowSERVER1 {
                     MessageBox.Show("You can only upload a file on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
             } catch (Exception) {
-                showAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+                buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
             }
                 
         }
@@ -2093,9 +2132,9 @@ namespace FlowSERVER1 {
 
             btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
             btnGoHomePage.FillColor = Color.Transparent;
-            panel1.SendToBack();
-            panel3.BringToFront();
-            label9.Visible = true;
+            pnlMain.SendToBack();
+            pnlFolders.BringToFront();
+            lblMyFolders.Visible = true;
             lstFoldersPage.Visible = true;
 
             clearRedundane();
@@ -2210,12 +2249,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
-                clearRedundane();
-            }
+            buildRedundaneVisibility();
 
         }
 
@@ -2262,21 +2296,14 @@ namespace FlowSERVER1 {
 
            
             await generateUserSharedOthers(_TypeValuesOthers, "DirParOther", _TypeValuesOthers.Count);
-
-            
-
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
-                clearRedundane();
-            }
+            buildRedundaneVisibility();
         }
 
         /// <summary>
         /// Select folder from listBox and start showing
         /// the files from selected folder
         /// </summary>
+
 
         public List<String> _TypeValuesOthers = new List<String>();
         public List<String> _TypeValues = new List<String>();
@@ -2296,11 +2323,7 @@ namespace FlowSERVER1 {
 
                 if (_selectedFolder == "Home") {
 
-                    btnDownloadFolder.Visible = false;
-                    btnDeleteFolder.Visible = false;
-                    btnRefreshSharedFiles.Visible = false;
-                    btnOpenRenameFolderPage.Visible = false;
-                    btnRefreshFiles.Visible = true;
+                    buildButtonsOnHomePageSelected();
                     flowLayoutPanel1.WrapContents = true;
                     flowLayoutPanel1.Controls.Clear();
 
@@ -2311,11 +2334,7 @@ namespace FlowSERVER1 {
                 }
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
 
-                    btnDeleteFolder.Visible = true;
-                    btnOpenRenameFolderPage.Visible = true;
-                    btnRefreshFiles.Visible = false;
-                    guna2Panel4.Visible = false;
-                    btnDownloadFolder.Visible = true;
+                    buildButtonsOnFolderNameSelected();
                     flowLayoutPanel1.Controls.Clear();
                     flowLayoutPanel1.WrapContents = true;
 
@@ -2346,11 +2365,7 @@ namespace FlowSERVER1 {
                 } else if (_selectedIndex == 1) {
 
 
-                    btnRefreshSharedFiles.Visible = true;
-                    btnOpenRenameFolderPage.Visible = false;
-                    btnRefreshFiles.Visible = false;
-                    btnDeleteFolder.Visible = false;
-                    btnDownloadFolder.Visible = false;
+                    buildButtonOnSharedFilesSelected();
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
@@ -2365,12 +2380,7 @@ namespace FlowSERVER1 {
                 }
                 else if (_selectedIndex == 2) {
 
-                    btnRefreshSharedFiles.Visible = true;
-                    btnRefreshFiles.Visible = false;
-                    btnDownloadFolder.Visible = false;
-
-                    btnDeleteFolder.Visible = false;
-                    btnOpenRenameFolderPage.Visible = false;
+                    buildButtonsOnSharedToMeSelected();
                     flowLayoutPanel1.Controls.Clear();
 
                     clearRedundane();
@@ -2395,7 +2405,7 @@ namespace FlowSERVER1 {
                     clearRedundane();
                 }
 
-                showAlert(title: "Something went wrong", subheader: "Try to restart Flowstorage.");
+                buildShowAlert(title: "Something went wrong", subheader: "Try to restart Flowstorage.");
             }
         }
 
@@ -2421,11 +2431,8 @@ namespace FlowSERVER1 {
                 int indexSelected = lstFoldersPage.Items.IndexOf("Home");
                 lstFoldersPage.SelectedIndex = indexSelected;
 
-                Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
+                closeRetrievalAlert();
+
             }
         }
 
@@ -2823,7 +2830,7 @@ namespace FlowSERVER1 {
                 } 
 
             } catch (Exception) {
-                showAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.");
+                buildShowAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.");
             }
         }
 
@@ -3193,7 +3200,7 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                showAlert(title: "Something went wrong", subheader: "Something went wrong while trying to load your files. Try to hit the refresh button.");
+                buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to load your files. Try to hit the refresh button.");
             }
         }
 
@@ -3208,14 +3215,11 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button19_Click(object sender, EventArgs e) {
 
-            Application.OpenForms
-              .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-              .ToList()
-              .ForEach(form => form.Close());
+            closeRetrievalAlert();
 
-            String _currentFold = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            string _currentFold = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             _removeFoldFunc(_currentFold);
+
         }
 
 
@@ -3363,11 +3367,7 @@ namespace FlowSERVER1 {
                     DirectoryForm displayDirectory = new DirectoryForm(titleLab.Text);
                     displayDirectory.Show();
 
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
+                    closeRetrievalAlert();
                 };
             }
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
@@ -3660,10 +3660,7 @@ namespace FlowSERVER1 {
             }
 
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
-
-            if (lblItemCountText.Text == "0") {
-                showRedundane();
-            }
+            buildRedundaneVisibility();
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
@@ -3691,36 +3688,39 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
-                clearRedundane();
-            }
-
-
+            buildRedundaneVisibility();
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
+        /// <summary>
+        /// Go to Home button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button9_Click_1(object sender, EventArgs e) {
-            guna2Panel4.Visible = true;
+            pnlSubPanelDetails.Visible = true;
             btnGoHomePage.FillColor = Color.FromArgb(255,71, 19, 191);
             btnShowFolderPage.FillColor = Color.Transparent;
-            panel3.SendToBack();
-            panel1.BringToFront();
-            label9.Visible = false;
+            pnlFolders.SendToBack();
+            pnlMain.BringToFront();
+            lblMyFolders.Visible = false;
             lstFoldersPage.Visible = false;
             btnLogout.Visible = true;
             guna2VSeparator1.BringToFront();
         }
 
+        /// <summary>
+        /// Go to Folders button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void guna2Button13_Click(object sender, EventArgs e) {
-            guna2Panel4.Visible = false;
+            pnlSubPanelDetails.Visible = false;
             btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
             btnGoHomePage.FillColor = Color.Transparent;
-            panel1.SendToBack();
-            panel3.BringToFront();
-            label9.Visible = true;
+            pnlMain.SendToBack();
+            pnlFolders.BringToFront();
+            lblMyFolders.Visible = true;
             lstFoldersPage.Visible = true;
             btnLogout.Visible = false;
             guna2VSeparator1.BringToFront();
@@ -3748,7 +3748,7 @@ namespace FlowSERVER1 {
                 DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (_confirmation == DialogResult.Yes) {
 
-                    panel1.SendToBack();
+                    pnlMain.SendToBack();
 
                     HomePage.instance.label2.Text = "Item Count";
                     HomePage.instance.lblUpload.Text = "Upload";
@@ -3899,7 +3899,7 @@ namespace FlowSERVER1 {
                 }
 
                 async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
-                    searchPan = panName;
+
                     nameTableInsert = nameTable;
 
                     if (fileSizeInMB < 1500) {
@@ -4316,22 +4316,12 @@ namespace FlowSERVER1 {
                         createPanelMain("file_info_word", "PanDoc", docxCurr, encryptText);
                     }
 
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                    .ToList()
-                    .ForEach(form => form.Close());
+                    closeUploadAlert();
 
                 }
                 catch (Exception) {
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                    .ToList()
-                    .ForEach(form => form.Close());
+                    closeUploadAlert();
                 }
-
-                searchCurr = curr;
 
                 lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
@@ -4413,11 +4403,7 @@ namespace FlowSERVER1 {
 
         private void _openFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
 
-            var retrievalAlertForm = Application.OpenForms
-                .OfType<Form>()
-                .FirstOrDefault(form => form.Name == "RetrievalAlert");
-
-            retrievalAlertForm?.Close();
+            closeRetrievalAlert();
 
             var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), EncryptionModel.Decrypt(folderTitle));
             Directory.CreateDirectory(folderPath);

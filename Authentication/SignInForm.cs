@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 using System.Security.Cryptography;
 using FlowSERVER1.Authentication;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
     public partial class SignInForm : Form {
@@ -874,7 +875,7 @@ namespace FlowSERVER1 {
 
             }
             catch (Exception) {
-                MessageBox.Show("Are you connected to the internet?", "Flowstorage: An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(title: "Failed to sign-in to your account", subheader: "Are you connected to the internet?").Show();
             }
 
         }

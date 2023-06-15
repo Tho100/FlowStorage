@@ -23,10 +23,9 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private MySqlCommand command = ConnectionModel.command;
 
-        private String _TabName = "";
-        private String _DirName = "";
+        private string _TabName = "";
+        private string _DirName = "";
 
-        private static audFORM instance;
         private bool isFromShared;
         private bool IsFromSharing;
 
@@ -65,9 +64,8 @@ namespace FlowSERVER1 {
             }
 
             label2.Text = _getName;
-
             pictureBox3.Enabled = false;
-            instance = this;
+
         }
 
         SoundPlayer _getSoundPlayer = null;

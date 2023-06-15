@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomePage));
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlMain = new System.Windows.Forms.Panel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.lblEssentials = new System.Windows.Forms.Label();
@@ -39,9 +39,9 @@
             this.btnFileSharing = new Guna.UI2.WinForms.Guna2Button();
             this.btnUploadFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnCreateDirectory = new Guna.UI2.WinForms.Guna2Button();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pnlFolders = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnlSubPanelDetails = new Guna.UI2.WinForms.Guna2Panel();
             this.lblUsagePercentage = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.progressBarUsageStorage = new Guna.UI2.WinForms.Guna2ProgressBar();
@@ -53,7 +53,7 @@
             this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblMyFolders = new System.Windows.Forms.Label();
             this.lstFoldersPage = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -102,10 +102,10 @@
             this.guna2CircleButton2 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
             this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
-            this.panel1.SuspendLayout();
+            this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            this.panel3.SuspendLayout();
-            this.guna2Panel4.SuspendLayout();
+            this.pnlFolders.SuspendLayout();
+            this.pnlSubPanelDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -115,25 +115,25 @@
             this.pnlFileOptions.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // pnlMain
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.panel1.Controls.Add(this.pictureBox5);
-            this.panel1.Controls.Add(this.guna2Separator1);
-            this.panel1.Controls.Add(this.lblEssentials);
-            this.panel1.Controls.Add(this.lblUpload);
-            this.panel1.Controls.Add(this.btnUploadFolder);
-            this.panel1.Controls.Add(this.btnFileSharing);
-            this.panel1.Controls.Add(this.btnUploadFile);
-            this.panel1.Controls.Add(this.btnCreateDirectory);
-            this.panel1.Controls.Add(this.panel3);
-            this.panel1.Location = new System.Drawing.Point(54, -1);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(207, 669);
-            this.panel1.TabIndex = 1;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.pnlMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.pnlMain.Controls.Add(this.pictureBox5);
+            this.pnlMain.Controls.Add(this.guna2Separator1);
+            this.pnlMain.Controls.Add(this.lblEssentials);
+            this.pnlMain.Controls.Add(this.lblUpload);
+            this.pnlMain.Controls.Add(this.btnUploadFolder);
+            this.pnlMain.Controls.Add(this.btnFileSharing);
+            this.pnlMain.Controls.Add(this.btnUploadFile);
+            this.pnlMain.Controls.Add(this.btnCreateDirectory);
+            this.pnlMain.Controls.Add(this.pnlFolders);
+            this.pnlMain.Location = new System.Drawing.Point(54, -1);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(207, 669);
+            this.pnlMain.TabIndex = 1;
+            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // pictureBox5
             // 
@@ -272,24 +272,24 @@
             this.btnCreateDirectory.TextOffset = new System.Drawing.Point(3, 0);
             this.btnCreateDirectory.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
-            // panel3
+            // pnlFolders
             // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.panel3.Controls.Add(this.button1);
-            this.panel3.Controls.Add(this.guna2Panel4);
-            this.panel3.Controls.Add(this.btnLogout);
-            this.panel3.Controls.Add(this.guna2PictureBox1);
-            this.panel3.Controls.Add(this.label18);
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.lstFoldersPage);
-            this.panel3.Location = new System.Drawing.Point(2, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.panel3.Size = new System.Drawing.Size(207, 669);
-            this.panel3.TabIndex = 36;
-            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            this.pnlFolders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.pnlFolders.Controls.Add(this.button1);
+            this.pnlFolders.Controls.Add(this.pnlSubPanelDetails);
+            this.pnlFolders.Controls.Add(this.btnLogout);
+            this.pnlFolders.Controls.Add(this.guna2PictureBox1);
+            this.pnlFolders.Controls.Add(this.label18);
+            this.pnlFolders.Controls.Add(this.lblMyFolders);
+            this.pnlFolders.Controls.Add(this.lstFoldersPage);
+            this.pnlFolders.Location = new System.Drawing.Point(2, 0);
+            this.pnlFolders.Name = "pnlFolders";
+            this.pnlFolders.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.pnlFolders.Size = new System.Drawing.Size(207, 669);
+            this.pnlFolders.TabIndex = 36;
+            this.pnlFolders.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // button1
             // 
@@ -302,26 +302,26 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // guna2Panel4
+            // pnlSubPanelDetails
             // 
-            this.guna2Panel4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.guna2Panel4.BorderRadius = 8;
-            this.guna2Panel4.BorderThickness = 1;
-            this.guna2Panel4.Controls.Add(this.lblUsagePercentage);
-            this.guna2Panel4.Controls.Add(this.label17);
-            this.guna2Panel4.Controls.Add(this.progressBarUsageStorage);
-            this.guna2Panel4.Controls.Add(this.btnOpenUpgradePage);
-            this.guna2Panel4.Controls.Add(this.lblLimitUploadText);
-            this.guna2Panel4.Controls.Add(this.label7);
-            this.guna2Panel4.Controls.Add(this.lblItemCountText);
-            this.guna2Panel4.Controls.Add(this.label2);
-            this.guna2Panel4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.guna2Panel4.Location = new System.Drawing.Point(16, 384);
-            this.guna2Panel4.Name = "guna2Panel4";
-            this.guna2Panel4.Size = new System.Drawing.Size(178, 205);
-            this.guna2Panel4.TabIndex = 23;
-            this.guna2Panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel4_Paint);
+            this.pnlSubPanelDetails.BackColor = System.Drawing.Color.Transparent;
+            this.pnlSubPanelDetails.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.pnlSubPanelDetails.BorderRadius = 8;
+            this.pnlSubPanelDetails.BorderThickness = 1;
+            this.pnlSubPanelDetails.Controls.Add(this.lblUsagePercentage);
+            this.pnlSubPanelDetails.Controls.Add(this.label17);
+            this.pnlSubPanelDetails.Controls.Add(this.progressBarUsageStorage);
+            this.pnlSubPanelDetails.Controls.Add(this.btnOpenUpgradePage);
+            this.pnlSubPanelDetails.Controls.Add(this.lblLimitUploadText);
+            this.pnlSubPanelDetails.Controls.Add(this.label7);
+            this.pnlSubPanelDetails.Controls.Add(this.lblItemCountText);
+            this.pnlSubPanelDetails.Controls.Add(this.label2);
+            this.pnlSubPanelDetails.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.pnlSubPanelDetails.Location = new System.Drawing.Point(16, 384);
+            this.pnlSubPanelDetails.Name = "pnlSubPanelDetails";
+            this.pnlSubPanelDetails.Size = new System.Drawing.Size(178, 205);
+            this.pnlSubPanelDetails.TabIndex = 23;
+            this.pnlSubPanelDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel4_Paint);
             // 
             // lblUsagePercentage
             // 
@@ -480,17 +480,17 @@
             this.label18.TabIndex = 36;
             this.label18.Text = "Folders";
             // 
-            // label9
+            // lblMyFolders
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label9.Location = new System.Drawing.Point(41, 104);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 20);
-            this.label9.TabIndex = 32;
-            this.label9.Text = "My Folders";
-            this.label9.Visible = false;
+            this.lblMyFolders.AutoSize = true;
+            this.lblMyFolders.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMyFolders.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblMyFolders.Location = new System.Drawing.Point(41, 104);
+            this.lblMyFolders.Name = "lblMyFolders";
+            this.lblMyFolders.Size = new System.Drawing.Size(85, 20);
+            this.lblMyFolders.TabIndex = 32;
+            this.lblMyFolders.Text = "My Folders";
+            this.lblMyFolders.Visible = false;
             // 
             // lstFoldersPage
             // 
@@ -1414,7 +1414,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.lblGreetingText);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.btnOpenFilterType);
             this.Controls.Add(this.txtBoxSearchFile);
             this.Controls.Add(this.btnDeleteFolder);
@@ -1429,13 +1429,13 @@
             this.Text = "Flowstorage";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.guna2Panel4.ResumeLayout(false);
-            this.guna2Panel4.PerformLayout();
+            this.pnlFolders.ResumeLayout(false);
+            this.pnlFolders.PerformLayout();
+            this.pnlSubPanelDetails.ResumeLayout(false);
+            this.pnlSubPanelDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -1451,7 +1451,7 @@
         }
 
         #endregion
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel4;
+        private Guna.UI2.WinForms.Guna2Panel pnlSubPanelDetails;
         public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label lblGreetingText;
@@ -1479,9 +1479,9 @@
         private System.Windows.Forms.Panel panel2;
         private Guna.UI2.WinForms.Guna2Button btnGoHomePage;
         private Guna.UI2.WinForms.Guna2Button btnShowFolderPage;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel pnlFolders;
         public System.Windows.Forms.Label label18;
-        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label lblMyFolders;
         public System.Windows.Forms.Label lblLimitUploadText;
         public System.Windows.Forms.Label label7;
         public Guna.UI2.WinForms.Guna2Button btnOpenUpgradePage;
@@ -1491,7 +1491,7 @@
         public System.Windows.Forms.Label lblUsagePercentage;
         public Guna.UI2.WinForms.Guna2ProgressBar progressBarUsageStorage;
         public Guna.UI2.WinForms.Guna2Button btnLogout;
-        public System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Panel pnlMain;
         public Guna.UI2.WinForms.Guna2Button btnOpenRenameFolderPage;
         public Guna.UI2.WinForms.Guna2Button btnOpenFilterType;
         public System.Windows.Forms.Label lblEmptyHere;

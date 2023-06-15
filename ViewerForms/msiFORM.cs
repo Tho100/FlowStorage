@@ -14,8 +14,8 @@ using System.Text.RegularExpressions;
 namespace FlowSERVER1 {
     public partial class msiFORM : Form {
 
-        public String _TableName;
-        public String _DirectoryName;
+        public string _TableName;
+        public string _DirectoryName;
 
         private bool _IsFromShared;
         public msiFORM(String fileName,String tableName, String directoryName,String uploaderUsername, bool _isFromShared = false) {
@@ -33,9 +33,10 @@ namespace FlowSERVER1 {
 
             label1.Text = fileName;
             label2.Text = _getName;
-            _TableName = tableName;
-            _DirectoryName = directoryName;
-            _IsFromShared = _isFromShared;
+
+            this._TableName = tableName;
+            this._DirectoryName = directoryName;
+            this._IsFromShared = _isFromShared;
         }
 
         private void msiFORM_Load(object sender, EventArgs e) {

@@ -20,7 +20,7 @@ namespace FlowSERVER1 {
     /// </summary>
     public partial class ptxFORM : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
+        private readonly MySqlConnection con = ConnectionModel.con;
 
         private string _TableName;
         private string _DirectoryName;
