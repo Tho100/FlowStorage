@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.Caching;
 using FlowSERVER1.AlertForms;
+using Org.BouncyCastle.Utilities.Encoders;
 
 namespace FlowSERVER1
 {
@@ -42,7 +43,6 @@ namespace FlowSERVER1
         private string getName { get; set; }
         private string retrieved { get; set; }
         private string retrievedName { get; set; }
-        private string tableName { get; set; }
         private string varDate { get; set; }
         private long fileSizeInMB { get; set; }
         private object keyValMain { get; set; }
@@ -79,7 +79,6 @@ namespace FlowSERVER1
                 { ".wav", ("vidFile", "file_info_vid") },
                 { ".xlsx", ("exlFile", "file_info_excel") },
                 { ".mp3", ("audiFile", "file_info_audi") },
-                { ".gif", ("gifFile", "file_info_gif") },
                 { ".apk", ("apkFile", "file_info_apk") },
                 { ".pdf", ("pdfFile", "file_info_pdf") },
                 { ".pptx", ("ptxFile", "file_info_ptx") },
@@ -163,6 +162,28 @@ namespace FlowSERVER1
                         string uploadDate = reader.GetString(1);
                         filesInfo.Add((fileName, uploadDate));
                     }
+                }
+            }
+
+            List<string> base64EncodedImage = new List<string>();
+
+            if (Globals.imageTypes.Contains(_extName)) {
+
+                for (int i = 0; i < currItem; i++) {
+
+                    const string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
+                        command.Parameters.AddWithValue("@ext", _extName);
+
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await readBase64.ReadAsync()) {
+                                base64EncodedImage.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -259,31 +280,12 @@ namespace FlowSERVER1
 
                 if (_tableName == "file_info") {
 
-                    List<string> base64Encoded = new List<string>();
-
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", _extName);
-
-                        using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(EncryptionModel.Decrypt(readBase64.GetString(0), "0123456789085746"));
-                            }
-                        }
-                    }
-
-
-                    if (base64Encoded.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded[i]);
+                    if (base64EncodedImage.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            Image setImageStream = Image.FromStream(toMs);
-                            picMain_Q.Image = setImageStream;
+                            picMain_Q.Image = Image.FromStream(toMs);
                         }
                     }
-
-                    base64Encoded.Clear();
 
                     picMain_Q.Click += (sender, e) => {
                         var getImgName = (Guna2PictureBox)sender;
@@ -361,7 +363,8 @@ namespace FlowSERVER1
 
                 if (_tableName == "file_info_vid") {
 
-                    var base64Encoded = new List<string>();
+                    List<string> base64EncodedThumbnail = new List<string>();
+
                     const string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext AND CUST_FILE_PATH = @filename";
                     using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -370,15 +373,15 @@ namespace FlowSERVER1
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
                         using (var readBase64 = await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(readBase64.GetString(0));
+                                base64EncodedThumbnail.Add(readBase64.GetString(0));
                             }
                         }
                     }
 
                     await Task.Run(async () => {
-                        byte[] getBytes = Convert.FromBase64String(base64Encoded?.FirstOrDefault());
+                        byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail?.FirstOrDefault());
                         using (var toMs = new MemoryStream(getBytes)) {
-                            img.Image = await Task.Run(() => new Bitmap(toMs));
+                            img.Image = await Task.Run(() => Image.FromStream(toMs));
                         }
                     });
                 
@@ -405,49 +408,6 @@ namespace FlowSERVER1
                         Form bgBlur = new Form();
                         audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
-                    };
-                }
-
-                if (_tableName == "file_info_gif") {
-
-                    List<String> _base64Encoded = new List<string>();
-
-                    const string retrieveImg = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    command = new MySqlCommand(retrieveImg, con);
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                    command.Parameters.AddWithValue("@ext",_extName);
-
-                    MySqlDataReader _readBase64 = command.ExecuteReader();
-                    while (_readBase64.Read()) {
-                        _base64Encoded.Add(_readBase64.GetString(0));
-                    }
-                    _readBase64.Close();
-
-                    var _getBytes = Convert.FromBase64String(_base64Encoded[i]);
-                    MemoryStream _toMs = new MemoryStream(_getBytes);
-
-                    img.Image = new Bitmap(_toMs);
-
-                    picMain_Q.Click += (sender_gi, ex_gi) => {
-                        Form bgBlur = new Form();
-                        using (gifFORM displayPic = new gifFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPic.Owner = bgBlur;
-                            displayPic.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
                     };
                 }
 
@@ -511,27 +471,7 @@ namespace FlowSERVER1
 
         }
 
-        private void guna2PictureBox1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e) {
 
         }
 
@@ -565,7 +505,6 @@ namespace FlowSERVER1
         int vidCurr = 0;
         int exlCurr = 0;
         int audCurr = 0;
-        int gifCurr = 0;
         int apkCurr = 0;
         int pdfCurr = 0;
         int ptxCurr = 0;
@@ -577,7 +516,7 @@ namespace FlowSERVER1
             var form1 = HomePage.instance;
 
             var open = new OpenFileDialog {
-                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
+                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
                 Multiselect = true
             };
 
@@ -890,18 +829,6 @@ namespace FlowSERVER1
                                     clearRedundane();
                                 }
 
-                                if (nameTable == "file_info_gif") {
-                                    await startSending(keyVal);
-                                    textboxPic.Image = new Bitmap(selectedItems);
-
-                                    textboxPic.Click += (sender_gi, e_gi) => {
-                                        Form bgBlur = new Form();
-                                        gifFORM displayPic = new gifFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
-                                        displayPic.Show();
-                                    };
-                                    clearRedundane();
-                                }
-
                                 if (nameTable == "file_info_apk") {
                                     keyValMain = keyVal;
                                     backgroundWorker1.RunWorkerAsync();
@@ -1051,12 +978,6 @@ namespace FlowSERVER1
                                 var _encryptValue = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_audi", "PanAud", audCurr, _encryptValue); 
                             }
-                            else if (retrieved == ".gif") {
-                                gifCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_gif", "PanGif", gifCurr, _encryptValue);
-                            }
                             else if (retrieved == ".apk") {
                                 apkCurr++;
                                 var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
@@ -1128,60 +1049,15 @@ namespace FlowSERVER1
 
             try {
 
-                int CurrentUploadCount = 0;
+                int currentUploadCount = Convert.ToInt32(HomePage.instance.lblItemCountText.Text);
 
-                string _accType = "";
-
-                const string getAccTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-                using (var command = new MySqlCommand(getAccTypeQuery, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    List<String> types = new List<String>();
-                    using (var reader = command.ExecuteReader()) {
-                        while (reader.Read()) {
-                            types.Add(reader.GetString(0));
-                        }
-                    }
-                    _accType = types.FirstOrDefault();
-                    CurrentUploadCount = flowLayoutPanel1.Controls.Count;
+                if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
+                    _mainFileGenerator(Globals.uploadFileLimit[Globals.accountType], Globals.accountType);
                 }
-                
-
-                if (_accType == "Basic") {
-                    if (CurrentUploadCount != 20) {
-                        _mainFileGenerator(20,"Basic");
-                    }
-                    else {
-                        DisplayError(_accType);
-                    }
+                else {
+                    DisplayError(Globals.accountType);
                 }
 
-                if (_accType == "Max") {
-                    if (CurrentUploadCount != 500) {
-
-                        _mainFileGenerator(500,"Max");
-                    }
-                    else {
-                        DisplayError(_accType);
-                    }
-                }
-
-                if (_accType == "Express") {
-                    if (CurrentUploadCount != 1000) {
-                        _mainFileGenerator(1000, "Express");
-                    }
-                    else {
-                        DisplayError(_accType);
-                    }
-                }
-
-                if (_accType == "Supreme") {
-                    if (CurrentUploadCount != 2000) {
-                        _mainFileGenerator(2000, "Supreme");
-                    }
-                    else {
-                        DisplayError(_accType);
-                    }
-                }
            } catch (Exception) {
 
                 Application.OpenForms

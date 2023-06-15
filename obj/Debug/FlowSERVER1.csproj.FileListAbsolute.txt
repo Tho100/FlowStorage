@@ -39,7 +39,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Interop.WMPLib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AxInterop.WMPLib.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.audFORM.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.gifFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.apkFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Properties.Resources.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.pdfFORM.resources

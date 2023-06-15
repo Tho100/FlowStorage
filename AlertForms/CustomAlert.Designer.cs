@@ -51,12 +51,11 @@
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(23, 28);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(49, 25);
+            this.lblTitle.Size = new System.Drawing.Size(351, 25);
             this.lblTitle.TabIndex = 49;
             this.lblTitle.Text = "Title";
             // 
@@ -98,7 +97,6 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.CustomAlert_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

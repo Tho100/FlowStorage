@@ -15,15 +15,19 @@ namespace FlowSERVER1 {
 
         public static RetrievalAlert instance;
 
-        private string OriginFrom = "";
+        private string originFrom {get; set; }
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
         public RetrievalAlert(String alertMessage,String _orignFrom) {
+
             InitializeComponent();
-            label8.Text = alertMessage;
-            OriginFrom = _orignFrom;
+
+            this.label8.Text = alertMessage;
+            this.originFrom = _orignFrom;
+
             instance = this;
+
             if(_orignFrom == "login") {
                 guna2Button10.Visible = false;
             } else {
@@ -38,9 +42,9 @@ namespace FlowSERVER1 {
 
         private void guna2Button10_Click(object sender, EventArgs e) {
             label8.Text = "Cancelling operation...";
-            if(OriginFrom == "Saver") {
+            if(originFrom == "Saver") {
                 SaverModel.stopFileRetrieval = true;
-            } else if (OriginFrom == "Loader") {
+            } else if (originFrom == "Loader") {
                 if(label8.Text == "Flowstorage is retrieving your directory files." || label8.Text == "Flowstorage is retrieving your folder files." || label8.Text == "Flowstorage is retrieving your shared files...") {
                     label8.Text = "Failed to cancel the operation.";
                 } else {

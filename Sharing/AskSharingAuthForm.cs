@@ -180,17 +180,6 @@ namespace FlowSERVER1 {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
                 }
-                else if (_retrieved == ".gif") {
-                    ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
-                    Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                    using (var stream = new MemoryStream()) {
-                        toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                        var toBase64String = Convert.ToBase64String(stream.ToArray());
-                        command.Parameters["@CUST_THUMB"].Value = toBase64String;
-                    }
-                    var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                    await startSending(_toBase64);
-                }
                 else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql") {
                     var nonLine = "";
                     using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName

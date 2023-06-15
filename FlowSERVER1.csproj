@@ -400,7 +400,7 @@
     <Compile Include="Authentication\SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalStyle.cs" />
+    <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
@@ -524,13 +524,7 @@
     <Compile Include="ViewerForms\exlFORM.Designer.cs">
       <DependentUpon>exlFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\gifFORM.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewerForms\gifFORM.Designer.cs">
-      <DependentUpon>gifFORM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Globals.cs" />
+    <Compile Include="Global\Globals.cs" />
     <Compile Include="AlertForms\LimitedFolderAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -802,9 +796,6 @@
     <EmbeddedResource Include="ViewerForms\exlFORM.resx">
       <DependentUpon>exlFORM.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\gifFORM.resx">
-      <DependentUpon>gifFORM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\LimitedFolderAlert.resx">
       <DependentUpon>LimitedFolderAlert.cs</DependentUpon>

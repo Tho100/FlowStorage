@@ -79,7 +79,6 @@ namespace FlowSERVER1 {
                             remove_ItemsTab("file_info_expand");
                             remove_ItemsTab("file_info_ptx");
                             remove_ItemsTab("file_info_pdf");
-                            remove_ItemsTab("file_info_gif");
                             remove_ItemsTab("file_info_word");
                             remove_ItemsTab("file_info_apk");
                             remove_ItemsTab("file_info_exe");

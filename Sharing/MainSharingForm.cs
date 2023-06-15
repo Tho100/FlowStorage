@@ -67,7 +67,7 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) {
 
             OpenFileDialog _OpenDialog = new OpenFileDialog();
-            _OpenDialog.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Gif Files|*.gif|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
+            _OpenDialog.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
             if (_OpenDialog.ShowDialog() == DialogResult.OK) {
                 var getEx = _OpenDialog.FileName;
                 var getName = _OpenDialog.SafeFileName;
@@ -88,7 +88,7 @@ namespace FlowSERVER1 {
         /// <param name="setValue"></param>
         /// <param name="thumbnailValue"></param>
         /// <returns></returns>
-        async Task startSending(Object setValue, Object thumbnailValue = null) {
+        private async Task startSending(Object setValue, Object thumbnailValue = null) {
 
             const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
 
@@ -175,21 +175,6 @@ namespace FlowSERVER1 {
                         var _toBase64 = Convert.ToBase64String(_getBytes);
                         String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
                         await startSending(encryptText);
-                    }
-                    else if (_retrieved == ".gif") {
-                        ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
-                        Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                        String toBase64Thumbnail;
-                        using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                            toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
-                        }
-
-                        var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
-                        String encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
-
-                        await startSending(encryptText, toBase64Thumbnail);
-
                     }
                     else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql" || _retrieved == ".csv") {
 

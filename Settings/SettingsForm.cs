@@ -1,35 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.IO;
-using System.Net.Http;
-using System.Web;
-using System.Net;
-using System.Globalization;
-using Ubiety.Dns.Core;
-using Stripe.Infrastructure;
-using System.Text.RegularExpressions;
-using Stripe.Checkout;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Configuration;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using FlowSERVER1.AlertForms;
-//using Stripe;
+using FlowSERVER1.Authentication;
 
 namespace FlowSERVER1 {
-    /// <summary>
-    /// Settings form class
-    /// </summary>
+    
     public partial class SettingsForm : Form {
 
         public static SettingsForm instance;
@@ -50,8 +36,8 @@ namespace FlowSERVER1 {
         private int CurrDateStats = 0;
         private string JoinedDate = "";
 
-        readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_gif", "info_word", "info_ptx", "info_audi", "info_excel" };
-        readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "GIF", "Document", "Presentation", "Audio", "Excel" };
+        readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audi", "info_excel" };
+        readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
 
         public SettingsForm() {
 
@@ -375,11 +361,11 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            
+
             try {
-                
-                DialogResult _confirmation = MessageBox.Show("Logout your account?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
-                if(_confirmation == DialogResult.Yes) {
+
+                DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (_confirmation == DialogResult.Yes) {
 
                     guna2Panel1.SendToBack();
                     HomePage.instance.panel1.SendToBack();
@@ -395,25 +381,28 @@ namespace FlowSERVER1 {
 
                     String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                     String _getAuth = _getPath + "\\CUST_DATAS.txt";
+
                     if (File.Exists(_getAuth)) {
-                        Directory.Delete(_getPath, true);
+                        if (Directory.Exists(_getPath)) {
+                            Directory.Delete(_getPath, true);
+                        }
                     }
 
-                    Application.OpenForms["remAccFORM"].Close();
+
                     HomePage.instance.lstFoldersPage.Items.Clear();
+                    HomePage.instance.Hide();
+
+                    this.Close();
+
+                    SignUpForm signUpForm = new SignUpForm();
+                    signUpForm.Show();
+
                 }
-            } catch (Exception) {
-                MessageBox.Show("There's a problem while attempting to logout your account. Please try again.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (Exception) {
+                MessageBox.Show("There's a problem while attempting to logout your account. Please try again.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-        private void label42_Click(object sender, EventArgs e) {
-
-        }
-
-       
-
-
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             _selectedAcc = "Max";
@@ -698,12 +687,12 @@ namespace FlowSERVER1 {
         }
 
         private void setupTime() {
-
-            var form = HomePage.instance;
        
             DateTime now = DateTime.Now;
+
             var hours = now.Hour;
-            String greeting = null;
+            string greeting = null;
+
             if (hours >= 1 && hours <= 12) {
                 if (NewLang == "US") {
                     greeting = "Good Morning, " + Globals.custUsername;
@@ -867,11 +856,13 @@ namespace FlowSERVER1 {
                 }
             }
 
-            string greetingLabel = HomePage.instance.lblGreetingText.Text;
-            greetingLabel = greeting;
+            HomePage.instance.lblGreetingText.Text = greeting;
+
         }
         private void setupUILanguage(String _custLang) {
+
             var Form_1 = HomePage.instance;
+
             if(_custLang == "MY") {
                 label21.Text = "Tetapan";
                 label75.Text = "Alamat Email";

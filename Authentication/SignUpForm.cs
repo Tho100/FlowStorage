@@ -18,8 +18,6 @@ namespace FlowSERVER1.Authentication {
         private readonly MySqlConnection con = ConnectionModel.con;
         private readonly HomePage accessHomePage = new HomePage();
         
-        private HomePage homePage;
-
         public SignUpForm() {
             InitializeComponent();
             InitializeAsyncLoad();
@@ -600,7 +598,7 @@ namespace FlowSERVER1.Authentication {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
@@ -609,7 +607,7 @@ namespace FlowSERVER1.Authentication {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
@@ -645,6 +643,10 @@ namespace FlowSERVER1.Authentication {
         private void guna2Button10_Click(object sender, EventArgs e) {
             SignInForm login_page = new SignInForm(this);
             login_page.Show();
+        }
+
+        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
+
         }
     }
 }

@@ -16,8 +16,8 @@ namespace FlowSERVER1 {
     /// 
     public partial class pdfFORM : Form {
 
-        private String _TableName;
-        private String _DirName;
+        private string _TableName;
+        private string _DirName;
         private bool _IsFromShared;
         private bool IsFromSharing;
 

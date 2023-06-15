@@ -97,11 +97,11 @@ namespace FlowSERVER1 {
         private void FileDeletionNormal(String FileName, String TableName) {
 
             string fileDeletionQuery = $"DELETE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName, EncryptionKey.KeyValue));
-            command.ExecuteNonQuery();
+            using(MySqlCommand command = new MySqlCommand(fileDeletionQuery,con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName, EncryptionKey.KeyValue));
+                command.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -111,38 +111,44 @@ namespace FlowSERVER1 {
 
             const string fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
 
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue));
-            command.ExecuteNonQuery();
+            using(MySqlCommand command = new MySqlCommand(fileDeletionQuery,con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue));
+                command.ExecuteNonQuery();
+            }
         }
         /// <summary>
         /// File deletion for folder
         /// </summary>
         /// <param name="_FileName"></param>
         /// <param name="_FoldName"></param>
-        private void FileDeletionFolder(String _FileName, String _FoldName) {
+        private void FileDeletionFolder(string _FileName, string _FoldName) {
 
             const string fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
 
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-            command.Parameters.AddWithValue("@foldtitle", _FoldName);
-            command.ExecuteNonQuery();
+            using (MySqlCommand command = new MySqlCommand(fileDeletionQuery, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@foldtitle", _FoldName);
+
+                command.ExecuteNonQuery();
+            }
         }
+
         /// <summary>
         /// File deletion function for sharing
         /// </summary>
-        private void FileDeletionSharing(String _FileName) {
+        private void FileDeletionSharing(string _FileName) {
 
             const string fileDeletionQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
 
-            command = new MySqlCommand(fileDeletionQuery, con);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName,EncryptionKey.KeyValue));
-            command.ExecuteNonQuery();
+            using (MySqlCommand command = new MySqlCommand(fileDeletionQuery, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+
+                command.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -182,7 +188,7 @@ namespace FlowSERVER1 {
                         var FileExt = FileName.Substring(FileName.Length-4);
                         var getName = FileName;
                         if(TableName == "null") {
-                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                            if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionNormal(FileName, "file_info");
                             }
                             else if (FileExt == ".msi") {
@@ -202,9 +208,6 @@ namespace FlowSERVER1 {
                             }
                             else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
                                 FileDeletionNormal(getName, "file_info_expand");
-                            }
-                            else if (FileExt == ".gif") {
-                                FileDeletionNormal(getName, "file_info_gif");
                             }
                             else if (FileExt == ".exe") {
                                 FileDeletionNormal(getName, "file_info_exe");
@@ -231,9 +234,6 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
                                 FileDeletionDirectory(getName);
                             }
-                            else if (FileExt == ".gif") {
-                                FileDeletionDirectory(getName);
-                            }
                             else if (FileExt == ".exe") {
                                 FileDeletionDirectory(getName);
                             }
@@ -258,9 +258,6 @@ namespace FlowSERVER1 {
                             }
                             else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
                                 FileDeletionFolder(getName, "file_info_expand");
-                            }
-                            else if (FileExt == ".gif") {
-                                FileDeletionFolder(getName, "file_info_gif");
                             }
                             else if (FileExt == ".exe") {
                                 FileDeletionFolder(getName, "file_info_exe");

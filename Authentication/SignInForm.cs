@@ -81,7 +81,9 @@ namespace FlowSERVER1 {
         }
 
         public void setupAutoLogin(String _custUsername) {
-            String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+
             if (!Directory.Exists(appDataPath)) {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
@@ -620,40 +622,6 @@ namespace FlowSERVER1 {
                         }
                     };
                     clearRedundane();
-                }
-
-                if (_tableName == "file_info_gif") {
-
-                    String getImgQue = "SELECT CUST_THUMB FROM " + _tableName + " WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(getImgQue, con);
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                    MySqlDataAdapter da_Read = new MySqlDataAdapter(command);
-                    DataSet ds_Read = new DataSet();
-                    da_Read.Fill(ds_Read);
-                    MemoryStream ms = new MemoryStream((byte[])ds_Read.Tables[0].Rows[i]["CUST_THUMB"]);
-                    img.Image = new Bitmap(ms);
-
-                    picMain_Q.Click += (sender_gi, ex_gi) => {
-                        Form bgBlur = new Form();
-                        using (gifFORM displayGif = new gifFORM(titleLab.Text, "file_info_gif", "null", Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayGif.Owner = bgBlur;
-                            displayGif.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
-                    };
                 }
 
                 if (_tableName == "file_info_apk") {

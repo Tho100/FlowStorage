@@ -20,10 +20,19 @@ namespace FlowSERVER1 {
         static public readonly HashSet<string> videoTypes = new HashSet<string> 
         {".mp4",".mov",".webm",".avi",".wmv"};
 
+        static public readonly HashSet<string> imageTypesFolder = new HashSet<string>
+        {"png","jpg","jpeg","webp","bmp","ico"};
+
+        static public readonly HashSet<string> textTypesFolder = new HashSet<string>
+        {"txt","csv","sql","html","css","py","xml","js","md"};
+
+        static public readonly HashSet<string> videoTypesFolder = new HashSet<string>
+        {"mp4","mov","webm","avi","wmv"};
+
         static public readonly HashSet<string> publicTables = new HashSet<string> 
         { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", 
           "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk", 
-          "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_gif", "file_info_directory" 
+          "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_directory" 
         };
 
         static public readonly Dictionary<string, string> tableToFileType = new Dictionary<string, string>
@@ -37,7 +46,6 @@ namespace FlowSERVER1 {
             { "file_info_apk", "apkFile" },
             { "file_info_word", "wordFile" },
             { "file_info_ptx", "ptxFile" },
-            { "file_info_gif", "gifFile" },
             { "file_info_directory", null }
         };
 
