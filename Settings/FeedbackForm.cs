@@ -23,11 +23,14 @@ namespace FlowSERVER1.Settings {
 
             try {
 
-                const string query = "INSERT INTO feedback_info VALUES (@username,@feedback)";
+                string currentDate = DateTime.Now.ToString("dd/mm/yyyy");
+
+                const string query = "INSERT INTO feedback_info VALUES (@username,@feedback,@date)";
                 var param = new Dictionary<string, string> 
                 {
-                    { "@username",Globals.custUsername },
-                    { "@feedback",inputFeedback}
+                    { "@username", Globals.custUsername },
+                    { "@feedback", inputFeedback },
+                    { "@date", currentDate },
                 };
 
 
@@ -37,8 +40,10 @@ namespace FlowSERVER1.Settings {
                 alertForm.Show();
 
             } catch (Exception) {
-                var alertForm = new AlertForms.CustomAlert(title: "Failed to send feedback",subheader: "Check your internet connection and try again.");
-                alertForm.Show();
+                new AlertForms.CustomAlert(
+                    title: "Failed to send feedback",
+                    subheader: "Check your internet connection and try again."
+                ).Show();
             }
         }
 
