@@ -400,6 +400,7 @@
     <Compile Include="Authentication\SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
@@ -408,12 +409,18 @@
     <Compile Include="ExtraForms\ApiPageForm.Designer.cs">
       <DependentUpon>ApiPageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GetComment.cs" />
+    <Compile Include="Helper\GetComment.cs" />
     <Compile Include="Settings\FeedbackForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings\FeedbackForm.Designer.cs">
       <DependentUpon>FeedbackForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sharing\SharingAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sharing\SharingAlert.Designer.cs">
+      <DependentUpon>SharingAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewerForms\apkFORM.cs">
       <SubType>Form</SubType>
@@ -499,7 +506,7 @@
     <Compile Include="AlertForms\RecoveryFailedAlert.Designer.cs">
       <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileSize.cs" />
+    <Compile Include="Helper\FileSize.cs" />
     <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -743,6 +750,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\FeedbackForm.resx">
       <DependentUpon>FeedbackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sharing\SharingAlert.resx">
+      <DependentUpon>SharingAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\apkFORM.resx">
       <DependentUpon>apkFORM.cs</DependentUpon>

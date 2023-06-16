@@ -11,6 +11,8 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Threading;
 using Microsoft.WindowsAPICodePack.Shell;
+using FlowSERVER1.Sharing;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
     public partial class AskSharingAuthForm : Form {
@@ -35,13 +37,13 @@ namespace FlowSERVER1 {
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button3.Visible = false;
             guna2Button1.Visible = true;
-            guna2TextBox2.PasswordChar = '*';
+            txtFieldShareToName.PasswordChar = '*';
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             guna2Button3.Visible = true;
             guna2Button1.Visible = false;
-            guna2TextBox2.PasswordChar = '\0';
+            txtFieldShareToName.PasswordChar = '\0';
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
@@ -104,8 +106,28 @@ namespace FlowSERVER1 {
         /// <summary>
         /// Main function for sharing file 
         /// </summary>
+
+        private async Task startSending(string encryptedFileValue, string thumbValue = "") {
+
+            string varDate = DateTime.Now.ToString("dd/MM/yyyy");
+            string encryptedFileName = EncryptionModel.Encrypt(_FileName);
+
+            const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
+            using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
+                command.Parameters.AddWithValue("@CUST_TO", CustUsername);
+                command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
+                command.Parameters.AddWithValue("@CUST_THUMB", thumbValue);
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", encryptedFileName);
+                command.Parameters.AddWithValue("@FILE_EXT", _retrieved);
+                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
+                command.Parameters.AddWithValue("@CUST_FILE", encryptedFileValue);
+
+                await command.ExecuteNonQueryAsync();
+            }
+        }
+
         String _controlName = null;
-        private async void startSharing() {
+        private async Task startSharing() {
 
             int _accType = accountType(CustUsername);
             int _countReceiverFile = countReceiverShared(CustUsername);
@@ -113,42 +135,14 @@ namespace FlowSERVER1 {
 
             if (_accType != _countReceiverFile) {
 
-                Byte[] _getBytes = File.ReadAllBytes(_FilePath);
+                _currentFileName = txtFieldShareToName.Text;
+
+                byte[] _getBytes = File.ReadAllBytes(_FilePath);
                 fileSizeInMB = (_getBytes.Length / 1024) / 1024;
 
-                Thread showUploadAlert = new Thread(() => new UploadingAlert(_FileName, Globals.custUsername, "cust_sharing", _controlName, CustUsername, _fileSize: fileSizeInMB).ShowDialog());
-                showUploadAlert.Start();
+                new Thread(() => new SharingAlert(fileName: _currentFileName, shareToName: CustUsername).ShowDialog()).Start();
 
-                string varDate = DateTime.Now.ToString("dd/MM/yyyy");
-                const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
-
-                async Task startSending(string encryptedFileValue,string thumbValue = "") {
-
-                    using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                        command.Parameters.Add("@CUST_TO", MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_FROM", MySqlDbType.Text);
-                        command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-                        command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-                        command.Parameters.Add("@FILE_EXT", MySqlDbType.Text);
-                        command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-                        command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-
-                        command.Parameters["@CUST_FROM"].Value = Globals.custUsername;
-                        command.Parameters["@CUST_TO"].Value = CustUsername;
-                        command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(_FileName);
-                        command.Parameters["@UPLOAD_DATE"].Value = varDate;
-                        command.Parameters["@FILE_EXT"].Value = _retrieved;
-                        command.Parameters["@CUST_THUMB"].Value = thumbValue;
-                        command.Parameters["@CUST_FILE"].Value = encryptedFileValue;
-
-                        await command.ExecuteNonQueryAsync();
-                    }
-                }
-                
-
-                _currentFileName = guna2TextBox2.Text;
-
-                if (_retrieved == ".png" || _retrieved == ".jpg" || _retrieved == ".jpeg" || _retrieved == ".bmp") {
+                if (Globals.imageTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
                 }
@@ -180,60 +174,55 @@ namespace FlowSERVER1 {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
                 }
-                else if (_retrieved == ".txt" || _retrieved == ".html" || _retrieved == ".xml" || _retrieved == ".py" || _retrieved == ".css" || _retrieved == ".js" || _retrieved == ".sql") {
+                else if (Globals.textTypes.Contains(_retrieved)) {
+
                     var nonLine = "";
-                    using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { //open.FileName
+                    using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { 
                         nonLine = ReadFileTxt.ReadToEnd();
                     }
+
                     var encryptValue = EncryptionModel.Encrypt(nonLine);
                     await startSending(encryptValue);
                 }
-                else if (_retrieved == ".mp4" || _retrieved == ".mov" || _retrieved == ".webm" || _retrieved == ".avi" || _retrieved == ".wmv") {
+                else if (Globals.videoTypes.Contains(_retrieved)) {
+
                     ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                    var toBase64StrThumb = "";
+
+                    string toBase64StrThumb;
                     using (var stream = new MemoryStream()) {
-                        toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                        toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
                         toBase64StrThumb = Convert.ToBase64String(stream.ToArray());
                     }
+
                     var _toBase64 = Convert.ToBase64String(File.ReadAllBytes(_FilePath));
                     await startSending(_toBase64,toBase64StrThumb);
                 }
 
-                Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                    .ToList()
-                    .ForEach(form => form.Close());
-
-                SucessSharedAlert _showSuccessfullyTransaction = new SucessSharedAlert(_FileName, CustUsername);
-                _showSuccessfullyTransaction.Show();
-
-                Application.OpenForms
-                .OfType<Form>()
-                .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                .ToList()
-                .ForEach(form => form.Close());
+                CloseForm.closeForm("SharingAlert");
+                new SucessSharedAlert(_FileName, CustUsername).Show();
 
                 this.Close();
             }
             else {
-                MessageBox.Show("The receiver has reached the limit amount of files they can received.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(title: "Sharing failed",subheader: "The receiver has reached the limit amount of files they can received.").Show();
             }
         }
 
-        private string getInformationSharing(String _custUsername) {
+        private string getInformationSharing(string shareToName) {
 
             string _storeVal = "";
             const string _queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_queryGet, con);
-            command.Parameters.AddWithValue("@username", _custUsername);
 
-            MySqlDataReader _readPas = command.ExecuteReader();
-            while (_readPas.Read()) {
-                _storeVal = _readPas.GetString(0);
+            using (MySqlCommand command = new MySqlCommand(_queryGet, con)) {
+                command.Parameters.AddWithValue("@username", shareToName);
+
+                using (MySqlDataReader _readPas = command.ExecuteReader()) {
+                    while (_readPas.Read()) {
+                        _storeVal = _readPas.GetString(0);
+                    }
+                }
             }
-            _readPas.Close();
 
             return _storeVal;
         }
@@ -243,14 +232,17 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            var _getInput = guna2TextBox2.Text;
+        private async void guna2Button2_Click(object sender, EventArgs e) {
+
+            var _getInput = txtFieldShareToName.Text;
             var _decryptionOutput = EncryptionModel.computeAuthCase(getInformationSharing(CustUsername));
+            
             if(EncryptionModel.computeAuthCase(_getInput) == _decryptionOutput) {
-                startSharing();
+                await startSharing();
             } else {
-                label4.Visible = true;
+                lblAlert.Visible = true;
             }
+
         }
     }
 }

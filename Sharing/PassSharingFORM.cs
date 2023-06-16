@@ -12,7 +12,7 @@ using MySql.Data.MySqlClient;
 namespace FlowSERVER1 {
     public partial class PassSharingFORM : Form {
 
-        private MySqlConnection con = ConnectionModel.con;
+        readonly private MySqlConnection con = ConnectionModel.con;
         private MySqlCommand command = ConnectionModel.command;
 
         public PassSharingFORM() {
@@ -57,7 +57,7 @@ namespace FlowSERVER1 {
                     MessageBox.Show("You've successfully added a password for File Sharing.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
             } else {
-                label4.Visible = true;
+                lblAlert.Visible = true;
             }
         }
 
