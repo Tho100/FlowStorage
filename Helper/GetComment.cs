@@ -12,10 +12,13 @@ namespace FlowSERVER1 {
         readonly private static MySqlConnection con = ConnectionModel.con;
 
         public static string getCommentSharedToMe(string fileName) {
-            String returnComment = "";
+
+            string returnComment = "";
+
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName)); using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName)); 
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }
@@ -25,10 +28,13 @@ namespace FlowSERVER1 {
         }
 
         public static string getCommentSharedToOthers(string fileName) {
-            String returnComment = "";
+
+            string returnComment = "";
+
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName)); using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName)); 
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
                         returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
                     }

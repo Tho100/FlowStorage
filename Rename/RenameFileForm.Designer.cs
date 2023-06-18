@@ -26,7 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenameFileForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblAlert = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -43,19 +43,19 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // label5
+            // lblAlert
             // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label5.ForeColor = System.Drawing.Color.Firebrick;
-            this.label5.Location = new System.Drawing.Point(95, 192);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(214, 17);
-            this.label5.TabIndex = 54;
-            this.label5.Text = "File with this name already exists";
-            this.label5.Visible = false;
+            this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblAlert.AutoSize = true;
+            this.lblAlert.BackColor = System.Drawing.Color.Transparent;
+            this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblAlert.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblAlert.Location = new System.Drawing.Point(95, 192);
+            this.lblAlert.Name = "lblAlert";
+            this.lblAlert.Size = new System.Drawing.Size(214, 17);
+            this.lblAlert.TabIndex = 54;
+            this.lblAlert.Text = "File with this name already exists";
+            this.lblAlert.Visible = false;
             // 
             // label2
             // 
@@ -174,13 +174,13 @@
             this.guna2TextBox1.Size = new System.Drawing.Size(380, 44);
             this.guna2TextBox1.TabIndex = 48;
             // 
-            // renameFORM
+            // RenameFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ClientSize = new System.Drawing.Size(569, 378);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblAlert);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2Separator1);
@@ -190,7 +190,7 @@
             this.Controls.Add(this.guna2TextBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "renameFORM";
+            this.Name = "RenameFileForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rename File";
             this.ResumeLayout(false);
@@ -201,7 +201,7 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblAlert;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;

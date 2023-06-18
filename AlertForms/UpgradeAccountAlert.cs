@@ -12,15 +12,11 @@ namespace FlowSERVER1 {
     public partial class UpgradeAccountAlert : Form {
         public UpgradeAccountAlert(String _curAcc) {
             InitializeComponent();
-            this.label3.Text = "Current Account: " + _curAcc; 
+            this.label3.Text = $"Current Account: {_curAcc}"; 
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            Application.OpenForms
-            .OfType<Form>()
-            .Where(form => String.Equals(form.Name, "upgradeFORM"))
-            .ToList()
-            .ForEach(form => form.Close());
+            this.Close();
         }
 
         private void upgradeFORM_Load(object sender, EventArgs e) {

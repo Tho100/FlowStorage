@@ -33,7 +33,7 @@ namespace FlowSERVER1 {
 
             string _queStr = "";
 
-            string _selectQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            const string _selectQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectQue, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
 

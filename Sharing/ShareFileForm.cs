@@ -19,7 +19,6 @@ namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         public static string _FileName { get; set; }
         public static string _FileExt {get; set ;}
@@ -47,7 +46,7 @@ namespace FlowSERVER1 {
 
             string _accType = "";
 
-            string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
+            const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_getAccountTypeQue, con)) {
                 command.Parameters.AddWithValue("@username", _receiverUsername);
 
@@ -68,16 +67,20 @@ namespace FlowSERVER1 {
         /// </summary>
         private static string _hasPas = "DEF";
         private string hasPassword(String _custUsername) {
-            String storeVal = "";
-            String queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(queryGet, con);
-            command.Parameters.AddWithValue("@username", _custUsername);
 
-            object result = command.ExecuteScalar();
-            if (result != null) {
-                storeVal = result.ToString();
-                if (storeVal == "DEF") {
-                    storeVal = "";
+            string storeVal = "";
+            const string queryGetSharingAuth = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+
+            using(MySqlCommand command = new MySqlCommand(queryGetSharingAuth,con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
+                using(MySqlDataReader read = command.ExecuteReader()) {
+                    if(read.Read()) {
+                        if(read.GetString(0) == "DEF") {
+                            storeVal = "";
+                        } else {
+                            storeVal = read.GetString(0);
+                        }
+                    }
                 }
             }
 
@@ -92,7 +95,8 @@ namespace FlowSERVER1 {
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
         private int countReceiverShared(String _receiverUsername) {
-            string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+
+            const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
             int fileCount = 0;
 
             using (MySqlCommand command = new MySqlCommand(countFileSharedQuery, con)) {
@@ -137,13 +141,15 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private int userIsExists(String _receiverUsername) {
 
-            const string  countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
+            int count = 0;
 
-            command = new MySqlCommand(countUser, con);
-            command.Parameters.AddWithValue("@username", _receiverUsername);
-            var setupCount = command.ExecuteScalar();
-            int ToInt = Convert.ToInt32(setupCount);
-            return ToInt;
+            const string countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(countUser,con)) {
+                command.Parameters.AddWithValue("@username", _receiverUsername);
+                count = Convert.ToInt32(command.ExecuteScalar());
+            }
+
+            return count;
         }
 
         /// <summary>
@@ -154,14 +160,16 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private int fileIsUploaded(String _custUsername, String _fileName) {
 
+            int count = 0;
+
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
-
-            command = new MySqlCommand(queryRetrieveCount, con);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.Parameters.AddWithValue("@receiver", _custUsername);
-            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName, EncryptionKey.KeyValue));
-
-            int count = Convert.ToInt32(command.ExecuteScalar());
+            using(MySqlCommand command = new MySqlCommand(queryRetrieveCount,con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@receiver", _custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                count = Convert.ToInt32(command.ExecuteScalar());
+            }
+            
             return count;
 
         }
@@ -263,7 +271,7 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
                 command.Parameters.AddWithValue("@CUST_TO", btnShareToName.Text);
                 command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
-                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName));
                 command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                 command.Parameters.AddWithValue("@CUST_FILE", setValue);
                 command.Parameters.AddWithValue("@FILE_EXT", _FileExt);
@@ -283,10 +291,10 @@ namespace FlowSERVER1 {
 
             if (_accType != _countReceiverFile) {
 
-                new Thread(() => new SharingAlert(fileName: _FileName, shareToName: shareToName).ShowDialog()).Start();
+                new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
                 if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
-                    string getThumbnails = await retrieveThumbnails("cust_sharing",Globals.custUsername, EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    string getThumbnails = await retrieveThumbnails("cust_sharing",Globals.custUsername, EncryptionModel.Encrypt(_FileName));
                     await startSending(getFileMetadataShared(Globals.custUsername, EncryptionModel.Encrypt(_FileName)),getThumbnails);
                 } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
 
@@ -373,24 +381,16 @@ namespace FlowSERVER1 {
                     new CustomAlert(title: "Sharing failed", subheader: $"The user {btnShareToName.Text} disabled their file sharing.").Show();
                     return;
                 }
-        
 
-
-                //if (hasPassword(guna2TextBox1.Text) != "") {
-                // AskPassSharing _askPassForm = new AskPassSharing(guna2TextBox1.Text, _FileName, _FilePath, _retrieved);
-                // _askPassForm.Show();
-
-            //}
-            //else {
+                if (hasPassword(btnShareToName.Text) != "") {
+                    new AskSharingAuthForm(btnShareToName.Text, _FileName, _FileName.Substring(_FileName.Length-4)).Show();
+                    return;
+                }
 
                 startSharing();
-
-
-            //}
                                
- 
             }
-            catch (Exception eq) {
+            catch (Exception) {
                 MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

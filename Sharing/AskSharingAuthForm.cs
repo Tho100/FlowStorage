@@ -23,15 +23,13 @@ namespace FlowSERVER1 {
         private String _retrieved { get; set; }
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
-        public AskSharingAuthForm(String _custUsername,String _fileName,String _filePath,String _RETRIEVED) {
+        public AskSharingAuthForm(String _custUsername,String _fileName,String _fileExtension) {
             InitializeComponent();
             CustUsername = _custUsername;
             _currentFileName = _fileName;
             _FileName = _fileName;
-            _FilePath = _filePath;
-            _retrieved = _RETRIEVED;
+            _retrieved = _fileExtension;
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
@@ -58,31 +56,19 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private int accountType(String _receiverUsername) {
 
-            int _allowedReturn = 12;
-            string _accType = "";
+            int allowedReturn = 20;
 
-            const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_getAccountTypeQue, con);
-            command.Parameters.AddWithValue("@username", _receiverUsername);
+            const string getAccountTypeQuery = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(getAccountTypeQuery,con)) {
+                command.Parameters.AddWithValue("@username", _receiverUsername);
+                using(MySqlDataReader reader = command.ExecuteReader()) {
+                    if(reader.Read()) {
+                        allowedReturn = Globals.uploadFileLimit[reader.GetString(0)];
+                    }
+                }
+            }
 
-            MySqlDataReader _readAccType = command.ExecuteReader();
-            if (_readAccType.Read()) {
-                _accType = _readAccType.GetString(0);
-            }
-            _readAccType.Close();
-            if (_accType == "Max") {
-                _allowedReturn = 500;
-            }
-            else if (_accType == "Express") {
-                _allowedReturn = 1000;
-            }
-            else if (_accType == "Supreme") {
-                _allowedReturn = 2000;
-            }
-            else if (_accType == "Basic") {
-                _allowedReturn = 20;
-            }
-            return _allowedReturn;
+            return allowedReturn;
         }
 
         /// <summary>
@@ -93,13 +79,11 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private int countReceiverShared(String _receiverUsername) {
 
-            const string _countFileShared = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
-            command = new MySqlCommand(_countFileShared, con);
-            command.Parameters.AddWithValue("@username", _receiverUsername);
-
-            var _getValue = command.ExecuteScalar();
-            int _toInt = Convert.ToInt32(_getValue);
-            return _toInt;
+            const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+            using(MySqlCommand command = new MySqlCommand(countFileSharedQuery,con)) {
+                command.Parameters.AddWithValue("@username", _receiverUsername);
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
 
         }
 
@@ -140,7 +124,7 @@ namespace FlowSERVER1 {
                 byte[] _getBytes = File.ReadAllBytes(_FilePath);
                 fileSizeInMB = (_getBytes.Length / 1024) / 1024;
 
-                new Thread(() => new SharingAlert(fileName: _currentFileName, shareToName: CustUsername).ShowDialog()).Start();
+                new Thread(() => new SharingAlert(shareToName: CustUsername).ShowDialog()).Start();
 
                 if (Globals.imageTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);

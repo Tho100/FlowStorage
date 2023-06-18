@@ -107,17 +107,17 @@ namespace FlowSERVER1 {
                 matches = DirectoryForm.instance.Controls.Find(panelName, true);
             }
 
-            if (matches.Length > 0 && matches[0] is Panel) {
+            if (matches.Length > 0 && matches[0] is Guna2Panel) {
 
-                Panel myPanel = (Panel)matches[0];
+                Guna2Panel myPanel = (Guna2Panel)matches[0];
 
                 Label titleLabel = myPanel.Controls.OfType<Label>().LastOrDefault();
                 titleLabel.Text = newFileName;
             }
 
-            label5.Visible = true;
-            label5.ForeColor = ColorTranslator.FromHtml("#50a832");
-            label5.Text = $"File has been renamed to {newFileName}.";
+            lblAlert.Visible = true;
+            lblAlert.ForeColor = ColorTranslator.FromHtml("#50a832");
+            lblAlert.Text = $"File has been renamed to {newFileName}.";
         }
 
         private async void guna2Button2_Click(object sender, EventArgs e) {

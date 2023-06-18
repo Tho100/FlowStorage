@@ -16,7 +16,6 @@ namespace FlowSERVER1 {
     public partial class RecoveryForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        readonly private MySqlCommand command = ConnectionModel.command;
 
         public RecoveryForm() {
             InitializeComponent();

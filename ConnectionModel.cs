@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
         private static string getConnection = ConfigurationManager.ConnectionStrings["djkioJ33AW=KDOdsad"].ConnectionString;//DecryptConnection("0afe74-gksuwpe8r",ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString);
         public static MySqlConnection con = new MySqlConnection(getConnection);
             
-        public static MySqlCommand command;
+        //public static MySqlCommand command;
         public static MySqlCommand commandRead;
 
         private static string DecryptConnection(string key, string cipherText) {

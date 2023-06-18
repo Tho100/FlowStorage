@@ -155,7 +155,7 @@
             // 
             this.btnCloseDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCloseDirectory.Animated = true;
-            this.btnCloseDirectory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.btnCloseDirectory.BackColor = System.Drawing.Color.Transparent;
             this.btnCloseDirectory.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.btnCloseDirectory.BorderRadius = 6;
             this.btnCloseDirectory.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -178,14 +178,6 @@
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // lblDirectoryName
             // 
@@ -229,6 +221,7 @@
             this.pnlFileOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFileOptions.BackColor = System.Drawing.Color.Transparent;
             this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.pnlFileOptions.BorderRadius = 14;
             this.pnlFileOptions.BorderThickness = 1;
             this.pnlFileOptions.Controls.Add(this.lblSharedToName);
             this.pnlFileOptions.Controls.Add(this.lblSelectedDirName);
@@ -240,7 +233,7 @@
             this.pnlFileOptions.Controls.Add(this.btnRenameFile);
             this.pnlFileOptions.Controls.Add(this.guna2Button28);
             this.pnlFileOptions.Controls.Add(this.lblFileNameOnPanel);
-            this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.pnlFileOptions.ForeColor = System.Drawing.Color.Transparent;
             this.pnlFileOptions.Location = new System.Drawing.Point(776, 399);
             this.pnlFileOptions.Name = "pnlFileOptions";
@@ -396,19 +389,20 @@
             this.guna2Button28.Animated = true;
             this.guna2Button28.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button28.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button28.BorderRadius = 12;
+            this.guna2Button28.BorderRadius = 6;
+            this.guna2Button28.BorderThickness = 1;
             this.guna2Button28.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button28.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button28.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button28.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button28.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Button28.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.guna2Button28.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button28.ForeColor = System.Drawing.Color.White;
             this.guna2Button28.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button28.Image")));
             this.guna2Button28.ImageSize = new System.Drawing.Size(18, 18);
-            this.guna2Button28.Location = new System.Drawing.Point(279, 9);
+            this.guna2Button28.Location = new System.Drawing.Point(268, 9);
             this.guna2Button28.Name = "guna2Button28";
-            this.guna2Button28.Size = new System.Drawing.Size(27, 25);
+            this.guna2Button28.Size = new System.Drawing.Size(35, 32);
             this.guna2Button28.TabIndex = 49;
             this.guna2Button28.Click += new System.EventHandler(this.guna2Button28_Click);
             // 

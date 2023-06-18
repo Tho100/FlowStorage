@@ -29,7 +29,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblSharingTo = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblFileName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,24 +94,12 @@
             this.label9.TabIndex = 63;
             this.label9.Text = "Sharing...";
             // 
-            // lblFileName
-            // 
-            this.lblFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFileName.ForeColor = System.Drawing.Color.LightGray;
-            this.lblFileName.Location = new System.Drawing.Point(23, 89);
-            this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(352, 20);
-            this.lblFileName.TabIndex = 65;
-            this.lblFileName.Text = "File name: jasdJ*Wdwd_wad.mp4 ";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
-            // 
             // SharingAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ClientSize = new System.Drawing.Size(508, 149);
-            this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.lblSharingTo);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCancelSharing);
@@ -134,7 +121,6 @@
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         public Guna.UI2.WinForms.Guna2Button btnCancelSharing;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Label lblSharingTo;
         private System.Windows.Forms.Label label9;
     }

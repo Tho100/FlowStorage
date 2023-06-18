@@ -12,7 +12,6 @@ using System.Windows.Forms;
 namespace FlowSERVER1 {
     public partial class ApiPageForm : Form {
 
-        readonly private MySqlCommand command = ConnectionModel.command;
         readonly private MySqlConnection con = ConnectionModel.con;
 
         public ApiPageForm() {
@@ -59,7 +58,7 @@ namespace FlowSERVER1 {
 
         private async void guna2Button3_Click(object sender, EventArgs e) {
 
-            string query = "SELECT CUST_PIN FROM information WHERE CUST_USERNAME = @username";
+            const string query = "SELECT CUST_PIN FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader read = (MySqlDataReader)await command.ExecuteReaderAsync()) {

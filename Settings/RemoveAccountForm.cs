@@ -30,7 +30,7 @@ namespace FlowSERVER1 {
             }
             else {
 
-                string _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
+                const string _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
                 using (MySqlCommand command = new MySqlCommand(_remSharingBeings, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.ExecuteNonQuery();

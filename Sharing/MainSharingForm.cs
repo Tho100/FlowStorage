@@ -26,7 +26,6 @@ namespace FlowSERVER1 {
         private string _getExt;
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         public MainSharingForm instance;
 
@@ -59,11 +58,10 @@ namespace FlowSERVER1 {
         private int userIsExists(String _receiverUsername) {
 
             const string countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(countUser,con);
-            command.Parameters.AddWithValue("@username",_receiverUsername);
-            var setupCount = command.ExecuteScalar();
-            int ToInt = Convert.ToInt32(setupCount);
-            return ToInt;
+            using(MySqlCommand command = new MySqlCommand(countUser,con)) {
+                command.Parameters.AddWithValue("@username",_receiverUsername);
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -99,7 +97,7 @@ namespace FlowSERVER1 {
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@CUST_TO", txtFieldShareToName.Text);
                     command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
-                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName));
                     command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                     command.Parameters.AddWithValue("@CUST_FILE", setValue);
                     command.Parameters.AddWithValue("@FILE_EXT", _retrieved);
@@ -131,48 +129,46 @@ namespace FlowSERVER1 {
 
                     _currentFileName = txtFieldFileName.Text;
 
-                    new Thread(() => new SharingAlert(fileName: _currentFileName, shareToName: shareToName).ShowDialog()).Start();
+                    new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
                     byte[] _getBytes = File.ReadAllBytes(_FilePath); 
                     string _toBase64 = Convert.ToBase64String(_getBytes);
 
                     if (Globals.imageTypes.Contains(_retrieved)) {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".docx" || _retrieved == ".doc") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);                    
                     }
                     else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".exe") {
-                        command.CommandTimeout = 12000;
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".msi") {
-                        command.CommandTimeout = 12000;
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".mp3" || _retrieved == ".wav") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
 
                     else if (_retrieved == ".pdf") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".apk") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".xlsx" || _retrieved == ".xls") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
                     else if (Globals.textTypes.Contains(_retrieved)) {
@@ -184,7 +180,7 @@ namespace FlowSERVER1 {
 
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         string getEncoded = Convert.ToBase64String(getBytes);
-                        string encryptText = EncryptionModel.Encrypt(getEncoded, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(getEncoded);
                         
                         await startSending(encryptText);
 
@@ -199,7 +195,7 @@ namespace FlowSERVER1 {
                             toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
 
-                        string encryptText = EncryptionModel.Encrypt(_toBase64, EncryptionKey.KeyValue);
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
 
                         await startSending(encryptText,toBase64Thumbnail);
                     }
@@ -249,16 +245,16 @@ namespace FlowSERVER1 {
         private string hasPassword(String _custUsername) {
 
             string storeVal = "";
-            const string queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(queryGet, con);
-            command.Parameters.AddWithValue("@username", _custUsername);
+            const string queryGetAuth = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(queryGetAuth,con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
+                storeVal = command.ExecuteScalar().ToString();
+            }
 
-            object result = command.ExecuteScalar();
-            if (result != null) {
-                storeVal = result.ToString();
-                if (storeVal == "DEF") {
-                    storeVal = "";
-                }
+            if(storeVal == "DEF") {
+                storeVal = "";
+            } else {
+                return storeVal;
             }
 
             return storeVal;
@@ -320,13 +316,12 @@ namespace FlowSERVER1 {
 
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
 
-            command = new MySqlCommand(queryRetrieveCount, con);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.Parameters.AddWithValue("@receiver", _custUsername);
-            command.Parameters.AddWithValue("@filename", _fileName);
-
-            int count = Convert.ToInt32(command.ExecuteScalar());
-            return count;
+            using(MySqlCommand command = new MySqlCommand(queryRetrieveCount,con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@receiver", _custUsername);
+                command.Parameters.AddWithValue("@filename", _fileName);
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
 
         }
 
@@ -374,7 +369,7 @@ namespace FlowSERVER1 {
 
                 string password = hasPassword(textBox1);
                 if (!string.IsNullOrEmpty(password)) {
-                    AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _FilePath, _retrieved);
+                    AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _retrieved);
                     _askPassForm.Show();
                 }
                 else {

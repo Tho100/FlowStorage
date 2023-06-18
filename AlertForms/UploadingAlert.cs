@@ -29,7 +29,6 @@ namespace FlowSERVER1 {
         public static UploadingAlert instance;
 
         private readonly MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         private string UploaderName;
         private string ControlName;
@@ -99,7 +98,7 @@ namespace FlowSERVER1 {
             string fileDeletionQuery = $"DELETE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using(MySqlCommand command = new MySqlCommand(fileDeletionQuery,con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName));
                 command.ExecuteNonQuery();
             }
         }
@@ -113,8 +112,8 @@ namespace FlowSERVER1 {
 
             using(MySqlCommand command = new MySqlCommand(fileDeletionQuery,con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName));
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName));
                 command.ExecuteNonQuery();
             }
         }
@@ -129,7 +128,7 @@ namespace FlowSERVER1 {
 
             using (MySqlCommand command = new MySqlCommand(fileDeletionQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName));
                 command.Parameters.AddWithValue("@foldtitle", _FoldName);
 
                 command.ExecuteNonQuery();
@@ -145,7 +144,7 @@ namespace FlowSERVER1 {
 
             using (MySqlCommand command = new MySqlCommand(fileDeletionQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName));
 
                 command.ExecuteNonQuery();
             }

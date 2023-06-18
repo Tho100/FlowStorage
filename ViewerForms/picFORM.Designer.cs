@@ -36,7 +36,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2VSeparator2 = new Guna.UI2.WinForms.Guna2VSeparator();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblImageResolution = new System.Windows.Forms.Label();
             this.filterPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
@@ -192,19 +192,19 @@
             this.guna2VSeparator2.Size = new System.Drawing.Size(10, 66);
             this.guna2VSeparator2.TabIndex = 65;
             // 
-            // label7
+            // lblImageResolution
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Silver;
-            this.label7.Location = new System.Drawing.Point(767, 25);
-            this.label7.Name = "label7";
-            this.label7.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label7.Size = new System.Drawing.Size(75, 17);
-            this.label7.TabIndex = 66;
-            this.label7.Text = "(1024x1920)";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
+            this.lblImageResolution.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblImageResolution.AutoSize = true;
+            this.lblImageResolution.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImageResolution.ForeColor = System.Drawing.Color.Silver;
+            this.lblImageResolution.Location = new System.Drawing.Point(767, 25);
+            this.lblImageResolution.Name = "lblImageResolution";
+            this.lblImageResolution.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblImageResolution.Size = new System.Drawing.Size(75, 17);
+            this.lblImageResolution.TabIndex = 66;
+            this.lblImageResolution.Text = "(1024x1920)";
+            this.lblImageResolution.Click += new System.EventHandler(this.label7_Click);
             // 
             // filterPanel
             // 
@@ -734,7 +734,7 @@
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.guna2Button10);
             this.Controls.Add(this.guna2Button6);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblImageResolution);
             this.Controls.Add(this.guna2VSeparator2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
@@ -795,7 +795,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator2;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblImageResolution;
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
         private Guna.UI2.WinForms.Guna2Panel filterPanel;
         private Guna.UI2.WinForms.Guna2TrackBar guna2TrackBar1;

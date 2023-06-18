@@ -53,7 +53,7 @@ namespace FlowSERVER1 {
             this.Directoryname = _DirectoryName;
             this.IsFromShared = _IsFromShared;
             this.IsFromSharing = _isFromSharing;
-            this.label7.Text = $"({width}x{height})";
+            this.lblImageResolution.Text = $"({width}x{height})";
 
             var setupImage = new Bitmap(userImage);
 
@@ -76,10 +76,12 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
             }
 
+            if(_TableName != "cust_sharing") {
+                lblUserComment.Text = "(No Comment)";
+            }
+
             lblUploaderName.Text = _getName;
 
-            ToolTip saveTip = new ToolTip();
-            saveTip.SetToolTip(this.guna2Button4, "Download Image");
         }
 
         private void picFORM_Load(object sender, EventArgs e) {
@@ -327,7 +329,7 @@ namespace FlowSERVER1 {
             ImageConverter convertByte = new ImageConverter();
             byte[] byteVals = (byte[])convertByte.ConvertTo(filteredImage,typeof(byte[]));
             string toBase64String = Convert.ToBase64String(byteVals);
-            string encryptVals = EncryptionModel.Encrypt(toBase64String,EncryptionKey.KeyValue);
+            string encryptVals = EncryptionModel.Encrypt(toBase64String);
             await saveChanges(encryptVals);
         }
 
@@ -353,7 +355,7 @@ namespace FlowSERVER1 {
             string que = query;
             using (MySqlCommand command = new MySqlCommand(que, con)) {
                 command.Parameters.AddWithValue("@newval", values);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 if (await command.ExecuteNonQueryAsync() == 1) {
                     MessageBox.Show("Changes saved successfully. Please hit the refresh button on the top of folder tab to see changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);

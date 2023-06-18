@@ -17,17 +17,17 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Runtime.Caching;
-using System.Xml;
+
 using FlowSERVER1.Authentication;
 using FlowSERVER1.Settings;
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
 
     public partial class HomePage : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         readonly private Crud crud = new Crud();
 
@@ -38,6 +38,13 @@ namespace FlowSERVER1 {
         // Initialize file (caching)
 
         private List<string> base64EncodedImageSharedOthers = new List<string>();
+        private List<string> base64EncodedThumbnailSharedOthers = new List<string>();
+
+        private List<string> base64EncodedThumbnailSharedToMe = new List<string>();
+        private List<string> base64EncodedImageSharedToMe = new List<string>();
+
+        private List<string> base64EncodedImageFolder = new List<string>();
+
         private List<string> base64EncodedImageHome = new List<string>();
         private List<string> base64EncodedThumbnailHome = new List<string>();
 
@@ -59,7 +66,6 @@ namespace FlowSERVER1 {
         private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
 
         // File Images
-        private readonly Image TextImage = FlowSERVER1.Properties.Resources.icons8_txt_48;
         private readonly Image PDFImage = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
         private readonly Image AudioImage = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
 
@@ -72,7 +78,8 @@ namespace FlowSERVER1 {
         private readonly Image MSIImage = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
         private readonly Image EXEImage = FlowSERVER1.Properties.Resources.icons8_exe_48;
 
-        private int top = 275; private int h_p = 100;
+        private int top = 275;
+        private int h_p = 100;
 
         public HomePage() {
 
@@ -184,323 +191,259 @@ namespace FlowSERVER1 {
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
 
-        public async Task _generateUserFiles(String _tableName, String parameterName, int currItem) {
+        private async Task buildFilePanelHome(String _tableName, String parameterName, int currItem) {
 
-            List<(string, string)> filesInfo = new List<(string, string)>();
+            List<Image> imageValues = new List<Image>();
+            List<EventHandler> onPressedEvent = new List<EventHandler>();
+            List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
-            string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    List<(string, string)> tuplesList = new List<(string, string)>();
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        tuplesList.Add((fileName, uploadDate));
+            try {
+
+                List<(string, string)> filesInfo = new List<(string, string)>();
+
+                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        List<(string, string)> tuplesList = new List<(string, string)>();
+                        while (await reader.ReadAsync()) {
+                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                            string uploadDate = reader.GetString(1);
+                            tuplesList.Add((fileName, uploadDate));
+                        }
+                        filesInfo.AddRange(tuplesList);
                     }
-                    filesInfo.AddRange(tuplesList);
                 }
-            }
 
-            if(_tableName == "file_info") {
+                if(_tableName == "file_info") {
 
-                if (base64EncodedImageHome.Count == 0) {
+                    if (base64EncodedImageHome.Count == 0) {
 
-                    string retrieveImgQuery = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                base64EncodedImageHome.Add(base64String);
+                        const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                while (await readBase64.ReadAsync()) {
+                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
+                                    base64EncodedImageHome.Add(base64String);
+                                }
+                                readBase64.Close();
                             }
                         }
                     }
                 }
-            }
 
-            for (int i = 0; i < currItem; i++) {
+                if(_tableName == "file_info_vid") {
 
-                var panelPic_Q = new Guna2Panel() {
-                    Name = $"{parameterName + i}",
-                    Width = 200, 
-                    Height = 222, 
-                    BorderColor = GlobalStyle.BorderColor,
-                    BorderThickness = 1,
-                    BorderRadius = 8,
-                    BackColor = GlobalStyle.TransparentColor,
-                    Location = new Point(600, top)
-                };
-                top += h_p;
-                flowLayoutPanel1.Controls.Add(panelPic_Q);
+                    if (base64EncodedThumbnailHome.Count == 0) {
 
-                var panelF = (Guna2Panel)panelPic_Q;
-
-                Label dateLab = new Label();
-                panelF.Controls.Add(dateLab);
-                dateLab.Name = $"LabG{i}";
-                dateLab.Font = GlobalStyle.DateLabelFont;
-                dateLab.ForeColor = GlobalStyle.DarkGrayColor;
-                dateLab.Visible = true;
-                dateLab.Enabled = true;
-                dateLab.Location = GlobalStyle.DateLabelLoc;
-                dateLab.Text = filesInfo[i].Item2;
-
-                Label titleLab = new Label();
-                panelF.Controls.Add(titleLab);
-                titleLab.Name = $"titleImgL{i}"; 
-                titleLab.Font = GlobalStyle.TitleLabelFont;
-                titleLab.ForeColor = GlobalStyle.GainsboroColor;
-                titleLab.Visible = true;
-                titleLab.Enabled = true;
-                titleLab.Location = GlobalStyle.TitleLabelLoc;
-                titleLab.AutoEllipsis = true;
-                titleLab.Width = 160; 
-                titleLab.Height = 20; 
-                titleLab.Text = filesInfo[i].Item1;
-
-                Guna2PictureBox picMain_Q = new Guna2PictureBox();
-                panelF.Controls.Add(picMain_Q);
-                picMain_Q.Name = "ImgG" + i;
-                picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                picMain_Q.BorderRadius = 8;
-                picMain_Q.Width = 190; 
-                picMain_Q.Height = 145; 
-                picMain_Q.Visible = true;
-
-                picMain_Q.Anchor = AnchorStyles.None;
-
-                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
-
-                picMain_Q.Location = new Point(picMain_Q_x, 10);
-
-                picMain_Q.MouseHover += (_senderM, _ev) => {
-                    panelF.ShadowDecoration.Enabled = true;
-                    panelF.ShadowDecoration.BorderRadius = 8;
-                };
-
-                picMain_Q.MouseLeave += (_senderQ, _evQ) => {
-                    panelF.ShadowDecoration.Enabled = false;
-                };
-
-                Guna2Button remBut = new Guna2Button();
-                panelF.Controls.Add(remBut);
-                remBut.Name = "Rem" + i;
-                remBut.Width = 29;
-                remBut.Height = 26;
-                remBut.ImageOffset = GlobalStyle.GarbageOffset;
-                remBut.FillColor = GlobalStyle.TransparentColor;
-                remBut.BorderRadius = 6;
-                remBut.BorderThickness = 1;
-                remBut.BorderColor = GlobalStyle.TransparentColor;
-                remBut.Image = GlobalStyle.GarbageImage; 
-                remBut.Visible = true;
-                remBut.Location = GlobalStyle.GarbageButtonLoc; 
-
-                remBut.Click += (sender_im, e_im) => {
-
-                    lblFileNameOnPanel.Text = titleLab.Text;
-                    lblFileTableName.Text = _tableName;
-                    lblFilePanelName.Text = panelPic_Q.Name;
-                    pnlFileOptions.Visible = true;
-
-                };
-
-                var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
-
-                if (_tableName == "file_info") {
-
-                    if (base64EncodedImageHome.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(base64EncodedImageHome[i]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            Image setImageStream = Image.FromStream(toMs);
-                            picMain_Q.Image = setImageStream;
-                        }
-                    }
-
-                    picMain_Q.Click += (sender, e) => {
-                        var getImgName = (Guna2PictureBox)sender;
-                        var getWidth = getImgName.Image.Width;
-                        var getHeight = getImgName.Image.Height;
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                        Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"file_info","null",Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPic.Owner = bgBlur;
-                            displayPic.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
-
-                    };
-                }
-
-                if (_tableName == "file_info_expand") {
-                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                    if (_extTypes == ".py") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                    }
-                    else if (_extTypes == ".txt" || _extTypes == ".md") {
-                        img.Image = TextImage;
-                    }
-                    else if (_extTypes == ".html") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                    }
-                    else if (_extTypes == ".css") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                    }
-                    else if (_extTypes == ".js") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                    } else if (_extTypes == ".sql") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                    }
-                    else if (_extTypes == ".csv") {
-                        img.Image = CSVImage;
-                    }
-
-                    picMain_Q.Click += (sender_t, e_t) => {
-
-                        if (_extTypes == ".csv" || _extTypes == ".sql") {
-                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                            _showRetrievalCsvAlert.Start();
-                        }
-
-                        txtFORM displayPic = new txtFORM("IGNORETHIS", "file_info_expand", titleLab.Text,"null",Globals.custUsername);
-                         displayPic.Show();
-                    };
-                    clearRedundane();
-                }
-
-                if (_tableName == "file_info_exe") {
-                    img.Image = EXEImage;
-                    picMain_Q.Click += (sender_ex, e_ex) => {
-                        Form bgBlur = new Form();
-                        exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",Globals.custUsername);
-                        displayExe.Show();
-                    };
-                }
-
-                if (_tableName == "file_info_vid") {
-
-                    if(base64EncodedThumbnailHome.Count == 0) {
-
-                        string retrieveImgQuery = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username";
+                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM  file_info_vid WHERE CUST_USERNAME = @username";
                         using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
 
-                            using (var readBase64 = await command.ExecuteReaderAsync()) {
+                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     base64EncodedThumbnailHome.Add(readBase64.GetString(0));
                                 }
+                                readBase64.Close();
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < currItem; i++) {
+
+                    int accessIndex = i;
+
+                    EventHandler moreOptionOnPressedEvent = (sender, e) => {
+                        lblFileNameOnPanel.Text = filesInfo[accessIndex].Item1;
+                        lblFileTableName.Text = _tableName;
+                        lblFilePanelName.Text = parameterName + accessIndex;
+                        pnlFileOptions.Visible = true;
+                    };
+
+                    onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
+
+                    if (_tableName == "file_info") {
+
+                        if (base64EncodedImageHome.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageHome[i]);
+                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                                Image setImageStream = Image.FromStream(toMs);
+                                imageValues.Add(setImageStream);
                             }
                         }
 
-                        if (base64EncodedThumbnailHome.Count > i && !string.IsNullOrEmpty(base64EncodedThumbnailHome[i])) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailHome[i]);
-                            using (var toMs = new MemoryStream(getBytes)) {
-                                img.Image = Image.FromStream(toMs);
-                            }
-                        }
+                        EventHandler imageOnPressed = (sender, e) => {
 
-                    } else {
+                            var getImgName = (Guna2PictureBox)sender;
+                            var getWidth = getImgName.Image.Width;
+                            var getHeight = getImgName.Image.Height;
+                            Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        if (base64EncodedThumbnailHome.Count > i && !string.IsNullOrEmpty(base64EncodedThumbnailHome[i])) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailHome[i]);
-                            using (var toMs = new MemoryStream(getBytes)) {
-                                img.Image = Image.FromStream(toMs);
-                            }
-                        }
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "file_info", "null", Globals.custUsername);
+                            displayPic.Show();
+                        };
+
+
+                        onPressedEvent.Add(imageOnPressed);
 
                     }
 
-                    picMain_Q.Click += (sender_vq, e_vq) => {
-                        var getImgName = (Guna2PictureBox)sender_vq;
-                        var getWidth = getImgName.Image.Width;
-                        var getHeight = getImgName.Image.Height;
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid","null",Globals.custUsername);
-                        vidFormShow.Show();
-                    };
+
+                    if (_tableName == "file_info_expand") {
+
+                        var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
+                        var textTypeToImage = Globals.textTypeToImage[getExtension];
+                        imageValues.Add(textTypeToImage);
+
+                        EventHandler textOnPressed = (sender,e) => {
+
+                            if (getExtension == ".csv" || getExtension == ".sql") {
+                                new Thread(() => new SheetRetrievalAlert().ShowDialog()).Start();
+                            }
+
+                            txtFORM displayPic = new txtFORM("IGNORETHIS", "file_info_expand", filesInfo[accessIndex].Item1,"null",Globals.custUsername);
+                            displayPic.Show();
+
+                     
+                            clearRedundane();
+
+                        };
+
+                        onPressedEvent.Add(textOnPressed);
+                    }
+
+                    if (_tableName == "file_info_exe") {
+
+                        imageValues.Add(EXEImage);
+
+                        EventHandler exeOnPressed = (sender, e) => {
+                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1,"file_info_exe","null",Globals.custUsername);
+                            displayExe.Show();
+                        };
+
+                        onPressedEvent.Add(exeOnPressed);
+                    }
+
+                    if (_tableName == "file_info_vid") {
+
+                        if(base64EncodedThumbnailHome.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailHome[i]);
+                            using (var toMs = new MemoryStream(getBytes)) {
+                                imageValues.Add(Image.FromStream(toMs));
+                            }
+                        }
+
+                        EventHandler videoOnPressed = (sender, e) => {
+
+                            var getImgName = (Guna2PictureBox) sender;
+                            var getWidth = getImgName.Image.Width;
+                            var getHeight = getImgName.Image.Height;
+
+                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "file_info_vid","null",Globals.custUsername);
+                            vidFormShow.Show();
+                        };
+
+                        onPressedEvent.Add(videoOnPressed);
+                    }
+
+                    if (_tableName == "file_info_excel") {
+
+                        imageValues.Add(EXCELImage);
+
+                        EventHandler excelOnPressed = (sender, e) => {
+                            exlFORM exlForm = new exlFORM(filesInfo[accessIndex].Item1,"file_info_excel","null",Globals.custUsername);
+                            exlForm.Show();
+                        };
+
+                        onPressedEvent.Add(excelOnPressed);
+                    }
+                    if (_tableName == "file_info_audi") {
+
+                        imageValues.Add(AudioImage);
+
+                        EventHandler audioOnPressed = (sender ,e) => {
+                            audFORM displayPic = new audFORM(filesInfo[accessIndex].Item1, "file_info_audi","null",Globals.custUsername);
+                            displayPic.Show();
+                        };
+
+                        onPressedEvent.Add(audioOnPressed);
+                    }
+
+                    if (_tableName == "file_info_apk") {
+
+                        imageValues.Add(APKImage);
+
+                        EventHandler apkOnPressed = (sender, e) => {
+                            apkFORM displayPic = new apkFORM(filesInfo[accessIndex].Item1, Globals.custUsername, "file_info_apk","null");
+                            displayPic.Show();
+                        };
+
+                        onPressedEvent.Add(apkOnPressed);
+                    }
+
+                    if (_tableName == "file_info_pdf") {
+
+                        imageValues.Add(PDFImage);
+
+                        EventHandler pdfOnPressed = (sender, e) => {
+                            pdfFORM displayPdf = new pdfFORM(filesInfo[accessIndex].Item1, "file_info_pdf", "null", Globals.custUsername);
+                            displayPdf.Show();
+                        };
+
+                        onPressedEvent.Add(pdfOnPressed);
+                    }
+
+                    if (_tableName == "file_info_ptx") {
+
+                        imageValues.Add(PTXImage);
+
+                        EventHandler ptxOnPressed = (sender, e) => {
+                            ptxFORM displayPtx = new ptxFORM(filesInfo[accessIndex].Item1, "file_info_ptx", "null", Globals.custUsername);
+                            displayPtx.Show();
+                        };
+
+                        onPressedEvent.Add(ptxOnPressed);
+                    }
+
+                    if (_tableName == "file_info_msi") {
+
+                        imageValues.Add(MSIImage);
+                    
+                        EventHandler msiOnPressed = (sender, e) => {
+                            msiFORM displayMsi = new msiFORM(filesInfo[accessIndex].Item1, "file_info_msi", "null", Globals.custUsername);
+                            displayMsi.Show();
+                        };
+
+                        onPressedEvent.Add(msiOnPressed);
+                    
+                    }
+
+                    if (_tableName == "file_info_word") {
+
+                        imageValues.Add(DOCImage);
+
+                        EventHandler wordOnPressed = (sender, e) => {
+                            wordFORM displayMsi = new wordFORM(filesInfo[accessIndex].Item1, "file_info_word", "null", Globals.custUsername);
+                            displayMsi.Show();
+                        };
+
+                        onPressedEvent.Add(wordOnPressed);
+                    }
                 }
 
-                if (_tableName == "file_info_excel") {
-                    picMain_Q.Image = EXCELImage;
-                    picMain_Q.Click += (sender_vq, e_vq) => {
-                        exlFORM exlForm = new exlFORM(titleLab.Text,"file_info_excel","null",Globals.custUsername);
-                        exlForm.Show();
-                    };
-                }
-                if (_tableName == "file_info_audi") {
-                    picMain_Q.Image = AudioImage;
-                    picMain_Q.Click += (sender_Aud, e_Aud) => {
-                        Form bgBlur = new Form();
-                        audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi","null",Globals.custUsername);
-                        displayPic.Show();
-                    };
-                }
+                PanelGenerator panelGenerator = new PanelGenerator();
+                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
-                if (_tableName == "file_info_apk") {
-                    picMain_Q.Image = APKImage;
-                    picMain_Q.Click += (sender_ap, ex_ap) => {
-                        Form bgBlur = new Form();
-                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk","null");
-                        displayPic.Show();
-                    };
-                }
+                buildRedundaneVisibility();
 
-                if (_tableName == "file_info_pdf") {
-                    picMain_Q.Image = PDFImage;
-                    picMain_Q.Click += (sender_pd, e_pd) => {
-                        Form bgBlur = new Form();
-                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",Globals.custUsername);
-                        displayPdf.Show();
-                    };
-                    clearRedundane();
-                }
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
-                if (_tableName == "file_info_ptx") {
-                    picMain_Q.Image = PTXImage;
-                    picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",Globals.custUsername);
-                        displayPtx.Show();
-                    };
-                }
-
-                if (_tableName == "file_info_msi") {
-                    picMain_Q.Image = MSIImage;
-                    picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
-                        msiFORM displayMsi = new msiFORM(titleLab.Text,"file_info_msi","null",Globals.custUsername);
-                        displayMsi.Show();
-                    };
-                    clearRedundane();
-                }
-
-                if (_tableName == "file_info_word") {
-                    picMain_Q.Image = DOCImage;
-                    picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
-                        wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word","null",Globals.custUsername);
-                        displayMsi.Show();
-                    };
-                }
+            } catch (Exception) {
+                new CustomAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.").Show();
             }
-
-            buildRedundaneVisibility();
-
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
         }
 
@@ -513,7 +456,7 @@ namespace FlowSERVER1 {
         /// <param name="_foldTitle">Folder title</param>
         /// <param name="parameterName">Custom parameter name for panel</param>
         /// <param name="currItem"></param>
-        private async Task _generateUserFold(List<String> _fileType, String _foldTitle, int currItem) {
+        private async Task buildFilePanelFolder(List<String> _fileType, String _foldTitle, int currItem) {
 
             clearRedundane();
 
@@ -528,6 +471,10 @@ namespace FlowSERVER1 {
             try {
 
                 List<string> typeValues = new List<string>(_fileType);
+
+                List<Image> imageValues = new List<Image>();
+                List<EventHandler> onPressedEvent = new List<EventHandler>();
+                List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
                 List<(string, string)> filesInfo = new List<(string, string)>();
                 HashSet<string> filePaths = new HashSet<string>();
@@ -549,209 +496,106 @@ namespace FlowSERVER1 {
                             filePaths.Add(filePath);
                             filesInfo.Add((filePath, uploadDate));
                         }
+                        reader.Close();
                     }
                 }
 
                 List<string> base64EncodedImage = new List<string>();
 
-                if(typeValues.Any(tv => Globals.imageTypesFolder.Contains(tv))) {
+                if (typeValues.Any(tv => Globals.imageTypesFolder.Contains(tv))) {
 
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
+                    if (base64EncodedImageFolder.Count == 0) {
 
-                        string cacheKey = $"folder_{_foldTitle}_images";
-                        MemoryCache cache = MemoryCache.Default;
-                        if (cache.Contains(cacheKey)) {
-
-                            base64EncodedImage = (List<string>)cache.Get(cacheKey);
-
-                        } else {
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
+                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
-                                    string encryptedString = readBase64.GetString(0);
-                                    string decryptedString = EncryptionModel.Decrypt(encryptedString);
-                                    base64EncodedImage.Add(decryptedString);
+                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
+                                    base64EncodedImageFolder.Add(base64String);
                                 }
+                                readBase64.Close();
                             }
-                            CacheItemPolicy cachePolicy = new CacheItemPolicy {
-                                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
-                            };
-
-                            cache.Add(cacheKey, base64EncodedImage, cachePolicy);
                         }
                     }
                 }
 
                 for (int i = 0; i < currItem; i++) {
 
-                    var panelPic_Q = new Guna2Panel() {
-                        Name = $"panelf{i}",
-                        Width = 200,
-                        Height = 222,
-                        BorderColor = GlobalStyle.BorderColor,
-                        BorderThickness = 1,
-                        BorderRadius = 8,
-                        BackColor = GlobalStyle.TransparentColor,
-                        Location = new Point(600, top)
-                    };
-                    top += h_p;
-                    flowLayoutPanel1.Controls.Add(panelPic_Q);
+                    int accessIndex = i;
+                    string fileName = filesInfo[accessIndex].Item1;
 
-                    var panelF = (Guna2Panel)panelPic_Q;
-
-                    Label dateLab = new Label();
-                    panelF.Controls.Add(dateLab);
-                    dateLab.Name = $"datef{i}";
-                    dateLab.Font = GlobalStyle.DateLabelFont;
-                    dateLab.ForeColor = GlobalStyle.DarkGrayColor;
-                    dateLab.Visible = true;
-                    dateLab.Enabled = true;
-                    dateLab.Location = GlobalStyle.DateLabelLoc;
-                    dateLab.Text = filesInfo[i].Item2;
-
-                    Label titleLab = new Label();
-                    panelF.Controls.Add(titleLab);
-                    titleLab.Name = $"titleImgL{i}";
-                    titleLab.Font = GlobalStyle.TitleLabelFont;
-                    titleLab.ForeColor = GlobalStyle.GainsboroColor;
-                    titleLab.Visible = true;
-                    titleLab.Enabled = true;
-                    titleLab.Location = GlobalStyle.TitleLabelLoc;
-                    titleLab.Width = 160;
-                    titleLab.Height = 20;
-                    titleLab.AutoEllipsis = true;
-                    titleLab.Text = filesInfo[i].Item1;
-
-                    Guna2PictureBox picMain_Q = new Guna2PictureBox();
-                    panelF.Controls.Add(picMain_Q);
-                    picMain_Q.Name = "imgf" + i;
-                    picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
-                    picMain_Q.BorderRadius = 8;
-                    picMain_Q.Width = 190;
-                    picMain_Q.Height = 145;
-                    picMain_Q.Visible = true;
-
-                    picMain_Q.Anchor = AnchorStyles.None;
-
-                    int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
-                    picMain_Q.Location = new Point(picMain_Q_x, 10);
-
-                    picMain_Q.MouseHover += (_senderM, _ev) => {
-                        panelF.ShadowDecoration.Enabled = true;
-                        panelF.ShadowDecoration.BorderRadius = 8;
-                    };
-
-                    picMain_Q.MouseLeave += (_senderQ, _evQ) => {
-                        panelF.ShadowDecoration.Enabled = false;
-                    };
-
-                    Guna2Button remBut = new Guna2Button();
-                    panelF.Controls.Add(remBut);
-                    remBut.Name = $"remf{i}";
-                    remBut.Width = 29;
-                    remBut.Height = 26;
-                    remBut.ImageOffset = GlobalStyle.GarbageOffset;
-                    remBut.FillColor = GlobalStyle.TransparentColor;
-                    remBut.BorderRadius = 6;
-                    remBut.BorderThickness = 1;
-                    remBut.BorderColor = GlobalStyle.TransparentColor;
-                    remBut.Image = GlobalStyle.GarbageImage;
-                    remBut.Visible = true;
-                    remBut.Location = GlobalStyle.GarbageButtonLoc;
-
-                    remBut.Click += (sender_im, e_im) => {
-
-                        lblFileNameOnPanel.Text = titleLab.Text;
+                    EventHandler moreOptionOnPressedEvent = (sender, e) => {
+                        lblFileNameOnPanel.Text = fileName;
                         lblFileTableName.Text = "folder_upload_info";
                         lblSelectedDirName.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
-                        lblFilePanelName.Text = panelPic_Q.Name;
+                        lblFilePanelName.Text = "folderParameter" + accessIndex;
                         pnlFileOptions.Visible = true;
-
                     };
 
-                    var img = ((Guna2PictureBox)panelF.Controls["imgf" + i]);
+                    onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
                     if (Globals.imageTypesFolder.Contains(typeValues[i])) {
 
-                        if (base64EncodedImage.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
+                        if (base64EncodedImageFolder.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageFolder[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                img.Image = Image.FromStream(toMs);
+                                Image setImageStream = Image.FromStream(toMs);
+                                imageValues.Add(setImageStream);
                             }
                         }
 
-                        picMain_Q.Click += (sender, e) => {
+                        EventHandler imageOnPressed = (sender, e) => {
+
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            Form bgBlur = new Form();
-                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text,"folder_upload_info","null",Globals.custUsername)) {
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                bgBlur.Opacity = .24d;
-                                bgBlur.BackColor = Color.Black;
-                                bgBlur.WindowState = FormWindowState.Maximized;
-                                bgBlur.TopMost = true;
-                                bgBlur.Location = this.Location;
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.ShowInTaskbar = false;
-                                bgBlur.Show();
-
-                                displayPic.Owner = bgBlur;
-                                displayPic.ShowDialog();
-
-                                bgBlur.Dispose();
-                            }
-
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, fileName, "folder_upload_info", "null", Globals.custUsername);
+                            displayPic.Show();
                         };
-                        clearRedundane();
+
+
+                        onPressedEvent.Add(imageOnPressed);
+
                     }
 
 
                     if (Globals.textTypesFolder.Contains(typeValues[i])) {
 
-                        var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                        if (typeValues[i] == "py") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                        }
-                        else if (typeValues[i] == "txt" || typeValues[i] == "md") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                        }
-                        else if (_extTypes == "html") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                        }
-                        else if (_extTypes == "css") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                        }
-                        else if (_extTypes == "js") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                        }
-                        else if (_extTypes == "sql") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                        }
-                        else if (_extTypes == "csv") {
-                            img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                        }
+                        var getExtension = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
+                        var textTypeToImage = Globals.textTypeToImageFolder[getExtension];
+                        imageValues.Add(textTypeToImage);
 
-                        picMain_Q.Click += (sender_t, e_t) => {
+                        EventHandler textOnPressed = (sender, e) => {
 
-                            if (_extTypes == "csv" || _extTypes == "sql") {
-                                Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                                _showRetrievalCsvAlert.Start();
-                            }
 
-                            txtFORM displayPic = new txtFORM("", "folder_upload_info", titleLab.Text,"null",Globals.custUsername);
+                            txtFORM displayPic = new txtFORM("", "folder_upload_info", fileName, "null", Globals.custUsername);
                             displayPic.Show();
+
+
+                            clearRedundane();
+
                         };
-                        clearRedundane();
+
+                        onPressedEvent.Add(textOnPressed);
                     }
 
-                    if(Globals.videoTypesFolder.Contains(typeValues[i])) {
+                    if (typeValues[i] == "exe") {
+
+                        imageValues.Add(EXEImage);
+
+                        EventHandler exeOnPressed = (sender, e) => {
+                            exeFORM displayExe = new exeFORM(fileName, "folder_upload_info", _foldTitle, "null");
+                            displayExe.Show();
+                        };
+
+                        onPressedEvent.Add(exeOnPressed);
+                    }
+
+                    if (Globals.videoTypesFolder.Contains(typeValues[i])) {
 
                         List<string> base64Encoded = new List<string>();
 
@@ -759,17 +603,19 @@ namespace FlowSERVER1 {
                         using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
                             command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_foldTitle));
-                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
+                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(filesInfo[i].Item1));
 
                             string cacheKey = $"folder_{_foldTitle}_thumb";
                             MemoryCache cache = MemoryCache.Default;
                             if (cache.Contains(cacheKey)) {
                                 base64Encoded = (List<string>)cache.Get(cacheKey);
-                            } else {
+                            }
+                            else {
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         base64Encoded.Add(readBase64.GetString(0));
                                     }
+                                    readBase64.Close();
                                 }
                                 CacheItemPolicy cachePolicy = new CacheItemPolicy {
                                     AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
@@ -780,107 +626,113 @@ namespace FlowSERVER1 {
 
                         byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            img.Image = new Bitmap(toMs);
+                            imageValues.Add(Image.FromStream(toMs));
                         }
 
+                        EventHandler videoOnPressed = (sender, e) => {
 
-                        img.Click += (sender_vid, e_vid) => {
-                            var getImgName = (Guna2PictureBox)sender_vid;
+                            var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImg = new Bitmap(getImgName.Image);
-                            Form bgBlur = new Form();
-                            vidFORM displayVid = new vidFORM(defaultImg,getWidth,getHeight,titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
+
+                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                            vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, fileName, "folder_upload_info", _foldTitle, Globals.custUsername);
                             displayVid.Show();
                         };
+
+                        onPressedEvent.Add(videoOnPressed);
                     }
 
                     if (typeValues[i] == "xlsx" || typeValues[i] == "xls") {
-                        img.Image = FlowSERVER1.Properties.Resources.excelIcon;
-                        img.Click += (sender_aud, e_aud) => {
-                            Form bgBlur = new Form();
-                            exlFORM displayExl = new exlFORM(titleLab.Text, "folder_upload_info", _foldTitle, Globals.custUsername);
-                            displayExl.Show();
-                        };
-                    }
 
-                    if (typeValues[i] == "wav" || typeValues[i] == "mp3") {
-                        var _getWidth = this.Width;
-                        var _getHeight = this.Height;
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-                        img.Click += (sender_aud, e_aud) => {
-                            audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
-                            displayPic.Show();
+                        imageValues.Add(EXCELImage);
+
+                        EventHandler excelOnPressed = (sender, e) => {
+                            new exlFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
                         };
+
+                        onPressedEvent.Add(excelOnPressed);
+                    }
+                    if (typeValues[i] == "mp3" || typeValues[i] == "wav") {
+
+                        imageValues.Add(AudioImage);
+
+                        EventHandler audioOnPressed = (sender, e) => {
+                            new audFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
+                        };
+
+                        onPressedEvent.Add(audioOnPressed);
                     }
 
                     if (typeValues[i] == "apk") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
-                        img.Click += (sender_ap, e_ap) => {
-                            Form bgBlur = new Form();
-                            apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk",_foldTitle);
-                            displayPic.Show();
-                        };
-                    }
 
-                    if (typeValues[i] == "exe") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_exe_96;
-                        img.Click += (sender_ap, e_ap) => {
-                            Form bgBlur = new Form();
-                            exeFORM displayPic = new exeFORM(titleLab.Text, "file_info_exe", _foldTitle,"null");
-                            displayPic.Show();
+                        imageValues.Add(APKImage);
+
+                        EventHandler apkOnPressed = (sender, e) => {
+                            new apkFORM(fileName, Globals.custUsername, "folder_upload_info", _foldTitle);
                         };
+
+                        onPressedEvent.Add(apkOnPressed);
                     }
 
                     if (typeValues[i] == "pdf") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
-                        img.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
-                            pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info",_foldTitle,Globals.custUsername);
-                            displayPic.Show();
+
+                        imageValues.Add(PDFImage);
+
+                        EventHandler pdfOnPressed = (sender, e) => {
+                            new pdfFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
                         };
+
+                        onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (typeValues[i] == "docx" || typeValues[i] == "doc") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
-                        img.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
-                            displayDoc.Show();
-                        };
-                    }
+                    if (typeValues[i] == "pptx" || typeValues[i] == "ppx") {
 
-                    if (typeValues[i] == "pptx" || typeValues[i] == "ppt") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-                        img.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
-                            displayDoc.Show();
+                        imageValues.Add(PTXImage);
+
+                        EventHandler ptxOnPressed = (sender, e) => {
+                            new wordFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
                         };
+
+                        onPressedEvent.Add(ptxOnPressed);
                     }
 
                     if (typeValues[i] == "msi") {
-                        picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
-                        picMain_Q.Click += (sender_pt, e_pt) => {
-                            Form bgBlur = new Form();
-                            msiFORM displayMsi = new msiFORM(titleLab.Text, "folder_upload_info", _foldTitle,Globals.custUsername);
-                            displayMsi.Show();
+
+                        imageValues.Add(MSIImage);
+
+                        EventHandler msiOnPressed = (sender, e) => {
+                            new msiFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
                         };
+
+                        onPressedEvent.Add(msiOnPressed);
+
                     }
 
-                    var loadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "LoadAlertFORM");
-                    loadAlertForm?.Close();
+                    if (typeValues[i] == "docx" || typeValues[i] == "doc") {
 
-                    var retrievalAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "RetrievalAlert");
-                    retrievalAlertForm?.Close();
+                        imageValues.Add(DOCImage);
 
-                    var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-                    uploadAlertForm?.Close();
+                        EventHandler wordOnPressed = (sender, e) => {
+                            new wordFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
+                        };
+
+                        onPressedEvent.Add(wordOnPressed);
+                    }
                 }
 
+                PanelGenerator panelGenerator = new PanelGenerator();
+                panelGenerator.generatePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+
+                buildRedundaneVisibility();
+
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+                CloseForm.closeForm("RetrievalAlert");
+                CloseForm.closeForm("RetrievalAlert");
+
             } catch (Exception) {
-                // @ Ignore exception after the user cancelled
-                // folder file retrieval
+                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
             }
         }
 
@@ -1113,7 +965,7 @@ namespace FlowSERVER1 {
 
             int getCurrentCount = int.Parse(lblItemCountText.Text);
             int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
+            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
             lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
             progressBarUsageStorage.Value = calculatePercentageUsage;
@@ -1157,7 +1009,7 @@ namespace FlowSERVER1 {
 
             int getCurrentCount = int.Parse(lblItemCountText.Text);
             int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
+            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
             lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
             progressBarUsageStorage.Value = calculatePercentageUsage;
@@ -1183,7 +1035,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void _mainFileGenerator() {
+        private void buildFilePanelUpload() {
 
             var open = new OpenFileDialog {
                 Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;.webp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
@@ -1371,36 +1223,17 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_expand") {
-                                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+
+                                    string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                                    textboxPic.Image = Globals.textTypeToImage[textType];
+
                                     await startSending(keyVal,nameTable);
-                                    
-                                    if (_extTypes == ".py") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                                    }
-                                    else if (_extTypes == ".txt" || _extTypes == ".md") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                                    }
-                                    else if (_extTypes == ".html") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                                    }
-                                    else if (_extTypes == ".css") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                                    }
-                                    else if (_extTypes == ".js") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                                    }
-                                    else if (_extTypes == ".sql") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                                    }
-                                    else if (_extTypes == ".csv") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                                    }
 
                                     var filePath = getName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
 
-                                        if(_extTypes == ".csv" || _extTypes == ".sql") {
+                                        if(textType == ".csv" || textType == ".sql") {
                                             Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
                                             _showRetrievalCsvAlert.Start();
                                         }
@@ -1692,7 +1525,7 @@ namespace FlowSERVER1 {
                     int currentUploadCount = Convert.ToInt32(lblItemCountText.Text);
 
                     if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
-                        _mainFileGenerator();
+                        buildFilePanelUpload();
                     } else {
                         DisplayError(Globals.accountType);
                     }
@@ -2241,7 +2074,7 @@ namespace FlowSERVER1 {
 
                         clearRedundane();
 
-                        await _generateUserFiles(tableName, fileType, await crud.countRow(tableName));
+                        await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
                     }
                     else {
                         await _generateUserDirectory(await crud.countRow(tableName));
@@ -2265,18 +2098,13 @@ namespace FlowSERVER1 {
                         }
                     }
                 }
-                await generateUserShared(_TypeValues, "DirParMe", _TypeValues.Count);
+                await buildFilePanelSharedToMe(_TypeValues, "DirParMe", _TypeValues.Count);
             }
             else {
-                await generateUserShared(_TypeValues, "DirParMe", _TypeValues.Count);
+                await buildFilePanelSharedToMe(_TypeValues, "DirParMe", _TypeValues.Count);
             }
 
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
-                clearRedundane();
-            }
+            buildRedundaneVisibility();
 
         }
 
@@ -2295,7 +2123,7 @@ namespace FlowSERVER1 {
             }
 
            
-            await generateUserSharedOthers(_TypeValuesOthers, "DirParOther", _TypeValuesOthers.Count);
+            await buildFilePanelSharedToOthers(_TypeValuesOthers, "DirParOther", _TypeValuesOthers.Count);
             buildRedundaneVisibility();
         }
 
@@ -2352,7 +2180,7 @@ namespace FlowSERVER1 {
 
                     var mainTypes = typesValues.Distinct().ToList();
                     var currMainLength = typesValues.Count;
-                    await _generateUserFold(typesValues, _selectedFolder, currMainLength);
+                    await buildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
 
                     lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     if (flowLayoutPanel1.Controls.Count == 0) {
@@ -2398,13 +2226,7 @@ namespace FlowSERVER1 {
 
                 flowLayoutPanel1.Controls.Clear();
 
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    showRedundane();
-                }
-                else {
-                    clearRedundane();
-                }
-
+                buildRedundaneVisibility();
                 buildShowAlert(title: "Something went wrong", subheader: "Try to restart Flowstorage.");
             }
         }
@@ -2460,7 +2282,7 @@ namespace FlowSERVER1 {
         /// Retrieve username of user you shared file to
         /// </summary>
         /// <returns></returns>
-        String getUploaderNameShared = "";
+        private string getUploaderNameShared = "";
         private string sharedToName() {
 
             const string selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
@@ -2504,333 +2326,239 @@ namespace FlowSERVER1 {
 
         }
 
-
-        private async Task generateUserSharedOthers(List<String> fileTypes, String parameterName, int itemCurr) {
+        private async Task buildFilePanelSharedToOthers(List<String> fileTypes, String parameterName, int itemCurr) {
 
             try {
+
+                List<Image> imageValues = new List<Image>();
+                List<EventHandler> onPressedEvent = new List<EventHandler>();
+                List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
                 List<string> typeValues = new List<string>(fileTypes);
 
                 if(typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                    if(base64EncodedImageSharedOthers.Count == 0) {
+                        
+                        const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
 
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                while (await readBase64.ReadAsync()) {
+                                    base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                                }
+                                readBase64.Close();
                             }
                         }
                     }
                 }
 
-                for (int q = 0; q < itemCurr; q++) {
+                for (int i = 0; i < itemCurr; i++) {
 
-                    var panelTxt = new Guna2Panel() {
-                        Name = $"{parameterName}{q}",
-                        Width = 200,
-                        Height = 222,
-                        BorderColor = GlobalStyle.BorderColor,
-                        BorderThickness = 1,
-                        BorderRadius = 8,
-                        BackColor = GlobalStyle.TransparentColor,
-                        Location = new Point(600, top)
-                    };
+                    int accessIndex = i;
 
-                    top += h_p;
-                    flowLayoutPanel1.Controls.Add(panelTxt);
-                    var mainPanelTxt = (Guna2Panel)panelTxt;  
-                    _controlName = $"{parameterName}{q}";
-
-                    var textboxPic = new Guna2PictureBox();
-                    mainPanelTxt.Controls.Add(textboxPic);
-                    textboxPic.Name = $"TxtBox{q}";
-                    textboxPic.BorderRadius = 8;
-                    textboxPic.Width = 190;
-                    textboxPic.Height = 145;
-                    textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
-                    textboxPic.Enabled = true;
-                    textboxPic.Visible = true;
-
-                    textboxPic.Anchor = AnchorStyles.None;
-
-                    int textboxPic_x = (mainPanelTxt.Width - textboxPic.Width) / 2;
-
-                    textboxPic.Location = new Point(textboxPic_x, 10);
-
-                    Label dateLabTxt = new Label();
-                    mainPanelTxt.Controls.Add(dateLabTxt);
-                    dateLabTxt.Name = $"LabTxtUp{q}";
-                    dateLabTxt.Font = GlobalStyle.DateLabelFont;
-                    dateLabTxt.ForeColor = GlobalStyle.DarkGrayColor;
-                    dateLabTxt.Visible = true;
-                    dateLabTxt.Enabled = true;
-                    dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                    dateLabTxt.Text = filesInfoSharedOthers[q].Item2;
-
-                    Label titleLab = new Label();
-                    mainPanelTxt.Controls.Add(titleLab);
-                    titleLab.Name = $"LabVidUp{q}";
-                    titleLab.Font = GlobalStyle.TitleLabelFont;
-                    titleLab.ForeColor = GlobalStyle.GainsboroColor;
-                    titleLab.Visible = true;
-                    titleLab.Enabled = true;
-                    titleLab.Location = GlobalStyle.TitleLabelLoc;
-                    titleLab.Width = 160;
-                    titleLab.Height = 20;
-                    titleLab.AutoEllipsis = true;
-                    titleLab.Text = filesInfoSharedOthers[q].Item1;
-
-                    getUploaderNameShared = titleLab.Text;
+                    getUploaderNameShared = filesInfoSharedOthers[i].Item1;
                     var setupSharedUsername = sharedToName();
                     var SharedToName = getUploaderNameShared;
 
-                    Guna2Button remButTxt = new Guna2Button();
-                    mainPanelTxt.Controls.Add(remButTxt);
-                    remButTxt.Name = $"RemTxtBut{q}";
-                    remButTxt.Width = 29;
-                    remButTxt.Height = 26;
-                    remButTxt.ImageOffset = GlobalStyle.GarbageOffset;
-                    remButTxt.FillColor = GlobalStyle.TransparentColor;
-                    remButTxt.BorderRadius = 6;
-                    remButTxt.BorderThickness = 1;
-                    remButTxt.BorderColor = GlobalStyle.TransparentColor;
-                    remButTxt.Image = GlobalStyle.GarbageImage;
-                    remButTxt.Visible = true;
-                    remButTxt.Location = GlobalStyle.GarbageButtonLoc;
-                    remButTxt.BringToFront();
+                    EventHandler moreOptionOnPressedEvent = (sender, e) => {
 
-                    remButTxt.Click += (sender_im, e_im) => {
-
-                        lblFileNameOnPanel.Text = titleLab.Text;
+                        lblFileNameOnPanel.Text = filesInfoSharedOthers[accessIndex].Item1;
                         lblFileTableName.Text = "cust_sharing";
                         lblSharedToName.Text = setupSharedUsername;
-                        lblFilePanelName.Text = mainPanelTxt.Name;
+                        lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
-
                     };
 
-                    textboxPic.MouseHover += (_senderM, _ev) => {
-                        panelTxt.ShadowDecoration.Enabled = true;
-                        panelTxt.ShadowDecoration.BorderRadius = 8;
-                    };
+                    onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                    textboxPic.MouseLeave += (_senderQ, _evQ) => {
-                        panelTxt.ShadowDecoration.Enabled = false;
-                    };
 
-                    if (Globals.imageTypes.Contains(typeValues[q])) {
+                    if (Globals.imageTypes.Contains(typeValues[i])) {
 
-                        if (base64EncodedImageSharedOthers.Count > q) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageSharedOthers[q]);
+                        if (base64EncodedImageSharedOthers.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageSharedOthers[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                textboxPic.Image = Image.FromStream(toMs);
+                                imageValues.Add(Image.FromStream(toMs));
                             }
                         }
 
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
+                        EventHandler imageOnPressed = (sender, e) => {
+
+                            var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            Form bgBlur = new Form();
-                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared "  + sharedToName(),true)) {
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                bgBlur.Opacity = .24d;
-                                bgBlur.BackColor = Color.Black;
-                                bgBlur.WindowState = FormWindowState.Maximized;
-                                bgBlur.TopMost = true;
-                                bgBlur.Location = this.Location;
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.ShowInTaskbar = false;
-                                bgBlur.Show();
-
-                                displayPic.Owner = bgBlur;
-                                displayPic.ShowDialog();
-
-                                bgBlur.Dispose();
-                            }
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            displayPic.Show();
                         };
+
+
+                        onPressedEvent.Add(imageOnPressed);
+
                     }
 
-                    if (typeValues[q] == ".pptx" || typeValues[q] == ".pptx") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    if (Globals.textTypes.Contains(typeValues[i])) {
 
-                            Form bgBlur = new Form();
-                            ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, sharedToName(),true);
-                            displayPtx.Show();
+                        imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
+
+                        EventHandler textOnPressed = (sender, e) => {
+
+                            txtFORM displayTxt = new txtFORM("", "cust_sharing", filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, "Shared " + sharedToName());
+                            displayTxt.Show();
+
                         };
+
+                        onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[q] == ".pdf") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    if (typeValues[i] == ".exe") {
 
-                            Form bgBlur = new Form();
-                            pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
-                            displayPtx.Show();
+                        imageValues.Add(EXEImage);
+
+                        EventHandler exeOnPressed = (sender, e) => {
+                            exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared To " + sharedToName(), true);
+                            displayExe.Show();
                         };
+
+                        onPressedEvent.Add(exeOnPressed);
                     }
 
-                    if (typeValues[q] == ".apk") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                            Form bgBlur = new Form();
-                            apkFORM displayApk = new apkFORM(titleLab.Text, "Shared To " + sharedToName(), "cust_sharing", lblGreetingText.Text,true);
-                            displayApk.Show();
-                        };
-                    }
+                        if(base64EncodedThumbnailSharedOthers.Count == 0) {
 
-                    if (typeValues[q] == ".msi") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                            const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                                command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                                command.Parameters.Add("@ext", MySqlDbType.Text).Value = typeValues[i];
 
-                            Form bgBlur = new Form();
-                            msiFORM displayMsi = new msiFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
-                            displayMsi.Show();
-                        };
-                    }
-
-                    if (typeValues[q] == ".docx" || typeValues[q] == ".doc") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
-                            displayDoc.Show();
-                        };
-                    }
-
-                    if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
-                            displayXls.Show();
-                        };
-                    }
-
-                    if (typeValues[q] == ".wav" || typeValues[q] == ".mp3") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
-                            displayAud.Show();
-                        };
-                    }
-
-                    if (Globals.videoTypes.Contains(typeValues[q])) {
-
-                        List<string> base64Encoded = new List<string>();
-
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                            command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(titleLab.Text);
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    base64Encoded.Add(readBase64.GetString(0));
+                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
+                                    }
+                                    readBase64.Close();
                                 }
                             }
                         }
 
-                        if (base64Encoded.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(base64Encoded[0]);
+                        if (base64EncodedThumbnailSharedOthers.Count > 0) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailSharedOthers[0]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                textboxPic.Image = Image.FromStream(toMs);
+                                imageValues.Add(Image.FromStream(toMs));
                             }
-                        }
 
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
+                        } 
+
+                        EventHandler videoOnPressed = (sender, e) => {
+
+                            var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            Form bgBlur = new Form();
-                            vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(),true);
-                            displayAud.Show();
+                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            vidFormShow.Show();
                         };
+
+                        onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (typeValues[q] == ".exe") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls") {
 
-                            Form bgBlur = new Form();
-                            exeFORM displayExe = new exeFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, "Shared To " + sharedToName(),true);
-                            displayExe.Show();
+                        imageValues.Add(EXCELImage);
+
+                        EventHandler excelOnPressed = (sender, e) => {
+                            exlFORM exlForm = new exlFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            exlForm.Show();
                         };
+
+                        onPressedEvent.Add(excelOnPressed);
                     }
+                    if (typeValues[i] == ".mp3" || typeValues[i] == ".wav") {
 
-                    if (Globals.textTypes.Contains(typeValues[q])) {
+                        imageValues.Add(AudioImage);
 
-                        if (typeValues[q] == ".py") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                        }
-                        else if (typeValues[q] == ".txt" || typeValues[q] == ".md") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                        }
-                        else if (typeValues[q] == ".html") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                        }
-                        else if (typeValues[q] == ".css") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                        }
-                        else if (typeValues[q] == ".js") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                        }
-                        else if (typeValues[q] == ".sql") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                        }
-                        else if (typeValues[q] == ".csv") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                        }
-
-                        textboxPic.Click += (sender_im, e_im) => {
-
-                            txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, lblGreetingText.Text, "Shared " +  sharedToName());
-                            displayTxt.Show();
+                        EventHandler audioOnPressed = (sender, e) => {
+                            audFORM displayPic = new audFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            displayPic.Show();
                         };
+
+                        onPressedEvent.Add(audioOnPressed);
                     }
 
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    if (typeValues[i] == ".apk") {
 
-                    if (flowLayoutPanel1.Controls.Count > 0) {
-                        clearRedundane();
+                        imageValues.Add(APKImage);
+
+                        EventHandler apkOnPressed = (sender, e) => {
+                            apkFORM displayPic = new apkFORM(filesInfoSharedOthers[accessIndex].Item1, "Shared To " + sharedToName(), "cust_sharing", lblGreetingText.Text, true);
+                            displayPic.Show();
+                        };
+
+                        onPressedEvent.Add(apkOnPressed);
                     }
-                } 
+
+                    if (typeValues[i] == ".pdf") {
+
+                        imageValues.Add(PDFImage);
+
+                        EventHandler pdfOnPressed = (sender, e) => {
+                            pdfFORM displayPdf = new pdfFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            displayPdf.Show();
+                        };
+
+                        onPressedEvent.Add(pdfOnPressed);
+                    }
+
+                    if (typeValues[i] == ".pptx" || typeValues[i] == ".ptx") {
+
+                        imageValues.Add(PTXImage);
+
+                        EventHandler ptxOnPressed = (sender, e) => {
+                            ptxFORM displayPtx = new ptxFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, sharedToName(), true);
+                            displayPtx.Show();
+                        };
+
+                        onPressedEvent.Add(ptxOnPressed);
+                    }
+
+                    if (typeValues[i] == ".msi") {
+
+                        imageValues.Add(MSIImage);
+
+                        EventHandler msiOnPressed = (sender, e) => {
+                            msiFORM displayMsi = new msiFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            displayMsi.Show();
+                        };
+
+                        onPressedEvent.Add(msiOnPressed);
+
+                    }
+
+                    if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
+
+                        imageValues.Add(DOCImage);
+
+                        EventHandler wordOnPressed = (sender, e) => {
+                            wordFORM displayMsi = new wordFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            displayMsi.Show();
+                        };
+
+                        onPressedEvent.Add(wordOnPressed);
+                    }
+                }
+
+                PanelGenerator panelGenerator = new PanelGenerator();
+                panelGenerator.generatePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+
+                buildRedundaneVisibility();
+
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
             } catch (Exception) {
-                buildShowAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.");
+                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
             }
         }
 
@@ -2860,347 +2588,237 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task generateUserShared(List<String> _extTypes, String parameterName, int itemCurr) {            
+        private async Task buildFilePanelSharedToMe(List<String> _extTypes, String parameterName, int itemCurr) {            
 
             try {
 
+                List<Image> imageValues = new List<Image>();
+                List<EventHandler> onPressedEvent = new List<EventHandler>();
+                List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+
                 var UploaderUsername = uploaderName();
 
-                List<String> typeValues = new List<String>(_extTypes);
-
-                List<string> base64EncodedImage = new List<string>();
+                List<string> typeValues = new List<string>(_extTypes);
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedImage.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+
+                    if(base64EncodedImageSharedToMe.Count == 0) {
+
+                        const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
+                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                while (await readBase64.ReadAsync()) {
+                                    base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                                }
+                                readBase64.Close();
                             }
                         }
                     }
                 }
 
-                for (int q = 0; q < itemCurr; q++) {
-                    var panelTxt = new Guna2Panel() {
-                        Name = $"parameterName{q}",
-                        Width = 200,
-                        Height = 222,
-                        BorderColor = GlobalStyle.BorderColor,
-                        BorderThickness = 1,
-                        BorderRadius = 8,
-                        BackColor = GlobalStyle.TransparentColor,
-                        Location = new Point(600, top)
-                    };
+                for (int i = 0; i < itemCurr; i++) {
 
-                    top += h_p;
-                    flowLayoutPanel1.Controls.Add(panelTxt);
-                    var mainPanelTxt = (Guna2Panel)panelTxt; 
-                    _controlName = parameterName + q;
+                    int accessIndex = i;
 
-                    var textboxPic = new Guna2PictureBox();
-                    mainPanelTxt.Controls.Add(textboxPic);
-                    textboxPic.Name = $"TxtBox{q}";
-                    textboxPic.BorderRadius = 8;
-                    textboxPic.Width = 190;
-                    textboxPic.Height = 145;
-                    textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
-                    textboxPic.Enabled = true;
-                    textboxPic.Visible = true;
+                    EventHandler moreOptionOnPressedEvent = (sender, e) => {
 
-                    textboxPic.Anchor = AnchorStyles.None;
-
-                    int textboxPic_x = (mainPanelTxt.Width - textboxPic.Width) / 2;
-
-                    textboxPic.Location = new Point(textboxPic_x, 10);
-
-                    Label titleLab = new Label();
-                    mainPanelTxt.Controls.Add(titleLab);
-                    titleLab.Name = $"LabVidUp{q}";
-                    titleLab.Font = GlobalStyle.TitleLabelFont;
-                    titleLab.ForeColor = GlobalStyle.GainsboroColor;
-                    titleLab.Visible = true;
-                    titleLab.Enabled = true;
-                    titleLab.Location = GlobalStyle.TitleLabelLoc;
-                    titleLab.Width = 160;
-                    titleLab.Height = 20;
-                    titleLab.AutoEllipsis = true;
-                    titleLab.Text = filesInfoShared[q].Item1;
-
-                    Guna2Button remButTxt = new Guna2Button();
-                    mainPanelTxt.Controls.Add(remButTxt);
-                    remButTxt.Name = $"RemTxtBut{q}";
-                    remButTxt.Width = 29;
-                    remButTxt.Height = 26;
-                    remButTxt.ImageOffset = GlobalStyle.GarbageOffset;
-                    remButTxt.FillColor = GlobalStyle.TransparentColor;
-                    remButTxt.BorderRadius = 6;
-                    remButTxt.BorderThickness = 1;
-                    remButTxt.BorderColor = GlobalStyle.TransparentColor;
-                    remButTxt.Image = GlobalStyle.GarbageImage;
-                    remButTxt.Visible = true;
-                    remButTxt.Location = GlobalStyle.GarbageButtonLoc;
-                    remButTxt.BringToFront();
-
-                    remButTxt.Click += (sender_im, e_im) => {
-
-                        lblFileNameOnPanel.Text = titleLab.Text;
+                        lblFileNameOnPanel.Text = filesInfoShared[accessIndex].Item1;
                         lblFileTableName.Text = "cust_sharing";
-                        lblFilePanelName.Text = mainPanelTxt.Name;
+                        lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
-
                     };
 
-                    Label dateLabTxt = new Label();
-                    mainPanelTxt.Controls.Add(dateLabTxt);
-                    dateLabTxt.Name = $"LabTxtUp{q}";
-                    dateLabTxt.Font = GlobalStyle.DateLabelFont;
-                    dateLabTxt.ForeColor = GlobalStyle.DarkGrayColor;
-                    dateLabTxt.Visible = true;
-                    dateLabTxt.Enabled = true;
-                    dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                    dateLabTxt.Text = filesInfoShared[q].Item2;
+                    onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                    textboxPic.MouseHover += (_senderM, _ev) => {
-                        panelTxt.ShadowDecoration.Enabled = true;
-                        panelTxt.ShadowDecoration.BorderRadius = 8;
-                    };
+                    if (Globals.imageTypes.Contains(typeValues[i])) {
 
-                    textboxPic.MouseLeave += (_senderQ, _evQ) => {
-                        panelTxt.ShadowDecoration.Enabled = false;
-                    };
-
-                    if (Globals.imageTypes.Contains(typeValues[q])) {
-
-                        if (base64EncodedImage.Count > q) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImage[q]);
+                        if (base64EncodedImageSharedToMe.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageSharedToMe[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                textboxPic.Image = Image.FromStream(toMs);
+                                imageValues.Add(Image.FromStream(toMs));
                             }
                         }
 
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
+                        EventHandler imageOnPressed = (sender, e) => {
+
+                            var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            Form bgBlur = new Form();
-                            using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false)) {
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                bgBlur.Opacity = .24d;
-                                bgBlur.BackColor = Color.Black;
-                                bgBlur.WindowState = FormWindowState.Maximized;
-                                bgBlur.TopMost = true;
-                                bgBlur.Location = this.Location;
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.ShowInTaskbar = false;
-                                bgBlur.Show();
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayPic.Show();
+                        };
 
-                                displayPic.Owner = bgBlur;
-                                displayPic.ShowDialog();
 
-                                bgBlur.Dispose();
+                        onPressedEvent.Add(imageOnPressed);
+
+                    }
+
+                    if (Globals.textTypes.Contains(typeValues[i])) {
+
+                        imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
+
+                        EventHandler textOnPressed = (sender, e) => {
+
+                            if (typeValues[i] == ".csv" || typeValues[i] == ".sql") {
+                                new Thread(() => new SheetRetrievalAlert().ShowDialog()).Start();
                             }
+
+                            txtFORM displayPic = new txtFORM("", "cust_sharing", filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
+                            displayPic.Show();
+
+
+                            clearRedundane();
+
                         };
+
+                        onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[q] == ".pptx" || typeValues[q] == ".ppt") {
+                    if (typeValues[i] == ".exe") {
 
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        imageValues.Add(EXEImage);
 
-                            Form bgBlur = new Form();
-                            ptxFORM displayPtx = new ptxFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false);
-                            displayPtx.Show();
+                        EventHandler exeOnPressed = (sender, e) => {
+                            exeFORM displayExe = new exeFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayExe.Show();
                         };
+
+                        onPressedEvent.Add(exeOnPressed);
                     }
 
-                    if (typeValues[q] == ".pdf") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                            Form bgBlur = new Form();
-                            pdfFORM displayPtx = new pdfFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false);
-                            displayPtx.Show();
-                        };
-                    }
+                        if(base64EncodedThumbnailSharedToMe.Count == 0) {
 
-                    if (typeValues[q] == ".apk") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                            using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
+                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(filesInfoShared[i].Item1));
 
-                            Form bgBlur = new Form();
-                            using (apkFORM displayApk = new apkFORM(titleLab.Text, UploaderUsername, "cust_sharing", lblGreetingText.Text,true)) {
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                bgBlur.Opacity = .24d;
-                                bgBlur.BackColor = Color.Black;
-                                bgBlur.WindowState = FormWindowState.Maximized;
-                                bgBlur.TopMost = true;
-                                bgBlur.Location = this.Location;
-                                bgBlur.StartPosition = FormStartPosition.Manual;
-                                bgBlur.ShowInTaskbar = false;
-                                bgBlur.Show();
-
-                                displayApk.Owner = bgBlur;
-                                displayApk.ShowDialog();
-
-                                bgBlur.Dispose();
-                            }
-                        };
-                    }
-
-                    if (typeValues[q] == ".docx" || typeValues[q] == ".doc") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            Form bgBlur = new Form();
-                            wordFORM displayDoc = new wordFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
-                            displayDoc.Show();
-                        };
-                    }
-
-                    if (typeValues[q] == ".xlsx" || typeValues[q] == ".xls") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            exlFORM displayXls = new exlFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
-                            displayXls.Show();
-                        };
-                    }
-
-                    if (typeValues[q] == ".wav" || typeValues[q] == ".mp3") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            Form bgBlur = new Form();
-                            audFORM displayAud = new audFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
-                            displayAud.Show();
-                        };
-                    }
-
-                    if (Globals.videoTypes.Contains(typeValues[q])) {
-
-                        List<string> base64EncodedThumbnail = new List<string>();
-
-                        const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                        using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
-                            command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    base64EncodedThumbnail.Add(readBase64.GetString(0));
+                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        base64EncodedThumbnailSharedToMe.Add(readBase64.GetString(0));
+                                    }
                                 }
                             }
                         }
 
-                        if (base64EncodedThumbnail.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail[0]);
+                        if (base64EncodedThumbnailSharedToMe.Count > 0) {
+                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailSharedToMe[0]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                textboxPic.Image = Image.FromStream(toMs);
+                                imageValues.Add(Image.FromStream(toMs));
                             }
                         }
 
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
+                        EventHandler videoOnPressed = (sender, e) => {
+
+                            var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            Form bgBlur = new Form();
-                            vidFORM displayAud = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername,false);
-                            displayAud.Show();
+                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            vidFormShow.Show();
                         };
+
+                        onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (typeValues[q] == ".exe") {
-                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
+                    if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls") {
 
-                            Form bgBlur = new Form();
-                            exeFORM displayExe = new exeFORM(titleLab.Text, "cust_sharing", lblGreetingText.Text, UploaderUsername);
-                            displayExe.Show();
+                        imageValues.Add(EXCELImage);
+
+                        EventHandler excelOnPressed = (sender, e) => {
+                            exlFORM exlForm = new exlFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            exlForm.Show();
                         };
+
+                        onPressedEvent.Add(excelOnPressed);
+                    }
+                    if (typeValues[i] == ".mp3" || typeValues[i] == ".wav") {
+
+                        imageValues.Add(AudioImage);
+
+                        EventHandler audioOnPressed = (sender, e) => {
+                            audFORM displayPic = new audFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayPic.Show();
+                        };
+
+                        onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (Globals.textTypes.Contains(typeValues[q])) {
+                    if (typeValues[i] == ".apk") {
 
-                        if (typeValues[q] == ".py") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                        }
-                        else if (typeValues[q] == ".txt" || typeValues[q] == ".md") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                        }
-                        else if (typeValues[q] == ".html") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                        }
-                        else if (typeValues[q] == ".css") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                        }
-                        else if (typeValues[q] == ".js") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                        }
-                        else if (typeValues[q] == ".sql") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                        }
-                        else if (typeValues[q] == ".csv") {
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                        }
+                        imageValues.Add(APKImage);
 
-                        textboxPic.Click += (sender_im, e_im) => {
-                            var getImgName = (Guna2PictureBox)sender_im;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            txtFORM displayTxt = new txtFORM("", "cust_sharing", titleLab.Text, lblGreetingText.Text, UploaderUsername, false);
-                            displayTxt.Show();
+                        EventHandler apkOnPressed = (sender, e) => {
+                            apkFORM displayPic = new apkFORM(filesInfoShared[accessIndex].Item1, UploaderUsername, "cust_sharing", lblGreetingText.Text,false);
+                            displayPic.Show();
                         };
+
+                        onPressedEvent.Add(apkOnPressed);
                     }
 
-                    Application.OpenForms
-                              .OfType<Form>()
-                              .Where(form => String.Equals(form.Name, "LoadAlertFORM"))
-                              .ToList()
-                              .ForEach(form => form.Close());
+                    if (typeValues[i] == ".pdf") {
 
+                        imageValues.Add(PDFImage);
 
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        EventHandler pdfOnPressed = (sender, e) => {
+                            pdfFORM displayPdf = new pdfFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayPdf.Show();
+                        };
 
-                    if (flowLayoutPanel1.Controls.Count > 0) {
-                        clearRedundane();
+                        onPressedEvent.Add(pdfOnPressed);
+                    }
+
+                    if (typeValues[i] == ".pptx" || typeValues[i] == ".ptx") {
+
+                        imageValues.Add(PTXImage);
+
+                        EventHandler ptxOnPressed = (sender, e) => {
+                            ptxFORM displayPtx = new ptxFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayPtx.Show();
+                        };
+
+                        onPressedEvent.Add(ptxOnPressed);
+                    }
+
+                    if (typeValues[i] == ".msi") {
+
+                        imageValues.Add(MSIImage);
+
+                        EventHandler msiOnPressed = (sender, e) => {
+                            msiFORM displayMsi = new msiFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayMsi.Show();
+                        };
+
+                        onPressedEvent.Add(msiOnPressed);
+
+                    }
+
+                    if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
+
+                        imageValues.Add(DOCImage);
+
+                        EventHandler wordOnPressed = (sender, e) => {
+                            wordFORM displayMsi = new wordFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
+                            displayMsi.Show();
+                        };
                     }
                 }
 
+                PanelGenerator panelGenerator = new PanelGenerator();
+                panelGenerator.generatePanel(parameterName, itemCurr, filesInfoShared, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+
+                buildRedundaneVisibility();
+
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+
             } catch (Exception) {
-                buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to load your files. Try to hit the refresh button.");
+                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
             }
         }
 
@@ -3459,6 +3077,10 @@ namespace FlowSERVER1 {
         /// <param name="count"></param>
         /// <returns></returns>
         private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName) {
+
+            base64EncodedImageSharedToMe.Clear();
+            base64EncodedThumbnailSharedToMe.Clear();
+
             if (typeValues.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
                     command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
@@ -3474,7 +3096,7 @@ namespace FlowSERVER1 {
 
             _callFilesInformationShared();
 
-            await generateUserShared(typeValues, dirName, typeValues.Count);
+            await buildFilePanelSharedToMe(typeValues, dirName, typeValues.Count);
         }
 
         /// <summary>
@@ -3488,6 +3110,9 @@ namespace FlowSERVER1 {
         /// <param name="count"></param>
         /// <returns></returns>
         private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
+
+            base64EncodedImageSharedOthers.Clear();
+            base64EncodedThumbnailSharedOthers.Clear();
 
             if (typeValuesOthers.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
@@ -3504,7 +3129,7 @@ namespace FlowSERVER1 {
 
             _callFilesInformationOthers();
 
-            await generateUserSharedOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
+            await buildFilePanelSharedToOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
         }
 
         /// <summary>
@@ -3528,13 +3153,7 @@ namespace FlowSERVER1 {
                 await RefreshGenerateUserSharedOthers(_TypeValuesOthers, "DirParOther");
             }
 
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
-                clearRedundane();
-            }
-
+            buildRedundaneVisibility();
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
         }
@@ -3557,7 +3176,7 @@ namespace FlowSERVER1 {
 
                         clearRedundane();
 
-                        await _generateUserFiles(tableName, fileType, await crud.countRow(tableName));
+                        await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
                     }
                     else {
                         await _generateUserDirectory(await crud.countRow(tableName));
@@ -3565,19 +3184,15 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
-                clearRedundane();
-            }
-
+            buildRedundaneVisibility();
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 
         private async Task RefreshFolder() {
 
-            String _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            base64EncodedImageFolder.Clear();
+
+            string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             var typesValues = new List<string>();
 
@@ -3593,7 +3208,7 @@ namespace FlowSERVER1 {
             }
 
             var currMainLength = typesValues.Count;
-            await _generateUserFold(typesValues, _selectedFolder, currMainLength);
+            await buildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
         }
 
         /// <summary>
@@ -3680,7 +3295,7 @@ namespace FlowSERVER1 {
 
                         clearRedundane();
 
-                        await _generateUserFiles(tableName, fileType, await crud.countRow(tableName));
+                        await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
                     }
                     else {
                         await _generateUserDirectory(await crud.countRow(tableName));
@@ -3844,6 +3459,10 @@ namespace FlowSERVER1 {
 
         private void DragDropHandleFiles(string[] files) {
 
+            List<Image> imageValues = new List<Image>();
+            List<EventHandler> onPressedEvent = new List<EventHandler>();
+            List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+
             List<string> filePathList = new List<string>(files);
 
             varDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -3854,85 +3473,9 @@ namespace FlowSERVER1 {
                 retrieved = Path.GetExtension(selectedItems);
                 fileSizeInMB = 0;
 
-                async Task containThumbUpload(string nameTable, string getNamePath, object keyValMain) {
-
-                    int getCurrentCount = int.Parse(lblItemCountText.Text);
-                    int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-                    int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
-                    lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-                    progressBarUsageStorage.Value = calculatePercentageUsage;
-
-                    try {
-
-                        using (var command = new MySqlCommand()) {
-
-                            command.Connection = con;
-                            command.CommandText = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
-                            command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath));
-                            command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                            command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                            command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
-
-                            using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
-                                var toBitMap = shellFile.Thumbnail.Bitmap;
-                                using (var stream = new MemoryStream()) {
-                                    toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                    var toBase64 = Convert.ToBase64String(stream.ToArray());
-                                    command.Parameters.AddWithValue("@CUST_THUMB", toBase64);
-                                }
-                            }
-
-                            await command.ExecuteNonQueryAsync();
-                        }
-
-                    }
-                    catch (Exception) {
-                        /* TODO: User has cancelled the insert operation
-                            * then ignore 'object reference was not set to an object'
-                            * exception
-                            */
-                    }
-
-                    Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
-                }
-
                 async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                    nameTableInsert = nameTable;
-
                     if (fileSizeInMB < 1500) {
-
-                        async Task startSending(string setValue) {
-
-                            int getCurrentCount = int.Parse(lblItemCountText.Text);
-                            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-                            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100) + 5;
-                            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-                            progressBarUsageStorage.Value = calculatePercentageUsage;
-
-                            string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
-
-                            try {
-
-                                using (var command = new MySqlCommand(insertQuery, con)) {
-                                    command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text).Value = EncryptionModel.Encrypt(getName);
-                                    command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text).Value = Globals.custUsername;
-                                    command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255).Value = varDate;
-                                    command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob).Value = setValue;
-
-                                    await command.ExecuteNonQueryAsync();
-                                }
-
-                                Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
-                            }
-                            catch (Exception) {
-                                MessageBox.Show("Failed to upload this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
 
                         var panelTxt = new Guna2Panel() {
                             Name = panName + itemCurr,
@@ -4023,77 +3566,38 @@ namespace FlowSERVER1 {
                         _setupUploadAlertThread.Start();
 
                         if (nameTable == "file_info") {
-                            await startSending(keyVal);
+
+                            base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
+                            await startSending(keyVal,"file_info");
 
                             textboxPic.Image = new Bitmap(selectedItems);
-                            textboxPic.Click += (sender_f, e_f) => {
-                                var getImgName = (Guna2PictureBox)sender_f;
+                            textboxPic.Click += (sender, e) => {
+
+                                var getImgName = (Guna2PictureBox)sender;
                                 var getWidth = getImgName.Image.Width;
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                Form bgBlur = new Form();
-                                using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null", Globals.custUsername)) {
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                    bgBlur.Opacity = .24d;
-                                    bgBlur.BackColor = Color.Black;
-                                    bgBlur.WindowState = FormWindowState.Maximized;
-                                    bgBlur.TopMost = true;
-                                    bgBlur.Location = this.Location;
-                                    bgBlur.StartPosition = FormStartPosition.Manual;
-                                    bgBlur.ShowInTaskbar = false;
-                                    bgBlur.Show();
-
-                                    displayPic.Owner = bgBlur;
-                                    displayPic.ShowDialog();
-
-                                    bgBlur.Dispose();
-                                }
+                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "file_info", "null", Globals.custUsername);
+                                displayPic.Show();
                             };
 
-                            clearRedundane();
+
                         }
 
                         if (nameTable == "file_info_expand") {
-                            var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                            await startSending(keyVal);
 
-                            if (_extTypes == ".py") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                            }
-                            else if (_extTypes == ".txt" || _extTypes == ".md") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                            }
-                            else if (_extTypes == ".html") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                            }
-                            else if (_extTypes == ".css") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                            }
-                            else if (_extTypes == ".js") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                            }
-                            else if (_extTypes == ".sql") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                            }
-                            else if (_extTypes == ".csv") {
-                                textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                            }
+                            string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                            textboxPic.Image = Globals.textTypeToImage[textType];
 
                             var filePath = getName;
+                            await startSending(keyVal,"file_info_expand");
 
                             textboxPic.Click += (sender_t, e_t) => {
-
-                                if (_extTypes == ".csv" || _extTypes == ".sql") {
-                                    Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                                    _showRetrievalCsvAlert.Start();
-                                }
 
                                 txtFORM txtFormShow = new txtFORM("IGNORETHIS", "file_info_expand", filePath, "null", Globals.custUsername);
                                 txtFormShow.Show();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_exe") {
@@ -4108,11 +3612,12 @@ namespace FlowSERVER1 {
                                 exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Globals.custUsername);
                                 displayExe.Show();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_vid") {
-                            await containThumbUpload(nameTable, getName, keyVal);
+
+                            await containThumbUpload(selectedItems,nameTable, getName, keyVal);
+
                             ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
                             Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                             textboxPic.Image = toBitMap;
@@ -4126,29 +3631,26 @@ namespace FlowSERVER1 {
                                 vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "file_info_vid", "null", Globals.custUsername);
                                 vidShow.Show();
                             };
-                            clearRedundane();
                         }
-                        if (nameTable == "file_info_audi") {
-                            await startSending(keyVal);
 
-                            var _getWidth = this.Width;
-                            var _getHeight = this.Height;
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                        if (nameTable == "file_info_audi") {
+
+                            await startSending(keyVal,"file_info_audi");
+
+                            textboxPic.Image = AudioImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", Globals.custUsername);
                                 displayPic.Show();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_excel") {
-                            await startSending(keyVal);
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                            await startSending(keyVal,"file_info_excel");
+                            textboxPic.Image = EXCELImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
                                 displayPic.Show();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_apk") {
@@ -4156,33 +3658,30 @@ namespace FlowSERVER1 {
                             tableName = "file_info_apk";
                             backgroundWorker1.RunWorkerAsync();
 
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
+                            textboxPic.Image = APKImage;
                             textboxPic.Click += (sender_gi, e_gi) => {
                                 Form bgBlur = new Form();
                                 apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null");
                                 displayPic.Show();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_pdf") {
-                            await startSending(keyVal);
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                            await startSending(keyVal,"file_info_pdf");
+                            textboxPic.Image = PDFImage;
                             textboxPic.Click += (sender_pd, e_pd) => {
                                 pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", Globals.custUsername);
                                 displayPdf.ShowDialog();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_ptx") {
-                            await startSending(keyVal);
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                            await startSending(keyVal,"file_info_ptx");
+                            textboxPic.Image = PTXImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
                                 ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx", "null", Globals.custUsername);
                                 displayPtx.ShowDialog();
                             };
-                            clearRedundane();
                         }
                         if (nameTable == "file_info_msi") {
                             keyValMain = keyVal;
@@ -4195,17 +3694,15 @@ namespace FlowSERVER1 {
                                 msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername);
                                 displayMsi.Show();
                             };
-                            clearRedundane();
                         }
 
                         if (nameTable == "file_info_word") {
-                            await startSending(keyVal);
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                            await startSending(keyVal,"file_info_word");
+                            textboxPic.Image = DOCImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
                                 wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word", "null", Globals.custUsername);
                                 displayWord.ShowDialog();
                             };
-                            clearRedundane();
                         }
 
                     } else {
@@ -4348,7 +3845,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button17_Click_2(object sender, EventArgs e) {
             txtBoxSearchFile.Text = String.Empty;
-            txtBoxSearchFile.Text = ".txt,.html,.md,.sql,.css,.js";
+            txtBoxSearchFile.Text = ".txt,.html,.md,.sql,.css,.js,.csv";
         }
 
         private void guna2Button22_Click_1(object sender, EventArgs e) {
@@ -4370,7 +3867,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button23_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = String.Empty;
-            txtBoxSearchFile.Text = ".csv";
+            txtBoxSearchFile.Text = ".mp4,.avi,.mov,wmv";
 
         }
 
@@ -4499,7 +3996,8 @@ namespace FlowSERVER1 {
 
                 } else if (tableName == "folder_upload_info") {
 
-                    using (MySqlCommand command = new MySqlCommand("DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
+                    const string removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
+                    using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(dirName));
@@ -4528,16 +4026,15 @@ namespace FlowSERVER1 {
                 }
 
                 Control[] matches = this.Controls.Find(panelName, true);
-                if (matches.Length > 0 && matches[0] is Panel) {
-                    Panel myPanel = (Panel)matches[0];
+                if (matches.Length > 0 && matches[0] is Guna2Panel) {
+                    Guna2Panel myPanel = (Guna2Panel)matches[0];
+                    flowLayoutPanel1.Controls.Remove(myPanel);
                     myPanel.Dispose();
                 }
 
                 lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
-                if (flowLayoutPanel1.Controls.Count == 0) {
-                    showRedundane();
-                }
+                buildRedundaneVisibility();
 
                 int getCurrentCount = int.Parse(lblItemCountText.Text);
                 int getLimitedValue = int.Parse(lblLimitUploadText.Text);
@@ -4595,6 +4092,11 @@ namespace FlowSERVER1 {
         }
 
         private void label25_Click(object sender, EventArgs e) {
+
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
 
         }
     }

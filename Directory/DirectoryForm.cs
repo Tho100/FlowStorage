@@ -22,12 +22,10 @@ using System.Threading;
 using System.Runtime.Caching;
 using FlowSERVER1.AlertForms;
 using Org.BouncyCastle.Utilities.Encoders;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace FlowSERVER1
-{
-    /// <summary>
-    /// Directory form class
-    /// </summary>
+{ 
     public partial class DirectoryForm : Form {
 
         public static DirectoryForm instance;
@@ -35,7 +33,6 @@ namespace FlowSERVER1
         readonly private Crud crud = new Crud();
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         private string _extName { get; set; }
 
@@ -86,42 +83,32 @@ namespace FlowSERVER1
                 { ".docx", ("docFile", "file_info_word") },
             };
 
-            string username = Globals.custUsername;
-            string dirname = lblDirectoryName.Text;
-
             foreach (string ext in fileExtensions.Keys) {
                 int count = _countRow(ext);
                 if (count > 0) {
                     _extName = ext;
                     string controlName = fileExtensions[ext].Item1;
                     string tableName = fileExtensions[ext].Item2;
-                    _generateUserFiles(tableName, controlName, count);
+                    buildFilePanelOnLoad(tableName, controlName, count);
                 }
             }
 
-            if (flowLayoutPanel1.Controls.Count == 0) {
+            if(flowLayoutPanel1.Controls.Count == 0) {
                 showRedundane();
-            }
-            else {
-                clearRedundane();    
-            }
-
-            int _countRow(string ext) {
-                const string query = "SELECT COUNT(CUST_USERNAME) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                using (var command = new MySqlCommand(query, con)) {
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirname));
-                    command.Parameters.AddWithValue("@ext", ext);
-
-                    return Convert.ToInt32(command.ExecuteScalar());
-                }
-            }
-
-            if (flowLayoutPanel1.Controls.Count == 0) {
-                showRedundane();
-            }
-            else {
+            } else {
                 clearRedundane();
+            }
+
+        }
+
+        private int _countRow(string ext) {
+            const string query = "SELECT COUNT(CUST_USERNAME) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+            using (var command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
+                command.Parameters.AddWithValue("@ext", ext);
+
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
 
@@ -147,7 +134,7 @@ namespace FlowSERVER1
         int top = 275;
         int h_p = 100;
 
-        private async void _generateUserFiles(String _tableName, String parameterName, int currItem) {
+        private async void buildFilePanelOnLoad(String _tableName, String parameterName, int currItem) {
 
             List<(string, string)> filesInfo = new List<(string, string)>();
 
@@ -511,7 +498,34 @@ namespace FlowSERVER1
         int msiCurr = 0;
         int docxCurr = 0;
         private string _controlName;
-        private void _mainFileGenerator(int AccountType_, String _AccountTypeStr_) {
+
+        private async Task startSending(string setValue) {
+
+            try {
+
+                const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
+                var param = new Dictionary<string, string>
+                {
+                    { "@CUST_USERNAME", Globals.custUsername},
+                    { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
+                    { "@UPLOAD_DATE", varDate},
+                    { "@CUST_FILE", setValue},
+                    { "@CUST_THUMB", "null"},
+                    { "@FILE_EXT", retrieved},
+                    { "@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text)}
+                };
+
+                await crud.Insert(insertQuery, param);
+
+                Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+
+            }
+            catch (Exception) {
+                MessageBox.Show("Hey there's an error uploading this file! :(", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void buildFilePanel(int AccountType_, String _AccountTypeStr_) {
 
             var form1 = HomePage.instance;
 
@@ -597,31 +611,6 @@ namespace FlowSERVER1
                         async void createPanelMain(string nameTable, string panName, int itemCurr, string keyVal) {
 
                             if (fileSizeInMB < 8000) {
-
-                                async Task startSending(string setValue) {
-
-                                    try {
-
-                                        const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
-                                        var param = new Dictionary<string, string>
-                                        {
-                                            { "@CUST_USERNAME", Globals.custUsername},
-                                            { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
-                                            { "@UPLOAD_DATE", varDate},
-                                            { "@CUST_FILE", setValue},
-                                            { "@CUST_THUMB", "null"},
-                                            { "@FILE_EXT", retrieved},
-                                            { "@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text)}
-                                        };
-
-                                        await crud.Insert(insertQuery, param);
-
-                                        Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
-                                    } catch (Exception) {
-                                        MessageBox.Show("Hey there's an error uploading this file! :(","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                                    }
-                                }
 
                                 int top = 275;
                                 int h_p = 100;
@@ -1009,7 +998,7 @@ namespace FlowSERVER1
                                 createPanelMain("file_info_word", "PanDoc", docxCurr, _encryptValue);
                             }
 
-                            Application.OpenForms.Cast<Form>().Where(f => f.Name == "UploadAlrt").ToList().ForEach(f => f.Close());
+                            CloseForm.closeForm("UploadAlrt");
 
                         }
 
@@ -1044,15 +1033,31 @@ namespace FlowSERVER1
                 bgBlur.Dispose();
             }
         }
+
+
+        private async Task<int> countTotalFilesDirectory(String directoryName) {
+
+            int count = 0;
+
+            const string query = "SELECT COUNT(*) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
+            using(MySqlCommand command = new MySqlCommand(query,con)) {
+                command.Parameters.AddWithValue("@username",Globals.custUsername);
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
+                object results = await command.ExecuteScalarAsync();
+                count = Convert.ToInt32(results);
+            }
+
+            return count;
+        }
    
-        private void guna2Button2_Click_1(object sender, EventArgs e) {
+        private async void guna2Button2_Click_1(object sender, EventArgs e) {
 
             try {
 
-                int currentUploadCount = Convert.ToInt32(HomePage.instance.lblItemCountText.Text);
+                int currentUploadCount = await countTotalFilesDirectory(lblDirectoryName.Text);
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
-                    _mainFileGenerator(Globals.uploadFileLimit[Globals.accountType], Globals.accountType);
+                    buildFilePanel(Globals.uploadFileLimit[Globals.accountType], Globals.accountType);
                 }
                 else {
                     DisplayError(Globals.accountType);
@@ -1060,63 +1065,14 @@ namespace FlowSERVER1
 
            } catch (Exception) {
 
-                Application.OpenForms
-                     .OfType<Form>()
-                     .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                     .ToList()
-                     .ForEach(form => form.Close());
+                CloseForm.closeForm("UploadAlrt");
 
-                CustomAlert showAlert = new CustomAlert(title: "An error occurred", "Something went wrong while trying to upload files.");
-                showAlert.Show();
+                new CustomAlert(title: "An error occurred", "Something went wrong while trying to upload files.").Show();
+                
             }
         }
 
         private void guna2VSeparator1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button12_Click(object sender, EventArgs   e) {
-
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
-
-            const string insertTxtQuery = "INSERT INTO upload_info_directory(CUST_FILE_PATH,CUST_USERNAME,UPLOAD_DATE,CUST_FILE,CUST_THUMB,FILE_EXT,DIR_NAME) VALUES (@CUST_FILE_PATH,@CUST_USERNAME,@UPLOAD_DATE,@CUST_FILE,@CUST_THUMB,@FILE_EXT,@DIR_NAME)";
-            command = new MySqlCommand(insertTxtQuery, con);
-
-            command.Parameters.Add("@CUST_FILE_PATH", MySqlDbType.Text);
-            command.Parameters.Add("@CUST_USERNAME", MySqlDbType.Text);
-            command.Parameters.Add("@UPLOAD_DATE", MySqlDbType.VarChar, 255);
-            command.Parameters.Add("@CUST_FILE", MySqlDbType.LongBlob);
-            command.Parameters.Add("@CUST_THUMB", MySqlDbType.LongBlob);
-            command.Parameters.Add("@FILE_EXT", MySqlDbType.LongText);
-            command.Parameters.Add("@DIR_NAME", MySqlDbType.Text);
-
-            command.Parameters["@CUST_FILE_PATH"].Value = EncryptionModel.Encrypt(getName);
-            command.Parameters["@CUST_USERNAME"].Value = Globals.custUsername;
-            command.Parameters["@UPLOAD_DATE"].Value = varDate;
-
-            command.Parameters["@FILE_EXT"].Value = retrieved;
-            command.Parameters["@DIR_NAME"].Value = lblDirectoryName.Text;
-            command.Parameters["@CUST_THUMB"].Value = "null";
-
-            command.CommandTimeout = 15000;
-            command.Prepare();
-
-            if(command.ExecuteNonQuery() == 1) {
-                Application.OpenForms
-                .OfType<Form>()
-                .Where(form => String.Equals(form.Name, "UploadAlrt"))
-                .ToList()
-                .ForEach(form => form.Close());
-            }
-        }
-
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {
-
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 
         }
 

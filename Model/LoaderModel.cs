@@ -62,7 +62,7 @@ namespace FlowSERVER1 {
             const string readGifFilesQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, "0123456789085746"));
+                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
@@ -152,7 +152,7 @@ namespace FlowSERVER1 {
 
             using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
@@ -166,7 +166,7 @@ namespace FlowSERVER1 {
                         }
 
                         var base64Encoded = reader.GetString(0);
-                        var decryptedValues = EncryptionModel.Decrypt(base64Encoded, EncryptionKey.KeyValue);
+                        var decryptedValues = EncryptionModel.Decrypt(base64Encoded);
                         var fileBytes = Convert.FromBase64String(decryptedValues);
                         universalBytes = fileBytes;
                     }
@@ -179,7 +179,7 @@ namespace FlowSERVER1 {
             string readFilesQuery = $"SELECT CUST_FILE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(readFilesQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
@@ -191,7 +191,7 @@ namespace FlowSERVER1 {
                         }
 
                         string base64Encoded = reader.GetString(0);
-                        string decryptedValues = EncryptionModel.Decrypt(base64Encoded, EncryptionKey.KeyValue);
+                        string decryptedValues = EncryptionModel.Decrypt(base64Encoded);
                         byte[] bytes = Convert.FromBase64String(decryptedValues);
                         universalBytes = bytes;
                     }

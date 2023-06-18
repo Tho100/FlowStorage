@@ -21,7 +21,6 @@ namespace FlowSERVER1 {
     public partial class audFORM : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        readonly private MySqlCommand command = ConnectionModel.command;
 
         private string _TabName = "";
         private string _DirName = "";

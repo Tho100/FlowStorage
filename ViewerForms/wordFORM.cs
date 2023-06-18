@@ -62,8 +62,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog());
-                ShowAlert.Start();
+                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog()).Start();
 
                 if (_TableName == "file_info_word") {
                     setupDocx(LoaderModel.LoadFile("file_info_word","null",lblFileName.Text));
@@ -75,12 +74,14 @@ namespace FlowSERVER1 {
                 } else if (_TableName == "cust_sharing") {
                     setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, lblFileName.Text,_isFromShared));
                 }
+
+                CloseForm.closeForm("RetrievalAlert");
             }
             catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        public void setupDocx(Byte[] _getByte) {
+        public void setupDocx(byte[] _getByte) {
 
             lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
 

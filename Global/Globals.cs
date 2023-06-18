@@ -1,11 +1,23 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static Spire.Spreadsheet.Forms.Common.Win32;
 
 namespace FlowSERVER1 {
     public class Globals {
+
+        static private readonly Image TextImage = FlowSERVER1.Properties.Resources.icons8_txt_48;
+        static private readonly Image CSVImage = FlowSERVER1.Properties.Resources.icons8_csv_48;
+        static private readonly Image CssImage = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
+        static private readonly Image JsImage = FlowSERVER1.Properties.Resources.icons8_javascript_50;
+        static private readonly Image HTMLImage = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
+        static private readonly Image SQLImage = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
+        static private readonly Image PYImage = FlowSERVER1.Properties.Resources.icons8_python_file_48;
 
         static public String custUsername = "";
         static public String custEmail = "";
@@ -71,6 +83,31 @@ namespace FlowSERVER1 {
             { "Max", 5 },
             { "Express", 10 },
             { "Supreme", 20 },
+        };
+
+        static public readonly Dictionary<string, Image> textTypeToImage = new Dictionary<string, Image> 
+        {
+            { ".txt", TextImage},
+            { ".md", TextImage},
+            { ".csv", CSVImage},
+            { ".js", JsImage},
+            { ".css", CssImage},
+            { ".html", HTMLImage},
+            { ".sql", SQLImage},
+            { ".py", PYImage},
+
+        };
+
+        static public readonly Dictionary<string, Image> textTypeToImageFolder = new Dictionary<string, Image>
+       {
+            { "txt", TextImage},
+            { "md", TextImage},
+            { "csv", CSVImage},
+            { "js", JsImage},
+            { "css", CssImage},
+            { "html", HTMLImage},
+            { "sql", SQLImage},
+            { "py", PYImage},
         };
 
     }

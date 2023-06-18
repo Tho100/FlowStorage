@@ -13,7 +13,6 @@ namespace FlowSERVER1 {
     public partial class PassSharingFORM : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         public PassSharingFORM() {
             InitializeComponent();
@@ -48,11 +47,12 @@ namespace FlowSERVER1 {
                     SettingsForm.instance.guna2Button27.Visible = true;
                     SettingsForm.instance.guna2Button27.Enabled = true;
 
-                    const string _customizeQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
-                    command = new MySqlCommand(_customizeQuery,con);
-                    command.Parameters.AddWithValue("@getval",EncryptionModel.computeAuthCase(guna2TextBox2.Text));
-                    command.Parameters.AddWithValue("@username",Globals.custUsername);
-                    command.ExecuteNonQuery();
+                    const string addSharingAuthQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
+                    using(MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {
+                        command.Parameters.AddWithValue("@getval",EncryptionModel.computeAuthCase(guna2TextBox2.Text));
+                        command.Parameters.AddWithValue("@username",Globals.custUsername);
+                        command.ExecuteNonQuery();
+                    }
 
                     MessageBox.Show("You've successfully added a password for File Sharing.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }

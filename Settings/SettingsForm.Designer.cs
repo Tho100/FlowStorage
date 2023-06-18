@@ -80,7 +80,7 @@
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblAccountCreatedDate = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -900,7 +900,7 @@
             this.guna2Panel4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel4.BorderRadius = 5;
             this.guna2Panel4.BorderThickness = 1;
-            this.guna2Panel4.Controls.Add(this.label16);
+            this.guna2Panel4.Controls.Add(this.lblAccountCreatedDate);
             this.guna2Panel4.Controls.Add(this.label15);
             this.guna2Panel4.Controls.Add(this.label14);
             this.guna2Panel4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
@@ -910,17 +910,17 @@
             this.guna2Panel4.TabIndex = 35;
             this.guna2Panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel4_Paint);
             // 
-            // label16
+            // lblAccountCreatedDate
             // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label16.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label16.Location = new System.Drawing.Point(226, 13);
-            this.label16.Name = "label16";
-            this.label16.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label16.Size = new System.Drawing.Size(98, 21);
-            this.label16.TabIndex = 36;
-            this.label16.Text = "12/7/2022";
+            this.lblAccountCreatedDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAccountCreatedDate.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccountCreatedDate.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblAccountCreatedDate.Location = new System.Drawing.Point(226, 13);
+            this.lblAccountCreatedDate.Name = "lblAccountCreatedDate";
+            this.lblAccountCreatedDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAccountCreatedDate.Size = new System.Drawing.Size(98, 21);
+            this.lblAccountCreatedDate.TabIndex = 36;
+            this.lblAccountCreatedDate.Text = "12/7/2022";
             // 
             // label15
             // 
@@ -3013,7 +3013,7 @@
         public System.Windows.Forms.Label label31;
         public System.Windows.Forms.Label label32;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel4;
-        public System.Windows.Forms.Label label16;
+        public System.Windows.Forms.Label lblAccountCreatedDate;
         public System.Windows.Forms.Label label15;
         public System.Windows.Forms.Label label14;
         public System.Windows.Forms.Label label28;

@@ -21,7 +21,6 @@ namespace FlowSERVER1 {
         static public SettingsForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
 
         public static string _selectedAcc;
 
@@ -160,7 +159,7 @@ namespace FlowSERVER1 {
 
             string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-            string querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+            const string querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@date", currentDate);
@@ -326,9 +325,6 @@ namespace FlowSERVER1 {
             con_Show.Show();
         }
 
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e) {
-
-        }
 
         private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
 
@@ -343,10 +339,6 @@ namespace FlowSERVER1 {
         }
 
         private void tabPage2_Click(object sender, EventArgs e) {
-        }
-
-        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
-
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
@@ -389,11 +381,10 @@ namespace FlowSERVER1 {
                         }
                     }
 
-
                     HomePage.instance.lstFoldersPage.Items.Clear();
                     HomePage.instance.Hide();
 
-                    this.Close();
+                    CloseForm.closeForm("SettingsForm");
 
                     SignUpForm signUpForm = new SignUpForm();
                     signUpForm.Show();
@@ -1463,12 +1454,13 @@ namespace FlowSERVER1 {
 
         private void updateLang(String _custLang) {
 
-            const string _updateQuery = "UPDATE lang_info SET CUST_LANG = @lang WHERE CUST_USERNAME = @username";
+            const string updateLangQuery = "UPDATE lang_info SET CUST_LANG = @lang WHERE CUST_USERNAME = @username";
 
-            command = new MySqlCommand(_updateQuery,con);
-            command.Parameters.AddWithValue("@lang",_custLang);
-            command.Parameters.AddWithValue("@username", Globals.custUsername);
-            command.ExecuteNonQuery();
+            using(MySqlCommand command = new MySqlCommand(updateLangQuery,con)) {
+                command.Parameters.AddWithValue("@lang",_custLang);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.ExecuteNonQuery();
+            }
         }
 
         private void languageChanger(String _custLang) {
@@ -1996,10 +1988,12 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_custUsername"></param>
         private void disableSharing(String _custUsername) {
-            String _disableQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_disableQuery,con);
-            command.Parameters.AddWithValue("@username",_custUsername);
-            command.ExecuteNonQuery();
+
+            const string disableSharingQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(disableSharingQuery,con)) {
+                command.Parameters.AddWithValue("@username",_custUsername);
+                command.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -2007,10 +2001,12 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_custUsername"></param>
         private void enableSharing(String _custUsername) {
-            String _disableQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(_disableQuery, con);
-            command.Parameters.AddWithValue("@username", _custUsername);
-            command.ExecuteNonQuery();
+
+            const string enabelSharingQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(enabelSharingQuery,con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
+                command.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -2084,16 +2080,17 @@ namespace FlowSERVER1 {
         private string getAccessToken(String custUsername) {
 
             string _localTok = "";
-            const string _selecTokQue = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
+            const string getAccessTokQuery = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
 
-            command = new MySqlCommand(_selecTokQue,con);
-            command.Parameters.AddWithValue("@username",custUsername);
-
-            MySqlDataReader _readTok = command.ExecuteReader();
-            while(_readTok.Read()) {
-                _localTok = EncryptionModel.Decrypt(_readTok.GetString(0));
+            using(MySqlCommand command = new MySqlCommand(getAccessTokQuery,con)) {
+                command.Parameters.AddWithValue("@username",custUsername);
+                using(MySqlDataReader reader = command.ExecuteReader()) {
+                    if(reader.Read()) {
+                        _localTok = EncryptionModel.Decrypt(reader.GetString(0));
+                    }
+                    reader.Close();
+                }
             }
-            _readTok.Close();
 
             return _localTok.ToLower();
         }
@@ -2107,19 +2104,24 @@ namespace FlowSERVER1 {
         private void guna2TabControl1_Click(object sender, EventArgs e) {
 
             if(guna2TabControl1.SelectedIndex == 1) {
-                CurrDateStats++;
-                String getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
-                command = new MySqlCommand(getJoinDateQuery, con);
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
-                String joinedDate = command.ExecuteScalar()?.ToString();
+                CurrDateStats++;
+
+                string joinedDate = "";
+                const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
+
+                using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    joinedDate = command.ExecuteScalar()?.ToString();
+                }
+
                 if (joinedDate != null) {
-                    label16.Text = joinedDate;
+                    lblAccountCreatedDate.Text = joinedDate;
                 }
 
             } else {
                 if(CurrDateStats > 0) {
-                    label16.Text = JoinedDate;
+                    lblAccountCreatedDate.Text = JoinedDate;
                 }
             }
 
@@ -2233,14 +2235,18 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_custUsername"></param>
         private void removePasSharing(String _custUsername) {
-            String removeQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(removeQuery, con);
-            command.Parameters.AddWithValue("@setPass", "DEF");
-            command.Parameters.AddWithValue("@username", _custUsername);
-            command.ExecuteNonQuery();
+
+            const string setPassSharingQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
+
+            using(MySqlCommand command = new MySqlCommand(setPassSharingQuery,con)) {
+                command.Parameters.AddWithValue("@setPass", "DEF");
+                command.Parameters.AddWithValue("@username", _custUsername);
+                command.ExecuteNonQuery();
+            }
 
         }
         private void guna2Button27_Click(object sender, EventArgs e) {
+
             if(MessageBox.Show("Remove File Sharing password?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes) {
 
                 removePasSharing(Globals.custUsername);

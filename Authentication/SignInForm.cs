@@ -32,8 +32,6 @@ namespace FlowSERVER1 {
 
         private readonly MySqlConnection con = ConnectionModel.con;
 
-        private MySqlCommand command = ConnectionModel.command;
-
         private Crud crudClass = new Crud();
 
 
@@ -217,7 +215,7 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        string dirName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        string dirName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
                         filesInfoDirs.Add(new Tuple<string, string>(dirName, uploadDate));
                     }
@@ -302,16 +300,19 @@ namespace FlowSERVER1 {
                     if (verifyDialog == DialogResult.Yes) {
 
                         const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                        command = new MySqlCommand(noSafeUpdate, con);
-                        command.ExecuteNonQuery();
+                        using(MySqlCommand command = new MySqlCommand(noSafeUpdate,con)) {
+                            command.ExecuteNonQuery();
+                        }
+                       
 
                         const string removeQuery = "DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(removeQuery, con);
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@filename", titleFile);
-                        command.ExecuteNonQuery();
+                        using(MySqlCommand command = new MySqlCommand(removeQuery)) {
+                            command.Parameters.AddWithValue("@filename", titleFile);
+                            command.ExecuteNonQuery();
+                        }
 
                         panelPic_Q.Dispose();
+
                         if (_form.flowLayoutPanel1.Controls.Count == 0) {
                             _form.lblEmptyHere.Visible = true;
                             _form.btnGarbageImage.Visible = true;
@@ -357,7 +358,7 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue);
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
                         filesInfo.Add((fileName, uploadDate));
                     }
@@ -447,15 +448,19 @@ namespace FlowSERVER1 {
                     DialogResult verifyDialog = MessageBox.Show("Delete '" + titleFile + "' File?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (verifyDialog == DialogResult.Yes) {
 
+
                         const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                        command = new MySqlCommand(noSafeUpdate, con);
-                        command.ExecuteNonQuery();
+                        using (MySqlCommand command = new MySqlCommand(noSafeUpdate, con)) {
+                            command.ExecuteNonQuery();
+                        }
+
 
                         string removeQuery = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                        command = new MySqlCommand(removeQuery, con);
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@filename", titleFile);
-                        command.ExecuteNonQuery();
+                        using (MySqlCommand command = new MySqlCommand(removeQuery)) {
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@filename", titleFile);
+                            command.ExecuteNonQuery();
+                        }
 
                         panelPic_Q.Dispose();
                         if (_form.flowLayoutPanel1.Controls.Count == 0) {
@@ -479,7 +484,7 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
-                                base64Encoded.Add(EncryptionModel.Encrypt(readBase64.GetString(0), EncryptionKey.KeyValue));
+                                base64Encoded.Add(EncryptionModel.Encrypt(readBase64.GetString(0)));
                             }
                         }
                     }
@@ -492,7 +497,6 @@ namespace FlowSERVER1 {
                         }
                        
                     }
-
 
                     picMain_Q.Click += (sender, e) => {
                         var getImgName = (Guna2PictureBox)sender;

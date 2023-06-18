@@ -402,6 +402,7 @@
     </Compile>
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
+    <Compile Include="Helper\PanelGenerator.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
@@ -486,7 +487,6 @@
     <Compile Include="Recovery\ValidateRecoveryEmail.Designer.cs">
       <DependentUpon>ValidateRecoveryEmail.cs</DependentUpon>
     </Compile>
-    <Compile Include="EncryptionKey.cs" />
     <Compile Include="EncryptionModel.cs" />
     <Compile Include="AlertForms\ErrorLoadAlert.cs">
       <SubType>Form</SubType>

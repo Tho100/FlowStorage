@@ -17,7 +17,6 @@ namespace FlowSERVER1 {
 
         private String CurrentUsername;
 
-        private MySqlCommand command = ConnectionModel.command;
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private Crud crud = new Crud();
 
@@ -69,37 +68,35 @@ namespace FlowSERVER1 {
 
             List<String> _usernameValues = new List<string>();
 
-            const string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(getUsername,con);
-            command.Parameters.AddWithValue("@username",_newUsername);
-
-            MySqlDataReader _ReadUsername = command.ExecuteReader();
-            if(_ReadUsername.Read()) {
-                var _getString = _ReadUsername.GetString(0);
-                _usernameValues.Add(_getString);
+            const string getUsernameQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(getUsernameQuery,con)) {
+                command.Parameters.AddWithValue("@username",_newUsername);
+                using(MySqlDataReader reader = command.ExecuteReader()) {
+                    if(reader.Read()) {
+                        _usernameValues.Add(reader.GetString(0));
+                    }
+                    reader.Close();
+                }
             }
-            _ReadUsername.Close();
 
             return _usernameValues.Count;
         }
         private string authReturnOriginal(String _usernameEntered) {
 
-            List<String> _passValues = new List<string>();
+            List<string> _passValues = new List<string>();
 
-            const string  getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-            command = new MySqlCommand(getUsername, con);
-            command.Parameters.AddWithValue("@username", _usernameEntered);
-
-            MySqlDataReader _ReadPass = command.ExecuteReader();
-            if (_ReadPass.Read()) {
-                var _getStringPassword = _ReadPass.GetString(0);
-                _passValues.Add(_getStringPassword);
+            const string getAuthQuery = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
+            using(MySqlCommand command = new MySqlCommand(getAuthQuery,con)) {
+                command.Parameters.AddWithValue("@username", _usernameEntered);
+                using(MySqlDataReader reader = command.ExecuteReader()) {
+                    if(reader.Read()) {
+                        _passValues.Add(reader.GetString(0));
+                    }
+                    reader.Close();
+                }
             }
-            _ReadPass.Close();
 
-            string _passValuesString = _passValues[0];
-
-            return _passValuesString;
+            return _passValues[0];
 
         }
         private void guna2Button2_Click(object sender, EventArgs e) {

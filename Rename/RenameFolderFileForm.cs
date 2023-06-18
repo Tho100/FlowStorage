@@ -13,11 +13,10 @@ namespace FlowSERVER1 {
     public partial class RenameFolderFileForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private MySqlCommand command = ConnectionModel.command;
         public RenameFolderFileForm(String foldTitle) {
             InitializeComponent();
 
-            this.label2.Text = foldTitle;
+            this.lblCurrentFolderName.Text = foldTitle;
 
         }
 
@@ -59,40 +58,40 @@ namespace FlowSERVER1 {
                         HomePage.instance.lstFoldersPage.Items[indexOld] = newFolderName;
                     }
 
-                    label5.Visible = true;
-                    label5.ForeColor = ColorTranslator.FromHtml("#50a832");
-                    label5.Text = $"Folder has been renamed to {newFolderName}.";
+                    lblAlert.Visible = true;
+                    lblAlert.ForeColor = ColorTranslator.FromHtml("#50a832");
+                    lblAlert.Text = $"Folder has been renamed to {newFolderName}.";
 
                 } catch (Exception) {
-                    label5.Visible = true;
-                    label5.ForeColor = Color.Firebrick;
-                    label5.Text = "Failed to rename this folder. Please try again.";
+                    lblAlert.Visible = true;
+                    lblAlert.ForeColor = Color.Firebrick;
+                    lblAlert.Text = "Failed to rename this folder. Please try again.";
                 }
             }
         }
 
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
-            string newFolderName = guna2TextBox1.Text;
-            string oldFolderName = label2.Text;
+            string newFolderName = txtFieldNewFolderName.Text;
+            string oldFolderName = lblCurrentFolderName.Text;
 
             if(String.IsNullOrEmpty(newFolderName)) {
                 return;
             }
 
             if(newFolderName == oldFolderName) {
-                label5.Visible = true;
-                label5.Text = "New folder name cannot be the same with old one.";
+                lblAlert.Visible = true;
+                lblAlert.Text = "New folder name cannot be the same with old one.";
                 return;
             }
 
             if (HomePage.instance.lstFoldersPage.Items.Contains(newFolderName)) {
-                label5.Visible = true;
-                label5.Text = "Folder with this name already exists.";
+                lblAlert.Visible = true;
+                lblAlert.Text = "Folder with this name already exists.";
                 return;
             }
 
-            label5.Visible = false;
+            lblAlert.Visible = false;
             await renameFolderAsync(newFolderName,oldFolderName);
 
         }

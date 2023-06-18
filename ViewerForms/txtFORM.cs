@@ -63,7 +63,10 @@ namespace FlowSERVER1 {
                     guna2Button12.Visible = true;
 
                     _getName = uploaderName.Replace("Shared", "");
+
+
                     this.IsFromSharing = true;
+
                     label4.Text = "Shared To";
                     btnShareFile.Visible = false;
                     lblUserComment.Visible = true;
@@ -84,12 +87,12 @@ namespace FlowSERVER1 {
 
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue));
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text,EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text));
 
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
-                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
+                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
 
                                 lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
 
@@ -117,11 +120,11 @@ namespace FlowSERVER1 {
                     using (var command = new MySqlCommand(getTxtQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem)));
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName, EncryptionKey.KeyValue));
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
 
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
-                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0),EncryptionKey.KeyValue));
+                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
                                 lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
 
                                 string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
@@ -173,11 +176,11 @@ namespace FlowSERVER1 {
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
-                        Byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0), EncryptionKey.KeyValue));
+                        Byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
 
                         lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
 
@@ -437,7 +440,7 @@ namespace FlowSERVER1 {
                     using(MySqlCommand command = new MySqlCommand(updateQue,con)) {
                         command.Parameters.Add("@update",MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username",MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text,EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -447,7 +450,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -457,7 +460,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -467,8 +470,8 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName,EncryptionKey.KeyValue);
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -479,7 +482,7 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem));
-                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(lblFileName.Text, EncryptionKey.KeyValue);
+                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
@@ -500,7 +503,7 @@ namespace FlowSERVER1 {
                 byte[] getBytesText = System.Text.Encoding.UTF8.GetBytes(getStrings);
                 string base64Strings = Convert.ToBase64String(getBytesText);
 
-                string encryptedEncoded = EncryptionModel.Encrypt(base64Strings,EncryptionKey.KeyValue);
+                string encryptedEncoded = EncryptionModel.Encrypt(base64Strings);
                 _saveChangesUpdate(encryptedEncoded);
             }
 

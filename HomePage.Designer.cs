@@ -753,6 +753,7 @@
             this.guna2Panel1.Size = new System.Drawing.Size(426, 102);
             this.guna2Panel1.TabIndex = 39;
             this.guna2Panel1.Visible = false;
+            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // guna2Button25
             // 
@@ -819,15 +820,14 @@
             this.guna2Button23.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button23.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button23.ForeColor = System.Drawing.Color.White;
-            this.guna2Button23.Image = global::FlowSERVER1.Properties.Resources.icons8_csv_48;
+            this.guna2Button23.Image = global::FlowSERVER1.Properties.Resources.video_image;
             this.guna2Button23.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.guna2Button23.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button23.ImageSize = new System.Drawing.Size(19, 19);
             this.guna2Button23.Location = new System.Drawing.Point(209, 53);
             this.guna2Button23.Name = "guna2Button23";
             this.guna2Button23.Size = new System.Drawing.Size(92, 33);
             this.guna2Button23.TabIndex = 44;
-            this.guna2Button23.Text = "CSV";
+            this.guna2Button23.Text = "Video";
             this.guna2Button23.TextOffset = new System.Drawing.Point(10, -1);
             this.guna2Button23.Click += new System.EventHandler(this.guna2Button23_Click);
             // 
@@ -845,7 +845,7 @@
             this.guna2Button22.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button22.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button22.ForeColor = System.Drawing.Color.White;
-            this.guna2Button22.Image = global::FlowSERVER1.Properties.Resources.image_icon;
+            this.guna2Button22.Image = global::FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
             this.guna2Button22.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.guna2Button22.ImageOffset = new System.Drawing.Point(0, -1);
             this.guna2Button22.ImageSize = new System.Drawing.Size(19, 19);
@@ -965,6 +965,7 @@
             this.pnlFileOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFileOptions.BackColor = System.Drawing.Color.Transparent;
             this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.pnlFileOptions.BorderRadius = 14;
             this.pnlFileOptions.BorderThickness = 1;
             this.pnlFileOptions.Controls.Add(this.lblSharedToName);
             this.pnlFileOptions.Controls.Add(this.lblSelectedDirName);
@@ -976,7 +977,7 @@
             this.pnlFileOptions.Controls.Add(this.btnRenameFile);
             this.pnlFileOptions.Controls.Add(this.btnClosePnlFileOptions);
             this.pnlFileOptions.Controls.Add(this.lblFileNameOnPanel);
-            this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.pnlFileOptions.ForeColor = System.Drawing.Color.Transparent;
             this.pnlFileOptions.Location = new System.Drawing.Point(975, 403);
             this.pnlFileOptions.Name = "pnlFileOptions";
@@ -1133,19 +1134,20 @@
             this.btnClosePnlFileOptions.Animated = true;
             this.btnClosePnlFileOptions.BackColor = System.Drawing.Color.Transparent;
             this.btnClosePnlFileOptions.BorderColor = System.Drawing.Color.Transparent;
-            this.btnClosePnlFileOptions.BorderRadius = 12;
+            this.btnClosePnlFileOptions.BorderRadius = 6;
+            this.btnClosePnlFileOptions.BorderThickness = 1;
             this.btnClosePnlFileOptions.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnClosePnlFileOptions.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnClosePnlFileOptions.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnClosePnlFileOptions.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnClosePnlFileOptions.FillColor = System.Drawing.Color.Transparent;
+            this.btnClosePnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnClosePnlFileOptions.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnClosePnlFileOptions.ForeColor = System.Drawing.Color.White;
             this.btnClosePnlFileOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClosePnlFileOptions.Image")));
             this.btnClosePnlFileOptions.ImageSize = new System.Drawing.Size(18, 18);
-            this.btnClosePnlFileOptions.Location = new System.Drawing.Point(279, 9);
+            this.btnClosePnlFileOptions.Location = new System.Drawing.Point(268, 9);
             this.btnClosePnlFileOptions.Name = "btnClosePnlFileOptions";
-            this.btnClosePnlFileOptions.Size = new System.Drawing.Size(27, 25);
+            this.btnClosePnlFileOptions.Size = new System.Drawing.Size(35, 32);
             this.btnClosePnlFileOptions.TabIndex = 49;
             this.btnClosePnlFileOptions.Click += new System.EventHandler(this.guna2Button28_Click);
             // 
@@ -1401,11 +1403,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.ClientSize = new System.Drawing.Size(1325, 661);
+            this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.pnlFileOptions);
             this.Controls.Add(this.pnlDragAndDropUpload);
             this.Controls.Add(this.btnRefreshSharedFiles);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.lblCurrentPageText);
             this.Controls.Add(this.lblEmptyHere);
             this.Controls.Add(this.btnGarbageImage);

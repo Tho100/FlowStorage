@@ -157,20 +157,8 @@ namespace FlowSERVER1.Authentication {
             }
 
             Globals.accountType = accountType;
-
-            if (accountType == "Basic") {
-                accessHomePage.lblLimitUploadText.Text = "20";
-            }
-            else if (accountType == "Max") {
-                accessHomePage.lblLimitUploadText.Text = "500";
-            }
-            else if (accountType == "Express") {
-                accessHomePage.lblLimitUploadText.Text = "1000";
-            }
-            else if (accountType == "Supreme") {
-                accessHomePage.lblLimitUploadText.Text = "2000";
-            }
-
+            accessHomePage.lblLimitUploadText.Text = Globals.uploadFileLimit[Globals.accountType].ToString();
+            
             return accountType;
         }
 
@@ -638,7 +626,7 @@ namespace FlowSERVER1.Authentication {
             label30.Visible = false;
             guna2Panel7.Visible = false;
 
-            accessHomePage.lblLimitUploadText.Text = "20";
+            accessHomePage.lblLimitUploadText.Text = "25";
 
             txtBoxUsernameField.Text = String.Empty;
             txtBoxAuth0Field.Text = String.Empty;
