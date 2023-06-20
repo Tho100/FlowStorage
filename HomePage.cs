@@ -2981,6 +2981,7 @@ namespace FlowSERVER1 {
                     closeRetrievalAlert();
                 };
             }
+
             lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
         }
 

@@ -223,18 +223,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Imazen.WebP.dll" size="18944">
-      <assemblyIdentity name="Imazen.WebP" version="10.0.1.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>S7VKc7qJV/1xdy2j1JmUS94TN7CGaOxe1ZCeorLkWtE=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.WMPLib.dll" size="330752">
       <assemblyIdentity name="Interop.WMPLib" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -242,7 +230,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>uTeUMfXD0GyTwdLn06pXQi/j3rXhG0O+Zz/OY8MN1bA=</dsig:DigestValue>
+        <dsig:DigestValue>BVmMNIRnM7hJeOI5FAzuVaMhXzkinX0CFmZ+ofXbjz8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

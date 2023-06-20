@@ -1354,5 +1354,3 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AccessT
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AlertForms.CustomAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Settings.FeedbackForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Sharing.SharingAlert.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Imazen.WebP.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Imazen.WebP.xml
