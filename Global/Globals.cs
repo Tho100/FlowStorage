@@ -24,7 +24,7 @@ namespace FlowSERVER1 {
         static public String accountType = "";
 
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
-        {".png",".jpg",".jpeg",".webp",".bmp",".ico"};
+        {".png",".jpg",".jpeg",".bmp",".ico"};
 
         static public readonly HashSet<string> textTypes = new HashSet<string>
         {".txt",".csv",".sql",".html",".css",".py",".xml",".js",".md"};
@@ -33,7 +33,7 @@ namespace FlowSERVER1 {
         {".mp4",".mov",".webm",".avi",".wmv"};
 
         static public readonly HashSet<string> imageTypesFolder = new HashSet<string>
-        {"png","jpg","jpeg","webp","bmp","ico"};
+        {"png","jpg","jpeg","bmp","ico"};
 
         static public readonly HashSet<string> textTypesFolder = new HashSet<string>
         {"txt","csv","sql","html","css","py","xml","js","md"};
@@ -110,7 +110,7 @@ namespace FlowSERVER1 {
             { "py", PYImage},
         };
 
-        static public readonly string filterFileType = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;.webp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
+        static public readonly string filterFileType = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
 
     }
 }
