@@ -19,7 +19,7 @@ namespace FlowSERVER1.Helper {
                 ImageFormat imageFormat = GetImageFormat(sourceImagePath);
 
                 EncoderParameters encoderParameters = new EncoderParameters(1);
-                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 62L); 
+                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 30L); 
 
                 ImageCodecInfo imageCodecInfo = GetEncoderInfo(imageFormat);
 

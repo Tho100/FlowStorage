@@ -232,7 +232,6 @@ namespace FlowSERVER1 {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
                                     base64EncodedImageHome.Add(base64String);
                                 }
-                                readBase64.Close();
                             }
                         }
                     }
@@ -242,7 +241,7 @@ namespace FlowSERVER1 {
 
                     if (base64EncodedThumbnailHome.Count == 0) {
 
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM  file_info_vid WHERE CUST_USERNAME = @username";
+                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username";
                         using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
 
@@ -250,7 +249,6 @@ namespace FlowSERVER1 {
                                 while (await readBase64.ReadAsync()) {
                                     base64EncodedThumbnailHome.Add(readBase64.GetString(0));
                                 }
-                                readBase64.Close();
                             }
                         }
                     }
@@ -3277,6 +3275,9 @@ namespace FlowSERVER1 {
         }
 
         private async void guna2Button8_Click(object sender, EventArgs e) {
+
+            base64EncodedImageHome.Clear();
+            base64EncodedThumbnailHome.Clear();
 
             btnDeleteFolder.Visible = false;
             btnRefreshSharedFiles.Visible = false;
