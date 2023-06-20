@@ -14,11 +14,15 @@ using System.Diagnostics;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading;
+
 using FlowSERVER1.Sharing;
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
     public partial class MainSharingForm : Form {
+
+        readonly private ImageCompressor compressor = new ImageCompressor();
 
         private string _FileName;
         private string _FilePath;
@@ -67,16 +71,19 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) {
 
             OpenFileDialog _OpenDialog = new OpenFileDialog();
-            _OpenDialog.Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
+            _OpenDialog.Filter = Globals.filterFileType;
+
             if (_OpenDialog.ShowDialog() == DialogResult.OK) {
-                var getEx = _OpenDialog.FileName;
-                var getName = _OpenDialog.SafeFileName;
-                var retrieved = Path.GetExtension(getEx);
-                _FileName = getName;
+
+                string fileExtension = _OpenDialog.FileName;
+                string fileName = _OpenDialog.SafeFileName;
+                string retrieved = Path.GetExtension(fileExtension);
+
+                _FileName = fileName;
                 _FilePath = _OpenDialog.FileName;
-                _getExt = getEx;
+                _getExt = fileExtension;
                 _retrieved = retrieved;
-                txtFieldFileName.Text = getName;
+                txtFieldFileName.Text = fileName;
             }
         }
 
@@ -135,7 +142,8 @@ namespace FlowSERVER1 {
                     string _toBase64 = Convert.ToBase64String(_getBytes);
 
                     if (Globals.imageTypes.Contains(_retrieved)) {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        string compressedImageBase64 = compressor.compresImageToBase64(_FilePath);
+                        string encryptText = EncryptionModel.Encrypt(compressedImageBase64);
                         await startSending(encryptText);
                     }
                     else if (_retrieved == ".docx" || _retrieved == ".doc") {
@@ -191,7 +199,7 @@ namespace FlowSERVER1 {
 
                         string toBase64Thumbnail;
                         using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
                             toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
 

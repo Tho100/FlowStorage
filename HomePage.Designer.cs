@@ -964,7 +964,7 @@
             // 
             this.pnlFileOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFileOptions.BackColor = System.Drawing.Color.Transparent;
-            this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.pnlFileOptions.BorderRadius = 14;
             this.pnlFileOptions.BorderThickness = 1;
             this.pnlFileOptions.Controls.Add(this.lblSharedToName);
@@ -1140,12 +1140,12 @@
             this.btnClosePnlFileOptions.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnClosePnlFileOptions.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnClosePnlFileOptions.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnClosePnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnClosePnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnClosePnlFileOptions.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnClosePnlFileOptions.ForeColor = System.Drawing.Color.White;
             this.btnClosePnlFileOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClosePnlFileOptions.Image")));
             this.btnClosePnlFileOptions.ImageSize = new System.Drawing.Size(18, 18);
-            this.btnClosePnlFileOptions.Location = new System.Drawing.Point(268, 9);
+            this.btnClosePnlFileOptions.Location = new System.Drawing.Point(267, 12);
             this.btnClosePnlFileOptions.Name = "btnClosePnlFileOptions";
             this.btnClosePnlFileOptions.Size = new System.Drawing.Size(35, 32);
             this.btnClosePnlFileOptions.TabIndex = 49;
@@ -1157,9 +1157,9 @@
             this.lblFileNameOnPanel.BackColor = System.Drawing.Color.Transparent;
             this.lblFileNameOnPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFileNameOnPanel.ForeColor = System.Drawing.Color.White;
-            this.lblFileNameOnPanel.Location = new System.Drawing.Point(9, 11);
+            this.lblFileNameOnPanel.Location = new System.Drawing.Point(12, 14);
             this.lblFileNameOnPanel.Name = "lblFileNameOnPanel";
-            this.lblFileNameOnPanel.Size = new System.Drawing.Size(260, 25);
+            this.lblFileNameOnPanel.Size = new System.Drawing.Size(249, 25);
             this.lblFileNameOnPanel.TabIndex = 48;
             this.lblFileNameOnPanel.Text = "somenwordfile.png";
             // 

@@ -220,7 +220,7 @@
             // 
             this.pnlFileOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFileOptions.BackColor = System.Drawing.Color.Transparent;
-            this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.pnlFileOptions.BorderRadius = 14;
             this.pnlFileOptions.BorderThickness = 1;
             this.pnlFileOptions.Controls.Add(this.lblSharedToName);
@@ -395,12 +395,12 @@
             this.guna2Button28.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button28.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button28.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button28.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.guna2Button28.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button28.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button28.ForeColor = System.Drawing.Color.White;
             this.guna2Button28.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button28.Image")));
             this.guna2Button28.ImageSize = new System.Drawing.Size(18, 18);
-            this.guna2Button28.Location = new System.Drawing.Point(268, 9);
+            this.guna2Button28.Location = new System.Drawing.Point(267, 11);
             this.guna2Button28.Name = "guna2Button28";
             this.guna2Button28.Size = new System.Drawing.Size(35, 32);
             this.guna2Button28.TabIndex = 49;
@@ -414,7 +414,7 @@
             this.lblFileNameOnPanel.ForeColor = System.Drawing.Color.White;
             this.lblFileNameOnPanel.Location = new System.Drawing.Point(9, 11);
             this.lblFileNameOnPanel.Name = "lblFileNameOnPanel";
-            this.lblFileNameOnPanel.Size = new System.Drawing.Size(260, 25);
+            this.lblFileNameOnPanel.Size = new System.Drawing.Size(253, 25);
             this.lblFileNameOnPanel.TabIndex = 48;
             this.lblFileNameOnPanel.Text = "somenwordfile.png";
             // 

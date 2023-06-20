@@ -124,7 +124,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Security.Pri
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Drawing.Common.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.splashFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\BraintreeHttp-Dotnet.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Source.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AuthorizeNet.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AuthorizeNet.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Stripe.net.dll
@@ -1355,3 +1354,5 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AccessT
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AlertForms.CustomAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Settings.FeedbackForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Sharing.SharingAlert.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Imazen.WebP.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Imazen.WebP.xml

@@ -2103,129 +2103,135 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2TabControl1_Click(object sender, EventArgs e) {
 
-            if(guna2TabControl1.SelectedIndex == 1) {
+            try {
 
-                CurrDateStats++;
+                if(guna2TabControl1.SelectedIndex == 1) {
 
-                string joinedDate = "";
-                const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
+                    CurrDateStats++;
 
-                using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    joinedDate = command.ExecuteScalar()?.ToString();
-                }
+                    string joinedDate = "";
+                    const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
 
-                if (joinedDate != null) {
-                    lblAccountCreatedDate.Text = joinedDate;
-                }
+                    using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        joinedDate = command.ExecuteScalar()?.ToString();
+                    }
 
-            } else {
-                if(CurrDateStats > 0) {
-                    lblAccountCreatedDate.Text = JoinedDate;
-                }
-            }
+                    if (joinedDate != null) {
+                        lblAccountCreatedDate.Text = joinedDate;
+                    }
 
-            if(guna2TabControl1.SelectedIndex == 3) {
-                if (CurrentLang == "US") {
-                    guna2Button19.Text = "Default";
-                    guna2Button19.Enabled = false;
-                    guna2Button19.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "MY") {
-                    guna2Button18.Text = "Default";
-                    guna2Button18.Enabled = false;
-                    guna2Button18.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "JAP") {
-                    guna2Button17.Text = "Default";
-                    guna2Button17.Enabled = false;
-                    guna2Button17.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "GER") {
-                    guna2Button15.Text = "Default";
-                    guna2Button15.Enabled = false;
-                    guna2Button15.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "ESP") {
-                    guna2Button16.Text = "Default";
-                    guna2Button16.Enabled = false;
-                    guna2Button16.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "FRE") {
-                    guna2Button20.Text = "Default";
-                    guna2Button20.Enabled = false;
-                    guna2Button20.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "CHI") {
-                    guna2Button22.Text = "Default";
-                    guna2Button22.Enabled = false;
-                    guna2Button22.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "POR") {
-                    guna2Button21.Text = "Default";
-                    guna2Button21.Enabled = false;
-                    guna2Button21.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "RUS") {
-                    guna2Button31.Text = "Default";
-                    guna2Button31.Enabled = false;
-                    guna2Button31.ForeColor = Color.Gainsboro;
-                }
-
-                if (CurrentLang == "DUT") {
-                    guna2Button30.Text = "Default";
-                    guna2Button30.Enabled = false;
-                    guna2Button30.ForeColor = Color.Gainsboro;
-                }
-            }
-
-            if(guna2TabControl1.SelectedIndex == 2) {
-
-                if(retrieveFileSharingPas() != "DEF") {
-
-                    guna2Button27.Visible = true;
-                    guna2Button27.Enabled = true;
-
-                    guna2Button23.Visible = false;
-                    guna2Button23.Enabled = false;
                 } else {
-
-                    guna2Button27.Visible = false;
-                    guna2Button27.Enabled = false;
-
-                    guna2Button23.Visible = true;
-                    guna2Button23.Enabled = true;
+                    if(CurrDateStats > 0) {
+                        lblAccountCreatedDate.Text = JoinedDate;
+                    }
                 }
 
-                if (retrieveDisabled(Globals.custUsername) == "1") {
-                    guna2Button24.Enabled = false;
-                    guna2Button24.Visible = false;
+                if(guna2TabControl1.SelectedIndex == 3) {
+                    if (CurrentLang == "US") {
+                        guna2Button19.Text = "Default";
+                        guna2Button19.Enabled = false;
+                        guna2Button19.ForeColor = Color.Gainsboro;
+                    }
 
-                    guna2Button26.Visible = true;
-                    guna2Button26.Enabled = true;
+                    if (CurrentLang == "MY") {
+                        guna2Button18.Text = "Default";
+                        guna2Button18.Enabled = false;
+                        guna2Button18.ForeColor = Color.Gainsboro;
+                    }
 
-                    label69.Text = "Enable File Sharing";
-                    label68.Text = "Enabling file sharing will allows people to share a file to you";
+                    if (CurrentLang == "JAP") {
+                        guna2Button17.Text = "Default";
+                        guna2Button17.Enabled = false;
+                        guna2Button17.ForeColor = Color.Gainsboro;
+                    }
 
+                    if (CurrentLang == "GER") {
+                        guna2Button15.Text = "Default";
+                        guna2Button15.Enabled = false;
+                        guna2Button15.ForeColor = Color.Gainsboro;
+                    }
+
+                    if (CurrentLang == "ESP") {
+                        guna2Button16.Text = "Default";
+                        guna2Button16.Enabled = false;
+                        guna2Button16.ForeColor = Color.Gainsboro;
+                    }
+
+                    if (CurrentLang == "FRE") {
+                        guna2Button20.Text = "Default";
+                        guna2Button20.Enabled = false;
+                        guna2Button20.ForeColor = Color.Gainsboro;
+                    }
+
+                    if (CurrentLang == "CHI") {
+                        guna2Button22.Text = "Default";
+                        guna2Button22.Enabled = false;
+                        guna2Button22.ForeColor = Color.Gainsboro;
+                    }
+
+                    if (CurrentLang == "POR") {
+                        guna2Button21.Text = "Default";
+                        guna2Button21.Enabled = false;
+                        guna2Button21.ForeColor = Color.Gainsboro;
+                    }
+
+                    if (CurrentLang == "RUS") {
+                        guna2Button31.Text = "Default";
+                        guna2Button31.Enabled = false;
+                        guna2Button31.ForeColor = Color.Gainsboro;
+                    }
+
+                    if (CurrentLang == "DUT") {
+                        guna2Button30.Text = "Default";
+                        guna2Button30.Enabled = false;
+                        guna2Button30.ForeColor = Color.Gainsboro;
+                    }
                 }
-                else {
-                    guna2Button24.Enabled = true;
-                    guna2Button24.Visible = true;
 
-                    guna2Button26.Visible = false;
-                    guna2Button26.Enabled = false;
+                if(guna2TabControl1.SelectedIndex == 2) {
 
-                    label69.Text = "Disable File Sharing";
-                    label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
+                    if(retrieveFileSharingPas() != "DEF") {
+
+                        guna2Button27.Visible = true;
+                        guna2Button27.Enabled = true;
+
+                        guna2Button23.Visible = false;
+                        guna2Button23.Enabled = false;
+                    } else {
+
+                        guna2Button27.Visible = false;
+                        guna2Button27.Enabled = false;
+
+                        guna2Button23.Visible = true;
+                        guna2Button23.Enabled = true;
+                    }
+
+                    if (retrieveDisabled(Globals.custUsername) == "1") {
+                        guna2Button24.Enabled = false;
+                        guna2Button24.Visible = false;
+
+                        guna2Button26.Visible = true;
+                        guna2Button26.Enabled = true;
+
+                        label69.Text = "Enable File Sharing";
+                        label68.Text = "Enabling file sharing will allows people to share a file to you";
+
+                    }
+                    else {
+                        guna2Button24.Enabled = true;
+                        guna2Button24.Visible = true;
+
+                        guna2Button26.Visible = false;
+                        guna2Button26.Enabled = false;
+
+                        label69.Text = "Disable File Sharing";
+                        label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
+                    }
                 }
+
+            } catch (Exception ex) {
+                Debug.WriteLine(ex.Message);    
             }
         }
 

@@ -110,5 +110,7 @@ namespace FlowSERVER1 {
             { "py", PYImage},
         };
 
+        static public readonly string filterFileType = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;.webp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv";
+
     }
 }

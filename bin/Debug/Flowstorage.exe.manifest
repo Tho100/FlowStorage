@@ -187,14 +187,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="8842240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="8841216">
       <assemblyIdentity name="Flowstorage" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MMu9fdXqEypW/AbQQdGdpsxHw5UWARjy+tXxraE/esk=</dsig:DigestValue>
+        <dsig:DigestValue>Er/U2OjMEUe4LYlxWigBMaYj81ap3aL5IvUChYX8+4I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -223,6 +223,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Imazen.WebP.dll" size="18944">
+      <assemblyIdentity name="Imazen.WebP" version="10.0.1.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>S7VKc7qJV/1xdy2j1JmUS94TN7CGaOxe1ZCeorLkWtE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.WMPLib.dll" size="330752">
       <assemblyIdentity name="Interop.WMPLib" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -230,7 +242,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>V0ubNtQL/h8eeZdzlwg2JHVn2m+caT7ny6lvCr2RBQU=</dsig:DigestValue>
+        <dsig:DigestValue>uTeUMfXD0GyTwdLn06pXQi/j3rXhG0O+Zz/OY8MN1bA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -703,18 +715,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Source.dll" size="93184">
-      <assemblyIdentity name="Source" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YKTQefG5xJiK+vC+AvHmjxwmc6HN8XdlfGIWeelB74M=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Spire.Barcode.dll" size="2154224">
       <assemblyIdentity name="Spire.Barcode" version="6.12.1.0" publicKeyToken="663F351905198CB3" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -1104,7 +1104,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>hUCot2O8v8NC5TvH63pU8B+/Y7CBp1tGHqsEi2ijd6M=</dsig:DigestValue>
+      <dsig:DigestValue>XapJrGnTRKxqEoNMj5OmUu9oyI8gFRliK5K51mv2V/Y=</dsig:DigestValue>
     </hash>
   </file>
   <file name="libvlc\win-x64\hrtfs\dodeca_and_7channel_3DSL_HRTF.sofa" size="92388">

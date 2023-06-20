@@ -247,7 +247,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(376, 348);
+            this.label5.Location = new System.Drawing.Point(379, 372);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 17);
             this.label5.TabIndex = 17;
@@ -278,9 +278,9 @@
             this.txtFieldComment.Name = "txtFieldComment";
             this.txtFieldComment.PasswordChar = '\0';
             this.txtFieldComment.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldComment.PlaceholderText = "Add a comment";
+            this.txtFieldComment.PlaceholderText = "Add a comment for receiver to see";
             this.txtFieldComment.SelectedText = "";
-            this.txtFieldComment.Size = new System.Drawing.Size(401, 273);
+            this.txtFieldComment.Size = new System.Drawing.Size(401, 302);
             this.txtFieldComment.TabIndex = 16;
             this.txtFieldComment.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 

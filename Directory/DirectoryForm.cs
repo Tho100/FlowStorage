@@ -6,23 +6,13 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
-using System.Data.OleDb;
-using System.Text.RegularExpressions;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Globalization;
-using System.Text;
-using System.Management;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Runtime.Caching;
 using FlowSERVER1.AlertForms;
-using Org.BouncyCastle.Utilities.Encoders;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1
 { 
@@ -31,6 +21,7 @@ namespace FlowSERVER1
         public static DirectoryForm instance;
 
         readonly private Crud crud = new Crud();
+        readonly private ImageCompressor compressor = new ImageCompressor();
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
@@ -156,7 +147,7 @@ namespace FlowSERVER1
 
             if (Globals.imageTypes.Contains(_extName)) {
 
-                for (int i = 0; i < currItem; i++) {
+                if(base64EncodedImage.Count == 0) {
 
                     const string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -170,7 +161,26 @@ namespace FlowSERVER1
                             }
                         }
                     }
+                }
+            }
 
+            List<string> base64EncodedThumbnail = new List<string>();
+
+            if(Globals.videoTypes.Contains(_extName)) {
+
+                if(base64EncodedThumbnail.Count == 0) {
+
+                    const string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+                    using (var command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
+                        command.Parameters.AddWithValue("@ext", _extName);
+                        using (var readBase64 = await command.ExecuteReaderAsync()) {
+                            while (await readBase64.ReadAsync()) {
+                                base64EncodedThumbnail.Add(readBase64.GetString(0));
+                            }
+                        }
+                    }
                 }
             }
 
@@ -280,55 +290,40 @@ namespace FlowSERVER1
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        Form bgBlur = new Form();
-                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPic.Owner = bgBlur;
-                            displayPic.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        displayPic.Show();
 
                     };
                 }
 
-                if (_tableName == "file_info_expand") {
-                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                    if (_extTypes == ".py") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                    }
-                    else if (_extTypes == ".txt" || _extTypes == ".md") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                    }
-                    else if (_extTypes == ".html") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                    }
-                    else if (_extTypes == ".css") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                    }
-                    else if (_extTypes == ".js") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                    }
-                    else if (_extTypes == ".sql") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                    }
-                    else if (_extTypes == ".csv") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
+                if (_tableName == "file_info_vid") {
+
+                    if (base64EncodedThumbnail.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            picMain_Q.Image = Image.FromStream(toMs);
+                        }
                     }
 
+                    picMain_Q.Click += (sender_vq, e_vq) => {
+                        var getImgName = (Guna2PictureBox)sender_vq;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        vidFormShow.Show();
+                    };
+                }
+
+
+                if (_tableName == "file_info_expand") {
+
+                    string textTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                    picMain_Q.Image = Globals.textTypeToImage[textTypes];
+                   
                     picMain_Q.Click += (sender_t, e_t) => {
 
-                        if (_extTypes == ".csv" || _extTypes == ".sql") {
+                        if (textTypes == ".csv" || textTypes == ".sql") {
                             Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
                             _showRetrievalCsvAlert.Start();
                         }
@@ -346,40 +341,6 @@ namespace FlowSERVER1
                         displayExe.Show();
                     };
                     clearRedundane();
-                }
-
-                if (_tableName == "file_info_vid") {
-
-                    List<string> base64EncodedThumbnail = new List<string>();
-
-                    const string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext AND CUST_FILE_PATH = @filename";
-                    using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", _extName);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleLab.Text));
-                        using (var readBase64 = await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedThumbnail.Add(readBase64.GetString(0));
-                            }
-                        }
-                    }
-
-                    await Task.Run(async () => {
-                        byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail?.FirstOrDefault());
-                        using (var toMs = new MemoryStream(getBytes)) {
-                            img.Image = await Task.Run(() => Image.FromStream(toMs));
-                        }
-                    });
-                
-                    picMain_Q.Click += (sender_vq, e_vq) => {
-                        var getImgName = (Guna2PictureBox)sender_vq;
-                        var getWidth = getImgName.Image.Width;
-                        var getHeight = getImgName.Image.Height;
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
-                        vidFormShow.Show();
-                    };
                 }
 
                 if (_tableName == "file_info_excel") {
@@ -444,11 +405,6 @@ namespace FlowSERVER1
                 }
             }
         }
-
-        public void label3_Click(object sender, EventArgs e)
-        {
-
-        }
         
         private void Form3_Load(object sender, EventArgs e) {
 
@@ -510,7 +466,7 @@ namespace FlowSERVER1
                     { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
                     { "@UPLOAD_DATE", varDate},
                     { "@CUST_FILE", setValue},
-                    { "@CUST_THUMB", "null"},
+                    { "@CUST_THUMB", ""},
                     { "@FILE_EXT", retrieved},
                     { "@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text)}
                 };
@@ -521,8 +477,34 @@ namespace FlowSERVER1
 
             }
             catch (Exception) {
-                MessageBox.Show("Hey there's an error uploading this file! :(", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert("Something went wrong","Failed to upload this file.").Show();
             }
+        }
+
+        private async Task containThumbUpload(string filePath, object keyValMain) {
+
+            using (var command = new MySqlCommand()) {
+                command.Connection = con;
+                command.CommandText = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)"; ;
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName));
+                command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
+                command.Parameters.AddWithValue("@FILE_EXT", retrieved);
+                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
+                command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text));
+                command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
+
+                using (var shellFile = ShellFile.FromFilePath(filePath))
+                using (var stream = new MemoryStream()) {
+                    shellFile.Thumbnail.Bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    string base64Thumb = Convert.ToBase64String(stream.ToArray());
+                    command.Parameters.AddWithValue("@CUST_THUMB", base64Thumb);
+                }
+
+                await command.ExecuteNonQueryAsync();
+            }
+
+            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+
         }
 
         private void buildFilePanel(int AccountType_, String _AccountTypeStr_) {
@@ -567,46 +549,24 @@ namespace FlowSERVER1
 
                 } else {
 
+                    HashSet<string> existingLabels = new HashSet<string>(flowLayoutPanel1.Controls
+                    .OfType<Guna2Panel>()
+                    .SelectMany(panel => panel.Controls.OfType<Label>())
+                    .Select(label => label.Text.ToLower()));
+
                     foreach (var selectedItems in open.FileNames) {
 
-                        _filValues.Add(Path.GetFileName(selectedItems));
-
-                        void clearRedundane() {
-                            label8.Visible = false;
-                            guna2Button6.Visible = false;
+                        if(existingLabels.Contains(Path.GetFileName(selectedItems).ToLower().Trim())) {
+                            continue;
                         }
+
+                        _filValues.Add(Path.GetFileName(selectedItems));
 
                         get_ex = open.FileName;
                         getName = Path.GetFileName(selectedItems);
                         retrieved = Path.GetExtension(selectedItems); 
                         retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
                         fileSizeInMB = 0;
-
-                        async Task containThumbUpload(object keyValMain) {
-
-                            using (var command = new MySqlCommand()) {
-                                command.Connection = con;
-                                command.CommandText = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)"; ;
-                                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName));
-                                command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                                command.Parameters.AddWithValue("@FILE_EXT", retrieved);
-                                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
-                                command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                                command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
-
-                                using (var shellFile = ShellFile.FromFilePath(selectedItems))
-                                using (var stream = new MemoryStream()) {
-                                    shellFile.Thumbnail.Bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                                    string base64Thumb = Convert.ToBase64String(stream.ToArray());
-                                    command.Parameters.AddWithValue("@CUST_THUMB", base64Thumb);
-                                }
-
-                                await command.ExecuteNonQueryAsync();
-                            }
-
-                            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
-
-                        }
 
                         async void createPanelMain(string nameTable, string panName, int itemCurr, string keyVal) {
 
@@ -693,33 +653,21 @@ namespace FlowSERVER1
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
 
+                                new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog())
+                                .Start();
+
                                 if (nameTable == "file_info") {
                                     await startSending(keyVal);
                                     textboxPic.Image = new Bitmap(selectedItems);
                                     textboxPic.Click += (sender_f, e_f) => {
+
                                         var getImgName = (Guna2PictureBox)sender_f;
                                         var getWidth = getImgName.Image.Width;
                                         var getHeight = getImgName.Image.Height;
                                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                        Form bgBlur = new Form();
-                                        using (picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername)) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
-
-                                            displayPic.Owner = bgBlur;
-                                            displayPic.ShowDialog();
-
-                                            bgBlur.Dispose();
-                                        }
+                                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        displayPic.Show();
                                     };
 
                                     clearRedundane();
@@ -728,34 +676,14 @@ namespace FlowSERVER1
                                 if (nameTable == "file_info_expand") {
                                     await startSending(keyVal);
 
-                                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                                    if (_extTypes == ".py") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                                    }
-                                    else if (_extTypes == ".txt" || _extTypes == ".md") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                                    }
-                                    else if (_extTypes == ".html") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                                    }
-                                    else if (_extTypes == ".css") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                                    }
-                                    else if (_extTypes == ".js") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                                    }
-                                    else if (_extTypes == ".sql") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                                    }
-                                    else if (_extTypes == ".csv") {
-                                        textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                                    }
+                                    string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                                    textboxPic.Image = Globals.textTypeToImage[textType];
 
                                     var filePath = getName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
 
-                                        if (_extTypes == ".csv" || _extTypes == ".sql") {
+                                        if (textType == ".csv" || textType == ".sql") {
                                             Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
                                             _showRetrievalCsvAlert.Start();
                                         }
@@ -780,7 +708,7 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_vid") {
-                                    await containThumbUpload(keyVal); 
+                                    await containThumbUpload(selectedItems,keyVal); 
                                     ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
                                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                                     textboxPic.Image = toBitMap;
@@ -794,6 +722,7 @@ namespace FlowSERVER1
                                         vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         vidShow.Show();
                                     };
+
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_audi") {
@@ -913,8 +842,8 @@ namespace FlowSERVER1
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
                                 if (retrieved != ".ico") {
-                                    String _tempToBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                    String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
+                                    String _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
+                                    String _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
                                     createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                                 }
                                 else {
@@ -1000,13 +929,10 @@ namespace FlowSERVER1
 
                             CloseForm.closeForm("UploadAlrt");
 
+                        } catch (Exception) {
+                            CloseForm.closeForm("UploadAlrt");
+                            new CustomAlert(title: "Some went wrong",subheader: "Failed to upload this file.").Show();
                         }
-
-                        catch (Exception ) {
-                            // IGNORE
-                        }
-
-                        Application.OpenForms.Cast<Form>().Where(f => f.Name == "UploadAlrt").ToList().ForEach(f => f.Close());
 
                     }
                 }
@@ -1146,7 +1072,7 @@ namespace FlowSERVER1
 
             string fileExtensions = titleFile.Substring(titleFile.Length - 4);
 
-            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, false, Globals.custUsername, dirName);
+            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, false, "upload_info_directory", dirName);
             sharingFileFORM.Show();
         }
     }

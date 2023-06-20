@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
@@ -23,7 +24,7 @@ namespace FlowSERVER1 {
         private static readonly MySqlConnection con = ConnectionModel.con;
         public static readonly SaverModel Instance = new SaverModel();
         public static bool stopFileRetrieval { get; set; } = false;
-        private static string _getExt { get; set; }
+        private static string fileExtension { get; set; }
 
         /// <summary>
         /// 
@@ -35,14 +36,10 @@ namespace FlowSERVER1 {
         /// <param name="_getBytes"></param>
         private static void _openDialog(String _FileTitle, Byte[] _getBytes) {
 
-            var retrievalAlertForm = Application.OpenForms
-                .OfType<Form>()
-                .FirstOrDefault(form => form.Name == "RetrievalAlert");
-
-            retrievalAlertForm?.Close();
+            closeRetrievalAlert();
 
             var dialog = new SaveFileDialog {
-                Filter = $"|*.{_getExt}",
+                Filter = $"|*.{fileExtension}",
                 FileName = _FileTitle
             };
 
@@ -54,7 +51,7 @@ namespace FlowSERVER1 {
 
         public static async void SaveSelectedFile(String _FileTitle, String _TableName, String _DirectoryName, bool _isFromShared = false) {
 
-            _getExt = _FileTitle.Split('.').Last();
+            fileExtension = _FileTitle.Split('.').Last();
 
             try {
 
@@ -62,8 +59,7 @@ namespace FlowSERVER1 {
 
                 if (_TableName == "upload_info_directory") {
 
-                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
-                    retrievalThread.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -75,34 +71,24 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                Application.OpenForms
-                                .OfType<Form>()
-                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                                .ToList()
-                                .ForEach(form => form.Close());
+                                closeRetrievalAlert();
                                 
                                 stopFileRetrieval = false;
                                 return;
                             }
 
                             if (await reader.ReadAsync()) {
-                                var base64Encoded = reader.GetString(0);
-                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                string encryptedBase64 = reader.GetString(0);
+                                string decryptedBase64 = EncryptionModel.Decrypt(encryptedBase64);
+                                var getBytes = Convert.FromBase64String(decryptedBase64);
                                 _openDialog(_FileTitle, getBytes);
                             }
                         }
                     }
 
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
-
                 } else if (_TableName == "folder_upload_info") {
 
-                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
-                    retrievalThread.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -114,34 +100,24 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                Application.OpenForms
-                                .OfType<Form>()
-                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                                .ToList()
-                                .ForEach(form => form.Close());
+                                closeRetrievalAlert();
 
                                 stopFileRetrieval = false;
                                 return;
                             }
 
                             if (await reader.ReadAsync()) {
-                                var base64Encoded = reader.GetString(0);
-                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                string encryptedBase64 = reader.GetString(0);
+                                string decryptedBase64 = EncryptionModel.Decrypt(encryptedBase64);
+                                var getBytes = Convert.FromBase64String(decryptedBase64);
                                 _openDialog(_FileTitle, getBytes);
                             }
                         }
                     }
 
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
-
                 } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory" && _TableName != "cust_sharing") {
 
-                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
-                    retrievalThread.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -152,35 +128,26 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                Application.OpenForms
-                                .OfType<Form>()
-                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                                .ToList()
-                                .ForEach(form => form.Close());
+                                closeRetrievalAlert();
 
                                 stopFileRetrieval = false;
                                 return;
                             }
 
                             if (await reader.ReadAsync()) {
-                                var base64Encoded = EncryptionModel.Decrypt(reader.GetString(0));
-                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                string encryptedBase64 = reader.GetString(0);
+                                string decryptedBase64 = EncryptionModel.Decrypt(encryptedBase64);
+                                var getBytes = Convert.FromBase64String(decryptedBase64);
                                 _openDialog(_FileTitle, getBytes);
                             }
                         }
                     }
 
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
                 }
 
                 else if (_TableName == "cust_sharing" && _isFromShared == true) {
 
-                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
-                    retrievalThread.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -191,35 +158,25 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                Application.OpenForms
-                                .OfType<Form>()
-                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                                .ToList()
-                                .ForEach(form => form.Close());
+                                closeRetrievalAlert();
 
                                 stopFileRetrieval = false;
                                 return;
                             }
 
                             if (await reader.ReadAsync()) {
-                                var base64Encoded = reader.GetString(0);
-                                var getBytes = Convert.FromBase64String(base64Encoded);
+                                string encryptedBase64 = reader.GetString(0);
+                                string decryptedBase64 = EncryptionModel.Decrypt(encryptedBase64);
+                                var getBytes = Convert.FromBase64String(decryptedBase64);
                                 _openDialog(_FileTitle, getBytes);
                             }
                         }
                     }
-
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
                 }
                 
-                else if (_TableName == "cust_sharing") {
+                else if (_TableName == "cust_sharing" && _isFromShared == false) {
 
-                    var retrievalThread = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog());
-                    retrievalThread.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -230,39 +187,41 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                Application.OpenForms
-                                .OfType<Form>()
-                                .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                                .ToList()
-                                .ForEach(form => form.Close());
+                               closeRetrievalAlert();
 
                                 stopFileRetrieval = false;
                                 return;
                             }
 
                             if (await reader.ReadAsync()) {
-                                var base64Encoded = reader.GetString(0);
-                                var getBytes = Convert.FromBase64String(base64Encoded);
+
+                                string encryptedBase64 = reader.GetString(0);
+                                string decryptedBase64 = EncryptionModel.Decrypt(encryptedBase64);
+                                var getBytes = Convert.FromBase64String(decryptedBase64);
+
                                 _openDialog(_FileTitle, getBytes);
+
                             }
                         }
                     }
 
-                    Application.OpenForms
-                    .OfType<Form>()
-                    .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                    .ToList()
-                    .ForEach(form => form.Close());
                 }
+
+                closeRetrievalAlert();
             }
 
             catch (Exception) {
-                Application.OpenForms
-                         .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                         .ToList()
-                         .ForEach(form => form.Close());
+                new CustomAlert(title: "Something went wrong","Failed to download this file.");
+                closeRetrievalAlert();
             }
+        }
+
+        private static void closeRetrievalAlert() {
+            Application.OpenForms
+            .OfType<Form>()
+            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
+            .ToList()
+            .ForEach(form => form.Close());
         }
     }
 }

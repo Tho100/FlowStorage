@@ -26,9 +26,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(shareFileFORM));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblFileName = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblCountCharComment = new System.Windows.Forms.Label();
             this.guna2TextBox4 = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
@@ -46,17 +46,17 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // label3
+            // lblFileName
             // 
-            this.label3.AutoEllipsis = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(13, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(552, 25);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "File Sharing";
+            this.lblFileName.AutoEllipsis = true;
+            this.lblFileName.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileName.ForeColor = System.Drawing.Color.White;
+            this.lblFileName.Location = new System.Drawing.Point(13, 18);
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(552, 25);
+            this.lblFileName.TabIndex = 6;
+            this.lblFileName.Text = "File Sharing";
             // 
             // guna2Panel1
             // 
@@ -64,7 +64,7 @@
             this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
-            this.guna2Panel1.Controls.Add(this.label5);
+            this.guna2Panel1.Controls.Add(this.lblCountCharComment);
             this.guna2Panel1.Controls.Add(this.guna2TextBox4);
             this.guna2Panel1.Controls.Add(this.label6);
             this.guna2Panel1.Controls.Add(this.guna2Button2);
@@ -77,19 +77,19 @@
             this.guna2Panel1.TabIndex = 30;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
-            // label5
+            // lblCountCharComment
             // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(452, 273);
-            this.label5.Name = "label5";
-            this.label5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label5.Size = new System.Drawing.Size(41, 17);
-            this.label5.TabIndex = 34;
-            this.label5.Text = "0/295";
+            this.lblCountCharComment.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblCountCharComment.AutoSize = true;
+            this.lblCountCharComment.BackColor = System.Drawing.Color.Transparent;
+            this.lblCountCharComment.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCountCharComment.ForeColor = System.Drawing.Color.Silver;
+            this.lblCountCharComment.Location = new System.Drawing.Point(452, 273);
+            this.lblCountCharComment.Name = "lblCountCharComment";
+            this.lblCountCharComment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblCountCharComment.Size = new System.Drawing.Size(41, 17);
+            this.lblCountCharComment.TabIndex = 34;
+            this.lblCountCharComment.Text = "0/295";
             // 
             // guna2TextBox4
             // 
@@ -234,7 +234,7 @@
             this.ClientSize = new System.Drawing.Size(676, 493);
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.guna2Separator1);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -252,12 +252,12 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblFileName;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         public Guna.UI2.WinForms.Guna2TextBox btnShareToName;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCountCharComment;
         public Guna.UI2.WinForms.Guna2TextBox guna2TextBox4;
         private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
