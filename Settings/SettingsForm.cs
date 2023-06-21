@@ -54,8 +54,8 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            label76.Text = Globals.custEmail;
-            label5.Text = Globals.custUsername;
+            lblUserEmail.Text = Globals.custEmail;
+            lblUserUsername.Text = Globals.custUsername;
 
             foreach (var axis in chart1.ChartAreas[0].Axes) {
                 axis.MajorGrid.Enabled = false;
@@ -89,10 +89,10 @@ namespace FlowSERVER1 {
                 await TotalUploadDirectoryTodayCount();
 
                 int _totalUploadTodayCount = this.TotalUploadToday.Sum(x => Convert.ToInt32(x));
-                label26.Text = _totalUploadTodayCount.ToString();
+                lblCountFileUploadToday.Text = _totalUploadTodayCount.ToString();
 
                 int _totalUploadOvertime = this.TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
-                label12.Text = _totalUploadOvertime.ToString();
+                lblTotalUploadFileCount.Text = _totalUploadOvertime.ToString();
 
             } catch (Exception) {
                 CustomAlert showAlert = new CustomAlert(title: "An error occurred","Something went wrong while trying to open Settings.");
@@ -172,7 +172,7 @@ namespace FlowSERVER1 {
             }
 
             int distinctDirCount = this.TotalUploadDirectoryToday.Distinct().Count();
-            label30.Text = distinctDirCount.ToString();
+            lblCountDirlUploadToday.Text = distinctDirCount.ToString();
         }
 
         private async Task GetAccountType() {
@@ -276,11 +276,11 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
-                label19.Text = totalDir.ToString();
+                lblTotalDirUploadCount.Text = totalDir.ToString();
             }
 
             int countTotalFolders = HomePage.instance.lstFoldersPage.Items.Count - 3;
-            label20.Text = countTotalFolders.ToString();
+            lblTotalFolderUploadCount.Text = countTotalFolders.ToString();
         }
 
 
@@ -882,7 +882,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Kiraan Direktori";
                 label11.Text = "Kiraan Folder";
                 label31.Text = "Jumlah Upload Hari-ini";
-                label28.Text = "Fail";
+                lblFile.Text = "Fail";
                 label29.Text = "Direktori";
                 label15.Text = "Tarikh Penciptaan Akaun";
 
@@ -941,7 +941,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Directory Count";
                 label11.Text = "Folders Count";
                 label31.Text = "Total Upload Today";
-                label28.Text = "File";
+                lblFile.Text = "File";
                 label29.Text = "Directory";
                 label15.Text = "Account Creation Date";
 
@@ -1000,7 +1000,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Aantal mappen";
                 label11.Text = "Aantal mappen";
                 label31.Text = "Totale upload vandaag";
-                label28.Text = "Bestand";
+                lblFile.Text = "Bestand";
                 label29.Text = "Map";
                 label15.Text = "Aanmaakdatum account";
 
@@ -1059,7 +1059,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Счетчик каталогов";
                 label11.Text = "Счетчик папок";
                 label31.Text = "Всего сегодня загружено";
-                label28.Text = "Файл";
+                lblFile.Text = "Файл";
                 label29.Text = "Каталог";
                 label15.Text = "Дата создания учетной записи";
 
@@ -1119,7 +1119,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Directory Count";
                 label11.Text = "Folders Count";
                 label31.Text = "Total Upload Today";
-                label28.Text = "File";
+                lblFile.Text = "File";
                 label29.Text = "Directory";
                 label15.Text = "Erstellungsdatum des Kontos";
 
@@ -1178,7 +1178,7 @@ namespace FlowSERVER1 {
                 label9.Text = "ディレクトリ数";
                 label11.Text = "フォルダ数";
                 label31.Text = "今日の合計アップロード";
-                label28.Text = "ファイル";
+                lblFile.Text = "ファイル";
                 label29.Text = "ディレクトリ";
                 label15.Text = "アカウント作成日";
 
@@ -1238,7 +1238,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Recuento de directorios";
                 label11.Text = "Número de carpetas";
                 label31.Text = "Subida total hoy";
-                label28.Text = "Archivo";
+                lblFile.Text = "Archivo";
                 label29.Text = "Directorio";
                 label15.Text = "Fecha de creación de la cuenta";
 
@@ -1297,7 +1297,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Nombre de répertoires";
                 label11.Text = "Nombre de dossiers";
                 label31.Text = "Téléchargement total aujourd'hui";
-                label28.Text = "Déposer";
+                lblFile.Text = "Déposer";
                 label29.Text = "Annuaire";
                 label15.Text = "Date de création du compte";
 
@@ -1356,7 +1356,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Contagem de diretório";
                 label11.Text = "Contagem de Pastas";
                 label31.Text = "Carregamento total hoje";
-                label28.Text = "Arquivo";
+                lblFile.Text = "Arquivo";
                 label29.Text = "Diretório";
                 label15.Text = "Data de criação da conta";
 
@@ -1415,7 +1415,7 @@ namespace FlowSERVER1 {
                 label9.Text = "目录计数";
                 label11.Text = "文件夹数";
                 label31.Text = "今日上传总量";
-                label28.Text = "文件";
+                lblFile.Text = "文件";
                 label29.Text = "目录";
                 label15.Text = "帐户创建日期";
                 label70.Text = "设置";

@@ -14,7 +14,7 @@ namespace FlowSERVER1 {
             InitializeComponent();
             this.label1.Text = _newUsername;
             this.label3.Text = _oldUsername;
-            SettingsForm.instance.label5.Text = _newUsername;
+            SettingsForm.instance.lblUserUsername.Text = _newUsername;
         }
 
         private void successChangeUser_Load(object sender, EventArgs e) {
