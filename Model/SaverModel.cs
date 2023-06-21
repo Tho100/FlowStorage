@@ -61,7 +61,9 @@ namespace FlowSERVER1 {
 
                 if (_TableName == "upload_info_directory") {
 
-                    using (var command = new MySqlCommand("SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
+                    const string selectFileDataQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+
+                    using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_DirectoryName));
@@ -88,7 +90,9 @@ namespace FlowSERVER1 {
 
                 } else if (_TableName == "folder_upload_info") {
 
-                    using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
+                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
+
+                    using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_DirectoryName));
@@ -115,7 +119,9 @@ namespace FlowSERVER1 {
 
                 } else if (Globals.publicTables.Contains(_TableName)) {
 
-                    using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
+                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+
+                    using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -143,7 +149,9 @@ namespace FlowSERVER1 {
 
                 else if (_TableName == "cust_sharing" && _isFromShared == true) {
 
-                    using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
+                    const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+
+                    using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -170,7 +178,9 @@ namespace FlowSERVER1 {
                 
                 else if (_TableName == "cust_sharing" && _isFromShared == false) {
 
-                    using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
+                    const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+
+                    using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -199,7 +209,9 @@ namespace FlowSERVER1 {
 
                 } else if (Globals.publicTablesPs.Contains(_TableName)) {
 
-                    using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_FILE_PATH = @filename", con)) {
+                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_FILE_PATH = @filename";
+
+                    using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
                         using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
 
@@ -227,7 +239,7 @@ namespace FlowSERVER1 {
             }
 
             catch (Exception) {
-                new CustomAlert(title: "Something went wrong","Failed to download this file.");
+                new CustomAlert(title: "An error occurred","Failed to download this file.");
                 closeRetrievalAlert();
             }
         }
