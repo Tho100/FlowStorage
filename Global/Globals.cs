@@ -11,6 +11,8 @@ using static Spire.Spreadsheet.Forms.Common.Win32;
 namespace FlowSERVER1 {
     public class Globals {
 
+        static public readonly Image VerticalMenuImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+
         static public readonly Image PDFImage = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
         static public readonly Image AudioImage = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
 

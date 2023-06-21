@@ -29,7 +29,7 @@ namespace FlowSERVER1 {
         // Garbage button
         static public readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
         static public readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
-        static public readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+        static public readonly Image GarbageImage = Globals.VerticalMenuImage;
         static public readonly Point GarbageButtonLoc = new Point(165, 188);
         static public readonly Point GarbageOffset = new Point(2, 0);
 
