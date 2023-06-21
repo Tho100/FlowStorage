@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
+using Stripe.Checkout;
 
 namespace FlowSERVER1 {
 
@@ -29,7 +30,7 @@ namespace FlowSERVER1 {
 
                 fileName = _FileName;
 
-                if (_TableName != "upload_info_directory" && _TableName != "folder_upload_info" && _TableName != "cust_sharing") {
+                if (Globals.publicTables.Contains(_TableName)) {
                     RetrieveHomeDataAsync(_TableName);
                 }
 
@@ -48,13 +49,45 @@ namespace FlowSERVER1 {
 
                 else if (_TableName == "cust_sharing") {
                     RetrieveSharedToMeData();
-                
+
+                }
+                else if (Globals.publicTablesPs.Contains(_TableName)) {
+                    RetrievePublicStorageData(_TableName);
+
                 }
 
             } catch (Exception) {
                 // @ ignore exception                
             }
             return universalBytes;
+        }
+
+        private static async void RetrievePublicStorageData(String table) {
+            string readGifFilesQuery = $"SELECT CUST_FILE FROM {table} WHERE CUST_FILE_PATH = @filepath";
+            using (MySqlCommand command = new MySqlCommand(readGifFilesQuery, con)) {
+                command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+
+                        var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
+                        retrievalAlertFormsOne.ForEach(form => form.Close());
+
+                        if (stopFileRetrievalLoad) {
+                            reader.Close();
+                            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
+                            retrievalAlertForms.ForEach(form => form.Close());
+                            stopFileRetrievalLoad = false;
+                        }
+
+
+                        var base64Encoded = reader.GetString(0);
+                        var decryptValues = EncryptionModel.Decrypt(base64Encoded);
+                        var bytes = Convert.FromBase64String(decryptValues);
+                        universalBytes = bytes;
+                    }
+                }
+            }
         }
 
         private static async void RetrieveSharedTootherData() {

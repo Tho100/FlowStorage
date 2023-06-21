@@ -29,6 +29,7 @@ namespace FlowSERVER1 {
         private bool IsFromSharing {get; set; }
         private string DirectoryName {get; set; }
         private string TableName { get; set; }
+        private string UploaderName { get; set; }
 
         /// <summary>
         /// 
@@ -54,6 +55,7 @@ namespace FlowSERVER1 {
                 this.lblFileName.Text = fileName;
                 this.TableName = tableName;
                 this.DirectoryName = directoryName;
+                this.UploaderName = uploaderName;
 
                 var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
 
@@ -63,7 +65,6 @@ namespace FlowSERVER1 {
                     guna2Button12.Visible = true;
 
                     _getName = uploaderName.Replace("Shared", "");
-
 
                     this.IsFromSharing = true;
 
@@ -150,13 +151,16 @@ namespace FlowSERVER1 {
 
                 } else if (tableName == "file_info_expand") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_);
+                    retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
                 } else if (tableName == "cust_sharing" && _isShared == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_);
+                    retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
                 } else if (tableName == "cust_sharing" && _isShared == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_);
+                    retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
+                } else if (tableName == "ps_info_text") {
+                    const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    retrieveData(getTxtQuery, FileExt_, this.UploaderName);
                 }
 
             } catch (Exception) {
@@ -171,11 +175,11 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void retrieveData(String PerformQue,String FileExtension) {
+        private async void retrieveData(String PerformQue,String FileExtension, String uploaderName) {
 
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", uploaderName);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {

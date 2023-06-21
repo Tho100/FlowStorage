@@ -30,7 +30,7 @@ namespace FlowSERVER1 {
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblFileName = new System.Windows.Forms.Label();
             this.lblUploaderName = new System.Windows.Forms.Label();
-            this.videoView1 = new LibVLCSharp.WinForms.VideoView();
+            this.videoViewer = new LibVLCSharp.WinForms.VideoView();
             this.lblUserComment = new System.Windows.Forms.Label();
             this.guna2VSeparator2 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
@@ -46,20 +46,20 @@ namespace FlowSERVER1 {
             this.guna2TextBox4 = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnReplayVideo = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPauseVideo = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPlayVideo = new Guna.UI2.WinForms.Guna2Button();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoViewer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
@@ -94,20 +94,20 @@ namespace FlowSERVER1 {
             this.lblUploaderName.TabIndex = 29;
             this.lblUploaderName.Text = "Uploaded By urmom";
             // 
-            // videoView1
+            // videoViewer
             // 
-            this.videoView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.videoViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.videoView1.BackColor = System.Drawing.Color.Black;
-            this.videoView1.Location = new System.Drawing.Point(351, 76);
-            this.videoView1.MediaPlayer = null;
-            this.videoView1.Name = "videoView1";
-            this.videoView1.Size = new System.Drawing.Size(774, 481);
-            this.videoView1.TabIndex = 38;
-            this.videoView1.Text = "videoView1";
-            this.videoView1.Visible = false;
-            this.videoView1.Click += new System.EventHandler(this.videoView1_Click_2);
+            this.videoViewer.BackColor = System.Drawing.Color.Black;
+            this.videoViewer.Location = new System.Drawing.Point(351, 76);
+            this.videoViewer.MediaPlayer = null;
+            this.videoViewer.Name = "videoViewer";
+            this.videoViewer.Size = new System.Drawing.Size(774, 481);
+            this.videoViewer.TabIndex = 38;
+            this.videoViewer.Text = "videoView1";
+            this.videoViewer.Visible = false;
+            this.videoViewer.Click += new System.EventHandler(this.videoView1_Click_2);
             // 
             // lblUserComment
             // 
@@ -311,28 +311,28 @@ namespace FlowSERVER1 {
             this.guna2Button12.Visible = false;
             this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
-            // guna2Button10
+            // btnReplayVideo
             // 
-            this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button10.Animated = true;
-            this.guna2Button10.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button10.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button10.BorderRadius = 6;
-            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button10.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button10.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button10.ForeColor = System.Drawing.Color.White;
-            this.guna2Button10.Image = global::FlowSERVER1.Properties.Resources.icons8_restart_500__1_;
-            this.guna2Button10.ImageSize = new System.Drawing.Size(27, 27);
-            this.guna2Button10.Location = new System.Drawing.Point(1076, 576);
-            this.guna2Button10.Name = "guna2Button10";
-            this.guna2Button10.Size = new System.Drawing.Size(46, 36);
-            this.guna2Button10.TabIndex = 82;
-            this.guna2Button10.Visible = false;
-            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
+            this.btnReplayVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReplayVideo.Animated = true;
+            this.btnReplayVideo.BackColor = System.Drawing.Color.Transparent;
+            this.btnReplayVideo.BorderColor = System.Drawing.Color.Empty;
+            this.btnReplayVideo.BorderRadius = 6;
+            this.btnReplayVideo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnReplayVideo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnReplayVideo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnReplayVideo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnReplayVideo.FillColor = System.Drawing.Color.Empty;
+            this.btnReplayVideo.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnReplayVideo.ForeColor = System.Drawing.Color.White;
+            this.btnReplayVideo.Image = global::FlowSERVER1.Properties.Resources.icons8_restart_500__1_;
+            this.btnReplayVideo.ImageSize = new System.Drawing.Size(27, 27);
+            this.btnReplayVideo.Location = new System.Drawing.Point(1071, 575);
+            this.btnReplayVideo.Name = "btnReplayVideo";
+            this.btnReplayVideo.Size = new System.Drawing.Size(46, 36);
+            this.btnReplayVideo.TabIndex = 82;
+            this.btnReplayVideo.Visible = false;
+            this.btnReplayVideo.Click += new System.EventHandler(this.guna2Button10_Click);
             // 
             // guna2Button9
             // 
@@ -412,33 +412,33 @@ namespace FlowSERVER1 {
             this.btnShareFile.TabIndex = 40;
             this.btnShareFile.Click += new System.EventHandler(this.guna2Button7_Click);
             // 
-            // guna2Button6
+            // btnPauseVideo
             // 
-            this.guna2Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button6.Animated = true;
-            this.guna2Button6.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button6.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button6.BorderRadius = 6;
-            this.guna2Button6.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button6.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button6.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button6.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
-            this.guna2Button6.ImageSize = new System.Drawing.Size(31, 31);
-            this.guna2Button6.Location = new System.Drawing.Point(1072, 575);
-            this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(46, 36);
-            this.guna2Button6.TabIndex = 37;
-            this.guna2Button6.Visible = false;
-            this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click_1);
+            this.btnPauseVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPauseVideo.Animated = true;
+            this.btnPauseVideo.BackColor = System.Drawing.Color.Transparent;
+            this.btnPauseVideo.BorderColor = System.Drawing.Color.Empty;
+            this.btnPauseVideo.BorderRadius = 6;
+            this.btnPauseVideo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPauseVideo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPauseVideo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPauseVideo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPauseVideo.FillColor = System.Drawing.Color.Empty;
+            this.btnPauseVideo.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnPauseVideo.ForeColor = System.Drawing.Color.White;
+            this.btnPauseVideo.Image = ((System.Drawing.Image)(resources.GetObject("btnPauseVideo.Image")));
+            this.btnPauseVideo.ImageSize = new System.Drawing.Size(31, 31);
+            this.btnPauseVideo.Location = new System.Drawing.Point(1071, 575);
+            this.btnPauseVideo.Name = "btnPauseVideo";
+            this.btnPauseVideo.Size = new System.Drawing.Size(46, 36);
+            this.btnPauseVideo.TabIndex = 37;
+            this.btnPauseVideo.Visible = false;
+            this.btnPauseVideo.Click += new System.EventHandler(this.guna2Button6_Click_1);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Enabled = false;
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_open_parcel_24;
             this.pictureBox1.Location = new System.Drawing.Point(117, 11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 50);
@@ -447,27 +447,27 @@ namespace FlowSERVER1 {
             this.pictureBox1.Visible = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_2);
             // 
-            // guna2Button5
+            // btnPlayVideo
             // 
-            this.guna2Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button5.Animated = true;
-            this.guna2Button5.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button5.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button5.BorderRadius = 6;
-            this.guna2Button5.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button5.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button5.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button5.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button5.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button5.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button5.ForeColor = System.Drawing.Color.White;
-            this.guna2Button5.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button5.Image")));
-            this.guna2Button5.ImageSize = new System.Drawing.Size(34, 34);
-            this.guna2Button5.Location = new System.Drawing.Point(1071, 575);
-            this.guna2Button5.Name = "guna2Button5";
-            this.guna2Button5.Size = new System.Drawing.Size(48, 36);
-            this.guna2Button5.TabIndex = 27;
-            this.guna2Button5.Click += new System.EventHandler(this.guna2Button5_Click);
+            this.btnPlayVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPlayVideo.Animated = true;
+            this.btnPlayVideo.BackColor = System.Drawing.Color.Transparent;
+            this.btnPlayVideo.BorderColor = System.Drawing.Color.Empty;
+            this.btnPlayVideo.BorderRadius = 6;
+            this.btnPlayVideo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPlayVideo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPlayVideo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPlayVideo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPlayVideo.FillColor = System.Drawing.Color.Empty;
+            this.btnPlayVideo.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnPlayVideo.ForeColor = System.Drawing.Color.White;
+            this.btnPlayVideo.Image = ((System.Drawing.Image)(resources.GetObject("btnPlayVideo.Image")));
+            this.btnPlayVideo.ImageSize = new System.Drawing.Size(34, 34);
+            this.btnPlayVideo.Location = new System.Drawing.Point(1071, 575);
+            this.btnPlayVideo.Name = "btnPlayVideo";
+            this.btnPlayVideo.Size = new System.Drawing.Size(48, 36);
+            this.btnPlayVideo.TabIndex = 27;
+            this.btnPlayVideo.Click += new System.EventHandler(this.guna2Button5_Click);
             // 
             // guna2PictureBox1
             // 
@@ -582,7 +582,7 @@ namespace FlowSERVER1 {
             this.Controls.Add(this.guna2Button12);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.lblFileSize);
-            this.Controls.Add(this.guna2Button10);
+            this.Controls.Add(this.btnReplayVideo);
             this.Controls.Add(this.guna2Separator3);
             this.Controls.Add(this.guna2TrackBar1);
             this.Controls.Add(this.guna2Button9);
@@ -597,11 +597,11 @@ namespace FlowSERVER1 {
             this.Controls.Add(this.guna2VSeparator1);
             this.Controls.Add(this.btnShareFile);
             this.Controls.Add(this.lblUserComment);
-            this.Controls.Add(this.videoView1);
-            this.Controls.Add(this.guna2Button6);
+            this.Controls.Add(this.videoViewer);
+            this.Controls.Add(this.btnPauseVideo);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblUploaderName);
-            this.Controls.Add(this.guna2Button5);
+            this.Controls.Add(this.btnPlayVideo);
             this.Controls.Add(this.guna2PictureBox1);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.guna2Button4);
@@ -615,7 +615,7 @@ namespace FlowSERVER1 {
             this.Text = "Video Viewer";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.vidFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.videoView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoViewer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
@@ -632,12 +632,12 @@ namespace FlowSERVER1 {
         public Guna.UI2.WinForms.Guna2Button guna2Button1;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label lblFileName;
-        public Guna.UI2.WinForms.Guna2Button guna2Button5;
+        public Guna.UI2.WinForms.Guna2Button btnPlayVideo;
         private System.Windows.Forms.Label lblUploaderName;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button6;
-        private LibVLCSharp.WinForms.VideoView videoView1;
+        public Guna.UI2.WinForms.Guna2Button btnPauseVideo;
+        private LibVLCSharp.WinForms.VideoView videoViewer;
         private System.Windows.Forms.Label lblUserComment;
         public Guna.UI2.WinForms.Guna2Button btnShareFile;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator2;
@@ -652,7 +652,7 @@ namespace FlowSERVER1 {
         public Guna.UI2.WinForms.Guna2Button guna2Button9;
         private Guna.UI2.WinForms.Guna2TrackBar guna2TrackBar1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
-        public Guna.UI2.WinForms.Guna2Button guna2Button10;
+        public Guna.UI2.WinForms.Guna2Button btnReplayVideo;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
         protected Guna.UI2.WinForms.Guna2TextBox guna2TextBox4;

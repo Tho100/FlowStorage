@@ -61,6 +61,26 @@ namespace FlowSERVER1 {
             { "file_info_directory", null }
         };
 
+        static public readonly HashSet<string> publicTablesPs = new HashSet<string>
+        { "ps_info_image", "ps_info_text", "file_info_exe", "ps_info_video",
+          "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk",
+          "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_directory"
+        };
+
+        static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>
+        {
+            { "ps_info_image", "imgFile" },
+            { "ps_info_text", "txtFile" },
+            { "file_info_exe", "exeFile" },
+            { "ps_info_video", "vidFile" },
+            { "file_info_excel", "exlFile" },
+            { "file_info_pdf", "pdfFile" },
+            { "file_info_apk", "apkFile" },
+            { "file_info_word", "wordFile" },
+            { "file_info_ptx", "ptxFile" },
+            { "file_info_directory", null }
+        };
+
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
         {
             { "Basic", 25 },

@@ -54,6 +54,8 @@
             this.btnRenameFile = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button28 = new Guna.UI2.WinForms.Guna2Button();
             this.lblFileNameOnPanel = new System.Windows.Forms.Label();
+            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.lblFilesCount = new System.Windows.Forms.Label();
             this.guna2Panel3.SuspendLayout();
             this.pnlFileOptions.SuspendLayout();
             this.SuspendLayout();
@@ -185,7 +187,7 @@
             this.lblDirectoryName.BackColor = System.Drawing.Color.Transparent;
             this.lblDirectoryName.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDirectoryName.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblDirectoryName.Location = new System.Drawing.Point(12, 16);
+            this.lblDirectoryName.Location = new System.Drawing.Point(12, 14);
             this.lblDirectoryName.Name = "lblDirectoryName";
             this.lblDirectoryName.Size = new System.Drawing.Size(792, 28);
             this.lblDirectoryName.TabIndex = 7;
@@ -198,7 +200,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(14, 45);
+            this.label2.Location = new System.Drawing.Point(15, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 8;
@@ -418,12 +420,41 @@
             this.lblFileNameOnPanel.TabIndex = 48;
             this.lblFileNameOnPanel.Text = "somenwordfile.png";
             // 
+            // guna2CircleButton1
+            // 
+            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
+            this.guna2CircleButton1.Location = new System.Drawing.Point(83, 52);
+            this.guna2CircleButton1.Name = "guna2CircleButton1";
+            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton1.Size = new System.Drawing.Size(6, 6);
+            this.guna2CircleButton1.TabIndex = 75;
+            // 
+            // lblFilesCount
+            // 
+            this.lblFilesCount.AutoSize = true;
+            this.lblFilesCount.BackColor = System.Drawing.Color.Transparent;
+            this.lblFilesCount.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFilesCount.ForeColor = System.Drawing.Color.Silver;
+            this.lblFilesCount.Location = new System.Drawing.Point(94, 45);
+            this.lblFilesCount.Name = "lblFilesCount";
+            this.lblFilesCount.Size = new System.Drawing.Size(50, 17);
+            this.lblFilesCount.TabIndex = 76;
+            this.lblFilesCount.Text = "12 Files";
+            // 
             // DirectoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.ClientSize = new System.Drawing.Size(1128, 655);
+            this.Controls.Add(this.lblFilesCount);
+            this.Controls.Add(this.guna2CircleButton1);
             this.Controls.Add(this.pnlFileOptions);
             this.Controls.Add(this.guna2Separator1);
             this.Controls.Add(this.label2);
@@ -472,5 +503,7 @@
         private Guna.UI2.WinForms.Guna2Button btnRenameFile;
         public Guna.UI2.WinForms.Guna2Button guna2Button28;
         private System.Windows.Forms.Label lblFileNameOnPanel;
+        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
+        public System.Windows.Forms.Label lblFilesCount;
     }
 }

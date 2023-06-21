@@ -64,16 +64,7 @@ namespace FlowSERVER1 {
 
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog()).Start();
 
-                if (_TableName == "file_info_word") {
-                    setupDocx(LoaderModel.LoadFile("file_info_word","null",lblFileName.Text));
-                } else if (_TableName == "upload_info_directory") {
-                    setupDocx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, lblFileName.Text));
-                }
-                else if (_TableName == "folder_upload_info") {
-                    setupDocx(LoaderModel.LoadFile("folder_upload_info",_DirectoryName,lblFileName.Text));
-                } else if (_TableName == "cust_sharing") {
-                    setupDocx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, lblFileName.Text,_isFromShared));
-                }
+                setupDocx(LoaderModel.LoadFile(_TableName, _DirectoryName, lblFileName.Text, _isFromShared));
 
                 CloseForm.closeForm("RetrievalAlert");
             }
@@ -108,15 +99,7 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            if(_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text,"upload_info_directory",_DirectoryName);
-            } else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirectoryName);
-            } else if (_TableName == "file_info_word") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_word", _DirectoryName);
-            } else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirectoryName,_IsFromShared);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text,_TableName,_DirectoryName,_IsFromShared);
             this.TopMost = true;
         }
 

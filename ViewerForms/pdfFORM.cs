@@ -54,8 +54,8 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 _getName = " " + uploaderName;
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
@@ -66,19 +66,10 @@ namespace FlowSERVER1 {
 
             try {
 
-                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").ShowDialog());
-                ShowAlert.Start();
+                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").
+                ShowDialog()).Start();
 
-                if (tableName == "file_info_pdf") {
-                    setupPdf(LoaderModel.LoadFile("file_info_pdf", directoryName, lblFileName.Text));
-                } else if (tableName == "upload_info_directory") {
-                    setupPdf(LoaderModel.LoadFile("upload_info_directory", directoryName, lblFileName.Text));
-                } else if (tableName == "folder_upload_info") {
-                    setupPdf(LoaderModel.LoadFile("folder_upload_info", directoryName, lblFileName.Text));
-                }
-                else if (tableName == "cust_sharing") {
-                    setupPdf(LoaderModel.LoadFile("cust_sharing", directoryName, lblFileName.Text,_isFromShared));
-                }
+                setupPdf(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text,_isFromShared));
 
             } catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -136,18 +127,9 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            if (_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirName);
-            }
-            else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirName);
-            }
-            else if (_TableName == "file_info_pdf") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_pdf", _DirName);
-            }
-            else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirName,_IsFromShared);
-            }
+
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirName);
+
             this.TopMost = true;
         }
 

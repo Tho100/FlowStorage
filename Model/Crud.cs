@@ -18,7 +18,27 @@ namespace FlowSERVER1 {
             }
         }
 
+        public async Task<int> countRowPublicStorage(String tableName) {
+            using (var command = con.CreateCommand()) {
+                command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {tableName}";
+                return Convert.ToInt32(await command.ExecuteScalarAsync());
+            }
+        }
+
         public async Task Insert(string query, Dictionary<string, string> parameters) {
+
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.CommandText = query;
+
+                foreach (var parameter in parameters) {
+                    command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+
+                await command.ExecuteNonQueryAsync();
+            }
+        }
+
+        public async Task Select(string query, Dictionary<string, string> parameters) {
 
             using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.CommandText = query;

@@ -81,17 +81,7 @@ namespace FlowSERVER1 {
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
                 ShowAlert.Show();
 
-                if (_TableName == "file_info_apk") {
-                    SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_apk", _DirName);
-                }
-                else if (_TableName == "upload_info_directory") {
-                    SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirName);
-                } else if (_TableName == "folder_upload_info") {
-                    SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirName);
-                }
-                else if (_TableName == "cust_sharing") {
-                    SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirName,isFromShared);
-                }
+                SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirName);
 
             } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);

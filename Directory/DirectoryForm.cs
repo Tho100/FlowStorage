@@ -90,6 +90,8 @@ namespace FlowSERVER1
                 clearRedundane();
             }
 
+            lblFilesCount.Text = $"{flowLayoutPanel1.Controls.Count.ToString()} File(s)";
+
         }
 
         private int _countRow(string ext) {
@@ -937,6 +939,9 @@ namespace FlowSERVER1
                     }
                 }
             }
+
+            lblFilesCount.Text = $"{flowLayoutPanel1.Controls.Count.ToString()} File(s)";
+
         }
 
         public void DisplayError(String CurAcc) {

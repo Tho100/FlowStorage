@@ -136,8 +136,8 @@ namespace FlowSERVER1 {
             _mp?.Dispose();
             _mp = new MediaPlayer(_setMedia);
 
-            videoView1.MediaPlayer?.Dispose();
-            videoView1.MediaPlayer = _mp;
+            videoViewer.MediaPlayer?.Dispose();
+            videoViewer.MediaPlayer = _mp;
 
             _mp.Play();
 
@@ -162,51 +162,32 @@ namespace FlowSERVER1 {
 
                 if(_mp != null) {
 
-                    videoView1.Visible = true;
+                    videoViewer.Visible = true;
 
                     if (_IsEndReached) {
 
                         _mp.Position = 0;
                         _IsEndReached = false;
 
-                        if (_TableName == "upload_info_directory") {
-                            setupPlayer(LoaderModel.LoadFile("upload_info_directory", _DirName, lblFileName.Text));
-                        }
-                        else if (_TableName == "file_info_vid") {
-                            setupPlayer(LoaderModel.LoadFile("file_info_vid", _DirName, lblFileName.Text));
-                        }
-                        else if (_TableName == "folder_upload_info") {
-                            setupPlayer(LoaderModel.LoadFile("folder_upload_info", _DirName, lblFileName.Text));
-                        }
-                        else if (_TableName == "cust_sharing") {
-                            setupPlayer(LoaderModel.LoadFile("cust_sharing", _DirName, lblFileName.Text, _IsFromShared));
-                        }
+                        setupPlayer(LoaderModel.LoadFile(_TableName, _DirName, lblFileName.Text));
+
                     }
 
                     _mp.Play();
 
                 } else {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..", "Loader").ShowDialog());
-                    ShowAlert.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..", "Loader").ShowDialog()).Start();
                         
                     guna2PictureBox1.Visible = false;
-                    videoView1.Visible = true;
+                    videoViewer.Visible = true;
 
-                    if (_TableName == "upload_info_directory") {
-                        setupPlayer(LoaderModel.LoadFile("upload_info_directory",_DirName,lblFileName.Text));
-                    }
-                     else if (_TableName == "file_info_vid"){
-                        setupPlayer(LoaderModel.LoadFile("file_info_vid", _DirName, lblFileName.Text));
-                    } else if (_TableName == "folder_upload_info") {
-                        setupPlayer(LoaderModel.LoadFile("folder_upload_info", _DirName, lblFileName.Text));
-                    } else if (_TableName == "cust_sharing") {
-                        setupPlayer(LoaderModel.LoadFile("cust_sharing", _DirName, lblFileName.Text,_IsFromShared));
-                    }
+                    setupPlayer(LoaderModel.LoadFile(_TableName, _DirName, lblFileName.Text));
+
                 }
 
-                guna2Button5.Visible = false;
-                guna2Button6.Visible = true;
+                btnPlayVideo.Visible = false;
+                btnPauseVideo.Visible = true;
 
             } catch (Exception) {
                 MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -263,8 +244,8 @@ namespace FlowSERVER1 {
         private void guna2Button6_Click_1(object sender, EventArgs e) {
             if(_mp != null) {
                 _mp.Pause();
-                guna2Button5.Visible = true;
-                guna2Button6.Visible = false;
+                btnPlayVideo.Visible = true;
+                btnPauseVideo.Visible = false;
             }
         }
 
@@ -336,8 +317,8 @@ namespace FlowSERVER1 {
         private void MediaPlayer_EndReached(object sender, EventArgs e) {
             guna2TrackBar1.Value = 100;
             //guna2Button10.Visible = true;
-            guna2Button5.Visible = true;
-            guna2Button6.Visible = false;
+            btnPlayVideo.Visible = true;
+            btnPauseVideo.Visible = false;
             _IsEndReached = true;
         }
 
@@ -345,8 +326,8 @@ namespace FlowSERVER1 {
             guna2TrackBar1.Value = 0;
             _mp.Stop();
             _mp.Play();
-            guna2Button10.Visible = false;
-            guna2Button6.Visible = true;
+            btnReplayVideo.Visible = false;
+            btnPauseVideo.Visible = true;
         }
 
         private async Task saveChangesComment(String updatedComment) {

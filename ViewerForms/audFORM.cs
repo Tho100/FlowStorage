@@ -241,39 +241,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            if (_TabName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirName);
-            }
-            else if (_TabName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirName);
-            }
-            else if (_TabName == "file_info_audi") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_audi", _DirName);
-            }
-            else if (_TabName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirName);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TabName, _DirName);
             this.TopMost = true;
         }
 
-        private void zedGraphControl1_Load(object sender, EventArgs e) {
-
-        }
-
-        private void waveViewer1_Load(object sender, EventArgs e) {
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e) {
-
-        }
-        private void guna2Button7_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button7_Click_1(object sender, EventArgs e) {
-
-        }
 
         bool IsSubFormOpened = false;
         private void guna2Button8_Click(object sender, EventArgs e) {

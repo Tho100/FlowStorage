@@ -553,6 +553,26 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_open_delivered_box_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-open-delivered-box-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_open_parcel_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-open-parcel-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_partying_face_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-partying-face-96", resourceCulture);
@@ -766,6 +786,16 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap image_icon {
             get {
                 object obj = ResourceManager.GetObject("image_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SplashMain {
+            get {
+                object obj = ResourceManager.GetObject("SplashMain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

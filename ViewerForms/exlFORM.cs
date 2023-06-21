@@ -85,20 +85,9 @@ namespace FlowSERVER1 {
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your workbook.","Loader");
                 ShowAlert.Show();
 
-                if (tableName == "file_info_excel") {
-                    generateSheet(LoaderModel.LoadFile("file_info_excel",DirectoryName, fileName));
-                    _sheetsByte = LoaderModel.LoadFile("file_info_excel", DirectoryName, fileName);
-                }
-                else if (tableName == "upload_info_directory") {
-                    generateSheet(LoaderModel.LoadFile("upload_info_directory", DirectoryName, fileName));
-                    _sheetsByte = LoaderModel.LoadFile("upload_info_directory", DirectoryName, fileName);
-                } else if (tableName == "folder_upload_info") {
-                    generateSheet(LoaderModel.LoadFile("folder_upload_info", DirectoryName, fileName));
-                    _sheetsByte = LoaderModel.LoadFile("folder_upload_info", DirectoryName, fileName);
-                } else if (tableName == "cust_sharing") {
-                    generateSheet(LoaderModel.LoadFile("cust_sharing", DirectoryName, fileName, isFromShared));
-                    _sheetsByte = LoaderModel.LoadFile("cust_sharing", DirectoryName, fileName);
-                }
+                generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName,isFromShared));
+                _sheetsByte = LoaderModel.LoadFile(tableName, DirectoryName, fileName);
+
             }
 
             catch (Exception) {
@@ -226,16 +215,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            if(TableName == "file_info_excel") {
-                SaverModel.SaveSelectedFile(lblFileName.Text,"file_info_excel",DirectoryName);
-            } else if (TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", DirectoryName);
-            } else if (TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", DirectoryName);
-            }
-            else if (TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", DirectoryName);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text,TableName,DirectoryName);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) {

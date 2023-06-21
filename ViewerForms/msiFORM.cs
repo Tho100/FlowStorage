@@ -31,7 +31,7 @@ namespace FlowSERVER1 {
                 _getName = "Uploaded By " + uploaderUsername;
             }
 
-            label1.Text = fileName;
+            lblFileName.Text = fileName;
             label2.Text = _getName;
 
             this._TableName = tableName;
@@ -48,18 +48,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            if (_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(label1.Text, "upload_info_directory", _DirectoryName);
-            }
-            else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(label1.Text, "folder_upload_info", _DirectoryName);
-            }
-            else if (_TableName == "file_info_msi") {
-                SaverModel.SaveSelectedFile(label1.Text, "file_info_msi", _DirectoryName);
-            } 
-            else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(label1.Text, "file_info_msi", _DirectoryName, _IsFromShared);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirectoryName);
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
