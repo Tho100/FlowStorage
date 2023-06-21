@@ -11,6 +11,17 @@ using static Spire.Spreadsheet.Forms.Common.Win32;
 namespace FlowSERVER1 {
     public class Globals {
 
+        static public readonly Image PDFImage = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+        static public readonly Image AudioImage = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+
+        static public readonly Image DOCImage = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+        static public readonly Image PTXImage = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+        static public readonly Image APKImage = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+
+        static public readonly Image EXCELImage = FlowSERVER1.Properties.Resources.excelIcon;
+        static public readonly Image MSIImage = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+        static public readonly Image EXEImage = FlowSERVER1.Properties.Resources.icons8_exe_48;
+
         static private readonly Image TextImage = FlowSERVER1.Properties.Resources.icons8_txt_48;
         static private readonly Image CSVImage = FlowSERVER1.Properties.Resources.icons8_csv_48;
         static private readonly Image CssImage = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
@@ -62,9 +73,9 @@ namespace FlowSERVER1 {
         };
 
         static public readonly HashSet<string> publicTablesPs = new HashSet<string>
-        { "ps_info_image", "ps_info_text", "file_info_exe", "ps_info_video",
-          "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk",
-          "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_directory"
+        { "ps_info_image", "ps_info_text", "ps_info_exe", "ps_info_video",
+          "ps_info_excel", "ps_info_msi", "ps_info_audio", "ps_info_apk",
+          "ps_info_pdf", "ps_info_word", "ps_info_ptx"
         };
 
         static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>

@@ -33,5 +33,7 @@ namespace FlowSERVER1 {
         static public readonly Point GarbageButtonLoc = new Point(165, 188);
         static public readonly Point GarbageOffset = new Point(2, 0);
 
+        static public readonly Color DarkPurpleColor = Color.FromArgb(255, 71, 19, 191);
+
     }
 }

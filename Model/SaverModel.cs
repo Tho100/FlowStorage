@@ -57,9 +57,9 @@ namespace FlowSERVER1 {
 
                 List<String> _base64Encoded = new List<string>();
 
-                if (_TableName == "upload_info_directory") {
+                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
+                if (_TableName == "upload_info_directory") {
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM " + _TableName + " WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -88,8 +88,6 @@ namespace FlowSERVER1 {
 
                 } else if (_TableName == "folder_upload_info") {
 
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
-
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
@@ -115,9 +113,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                } else if (_TableName != "folder_upload_info" && _TableName != "upload_info_directory" && _TableName != "cust_sharing") {
-
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
+                } else if (Globals.publicTables.Contains(_TableName)) {
 
                     using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -147,8 +143,6 @@ namespace FlowSERVER1 {
 
                 else if (_TableName == "cust_sharing" && _isFromShared == true) {
 
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
-
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
@@ -175,8 +169,6 @@ namespace FlowSERVER1 {
                 }
                 
                 else if (_TableName == "cust_sharing" && _isFromShared == false) {
-
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
                     using (var command = new MySqlCommand("SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -205,6 +197,30 @@ namespace FlowSERVER1 {
                         }
                     }
 
+                } else if (Globals.publicTablesPs.Contains(_TableName)) {
+
+                    using (var command = new MySqlCommand($"SELECT CUST_FILE FROM {_TableName} WHERE CUST_FILE_PATH = @filename", con)) {
+                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileTitle));
+                        using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+
+                            if (stopFileRetrieval) {
+
+                                reader.Close();
+
+                                closeRetrievalAlert();
+
+                                stopFileRetrieval = false;
+                                return;
+                            }
+
+                            if (await reader.ReadAsync()) {
+                                string encryptedBase64 = reader.GetString(0);
+                                string decryptedBase64 = EncryptionModel.Decrypt(encryptedBase64);
+                                var getBytes = Convert.FromBase64String(decryptedBase64);
+                                _openDialog(_FileTitle, getBytes);
+                            }
+                        }
+                    }
                 }
 
                 closeRetrievalAlert();

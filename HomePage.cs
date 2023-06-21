@@ -1,22 +1,22 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Text;
+using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Threading;
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
+
 using Microsoft.WindowsAPICodePack.Shell;
-using System.Text.RegularExpressions;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Runtime.Caching;
+
+using MySql.Data.MySqlClient;
+using Guna.UI2.WinForms;
 
 using FlowSERVER1.Authentication;
 using FlowSERVER1.Settings;
@@ -36,6 +36,8 @@ namespace FlowSERVER1 {
         public string CurrentLang { get; set; }
         public string nameTableInsert { get; private set; }
 
+        private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
+
         // Initialize file (caching)
 
         private List<string> base64EncodedImageSharedOthers = new List<string>();
@@ -48,7 +50,6 @@ namespace FlowSERVER1 {
         private List<string> base64EncodedThumbnailFolder = new List<string>();
 
         private string previousSelectedItem = null;
-
 
         private List<string> base64EncodedImageHome = new List<string>();
         private List<string> base64EncodedThumbnailHome = new List<string>();
@@ -65,28 +66,6 @@ namespace FlowSERVER1 {
         private string varDate;
         private string tableName;
 
-        private bool fromPublicStoragePage = false;
-
-        /// <summary>
-        /// 
-        /// Initialize panel data
-        /// 
-        /// </summary>
-        
-        private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
-
-        // File Images
-        private readonly Image PDFImage = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
-        private readonly Image AudioImage = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-
-        private readonly Image DOCImage = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
-        private readonly Image PTXImage = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-        private readonly Image APKImage = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-
-        private readonly Image EXCELImage = FlowSERVER1.Properties.Resources.excelIcon;
-        private readonly Image CSVImage = FlowSERVER1.Properties.Resources.icons8_csv_48;
-        private readonly Image MSIImage = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
-        private readonly Image EXEImage = FlowSERVER1.Properties.Resources.icons8_exe_48;
 
         private int top = 275;
         private int h_p = 100;
@@ -400,7 +379,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_exe") {
 
-                        imageValues.Add(EXEImage);
+                        imageValues.Add(Globals.EXEImage);
 
                         EventHandler exeOnPressed = (sender, e) => {
                             exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1,"file_info_exe","null",Globals.custUsername);
@@ -435,7 +414,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_excel") {
 
-                        imageValues.Add(EXCELImage);
+                        imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
                             exlFORM exlForm = new exlFORM(filesInfo[accessIndex].Item1,"file_info_excel","null",Globals.custUsername);
@@ -446,7 +425,7 @@ namespace FlowSERVER1 {
                     }
                     if (_tableName == "file_info_audi") {
 
-                        imageValues.Add(AudioImage);
+                        imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender ,e) => {
                             audFORM displayPic = new audFORM(filesInfo[accessIndex].Item1, "file_info_audi","null",Globals.custUsername);
@@ -458,7 +437,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_apk") {
 
-                        imageValues.Add(APKImage);
+                        imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
                             apkFORM displayPic = new apkFORM(filesInfo[accessIndex].Item1, Globals.custUsername, "file_info_apk","null");
@@ -470,7 +449,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_pdf") {
 
-                        imageValues.Add(PDFImage);
+                        imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
                             pdfFORM displayPdf = new pdfFORM(filesInfo[accessIndex].Item1, "file_info_pdf", "null", Globals.custUsername);
@@ -482,7 +461,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_ptx") {
 
-                        imageValues.Add(PTXImage);
+                        imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
                             ptxFORM displayPtx = new ptxFORM(filesInfo[accessIndex].Item1, "file_info_ptx", "null", Globals.custUsername);
@@ -494,7 +473,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_msi") {
 
-                        imageValues.Add(MSIImage);
+                        imageValues.Add(Globals.MSIImage);
                     
                         EventHandler msiOnPressed = (sender, e) => {
                             msiFORM displayMsi = new msiFORM(filesInfo[accessIndex].Item1, "file_info_msi", "null", Globals.custUsername);
@@ -507,7 +486,7 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "file_info_word") {
 
-                        imageValues.Add(DOCImage);
+                        imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
                             wordFORM displayMsi = new wordFORM(filesInfo[accessIndex].Item1, "file_info_word", "null", Globals.custUsername);
@@ -678,7 +657,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "exe") {
 
-                        imageValues.Add(EXEImage);
+                        imageValues.Add(Globals.EXEImage);
 
                         EventHandler exeOnPressed = (sender, e) => {
                             exeFORM displayExe = new exeFORM(fileName, "folder_upload_info", _foldTitle, "null");
@@ -730,7 +709,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "xlsx" || typeValues[i] == "xls") {
 
-                        imageValues.Add(EXCELImage);
+                        imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
                             new exlFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
@@ -740,7 +719,7 @@ namespace FlowSERVER1 {
                     }
                     if (typeValues[i] == "mp3" || typeValues[i] == "wav") {
 
-                        imageValues.Add(AudioImage);
+                        imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
                             new audFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
@@ -751,7 +730,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "apk") {
 
-                        imageValues.Add(APKImage);
+                        imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
                             new apkFORM(fileName, Globals.custUsername, "folder_upload_info", _foldTitle);
@@ -762,7 +741,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "pdf") {
 
-                        imageValues.Add(PDFImage);
+                        imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
                             new pdfFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
@@ -773,7 +752,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "pptx" || typeValues[i] == "ppx") {
 
-                        imageValues.Add(PTXImage);
+                        imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
                             new wordFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
@@ -784,7 +763,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "msi") {
 
-                        imageValues.Add(MSIImage);
+                        imageValues.Add(Globals.MSIImage);
 
                         EventHandler msiOnPressed = (sender, e) => {
                             new msiFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
@@ -796,7 +775,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == "docx" || typeValues[i] == "doc") {
 
-                        imageValues.Add(DOCImage);
+                        imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
                             new wordFORM(fileName, "folder_upload_info", _foldTitle, Globals.custUsername).Show();
@@ -815,7 +794,7 @@ namespace FlowSERVER1 {
 
                 CloseForm.closeForm("RetrievalAlert");
 
-            } catch (Exception eq) {
+            } catch (Exception) {
                 CloseForm.closeForm("RetrievalAlert");
                 new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
             }
@@ -1243,7 +1222,7 @@ namespace FlowSERVER1 {
 
                                     await insertFileData(keyVal, nameTable);
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                                    textboxPic.Image = Globals.EXEImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
                                         exeFORM displayExe = new exeFORM(titleLab.Text,"file_info_exe","null",Globals.custUsername);
@@ -1271,11 +1250,12 @@ namespace FlowSERVER1 {
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_audi") {
+
                                    await insertFileData(keyVal, nameTable);
 
                                     var _getWidth = this.Width;
                                     var _getHeight = this.Height;
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                                    textboxPic.Image = Globals.AudioImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null",Globals.custUsername);
                                         displayPic.Show();
@@ -1283,8 +1263,10 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_excel") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+
+                                    textboxPic.Image = Globals.EXCELImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
                                         displayPic.Show();
@@ -1292,9 +1274,10 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_apk") {
+
                                     await insertFileData(keyVal, nameTable);
       
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
+                                    textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
                                         apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk","null");
@@ -1303,8 +1286,10 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_pdf") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+
+                                    textboxPic.Image = Globals.PDFImage;
                                     textboxPic.Click += (sender_pd, e_pd) => {
                                         pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf","null",Globals.custUsername);
                                         displayPdf.ShowDialog();
@@ -1312,8 +1297,10 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_ptx") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+
+                                    textboxPic.Image = Globals.PTXImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx","null",Globals.custUsername);
                                         displayPtx.ShowDialog();                                       
@@ -1323,7 +1310,7 @@ namespace FlowSERVER1 {
 
                                     await insertFileData(keyVal, nameTable);
                            
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                                    textboxPic.Image = Globals.MSIImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         Form bgBlur = new Form();
                                         msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null",Globals.custUsername);
@@ -1332,8 +1319,10 @@ namespace FlowSERVER1 {
                                 }
 
                                 if (nameTable == "file_info_word") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+
+                                    textboxPic.Image = Globals.DOCImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word","null",Globals.custUsername);
                                         displayWord.ShowDialog();
@@ -1599,12 +1588,12 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (_tableName == "file_info_exe") {
+                    if (_tableName == "ps_info_exe") {
 
-                        imageValues.Add(EXEImage);
+                        imageValues.Add(Globals.EXEImage);
 
                         EventHandler exeOnPressed = (sender, e) => {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, "file_info_exe", "null", Globals.custUsername);
+                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, "ps_info_exe", "null", uploaderName);
                             displayExe.Show();
                         };
 
@@ -1634,71 +1623,71 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (_tableName == "file_info_excel") {
+                    if (_tableName == "ps_info_excel") {
 
-                        imageValues.Add(EXCELImage);
+                        imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            exlFORM exlForm = new exlFORM(filesInfo[accessIndex].Item1, "file_info_excel", "null", Globals.custUsername);
+                            exlFORM exlForm = new exlFORM(filesInfo[accessIndex].Item1, "ps_info_excel", "null", uploaderName);
                             exlForm.Show();
                         };
 
                         onPressedEvent.Add(excelOnPressed);
                     }
-                    if (_tableName == "file_info_audi") {
+                    if (_tableName == "ps_info_audio") {
 
-                        imageValues.Add(AudioImage);
+                        imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
-                            audFORM displayPic = new audFORM(filesInfo[accessIndex].Item1, "file_info_audi", "null", Globals.custUsername);
+                            audFORM displayPic = new audFORM(filesInfo[accessIndex].Item1, "ps_info_audio", "null", uploaderName);
                             displayPic.Show();
                         };
 
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (_tableName == "file_info_apk") {
+                    if (_tableName == "ps_info_apk") {
 
-                        imageValues.Add(APKImage);
+                        imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            apkFORM displayPic = new apkFORM(filesInfo[accessIndex].Item1, Globals.custUsername, "file_info_apk", "null");
+                            apkFORM displayPic = new apkFORM(filesInfo[accessIndex].Item1, uploaderName, "ps_info_apk", "null");
                             displayPic.Show();
                         };
 
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (_tableName == "file_info_pdf") {
+                    if (_tableName == "ps_info_pdf") {
 
-                        imageValues.Add(PDFImage);
+                        imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            pdfFORM displayPdf = new pdfFORM(filesInfo[accessIndex].Item1, "file_info_pdf", "null", Globals.custUsername);
+                            pdfFORM displayPdf = new pdfFORM(filesInfo[accessIndex].Item1, "ps_info_pdf", "null", uploaderName);
                             displayPdf.Show();
                         };
 
                         onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (_tableName == "file_info_ptx") {
+                    if (_tableName == "ps_info_ptx") {
 
-                        imageValues.Add(PTXImage);
+                        imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
-                            ptxFORM displayPtx = new ptxFORM(filesInfo[accessIndex].Item1, "file_info_ptx", "null", Globals.custUsername);
+                            ptxFORM displayPtx = new ptxFORM(filesInfo[accessIndex].Item1, "ps_info_ptx", "null", uploaderName);
                             displayPtx.Show();
                         };
 
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (_tableName == "file_info_msi") {
+                    if (_tableName == "ps_info_msi") {
 
-                        imageValues.Add(MSIImage);
+                        imageValues.Add(Globals.MSIImage);
 
                         EventHandler msiOnPressed = (sender, e) => {
-                            msiFORM displayMsi = new msiFORM(filesInfo[accessIndex].Item1, "file_info_msi", "null", Globals.custUsername);
+                            msiFORM displayMsi = new msiFORM(filesInfo[accessIndex].Item1, "ps_info_msi", "null", uploaderName);
                             displayMsi.Show();
                         };
 
@@ -1706,12 +1695,12 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (_tableName == "file_info_word") {
+                    if (_tableName == "ps_info_word") {
 
-                        imageValues.Add(DOCImage);
+                        imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            wordFORM displayMsi = new wordFORM(filesInfo[accessIndex].Item1, "file_info_word", "null", Globals.custUsername);
+                            wordFORM displayMsi = new wordFORM(filesInfo[accessIndex].Item1, "ps_info_word", "null", uploaderName);
                             displayMsi.Show();
                         };
 
@@ -1931,7 +1920,7 @@ namespace FlowSERVER1 {
 
                                     await insertFileData(keyVal, nameTable);
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                                    textboxPic.Image = Globals.EXEImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
                                         exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Globals.custUsername);
@@ -1958,72 +1947,80 @@ namespace FlowSERVER1 {
                                     };
                                     clearRedundane();
                                 }
-                                if (nameTable == "file_info_audi") {
+                                if (nameTable == "ps_info_audio") {
+
                                     await insertFileData(keyVal, nameTable);
 
-                                    var _getWidth = this.Width;
-                                    var _getHeight = this.Height;
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                                    textboxPic.Image = Globals.AudioImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", Globals.custUsername);
+                                        audFORM displayPic = new audFORM(titleLab.Text, "ps_info_audio", "null", Globals.custUsername);
                                         displayPic.Show();
                                     };
                                 }
 
-                                if (nameTable == "file_info_excel") {
+                                if (nameTable == "ps_info_excel") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+
+                                    textboxPic.Image = Globals.EXCELImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
+                                        exlFORM displayPic = new exlFORM(titleLab.Text, "ps_info_excel", "null", Globals.custUsername);
                                         displayPic.Show();
                                     };
                                 }
 
-                                if (nameTable == "file_info_apk") {
+                                if (nameTable == "ps_info_apk") {
+
                                     await insertFileData(keyVal, nameTable);
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
+                                    textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
-                                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null");
+                                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "ps_info_apk", "null");
                                         displayPic.Show();
                                     };
                                 }
 
-                                if (nameTable == "file_info_pdf") {
+                                if (nameTable == "ps_info_pdf") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+
+                                    textboxPic.Image = Globals.PDFImage;
                                     textboxPic.Click += (sender_pd, e_pd) => {
-                                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", Globals.custUsername);
+                                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "ps_info_pdf", "null", Globals.custUsername);
                                         displayPdf.ShowDialog();
                                     };
                                 }
 
-                                if (nameTable == "file_info_ptx") {
+                                if (nameTable == "ps_info_ptx") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+
+                                    textboxPic.Image = Globals.PTXImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx", "null", Globals.custUsername);
+                                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "ps_info_ptx", "null", Globals.custUsername);
                                         displayPtx.ShowDialog();
                                     };
                                 }
-                                if (nameTable == "file_info_msi") {
+                                if (nameTable == "ps_info_msi") {
 
                                     await insertFileData(keyVal, nameTable);
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                                    textboxPic.Image = Globals.MSIImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         Form bgBlur = new Form();
-                                        msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername);
+                                        msiFORM displayMsi = new msiFORM(titleLab.Text, "ps_info_msi", "null", Globals.custUsername);
                                         displayMsi.Show();
                                     };
                                 }
 
-                                if (nameTable == "file_info_word") {
+                                if (nameTable == "ps_info_word") {
+
                                     await insertFileData(keyVal, nameTable);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+
+                                    textboxPic.Image = Globals.DOCImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word", "null", Globals.custUsername);
+                                        wordFORM displayWord = new wordFORM(titleLab.Text, "ps_info_word", "null", Globals.custUsername);
                                         displayWord.ShowDialog();
                                     };
                                 }
@@ -2478,27 +2475,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.textTypes.Contains(_extTypes)) {
 
-                        if (_extTypes == ".py") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                        }
-                        else if (_extTypes == ".txt" || _extTypes == ".md") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_txt_48;
-                        }
-                        else if (_extTypes == ".html") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                        }
-                        else if (_extTypes == ".css") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                        }
-                        else if (_extTypes == ".js") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_javascript_50;
-                        }
-                        else if (_extTypes == ".sql") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                        }
-                        else if (_extTypes == ".csv") {
-                            textboxExl.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                        }
+                        textboxExl.Image = Globals.textTypeToImageFolder[_extTypes];
 
                         String nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(_Files)) {
@@ -2530,7 +2507,7 @@ namespace FlowSERVER1 {
                         String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = APKImage;
+                        textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
                             Form bgBlur = new Form();
                             apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null");
@@ -2569,7 +2546,7 @@ namespace FlowSERVER1 {
                         String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = PDFImage;
+                        textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             pdfFORM displayPic = new pdfFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
@@ -2582,7 +2559,7 @@ namespace FlowSERVER1 {
                         String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = DOCImage;
+                        textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             wordFORM displayPic = new wordFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
@@ -2595,7 +2572,7 @@ namespace FlowSERVER1 {
                         String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
                         
-                        textboxExl.Image = DOCImage;
+                        textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             exlFORM displayPic = new exlFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
@@ -2609,7 +2586,7 @@ namespace FlowSERVER1 {
                         String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
                         
-                        textboxExl.Image = PTXImage;
+                        textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             ptxFORM displayPic = new ptxFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
@@ -2622,7 +2599,7 @@ namespace FlowSERVER1 {
                         String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
-                        textboxExl.Image = AudioImage;
+                        textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
                             Form bgBlur = new Form();
                             audFORM displayPic = new audFORM(titleLab.Text, "folder_upload_info", _selectedFolder, Globals.custUsername);
@@ -3106,7 +3083,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".exe") {
 
-                        imageValues.Add(EXEImage);
+                        imageValues.Add(Globals.EXEImage);
 
                         EventHandler exeOnPressed = (sender, e) => {
                             exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared To " + sharedToName(), true);
@@ -3158,7 +3135,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls") {
 
-                        imageValues.Add(EXCELImage);
+                        imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
                             exlFORM exlForm = new exlFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
@@ -3169,7 +3146,7 @@ namespace FlowSERVER1 {
                     }
                     if (typeValues[i] == ".mp3" || typeValues[i] == ".wav") {
 
-                        imageValues.Add(AudioImage);
+                        imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
                             audFORM displayPic = new audFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
@@ -3181,7 +3158,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".apk") {
 
-                        imageValues.Add(APKImage);
+                        imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
                             apkFORM displayPic = new apkFORM(filesInfoSharedOthers[accessIndex].Item1, "Shared To " + sharedToName(), "cust_sharing", lblGreetingText.Text, true);
@@ -3193,7 +3170,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".pdf") {
 
-                        imageValues.Add(PDFImage);
+                        imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
                             pdfFORM displayPdf = new pdfFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
@@ -3205,7 +3182,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".pptx" || typeValues[i] == ".ptx") {
 
-                        imageValues.Add(PTXImage);
+                        imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
                             ptxFORM displayPtx = new ptxFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, sharedToName(), true);
@@ -3217,7 +3194,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".msi") {
 
-                        imageValues.Add(MSIImage);
+                        imageValues.Add(Globals.MSIImage);
 
                         EventHandler msiOnPressed = (sender, e) => {
                             msiFORM displayMsi = new msiFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
@@ -3230,7 +3207,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
 
-                        imageValues.Add(DOCImage);
+                        imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
                             wordFORM displayMsi = new wordFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
@@ -3370,7 +3347,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".exe") {
 
-                        imageValues.Add(EXEImage);
+                        imageValues.Add(Globals.EXEImage);
 
                         EventHandler exeOnPressed = (sender, e) => {
                             exeFORM displayExe = new exeFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -3420,7 +3397,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls") {
 
-                        imageValues.Add(EXCELImage);
+                        imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
                             exlFORM exlForm = new exlFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -3431,7 +3408,7 @@ namespace FlowSERVER1 {
                     }
                     if (typeValues[i] == ".mp3" || typeValues[i] == ".wav") {
 
-                        imageValues.Add(AudioImage);
+                        imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
                             audFORM displayPic = new audFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -3443,7 +3420,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".apk") {
 
-                        imageValues.Add(APKImage);
+                        imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
                             apkFORM displayPic = new apkFORM(filesInfoShared[accessIndex].Item1, UploaderUsername, "cust_sharing", lblGreetingText.Text,false);
@@ -3455,7 +3432,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".pdf") {
 
-                        imageValues.Add(PDFImage);
+                        imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
                             pdfFORM displayPdf = new pdfFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -3467,7 +3444,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".pptx" || typeValues[i] == ".ptx") {
 
-                        imageValues.Add(PTXImage);
+                        imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
                             ptxFORM displayPtx = new ptxFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -3479,7 +3456,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".msi") {
 
-                        imageValues.Add(MSIImage);
+                        imageValues.Add(Globals.MSIImage);
 
                         EventHandler msiOnPressed = (sender, e) => {
                             msiFORM displayMsi = new msiFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -3492,7 +3469,7 @@ namespace FlowSERVER1 {
 
                     if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
 
-                        imageValues.Add(DOCImage);
+                        imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
                             wordFORM displayMsi = new wordFORM(filesInfoShared[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, UploaderUsername, false);
@@ -4014,7 +3991,10 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button9_Click_1(object sender, EventArgs e) {
 
-            fromPublicStoragePage = false;
+            if(lblCurrentPageText.Text == "Public Storage") {
+                flowLayoutPanel1.Controls.Clear();
+                buildHomeFiles();
+            }
 
             lblCurrentPageText.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
@@ -4026,10 +4006,10 @@ namespace FlowSERVER1 {
             lblMyFolders.Visible = false;
             lstFoldersPage.Visible = false;
 
-            btnGoHomePage.FillColor = Color.FromArgb(255,71, 19, 191);
+            btnGoHomePage.FillColor = GlobalStyle.DarkPurpleColor;
 
-            btnShowFolderPage.FillColor = Color.Transparent;
-            btnShowPs.FillColor = Color.Transparent;
+            btnShowFolderPage.FillColor = GlobalStyle.TransparentColor;
+            btnShowPs.FillColor = GlobalStyle.TransparentColor;
 
             pnlMain.BringToFront();
             pnlFolders.SendToBack();
@@ -4047,10 +4027,10 @@ namespace FlowSERVER1 {
             btnLogout.Visible = false;
             pnlPublicStorage.Visible = false;
 
-            btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
+            btnShowFolderPage.FillColor = GlobalStyle.DarkPurpleColor;
 
-            btnGoHomePage.FillColor = Color.Transparent;
-            btnShowPs.FillColor = Color.Transparent;
+            btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
+            btnShowPs.FillColor = GlobalStyle.TransparentColor;
 
             lblMyFolders.Visible = true;
             lstFoldersPage.Visible = true;
@@ -4325,7 +4305,7 @@ namespace FlowSERVER1 {
                             tableName = "file_info_exe";
                             backgroundWorker1.RunWorkerAsync();
 
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                            textboxPic.Image = Globals.EXEImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 Form bgBlur = new Form();
                                 exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Globals.custUsername);
@@ -4356,7 +4336,7 @@ namespace FlowSERVER1 {
 
                             await insertFileData(keyVal,"file_info_audi");
 
-                            textboxPic.Image = AudioImage;
+                            textboxPic.Image = Globals.AudioImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", Globals.custUsername);
                                 displayPic.Show();
@@ -4364,8 +4344,10 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_excel") {
+
                             await insertFileData(keyVal,"file_info_excel");
-                            textboxPic.Image = EXCELImage;
+
+                            textboxPic.Image = Globals.EXCELImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
                                 exlFORM displayPic = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
                                 displayPic.Show();
@@ -4373,11 +4355,12 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_apk") {
+
                             keyValMain = keyVal;
                             tableName = "file_info_apk";
                             backgroundWorker1.RunWorkerAsync();
 
-                            textboxPic.Image = APKImage;
+                            textboxPic.Image = Globals.APKImage;
                             textboxPic.Click += (sender_gi, e_gi) => {
                                 Form bgBlur = new Form();
                                 apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null");
@@ -4386,8 +4369,10 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_pdf") {
+
                             await insertFileData(keyVal,"file_info_pdf");
-                            textboxPic.Image = PDFImage;
+
+                            textboxPic.Image = Globals.PDFImage;
                             textboxPic.Click += (sender_pd, e_pd) => {
                                 pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", Globals.custUsername);
                                 displayPdf.ShowDialog();
@@ -4395,19 +4380,22 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_ptx") {
+
                             await insertFileData(keyVal,"file_info_ptx");
-                            textboxPic.Image = PTXImage;
+
+                            textboxPic.Image = Globals.PTXImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
                                 ptxFORM displayPtx = new ptxFORM(titleLab.Text, "file_info_ptx", "null", Globals.custUsername);
                                 displayPtx.ShowDialog();
                             };
                         }
                         if (nameTable == "file_info_msi") {
+
                             keyValMain = keyVal;
                             tableName = "file_info_msi";
                             backgroundWorker1.RunWorkerAsync();
 
-                            textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                            textboxPic.Image = Globals.MSIImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
                                 Form bgBlur = new Form();
                                 msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername);
@@ -4416,8 +4404,10 @@ namespace FlowSERVER1 {
                         }
 
                         if (nameTable == "file_info_word") {
+
                             await insertFileData(keyVal,"file_info_word");
-                            textboxPic.Image = DOCImage;
+
+                            textboxPic.Image = Globals.DOCImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
                                 wordFORM displayWord = new wordFORM(titleLab.Text, "file_info_word", "null", Globals.custUsername);
                                 displayWord.ShowDialog();
@@ -4831,7 +4821,7 @@ namespace FlowSERVER1 {
         /// 
         /// Public storage upload file
         /// 
-        /// </summary>
+        /// </summary>g
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button1_Click_1(object sender, EventArgs e) {
@@ -4855,14 +4845,12 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click_1(object sender, EventArgs e) {
 
-            fromPublicStoragePage = true;
-
             lblCurrentPageText.Text = "Public Storage";
 
-            btnShowPs.FillColor = Color.FromArgb(255, 71, 19, 191);
+            btnShowPs.FillColor = GlobalStyle.DarkPurpleColor;
 
-            btnShowFolderPage.FillColor = Color.Transparent;
-            btnGoHomePage.FillColor = Color.Transparent;
+            btnShowFolderPage.FillColor = GlobalStyle.TransparentColor;
+            btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
 
             pnlSubPanelDetails.Visible = true;
             btnLogout.Visible = true;

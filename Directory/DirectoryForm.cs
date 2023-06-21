@@ -41,14 +41,14 @@ namespace FlowSERVER1
         /// 
         /// </summary>
 
-        public DirectoryForm(String sendTitle_)
+        public DirectoryForm(String directoryName)
         {
             InitializeComponent();
 
             instance = this;
 
-            this.Text = $"{sendTitle_} (Directory)";
-            this.lblDirectoryName.Text = sendTitle_;
+            this.Text = $"{directoryName} (Directory)";
+            this.lblDirectoryName.Text = directoryName;
 
             Dictionary<string, (string, string)> fileExtensions = new Dictionary<string, (string, string)> {
                 { ".png", ("imgFilePng", "file_info") },
@@ -90,7 +90,7 @@ namespace FlowSERVER1
                 clearRedundane();
             }
 
-            lblFilesCount.Text = $"{flowLayoutPanel1.Controls.Count.ToString()} File(s)";
+            lblFilesCount.Text = $"{flowLayoutPanel1.Controls.Count} File(s)";
 
         }
 
@@ -336,7 +336,7 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_exe") {
-                    img.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                    img.Image = Globals.EXEImage;
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
                         exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -346,14 +346,14 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_excel") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                    picMain_Q.Image = Globals.EXCELImage;
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         exlFORM exlForm = new exlFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         exlForm.Show();
                     };
                 }
                 if (_tableName == "file_info_audi") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                    picMain_Q.Image = Globals.AudioImage;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
                         audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -362,7 +362,7 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_apk") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    picMain_Q.Image = Globals.APKImage;
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
                         apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
@@ -371,7 +371,7 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_pdf") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                    picMain_Q.Image = Globals.PDFImage;
                     picMain_Q.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
                         pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -380,7 +380,7 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_ptx") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+                    picMain_Q.Image = Globals.PTXImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
                         ptxFORM displayPtx = new ptxFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -389,7 +389,7 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_msi") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                    picMain_Q.Image = Globals.MSIImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
                         msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -398,7 +398,7 @@ namespace FlowSERVER1
                 }
 
                 if (_tableName == "file_info_word") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                    picMain_Q.Image = Globals.DOCImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
                         wordFORM displayMsi = new wordFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -659,7 +659,9 @@ namespace FlowSERVER1
                                 .Start();
 
                                 if (nameTable == "file_info") {
+
                                     await startSending(keyVal);
+
                                     textboxPic.Image = new Bitmap(selectedItems);
                                     textboxPic.Click += (sender_f, e_f) => {
 
@@ -676,6 +678,7 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_expand") {
+
                                     await startSending(keyVal);
 
                                     string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
@@ -697,10 +700,11 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_exe") {
+
                                     keyValMain = keyVal;
                                     backgroundWorker1.RunWorkerAsync(); 
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                                    textboxPic.Image = Globals.EXEImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         Form bgBlur = new Form();
                                         exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
@@ -710,7 +714,9 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_vid") {
+
                                     await containThumbUpload(selectedItems,keyVal); 
+
                                     ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
                                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                                     textboxPic.Image = toBitMap;
@@ -728,10 +734,10 @@ namespace FlowSERVER1
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_audi") {
+
                                     await startSending(keyVal);
-                                    var _getWidth = this.Width;
-                                    var _getHeight = this.Height;
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+
+                                    textboxPic.Image = Globals.AudioImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPic.Show();
@@ -740,8 +746,10 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_excel") {
+
                                     await startSending(keyVal);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.excelIcon;
+
+                                    textboxPic.Image = Globals.EXCELImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
                                         exlFORM displayPic = new exlFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPic.Show();
@@ -750,10 +758,11 @@ namespace FlowSERVER1
                                 }
 
                                 if (nameTable == "file_info_apk") {
+
                                     keyValMain = keyVal;
                                     backgroundWorker1.RunWorkerAsync();
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;
+                                    textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
                                         Form bgBlur = new Form();
                                         apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
@@ -762,8 +771,10 @@ namespace FlowSERVER1
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_pdf") {
+
                                     await startSending(keyVal);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+
+                                    textboxPic.Image = Globals.PDFImage;
                                     textboxPic.Click += (sender_pd, e_pd) => {
                                         pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPdf.ShowDialog();
@@ -771,8 +782,10 @@ namespace FlowSERVER1
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_ptx") {
+
                                     await startSending(keyVal);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
+
+                                    textboxPic.Image = Globals.PTXImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         ptxFORM displayPtx = new ptxFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPtx.ShowDialog();
@@ -780,36 +793,21 @@ namespace FlowSERVER1
                                     clearRedundane();
                                 }
                                 if (nameTable == "file_info_msi") {
+
                                     keyValMain = keyVal;
                                     backgroundWorker1.RunWorkerAsync();
 
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                                    textboxPic.Image = Globals.MSIImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        Form bgBlur = new Form();
-                                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername)) {
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                                            bgBlur.Opacity = .24d;
-                                            bgBlur.BackColor = Color.Black;
-                                            bgBlur.WindowState = FormWindowState.Maximized;
-                                            bgBlur.TopMost = true;
-                                            bgBlur.Location = this.Location;
-                                            bgBlur.StartPosition = FormStartPosition.Manual;
-                                            bgBlur.ShowInTaskbar = false;
-                                            bgBlur.Show();
-
-                                            displayMsi.Owner = bgBlur;
-                                            displayMsi.ShowDialog();
-
-                                            bgBlur.Dispose();
-                                        }
+                                        msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername); 
+                                        displayMsi.Show();
                                     };
                                     clearRedundane();
                                 }
 
                                 if (nameTable == "file_info_word") {
                                     await startSending(keyVal);
-                                    textboxPic.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                                    textboxPic.Image = Globals.DOCImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
                                         wordFORM displayWord = new wordFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayWord.ShowDialog();
@@ -839,27 +837,36 @@ namespace FlowSERVER1
                             fileSizeInMB = (_getBytesSelectedFiles.Length / 1024) / 1024;
 
                             if (Globals.imageTypes.Contains(retrieved)) {
+
                                 curr++;
+
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
+
                                 if (retrieved != ".ico") {
-                                    String _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
-                                    String _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
+
+                                    string _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
+                                    string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
                                     createPanelMain("file_info", "PanImg", curr, _encryptedValue);
-                                }
-                                else {
+
+                                } else {
+
                                     Image retrieveIcon = Image.FromFile(selectedItems);
                                     byte[] dataIco;
                                     using (MemoryStream msIco = new MemoryStream()) {
+
                                         retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
+
                                         dataIco = msIco.ToArray();
-                                        String _tempToBase64 = Convert.ToBase64String(dataIco);
-                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
+                                        string _tempToBase64 = Convert.ToBase64String(dataIco);
+                                        string _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
+
                                         createPanelMain("file_info", "PanImg", curr, _encryptedValue);
                                     }
                                 }
                             }
+
                             else if (Globals.textTypes.Contains(retrieved)) {
                                 txtCurr++;
                                 String nonLine = "";
@@ -940,7 +947,7 @@ namespace FlowSERVER1
                 }
             }
 
-            lblFilesCount.Text = $"{flowLayoutPanel1.Controls.Count.ToString()} File(s)";
+            lblFilesCount.Text = $"{flowLayoutPanel1.Controls.Count} File(s)";
 
         }
 
