@@ -2947,28 +2947,6 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
-        /// Retrieve username of user you shared file to
-        /// </summary>
-        /// <returns></returns>
-        private string getUploaderNameShared = "";
-        private string sharedToName() {
-
-            const string selectUploaderName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-            using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(getUploaderNameShared));
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read()) {
-                        return reader.GetString(0);
-                    }
-                }
-            }
-
-            return String.Empty;
-
-        }
-
-        /// <summary>
         /// Generate files that has been shared to other
         /// </summary>
         /// <param name="_extTypes"></param>
@@ -3003,6 +2981,17 @@ namespace FlowSERVER1 {
                 List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
                 List<string> typeValues = new List<string>(fileTypes);
+                List<string> uploadToNameList = new List<string>();
+
+                const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
+                using(MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
+                    command.Parameters.AddWithValue("@username",Globals.custUsername);
+                    using(MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                        while(await reader.ReadAsync()) {
+                            uploadToNameList.Add(reader.GetString(0));
+                        }
+                    }
+                }
 
                 if(typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
@@ -3025,16 +3014,13 @@ namespace FlowSERVER1 {
                 for (int i = 0; i < itemCurr; i++) {
 
                     int accessIndex = i;
-
-                    getUploaderNameShared = filesInfoSharedOthers[i].Item1;
-                    var setupSharedUsername = sharedToName();
-                    var SharedToName = getUploaderNameShared;
+                    string uploadToName = uploadToNameList[accessIndex];
 
                     EventHandler moreOptionOnPressedEvent = (sender, e) => {
 
                         lblFileNameOnPanel.Text = filesInfoSharedOthers[accessIndex].Item1;
                         lblFileTableName.Text = "cust_sharing";
-                        lblSharedToName.Text = setupSharedUsername;
+                        lblSharedToName.Text = uploadToName;
                         lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
                     };
@@ -3058,7 +3044,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayPic.Show();
                         };
 
@@ -3073,7 +3059,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            txtFORM displayTxt = new txtFORM("", "cust_sharing", filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, "Shared " + sharedToName());
+                            txtFORM displayTxt = new txtFORM("", "cust_sharing", filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName,true);
                             displayTxt.Show();
 
                         };
@@ -3086,7 +3072,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         EventHandler exeOnPressed = (sender, e) => {
-                            exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared To " + sharedToName(), true);
+                            exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayExe.Show();
                         };
 
@@ -3126,7 +3112,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             vidFormShow.Show();
                         };
 
@@ -3138,7 +3124,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            exlFORM exlForm = new exlFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            exlFORM exlForm = new exlFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             exlForm.Show();
                         };
 
@@ -3149,7 +3135,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
-                            audFORM displayPic = new audFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            audFORM displayPic = new audFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayPic.Show();
                         };
 
@@ -3161,7 +3147,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            apkFORM displayPic = new apkFORM(filesInfoSharedOthers[accessIndex].Item1, "Shared To " + sharedToName(), "cust_sharing", lblGreetingText.Text, true);
+                            apkFORM displayPic = new apkFORM(filesInfoSharedOthers[accessIndex].Item1, uploadToName, "cust_sharing", lblGreetingText.Text, true);
                             displayPic.Show();
                         };
 
@@ -3173,7 +3159,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            pdfFORM displayPdf = new pdfFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            pdfFORM displayPdf = new pdfFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayPdf.Show();
                         };
 
@@ -3185,7 +3171,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
-                            ptxFORM displayPtx = new ptxFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, sharedToName(), true);
+                            ptxFORM displayPtx = new ptxFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayPtx.Show();
                         };
 
@@ -3197,7 +3183,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         EventHandler msiOnPressed = (sender, e) => {
-                            msiFORM displayMsi = new msiFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            msiFORM displayMsi = new msiFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayMsi.Show();
                         };
 
@@ -3210,7 +3196,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            wordFORM displayMsi = new wordFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, "Shared " + sharedToName(), true);
+                            wordFORM displayMsi = new wordFORM(filesInfoSharedOthers[accessIndex].Item1, "cust_sharing", lblGreetingText.Text, uploadToName, true);
                             displayMsi.Show();
                         };
 

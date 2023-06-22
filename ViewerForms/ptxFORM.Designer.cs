@@ -63,7 +63,7 @@
             // 
             this.lblUploaderName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblUploaderName.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblUploaderName.Location = new System.Drawing.Point(7, 200);
+            this.lblUploaderName.Location = new System.Drawing.Point(13, 200);
             this.lblUploaderName.Name = "lblUploaderName";
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 34;

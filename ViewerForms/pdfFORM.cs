@@ -35,34 +35,29 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            String _getName = "";
-            bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
-
             this.lblFileName.Text = fileName;
             this._TableName = tableName;
             this._DirName = directoryName;
             this._IsFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
-            if (_isShared == true) {
+            if (_isFromShared == true) {
 
                 btnEditComment.Visible = true;
                 btnEditComment.Visible = true;
 
-                _getName = uploaderName.Replace("Shared", "");
                 label4.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                _getName = " " + uploaderName;
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = uploaderName;
 
             try {
 

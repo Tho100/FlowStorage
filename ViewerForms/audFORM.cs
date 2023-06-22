@@ -35,34 +35,28 @@ namespace FlowSERVER1 {
         public audFORM(String fileName,String tableName,String directoryName,String uploaderUsername, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
-            string _getName = "";
-            bool _isShared = Regex.Match(uploaderUsername, @"^([\w\-]+)").Value == "Shared";
-
             this.lblFileName.Text = fileName;
             this._TabName = tableName;
             this._DirName = directoryName;
             this.isFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
-            if (_isShared == true) {
+            if (_isFromShared == true) {
 
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
-                _getName = uploaderUsername.Replace("Shared", "");
                 label5.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
-                _getName = " " + uploaderUsername;
+            } else {
                 label5.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            label2.Text = _getName;
+            lblUploaderUsername.Text = uploaderUsername;
             pictureBox3.Enabled = false;
 
         }
@@ -241,7 +235,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TabName, _DirName);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TabName, _DirName,isFromShared);
             this.TopMost = true;
         }
 

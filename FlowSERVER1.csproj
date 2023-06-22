@@ -929,6 +929,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MainIco.ico" />
+    <None Include="Resources\icons8-feedback-48.png" />
     <None Include="Resources\icons8-open-parcel-24.png" />
     <None Include="Resources\icons8-open-delivered-box-50.png" />
     <None Include="Resources\SplashMain.png" />

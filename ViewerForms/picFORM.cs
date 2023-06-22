@@ -45,8 +45,6 @@ namespace FlowSERVER1 {
 
         private void initializePicture(Image userImage, int width, int height, string title, string _TableName, string _DirectoryName, string _UploaderName, bool _IsFromShared = false, bool _isFromSharing = true) {
 
-            String _getName = "";
-            bool _isShared = Regex.Match(_UploaderName, @"^([\w\-]+)").Value == "Shared";
 
             this.lblFileName.Text = title;
             this.TableName = _TableName;
@@ -62,15 +60,13 @@ namespace FlowSERVER1 {
 
             guna2PictureBox1.Image = setupImage;
 
-            if (_isShared == true) {
-                _getName = _UploaderName.Replace("Shared", "");
+            if (_IsFromShared == true) {
                 label4.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: title) != "" ? GetComment.getCommentSharedToOthers(fileName: title) : "(No Comment)";
             }
             else {
-                _getName = " " + _UploaderName;
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
@@ -80,7 +76,7 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = _UploaderName;
 
         }
 

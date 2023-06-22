@@ -56,6 +56,7 @@
             this.lblCurrentPageText = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.guna2VSeparator3 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.lblEmptyHere = new System.Windows.Forms.Label();
             this.pnlDragAndDropUpload = new Guna.UI2.WinForms.Guna2Panel();
@@ -72,7 +73,6 @@
             this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
             this.pnlPublicStorage = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.btnUploadPs = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button24 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button23 = new Guna.UI2.WinForms.Guna2Button();
@@ -107,7 +107,6 @@
             this.btnOpenRenameFolderPage = new Guna.UI2.WinForms.Guna2Button();
             this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2VSeparator3 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.pnlMain.SuspendLayout();
             this.pnlFolders.SuspendLayout();
             this.pnlSubPanelDetails.SuspendLayout();
@@ -474,6 +473,17 @@
             this.panel2.Size = new System.Drawing.Size(55, 666);
             this.panel2.TabIndex = 33;
             // 
+            // guna2VSeparator3
+            // 
+            this.guna2VSeparator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.guna2VSeparator3.BackColor = System.Drawing.Color.Transparent;
+            this.guna2VSeparator3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.guna2VSeparator3.Location = new System.Drawing.Point(49, -13);
+            this.guna2VSeparator3.Name = "guna2VSeparator3";
+            this.guna2VSeparator3.Size = new System.Drawing.Size(10, 663);
+            this.guna2VSeparator3.TabIndex = 53;
+            // 
             // guna2VSeparator1
             // 
             this.guna2VSeparator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -678,12 +688,13 @@
             this.guna2CircleButton2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.guna2CircleButton2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2CircleButton2.ForeColor = System.Drawing.Color.Gray;
+            this.guna2CircleButton2.Image = global::FlowSERVER1.Properties.Resources.icons8_feedback_48;
+            this.guna2CircleButton2.ImageSize = new System.Drawing.Size(24, 24);
             this.guna2CircleButton2.Location = new System.Drawing.Point(1262, 17);
             this.guna2CircleButton2.Name = "guna2CircleButton2";
             this.guna2CircleButton2.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.guna2CircleButton2.Size = new System.Drawing.Size(42, 42);
             this.guna2CircleButton2.TabIndex = 44;
-            this.guna2CircleButton2.Text = "?";
             this.guna2CircleButton2.TextOffset = new System.Drawing.Point(1, -1);
             this.guna2CircleButton2.Click += new System.EventHandler(this.guna2CircleButton2_Click);
             // 
@@ -692,7 +703,6 @@
             this.pnlPublicStorage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlPublicStorage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pnlPublicStorage.Controls.Add(this.guna2Button3);
             this.pnlPublicStorage.Controls.Add(this.btnUploadPs);
             this.pnlPublicStorage.Controls.Add(this.label10);
             this.pnlPublicStorage.Location = new System.Drawing.Point(55, 0);
@@ -712,27 +722,6 @@
             this.label10.Size = new System.Drawing.Size(134, 50);
             this.label10.TabIndex = 36;
             this.label10.Text = "Upload to \r\nPublic Storage";
-            // 
-            // guna2Button3
-            // 
-            this.guna2Button3.Animated = true;
-            this.guna2Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2Button3.BorderRadius = 10;
-            this.guna2Button3.DefaultAutoSize = true;
-            this.guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button3.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2Button3.ForeColor = System.Drawing.Color.LightGray;
-            this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
-            this.guna2Button3.Location = new System.Drawing.Point(11, 175);
-            this.guna2Button3.Name = "guna2Button3";
-            this.guna2Button3.Size = new System.Drawing.Size(173, 33);
-            this.guna2Button3.TabIndex = 37;
-            this.guna2Button3.Text = "Create Directory";
-            this.guna2Button3.TextOffset = new System.Drawing.Point(3, 0);
             // 
             // btnUploadPs
             // 
@@ -1498,17 +1487,6 @@
             this.btnDownloadFolder.Visible = false;
             this.btnDownloadFolder.Click += new System.EventHandler(this.guna2Button27_Click);
             // 
-            // guna2VSeparator3
-            // 
-            this.guna2VSeparator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.guna2VSeparator3.BackColor = System.Drawing.Color.Transparent;
-            this.guna2VSeparator3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.guna2VSeparator3.Location = new System.Drawing.Point(49, -13);
-            this.guna2VSeparator3.Name = "guna2VSeparator3";
-            this.guna2VSeparator3.Size = new System.Drawing.Size(10, 663);
-            this.guna2VSeparator3.TabIndex = 53;
-            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1643,7 +1621,6 @@
         private System.Windows.Forms.Panel pnlPublicStorage;
         public System.Windows.Forms.Label label10;
         public Guna.UI2.WinForms.Guna2Button btnUploadPs;
-        public Guna.UI2.WinForms.Guna2Button guna2Button3;
         private Guna.UI2.WinForms.Guna2Button btnShowPs;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator3;
     }

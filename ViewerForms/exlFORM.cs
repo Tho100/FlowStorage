@@ -50,9 +50,6 @@ namespace FlowSERVER1 {
 
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
 
-            String _getName = "";
-            bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
-
             instance = this;
 
             this.lblFileName.Text = fileName;
@@ -60,25 +57,23 @@ namespace FlowSERVER1 {
             this.TableName = tableName;
             this._isFromShared = isFromShared;
 
-            if (_isShared == true) {
+            if (IsFromSharing == true) {
 
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 
-                _getName = uploaderName.Replace("Shared", "");
                 label4.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + uploaderName;
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = uploaderName;
 
             try {
 
@@ -356,6 +351,10 @@ namespace FlowSERVER1 {
             guna2Button9.Visible = true;
             lblUserComment.Visible = false;
             guna2TextBox4.Text = lblUserComment.Text;
+        }
+
+        private void guna2Separator1_Click(object sender, EventArgs e) {
+
         }
     }
 }

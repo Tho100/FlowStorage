@@ -88,7 +88,7 @@ namespace FlowSERVER1 {
             // 
             this.lblUploaderName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblUploaderName.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblUploaderName.Location = new System.Drawing.Point(7, 189);
+            this.lblUploaderName.Location = new System.Drawing.Point(11, 189);
             this.lblUploaderName.Name = "lblUploaderName";
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 29;
@@ -438,7 +438,7 @@ namespace FlowSERVER1 {
             // pictureBox1
             // 
             this.pictureBox1.Enabled = false;
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_open_parcel_24;
+            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_feedback_48;
             this.pictureBox1.Location = new System.Drawing.Point(117, 11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 50);

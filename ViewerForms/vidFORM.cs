@@ -34,9 +34,6 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            String _getName = "";
-            bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
-
             instance = this;
 
             var setupImage = resizeImage(getThumb, new Size(width, height));
@@ -49,25 +46,23 @@ namespace FlowSERVER1 {
             this._IsFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
-            if (_isShared == true) {
+            if (_isFromShared == true) {
 
                 btnEditComment.Visible = true;
                 guna2Button12.Visible = true;
 
-                _getName = _UploaderName.Replace("Shared", "");
                 label5.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + _UploaderName;
                 label5.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = uploaderName;
         }
 
         public static Image resizeImage(Image userImg, Size size) {
@@ -182,7 +177,7 @@ namespace FlowSERVER1 {
                     guna2PictureBox1.Visible = false;
                     videoViewer.Visible = true;
 
-                    setupPlayer(LoaderModel.LoadFile(_TableName, _DirName, lblFileName.Text));
+                    setupPlayer(LoaderModel.LoadFile(_TableName, _DirName, lblFileName.Text, _IsFromShared));
 
                 }
 

@@ -41,51 +41,36 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            String _getName = "";
-            bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
-
             this.lblFileName.Text = fileName;
             this._TableName = tableName;
             this._DirectoryName = directoryName;
             this._IsFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
-            if (_isShared == true) {
+            if (_isFromShared == true) {
 
                 btnEditComment.Visible = true;
                 guna2Button7.Visible = true;
 
-                _getName = uploaderName.Replace("Shared", "");
                 label4.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + uploaderName;
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = uploaderName;
 
             try {
 
                 Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader").ShowDialog());
                 ShowAlert.Start();
 
-                if (_TableName == "file_info_ptx") {   
-                    setupPtx(LoaderModel.LoadFile("file_info_ptx",_DirectoryName,lblFileName.Text));
-                } else if (_TableName == "upload_info_directory") {
-                    setupPtx(LoaderModel.LoadFile("upload_info_directory", _DirectoryName, lblFileName.Text));
-                }
-                else if (_TableName == "folder_upload_info") { 
-                    setupPtx(LoaderModel.LoadFile("folder_upload_info", _DirectoryName, lblFileName.Text));
-                }
-                else if (_TableName == "cust_sharing") {
-                    setupPtx(LoaderModel.LoadFile("cust_sharing", _DirectoryName, lblFileName.Text,_isFromShared));
-                }
+                setupPtx(LoaderModel.LoadFile(_TableName, _DirectoryName, lblFileName.Text, _isFromShared));
 
             }  catch (Exception) {
                 MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -107,17 +92,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            if (_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirectoryName);
-            }
-            else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirectoryName);
-            }
-            else if (_TableName == "file_info_ptx") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_ptx", _DirectoryName);
-            } else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirectoryName,_IsFromShared);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirectoryName, _IsFromShared);
             this.TopMost = true;
         }
 

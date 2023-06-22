@@ -47,9 +47,6 @@ namespace FlowSERVER1 {
 
             try {
 
-                String _getName = "";
-                bool _isShared = Regex.Match(uploaderName, @"^([\w\-]+)").Value == "Shared";
-
                 instance = this;
 
                 this.lblFileName.Text = fileName;
@@ -59,12 +56,10 @@ namespace FlowSERVER1 {
 
                 var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
 
-                if (_isShared == true) {
+                if (_isFromSharing == true) {
 
                     btnEditComment.Visible = true;
                     guna2Button12.Visible = true;
-
-                    _getName = uploaderName.Replace("Shared", "");
 
                     this.IsFromSharing = true;
 
@@ -74,13 +69,12 @@ namespace FlowSERVER1 {
                     lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
                 }
                 else {
-                    _getName = " " + uploaderName;
                     label4.Text = "Uploaded By";
                     lblUserComment.Visible = true;
                     lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
                 }
 
-                lblUploaderName.Text = _getName;
+                lblUploaderName.Text = uploaderName;
 
                 if (tableName == "upload_info_directory" && getText == "") {
 
@@ -152,10 +146,10 @@ namespace FlowSERVER1 {
                 } else if (tableName == "file_info_expand") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "cust_sharing" && _isShared == false) {
+                } else if (tableName == "cust_sharing" && IsFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "cust_sharing" && _isShared == true) {
+                } else if (tableName == "cust_sharing" && IsFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
                 } else if (tableName == "ps_info_text") {

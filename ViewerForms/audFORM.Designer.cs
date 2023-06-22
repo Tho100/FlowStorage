@@ -26,7 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(audFORM));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblUploaderUsername = new System.Windows.Forms.Label();
             this.lblFileName = new System.Windows.Forms.Label();
             this.lblUserComment = new System.Windows.Forms.Label();
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
@@ -64,15 +64,15 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // label2
+            // lblUploaderUsername
             // 
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(7, 196);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(266, 36);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "Uploaded By urmom";
+            this.lblUploaderUsername.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblUploaderUsername.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblUploaderUsername.Location = new System.Drawing.Point(13, 196);
+            this.lblUploaderUsername.Name = "lblUploaderUsername";
+            this.lblUploaderUsername.Size = new System.Drawing.Size(266, 36);
+            this.lblUploaderUsername.TabIndex = 34;
+            this.lblUploaderUsername.Text = "Uploaded By urmom";
             // 
             // lblFileName
             // 
@@ -501,7 +501,7 @@
             this.Controls.Add(this.guna2Button5);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.guna2Button8);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblUploaderUsername);
             this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.guna2Button2);
@@ -523,7 +523,7 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblUploaderUsername;
         public Guna.UI2.WinForms.Guna2Button guna2Button4;
         private System.Windows.Forms.Label lblFileName;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;

@@ -26,34 +26,29 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            string _getName = "";
-            bool _isShared = Regex.Match(uploaderUsername, @"^([\w\-]+)").Value == "Shared";
-
             this.lblFileName.Text = fileName;
             this._TableName = tableName;
             this._DirName = directoryName;
             this.isFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
-            if (_isShared == true) {
+            if (_isFromShared == true) {
 
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
-                _getName = uploaderUsername.Replace("Shared", "");
                 label6.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + uploaderUsername;
                 label6.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = uploaderUsername;
         }
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
 

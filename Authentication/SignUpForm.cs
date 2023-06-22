@@ -485,8 +485,8 @@ namespace FlowSERVER1.Authentication {
                     showHomePage();
                 }
             }
-            catch (Exception eq) {
-                new CustomAlert(title: "Failed to register your account",subheader: eq.Message).Show();
+            catch (Exception) {
+                new CustomAlert(title: "Failed to register your account",subheader: "Are you connected to the internet?").Show();
             }
         }
 

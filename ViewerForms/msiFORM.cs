@@ -17,26 +17,8 @@ namespace FlowSERVER1 {
         public string _TableName;
         public string _DirectoryName;
 
-        private bool _IsFromShared;
         public msiFORM(String fileName,String tableName, String directoryName,String uploaderUsername, bool _isFromShared = false) {
             InitializeComponent();
-
-            String _getName = "";
-            bool _isShared = Regex.Match(uploaderUsername, @"^([\w\-]+)").Value == "Shared";
-
-            if (_isShared == true) {
-                _getName = uploaderUsername;
-            }
-            else {
-                _getName = "Uploaded By " + uploaderUsername;
-            }
-
-            lblFileName.Text = fileName;
-            label2.Text = _getName;
-
-            this._TableName = tableName;
-            this._DirectoryName = directoryName;
-            this._IsFromShared = _isFromShared;
         }
 
         private void msiFORM_Load(object sender, EventArgs e) {

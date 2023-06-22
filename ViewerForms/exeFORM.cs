@@ -33,9 +33,6 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            string _getName = "";
-            bool _isShared = Regex.Match(uploaderUsername, @"^([\w\-]+)").Value == "Shared";
-
             lblFileName.Text = fileName;
 
             this._TableName = tableName;
@@ -43,25 +40,23 @@ namespace FlowSERVER1 {
             this._isFromShared = isFromShared;
             this.IsFromSharing = _isFromSharing;
 
-            if (_isShared == true) {
+            if (isFromShared == true) {
 
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 
-                _getName = uploaderUsername.Replace("Shared", "");
                 label6.Text = "Shared To";
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
             }
             else {
-                _getName = " " + uploaderUsername;
                 label6.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = _getName;
+            lblUploaderName.Text = uploaderUsername;
         }
         private void exeFORM_Load(object sender, EventArgs e) {
         }
@@ -78,18 +73,7 @@ namespace FlowSERVER1 {
 
         }
         private void guna2Button4_Click(object sender, EventArgs e) {
-            if (_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirectoryName);
-            }
-            else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirectoryName);
-            }
-            else if (_TableName == "file_info_exe") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_exe", _DirectoryName);
-            }
-            else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirectoryName,_isFromShared);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirectoryName,_isFromShared);
         }
 
         private void label1_Click(object sender, EventArgs e) {
