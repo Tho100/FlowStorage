@@ -93,16 +93,6 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap excelIcon1 {
-            get {
-                object obj = ResourceManager.GetObject("excelIcon1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap flowstorageLogo__15_ {
             get {
                 object obj = ResourceManager.GetObject("flowstorageLogo (15)", resourceCulture);
@@ -496,16 +486,6 @@ namespace FlowSERVER1.Properties {
         internal static System.Drawing.Bitmap icons8_microsoft_word_60 {
             get {
                 object obj = ResourceManager.GetObject("icons8-microsoft-word-60", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_netherlands_96 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-netherlands-96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
