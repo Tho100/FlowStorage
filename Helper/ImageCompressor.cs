@@ -13,13 +13,41 @@ namespace FlowSERVER1.Helper {
     public class ImageCompressor {
 
         public string compresImageToBase64(string sourceImagePath) {
+            using (Image sourceImage = Image.FromFile(sourceImagePath)) {
+                EncoderParameters encoderParameters = new EncoderParameters(1);
+                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 30L);
+
+                ImageCodecInfo jpegEncoder = GetEncoderInfo(ImageFormat.Jpeg);
+
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    sourceImage.Save(memoryStream, jpegEncoder, encoderParameters);
+
+                    byte[] imageBytes = memoryStream.ToArray();
+                    string base64String = Convert.ToBase64String(imageBytes);
+
+                    return base64String;
+                }
+            }
+        }
+
+        private ImageCodecInfo GetEncoderInfo(ImageFormat format) {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach (ImageCodecInfo codec in codecs) {
+                if (codec.FormatID == format.Guid) {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        /*public string compresImageToBase64(string sourceImagePath) {
 
             using (Image sourceImage = Image.FromFile(sourceImagePath)) {
 
                 ImageFormat imageFormat = GetImageFormat(sourceImagePath);
 
                 EncoderParameters encoderParameters = new EncoderParameters(1);
-                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 30L); 
+                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 5L); 
 
                 ImageCodecInfo imageCodecInfo = GetEncoderInfo(imageFormat);
 
@@ -59,7 +87,7 @@ namespace FlowSERVER1.Helper {
                 }
             }
             return null;
-        }
+        }*/
 
     }
 }
