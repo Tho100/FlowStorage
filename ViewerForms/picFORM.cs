@@ -33,22 +33,22 @@ namespace FlowSERVER1 {
         private bool IsFromSharing {get; set; } 
         private MySqlConnection con {get; set; } = ConnectionModel.con;
 
-        public picFORM(Image userImage, int width, int height,string title,string _TableName, string _DirectoryName, string _UploaderName,bool _IsFromShared = false, bool _isFromSharing = true) {
+        public picFORM(Image userImage, int width, int height,string title,string tableName, string directoryName, string uploaderName,bool _IsFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
             instance = this;
 
             filterPanel.MouseDown += filterPanel_MouseDown;
-            initializePicture(userImage,width,height,title,_TableName,_DirectoryName,_UploaderName,_IsFromShared, _isFromSharing);
+            initializePicture(userImage,width,height,title, tableName, directoryName, uploaderName, _IsFromShared, _isFromSharing);
 
         }
 
-        private void initializePicture(Image userImage, int width, int height, string title, string _TableName, string _DirectoryName, string _UploaderName, bool _IsFromShared = false, bool _isFromSharing = true) {
+        private void initializePicture(Image userImage, int width, int height, string title, string tableName, string directoryName, string uploaderName, bool _IsFromShared = false, bool _isFromSharing = true) {
 
 
             this.lblFileName.Text = title;
-            this.TableName = _TableName;
-            this.Directoryname = _DirectoryName;
+            this.TableName = tableName;
+            this.Directoryname = directoryName;
             this.IsFromShared = _IsFromShared;
             this.IsFromSharing = _isFromSharing;
             this.lblImageResolution.Text = $"({width}x{height})";
@@ -72,11 +72,14 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
             }
 
-            if(_TableName != "cust_sharing") {
-                lblUserComment.Text = "(No Comment)";
+            if (Globals.publicTablesPs.Contains(tableName)) {
+                label4.Text = "Uploaded By";
+                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: title, uploaderName: uploaderName);
+                lblUserComment.Visible = true;
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
             }
 
-            lblUploaderName.Text = _UploaderName;
+            lblUploaderName.Text = uploaderName;
 
         }
 

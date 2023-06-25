@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FlowSERVER1 {
 
@@ -42,6 +43,24 @@ namespace FlowSERVER1 {
             }
             return returnComment;
         }
+
+        public static string getCommentPublicStorage(string tableName, string fileName, string uploaderName) {
+
+            string returnComment = "";
+
+            using (MySqlCommand command = new MySqlCommand($"SELECT CUST_COMMENT FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", con)) {
+                command.Parameters.AddWithValue("@username", uploaderName);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
+                using (MySqlDataReader readerComment = command.ExecuteReader()) {
+                    while (readerComment.Read()) {
+                        returnComment = EncryptionModel.Decrypt(readerComment.GetString(0));
+                    }
+                }
+            }
+
+            return returnComment;
+        }
+
 
     }
 }

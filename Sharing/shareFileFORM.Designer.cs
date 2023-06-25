@@ -29,10 +29,10 @@
             this.lblFileName = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.lblCountCharComment = new System.Windows.Forms.Label();
-            this.guna2TextBox4 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.btnShareToName = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnUpload = new Guna.UI2.WinForms.Guna2Button();
+            this.txtFieldShareToName = new Guna.UI2.WinForms.Guna2TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
@@ -65,10 +65,10 @@
             this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.lblCountCharComment);
-            this.guna2Panel1.Controls.Add(this.guna2TextBox4);
+            this.guna2Panel1.Controls.Add(this.txtFieldComment);
             this.guna2Panel1.Controls.Add(this.label6);
-            this.guna2Panel1.Controls.Add(this.guna2Button2);
-            this.guna2Panel1.Controls.Add(this.btnShareToName);
+            this.guna2Panel1.Controls.Add(this.btnUpload);
+            this.guna2Panel1.Controls.Add(this.txtFieldShareToName);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.Location = new System.Drawing.Point(19, 77);
@@ -91,35 +91,35 @@
             this.lblCountCharComment.TabIndex = 34;
             this.lblCountCharComment.Text = "0/295";
             // 
-            // guna2TextBox4
+            // txtFieldComment
             // 
-            this.guna2TextBox4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2TextBox4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.BorderRadius = 8;
-            this.guna2TextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox4.DefaultText = "";
-            this.guna2TextBox4.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.guna2TextBox4.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox4.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Location = new System.Drawing.Point(22, 130);
-            this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox4.MaxLength = 295;
-            this.guna2TextBox4.Multiline = true;
-            this.guna2TextBox4.Name = "guna2TextBox4";
-            this.guna2TextBox4.PasswordChar = '\0';
-            this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox4.PlaceholderText = "Add a comment for receiver to see";
-            this.guna2TextBox4.SelectedText = "";
-            this.guna2TextBox4.Size = new System.Drawing.Size(475, 136);
-            this.guna2TextBox4.TabIndex = 33;
-            this.guna2TextBox4.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
+            this.txtFieldComment.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldComment.BackColor = System.Drawing.Color.Transparent;
+            this.txtFieldComment.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldComment.BorderRadius = 8;
+            this.txtFieldComment.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFieldComment.DefaultText = "";
+            this.txtFieldComment.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtFieldComment.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtFieldComment.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldComment.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldComment.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldComment.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldComment.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.txtFieldComment.ForeColor = System.Drawing.Color.White;
+            this.txtFieldComment.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldComment.Location = new System.Drawing.Point(22, 130);
+            this.txtFieldComment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFieldComment.MaxLength = 295;
+            this.txtFieldComment.Multiline = true;
+            this.txtFieldComment.Name = "txtFieldComment";
+            this.txtFieldComment.PasswordChar = '\0';
+            this.txtFieldComment.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldComment.PlaceholderText = "Add a comment for receiver to see";
+            this.txtFieldComment.SelectedText = "";
+            this.txtFieldComment.Size = new System.Drawing.Size(475, 136);
+            this.txtFieldComment.TabIndex = 33;
+            this.txtFieldComment.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
             // label6
             // 
@@ -134,53 +134,53 @@
             this.label6.TabIndex = 32;
             this.label6.Text = "Comment (Optional)";
             // 
-            // guna2Button2
+            // btnUpload
             // 
-            this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button2.Animated = true;
-            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.BorderRadius = 10;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(22, 311);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(475, 51);
-            this.guna2Button2.TabIndex = 17;
-            this.guna2Button2.Text = "Share";
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnUpload.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnUpload.Animated = true;
+            this.btnUpload.BackColor = System.Drawing.Color.Transparent;
+            this.btnUpload.BorderRadius = 10;
+            this.btnUpload.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpload.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpload.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUpload.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUpload.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnUpload.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnUpload.ForeColor = System.Drawing.Color.White;
+            this.btnUpload.Location = new System.Drawing.Point(22, 311);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Size = new System.Drawing.Size(475, 51);
+            this.btnUpload.TabIndex = 17;
+            this.btnUpload.Text = "Share";
+            this.btnUpload.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // btnShareToName
+            // txtFieldShareToName
             // 
-            this.btnShareToName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnShareToName.BackColor = System.Drawing.Color.Transparent;
-            this.btnShareToName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnShareToName.BorderRadius = 8;
-            this.btnShareToName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.btnShareToName.DefaultText = "";
-            this.btnShareToName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.btnShareToName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.btnShareToName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.btnShareToName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.btnShareToName.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnShareToName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.btnShareToName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.btnShareToName.ForeColor = System.Drawing.Color.White;
-            this.btnShareToName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.btnShareToName.Location = new System.Drawing.Point(22, 43);
-            this.btnShareToName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnShareToName.Name = "btnShareToName";
-            this.btnShareToName.PasswordChar = '\0';
-            this.btnShareToName.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.btnShareToName.PlaceholderText = "Enter receiver username";
-            this.btnShareToName.SelectedText = "";
-            this.btnShareToName.Size = new System.Drawing.Size(423, 44);
-            this.btnShareToName.TabIndex = 16;
-            this.btnShareToName.TextChanged += new System.EventHandler(this.btnShareToName_TextChanged);
+            this.txtFieldShareToName.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldShareToName.BackColor = System.Drawing.Color.Transparent;
+            this.txtFieldShareToName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldShareToName.BorderRadius = 8;
+            this.txtFieldShareToName.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFieldShareToName.DefaultText = "";
+            this.txtFieldShareToName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtFieldShareToName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtFieldShareToName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldShareToName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldShareToName.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldShareToName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldShareToName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.txtFieldShareToName.ForeColor = System.Drawing.Color.White;
+            this.txtFieldShareToName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldShareToName.Location = new System.Drawing.Point(22, 43);
+            this.txtFieldShareToName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFieldShareToName.Name = "txtFieldShareToName";
+            this.txtFieldShareToName.PasswordChar = '\0';
+            this.txtFieldShareToName.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldShareToName.PlaceholderText = "Enter receiver username";
+            this.txtFieldShareToName.SelectedText = "";
+            this.txtFieldShareToName.Size = new System.Drawing.Size(423, 44);
+            this.txtFieldShareToName.TabIndex = 16;
+            this.txtFieldShareToName.TextChanged += new System.EventHandler(this.btnShareToName_TextChanged);
             // 
             // label4
             // 
@@ -254,11 +254,11 @@
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label lblFileName;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        public Guna.UI2.WinForms.Guna2TextBox btnShareToName;
+        public Guna.UI2.WinForms.Guna2Button btnUpload;
+        public Guna.UI2.WinForms.Guna2TextBox txtFieldShareToName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblCountCharComment;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox4;
+        public Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         public Guna.UI2.WinForms.Guna2Button guna2Button1;

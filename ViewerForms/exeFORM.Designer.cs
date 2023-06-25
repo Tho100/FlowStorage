@@ -222,6 +222,7 @@
             this.label7.Size = new System.Drawing.Size(195, 23);
             this.label7.TabIndex = 78;
             this.label7.Text = "EXE File";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // guna2Button4
             // 

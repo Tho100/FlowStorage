@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
         private bool _isFromShared;
         private bool IsFromSharing;  
 
-        public exeFORM(String fileName,String tableName, String directoryName, String uploaderUsername,bool isFromShared = false, bool _isFromSharing = true) {
+        public exeFORM(String fileName,String tableName, String directoryName, String uploaderName,bool isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
 
@@ -56,7 +56,14 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = uploaderUsername;
+            if (Globals.publicTablesPs.Contains(tableName)) {
+                label6.Text = "Uploaded By";
+                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderName);
+                lblUserComment.Visible = true;
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+            }
+
+            lblUploaderName.Text = uploaderName;
         }
         private void exeFORM_Load(object sender, EventArgs e) {
         }
@@ -125,5 +132,8 @@ namespace FlowSERVER1 {
             lblUserComment.Refresh();
         }
 
+        private void label7_Click(object sender, EventArgs e) {
+
+        }
     }
 }

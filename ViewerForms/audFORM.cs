@@ -32,7 +32,7 @@ namespace FlowSERVER1 {
         private TimeSpan _elapsedTime;
         private Mp3FileReader _NReader;
 
-        public audFORM(String fileName,String tableName,String directoryName,String uploaderUsername, bool _isFromShared = false, bool _isFromSharing = true) {
+        public audFORM(String fileName,String tableName,String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
@@ -56,7 +56,14 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderUsername.Text = uploaderUsername;
+            if (Globals.publicTablesPs.Contains(tableName)) {
+                label5.Text = "Uploaded By";
+                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderName);
+                lblUserComment.Visible = true;
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+            }
+
+            lblUploaderUsername.Text = uploaderName;
             pictureBox3.Enabled = false;
 
         }

@@ -397,6 +397,12 @@
     <Compile Include="Authentication\SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtraForms\PublishPublicStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraForms\PublishPublicStorage.Designer.cs">
+      <DependentUpon>PublishPublicStorage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
@@ -745,6 +751,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\ApiPageForm.resx">
       <DependentUpon>ApiPageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraForms\PublishPublicStorage.resx">
+      <DependentUpon>PublishPublicStorage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\FeedbackForm.resx">
       <DependentUpon>FeedbackForm.cs</DependentUpon>

@@ -306,13 +306,13 @@ namespace FlowSERVER1 {
         private async Task startSending(Object setValue, Object thumbnailValue = null) {
 
             using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
-                command.Parameters.AddWithValue("@CUST_TO", btnShareToName.Text);
+                command.Parameters.AddWithValue("@CUST_TO", txtFieldShareToName.Text);
                 command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
                 command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName));
                 command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                 command.Parameters.AddWithValue("@CUST_FILE", setValue);
                 command.Parameters.AddWithValue("@FILE_EXT", _FileExt);
-                command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(guna2TextBox4.Text));
+                command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(txtFieldComment.Text));
                 command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
                 await command.ExecuteNonQueryAsync();
@@ -322,9 +322,9 @@ namespace FlowSERVER1 {
 
         private async void startSharing() {
 
-            int _accType = accountType(btnShareToName.Text);
-            int _countReceiverFile = countReceiverShared(btnShareToName.Text);
-            string shareToName = btnShareToName.Text;
+            int _accType = accountType(txtFieldShareToName.Text);
+            int _countReceiverFile = countReceiverShared(txtFieldShareToName.Text);
+            string shareToName = txtFieldShareToName.Text;
 
             if (_accType != _countReceiverFile) {
 
@@ -392,7 +392,7 @@ namespace FlowSERVER1 {
                 }
 
                 CloseForm.closeForm("SharingAlert");
-                new SucessSharedAlert(_FileName, btnShareToName.Text).Show();
+                new SucessSharedAlert(_FileName, txtFieldShareToName.Text).Show();
 
             }
         }
@@ -401,29 +401,29 @@ namespace FlowSERVER1 {
 
             try {
 
-                if (btnShareToName.Text == Globals.custUsername) {
+                if (txtFieldShareToName.Text == Globals.custUsername) {
                     new CustomAlert(title: "Sharing failed", subheader: "You can't share to yourself.").Show();
                     return;
                 }
-                if (btnShareToName.Text == String.Empty) {
+                if (txtFieldShareToName.Text == String.Empty) {
                     return;
                 }
-                if (userIsExists(btnShareToName.Text) == 0) {
-                    new CustomAlert(title: "Sharing failed", subheader: $"The user {btnShareToName.Text} does not exist.").Show();
+                if (userIsExists(txtFieldShareToName.Text) == 0) {
+                    new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} does not exist.").Show();
                     return;
                 }
-                if (fileIsUploaded(btnShareToName.Text, _FileName) > 0) {
+                if (fileIsUploaded(txtFieldShareToName.Text, _FileName) > 0) {
                     new CustomAlert(title: "Sharing failed", subheader: "This file is already shared.").Show();
                     return;
                 }
 
-                if (!(retrieveDisabled(btnShareToName.Text) == "0")) {
-                    new CustomAlert(title: "Sharing failed", subheader: $"The user {btnShareToName.Text} disabled their file sharing.").Show();
+                if (!(retrieveDisabled(txtFieldShareToName.Text) == "0")) {
+                    new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} disabled their file sharing.").Show();
                     return;
                 }
 
-                if (hasPassword(btnShareToName.Text) != "") {
-                    new AskSharingAuthForm(btnShareToName.Text, _FileName, _FileName.Substring(_FileName.Length-4)).Show();
+                if (hasPassword(txtFieldShareToName.Text) != "") {
+                    new AskSharingAuthForm(txtFieldShareToName.Text, _FileName, _FileName.Substring(_FileName.Length-4)).Show();
                     return;
                 }
 
@@ -440,7 +440,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            lblCountCharComment.Text = guna2TextBox4.Text.Length.ToString() + "/295";
+            lblCountCharComment.Text = txtFieldComment.Text.Length.ToString() + "/295";
         }
 
         private void shareFileFORM_Load(object sender, EventArgs e) {

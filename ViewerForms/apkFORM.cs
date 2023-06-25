@@ -22,7 +22,7 @@ namespace FlowSERVER1 {
         private bool IsFromSharing;   
         private bool isFromShared = false;
 
-        public apkFORM(String fileName, String uploaderUsername,String tableName, String directoryName, bool _isFromShared = false, bool _isFromSharing = true) {
+        public apkFORM(String fileName, String uploaderName,String tableName, String directoryName, bool _isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
 
@@ -48,10 +48,14 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            lblUploaderName.Text = uploaderUsername;
-        }
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+            if (Globals.publicTablesPs.Contains(tableName)) {
+                label6.Text = "Uploaded By";
+                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderName);
+                lblUserComment.Visible = true;
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+            }
 
+            lblUploaderName.Text = uploaderName;
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {

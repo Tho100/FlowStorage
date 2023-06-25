@@ -63,6 +63,13 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
+            if (Globals.publicTablesPs.Contains(tableName)) {
+                label4.Text = "Uploaded By";
+                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderName);
+                lblUserComment.Visible = true;
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+            }
+
             lblUploaderName.Text = uploaderName;
 
             try {
