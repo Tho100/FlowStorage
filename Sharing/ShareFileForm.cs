@@ -1,4 +1,5 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Sharing;
 using Guna.UI2.WinForms;
@@ -333,50 +334,50 @@ namespace FlowSERVER1 {
                 if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
                     string getThumbnails = await retrieveThumbnailShared(_FileName,"CUST_TO");
                     await startSending(getFileMetadataSharedToMe(Globals.custUsername, _FileName), getThumbnails);
-                } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != "folder_upload_info") {
+                } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != GlobalsTable.folderUploadTable) {
 
                     if (Globals.imageTypes.Contains(_FileExt)) {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName),"file_info"));  
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName),GlobalsTable.homeImageTable));  
                     } 
                     
                     else if (_FileExt == ".xlsx" || _FileExt == ".xls") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_excel"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeExcelTable));
                     }
                     
                     else if (Globals.textTypes.Contains(_FileExt)) {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_expand"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeTextTable));
                     } 
                     
                     else if (_FileExt == ".pdf") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_pdf"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homePdfTable));
                     } 
                     
                     else if (_FileExt == ".pptx" || _FileExt == ".ppt") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_ptx"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homePtxTable));
                     } 
                     
                     else if (_FileExt == ".docx" || _FileExt == ".doc") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_word"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeWordTable));
                     } 
                     
                     else if (_FileExt == ".wav" || _FileExt == ".mp3") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_audi"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeAudioTable));
                     } 
                     
                     else if (Globals.videoTypes.Contains(_FileExt)) {
                         string getThumbnails = await retrieveThumbnails("file_info_vid",Globals.custUsername,_FileName);
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_vid"),getThumbnails);
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeVideoTable),getThumbnails);
                     }
                     
                     else if (_FileExt == ".exe") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_exe"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeExeTable));
                     }
                     
                     else if (_FileExt == ".apk") {
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), "file_info_apk"));
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), GlobalsTable.homeApkTable));
                     }
 
-                } else if (_IsFromShared == true && _IsFromTable == "cust_sharing") {
+                } else if (_IsFromShared == true && _IsFromTable == GlobalsTable.sharingTable) {
                     string getThumbnails = await retrieveThumbnailShared(_FileName, "CUST_FROM");
                     await startSending(getFileMetadataSharedToOthers(Globals.custUsername, _FileName), getThumbnails);
                 } 
@@ -386,9 +387,9 @@ namespace FlowSERVER1 {
                     await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Globals.custUsername,_FileName));
                 } 
                 
-                else if (_IsFromTable == "folder_upload_info") {
-                    string getThumbnails = await retrieveThumbnailsExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Globals.custUsername, _FileName);
-                    await startSending(await getFileMetadataExtra("folder_upload_info", "FOLDER_TITLE", _DirectoryName, Globals.custUsername, _FileName));
+                else if (_IsFromTable == GlobalsTable.folderUploadTable) {
+                    string getThumbnails = await retrieveThumbnailsExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _DirectoryName, Globals.custUsername, _FileName);
+                    await startSending(await getFileMetadataExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _DirectoryName, Globals.custUsername, _FileName));
                 }
 
                 CloseForm.closeForm("SharingAlert");

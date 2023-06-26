@@ -14,6 +14,7 @@ using LibVLCSharp.WinForms;
 using LibVLCSharp.Shared;
 using System.Threading;
 using System.Text.RegularExpressions;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
@@ -208,18 +209,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
-            if (_TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", _DirName);
-            }
-            else if (_TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", _DirName);
-            }
-            else if (_TableName == "file_info_vid") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info_vid", _DirName);
-            }
-            else if (_TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", _DirName,_IsFromShared);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirName, _IsFromShared);
         }
 
         private void videoView1_Click(object sender, EventArgs e) {

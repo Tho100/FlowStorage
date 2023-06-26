@@ -108,17 +108,7 @@ namespace FlowSERVER1 {
         
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            if (TableName == "upload_info_directory") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "upload_info_directory", Directoryname);
-            }
-            else if (TableName == "folder_upload_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "folder_upload_info", Directoryname);
-            }
-            else if (TableName == "file_info") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "file_info", Directoryname);
-            } else if (TableName == "cust_sharing") {
-                SaverModel.SaveSelectedFile(lblFileName.Text, "cust_sharing", Directoryname,IsFromShared);
-            }
+            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, Directoryname, IsFromShared);
             this.TopMost = true;
         }
 

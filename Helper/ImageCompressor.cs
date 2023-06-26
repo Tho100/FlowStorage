@@ -15,7 +15,7 @@ namespace FlowSERVER1.Helper {
         public string compresImageToBase64(string sourceImagePath) {
             using (Image sourceImage = Image.FromFile(sourceImagePath)) {
                 EncoderParameters encoderParameters = new EncoderParameters(1);
-                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 30L);
+                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 88L);
 
                 ImageCodecInfo jpegEncoder = GetEncoderInfo(ImageFormat.Jpeg);
 

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Drawing;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
 
@@ -188,28 +189,28 @@ namespace FlowSERVER1 {
                         var getName = FileName;
                         if(TableName == "null") {
                             if (Globals.imageTypes.Contains(FileExt)) {
-                                FileDeletionNormal(FileName, "file_info");
+                                FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
                             }
                             else if (FileExt == ".msi") {
                                 FileDeletionNormal(FileName, "file_info_msi");
                             }
                             else if (FileExt == ".mp3" || FileExt == ".wav") {
-                                FileDeletionNormal(getName, "file_info_audi");
+                                FileDeletionNormal(getName, GlobalsTable.homeAudioTable);
                             }
                             else if (FileExt == ".docx" || FileExt == ".doc") {
-                                FileDeletionNormal(getName, "file_info_word");
+                                FileDeletionNormal(getName, GlobalsTable.homeWordTable);
                             }
                             else if (FileExt == ".pptx" || FileExt == ".ppt") {
-                                FileDeletionNormal(getName, "file_info_ptx");
+                                FileDeletionNormal(getName, GlobalsTable.homePtxTable);
                             }
                             else if (FileExt == ".pdf") {
-                                FileDeletionNormal(getName, "file_info_pdf");
+                                FileDeletionNormal(getName, GlobalsTable.homePdfTable);
                             }
                             else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
-                                FileDeletionNormal(getName, "file_info_expand");
+                                FileDeletionNormal(getName, GlobalsTable.homeTextTable);
                             }
                             else if (FileExt == ".exe") {
-                                FileDeletionNormal(getName, "file_info_exe");
+                                FileDeletionNormal(getName, GlobalsTable.homeExeTable);
                             }
                         } else if (TableName == "upload_info_directory") {
                             if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
@@ -238,30 +239,30 @@ namespace FlowSERVER1 {
                             }
                         } else if (TableName == "folder_upload_info") {
                             if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
-                                FileDeletionFolder(getName, "file_info");
+                                FileDeletionFolder(getName, GlobalsTable.homeImageTable);
                             }
                             else if (FileExt == ".msi") {
                                 FileDeletionFolder(getName, "file_info_msi");
                             }
                             else if (FileExt == ".mp3" || FileExt == ".wav") {
-                                FileDeletionFolder(getName, "file_info_audi");
+                                FileDeletionFolder(getName, GlobalsTable.homeAudioTable);
                             }
                             else if (FileExt == ".docx" || FileExt == ".doc") {
-                                FileDeletionFolder(getName, "file_info_word");
+                                FileDeletionFolder(getName, GlobalsTable.homeWordTable);
                             }
                             else if (FileExt == ".pptx" || FileExt == ".ppt") {
-                                FileDeletionFolder(getName, "file_info_ptx");
+                                FileDeletionFolder(getName, GlobalsTable.homePtxTable);
                             }
                             else if (FileExt == ".pdf") {
-                                FileDeletionFolder(getName, "file_info_pdf");
+                                FileDeletionFolder(getName, GlobalsTable.homePdfTable);
                             }
                             else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
-                                FileDeletionFolder(getName, "file_info_expand");
+                                FileDeletionFolder(getName, GlobalsTable.homeTextTable);
                             }
                             else if (FileExt == ".exe") {
-                                FileDeletionFolder(getName, "file_info_exe");
+                                FileDeletionFolder(getName, GlobalsTable.homeExeTable);
                             }
-                        } else if (TableName == "cust_sharing") {
+                        } else if (TableName == GlobalsTable.sharingTable) {
                             // @ Note: Directory name refer to receiver name
                             FileDeletionSharing(getName);
                         }

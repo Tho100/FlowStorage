@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1
 { 
@@ -277,7 +278,7 @@ namespace FlowSERVER1
                 label8.Visible = false;
                 var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
-                if (_tableName == "file_info") {
+                if (_tableName == GlobalsTable.homeImageTable) {
 
                     if (base64EncodedImage.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
@@ -298,7 +299,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if (_tableName == "file_info_vid") {
+                if (_tableName == GlobalsTable.homeVideoTable) {
 
                     if (base64EncodedThumbnail.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail[i]);
@@ -318,7 +319,7 @@ namespace FlowSERVER1
                 }
 
 
-                if (_tableName == "file_info_expand") {
+                if (_tableName == GlobalsTable.homeTextTable) {
 
                     string textTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                     picMain_Q.Image = Globals.textTypeToImage[textTypes];
@@ -335,7 +336,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if (_tableName == "file_info_exe") {
+                if (_tableName == GlobalsTable.homeExeTable) {
                     img.Image = Globals.EXEImage;
                     picMain_Q.Click += (sender_ex, e_ex) => {
                         Form bgBlur = new Form();
@@ -345,14 +346,14 @@ namespace FlowSERVER1
                     clearRedundane();
                 }
 
-                if (_tableName == "file_info_excel") {
+                if (_tableName == GlobalsTable.homeExcelTable) {
                     picMain_Q.Image = Globals.EXCELImage;
                     picMain_Q.Click += (sender_vq, e_vq) => {
                         exlFORM exlForm = new exlFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         exlForm.Show();
                     };
                 }
-                if (_tableName == "file_info_audi") {
+                if (_tableName == GlobalsTable.homeAudioTable) {
                     picMain_Q.Image = Globals.AudioImage;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
                         Form bgBlur = new Form();
@@ -361,7 +362,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if (_tableName == "file_info_apk") {
+                if (_tableName == GlobalsTable.homeApkTable) {
                     picMain_Q.Image = Globals.APKImage;
                     picMain_Q.Click += (sender_ap, ex_ap) => {
                         Form bgBlur = new Form();
@@ -370,7 +371,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if (_tableName == "file_info_pdf") {
+                if (_tableName == GlobalsTable.homePdfTable) {
                     picMain_Q.Image = Globals.PDFImage;
                     picMain_Q.Click += (sender_pd, e_pd) => {
                         Form bgBlur = new Form();
@@ -379,7 +380,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if (_tableName == "file_info_ptx") {
+                if (_tableName == GlobalsTable.homePtxTable) {
                     picMain_Q.Image = Globals.PTXImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
@@ -397,7 +398,7 @@ namespace FlowSERVER1
                     };
                 }
 
-                if (_tableName == "file_info_word") {
+                if (_tableName == GlobalsTable.homeWordTable) {
                     picMain_Q.Image = Globals.DOCImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
                         Form bgBlur = new Form();
@@ -658,7 +659,7 @@ namespace FlowSERVER1
                                 new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog())
                                 .Start();
 
-                                if (nameTable == "file_info") {
+                                if (nameTable == GlobalsTable.homeImageTable) {
 
                                     await startSending(keyVal);
 

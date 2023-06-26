@@ -403,6 +403,7 @@
     <Compile Include="ExtraForms\PublishPublicStorage.Designer.cs">
       <DependentUpon>PublishPublicStorage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global\GlobalsTable.cs" />
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />

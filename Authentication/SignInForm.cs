@@ -20,6 +20,7 @@ using Microsoft.WindowsAPICodePack.Shell.Interop;
 using System.Security.Cryptography;
 using FlowSERVER1.Authentication;
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
     public partial class SignInForm : Form {
@@ -475,7 +476,7 @@ namespace FlowSERVER1 {
 
                 var img = ((Guna2PictureBox)panelF.Controls["ImgG" + i]);
 
-                if (_tableName == "file_info") {
+                if (_tableName == GlobalsTable.homeImageTable) {
 
                     List<string> base64Encoded = new List<string>();
 
@@ -504,66 +505,33 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info", "null", Globals.custUsername);
-                        displayPic.Show();
+                        new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, 
+                            GlobalsTable.homeImageTable, "null", Globals.custUsername).Show();
 
                     };
                     clearRedundane();
                 }
 
-                if (_tableName == "file_info_expand") {
-                    var _extTypes = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
-                    if (_extTypes == ".py") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                    }
-                    else if (_extTypes == ".txt") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-                    }
-                    else if (_extTypes == ".html") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
-                    }
-                    else if (_extTypes == ".css") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_css_filetype_48__1_;
-                    }
-                    else if (_extTypes == ".sql") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
-                    }
-                    else if (_extTypes == ".csv") {
-                        img.Image = FlowSERVER1.Properties.Resources.icons8_csv_48;
-                    }
+                if (_tableName == GlobalsTable.homeTextTable) {
+
+                    string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                    img.Image = Globals.textTypeToImage[textType];
+
                     picMain_Q.Click += (sender_t, e_t) => {
-                        txtFORM txtFormShow = new txtFORM("LOLOL", "file_info_expand", titleLab.Text, "null", Globals.custUsername);
-                        txtFormShow.Show();
+                        new txtFORM("value", GlobalsTable.homeTextTable, titleLab.Text, "null", Globals.custUsername).Show();
                     };
                     clearRedundane();
                 }
 
-                if (_tableName == "file_info_exe") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_exe_48;
+                if (_tableName == GlobalsTable.homeExeTable) {
+                    picMain_Q.Image = Globals.EXEImage;
                     picMain_Q.Click += (sender_ex, e_ex) => {
-                        Form bgBlur = new Form();
-                        using (exeFORM displayExe = new exeFORM(titleLab.Text, "file_info_exe", "null", Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayExe.Owner = bgBlur;
-                            displayExe.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
-                    };
+                        new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, "null", Globals.custUsername).Show(); 
+                    };                          
                     clearRedundane();
                 }
 
-                if (_tableName == "file_info_vid") {
+                if (_tableName == GlobalsTable.homeVideoTable) {
 
                     List<string> base64Encoded = new List<string>();
 
@@ -590,138 +558,52 @@ namespace FlowSERVER1 {
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, "file_info_vid", "null", Globals.custUsername);
-                        vidFormShow.Show();
+                        new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, 
+                            GlobalsTable.homeVideoTable, "null", Globals.custUsername).Show();
                     };
                     clearRedundane();
                 }
 
-                if (_tableName == "file_info_excel") {
-                    img.Image = FlowSERVER1.Properties.Resources.excelIcon;
+                if (_tableName == GlobalsTable.homeExcelTable) {
+                    img.Image = Globals.EXCELImage;
                     picMain_Q.Click += (sender_vq, e_vq) => {
-                        exlFORM exlForm = new exlFORM(titleLab.Text, "file_info_excel", "null", Globals.custUsername);
-                        exlForm.Show();
+                        new exlFORM(titleLab.Text, GlobalsTable.homeExcelTable, "null", Globals.custUsername).Show();
                     };
                 }
 
-                if (_tableName == "file_info_audi") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+                if (_tableName == GlobalsTable.homeAudioTable) {
+                    picMain_Q.Image = Globals.AudioImage;
                     picMain_Q.Click += (sender_aud, e_aud) => {
-                        Form bgBlur = new Form();
-                        using (audFORM displayPic = new audFORM(titleLab.Text, "file_info_audi", "null", Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPic.Owner = bgBlur;
-                            displayPic.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        new audFORM(titleLab.Text, GlobalsTable.homeAudioTable, "null", Globals.custUsername).Show();
                     };
                     clearRedundane();
                 }
 
                 if (_tableName == "file_info_apk") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_android_os_50;//Image.FromFile(@"C:\USERS\USER\Downloads\icons8-android-os-50.png");
+                    picMain_Q.Image = Globals.APKImage;
                     picMain_Q.Click += (sender_ap, ex_ap) => {
-                        Form bgBlur = new Form();
-                        using (apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "file_info_apk", "null")) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPic.Owner = bgBlur;
-                            displayPic.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null").Show();
                     };
                 }
 
-                if (_tableName == "file_info_pdf") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
+                if (_tableName == GlobalsTable.homePdfTable) {
+                    picMain_Q.Image = Globals.PDFImage;
                     picMain_Q.Click += (sender_pd, e_pd) => {
-                        Form bgBlur = new Form();
-                        using (pdfFORM displayPdf = new pdfFORM(titleLab.Text, "file_info_pdf", "null", Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayPdf.Owner = bgBlur;
-                            displayPdf.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        new pdfFORM(titleLab.Text, GlobalsTable.homePdfTable, "null", Globals.custUsername).Show();
                     };
                 }
 
                 if (_tableName == "file_info_msi") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_software_installer_32;
+                    picMain_Q.Image = Globals.MSIImage;
                     picMain_Q.Click += (sender_ptx, e_ptx) => {
-                        Form bgBlur = new Form();
-                        using (msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayMsi.Owner = bgBlur;
-                            displayMsi.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername).Show();
                     };
                 }
 
-                if (_tableName == "file_info_word") {
-                    picMain_Q.Image = FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
+                if (_tableName == GlobalsTable.homeWordTable) {
+                    picMain_Q.Image = Globals.DOCImage;
                     picMain_Q.Click += (sender_ptx, e_ptx) => {
-                        Form bgBlur = new Form();
-                        using (wordFORM displayMsi = new wordFORM(titleLab.Text, "file_info_word", "null", Globals.custUsername)) {
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.FormBorderStyle = FormBorderStyle.None;
-                            bgBlur.Opacity = .24d;
-                            bgBlur.BackColor = Color.Black;
-                            bgBlur.WindowState = FormWindowState.Maximized;
-                            bgBlur.TopMost = true;
-                            bgBlur.Location = this.Location;
-                            bgBlur.StartPosition = FormStartPosition.Manual;
-                            bgBlur.ShowInTaskbar = false;
-                            bgBlur.Show();
-
-                            displayMsi.Owner = bgBlur;
-                            displayMsi.ShowDialog();
-
-                            bgBlur.Dispose();
-                        }
+                        new wordFORM(titleLab.Text, GlobalsTable.homeWordTable, "null", Globals.custUsername).Show();
                     };
                 }
             }
