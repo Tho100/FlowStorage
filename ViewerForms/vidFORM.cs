@@ -15,6 +15,7 @@ using LibVLCSharp.Shared;
 using System.Threading;
 using System.Text.RegularExpressions;
 using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
     public partial class vidFORM : Form {
@@ -31,7 +32,7 @@ namespace FlowSERVER1 {
         private bool IsFromSharing;
         private bool _IsEndReached;
 
-        public vidFORM(Image getThumb, int width, int height, String fileName,String tableName, String directoryName,String uploaderName, bool _isFromShared = false,bool _isFromSharing = true) {
+        public vidFORM(Image getThumb, int width, int height, String fileName,String tableName, String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
 
             InitializeComponent();
 
@@ -322,36 +323,24 @@ namespace FlowSERVER1 {
             btnPauseVideo.Visible = true;
         }
 
-        private async Task saveChangesComment(String updatedComment) {
-
-            const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@updatedComment", updatedComment);
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
-                await command.ExecuteNonQueryAsync();
-            }
-
-        }
-
         private void guna2Button11_Click(object sender, EventArgs e) {
-            guna2TextBox4.Enabled = true;
-            guna2TextBox4.Visible = true;
+            txtFieldComment.Enabled = true;
+            txtFieldComment.Visible = true;
             btnEditComment.Visible = false;
             guna2Button12.Visible = true;
             lblUserComment.Visible = false;
-            guna2TextBox4.Text = lblUserComment.Text;
+            txtFieldComment.Text = lblUserComment.Text;
         }
 
         private async void guna2Button12_Click(object sender, EventArgs e) {
-            if (lblUserComment.Text != guna2TextBox4.Text) {
-                await saveChangesComment(guna2TextBox4.Text);
+            if (lblUserComment.Text != txtFieldComment.Text) {
+                await new UpdateComment().saveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button12.Visible = false;
-            guna2TextBox4.Visible = false;
+            txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
         }

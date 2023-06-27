@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Imaging.Filters;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
     public partial class picFORM : Form {
@@ -33,7 +34,7 @@ namespace FlowSERVER1 {
         private bool IsFromSharing {get; set; } 
         private MySqlConnection con {get; set; } = ConnectionModel.con;
 
-        public picFORM(Image userImage, int width, int height,string title,string tableName, string directoryName, string uploaderName,bool _IsFromShared = false, bool _isFromSharing = true) {
+        public picFORM(Image userImage, int width, int height,string title,string tableName, string directoryName, string uploaderName,bool _IsFromShared = false, bool _isFromSharing = false) {
             InitializeComponent();
 
             instance = this;
@@ -62,6 +63,7 @@ namespace FlowSERVER1 {
 
             if (_IsFromShared == true) {
                 label4.Text = "Shared To";
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: title) != "" ? GetComment.getCommentSharedToOthers(fileName: title) : "(No Comment)";
@@ -359,43 +361,30 @@ namespace FlowSERVER1 {
             label11.Text = "0%";
             label13.Text = "0%";
             label8.Text = "0%";
-            //guna2ToggleSwitch1.Checked = false;
         }
 
         private void guna2VSeparator1_Click(object sender, EventArgs e) {
 
         }
 
-        private async Task saveChangesComment(String updatedComment) {
-
-            const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@updatedComment", updatedComment);
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
-                await command.ExecuteNonQueryAsync();
-            }
-
-        }
-
         private void guna2Button9_Click(object sender, EventArgs e) {
-            guna2TextBox4.Enabled = true;
-            guna2TextBox4.Visible = true;
+            txtFieldComment.Enabled = true;
+            txtFieldComment.Visible = true;
             btnEditComment.Visible = false;
             guna2Button10.Visible = true;
             lblUserComment.Visible = false;
-            guna2TextBox4.Text = lblUserComment.Text;
+            txtFieldComment.Text = lblUserComment.Text;
         }
 
         private async void guna2Button10_Click(object sender, EventArgs e) {
-            if (lblUserComment.Text != guna2TextBox4.Text) {
-                await saveChangesComment(guna2TextBox4.Text);
+            if (lblUserComment.Text != txtFieldComment.Text) {
+                await new UpdateComment().saveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = guna2TextBox4.Text != String.Empty ? guna2TextBox4.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button10.Visible = false;
-            guna2TextBox4.Visible = false;
+            txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
         }

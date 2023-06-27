@@ -2867,7 +2867,7 @@
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(109, 86);
             this.label40.TabIndex = 1;
-            this.label40.Text = "$5";
+            this.label40.Text = "$3";
             // 
             // guna2BorderlessForm1
             // 

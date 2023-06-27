@@ -408,6 +408,7 @@
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
     <Compile Include="Helper\ImageCompressor.cs" />
+    <Compile Include="Helper\UpdateComment.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>

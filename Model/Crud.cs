@@ -38,18 +38,5 @@ namespace FlowSERVER1 {
             }
         }
 
-        public async Task Select(string query, Dictionary<string, string> parameters) {
-
-            using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.CommandText = query;
-
-                foreach (var parameter in parameters) {
-                    command.Parameters.AddWithValue(parameter.Key, parameter.Value);
-                }
-
-                await command.ExecuteNonQueryAsync();
-            }
-        }
-
     }
 }

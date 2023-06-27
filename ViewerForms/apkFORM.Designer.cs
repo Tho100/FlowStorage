@@ -41,7 +41,7 @@
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2TextBox4 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -244,35 +244,35 @@
             this.guna2Button2.TabIndex = 30;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // guna2TextBox4
+            // txtFieldComment
             // 
-            this.guna2TextBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.guna2TextBox4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.BorderRadius = 8;
-            this.guna2TextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox4.DefaultText = "";
-            this.guna2TextBox4.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.guna2TextBox4.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox4.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Location = new System.Drawing.Point(12, 266);
-            this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.guna2TextBox4.MaxLength = 295;
-            this.guna2TextBox4.Multiline = true;
-            this.guna2TextBox4.Name = "guna2TextBox4";
-            this.guna2TextBox4.PasswordChar = '\0';
-            this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox4.PlaceholderText = "Add a comment for receiver to see";
-            this.guna2TextBox4.SelectedText = "";
-            this.guna2TextBox4.Size = new System.Drawing.Size(312, 292);
-            this.guna2TextBox4.TabIndex = 93;
-            this.guna2TextBox4.Visible = false;
+            this.txtFieldComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtFieldComment.BackColor = System.Drawing.Color.Transparent;
+            this.txtFieldComment.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldComment.BorderRadius = 8;
+            this.txtFieldComment.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFieldComment.DefaultText = "";
+            this.txtFieldComment.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtFieldComment.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtFieldComment.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldComment.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldComment.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldComment.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldComment.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtFieldComment.ForeColor = System.Drawing.Color.White;
+            this.txtFieldComment.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldComment.Location = new System.Drawing.Point(12, 266);
+            this.txtFieldComment.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtFieldComment.MaxLength = 295;
+            this.txtFieldComment.Multiline = true;
+            this.txtFieldComment.Name = "txtFieldComment";
+            this.txtFieldComment.PasswordChar = '\0';
+            this.txtFieldComment.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldComment.PlaceholderText = "Add a comment for receiver to see";
+            this.txtFieldComment.SelectedText = "";
+            this.txtFieldComment.Size = new System.Drawing.Size(312, 292);
+            this.txtFieldComment.TabIndex = 93;
+            this.txtFieldComment.Visible = false;
             // 
             // btnEditComment
             // 
@@ -326,7 +326,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1136, 617);
-            this.Controls.Add(this.guna2TextBox4);
+            this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.guna2Button7);
             this.Controls.Add(this.pictureBox1);
@@ -374,7 +374,7 @@
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label7;
-        protected Guna.UI2.WinForms.Guna2TextBox guna2TextBox4;
+        protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         public Guna.UI2.WinForms.Guna2Button btnEditComment;
         public Guna.UI2.WinForms.Guna2Button guna2Button7;
     }

@@ -432,13 +432,8 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender,e) => {
 
-                            if (getExtension == ".csv" || getExtension == ".sql") {
-                                new Thread(() => new SheetRetrievalAlert().ShowDialog()).Start();
-                            }
-
                             txtFORM displayPic = new txtFORM("IGNORETHIS", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1,"null",Globals.custUsername);
                             displayPic.Show();
-
                      
                             clearRedundane();
 
@@ -593,8 +588,7 @@ namespace FlowSERVER1 {
 
             clearRedundane();
 
-            var uploadAlertFormSucceeded = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
-            uploadAlertFormSucceeded?.Close();
+            closeUploadAlert();
 
             new Thread(() => new RetrievalAlert("Flowstorage is retrieving your folder files.", "Loader").ShowDialog()).Start();
 
@@ -1276,11 +1270,6 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Click += (sender_t, e_t) => {
 
-                                        if(textType == ".csv" || textType == ".sql") {
-                                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                                            _showRetrievalCsvAlert.Start();
-                                        }
-
                                         txtFORM txtFormShow = new txtFORM("IGNORETHIS", GlobalsTable.homeTextTable, filePath,"null",Globals.custUsername);
                                         txtFormShow.Show();
                                     };
@@ -1641,10 +1630,6 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            if (getExtension == ".csv" || getExtension == ".sql") {
-                                new Thread(() => new SheetRetrievalAlert().ShowDialog()).Start();
-                            }
-
                             txtFORM displayPic = new txtFORM("IGNORETHIS", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
                             displayPic.Show();
 
@@ -1970,11 +1955,6 @@ namespace FlowSERVER1 {
                                 var filePath = getName;
 
                                 textboxPic.Click += (sender_t, e_t) => {
-
-                                    if (textType == ".csv" || textType == ".sql") {
-                                        Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                                        _showRetrievalCsvAlert.Start();
-                                    }
 
                                     txtFORM txtFormShow = new txtFORM("IGNORETHIS", "ps_info_text", filePath, "null", Globals.custUsername);
                                     txtFormShow.Show();
@@ -2541,11 +2521,6 @@ namespace FlowSERVER1 {
                         await setupUpload(encryptEncoded);
 
                         textboxExl.Click += (sender_t, e_t) => {
-
-                            if (_extTypes == ".csv" || _extTypes == ".sql") {
-                                Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                                _showRetrievalCsvAlert.Start();
-                            }
 
                             txtFORM displayPic = new txtFORM("", GlobalsTable.folderUploadTable, titleLab.Text, "null", Globals.custUsername);
                             displayPic.Show();
@@ -3351,13 +3326,8 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            if (typeValues[i] == ".csv" || typeValues[i] == ".sql") {
-                                new Thread(() => new SheetRetrievalAlert().ShowDialog()).Start();
-                            }
-
                             txtFORM displayPic = new txtFORM("", GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
                             displayPic.Show();
-
 
                             clearRedundane();
 
@@ -4838,12 +4808,30 @@ namespace FlowSERVER1 {
         /// </summary>g
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button1_Click_1(object sender, EventArgs e) {
+
+        private async Task<int> countTotalUploadPublicStorage(string tableName) {
+
+            string query = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
+
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                int value = Convert.ToInt32(await command.ExecuteScalarAsync());
+                return value;
+            }
+        }
+
+        private async void guna2Button1_Click_1(object sender, EventArgs e) {
 
             try {
 
-                string _currentFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
-                int currentUploadCount = Convert.ToInt32(lblItemCountText.Text);
+                List<int> returnedCountValue = new List<int>();
+
+                foreach(string tableName in Globals.publicTablesPs) {
+                    int count = await countTotalUploadPublicStorage(tableName);
+                    returnedCountValue.Add(count);
+                }
+
+                int currentUploadCount = returnedCountValue.Sum();
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
                     buildFilePanelUploadPublicStorage();
@@ -4851,6 +4839,9 @@ namespace FlowSERVER1 {
                 else {
                     DisplayError(Globals.accountType);
                 }
+
+                returnedCountValue.Clear();
+
             }
             catch (Exception) {
                 buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
