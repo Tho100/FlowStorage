@@ -40,9 +40,8 @@ namespace FlowSERVER1 {
         public string nameTableInsert { get; private set; }
 
 
-        private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
-
-        // Initialize file (caching)
+        public List<string> fileTypeValuesSharedToOthers = new List<string>();
+        public List<string> fileTypeValuesSharedToMe = new List<string>();
 
         private List<string> base64EncodedImageSharedOthers = new List<string>();
         private List<string> base64EncodedThumbnailSharedOthers = new List<string>();
@@ -53,13 +52,14 @@ namespace FlowSERVER1 {
         private List<string> base64EncodedImageFolder = new List<string>();
         private List<string> base64EncodedThumbnailFolder = new List<string>();
 
-        private string previousSelectedItem = null;
-
         private List<string> base64EncodedImageHome = new List<string>();
         private List<string> base64EncodedThumbnailHome = new List<string>();
 
         private List<string> base64EncodedImagePs = new List<string>();
         private List<string> base64EncodedThumbnailPs = new List<string>();
+
+
+        private string previousSelectedItem = null;
 
         private string get_ex;
         private string getName;
@@ -103,7 +103,7 @@ namespace FlowSERVER1 {
             this.TopMost = false;
         }
 
-        private async Task insertFileVideo(string selectedItems, string nameTable, string getNamePath, object keyValMain) {
+        private void updateProgressBarValue() {
 
             int getCurrentCount = int.Parse(lblItemCountText.Text);
             int getLimitedValue = int.Parse(lblLimitUploadText.Text);
@@ -112,14 +112,19 @@ namespace FlowSERVER1 {
 
             progressBarUsageStorage.Value = calculatePercentageUsage;
 
+        }
+
+        private async Task insertFileVideo(string selectedItems, string nameTable, string getNamePath, object keyValMain) {
+
             try {
 
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB)";
+                string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value)";
+
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath));
-                    command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                    command.Parameters.AddWithValue("@UPLOAD_DATE", todayDate);
-                    command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
+                    command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@date", todayDate);
+                    command.Parameters.AddWithValue("@file_value", keyValMain);
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
                         var toBitMap = shellFile.Thumbnail.Bitmap;
@@ -133,46 +138,42 @@ namespace FlowSERVER1 {
                                 base64EncodedThumbnailPs.Add(toBase64);
                             }
 
-                            command.Parameters.AddWithValue("@CUST_THUMB", toBase64);
+                            command.Parameters.AddWithValue("@thumbnail_value", toBase64);
                         }
                     }
 
                     await command.ExecuteNonQueryAsync();
                 }
 
+                closeUploadAlert();
+                updateProgressBarValue();
+
             }
             catch (Exception) {
                 buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
             }
 
-            closeUploadAlert();
 
         }
         private async Task insertFileData(string setValue, string nameTable) {
 
-            int getCurrentCount = int.Parse(lblItemCountText.Text);
-            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-            progressBarUsageStorage.Value = calculatePercentageUsage;
-
-
             try {
 
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE) VALUES (@CUST_USERNAME, @CUST_FILE_PATH, @UPLOAD_DATE, @CUST_FILE)";
+                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE) VALUES (@username, @file_name, @date, @file_value)";
                 var param = new Dictionary<string, string>
                 {
-                    { "@CUST_USERNAME", Globals.custUsername},
-                    { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
-                    { "@UPLOAD_DATE", todayDate},
-                    { "@CUST_FILE", setValue}
+                    { "@username", Globals.custUsername},
+                    { "@file_name", EncryptionModel.Encrypt(getName)},
+                    { "@date", todayDate},
+                    { "@file_value", setValue}
                 };
 
                 await crud.Insert(insertQuery, param);
 
                 closeUploadAlert();
+                updateProgressBarValue();
             }
+
             catch (Exception) {
                 buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
             }
@@ -180,22 +181,15 @@ namespace FlowSERVER1 {
 
         private async Task insertFileVideoPublic(string selectedItems, string getNamePath, object keyValMain) {
 
-            int getCurrentCount = int.Parse(lblItemCountText.Text);
-            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-            progressBarUsageStorage.Value = calculatePercentageUsage;
-
             try {
 
-                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB,CUST_COMMENT) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB,@CUST_COMMENT)";
+                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB,CUST_COMMENT) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value,@comment)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getNamePath));
-                    command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                    command.Parameters.AddWithValue("@UPLOAD_DATE", todayDate);
-                    command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
-                    command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(publicStorageUserComment));
+                    command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@date", todayDate);
+                    command.Parameters.AddWithValue("@file_value", keyValMain);
+                    command.Parameters.AddWithValue("@comment", EncryptionModel.Encrypt(publicStorageUserComment));
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
                         var toBitMap = shellFile.Thumbnail.Bitmap;
@@ -205,7 +199,7 @@ namespace FlowSERVER1 {
                             var toBase64 = Convert.ToBase64String(stream.ToArray());
                             base64EncodedThumbnailPs.Add(toBase64);
 
-                            command.Parameters.AddWithValue("@CUST_THUMB", toBase64);
+                            command.Parameters.AddWithValue("@thumbnail_value", toBase64);
                         }
                     }
 
@@ -213,11 +207,11 @@ namespace FlowSERVER1 {
                 }
 
                 closeUploadAlert();
+                updateProgressBarValue();
 
                 publicStorageUserComment = null;
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
             }
 
@@ -225,29 +219,22 @@ namespace FlowSERVER1 {
 
         public async Task insertFileDataPublic(string fileBase64Value, string nameTable) {
 
-            int getCurrentCount = int.Parse(lblItemCountText.Text);
-            int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-            lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-            progressBarUsageStorage.Value = calculatePercentageUsage;
-
-
             try {
 
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_COMMENT) VALUES (@CUST_USERNAME, @CUST_FILE_PATH, @UPLOAD_DATE, @CUST_FILE,@CUST_COMMENT)";
+                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_COMMENT) VALUES (@username, @file_name, @date, @file_value,@comment)";
                 var param = new Dictionary<string, string>
                 {
-                    { "@CUST_USERNAME", Globals.custUsername},
-                    { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
-                    { "@UPLOAD_DATE", todayDate},
-                    { "@CUST_FILE", fileBase64Value},
-                    { "@CUST_COMMENT", EncryptionModel.Encrypt(publicStorageUserComment)},
+                    { "@username", Globals.custUsername},
+                    { "@file_name", EncryptionModel.Encrypt(getName)},
+                    { "@date", todayDate},
+                    { "@file_value", fileBase64Value},
+                    { "@comment", EncryptionModel.Encrypt(publicStorageUserComment)},
                 };
 
                 await crud.Insert(insertQuery, param);
 
                 closeUploadAlert();
+                updateProgressBarValue();
 
                 publicStorageUserComment = null;
             }
@@ -2824,20 +2811,20 @@ namespace FlowSERVER1 {
 
         private async void buildSharedToMe() {
 
-            if (!_TypeValues.Any()) {
+            if (!fileTypeValuesSharedToMe.Any()) {
                 const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            _TypeValues.Add(reader.GetString(0));
+                            fileTypeValuesSharedToMe.Add(reader.GetString(0));
                         }
                     }
                 }
-                await buildFilePanelSharedToMe(_TypeValues, "DirParMe", _TypeValues.Count);
+                await buildFilePanelSharedToMe(fileTypeValuesSharedToMe, "DirParMe", fileTypeValuesSharedToMe.Count);
             }
             else {
-                await buildFilePanelSharedToMe(_TypeValues, "DirParMe", _TypeValues.Count);
+                await buildFilePanelSharedToMe(fileTypeValuesSharedToMe, "DirParMe", fileTypeValuesSharedToMe.Count);
             }
 
             buildRedundaneVisibility();
@@ -2846,20 +2833,20 @@ namespace FlowSERVER1 {
 
         private async void buildSharedToOthers() {
 
-            if (!_TypeValuesOthers.Any()) {
+            if (!fileTypeValuesSharedToOthers.Any()) {
                 const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
                 using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (var readTypeOthers = await command.ExecuteReaderAsync()) {
                         while (await readTypeOthers.ReadAsync()) {
-                            _TypeValuesOthers.Add(readTypeOthers.GetString(0));
+                            fileTypeValuesSharedToOthers.Add(readTypeOthers.GetString(0));
                         }
                     }
                 }
             }
 
            
-            await buildFilePanelSharedToOthers(_TypeValuesOthers, "DirParOther", _TypeValuesOthers.Count);
+            await buildFilePanelSharedToOthers(fileTypeValuesSharedToOthers, "DirParOther", fileTypeValuesSharedToOthers.Count);
             buildRedundaneVisibility();
         }
 
@@ -2867,10 +2854,6 @@ namespace FlowSERVER1 {
         /// Select folder from listBox and start showing
         /// the files from selected folder
         /// </summary>
-
-
-        public List<String> _TypeValuesOthers = new List<String>();
-        public List<String> _TypeValues = new List<String>();
 
         private async void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
 
@@ -2885,11 +2868,12 @@ namespace FlowSERVER1 {
                 lblCurrentPageText.Visible = true;
                 btnDeleteFolder.Visible = true;
 
+                flowLayoutPanel1.Controls.Clear();
+
                 if (_selectedFolder == "Home") {
 
                     buildButtonsOnHomePageSelected();
                     flowLayoutPanel1.WrapContents = true;
-                    flowLayoutPanel1.Controls.Clear();
 
                     buildHomeFiles();
 
@@ -2899,9 +2883,6 @@ namespace FlowSERVER1 {
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
 
                     buildButtonsOnFolderNameSelected();
-
-                    flowLayoutPanel1.Controls.Clear();
-                    flowLayoutPanel1.WrapContents = true;
 
                     var typesValues = new List<string>();
                     const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
@@ -2919,43 +2900,32 @@ namespace FlowSERVER1 {
                     var currMainLength = typesValues.Count;
 
                     await buildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
-
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
                     buildRedundaneVisibility();
 
                 } else if (_selectedIndex == 1) {
 
 
                     buildButtonOnSharedFilesSelected();
-                    flowLayoutPanel1.Controls.Clear();
-
                     clearRedundane();
 
                     _callFilesInformationShared();
-
-                    buildSharedToMe();
-
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
-                    
+                    buildSharedToMe();                    
 
                 }
                 else if (_selectedIndex == 2) {
 
                     buildButtonsOnSharedToMeSelected();
-                    flowLayoutPanel1.Controls.Clear();
-
                     clearRedundane();
 
                     _callFilesInformationOthers();
-
-                    buildSharedToOthers();
-
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
-                    
+                    buildSharedToOthers();                    
 
                 }
 
-            } catch (Exception) {
+                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+
+            }
+            catch (Exception) {
 
                 flowLayoutPanel1.Controls.Clear();
 
@@ -3657,7 +3627,7 @@ namespace FlowSERVER1 {
                 remBut.BorderRadius = 6;
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = GlobalStyle.TransparentColor;
-                remBut.Image = DirectoryGarbageImage;
+                remBut.Image = Globals.DirectoryGarbageImage;
                 remBut.Visible = true;
                 remBut.Location = GlobalStyle.GarbageButtonLoc;
 
@@ -3690,17 +3660,11 @@ namespace FlowSERVER1 {
                         lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                         buildRedundaneVisibility();
-
-                        int getCurrentCount = int.Parse(lblItemCountText.Text);
-                        int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-                        int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-                        lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-                        progressBarUsageStorage.Value = calculatePercentageUsage;
+                        updateProgressBarValue();
                     }
                 };
 
-                picMain_Q.Image = FlowSERVER1.Properties.Resources.DirIcon;
+                picMain_Q.Image = Globals.DIRIcon;
                 picMain_Q.Click += (sender_dir, ev_dir) => {
 
                     Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader").ShowDialog());
@@ -3867,15 +3831,15 @@ namespace FlowSERVER1 {
 
             int selectedIndex = lstFoldersPage.SelectedIndex;
 
-            _TypeValues.Clear();
-            _TypeValuesOthers.Clear();
+            fileTypeValuesSharedToMe.Clear();
+            fileTypeValuesSharedToOthers.Clear();
             flowLayoutPanel1.Controls.Clear();
 
             if (selectedIndex == 1) {
-                await RefreshGenerateUserShared(_TypeValues, "DirParMe");
+                await RefreshGenerateUserShared(fileTypeValuesSharedToMe, "DirParMe");
             }
             else if (selectedIndex == 2) {
-                await RefreshGenerateUserSharedOthers(_TypeValuesOthers, "DirParOther");
+                await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
             }
 
             buildRedundaneVisibility();
@@ -3983,18 +3947,18 @@ namespace FlowSERVER1 {
             if (string.IsNullOrEmpty(searchText)) {
 
                 string _selectedFolderSearch = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+
+                flowLayoutPanel1.Controls.Clear();
+
                 if (_selectedFolderSearch == "Home") {
                     await refreshHomePanels();
                 } else if (_selectedFolderSearch == "Shared To Me") {
-                    flowLayoutPanel1.Controls.Clear();
-                    _TypeValues.Clear();
-                    await RefreshGenerateUserShared(_TypeValues, "DirParMe");
+                    fileTypeValuesSharedToMe.Clear();
+                    await RefreshGenerateUserShared(fileTypeValuesSharedToMe, "DirParMe");
                 } else if (_selectedFolderSearch == "Shared Files") {
-                    flowLayoutPanel1.Controls.Clear();
-                    _TypeValuesOthers.Clear();
-                    await RefreshGenerateUserSharedOthers(_TypeValuesOthers, "DirParOther");
+                    fileTypeValuesSharedToOthers.Clear();
+                    await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
                 } else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
-                    flowLayoutPanel1.Controls.Clear();
                     await RefreshFolder();
                 }
             }
@@ -4136,6 +4100,7 @@ namespace FlowSERVER1 {
                     base64EncodedImageHome.Clear();
                     base64EncodedThumbnailHome.Clear();
                     base64EncodedImageSharedOthers.Clear();
+
                     HomePage.instance.lstFoldersPage.Items.Clear();
 
                     Hide();

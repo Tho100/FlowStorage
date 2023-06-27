@@ -30,11 +30,12 @@ namespace FlowSERVER1 {
         private List<int> TotalUploadOvertime = new List<int>();
         private List<string> TotalUploadDirectoryToday = new List<string>();
 
-        private string CurrentLang = "";
-        private string NewLang = "";
+        private string CurrentLang = null;
+        private string NewLang = null;
 
         private int CurrDateStats = 0;
-        private string JoinedDate = "";
+        private string userJoinedDate = null;
+
 
         readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audi", "info_excel" };
         readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
@@ -95,8 +96,7 @@ namespace FlowSERVER1 {
                 lblTotalUploadFileCount.Text = _totalUploadOvertime.ToString();
 
             } catch (Exception) {
-                CustomAlert showAlert = new CustomAlert(title: "An error occurred","Something went wrong while trying to open Settings.");
-                showAlert.Show();
+                new CustomAlert(title: "An error occurred","Something went wrong while trying to open Settings.");
             }
         }
 
@@ -875,7 +875,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Padam akaun saya";
                 label3.Text = "Akaun Flowstorage anda akan dipadam bersama-sama dengan data anda";
                 
-                label22.Text = "Tetapan";
+                lblSettings.Text = "Tetapan";
                 label1.Text = "Tetapan";
 
                 label13.Text = "Kiraan Fail";
@@ -886,12 +886,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Direktori";
                 label15.Text = "Tarikh Penciptaan Akaun";
 
-                guna2Button12.Text = "Ubah";
-                guna2Button13.Text = "Ubah";
-                guna2Button4.Text = "Log-Keluar";
-                guna2Button4.TextOffset = new Point(4,0);
+                btnUpdatePassword.Text = "Ubah";
+                btnUpdateUsername.Text = "Ubah";
+                btnLogout.Text = "Log-Keluar";
+                btnLogout.TextOffset = new Point(4,0);
                 guna2Button11.Location = new Point(140, 61);
-                guna2Button1.Text = "Padam Akaun";
+                btnDltAccount.Text = "Padam Akaun";
 
                 Form_1.lblUpload.Text = "Muat-Naik";
                 Form_1.btnUploadFile.Text = "Muat-Naik Fail";
@@ -934,7 +934,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Delete my account";
                 label3.Text = "Your Flowstorage account along with your data will be deleted";
 
-                label22.Text = "Settings";
+                lblSettings.Text = "Settings";
                 label1.Text = "Settings";
 
                 label13.Text = "Files Count";
@@ -945,12 +945,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Directory";
                 label15.Text = "Account Creation Date";
 
-                guna2Button12.Text = "Change";
-                guna2Button13.Text = "Change";
-                guna2Button4.Text = "Logout";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "Change";
+                btnUpdateUsername.Text = "Change";
+                btnLogout.Text = "Logout";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(121, 61);
-                guna2Button1.Text = "Delete Account";
+                btnDltAccount.Text = "Delete Account";
 
                 Form_1.lblUpload.Text = "Upload";
                 Form_1.label2.Text = "Item Count";
@@ -993,7 +993,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Verwijder mijn account";
                 label3.Text = "Uw Flowstorage-account wordt samen met uw gegevens verwijderd";
 
-                label22.Text = "Instellingen";
+                lblSettings.Text = "Instellingen";
                 label1.Text = "Instellingen";
 
                 label13.Text = "Aantal bestanden";
@@ -1004,12 +1004,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Map";
                 label15.Text = "Aanmaakdatum account";
 
-                guna2Button12.Text = "Wijzigen";
-                guna2Button13.Text = "Wijzigen";
-                guna2Button4.Text = "Uitloggen";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "Wijzigen";
+                btnUpdateUsername.Text = "Wijzigen";
+                btnLogout.Text = "Uitloggen";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(134, 61);
-                guna2Button1.Text = "Aanmelden";
+                btnDltAccount.Text = "Aanmelden";
 
                 Form_1.lblUpload.Text = "Uploaden";
                 Form_1.label2.Text = "Aantal artikelen";
@@ -1052,7 +1052,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Удалить мою учетную запись";
                 label3.Text = "Ваша учетная запись Flowstorage вместе с вашими данными будет удалена";
 
-                label22.Text = "Настройки";
+                lblSettings.Text = "Настройки";
                 label1.Text = "Настройки";
 
                 label13.Text = "Счетчик файлов";
@@ -1063,12 +1063,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Каталог";
                 label15.Text = "Дата создания учетной записи";
 
-                guna2Button12.Text = "Изменить";
-                guna2Button13.Text = "Изменить";
-                guna2Button4.Text = "Выход";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "Изменить";
+                btnUpdateUsername.Text = "Изменить";
+                btnLogout.Text = "Выход";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(166, 61);
-                guna2Button1.Text = "Удалить аккаунт";
+                btnDltAccount.Text = "Удалить аккаунт";
 
                 Form_1.lblUpload.Text = "Загрузить";
                 Form_1.label2.Text = "Количество предметов";
@@ -1112,7 +1112,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Mein Konto löschen";
                 label3.Text = "Ihr Flowstorage-Konto wird zusammen mit Ihren Daten gelöscht";
 
-                label22.Text = "Einstellungen";
+                lblSettings.Text = "Einstellungen";
                 label1.Text = "Einstellungen";
 
                 label13.Text = "Files Count";
@@ -1123,12 +1123,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Directory";
                 label15.Text = "Erstellungsdatum des Kontos";
 
-                guna2Button12.Text = "Ändern";
-                guna2Button13.Text = "Ändern";
-                guna2Button4.Text = "Ausloggen";
-                guna2Button4.TextOffset = new Point(10, 0);
+                btnUpdatePassword.Text = "Ändern";
+                btnUpdateUsername.Text = "Ändern";
+                btnLogout.Text = "Ausloggen";
+                btnLogout.TextOffset = new Point(10, 0);
                 guna2Button11.Location = new Point(155, 61);
-                guna2Button1.Text = "Konto Löschen";
+                btnDltAccount.Text = "Konto Löschen";
 
                 Form_1.lblUpload.Text = "Hochladen";
                 Form_1.label2.Text = "Stückzahl";
@@ -1171,7 +1171,7 @@ namespace FlowSERVER1 {
                 label2.Text = "アカウントを削除します";
                 label3.Text = "Flowstorage アカウントとデータが削除されます";
 
-                label22.Text = "設定";
+                lblSettings.Text = "設定";
                 label1.Text = "設定";
 
                 label13.Text = "ファイル数";
@@ -1182,12 +1182,12 @@ namespace FlowSERVER1 {
                 label29.Text = "ディレクトリ";
                 label15.Text = "アカウント作成日";
 
-                guna2Button12.Text = "変化";
-                guna2Button13.Text = "変化";
-                guna2Button4.Text = "ログアウト";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "変化";
+                btnUpdateUsername.Text = "変化";
+                btnLogout.Text = "ログアウト";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(199, 61);
-                guna2Button1.Text = "アカウントを削除する";
+                btnDltAccount.Text = "アカウントを削除する";
 
                 Form_1.lblUpload.Text = "アップロード";
                 Form_1.label2.Text = "アイテム数";
@@ -1231,7 +1231,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Borrar mi cuenta";
                 label3.Text = "Se eliminará su cuenta de Flowstorage junto con sus datos";
 
-                label22.Text = "Ajustes";
+                lblSettings.Text = "Ajustes";
                 label1.Text = "Ajustes";
 
                 label13.Text = "Recuento de archivos";
@@ -1242,12 +1242,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Directorio";
                 label15.Text = "Fecha de creación de la cuenta";
 
-                guna2Button12.Text = "Cambiar";
-                guna2Button13.Text = "Cambiar";
-                guna2Button4.Text = "Cerrar sesión";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "Cambiar";
+                btnUpdateUsername.Text = "Cambiar";
+                btnLogout.Text = "Cerrar sesión";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(152, 61);
-                guna2Button1.Text = "Borrar cuenta";
+                btnDltAccount.Text = "Borrar cuenta";
 
                 Form_1.lblUpload.Text = "Subir";
                 Form_1.label2.Text = "Recuento de elementos";
@@ -1290,7 +1290,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Supprimer mon compte";
                 label3.Text = "Votre compte Flowstorage ainsi que vos données seront supprimés";
 
-                label22.Text = "Paramètres";
+                lblSettings.Text = "Paramètres";
                 label1.Text = "Paramètres";
 
                 label13.Text = "Nombre de fichiers";
@@ -1301,12 +1301,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Annuaire";
                 label15.Text = "Date de création du compte";
 
-                guna2Button12.Text = "Changement";
-                guna2Button13.Text = "Changement";
-                guna2Button4.Text = "Se déconnecter";
-                guna2Button4.TextOffset = new Point(-3, 0);
+                btnUpdatePassword.Text = "Changement";
+                btnUpdateUsername.Text = "Changement";
+                btnLogout.Text = "Se déconnecter";
+                btnLogout.TextOffset = new Point(-3, 0);
                 guna2Button11.Location = new Point(230, 61);
-                guna2Button1.Text = "Supprimer le compte";
+                btnDltAccount.Text = "Supprimer le compte";
 
                 Form_1.lblUpload.Text = "Télécharger";
                 Form_1.label2.Text = "Nombre d'éléments";
@@ -1349,7 +1349,7 @@ namespace FlowSERVER1 {
                 label2.Text = "Deletar minha conta";
                 label3.Text = "Sua conta Flowstorage junto com seus dados serão excluídos";
 
-                label22.Text = "Configurações";
+                lblSettings.Text = "Configurações";
                 label1.Text = "Configurações";
 
                 label13.Text = "Contagem de arquivos";
@@ -1360,12 +1360,12 @@ namespace FlowSERVER1 {
                 label29.Text = "Diretório";
                 label15.Text = "Data de criação da conta";
 
-                guna2Button12.Text = "Mudar";
-                guna2Button13.Text = "Mudar";
-                guna2Button4.Text = "Sair";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "Mudar";
+                btnUpdateUsername.Text = "Mudar";
+                btnLogout.Text = "Sair";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(196, 61);
-                guna2Button1.Text = "Deletar conta";
+                btnDltAccount.Text = "Deletar conta";
 
                 Form_1.lblUpload.Text = "Carregar";
                 Form_1.label2.Text = "Contagem de itens";
@@ -1408,7 +1408,7 @@ namespace FlowSERVER1 {
                 label2.Text = "删除我的账户";
                 label3.Text = "您的 Flowstorage 帐户以及您的数据将被删除";
 
-                label22.Text = "设置";
+                lblSettings.Text = "设置";
                 label1.Text = "设置";
 
                 label13.Text = "文件数";
@@ -1420,12 +1420,12 @@ namespace FlowSERVER1 {
                 label15.Text = "帐户创建日期";
                 label70.Text = "设置";
 
-                guna2Button12.Text = "改变";
-                guna2Button13.Text = "改变";
-                guna2Button4.Text = "登出";
-                guna2Button4.TextOffset = new Point(0, 0);
+                btnUpdatePassword.Text = "改变";
+                btnUpdateUsername.Text = "改变";
+                btnLogout.Text = "登出";
+                btnLogout.TextOffset = new Point(0, 0);
                 guna2Button11.Location = new Point(102, 61);
-                guna2Button1.Text = "删除帐户";
+                btnDltAccount.Text = "删除帐户";
 
                 Form_1.lblUpload.Text = "上传";
                 Form_1.label2.Text = "物品数量";
@@ -2107,24 +2107,21 @@ namespace FlowSERVER1 {
 
                 if(guna2TabControl1.SelectedIndex == 1) {
 
-                    CurrDateStats++;
+                    if(CurrDateStats == 0) {
 
-                    string joinedDate = "";
-                    const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
+                        const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
 
-                    using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        joinedDate = command.ExecuteScalar()?.ToString();
+                        using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            userJoinedDate = command.ExecuteScalar()?.ToString();
+                        }
+
+                        CurrDateStats++;
+
+                    } else {
+                        lblAccountCreatedDate.Text = userJoinedDate;
                     }
 
-                    if (joinedDate != null) {
-                        lblAccountCreatedDate.Text = joinedDate;
-                    }
-
-                } else {
-                    if(CurrDateStats > 0) {
-                        lblAccountCreatedDate.Text = JoinedDate;
-                    }
                 }
 
                 if(guna2TabControl1.SelectedIndex == 3) {
@@ -2193,15 +2190,15 @@ namespace FlowSERVER1 {
 
                     if(retrieveFileSharingPas() != "DEF") {
 
-                        guna2Button27.Visible = true;
-                        guna2Button27.Enabled = true;
+                        btnRmvSharingAuth.Visible = true;
+                        btnRmvSharingAuth.Enabled = true;
 
                         guna2Button23.Visible = false;
                         guna2Button23.Enabled = false;
                     } else {
 
-                        guna2Button27.Visible = false;
-                        guna2Button27.Enabled = false;
+                        btnRmvSharingAuth.Visible = false;
+                        btnRmvSharingAuth.Enabled = false;
 
                         guna2Button23.Visible = true;
                         guna2Button23.Enabled = true;
@@ -2259,8 +2256,8 @@ namespace FlowSERVER1 {
                 guna2Button23.Visible = true;
                 guna2Button23.Enabled = true;
 
-                guna2Button27.Visible = false;
-                guna2Button27.Enabled = false;
+                btnRmvSharingAuth.Visible = false;
+                btnRmvSharingAuth.Enabled = false;
             }
         }
 

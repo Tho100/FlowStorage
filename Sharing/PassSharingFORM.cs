@@ -44,8 +44,8 @@ namespace FlowSERVER1 {
                     SettingsForm.instance.guna2Button23.Visible = false;
                     SettingsForm.instance.guna2Button23.Enabled = false;
 
-                    SettingsForm.instance.guna2Button27.Visible = true;
-                    SettingsForm.instance.guna2Button27.Enabled = true;
+                    SettingsForm.instance.btnRmvSharingAuth.Visible = true;
+                    SettingsForm.instance.btnRmvSharingAuth.Enabled = true;
 
                     const string addSharingAuthQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
                     using(MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {

@@ -12,6 +12,8 @@ namespace FlowSERVER1 {
     public class Globals {
 
         static public readonly Image VerticalMenuImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
+        static public readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
+        static public readonly Image DIRIcon = FlowSERVER1.Properties.Resources.DirIcon;
 
         static public readonly Image PDFImage = FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
         static public readonly Image AudioImage = FlowSERVER1.Properties.Resources.icons8_audio_file_60;
@@ -31,7 +33,6 @@ namespace FlowSERVER1 {
         static private readonly Image HTMLImage = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
         static private readonly Image SQLImage = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
         static private readonly Image PYImage = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-
         static public String custUsername = "";
         static public String custEmail = "";
         static public String accountType = "";

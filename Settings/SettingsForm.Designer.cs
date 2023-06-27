@@ -42,20 +42,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.lnkLblBackupRecovery = new System.Windows.Forms.LinkLabel();
             this.guna2Panel12 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnUpdatePassword = new Guna.UI2.WinForms.Guna2Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.guna2Panel11 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Button13 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnUpdateUsername = new Guna.UI2.WinForms.Guna2Button();
             this.label33 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
             this.label35 = new System.Windows.Forms.Label();
-            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
             this.label36 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
+            this.lblSettings = new System.Windows.Forms.Label();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
@@ -69,7 +69,7 @@
             this.lblUserUsername = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnDltAccount = new Guna.UI2.WinForms.Guna2Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Separator4 = new Guna.UI2.WinForms.Guna2Separator();
@@ -118,7 +118,7 @@
             this.label71 = new System.Windows.Forms.Label();
             this.label70 = new System.Windows.Forms.Label();
             this.guna2Panel22 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Button27 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRmvSharingAuth = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button23 = new Guna.UI2.WinForms.Guna2Button();
             this.label66 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
@@ -320,11 +320,11 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.tabPage1.Controls.Add(this.linkLabel1);
+            this.tabPage1.Controls.Add(this.lnkLblBackupRecovery);
             this.tabPage1.Controls.Add(this.guna2Panel12);
             this.tabPage1.Controls.Add(this.guna2Panel11);
             this.tabPage1.Controls.Add(this.guna2Panel7);
-            this.tabPage1.Controls.Add(this.label22);
+            this.tabPage1.Controls.Add(this.lblSettings);
             this.tabPage1.Controls.Add(this.guna2Button3);
             this.tabPage1.Controls.Add(this.guna2Panel2);
             this.tabPage1.Controls.Add(this.guna2Panel1);
@@ -336,28 +336,28 @@
             this.tabPage1.Text = "Account";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // linkLabel1
+            // lnkLblBackupRecovery
             // 
-            this.linkLabel1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.linkLabel1.Location = new System.Drawing.Point(817, 17);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(167, 21);
-            this.linkLabel1.TabIndex = 33;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Backup Recovery Key";
-            this.linkLabel1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.lnkLblBackupRecovery.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.lnkLblBackupRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkLblBackupRecovery.AutoSize = true;
+            this.lnkLblBackupRecovery.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkLblBackupRecovery.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkLblBackupRecovery.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.lnkLblBackupRecovery.Location = new System.Drawing.Point(817, 17);
+            this.lnkLblBackupRecovery.Name = "lnkLblBackupRecovery";
+            this.lnkLblBackupRecovery.Size = new System.Drawing.Size(167, 21);
+            this.lnkLblBackupRecovery.TabIndex = 33;
+            this.lnkLblBackupRecovery.TabStop = true;
+            this.lnkLblBackupRecovery.Text = "Backup Recovery Key";
+            this.lnkLblBackupRecovery.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.lnkLblBackupRecovery.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // guna2Panel12
             // 
             this.guna2Panel12.BorderRadius = 5;
             this.guna2Panel12.BorderThickness = 1;
-            this.guna2Panel12.Controls.Add(this.guna2Button12);
+            this.guna2Panel12.Controls.Add(this.btnUpdatePassword);
             this.guna2Panel12.Controls.Add(this.label8);
             this.guna2Panel12.Controls.Add(this.label18);
             this.guna2Panel12.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
@@ -367,30 +367,30 @@
             this.guna2Panel12.TabIndex = 29;
             this.guna2Panel12.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel12_Paint);
             // 
-            // guna2Button12
+            // btnUpdatePassword
             // 
-            this.guna2Button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button12.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button12.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button12.BorderRadius = 5;
-            this.guna2Button12.BorderThickness = 1;
-            this.guna2Button12.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button12.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button12.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button12.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button12.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button12.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button12.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button12.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button12.ImageOffset = new System.Drawing.Point(-8, 1);
-            this.guna2Button12.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button12.Location = new System.Drawing.Point(827, 29);
-            this.guna2Button12.Name = "guna2Button12";
-            this.guna2Button12.Size = new System.Drawing.Size(123, 30);
-            this.guna2Button12.TabIndex = 25;
-            this.guna2Button12.Text = "Change";
-            this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
+            this.btnUpdatePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdatePassword.BackColor = System.Drawing.Color.Transparent;
+            this.btnUpdatePassword.BorderColor = System.Drawing.Color.Empty;
+            this.btnUpdatePassword.BorderRadius = 5;
+            this.btnUpdatePassword.BorderThickness = 1;
+            this.btnUpdatePassword.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnUpdatePassword.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpdatePassword.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpdatePassword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUpdatePassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUpdatePassword.FillColor = System.Drawing.Color.Empty;
+            this.btnUpdatePassword.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdatePassword.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnUpdatePassword.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnUpdatePassword.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.btnUpdatePassword.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnUpdatePassword.Location = new System.Drawing.Point(827, 29);
+            this.btnUpdatePassword.Name = "btnUpdatePassword";
+            this.btnUpdatePassword.Size = new System.Drawing.Size(123, 30);
+            this.btnUpdatePassword.TabIndex = 25;
+            this.btnUpdatePassword.Text = "Change";
+            this.btnUpdatePassword.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
             // label8
             // 
@@ -421,7 +421,7 @@
             // 
             this.guna2Panel11.BorderRadius = 5;
             this.guna2Panel11.BorderThickness = 1;
-            this.guna2Panel11.Controls.Add(this.guna2Button13);
+            this.guna2Panel11.Controls.Add(this.btnUpdateUsername);
             this.guna2Panel11.Controls.Add(this.label33);
             this.guna2Panel11.Controls.Add(this.label58);
             this.guna2Panel11.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
@@ -431,30 +431,30 @@
             this.guna2Panel11.TabIndex = 28;
             this.guna2Panel11.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel11_Paint);
             // 
-            // guna2Button13
+            // btnUpdateUsername
             // 
-            this.guna2Button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button13.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button13.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button13.BorderRadius = 5;
-            this.guna2Button13.BorderThickness = 1;
-            this.guna2Button13.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button13.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button13.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button13.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button13.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button13.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button13.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button13.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button13.ImageOffset = new System.Drawing.Point(-8, 1);
-            this.guna2Button13.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button13.Location = new System.Drawing.Point(827, 29);
-            this.guna2Button13.Name = "guna2Button13";
-            this.guna2Button13.Size = new System.Drawing.Size(123, 30);
-            this.guna2Button13.TabIndex = 25;
-            this.guna2Button13.Text = "Change";
-            this.guna2Button13.Click += new System.EventHandler(this.guna2Button13_Click);
+            this.btnUpdateUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdateUsername.BackColor = System.Drawing.Color.Transparent;
+            this.btnUpdateUsername.BorderColor = System.Drawing.Color.Empty;
+            this.btnUpdateUsername.BorderRadius = 5;
+            this.btnUpdateUsername.BorderThickness = 1;
+            this.btnUpdateUsername.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnUpdateUsername.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpdateUsername.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpdateUsername.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUpdateUsername.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUpdateUsername.FillColor = System.Drawing.Color.Empty;
+            this.btnUpdateUsername.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateUsername.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnUpdateUsername.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnUpdateUsername.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.btnUpdateUsername.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnUpdateUsername.Location = new System.Drawing.Point(827, 29);
+            this.btnUpdateUsername.Name = "btnUpdateUsername";
+            this.btnUpdateUsername.Size = new System.Drawing.Size(123, 30);
+            this.btnUpdateUsername.TabIndex = 25;
+            this.btnUpdateUsername.Text = "Change";
+            this.btnUpdateUsername.Click += new System.EventHandler(this.guna2Button13_Click);
             // 
             // label33
             // 
@@ -486,7 +486,7 @@
             this.guna2Panel7.BorderRadius = 5;
             this.guna2Panel7.BorderThickness = 1;
             this.guna2Panel7.Controls.Add(this.label35);
-            this.guna2Panel7.Controls.Add(this.guna2Button4);
+            this.guna2Panel7.Controls.Add(this.btnLogout);
             this.guna2Panel7.Controls.Add(this.label36);
             this.guna2Panel7.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel7.Location = new System.Drawing.Point(3, 339);
@@ -508,32 +508,32 @@
             this.label35.TabIndex = 24;
             this.label35.Text = "Flowstorage will not automatically login your account on startup";
             // 
-            // guna2Button4
+            // btnLogout
             // 
-            this.guna2Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button4.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button4.BorderRadius = 5;
-            this.guna2Button4.BorderThickness = 1;
-            this.guna2Button4.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button4.DefaultAutoSize = true;
-            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button4.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button4.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
-            this.guna2Button4.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button4.ImageOffset = new System.Drawing.Point(-18, 1);
-            this.guna2Button4.ImageSize = new System.Drawing.Size(35, 35);
-            this.guna2Button4.Location = new System.Drawing.Point(831, 29);
-            this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.Size = new System.Drawing.Size(119, 33);
-            this.guna2Button4.TabIndex = 0;
-            this.guna2Button4.Text = "Logout";
-            this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click);
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogout.BackColor = System.Drawing.Color.Transparent;
+            this.btnLogout.BorderColor = System.Drawing.Color.Empty;
+            this.btnLogout.BorderRadius = 5;
+            this.btnLogout.BorderThickness = 1;
+            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnLogout.DefaultAutoSize = true;
+            this.btnLogout.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogout.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLogout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLogout.FillColor = System.Drawing.Color.Empty;
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogout.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnLogout.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
+            this.btnLogout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLogout.ImageOffset = new System.Drawing.Point(-18, 1);
+            this.btnLogout.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnLogout.Location = new System.Drawing.Point(831, 29);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(119, 33);
+            this.btnLogout.TabIndex = 0;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.Click += new System.EventHandler(this.guna2Button4_Click);
             // 
             // label36
             // 
@@ -547,17 +547,17 @@
             this.label36.TabIndex = 23;
             this.label36.Text = "Logout my acount";
             // 
-            // label22
+            // lblSettings
             // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label22.Location = new System.Drawing.Point(56, 13);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(90, 30);
-            this.label22.TabIndex = 31;
-            this.label22.Text = "Settings";
-            this.label22.Click += new System.EventHandler(this.label22_Click);
+            this.lblSettings.AutoSize = true;
+            this.lblSettings.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSettings.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblSettings.Location = new System.Drawing.Point(56, 13);
+            this.lblSettings.Name = "lblSettings";
+            this.lblSettings.Size = new System.Drawing.Size(90, 30);
+            this.lblSettings.TabIndex = 31;
+            this.lblSettings.Text = "Settings";
+            this.lblSettings.Click += new System.EventHandler(this.label22_Click);
             // 
             // guna2Button3
             // 
@@ -742,7 +742,7 @@
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.label3);
             this.guna2Panel1.Controls.Add(this.label2);
-            this.guna2Panel1.Controls.Add(this.guna2Button1);
+            this.guna2Panel1.Controls.Add(this.btnDltAccount);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel1.Location = new System.Drawing.Point(3, 431);
             this.guna2Panel1.Name = "guna2Panel1";
@@ -750,28 +750,28 @@
             this.guna2Panel1.TabIndex = 25;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
-            // guna2Button1
+            // btnDltAccount
             // 
-            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button1.BorderRadius = 5;
-            this.guna2Button1.BorderThickness = 1;
-            this.guna2Button1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button1.DefaultAutoSize = true;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button1.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button1.Location = new System.Drawing.Point(811, 27);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(145, 33);
-            this.guna2Button1.TabIndex = 0;
-            this.guna2Button1.Text = "Delete Account";
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnDltAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDltAccount.BackColor = System.Drawing.Color.Transparent;
+            this.btnDltAccount.BorderColor = System.Drawing.Color.Empty;
+            this.btnDltAccount.BorderRadius = 5;
+            this.btnDltAccount.BorderThickness = 1;
+            this.btnDltAccount.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnDltAccount.DefaultAutoSize = true;
+            this.btnDltAccount.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnDltAccount.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnDltAccount.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnDltAccount.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnDltAccount.FillColor = System.Drawing.Color.Empty;
+            this.btnDltAccount.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDltAccount.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnDltAccount.Location = new System.Drawing.Point(811, 27);
+            this.btnDltAccount.Name = "btnDltAccount";
+            this.btnDltAccount.Size = new System.Drawing.Size(145, 33);
+            this.btnDltAccount.TabIndex = 0;
+            this.btnDltAccount.Text = "Delete Account";
+            this.btnDltAccount.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // tabPage2
             // 
@@ -1501,7 +1501,7 @@
             // 
             this.guna2Panel22.BorderRadius = 5;
             this.guna2Panel22.BorderThickness = 1;
-            this.guna2Panel22.Controls.Add(this.guna2Button27);
+            this.guna2Panel22.Controls.Add(this.btnRmvSharingAuth);
             this.guna2Panel22.Controls.Add(this.guna2Button23);
             this.guna2Panel22.Controls.Add(this.label66);
             this.guna2Panel22.Controls.Add(this.label67);
@@ -1511,32 +1511,32 @@
             this.guna2Panel22.Size = new System.Drawing.Size(990, 87);
             this.guna2Panel22.TabIndex = 31;
             // 
-            // guna2Button27
+            // btnRmvSharingAuth
             // 
-            this.guna2Button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button27.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button27.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button27.BorderRadius = 5;
-            this.guna2Button27.BorderThickness = 1;
-            this.guna2Button27.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button27.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button27.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button27.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button27.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button27.Enabled = false;
-            this.guna2Button27.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button27.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button27.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button27.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button27.ImageOffset = new System.Drawing.Point(-8, 1);
-            this.guna2Button27.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button27.Location = new System.Drawing.Point(811, 29);
-            this.guna2Button27.Name = "guna2Button27";
-            this.guna2Button27.Size = new System.Drawing.Size(164, 30);
-            this.guna2Button27.TabIndex = 28;
-            this.guna2Button27.Text = "Remove Password";
-            this.guna2Button27.Visible = false;
-            this.guna2Button27.Click += new System.EventHandler(this.guna2Button27_Click);
+            this.btnRmvSharingAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRmvSharingAuth.BackColor = System.Drawing.Color.Transparent;
+            this.btnRmvSharingAuth.BorderColor = System.Drawing.Color.Empty;
+            this.btnRmvSharingAuth.BorderRadius = 5;
+            this.btnRmvSharingAuth.BorderThickness = 1;
+            this.btnRmvSharingAuth.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnRmvSharingAuth.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRmvSharingAuth.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRmvSharingAuth.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRmvSharingAuth.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRmvSharingAuth.Enabled = false;
+            this.btnRmvSharingAuth.FillColor = System.Drawing.Color.Empty;
+            this.btnRmvSharingAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRmvSharingAuth.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnRmvSharingAuth.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnRmvSharingAuth.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.btnRmvSharingAuth.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnRmvSharingAuth.Location = new System.Drawing.Point(811, 29);
+            this.btnRmvSharingAuth.Name = "btnRmvSharingAuth";
+            this.btnRmvSharingAuth.Size = new System.Drawing.Size(164, 30);
+            this.btnRmvSharingAuth.TabIndex = 28;
+            this.btnRmvSharingAuth.Text = "Remove Password";
+            this.btnRmvSharingAuth.Visible = false;
+            this.btnRmvSharingAuth.Click += new System.EventHandler(this.guna2Button27_Click);
             // 
             // guna2Button23
             // 
@@ -2979,7 +2979,7 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button2;
         public System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2Button guna2Button3;
-        public System.Windows.Forms.Label label22;
+        public System.Windows.Forms.Label lblSettings;
         public System.Windows.Forms.Label label23;
         public System.Windows.Forms.Label label24;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel7;
@@ -3047,15 +3047,15 @@
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label label3;
         public Guna.UI2.WinForms.Guna2TabControl guna2TabControl1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        public Guna.UI2.WinForms.Guna2Button btnDltAccount;
         public System.Windows.Forms.Label label35;
         public System.Windows.Forms.Label label36;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
+        public Guna.UI2.WinForms.Guna2Button btnLogout;
         public Guna.UI2.WinForms.Guna2Button guna2Button11;
         public System.Windows.Forms.Label label33;
         public System.Windows.Forms.Label label58;
-        public Guna.UI2.WinForms.Guna2Button guna2Button13;
-        public Guna.UI2.WinForms.Guna2Button guna2Button12;
+        public Guna.UI2.WinForms.Guna2Button btnUpdateUsername;
+        public Guna.UI2.WinForms.Guna2Button btnUpdatePassword;
         public System.Windows.Forms.Label label8;
         public System.Windows.Forms.Label label18;
         public System.Windows.Forms.TabPage tabPage2;
@@ -3094,7 +3094,7 @@
         public System.Windows.Forms.Label label70;
         private Guna.UI2.WinForms.Guna2Button guna2Button25;
         public Guna.UI2.WinForms.Guna2Button guna2Button26;
-        public Guna.UI2.WinForms.Guna2Button guna2Button27;
+        public Guna.UI2.WinForms.Guna2Button btnRmvSharingAuth;
         private System.Windows.Forms.Label label72;
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.Label label73;
@@ -3124,7 +3124,7 @@
         public System.Windows.Forms.Label label75;
         public System.Windows.Forms.Label lblUserEmail;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel lnkLblBackupRecovery;
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label77;

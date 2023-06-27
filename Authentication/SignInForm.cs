@@ -657,14 +657,14 @@ namespace FlowSERVER1 {
 
                 try {
 
+                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                    HomePage.instance.fileTypeValuesSharedToMe.Clear();
+                    HomePage.instance.fileTypeValuesSharedToOthers.Clear();
+
                     await generateUserData();
 
                     RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
                     retrievalAlertForm?.Close();
-
-                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
-                    HomePage.instance._TypeValues.Clear();
-                    HomePage.instance._TypeValuesOthers.Clear();
 
                     if (guna2CheckBox2.Checked) {
                         setupAutoLogin(Globals.custUsername);
