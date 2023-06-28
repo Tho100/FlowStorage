@@ -249,22 +249,18 @@ namespace FlowSERVER1 {
 
             btnDownloadFolder.Visible = false;
             btnDeleteFolder.Visible = false;
-            btnRefreshSharedFiles.Visible = false;
             btnOpenRenameFolderPage.Visible = false;
-            btnRefreshFiles.Visible = true;
         }
 
         private void buildButtonOnSharedFilesSelected() {
-            btnRefreshSharedFiles.Visible = true;
+            btnRefreshFiles.Visible = true;
             btnOpenRenameFolderPage.Visible = false;
-            btnRefreshFiles.Visible = false;
             btnDeleteFolder.Visible = false;
             btnDownloadFolder.Visible = false;
         }
 
         private void buildButtonsOnSharedToMeSelected() {
-            btnRefreshSharedFiles.Visible = true;
-            btnRefreshFiles.Visible = false;
+            btnRefreshFiles.Visible = true;
             btnDownloadFolder.Visible = false;
             btnDeleteFolder.Visible = false;
             btnOpenRenameFolderPage.Visible = false;
@@ -272,8 +268,8 @@ namespace FlowSERVER1 {
 
         private void buildButtonsOnFolderNameSelected() {
             btnDeleteFolder.Visible = true;
-            btnOpenRenameFolderPage.Visible = true;
             btnRefreshFiles.Visible = false;
+            btnOpenRenameFolderPage.Visible = true;
             pnlSubPanelDetails.Visible = false;
             btnDownloadFolder.Visible = true;
         }
@@ -1819,9 +1815,10 @@ namespace FlowSERVER1 {
                     .Select(label => label.Text.ToLower()));
 
                     string selectedItems = open.FileName;
-
                     string selectedFileName = Path.GetFileName(selectedItems);
+
                     if (existingLabels.Contains(selectedFileName.ToLower().Trim())) {
+                        new CustomAlert(title: "Upload Failed",$"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}").Show();
                         return;
                     }
 
@@ -3800,16 +3797,29 @@ namespace FlowSERVER1 {
         private async void guna2Button4_Click(object sender, EventArgs e) {
 
             int selectedIndex = lstFoldersPage.SelectedIndex;
-
-            fileTypeValuesSharedToMe.Clear();
-            fileTypeValuesSharedToOthers.Clear();
+            
             flowLayoutPanel1.Controls.Clear();
 
-            if (selectedIndex == 1) {
+            if (selectedIndex == 1 && lblCurrentPageText.Text == "Shared To Me") {
+                fileTypeValuesSharedToMe.Clear();
                 await RefreshGenerateUserShared(fileTypeValuesSharedToMe, "DirParMe");
             }
-            else if (selectedIndex == 2) {
+            else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared To Others") {
+                fileTypeValuesSharedToOthers.Clear();
                 await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
+            } 
+            else if (selectedIndex == 0 && lblCurrentPageText.Text == "Home") {
+
+                base64EncodedImageHome.Clear();
+                base64EncodedThumbnailHome.Clear();
+                buildHomeFiles();
+
+            }
+            else if (lblCurrentPageText.Text == "Public Storage") {
+
+                base64EncodedImagePs.Clear();
+                base64EncodedThumbnailPs.Clear();
+                buildPublicStorageFiles();
             }
 
             buildRedundaneVisibility();
@@ -3825,7 +3835,6 @@ namespace FlowSERVER1 {
         private async Task refreshHomePanels() {
 
             btnDeleteFolder.Visible = false;
-            btnRefreshSharedFiles.Visible = false;
             flowLayoutPanel1.Controls.Clear();
 
             foreach (string tableName in Globals.publicTables) {
@@ -3941,34 +3950,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void guna2Button8_Click(object sender, EventArgs e) {
-
-            base64EncodedImageHome.Clear();
-            base64EncodedThumbnailHome.Clear();
-
-            btnDeleteFolder.Visible = false;
-            btnRefreshSharedFiles.Visible = false;
-            flowLayoutPanel1.Controls.Clear();
-
-            foreach (string tableName in Globals.publicTables) {
-                if (Globals.tableToFileType.ContainsKey(tableName)) {
-                    string fileType = Globals.tableToFileType[tableName];
-                    if (fileType != null) {
-
-                        clearRedundane();
-
-                        await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
-                    }
-                    else {
-                        await buildDirectoryPanel(await crud.countRow(tableName));
-                    }
-                }
-            }
-
-            buildRedundaneVisibility();
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
-        }
-
         /// <summary>
         /// Go to Home button is pressed
         /// </summary>
@@ -3982,7 +3963,8 @@ namespace FlowSERVER1 {
             }
 
             lblCurrentPageText.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
-
+            
+            btnRefreshFiles.Visible = true;
             pnlSubPanelDetails.Visible = true;
             btnLogout.Visible = true;
             pnlMain.Visible = true;
@@ -4857,6 +4839,7 @@ namespace FlowSERVER1 {
             btnShowFolderPage.FillColor = GlobalStyle.TransparentColor;
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
 
+            btnRefreshFiles.Visible = true;
             pnlSubPanelDetails.Visible = true;
             btnLogout.Visible = true;
             pnlPublicStorage.Visible = true;

@@ -45,7 +45,7 @@
             this.lblSubHeader.ForeColor = System.Drawing.Color.LightGray;
             this.lblSubHeader.Location = new System.Drawing.Point(23, 65);
             this.lblSubHeader.Name = "lblSubHeader";
-            this.lblSubHeader.Size = new System.Drawing.Size(387, 58);
+            this.lblSubHeader.Size = new System.Drawing.Size(404, 68);
             this.lblSubHeader.TabIndex = 50;
             this.lblSubHeader.Text = "Subheader";
             // 
