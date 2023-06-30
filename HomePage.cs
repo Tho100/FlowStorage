@@ -1758,7 +1758,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true);
 
                 buildRedundaneVisibility();
 
@@ -2777,6 +2777,8 @@ namespace FlowSERVER1 {
                 }
             }
 
+            lblPsCount.Text = $"{flowLayoutPanel1.Controls.Count.ToString()} Files";
+
             buildRedundaneVisibility();
 
         }
@@ -2848,8 +2850,6 @@ namespace FlowSERVER1 {
                     flowLayoutPanel1.WrapContents = true;
 
                     buildHomeFiles();
-
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
                 }
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
@@ -3804,7 +3804,7 @@ namespace FlowSERVER1 {
                 fileTypeValuesSharedToMe.Clear();
                 await RefreshGenerateUserShared(fileTypeValuesSharedToMe, "DirParMe");
             }
-            else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared To Others") {
+            else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared Files") {
                 fileTypeValuesSharedToOthers.Clear();
                 await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
             } 
@@ -3939,6 +3939,10 @@ namespace FlowSERVER1 {
                     await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
                 } else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
                     await RefreshFolder();
+                } else if (lblCurrentPageText.Text == "Public Storage") {
+                    base64EncodedImagePs.Clear();
+                    base64EncodedThumbnailPs.Clear();
+                    buildPublicStorageFiles();
                 }
             }
 
@@ -4856,6 +4860,12 @@ namespace FlowSERVER1 {
 
             buildPublicStorageFiles();
 
+        }
+
+        private void btnMyPsFiles_Click(object sender, EventArgs e) {
+            flowLayoutPanel1.Controls.Clear();
+            buildRedundaneVisibility();
+            buildPublicStorageFiles();
         }
     }
 }

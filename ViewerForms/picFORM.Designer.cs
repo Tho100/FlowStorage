@@ -219,7 +219,7 @@
             this.filterPanel.Controls.Add(this.guna2Panel2);
             this.filterPanel.Controls.Add(this.guna2Panel1);
             this.filterPanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.filterPanel.Location = new System.Drawing.Point(89, 60);
+            this.filterPanel.Location = new System.Drawing.Point(83, 76);
             this.filterPanel.Name = "filterPanel";
             this.filterPanel.Size = new System.Drawing.Size(263, 438);
             this.filterPanel.TabIndex = 68;
@@ -655,7 +655,6 @@
             // 
             // btnEditComment
             // 
-            this.btnEditComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditComment.Animated = true;
             this.btnEditComment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.btnEditComment.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -678,7 +677,6 @@
             // 
             // guna2Button10
             // 
-            this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button10.Animated = true;
             this.guna2Button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.guna2Button10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));

@@ -13,7 +13,7 @@ namespace FlowSERVER1.Helper {
         private int top = 275; 
         private int h_p = 100;
 
-        public void generatePanel(string parameterName, int length, List<(string,string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage) {
+        public void generatePanel(string parameterName, int length, List<(string,string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false) {
 
             for(int i=0; i<length; i++) {
 
@@ -91,9 +91,9 @@ namespace FlowSERVER1.Helper {
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = GlobalStyle.TransparentColor;
                 remBut.Image = GlobalStyle.GarbageImage; 
-                remBut.Visible = true;
+                remBut.Visible = isFromPs == true ? false : true;
                 remBut.Location = GlobalStyle.GarbageButtonLoc; 
-                remBut.Enabled = true;
+                remBut.Enabled = isFromPs == true ? false : true;
 
                 remBut.Click += onPressedMoreButton[i];
 
