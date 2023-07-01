@@ -1278,7 +1278,6 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Image = Globals.EXEImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        Form bgBlur = new Form();
                                         exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, "null",Globals.custUsername);
                                         displayExe.Show();
                                     };
@@ -1333,7 +1332,6 @@ namespace FlowSERVER1 {
       
                                     textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
-                                        Form bgBlur = new Form();
                                         apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null");
                                         displayPic.Show();
                                     };
@@ -1366,7 +1364,6 @@ namespace FlowSERVER1 {
                            
                                     textboxPic.Image = Globals.MSIImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        Form bgBlur = new Form();
                                         msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null",Globals.custUsername);
                                         displayMsi.Show();
                                     };
@@ -2095,7 +2092,6 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.APKImage;
                                 textboxPic.Click += (sender_gi, e_gi) => {
-                                    Form bgBlur = new Form();
                                     apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "ps_info_apk", "null");
                                     displayPic.Show();
                                 };
@@ -2572,7 +2568,6 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            Form bgBlur = new Form();
                             picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
                             displayPic.Show();
 
@@ -2610,7 +2605,6 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
-                            Form bgBlur = new Form();
                             apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.folderUploadTable, "null");
                             displayPic.ShowDialog();
                         };
@@ -2631,11 +2625,12 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = toBitMap;
                         textboxExl.Click += (sender_vid, e_vid) => {
+
                             var getImgName = (Guna2PictureBox)sender_vid;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            Form bgBlur = new Form();
                             vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayVid.ShowDialog();
                         };
@@ -2649,7 +2644,6 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
                             pdfFORM displayPic = new pdfFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
@@ -2662,7 +2656,6 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
                             wordFORM displayPic = new wordFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
@@ -2675,7 +2668,6 @@ namespace FlowSERVER1 {
                         
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
                             exlFORM displayPic = new exlFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
@@ -2689,7 +2681,6 @@ namespace FlowSERVER1 {
                         
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
                             ptxFORM displayPic = new ptxFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
@@ -2702,7 +2693,6 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            Form bgBlur = new Form();
                             audFORM displayPic = new audFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
@@ -4377,7 +4367,6 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.EXEImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
-                                Form bgBlur = new Form();
                                 exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, "null", Globals.custUsername);
                                 displayExe.Show();
                             };
@@ -4432,7 +4421,6 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.APKImage;
                             textboxPic.Click += (sender_gi, e_gi) => {
-                                Form bgBlur = new Form();
                                 apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null");
                                 displayPic.Show();
                             };
@@ -4467,7 +4455,6 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.MSIImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
-                                Form bgBlur = new Form();
                                 msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername);
                                 displayMsi.Show();
                             };

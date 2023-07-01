@@ -339,7 +339,6 @@ namespace FlowSERVER1
                 if (_tableName == GlobalsTable.homeExeTable) {
                     img.Image = Globals.EXEImage;
                     picMain_Q.Click += (sender_ex, e_ex) => {
-                        Form bgBlur = new Form();
                         exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayExe.Show();
                     };
@@ -356,7 +355,6 @@ namespace FlowSERVER1
                 if (_tableName == GlobalsTable.homeAudioTable) {
                     picMain_Q.Image = Globals.AudioImage;
                     picMain_Q.Click += (sender_Aud, e_Aud) => {
-                        Form bgBlur = new Form();
                         audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     };
@@ -365,7 +363,6 @@ namespace FlowSERVER1
                 if (_tableName == GlobalsTable.homeApkTable) {
                     picMain_Q.Image = Globals.APKImage;
                     picMain_Q.Click += (sender_ap, ex_ap) => {
-                        Form bgBlur = new Form();
                         apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
                         displayPic.Show();
                     };
@@ -374,7 +371,6 @@ namespace FlowSERVER1
                 if (_tableName == GlobalsTable.homePdfTable) {
                     picMain_Q.Image = Globals.PDFImage;
                     picMain_Q.Click += (sender_pd, e_pd) => {
-                        Form bgBlur = new Form();
                         pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayPdf.Show();
                     };
@@ -383,7 +379,6 @@ namespace FlowSERVER1
                 if (_tableName == GlobalsTable.homePtxTable) {
                     picMain_Q.Image = Globals.PTXImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
                         ptxFORM displayPtx = new ptxFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayPtx.Show();
                     };
@@ -392,7 +387,6 @@ namespace FlowSERVER1
                 if (_tableName == "file_info_msi") {
                     picMain_Q.Image = Globals.MSIImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
                         msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayMsi.Show();
                     };
@@ -401,7 +395,6 @@ namespace FlowSERVER1
                 if (_tableName == GlobalsTable.homeWordTable) {
                     picMain_Q.Image = Globals.DOCImage;
                     picMain_Q.Click += (sender_pt, e_pt) => {
-                        Form bgBlur = new Form();
                         wordFORM displayMsi = new wordFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayMsi.Show();
                     };
