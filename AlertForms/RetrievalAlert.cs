@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace FlowSERVER1 {
     public partial class RetrievalAlert : Form {
@@ -41,45 +42,46 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {
-            label8.Text = "Cancelling operation...";
-            if(originFrom == "Saver") {
-                SaverModel.stopFileRetrieval = true;
-            } else if (originFrom == "Loader") {
-                if(label8.Text == "Flowstorage is retrieving your directory files." || label8.Text == "Flowstorage is retrieving your folder files." || label8.Text == "Flowstorage is retrieving your shared files...") {
-                    label8.Text = "Failed to cancel the operation.";
-                } else {
 
-                    try {
+            try {
 
-                        label9.Text = "Cancelling Operation...";
-                        if (con.State == System.Data.ConnectionState.Open) {
+                label8.Text = "Cancelling operation...";
+                if(originFrom == "Saver") {
+                    SaverModel.stopFileRetrieval = true;
+                } else if (originFrom == "Loader") {
+                    if(label8.Text == "Flowstorage is retrieving your directory files." || label8.Text == "Flowstorage is retrieving your folder files." || label8.Text == "Flowstorage is retrieving your shared files...") {
+                        label8.Text = "Failed to cancel the operation.";
+                    } else {
 
-                            // @ Close connection before turning it back on for retrieval cancellation
+                        try {
+
+                            label9.Text = "Cancelling Operation...";
+                            if (con.State == System.Data.ConnectionState.Open) {
+
+                                // @ Close connection before turning it back on for retrieval cancellation
+                                con.Close();
+
+                                if (con.State == System.Data.ConnectionState.Closed) {
+
+                                    // @ Turn connection back on so that the user can 
+                                    // reuse the application properly
+                                    con.Open();
+                                }
+                            }
+
+                        } catch (Exception) {
                             con.Close();
-
-                            if (con.State == System.Data.ConnectionState.Closed) {
-
-                                // @ Turn connection back on so that the user can 
-                                // reuse the application properly
+                            if(con.State == System.Data.ConnectionState.Closed) {
                                 con.Open();
                             }
                         }
 
-                    } catch (Exception) {
-                        con.Close();
-                        if(con.State == System.Data.ConnectionState.Closed) {
-                            con.Open();
-                        }
+                        CloseForm.closeForm("Form3");
+                        this.Close();
                     }
-
-                    Application.OpenForms
-                               .OfType<Form>()
-                               .Where(form => String.Equals(form.Name, "Form3"))
-                               .ToList()
-                               .ForEach(form => form.Close());
-
-                    this.Close();
-                }
+                } 
+            } catch (Exception) {
+                CloseForm.closeForm("Form3");
             }
         }
     }

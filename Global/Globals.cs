@@ -92,7 +92,8 @@ namespace FlowSERVER1 {
             { "ps_info_apk", "apkFile" },
             { "ps_info_word", "wordFile" },
             { "ps_info_ptx", "ptxFile" },
-            
+            { "ps_info_audio", "audFile" },
+
         };
 
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
