@@ -170,6 +170,10 @@ namespace FlowSERVER1 {
                         await setupChangeUsername(tableNames[i], _getNewUsername);
                     }
 
+                    foreach(var publicTablesPs in Globals.publicTablesPs) {
+                        await setupChangeUsername(publicTablesPs, _getNewUsername);
+                    }
+
                     await setupChangeUsernameSharing(_getNewUsername);
 
                     updateLocalUsername(_getNewUsername);

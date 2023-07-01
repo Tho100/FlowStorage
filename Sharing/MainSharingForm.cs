@@ -28,6 +28,7 @@ namespace FlowSERVER1 {
         private string _FilePath;
         private string _retrieved;
         private string _getExt;
+        private byte[] _FileBytes;
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
@@ -84,6 +85,11 @@ namespace FlowSERVER1 {
                 _getExt = fileExtension;
                 _retrieved = retrieved;
                 txtFieldFileName.Text = fileName;
+
+                _FileBytes = File.ReadAllBytes(_FilePath);
+
+                lblFileSize.Text = $"File Size: {FileSize.fileSize(_FileBytes):F2}Mb";
+                lblFileSize.Visible = true;
             }
         }
 
@@ -138,8 +144,7 @@ namespace FlowSERVER1 {
 
                     new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
-                    byte[] _getBytes = File.ReadAllBytes(_FilePath); 
-                    string _toBase64 = Convert.ToBase64String(_getBytes);
+                    string _toBase64 = Convert.ToBase64String(_FileBytes);
 
                     if (Globals.imageTypes.Contains(_retrieved)) {
                         string compressedImageBase64 = compressor.compresImageToBase64(_FilePath);

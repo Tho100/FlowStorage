@@ -40,6 +40,7 @@
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
+            this.lblFileSize = new System.Windows.Forms.Label();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +70,7 @@
             this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
+            this.guna2Panel1.Controls.Add(this.lblFileSize);
             this.guna2Panel1.Controls.Add(this.guna2Button1);
             this.guna2Panel1.Controls.Add(this.txtFieldFileName);
             this.guna2Panel1.Controls.Add(this.label1);
@@ -307,6 +309,19 @@
             this.guna2Separator1.Size = new System.Drawing.Size(977, 10);
             this.guna2Separator1.TabIndex = 36;
             // 
+            // lblFileSize
+            // 
+            this.lblFileSize.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblFileSize.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileSize.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblFileSize.ForeColor = System.Drawing.Color.DarkGray;
+            this.lblFileSize.Location = new System.Drawing.Point(43, 190);
+            this.lblFileSize.Name = "lblFileSize";
+            this.lblFileSize.Size = new System.Drawing.Size(130, 20);
+            this.lblFileSize.TabIndex = 35;
+            this.lblFileSize.Text = "File Size: 12Mb";
+            this.lblFileSize.Visible = false;
+            // 
             // MainSharingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,5 +363,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
+        private System.Windows.Forms.Label lblFileSize;
     }
 }

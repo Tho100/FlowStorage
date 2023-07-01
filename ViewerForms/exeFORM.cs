@@ -42,7 +42,7 @@ namespace FlowSERVER1 {
             this.IsFromSharing = _isFromSharing;
 
             if (isFromShared == true) {
-
+                
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 

@@ -700,7 +700,6 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.EXEImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        Form bgBlur = new Form();
                                         exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayExe.Show();
                                     };
@@ -758,7 +757,6 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
-                                        Form bgBlur = new Form();
                                         apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
                                         displayPic.Show();
                                     };
