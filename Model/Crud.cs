@@ -12,7 +12,7 @@ namespace FlowSERVER1 {
         private readonly MySqlConnection con = ConnectionModel.con;
         public async Task<int> countRow(String tableName) {
             using (var command = con.CreateCommand()) {
-                command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {tableName} WHERE CUST_USERNAME = @username";
+                command.CommandText = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
@@ -20,7 +20,15 @@ namespace FlowSERVER1 {
 
         public async Task<int> countRowPublicStorage(String tableName) {
             using (var command = con.CreateCommand()) {
-                command.CommandText = $"SELECT COUNT(CUST_USERNAME) FROM {tableName}";
+                command.CommandText = $"SELECT COUNT(*) FROM {tableName}";
+                return Convert.ToInt32(await command.ExecuteScalarAsync());
+            }
+        }
+
+        public async Task<int> countRowMyPublicStorage(String tableName) {
+            using (var command = con.CreateCommand()) {
+                command.CommandText = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
+                command.Parameters.AddWithValue("@username",Globals.custUsername);
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
         }

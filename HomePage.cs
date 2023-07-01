@@ -239,7 +239,8 @@ namespace FlowSERVER1 {
                 publicStorageUserComment = null;
             }
 
-            catch (Exception) {
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
                 buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
             }
         }
@@ -1512,7 +1513,7 @@ namespace FlowSERVER1 {
             closeUploadAlert();
         }
 
-        private async Task buildFilePanelPublicStorage(String _tableName, String parameterName, int currItem) {
+        private async Task buildFilePanelPublicStorage(String _tableName, String parameterName, int currItem, bool isFromMyPs = false) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -1522,42 +1523,103 @@ namespace FlowSERVER1 {
 
                 List<(string, string)> filesInfo = new List<(string, string)>();
 
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE,CUST_USERNAME FROM {_tableName}";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        List<(string, string)> tuplesList = new List<(string, string)>();
-                        while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            tuplesList.Add((fileName, uploadDate));
+                string selectFileDataQuery = null;
+
+                if(isFromMyPs == true) {
+                    base64EncodedImagePs.Clear();
+                    base64EncodedThumbnailPs.Clear();
+                }
+
+                if(isFromMyPs == false) {
+
+                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_USERNAME FROM {_tableName}";
+                    using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
+                        using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                            List<(string, string)> tuplesList = new List<(string, string)>();
+                            while (await reader.ReadAsync()) {
+                                string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                                string uploadDate = reader.GetString(1);
+                                tuplesList.Add((fileName, uploadDate));
+                            }
+                            filesInfo.AddRange(tuplesList);
                         }
-                        filesInfo.AddRange(tuplesList);
+                    }
+
+                } else {
+
+                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_USERNAME FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
+                        command.Parameters.AddWithValue("@username",Globals.custUsername);
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            List<(string, string)> tuplesList = new List<(string, string)>();
+                            while (await reader.ReadAsync()) {
+                                string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                                string uploadDate = reader.GetString(1);
+                                tuplesList.Add((fileName, uploadDate));
+                            }
+                            filesInfo.AddRange(tuplesList);
+                        }
                     }
                 }
 
                 List<string> usernameList = new List<string>();
 
-                string selectUploaderName = $"SELECT CUST_USERNAME, CUST_USERNAME FROM {_tableName}";
-                using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            usernameList.Add(reader.GetString(0));
+                string selectUploaderNameQuery = null;
+
+                if(isFromMyPs == false) {
+
+                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {_tableName}";
+                    using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await reader.ReadAsync()) {
+                                usernameList.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+
+                } else {
+
+                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
+                        command.Parameters.AddWithValue("@username",Globals.custUsername);
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await reader.ReadAsync()) {
+                                usernameList.Add(reader.GetString(0));
+                            }
                         }
                     }
                 }
 
                 if (_tableName == "ps_info_image") {
-
+                    
                     if (base64EncodedImagePs.Count == 0) {
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM ps_info_image";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    base64EncodedImagePs.Add(base64String);
+                        if(isFromMyPs == false) {
+
+                            const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
+                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
+                                        base64EncodedImagePs.Add(base64String);
+                                    }
                                 }
                             }
+
+                        } else {
+
+                            const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image WHERE CUST_USERNAME = @username";
+                            using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
+                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
+                                        base64EncodedImagePs.Add(base64String);
+                                    }
+                                }
+                            }
+
+
                         }
                     }
                 }
@@ -1566,13 +1628,30 @@ namespace FlowSERVER1 {
 
                     if (base64EncodedThumbnailPs.Count == 0) {
 
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM ps_info_video";
-                        using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    base64EncodedThumbnailPs.Add(readBase64.GetString(0));
+                        if(isFromMyPs == false) {
+
+                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video";
+                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
+                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        base64EncodedThumbnailPs.Add(readBase64.GetString(0));
+                                    }
                                 }
                             }
+
+                        } else {
+
+                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video WHERE CUST_USERNAME = @username";
+                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
+                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                                    while (await readBase64.ReadAsync()) {
+                                        base64EncodedThumbnailPs.Add(readBase64.GetString(0));
+                                    }
+                                }
+                            }
+
+
                         }
                     }
                 }
@@ -1964,7 +2043,6 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.EXEImage;
                                 textboxPic.Click += (sender_ex, e_ex) => {
-                                    Form bgBlur = new Form();
                                     exeFORM displayExe = new exeFORM(titleLab.Text, "ps_info_exe", "null", Globals.custUsername);
                                     displayExe.Show();
                                 };
@@ -2050,7 +2128,6 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.MSIImage;
                                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                                    Form bgBlur = new Form();
                                     msiFORM displayMsi = new msiFORM(titleLab.Text, "ps_info_msi", "null", Globals.custUsername);
                                     displayMsi.Show();
                                 };
@@ -2121,7 +2198,7 @@ namespace FlowSERVER1 {
                         else if (retrieved == ".exe") {
                             exeCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_exe", "PanExe", exeCurr, encryptText);
+                            createPanelMain("ps_info_exe", "PanExe", exeCurr, encryptText);
 
                         }
                         else if (Globals.videoTypes.Contains(retrieved)) {
@@ -2133,42 +2210,42 @@ namespace FlowSERVER1 {
                         else if (retrieved == ".xlsx" || retrieved == ".xls") {
                             exlCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_excel", "PanExl", exlCurr, encryptText);
+                            createPanelMain("ps_info_excel", "PanExl", exlCurr, encryptText);
                         }
 
                         else if (retrieved == ".mp3" || retrieved == ".wav") {
                             audCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_audi", "PanAud", audCurr, encryptText);
+                            createPanelMain("ps_info_audio", "PanAud", audCurr, encryptText);
 
                         }
 
                         else if (retrieved == ".apk") {
                             apkCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_apk", "PanApk", apkCurr, encryptText);
+                            createPanelMain("ps_info_apk", "PanApk", apkCurr, encryptText);
                         }
 
                         else if (retrieved == ".pdf") {
                             pdfCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_pdf", "PanPdf", pdfCurr, encryptText);
+                            createPanelMain("ps_info_pdf", "PanPdf", pdfCurr, encryptText);
                         }
 
                         else if (retrieved == ".pptx" || retrieved == ".ppt") {
                             ptxCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_ptx", "PanPtx", ptxCurr, encryptText);
+                            createPanelMain("ps_info_ptx", "PanPtx", ptxCurr, encryptText);
                         }
                         else if (retrieved == ".msi") {
                             msiCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptText);
+                            createPanelMain("ps_info_msi", "PanMsi", msiCurr, encryptText);
                         }
                         else if (retrieved == ".docx") {
                             docxCurr++;
                             String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("file_info_word", "PanDoc", docxCurr, encryptText);
+                            createPanelMain("ps_info_word", "PanDoc", docxCurr, encryptText);
 
                         }
                         else {
@@ -2772,12 +2849,35 @@ namespace FlowSERVER1 {
 
                         clearRedundane();
 
-                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName));
+                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
                     }
                 }
             }
 
-            lblPsCount.Text = $"{flowLayoutPanel1.Controls.Count.ToString()} Files";
+            lblPsCount.Text = $"{flowLayoutPanel1.Controls.Count} Files";
+
+            buildRedundaneVisibility();
+
+        }
+
+        private async void buildMyPublicStorageFiles() {
+
+            base64EncodedImagePs.Clear();
+            base64EncodedThumbnailPs.Clear();
+
+            foreach (string tableName in Globals.publicTablesPs) {
+                if (Globals.tableToFileTypePs.ContainsKey(tableName)) {
+                    string fileType = Globals.tableToFileTypePs[tableName];
+                    if (fileType != null) {
+
+                        clearRedundane();
+
+                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowMyPublicStorage(tableName), isFromMyPs: true);
+                    }
+                }
+            }
+
+            lblPsCount.Text = $"{flowLayoutPanel1.Controls.Count} Files";
 
             buildRedundaneVisibility();
 
@@ -4864,8 +4964,7 @@ namespace FlowSERVER1 {
 
         private void btnMyPsFiles_Click(object sender, EventArgs e) {
             flowLayoutPanel1.Controls.Clear();
-            buildRedundaneVisibility();
-            buildPublicStorageFiles();
+            buildMyPublicStorageFiles();
         }
     }
 }

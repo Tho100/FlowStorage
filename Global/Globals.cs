@@ -85,14 +85,14 @@ namespace FlowSERVER1 {
         {
             { "ps_info_image", "imgFile" },
             { "ps_info_text", "txtFile" },
-            { "file_info_exe", "exeFile" },
+            { "ps_info_exe", "exeFile" },
             { "ps_info_video", "vidFile" },
-            { "file_info_excel", "exlFile" },
-            { "file_info_pdf", "pdfFile" },
-            { "file_info_apk", "apkFile" },
-            { "file_info_word", "wordFile" },
-            { "file_info_ptx", "ptxFile" },
-            { "file_info_directory", null }
+            { "ps_info_excel", "exlFile" },
+            { "ps_info_pdf", "pdfFile" },
+            { "ps_info_apk", "apkFile" },
+            { "ps_info_word", "wordFile" },
+            { "ps_info_ptx", "ptxFile" },
+            
         };
 
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>

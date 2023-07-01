@@ -31,9 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomePage));
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.lblEssentials = new System.Windows.Forms.Label();
             this.lblUpload = new System.Windows.Forms.Label();
+            this.btnUploadFolder = new Guna.UI2.WinForms.Guna2Button();
+            this.btnFileSharing = new Guna.UI2.WinForms.Guna2Button();
+            this.btnUploadFile = new Guna.UI2.WinForms.Guna2Button();
+            this.btnCreateDirectory = new Guna.UI2.WinForms.Guna2Button();
             this.pnlFolders = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.pnlSubPanelDetails = new Guna.UI2.WinForms.Guna2Panel();
@@ -45,6 +50,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lblItemCountText = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.label18 = new System.Windows.Forms.Label();
             this.lblMyFolders = new System.Windows.Forms.Label();
             this.lstFoldersPage = new System.Windows.Forms.ListBox();
@@ -57,25 +64,17 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel2 = new System.Windows.Forms.Panel();
             this.guna2VSeparator3 = new Guna.UI2.WinForms.Guna2VSeparator();
+            this.btnShowPs = new Guna.UI2.WinForms.Guna2Button();
+            this.btnShowFolderPage = new Guna.UI2.WinForms.Guna2Button();
+            this.btnGoHomePage = new Guna.UI2.WinForms.Guna2Button();
+            this.btnSettings = new Guna.UI2.WinForms.Guna2Button();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.lblEmptyHere = new System.Windows.Forms.Label();
             this.pnlDragAndDropUpload = new Guna.UI2.WinForms.Guna2Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label25 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button25 = new Guna.UI2.WinForms.Guna2Button();
-            this.pnlFileOptions = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblSharedToName = new System.Windows.Forms.Label();
-            this.lblSelectedDirName = new System.Windows.Forms.Label();
-            this.lblFileTableName = new System.Windows.Forms.Label();
-            this.lblFilePanelName = new System.Windows.Forms.Label();
-            this.lblFileNameOnPanel = new System.Windows.Forms.Label();
-            this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
-            this.pnlPublicStorage = new System.Windows.Forms.Panel();
-            this.lblPsCount = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnMyPsFiles = new Guna.UI2.WinForms.Guna2Button();
-            this.btnUploadPs = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button24 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button23 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button22 = new Guna.UI2.WinForms.Guna2Button();
@@ -83,25 +82,26 @@
             this.guna2Button20 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button17 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button18 = new Guna.UI2.WinForms.Guna2Button();
+            this.pnlFileOptions = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblSharedToName = new System.Windows.Forms.Label();
+            this.lblSelectedDirName = new System.Windows.Forms.Label();
+            this.lblFileTableName = new System.Windows.Forms.Label();
+            this.lblFilePanelName = new System.Windows.Forms.Label();
             this.btnDownload = new Guna.UI2.WinForms.Guna2Button();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
             this.btnRenameFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnClosePnlFileOptions = new Guna.UI2.WinForms.Guna2Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblFileNameOnPanel = new System.Windows.Forms.Label();
+            this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
+            this.pnlPublicStorage = new System.Windows.Forms.Panel();
+            this.btnMyPsFiles = new Guna.UI2.WinForms.Guna2Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnUploadPs = new Guna.UI2.WinForms.Guna2Button();
+            this.lblPsCount = new System.Windows.Forms.Label();
             this.btnRefreshFiles = new Guna.UI2.WinForms.Guna2Button();
             this.btnGarbageImage = new Guna.UI2.WinForms.Guna2Button();
-            this.btnShowPs = new Guna.UI2.WinForms.Guna2Button();
-            this.btnShowFolderPage = new Guna.UI2.WinForms.Guna2Button();
-            this.btnGoHomePage = new Guna.UI2.WinForms.Guna2Button();
-            this.btnSettings = new Guna.UI2.WinForms.Guna2Button();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.btnUploadFolder = new Guna.UI2.WinForms.Guna2Button();
-            this.btnFileSharing = new Guna.UI2.WinForms.Guna2Button();
-            this.btnUploadFile = new Guna.UI2.WinForms.Guna2Button();
-            this.btnCreateDirectory = new Guna.UI2.WinForms.Guna2Button();
-            this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.btnOpenFilterType = new Guna.UI2.WinForms.Guna2Button();
             this.txtBoxSearchFile = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnDeleteFolder = new Guna.UI2.WinForms.Guna2Button();
@@ -110,17 +110,17 @@
             this.guna2CircleButton2 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.pnlFolders.SuspendLayout();
             this.pnlSubPanelDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnlDragAndDropUpload.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.pnlFileOptions.SuspendLayout();
             this.pnlPublicStorage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlMain
@@ -142,6 +142,17 @@
             this.pnlMain.Size = new System.Drawing.Size(207, 669);
             this.pnlMain.TabIndex = 1;
             this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.pictureBox5.Image = global::FlowSERVER1.Properties.Resources.flowstorageLogo__15_;
+            this.pictureBox5.Location = new System.Drawing.Point(12, 18);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(182, 57);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 0;
+            this.pictureBox5.TabStop = false;
             // 
             // guna2Separator1
             // 
@@ -177,6 +188,97 @@
             this.lblUpload.TabIndex = 32;
             this.lblUpload.Text = "Upload";
             this.lblUpload.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // btnUploadFolder
+            // 
+            this.btnUploadFolder.Animated = true;
+            this.btnUploadFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnUploadFolder.BorderRadius = 10;
+            this.btnUploadFolder.DefaultAutoSize = true;
+            this.btnUploadFolder.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUploadFolder.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUploadFolder.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUploadFolder.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUploadFolder.FillColor = System.Drawing.Color.Empty;
+            this.btnUploadFolder.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUploadFolder.ForeColor = System.Drawing.Color.LightGray;
+            this.btnUploadFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFolder.Image")));
+            this.btnUploadFolder.ImageSize = new System.Drawing.Size(27, 27);
+            this.btnUploadFolder.Location = new System.Drawing.Point(6, 183);
+            this.btnUploadFolder.Name = "btnUploadFolder";
+            this.btnUploadFolder.Size = new System.Drawing.Size(164, 33);
+            this.btnUploadFolder.TabIndex = 29;
+            this.btnUploadFolder.Text = "Upload Folder";
+            this.btnUploadFolder.TextOffset = new System.Drawing.Point(4, 0);
+            this.btnUploadFolder.Click += new System.EventHandler(this.guna2Button12_Click);
+            // 
+            // btnFileSharing
+            // 
+            this.btnFileSharing.Animated = true;
+            this.btnFileSharing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnFileSharing.DefaultAutoSize = true;
+            this.btnFileSharing.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnFileSharing.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnFileSharing.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnFileSharing.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnFileSharing.FillColor = System.Drawing.Color.Empty;
+            this.btnFileSharing.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnFileSharing.ForeColor = System.Drawing.Color.LightGray;
+            this.btnFileSharing.Image = global::FlowSERVER1.Properties.Resources.icons8_share_64;
+            this.btnFileSharing.ImageOffset = new System.Drawing.Point(1, 0);
+            this.btnFileSharing.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnFileSharing.Location = new System.Drawing.Point(6, 333);
+            this.btnFileSharing.Name = "btnFileSharing";
+            this.btnFileSharing.Size = new System.Drawing.Size(148, 33);
+            this.btnFileSharing.TabIndex = 26;
+            this.btnFileSharing.Text = "File Sharing";
+            this.btnFileSharing.TextOffset = new System.Drawing.Point(1, 0);
+            this.btnFileSharing.Click += new System.EventHandler(this.guna2Button7_Click);
+            // 
+            // btnUploadFile
+            // 
+            this.btnUploadFile.Animated = true;
+            this.btnUploadFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnUploadFile.BorderRadius = 10;
+            this.btnUploadFile.DefaultAutoSize = true;
+            this.btnUploadFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUploadFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUploadFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUploadFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUploadFile.FillColor = System.Drawing.Color.Empty;
+            this.btnUploadFile.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUploadFile.ForeColor = System.Drawing.Color.LightGray;
+            this.btnUploadFile.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFile.Image")));
+            this.btnUploadFile.ImageSize = new System.Drawing.Size(26, 26);
+            this.btnUploadFile.Location = new System.Drawing.Point(4, 137);
+            this.btnUploadFile.Name = "btnUploadFile";
+            this.btnUploadFile.Size = new System.Drawing.Size(141, 33);
+            this.btnUploadFile.TabIndex = 14;
+            this.btnUploadFile.Text = "Upload File";
+            this.btnUploadFile.TextOffset = new System.Drawing.Point(4, 0);
+            this.btnUploadFile.Click += new System.EventHandler(this.guna2Button2_Click);
+            // 
+            // btnCreateDirectory
+            // 
+            this.btnCreateDirectory.Animated = true;
+            this.btnCreateDirectory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnCreateDirectory.BorderRadius = 10;
+            this.btnCreateDirectory.DefaultAutoSize = true;
+            this.btnCreateDirectory.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCreateDirectory.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCreateDirectory.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCreateDirectory.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCreateDirectory.FillColor = System.Drawing.Color.Empty;
+            this.btnCreateDirectory.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCreateDirectory.ForeColor = System.Drawing.Color.LightGray;
+            this.btnCreateDirectory.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateDirectory.Image")));
+            this.btnCreateDirectory.Location = new System.Drawing.Point(12, 285);
+            this.btnCreateDirectory.Name = "btnCreateDirectory";
+            this.btnCreateDirectory.Size = new System.Drawing.Size(173, 33);
+            this.btnCreateDirectory.TabIndex = 13;
+            this.btnCreateDirectory.Text = "Create Directory";
+            this.btnCreateDirectory.TextOffset = new System.Drawing.Point(3, 0);
+            this.btnCreateDirectory.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // pnlFolders
             // 
@@ -337,6 +439,44 @@
             this.label2.Text = "Items Count";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
+            // btnLogout
+            // 
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnLogout.BackColor = System.Drawing.Color.Transparent;
+            this.btnLogout.BorderColor = System.Drawing.Color.Empty;
+            this.btnLogout.BorderRadius = 5;
+            this.btnLogout.BorderThickness = 1;
+            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnLogout.DefaultAutoSize = true;
+            this.btnLogout.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogout.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLogout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLogout.FillColor = System.Drawing.Color.Empty;
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogout.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnLogout.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
+            this.btnLogout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLogout.ImageOffset = new System.Drawing.Point(-18, 1);
+            this.btnLogout.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnLogout.Location = new System.Drawing.Point(52, 614);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(119, 33);
+            this.btnLogout.TabIndex = 38;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.Click += new System.EventHandler(this.guna2Button15_Click);
+            // 
+            // guna2PictureBox1
+            // 
+            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.DirIcon;
+            this.guna2PictureBox1.ImageRotate = 0F;
+            this.guna2PictureBox1.Location = new System.Drawing.Point(16, 102);
+            this.guna2PictureBox1.Name = "guna2PictureBox1";
+            this.guna2PictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.guna2PictureBox1.TabIndex = 34;
+            this.guna2PictureBox1.TabStop = false;
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -486,6 +626,90 @@
             this.guna2VSeparator3.Size = new System.Drawing.Size(10, 663);
             this.guna2VSeparator3.TabIndex = 53;
             // 
+            // btnShowPs
+            // 
+            this.btnShowPs.BackColor = System.Drawing.Color.Transparent;
+            this.btnShowPs.BorderRadius = 12;
+            this.btnShowPs.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnShowPs.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnShowPs.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnShowPs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnShowPs.FillColor = System.Drawing.Color.Transparent;
+            this.btnShowPs.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnShowPs.ForeColor = System.Drawing.Color.White;
+            this.btnShowPs.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
+            this.btnShowPs.Image = global::FlowSERVER1.Properties.Resources.icons8_open_parcel_24;
+            this.btnShowPs.ImageSize = new System.Drawing.Size(24, 24);
+            this.btnShowPs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnShowPs.Location = new System.Drawing.Point(6, 126);
+            this.btnShowPs.Name = "btnShowPs";
+            this.btnShowPs.Size = new System.Drawing.Size(40, 36);
+            this.btnShowPs.TabIndex = 36;
+            this.btnShowPs.TextOffset = new System.Drawing.Point(1, 0);
+            this.btnShowPs.Click += new System.EventHandler(this.guna2Button4_Click_1);
+            // 
+            // btnShowFolderPage
+            // 
+            this.btnShowFolderPage.BackColor = System.Drawing.Color.Transparent;
+            this.btnShowFolderPage.BorderRadius = 12;
+            this.btnShowFolderPage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnShowFolderPage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnShowFolderPage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnShowFolderPage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnShowFolderPage.FillColor = System.Drawing.Color.Transparent;
+            this.btnShowFolderPage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnShowFolderPage.ForeColor = System.Drawing.Color.White;
+            this.btnShowFolderPage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
+            this.btnShowFolderPage.Image = global::FlowSERVER1.Properties.Resources.icons8_folder_48;
+            this.btnShowFolderPage.ImageSize = new System.Drawing.Size(29, 29);
+            this.btnShowFolderPage.Location = new System.Drawing.Point(6, 78);
+            this.btnShowFolderPage.Name = "btnShowFolderPage";
+            this.btnShowFolderPage.Size = new System.Drawing.Size(40, 36);
+            this.btnShowFolderPage.TabIndex = 35;
+            this.btnShowFolderPage.Click += new System.EventHandler(this.guna2Button13_Click);
+            // 
+            // btnGoHomePage
+            // 
+            this.btnGoHomePage.BackColor = System.Drawing.Color.Transparent;
+            this.btnGoHomePage.BorderRadius = 12;
+            this.btnGoHomePage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnGoHomePage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnGoHomePage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnGoHomePage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnGoHomePage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
+            this.btnGoHomePage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnGoHomePage.ForeColor = System.Drawing.Color.White;
+            this.btnGoHomePage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
+            this.btnGoHomePage.Image = global::FlowSERVER1.Properties.Resources.icons8_home_page_32;
+            this.btnGoHomePage.ImageSize = new System.Drawing.Size(22, 22);
+            this.btnGoHomePage.Location = new System.Drawing.Point(7, 30);
+            this.btnGoHomePage.Name = "btnGoHomePage";
+            this.btnGoHomePage.Size = new System.Drawing.Size(40, 36);
+            this.btnGoHomePage.TabIndex = 34;
+            this.btnGoHomePage.Click += new System.EventHandler(this.guna2Button9_Click_1);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSettings.Animated = true;
+            this.btnSettings.BackColor = System.Drawing.Color.Transparent;
+            this.btnSettings.BorderRadius = 12;
+            this.btnSettings.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSettings.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSettings.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSettings.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSettings.FillColor = System.Drawing.Color.Transparent;
+            this.btnSettings.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSettings.ForeColor = System.Drawing.Color.LightGray;
+            this.btnSettings.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
+            this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
+            this.btnSettings.ImageSize = new System.Drawing.Size(25, 25);
+            this.btnSettings.Location = new System.Drawing.Point(7, 614);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(40, 36);
+            this.btnSettings.TabIndex = 14;
+            this.btnSettings.Click += new System.EventHandler(this.guna2Button5_Click);
+            // 
             // guna2VSeparator1
             // 
             this.guna2VSeparator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -526,6 +750,16 @@
             this.pnlDragAndDropUpload.TabIndex = 41;
             this.pnlDragAndDropUpload.Visible = false;
             this.pnlDragAndDropUpload.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint_1);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.download_ico;
+            this.pictureBox1.Location = new System.Drawing.Point(505, 181);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(52, 47);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
             // 
             // label25
             // 
@@ -588,196 +822,6 @@
             this.guna2Button25.Text = "Clear Filter";
             this.guna2Button25.TextOffset = new System.Drawing.Point(0, -1);
             this.guna2Button25.Click += new System.EventHandler(this.guna2Button25_Click);
-            // 
-            // pnlFileOptions
-            // 
-            this.pnlFileOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlFileOptions.BackColor = System.Drawing.Color.Transparent;
-            this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pnlFileOptions.BorderRadius = 14;
-            this.pnlFileOptions.BorderThickness = 1;
-            this.pnlFileOptions.Controls.Add(this.lblSharedToName);
-            this.pnlFileOptions.Controls.Add(this.lblSelectedDirName);
-            this.pnlFileOptions.Controls.Add(this.lblFileTableName);
-            this.pnlFileOptions.Controls.Add(this.lblFilePanelName);
-            this.pnlFileOptions.Controls.Add(this.btnDownload);
-            this.pnlFileOptions.Controls.Add(this.btnShareFile);
-            this.pnlFileOptions.Controls.Add(this.btnDelete);
-            this.pnlFileOptions.Controls.Add(this.btnRenameFile);
-            this.pnlFileOptions.Controls.Add(this.btnClosePnlFileOptions);
-            this.pnlFileOptions.Controls.Add(this.lblFileNameOnPanel);
-            this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.pnlFileOptions.ForeColor = System.Drawing.Color.Transparent;
-            this.pnlFileOptions.Location = new System.Drawing.Point(975, 403);
-            this.pnlFileOptions.Name = "pnlFileOptions";
-            this.pnlFileOptions.Size = new System.Drawing.Size(314, 232);
-            this.pnlFileOptions.TabIndex = 47;
-            this.pnlFileOptions.Visible = false;
-            this.pnlFileOptions.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_1);
-            // 
-            // lblSharedToName
-            // 
-            this.lblSharedToName.AutoSize = true;
-            this.lblSharedToName.BackColor = System.Drawing.Color.Transparent;
-            this.lblSharedToName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSharedToName.ForeColor = System.Drawing.Color.White;
-            this.lblSharedToName.Location = new System.Drawing.Point(193, 124);
-            this.lblSharedToName.Name = "lblSharedToName";
-            this.lblSharedToName.Size = new System.Drawing.Size(119, 21);
-            this.lblSharedToName.TabIndex = 55;
-            this.lblSharedToName.Text = "sharedToName";
-            this.lblSharedToName.Visible = false;
-            // 
-            // lblSelectedDirName
-            // 
-            this.lblSelectedDirName.AutoSize = true;
-            this.lblSelectedDirName.BackColor = System.Drawing.Color.Transparent;
-            this.lblSelectedDirName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedDirName.ForeColor = System.Drawing.Color.White;
-            this.lblSelectedDirName.Location = new System.Drawing.Point(193, 153);
-            this.lblSelectedDirName.Name = "lblSelectedDirName";
-            this.lblSelectedDirName.Size = new System.Drawing.Size(73, 21);
-            this.lblSelectedDirName.TabIndex = 54;
-            this.lblSelectedDirName.Text = "dirName";
-            this.lblSelectedDirName.Visible = false;
-            // 
-            // lblFileTableName
-            // 
-            this.lblFileTableName.AutoSize = true;
-            this.lblFileTableName.BackColor = System.Drawing.Color.Transparent;
-            this.lblFileTableName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFileTableName.ForeColor = System.Drawing.Color.White;
-            this.lblFileTableName.Location = new System.Drawing.Point(193, 177);
-            this.lblFileTableName.Name = "lblFileTableName";
-            this.lblFileTableName.Size = new System.Drawing.Size(90, 21);
-            this.lblFileTableName.TabIndex = 53;
-            this.lblFileTableName.Text = "tableName";
-            this.lblFileTableName.Visible = false;
-            // 
-            // lblFilePanelName
-            // 
-            this.lblFilePanelName.AutoSize = true;
-            this.lblFilePanelName.BackColor = System.Drawing.Color.Transparent;
-            this.lblFilePanelName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFilePanelName.ForeColor = System.Drawing.Color.White;
-            this.lblFilePanelName.Location = new System.Drawing.Point(193, 200);
-            this.lblFilePanelName.Name = "lblFilePanelName";
-            this.lblFilePanelName.Size = new System.Drawing.Size(93, 21);
-            this.lblFilePanelName.TabIndex = 52;
-            this.lblFilePanelName.Text = "panelName";
-            this.lblFilePanelName.Visible = false;
-            // 
-            // lblFileNameOnPanel
-            // 
-            this.lblFileNameOnPanel.AutoEllipsis = true;
-            this.lblFileNameOnPanel.BackColor = System.Drawing.Color.Transparent;
-            this.lblFileNameOnPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFileNameOnPanel.ForeColor = System.Drawing.Color.White;
-            this.lblFileNameOnPanel.Location = new System.Drawing.Point(12, 14);
-            this.lblFileNameOnPanel.Name = "lblFileNameOnPanel";
-            this.lblFileNameOnPanel.Size = new System.Drawing.Size(249, 25);
-            this.lblFileNameOnPanel.TabIndex = 48;
-            this.lblFileNameOnPanel.Text = "somenwordfile.png";
-            // 
-            // pnlPublicStorage
-            // 
-            this.pnlPublicStorage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlPublicStorage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pnlPublicStorage.Controls.Add(this.btnMyPsFiles);
-            this.pnlPublicStorage.Controls.Add(this.label4);
-            this.pnlPublicStorage.Controls.Add(this.label1);
-            this.pnlPublicStorage.Controls.Add(this.btnUploadPs);
-            this.pnlPublicStorage.Controls.Add(this.lblPsCount);
-            this.pnlPublicStorage.Location = new System.Drawing.Point(55, 0);
-            this.pnlPublicStorage.Name = "pnlPublicStorage";
-            this.pnlPublicStorage.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.pnlPublicStorage.Size = new System.Drawing.Size(207, 669);
-            this.pnlPublicStorage.TabIndex = 52;
-            this.pnlPublicStorage.Visible = false;
-            // 
-            // lblPsCount
-            // 
-            this.lblPsCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblPsCount.AutoSize = true;
-            this.lblPsCount.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.lblPsCount.ForeColor = System.Drawing.Color.LightGray;
-            this.lblPsCount.Location = new System.Drawing.Point(16, 614);
-            this.lblPsCount.Name = "lblPsCount";
-            this.lblPsCount.Size = new System.Drawing.Size(71, 20);
-            this.lblPsCount.TabIndex = 36;
-            this.lblPsCount.Text = "1,44 Files";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(14, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 20);
-            this.label1.TabIndex = 38;
-            this.label1.Text = "Options";
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label4.Location = new System.Drawing.Point(14, 585);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 20);
-            this.label4.TabIndex = 39;
-            this.label4.Text = "Count";
-            // 
-            // btnMyPsFiles
-            // 
-            this.btnMyPsFiles.Animated = true;
-            this.btnMyPsFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnMyPsFiles.BorderRadius = 10;
-            this.btnMyPsFiles.DefaultAutoSize = true;
-            this.btnMyPsFiles.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnMyPsFiles.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnMyPsFiles.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnMyPsFiles.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnMyPsFiles.FillColor = System.Drawing.Color.Empty;
-            this.btnMyPsFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMyPsFiles.ForeColor = System.Drawing.Color.LightGray;
-            this.btnMyPsFiles.Image = global::FlowSERVER1.Properties.Resources.icons8_documents_folder_48__2_;
-            this.btnMyPsFiles.ImageSize = new System.Drawing.Size(24, 24);
-            this.btnMyPsFiles.Location = new System.Drawing.Point(9, 127);
-            this.btnMyPsFiles.Name = "btnMyPsFiles";
-            this.btnMyPsFiles.Size = new System.Drawing.Size(115, 33);
-            this.btnMyPsFiles.TabIndex = 40;
-            this.btnMyPsFiles.Text = "My files";
-            this.btnMyPsFiles.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnMyPsFiles.Click += new System.EventHandler(this.btnMyPsFiles_Click);
-            // 
-            // btnUploadPs
-            // 
-            this.btnUploadPs.Animated = true;
-            this.btnUploadPs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnUploadPs.BorderRadius = 10;
-            this.btnUploadPs.DefaultAutoSize = true;
-            this.btnUploadPs.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnUploadPs.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnUploadPs.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnUploadPs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnUploadPs.FillColor = System.Drawing.Color.Empty;
-            this.btnUploadPs.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUploadPs.ForeColor = System.Drawing.Color.LightGray;
-            this.btnUploadPs.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadPs.Image")));
-            this.btnUploadPs.ImageSize = new System.Drawing.Size(26, 26);
-            this.btnUploadPs.Location = new System.Drawing.Point(8, 79);
-            this.btnUploadPs.Name = "btnUploadPs";
-            this.btnUploadPs.Size = new System.Drawing.Size(139, 33);
-            this.btnUploadPs.TabIndex = 37;
-            this.btnUploadPs.Text = "Upload file";
-            this.btnUploadPs.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnUploadPs.Click += new System.EventHandler(this.guna2Button1_Click_1);
             // 
             // guna2Button24
             // 
@@ -959,6 +1003,84 @@
             this.guna2Button18.TextOffset = new System.Drawing.Point(10, -1);
             this.guna2Button18.Click += new System.EventHandler(this.guna2Button18_Click);
             // 
+            // pnlFileOptions
+            // 
+            this.pnlFileOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlFileOptions.BackColor = System.Drawing.Color.Transparent;
+            this.pnlFileOptions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.pnlFileOptions.BorderRadius = 14;
+            this.pnlFileOptions.BorderThickness = 1;
+            this.pnlFileOptions.Controls.Add(this.lblSharedToName);
+            this.pnlFileOptions.Controls.Add(this.lblSelectedDirName);
+            this.pnlFileOptions.Controls.Add(this.lblFileTableName);
+            this.pnlFileOptions.Controls.Add(this.lblFilePanelName);
+            this.pnlFileOptions.Controls.Add(this.btnDownload);
+            this.pnlFileOptions.Controls.Add(this.btnShareFile);
+            this.pnlFileOptions.Controls.Add(this.btnDelete);
+            this.pnlFileOptions.Controls.Add(this.btnRenameFile);
+            this.pnlFileOptions.Controls.Add(this.btnClosePnlFileOptions);
+            this.pnlFileOptions.Controls.Add(this.lblFileNameOnPanel);
+            this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.pnlFileOptions.ForeColor = System.Drawing.Color.Transparent;
+            this.pnlFileOptions.Location = new System.Drawing.Point(975, 403);
+            this.pnlFileOptions.Name = "pnlFileOptions";
+            this.pnlFileOptions.Size = new System.Drawing.Size(314, 232);
+            this.pnlFileOptions.TabIndex = 47;
+            this.pnlFileOptions.Visible = false;
+            this.pnlFileOptions.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_1);
+            // 
+            // lblSharedToName
+            // 
+            this.lblSharedToName.AutoSize = true;
+            this.lblSharedToName.BackColor = System.Drawing.Color.Transparent;
+            this.lblSharedToName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSharedToName.ForeColor = System.Drawing.Color.White;
+            this.lblSharedToName.Location = new System.Drawing.Point(193, 124);
+            this.lblSharedToName.Name = "lblSharedToName";
+            this.lblSharedToName.Size = new System.Drawing.Size(119, 21);
+            this.lblSharedToName.TabIndex = 55;
+            this.lblSharedToName.Text = "sharedToName";
+            this.lblSharedToName.Visible = false;
+            // 
+            // lblSelectedDirName
+            // 
+            this.lblSelectedDirName.AutoSize = true;
+            this.lblSelectedDirName.BackColor = System.Drawing.Color.Transparent;
+            this.lblSelectedDirName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectedDirName.ForeColor = System.Drawing.Color.White;
+            this.lblSelectedDirName.Location = new System.Drawing.Point(193, 153);
+            this.lblSelectedDirName.Name = "lblSelectedDirName";
+            this.lblSelectedDirName.Size = new System.Drawing.Size(73, 21);
+            this.lblSelectedDirName.TabIndex = 54;
+            this.lblSelectedDirName.Text = "dirName";
+            this.lblSelectedDirName.Visible = false;
+            // 
+            // lblFileTableName
+            // 
+            this.lblFileTableName.AutoSize = true;
+            this.lblFileTableName.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileTableName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileTableName.ForeColor = System.Drawing.Color.White;
+            this.lblFileTableName.Location = new System.Drawing.Point(193, 177);
+            this.lblFileTableName.Name = "lblFileTableName";
+            this.lblFileTableName.Size = new System.Drawing.Size(90, 21);
+            this.lblFileTableName.TabIndex = 53;
+            this.lblFileTableName.Text = "tableName";
+            this.lblFileTableName.Visible = false;
+            // 
+            // lblFilePanelName
+            // 
+            this.lblFilePanelName.AutoSize = true;
+            this.lblFilePanelName.BackColor = System.Drawing.Color.Transparent;
+            this.lblFilePanelName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFilePanelName.ForeColor = System.Drawing.Color.White;
+            this.lblFilePanelName.Location = new System.Drawing.Point(193, 200);
+            this.lblFilePanelName.Name = "lblFilePanelName";
+            this.lblFilePanelName.Size = new System.Drawing.Size(93, 21);
+            this.lblFilePanelName.TabIndex = 52;
+            this.lblFilePanelName.Text = "panelName";
+            this.lblFilePanelName.Visible = false;
+            // 
             // btnDownload
             // 
             this.btnDownload.Animated = true;
@@ -1072,15 +1194,117 @@
             this.btnClosePnlFileOptions.TabIndex = 49;
             this.btnClosePnlFileOptions.Click += new System.EventHandler(this.guna2Button28_Click);
             // 
-            // pictureBox1
+            // lblFileNameOnPanel
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.download_ico;
-            this.pictureBox1.Location = new System.Drawing.Point(505, 181);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(52, 47);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 42;
-            this.pictureBox1.TabStop = false;
+            this.lblFileNameOnPanel.AutoEllipsis = true;
+            this.lblFileNameOnPanel.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileNameOnPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileNameOnPanel.ForeColor = System.Drawing.Color.White;
+            this.lblFileNameOnPanel.Location = new System.Drawing.Point(12, 14);
+            this.lblFileNameOnPanel.Name = "lblFileNameOnPanel";
+            this.lblFileNameOnPanel.Size = new System.Drawing.Size(249, 25);
+            this.lblFileNameOnPanel.TabIndex = 48;
+            this.lblFileNameOnPanel.Text = "somenwordfile.png";
+            // 
+            // pnlPublicStorage
+            // 
+            this.pnlPublicStorage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlPublicStorage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.pnlPublicStorage.Controls.Add(this.btnMyPsFiles);
+            this.pnlPublicStorage.Controls.Add(this.label4);
+            this.pnlPublicStorage.Controls.Add(this.label1);
+            this.pnlPublicStorage.Controls.Add(this.btnUploadPs);
+            this.pnlPublicStorage.Controls.Add(this.lblPsCount);
+            this.pnlPublicStorage.Location = new System.Drawing.Point(55, 0);
+            this.pnlPublicStorage.Name = "pnlPublicStorage";
+            this.pnlPublicStorage.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.pnlPublicStorage.Size = new System.Drawing.Size(207, 669);
+            this.pnlPublicStorage.TabIndex = 52;
+            this.pnlPublicStorage.Visible = false;
+            // 
+            // btnMyPsFiles
+            // 
+            this.btnMyPsFiles.Animated = true;
+            this.btnMyPsFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnMyPsFiles.BorderRadius = 10;
+            this.btnMyPsFiles.DefaultAutoSize = true;
+            this.btnMyPsFiles.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnMyPsFiles.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnMyPsFiles.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnMyPsFiles.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnMyPsFiles.FillColor = System.Drawing.Color.Empty;
+            this.btnMyPsFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMyPsFiles.ForeColor = System.Drawing.Color.LightGray;
+            this.btnMyPsFiles.Image = global::FlowSERVER1.Properties.Resources.icons8_documents_folder_48__2_;
+            this.btnMyPsFiles.ImageSize = new System.Drawing.Size(24, 24);
+            this.btnMyPsFiles.Location = new System.Drawing.Point(9, 134);
+            this.btnMyPsFiles.Name = "btnMyPsFiles";
+            this.btnMyPsFiles.Size = new System.Drawing.Size(113, 33);
+            this.btnMyPsFiles.TabIndex = 40;
+            this.btnMyPsFiles.Text = "My files";
+            this.btnMyPsFiles.TextOffset = new System.Drawing.Point(4, 0);
+            this.btnMyPsFiles.Click += new System.EventHandler(this.btnMyPsFiles_Click);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label4.Location = new System.Drawing.Point(14, 585);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(50, 20);
+            this.label4.TabIndex = 39;
+            this.label4.Text = "Count";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.Location = new System.Drawing.Point(14, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 20);
+            this.label1.TabIndex = 38;
+            this.label1.Text = "Options";
+            // 
+            // btnUploadPs
+            // 
+            this.btnUploadPs.Animated = true;
+            this.btnUploadPs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnUploadPs.BorderRadius = 10;
+            this.btnUploadPs.DefaultAutoSize = true;
+            this.btnUploadPs.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUploadPs.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUploadPs.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUploadPs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUploadPs.FillColor = System.Drawing.Color.Empty;
+            this.btnUploadPs.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUploadPs.ForeColor = System.Drawing.Color.LightGray;
+            this.btnUploadPs.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadPs.Image")));
+            this.btnUploadPs.ImageSize = new System.Drawing.Size(26, 26);
+            this.btnUploadPs.Location = new System.Drawing.Point(8, 86);
+            this.btnUploadPs.Name = "btnUploadPs";
+            this.btnUploadPs.Size = new System.Drawing.Size(139, 33);
+            this.btnUploadPs.TabIndex = 37;
+            this.btnUploadPs.Text = "Upload file";
+            this.btnUploadPs.TextOffset = new System.Drawing.Point(4, 0);
+            this.btnUploadPs.Click += new System.EventHandler(this.guna2Button1_Click_1);
+            // 
+            // lblPsCount
+            // 
+            this.lblPsCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblPsCount.AutoSize = true;
+            this.lblPsCount.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblPsCount.ForeColor = System.Drawing.Color.LightGray;
+            this.lblPsCount.Location = new System.Drawing.Point(16, 614);
+            this.lblPsCount.Name = "lblPsCount";
+            this.lblPsCount.Size = new System.Drawing.Size(71, 20);
+            this.lblPsCount.TabIndex = 36;
+            this.lblPsCount.Text = "1,44 Files";
             // 
             // btnRefreshFiles
             // 
@@ -1121,230 +1345,6 @@
             this.btnGarbageImage.Size = new System.Drawing.Size(91, 76);
             this.btnGarbageImage.TabIndex = 17;
             this.btnGarbageImage.Click += new System.EventHandler(this.guna2Button6_Click);
-            // 
-            // btnShowPs
-            // 
-            this.btnShowPs.BackColor = System.Drawing.Color.Transparent;
-            this.btnShowPs.BorderRadius = 12;
-            this.btnShowPs.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnShowPs.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnShowPs.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnShowPs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnShowPs.FillColor = System.Drawing.Color.Transparent;
-            this.btnShowPs.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnShowPs.ForeColor = System.Drawing.Color.White;
-            this.btnShowPs.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnShowPs.Image = global::FlowSERVER1.Properties.Resources.icons8_open_parcel_24;
-            this.btnShowPs.ImageSize = new System.Drawing.Size(24, 24);
-            this.btnShowPs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnShowPs.Location = new System.Drawing.Point(6, 126);
-            this.btnShowPs.Name = "btnShowPs";
-            this.btnShowPs.Size = new System.Drawing.Size(40, 36);
-            this.btnShowPs.TabIndex = 36;
-            this.btnShowPs.TextOffset = new System.Drawing.Point(1, 0);
-            this.btnShowPs.Click += new System.EventHandler(this.guna2Button4_Click_1);
-            // 
-            // btnShowFolderPage
-            // 
-            this.btnShowFolderPage.BackColor = System.Drawing.Color.Transparent;
-            this.btnShowFolderPage.BorderRadius = 12;
-            this.btnShowFolderPage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnShowFolderPage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnShowFolderPage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnShowFolderPage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnShowFolderPage.FillColor = System.Drawing.Color.Transparent;
-            this.btnShowFolderPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnShowFolderPage.ForeColor = System.Drawing.Color.White;
-            this.btnShowFolderPage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnShowFolderPage.Image = global::FlowSERVER1.Properties.Resources.icons8_folder_48;
-            this.btnShowFolderPage.ImageSize = new System.Drawing.Size(29, 29);
-            this.btnShowFolderPage.Location = new System.Drawing.Point(6, 78);
-            this.btnShowFolderPage.Name = "btnShowFolderPage";
-            this.btnShowFolderPage.Size = new System.Drawing.Size(40, 36);
-            this.btnShowFolderPage.TabIndex = 35;
-            this.btnShowFolderPage.Click += new System.EventHandler(this.guna2Button13_Click);
-            // 
-            // btnGoHomePage
-            // 
-            this.btnGoHomePage.BackColor = System.Drawing.Color.Transparent;
-            this.btnGoHomePage.BorderRadius = 12;
-            this.btnGoHomePage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnGoHomePage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnGoHomePage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnGoHomePage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnGoHomePage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnGoHomePage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnGoHomePage.ForeColor = System.Drawing.Color.White;
-            this.btnGoHomePage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnGoHomePage.Image = global::FlowSERVER1.Properties.Resources.icons8_home_page_32;
-            this.btnGoHomePage.ImageSize = new System.Drawing.Size(22, 22);
-            this.btnGoHomePage.Location = new System.Drawing.Point(7, 30);
-            this.btnGoHomePage.Name = "btnGoHomePage";
-            this.btnGoHomePage.Size = new System.Drawing.Size(40, 36);
-            this.btnGoHomePage.TabIndex = 34;
-            this.btnGoHomePage.Click += new System.EventHandler(this.guna2Button9_Click_1);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSettings.Animated = true;
-            this.btnSettings.BackColor = System.Drawing.Color.Transparent;
-            this.btnSettings.BorderRadius = 12;
-            this.btnSettings.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnSettings.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnSettings.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnSettings.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnSettings.FillColor = System.Drawing.Color.Transparent;
-            this.btnSettings.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnSettings.ForeColor = System.Drawing.Color.LightGray;
-            this.btnSettings.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
-            this.btnSettings.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnSettings.Location = new System.Drawing.Point(7, 614);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(40, 36);
-            this.btnSettings.TabIndex = 14;
-            this.btnSettings.Click += new System.EventHandler(this.guna2Button5_Click);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pictureBox5.Image = global::FlowSERVER1.Properties.Resources.flowstorageLogo__15_;
-            this.pictureBox5.Location = new System.Drawing.Point(12, 18);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(182, 57);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 0;
-            this.pictureBox5.TabStop = false;
-            // 
-            // btnUploadFolder
-            // 
-            this.btnUploadFolder.Animated = true;
-            this.btnUploadFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnUploadFolder.BorderRadius = 10;
-            this.btnUploadFolder.DefaultAutoSize = true;
-            this.btnUploadFolder.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnUploadFolder.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnUploadFolder.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnUploadFolder.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnUploadFolder.FillColor = System.Drawing.Color.Empty;
-            this.btnUploadFolder.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUploadFolder.ForeColor = System.Drawing.Color.LightGray;
-            this.btnUploadFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFolder.Image")));
-            this.btnUploadFolder.ImageSize = new System.Drawing.Size(27, 27);
-            this.btnUploadFolder.Location = new System.Drawing.Point(6, 183);
-            this.btnUploadFolder.Name = "btnUploadFolder";
-            this.btnUploadFolder.Size = new System.Drawing.Size(164, 33);
-            this.btnUploadFolder.TabIndex = 29;
-            this.btnUploadFolder.Text = "Upload Folder";
-            this.btnUploadFolder.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnUploadFolder.Click += new System.EventHandler(this.guna2Button12_Click);
-            // 
-            // btnFileSharing
-            // 
-            this.btnFileSharing.Animated = true;
-            this.btnFileSharing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnFileSharing.DefaultAutoSize = true;
-            this.btnFileSharing.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnFileSharing.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnFileSharing.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnFileSharing.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnFileSharing.FillColor = System.Drawing.Color.Empty;
-            this.btnFileSharing.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnFileSharing.ForeColor = System.Drawing.Color.LightGray;
-            this.btnFileSharing.Image = global::FlowSERVER1.Properties.Resources.icons8_share_64;
-            this.btnFileSharing.ImageOffset = new System.Drawing.Point(1, 0);
-            this.btnFileSharing.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnFileSharing.Location = new System.Drawing.Point(6, 333);
-            this.btnFileSharing.Name = "btnFileSharing";
-            this.btnFileSharing.Size = new System.Drawing.Size(148, 33);
-            this.btnFileSharing.TabIndex = 26;
-            this.btnFileSharing.Text = "File Sharing";
-            this.btnFileSharing.TextOffset = new System.Drawing.Point(1, 0);
-            this.btnFileSharing.Click += new System.EventHandler(this.guna2Button7_Click);
-            // 
-            // btnUploadFile
-            // 
-            this.btnUploadFile.Animated = true;
-            this.btnUploadFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnUploadFile.BorderRadius = 10;
-            this.btnUploadFile.DefaultAutoSize = true;
-            this.btnUploadFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnUploadFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnUploadFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnUploadFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnUploadFile.FillColor = System.Drawing.Color.Empty;
-            this.btnUploadFile.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUploadFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnUploadFile.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFile.Image")));
-            this.btnUploadFile.ImageSize = new System.Drawing.Size(26, 26);
-            this.btnUploadFile.Location = new System.Drawing.Point(4, 137);
-            this.btnUploadFile.Name = "btnUploadFile";
-            this.btnUploadFile.Size = new System.Drawing.Size(141, 33);
-            this.btnUploadFile.TabIndex = 14;
-            this.btnUploadFile.Text = "Upload File";
-            this.btnUploadFile.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnUploadFile.Click += new System.EventHandler(this.guna2Button2_Click);
-            // 
-            // btnCreateDirectory
-            // 
-            this.btnCreateDirectory.Animated = true;
-            this.btnCreateDirectory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnCreateDirectory.BorderRadius = 10;
-            this.btnCreateDirectory.DefaultAutoSize = true;
-            this.btnCreateDirectory.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnCreateDirectory.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnCreateDirectory.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnCreateDirectory.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnCreateDirectory.FillColor = System.Drawing.Color.Empty;
-            this.btnCreateDirectory.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCreateDirectory.ForeColor = System.Drawing.Color.LightGray;
-            this.btnCreateDirectory.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateDirectory.Image")));
-            this.btnCreateDirectory.Location = new System.Drawing.Point(12, 285);
-            this.btnCreateDirectory.Name = "btnCreateDirectory";
-            this.btnCreateDirectory.Size = new System.Drawing.Size(173, 33);
-            this.btnCreateDirectory.TabIndex = 13;
-            this.btnCreateDirectory.Text = "Create Directory";
-            this.btnCreateDirectory.TextOffset = new System.Drawing.Point(3, 0);
-            this.btnCreateDirectory.Click += new System.EventHandler(this.guna2Button1_Click);
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnLogout.BackColor = System.Drawing.Color.Transparent;
-            this.btnLogout.BorderColor = System.Drawing.Color.Empty;
-            this.btnLogout.BorderRadius = 5;
-            this.btnLogout.BorderThickness = 1;
-            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnLogout.DefaultAutoSize = true;
-            this.btnLogout.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnLogout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnLogout.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnLogout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnLogout.FillColor = System.Drawing.Color.Empty;
-            this.btnLogout.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogout.ForeColor = System.Drawing.Color.Firebrick;
-            this.btnLogout.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
-            this.btnLogout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnLogout.ImageOffset = new System.Drawing.Point(-18, 1);
-            this.btnLogout.ImageSize = new System.Drawing.Size(35, 35);
-            this.btnLogout.Location = new System.Drawing.Point(52, 614);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(119, 33);
-            this.btnLogout.TabIndex = 38;
-            this.btnLogout.Text = "Logout";
-            this.btnLogout.Click += new System.EventHandler(this.guna2Button15_Click);
-            // 
-            // guna2PictureBox1
-            // 
-            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.DirIcon;
-            this.guna2PictureBox1.ImageRotate = 0F;
-            this.guna2PictureBox1.Location = new System.Drawing.Point(16, 102);
-            this.guna2PictureBox1.Name = "guna2PictureBox1";
-            this.guna2PictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.guna2PictureBox1.TabIndex = 34;
-            this.guna2PictureBox1.TabStop = false;
             // 
             // btnOpenFilterType
             // 
@@ -1552,22 +1552,22 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.pnlFolders.ResumeLayout(false);
             this.pnlFolders.PerformLayout();
             this.pnlSubPanelDetails.ResumeLayout(false);
             this.pnlSubPanelDetails.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.pnlDragAndDropUpload.ResumeLayout(false);
             this.pnlDragAndDropUpload.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.guna2Panel1.ResumeLayout(false);
             this.pnlFileOptions.ResumeLayout(false);
             this.pnlFileOptions.PerformLayout();
             this.pnlPublicStorage.ResumeLayout(false);
             this.pnlPublicStorage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
