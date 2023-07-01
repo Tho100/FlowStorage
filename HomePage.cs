@@ -1964,28 +1964,6 @@ namespace FlowSERVER1 {
                             titleLab.AutoEllipsis = true;
                             titleLab.Text = getName;
 
-                            Guna2Button remButTxt = new Guna2Button();
-                            mainPanelTxt.Controls.Add(remButTxt);
-                            remButTxt.Name = "RemTxtBut" + itemCurr;
-                            remButTxt.Width = 29;
-                            remButTxt.Height = 26;
-                            remButTxt.ImageOffset = GlobalStyle.GarbageOffset;
-                            remButTxt.FillColor = GlobalStyle.TransparentColor;
-                            remButTxt.BorderRadius = 6;
-                            remButTxt.BorderThickness = 1;
-                            remButTxt.BorderColor = GlobalStyle.TransparentColor;
-                            remButTxt.Image = GlobalStyle.GarbageImage;
-                            remButTxt.Visible = true;
-                            remButTxt.Location = GlobalStyle.GarbageButtonLoc;
-                            remButTxt.BringToFront();
-
-                            remButTxt.Click += (sender_tx, e_tx) => {
-                                lblFileNameOnPanel.Text = titleLab.Text;
-                                lblFileTableName.Text = nameTable;
-                                lblFilePanelName.Text = mainPanelTxt.Name;
-                                pnlFileOptions.Visible = true;
-                            };
-
                             textboxPic.MouseHover += (_senderM, _ev) => {
                                 panelTxt.ShadowDecoration.Enabled = true;
                                 panelTxt.ShadowDecoration.BorderRadius = 8;
