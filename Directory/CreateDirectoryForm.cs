@@ -75,13 +75,11 @@ namespace FlowSERVER1
         /// </summary>
         /// <param name="currMain"></param>
         /// <param name="getDirTitle"></param>
-        public void generateDirectory(int currMain, String getDirTitle) {
+        private void generateDirectory(int currMain, string getDirTitle) {
 
             try {
 
                 var flowlayout = HomePage.instance.flowLayoutPanel1;
-                int top = 275;
-                int h_p = 100;
                 var panelPic = new Guna2Panel() {
                     Name = "DirPan" + currMain,
                     Width = 200,
@@ -90,11 +88,13 @@ namespace FlowSERVER1
                     BorderThickness = 1,
                     BorderRadius = 8,
                     BackColor = TransparentColor,
-                    Location = new Point(600, top)
+                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
 
-                top += h_p;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
+
                 flowlayout.Controls.Add(panelPic);
+
                 var panel = ((Guna2Panel)flowlayout.Controls["DirPan" + currMain]);
 
                 Label dirName = new Label();

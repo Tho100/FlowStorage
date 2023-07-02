@@ -56,7 +56,7 @@
             this.btnCreateDirectory.ForeColor = System.Drawing.Color.White;
             this.btnCreateDirectory.Location = new System.Drawing.Point(45, 136);
             this.btnCreateDirectory.Name = "btnCreateDirectory";
-            this.btnCreateDirectory.Size = new System.Drawing.Size(297, 47);
+            this.btnCreateDirectory.Size = new System.Drawing.Size(297, 51);
             this.btnCreateDirectory.TabIndex = 17;
             this.btnCreateDirectory.Text = "Create";
             this.btnCreateDirectory.Click += new System.EventHandler(this.guna2Button2_Click);
@@ -107,9 +107,9 @@
             this.btnCancel.FillColor = System.Drawing.Color.Transparent;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(45, 190);
+            this.btnCancel.Location = new System.Drawing.Point(45, 194);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(297, 47);
+            this.btnCancel.Size = new System.Drawing.Size(297, 51);
             this.btnCancel.TabIndex = 18;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.guna2Button1_Click);

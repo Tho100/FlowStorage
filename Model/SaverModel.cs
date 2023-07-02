@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
@@ -117,7 +118,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                } else if (Globals.publicTables.Contains(_TableName)) {
+                } else if (GlobalsTable.publicTables.Contains(_TableName)) {
 
                     string selectFileDataQuery = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
 
@@ -189,7 +190,7 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                               closeRetrievalAlert();
+                                closeRetrievalAlert();
 
                                 stopFileRetrieval = false;
                                 return;
@@ -207,7 +208,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                } else if (Globals.publicTablesPs.Contains(_TableName)) {
+                } else if (GlobalsTable.publicTablesPs.Contains(_TableName)) {
 
                     string selectFileDataQuery = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_FILE_PATH = @filename";
 

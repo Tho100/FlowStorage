@@ -66,9 +66,9 @@
             this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(80, 307);
+            this.guna2Button1.Location = new System.Drawing.Point(80, 308);
             this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(294, 46);
+            this.guna2Button1.Size = new System.Drawing.Size(294, 51);
             this.guna2Button1.TabIndex = 15;
             this.guna2Button1.Text = "Confirm";
             this.guna2Button1.TextOffset = new System.Drawing.Point(0, -1);
@@ -243,9 +243,9 @@
             this.guna2Button2.FillColor = System.Drawing.Color.Empty;
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(80, 361);
+            this.guna2Button2.Location = new System.Drawing.Point(80, 366);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(294, 44);
+            this.guna2Button2.Size = new System.Drawing.Size(294, 51);
             this.guna2Button2.TabIndex = 22;
             this.guna2Button2.Text = "Cancel";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -1);
@@ -257,7 +257,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label4.Location = new System.Drawing.Point(71, 280);
+            this.label4.Location = new System.Drawing.Point(73, 279);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(125, 17);
             this.label4.TabIndex = 19;

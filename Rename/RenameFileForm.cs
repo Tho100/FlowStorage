@@ -31,7 +31,9 @@ namespace FlowSERVER1 {
             this.sharedToName = _sharedToName;
             this.dirName = _dirName;
 
-            this.label2.Text = titleFile;
+            this.lblFileName.Text = titleFile;
+
+            txtFieldNewFileName.Text = titleFile;
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
@@ -123,7 +125,7 @@ namespace FlowSERVER1 {
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
             string fileExtensions = titleFile.Split('.').Last();
-            string newFileName = guna2TextBox1.Text + "." + fileExtensions;
+            string newFileName = txtFieldNewFileName.Text + "." + fileExtensions;
 
             if(String.IsNullOrEmpty(newFileName)) {
                 return;
@@ -134,6 +136,10 @@ namespace FlowSERVER1 {
         }
 
         private void label2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void RenameFileForm_Load(object sender, EventArgs e) {
 
         }
     }

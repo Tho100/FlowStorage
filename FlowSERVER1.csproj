@@ -673,12 +673,6 @@
     <Compile Include="ExtraForms\SplashForm.Designer.cs">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AlertForms\UsernameUpdatedAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\UsernameUpdatedAlert.Designer.cs">
-      <DependentUpon>UsernameUpdatedAlert.cs</DependentUpon>
-    </Compile>
     <Compile Include="AlertForms\PaymentSuceededAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -885,9 +879,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\UsernameUpdatedAlert.resx">
-      <DependentUpon>UsernameUpdatedAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\PaymentSuceededAlert.resx">
       <DependentUpon>PaymentSuceededAlert.cs</DependentUpon>

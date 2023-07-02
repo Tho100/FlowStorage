@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Threading;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
     public partial class wordFORM : Form {
@@ -55,7 +56,7 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            if (Globals.publicTablesPs.Contains(tableName)) {
+            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
                 label4.Text = "Uploaded By";
                 string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderName);
                 lblUserComment.Visible = true;

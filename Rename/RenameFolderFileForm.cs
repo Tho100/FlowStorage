@@ -17,6 +17,7 @@ namespace FlowSERVER1 {
             InitializeComponent();
 
             this.lblCurrentFolderName.Text = foldTitle;
+            txtFieldNewFolderName.Text = foldTitle;
 
         }
 

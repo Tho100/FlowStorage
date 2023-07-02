@@ -17,6 +17,7 @@ using Stripe.Terminal;
 using System.Timers;
 using System.Data.SqlClient;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
@@ -58,7 +59,7 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
             }
 
-            if (Globals.publicTablesPs.Contains(tableName)) {
+            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
                 label5.Text = "Uploaded By";
                 string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderName);
                 lblUserComment.Visible = true;

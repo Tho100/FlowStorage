@@ -10,9 +10,6 @@ using System.Windows.Forms;
 namespace FlowSERVER1.Helper {
     public class PanelGenerator {
 
-        private int top = 275; 
-        private int h_p = 100;
-
         public void generatePanel(string parameterName, int length, List<(string,string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false) {
 
             for(int i=0; i<length; i++) {
@@ -25,9 +22,9 @@ namespace FlowSERVER1.Helper {
                     BorderThickness = 1,
                     BorderRadius = 8,
                     BackColor = GlobalStyle.TransparentColor,
-                    Location = new Point(600, top)
+                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
-                top += h_p;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
                 HomePage.instance.flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                 var panelF = (Guna2Panel)panelPic_Q;

@@ -37,8 +37,6 @@ namespace FlowSERVER1 {
         public static HomePage instance { get; set;} = new HomePage();
         public string publicStorageUserComment {get; set; } = null;
         public string CurrentLang { get; set; }
-        public string nameTableInsert { get; private set; }
-
 
         public List<string> fileTypeValuesSharedToOthers = new List<string>();
         public List<string> fileTypeValuesSharedToMe = new List<string>();
@@ -58,7 +56,6 @@ namespace FlowSERVER1 {
         private List<string> base64EncodedImagePs = new List<string>();
         private List<string> base64EncodedThumbnailPs = new List<string>();
 
-
         private string previousSelectedItem = null;
 
         private string get_ex;
@@ -70,9 +67,6 @@ namespace FlowSERVER1 {
         private string tableName;
 
         private string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
-
-        private int top = 275;
-        private int h_p = 100;
 
         public HomePage() {
 
@@ -1145,8 +1139,6 @@ namespace FlowSERVER1 {
 
                         async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                            nameTableInsert = nameTable;
-
                             if (fileSizeInMB < 1500) {
 
                                 var panelTxt = new Guna2Panel() {
@@ -1157,10 +1149,10 @@ namespace FlowSERVER1 {
                                     BorderThickness = 1,
                                     BorderRadius = 8,
                                     BackColor = GlobalStyle.TransparentColor,
-                                    Location = new Point(600, top)
+                                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                                 };
 
-                                top += h_p;
+                                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
                                 flowLayoutPanel1.Controls.Add(panelTxt);
                                 var mainPanelTxt = (Guna2Panel)panelTxt;
 
@@ -1907,8 +1899,6 @@ namespace FlowSERVER1 {
 
                     async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                        nameTableInsert = nameTable;
-
                         if (fileSizeInMB < 1500) {
 
                             var panelTxt = new Guna2Panel() {
@@ -1919,10 +1909,10 @@ namespace FlowSERVER1 {
                                 BorderThickness = 1,
                                 BorderRadius = 8,
                                 BackColor = GlobalStyle.TransparentColor,
-                                Location = new Point(600, top)
+                                Location = new Point(600, Globals.PANEL_GAP_TOP)
                             };
 
-                            top += h_p;
+                            Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
                             flowLayoutPanel1.Controls.Add(panelTxt);
                             var mainPanelTxt = (Guna2Panel)panelTxt;
 
@@ -2431,10 +2421,10 @@ namespace FlowSERVER1 {
                     BorderThickness = 1,
                     BorderRadius = 8,
                     BackColor = GlobalStyle.TransparentColor,
-                    Location = new Point(600, top)
+                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
 
-                top += h_p;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
                 flowLayoutPanel1.Controls.Add(panelVid);
                 var mainPanelTxt = (Guna2Panel)panelVid;
                 _controlName = "PanExlFold" + _IntCurr;
@@ -2790,9 +2780,9 @@ namespace FlowSERVER1 {
 
         private async void buildHomeFiles() {
 
-            foreach (string tableName in Globals.publicTables) {
-                if (Globals.tableToFileType.ContainsKey(tableName)) {
-                    string fileType = Globals.tableToFileType[tableName];
+            foreach (string tableName in GlobalsTable.publicTables) {
+                if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
+                    string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
 
                         clearRedundane();
@@ -2811,9 +2801,9 @@ namespace FlowSERVER1 {
 
         private async void buildPublicStorageFiles() {
 
-            foreach (string tableName in Globals.publicTablesPs) {
-                if (Globals.tableToFileTypePs.ContainsKey(tableName)) {
-                    string fileType = Globals.tableToFileTypePs[tableName];
+            foreach (string tableName in GlobalsTable.publicTablesPs) {
+                if (GlobalsTable.tableToFileTypePs.ContainsKey(tableName)) {
+                    string fileType = GlobalsTable.tableToFileTypePs[tableName];
                     if (fileType != null) {
 
                         clearRedundane();
@@ -2834,9 +2824,9 @@ namespace FlowSERVER1 {
             base64EncodedImagePs.Clear();
             base64EncodedThumbnailPs.Clear();
 
-            foreach (string tableName in Globals.publicTablesPs) {
-                if (Globals.tableToFileTypePs.ContainsKey(tableName)) {
-                    string fileType = Globals.tableToFileTypePs[tableName];
+            foreach (string tableName in GlobalsTable.publicTablesPs) {
+                if (GlobalsTable.tableToFileTypePs.ContainsKey(tableName)) {
+                    string fileType = GlobalsTable.tableToFileTypePs[tableName];
                     if (fileType != null) {
 
                         clearRedundane();
@@ -3598,9 +3588,9 @@ namespace FlowSERVER1 {
                     BorderThickness = 1,
                     BorderRadius = 8,
                     BackColor = GlobalStyle.TransparentColor,
-                    Location = new Point(600, top)
+                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
-                top += h_p;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                 var panelF = (Guna2Panel)panelPic_Q;
@@ -3906,9 +3896,9 @@ namespace FlowSERVER1 {
             btnDeleteFolder.Visible = false;
             flowLayoutPanel1.Controls.Clear();
 
-            foreach (string tableName in Globals.publicTables) {
-                if (Globals.tableToFileType.ContainsKey(tableName)) {
-                    string fileType = Globals.tableToFileType[tableName];
+            foreach (string tableName in GlobalsTable.publicTables) {
+                if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
+                    string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
 
                         clearRedundane();
@@ -4223,10 +4213,10 @@ namespace FlowSERVER1 {
                             BorderThickness = 1,
                             BorderRadius = 8,
                             BackColor = GlobalStyle.TransparentColor,
-                            Location = new Point(600, top)
+                            Location = new Point(600, Globals.PANEL_GAP_TOP)
                         };
 
-                        top += h_p;
+                        Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
                         flowLayoutPanel1.Controls.Add(panelTxt);
                         var mainPanelTxt = (Guna2Panel)panelTxt;
 
@@ -4878,7 +4868,7 @@ namespace FlowSERVER1 {
 
                 List<int> returnedCountValue = new List<int>();
 
-                foreach(string tableName in Globals.publicTablesPs) {
+                foreach(string tableName in GlobalsTable.publicTablesPs) {
                     int count = await countTotalUploadPublicStorage(tableName);
                     returnedCountValue.Add(count);
                 }

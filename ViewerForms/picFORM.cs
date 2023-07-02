@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Imaging.Filters;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
     public partial class picFORM : Form {
@@ -74,7 +75,7 @@ namespace FlowSERVER1 {
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
             }
 
-            if (Globals.publicTablesPs.Contains(tableName)) {
+            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
                 label4.Text = "Uploaded By";
                 string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: title, uploaderName: uploaderName);
                 lblUserComment.Visible = true;

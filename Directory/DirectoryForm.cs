@@ -125,9 +125,6 @@ namespace FlowSERVER1
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
 
-        int top = 275;
-        int h_p = 100;
-
         private async void buildFilePanelOnLoad(String _tableName, String parameterName, int currItem) {
 
             List<(string, string)> filesInfo = new List<(string, string)>();
@@ -197,10 +194,11 @@ namespace FlowSERVER1
                     BorderThickness = 1,
                     BorderRadius = 8,
                     BackColor = GlobalStyle.TransparentColor,
-                    Location = new Point(600, top)
+                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
 
-                top += h_p;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
+
                 flowLayoutPanel1.Controls.Add(panelPic_Q);
 
                 var panelF = (Guna2Panel)panelPic_Q;
@@ -568,8 +566,6 @@ namespace FlowSERVER1
 
                             if (fileSizeInMB < 8000) {
 
-                                int top = 275;
-                                int h_p = 100;
                                 var panelTxt = new Guna2Panel() {
                                     Name = panName + itemCurr,
                                     Width = 200,
@@ -578,11 +574,13 @@ namespace FlowSERVER1
                                     BorderThickness = 1,
                                     BorderRadius = 8,
                                     BackColor = GlobalStyle.TransparentColor,
-                                    Location = new Point(600, top)
+                                    Location = new Point(600, Globals.PANEL_GAP_TOP)
                                 };
-                 
-                                top += h_p;
+
+                                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
+
                                 flowLayoutPanel1.Controls.Add(panelTxt);
+
                                 var mainPanelTxt = (Guna2Panel)panelTxt;
                                 _controlName = panName + itemCurr;
 

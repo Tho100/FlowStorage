@@ -1,15 +1,15 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static Spire.Spreadsheet.Forms.Common.Win32;
 
 namespace FlowSERVER1 {
     public class Globals {
+
+        static public int PANEL_GAP_TOP = 275;
+        static public int PANEL_GAP_HEIGHT = 100;
+
+        static public string custUsername = "";
+        static public string custEmail = "";
+        static public string accountType = "";
 
         static public readonly Image VerticalMenuImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
         static public readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
@@ -33,9 +33,6 @@ namespace FlowSERVER1 {
         static private readonly Image HTMLImage = FlowSERVER1.Properties.Resources.icons8_html_filetype_48__1_;
         static private readonly Image SQLImage = FlowSERVER1.Properties.Resources.icons8_database_50__1_;
         static private readonly Image PYImage = FlowSERVER1.Properties.Resources.icons8_python_file_48;
-        static public String custUsername = "";
-        static public String custEmail = "";
-        static public String accountType = "";
 
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
         {".png",".jpg",".jpeg",".bmp",".ico"};
@@ -54,47 +51,6 @@ namespace FlowSERVER1 {
 
         static public readonly HashSet<string> videoTypesFolder = new HashSet<string>
         {"mp4","mov","webm","avi","wmv"};
-
-        static public readonly HashSet<string> publicTables = new HashSet<string> 
-        { "file_info", "file_info_expand", "file_info_exe", "file_info_vid", 
-          "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk", 
-          "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_directory" 
-        };
-
-        static public readonly Dictionary<string, string> tableToFileType = new Dictionary<string, string>
-        {
-            { "file_info", "imgFile" },
-            { "file_info_expand", "txtFile" },
-            { "file_info_exe", "exeFile" },
-            { "file_info_vid", "vidFile" },
-            { "file_info_excel", "exlFile" },
-            { "file_info_pdf", "pdfFile" },
-            { "file_info_apk", "apkFile" },
-            { "file_info_word", "wordFile" },
-            { "file_info_ptx", "ptxFile" },
-            { "file_info_directory", null }
-        };
-
-        static public readonly HashSet<string> publicTablesPs = new HashSet<string>
-        { "ps_info_image", "ps_info_text", "ps_info_exe", "ps_info_video",
-          "ps_info_excel", "ps_info_msi", "ps_info_audio", "ps_info_apk",
-          "ps_info_pdf", "ps_info_word", "ps_info_ptx"
-        };
-
-        static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>
-        {
-            { "ps_info_image", "imgFile" },
-            { "ps_info_text", "txtFile" },
-            { "ps_info_exe", "exeFile" },
-            { "ps_info_video", "vidFile" },
-            { "ps_info_excel", "exlFile" },
-            { "ps_info_pdf", "pdfFile" },
-            { "ps_info_apk", "apkFile" },
-            { "ps_info_word", "wordFile" },
-            { "ps_info_ptx", "ptxFile" },
-            { "ps_info_audio", "audFile" },
-
-        };
 
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
         {

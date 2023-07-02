@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
@@ -158,7 +159,6 @@ namespace FlowSERVER1 {
 
                 if(authReturnOriginal(CurrentUsername) == EncryptionModel.computeAuthCase(_getCustPass)) {
 
-
                     string[] tableNames = {
                         "information","cust_type","file_info", "file_info_expand", 
                         "file_info_word", "file_info_excel", "file_info_pdf", "file_info_audi", 
@@ -170,7 +170,7 @@ namespace FlowSERVER1 {
                         await setupChangeUsername(tableNames[i], _getNewUsername);
                     }
 
-                    foreach(var publicTablesPs in Globals.publicTablesPs) {
+                    foreach(var publicTablesPs in GlobalsTable.publicTablesPs) {
                         await setupChangeUsername(publicTablesPs, _getNewUsername);
                     }
 

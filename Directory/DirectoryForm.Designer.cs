@@ -200,7 +200,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(15, 45);
+            this.label2.Location = new System.Drawing.Point(14, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 8;
@@ -429,7 +429,7 @@
             this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(83, 52);
+            this.guna2CircleButton1.Location = new System.Drawing.Point(82, 52);
             this.guna2CircleButton1.Name = "guna2CircleButton1";
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.guna2CircleButton1.Size = new System.Drawing.Size(6, 6);
@@ -441,7 +441,7 @@
             this.lblFilesCount.BackColor = System.Drawing.Color.Transparent;
             this.lblFilesCount.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFilesCount.ForeColor = System.Drawing.Color.Silver;
-            this.lblFilesCount.Location = new System.Drawing.Point(94, 45);
+            this.lblFilesCount.Location = new System.Drawing.Point(93, 45);
             this.lblFilesCount.Name = "lblFilesCount";
             this.lblFilesCount.Size = new System.Drawing.Size(50, 17);
             this.lblFilesCount.TabIndex = 76;

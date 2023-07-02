@@ -61,7 +61,7 @@
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Location = new System.Drawing.Point(69, 321);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(273, 48);
+            this.guna2Button2.Size = new System.Drawing.Size(273, 51);
             this.guna2Button2.TabIndex = 15;
             this.guna2Button2.Text = "Sign In";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);
@@ -365,7 +365,7 @@
             this.guna2Separator1.Size = new System.Drawing.Size(684, 10);
             this.guna2Separator1.TabIndex = 55;
             // 
-            // LogIN
+            // SignInForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -390,7 +390,7 @@
             this.Controls.Add(this.guna2TextBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "LogIN";
+            this.Name = "SignInForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sign In";
             this.Load += new System.EventHandler(this.LogIN_Load);

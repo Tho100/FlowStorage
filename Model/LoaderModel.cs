@@ -3,6 +3,7 @@ using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
 
@@ -19,7 +20,7 @@ namespace FlowSERVER1 {
 
                 fileName = _FileName;
 
-                if (Globals.publicTables.Contains(_TableName)) {
+                if (GlobalsTable.publicTables.Contains(_TableName)) {
                     RetrieveHomeDataAsync(_TableName);
                 }
 
@@ -40,7 +41,7 @@ namespace FlowSERVER1 {
                     RetrieveSharedToMeData();
 
                 }
-                else if (Globals.publicTablesPs.Contains(_TableName)) {
+                else if (GlobalsTable.publicTablesPs.Contains(_TableName)) {
                     RetrievePublicStorageData(_TableName);
 
                 }
