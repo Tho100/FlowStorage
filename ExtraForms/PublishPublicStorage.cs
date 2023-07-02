@@ -24,5 +24,8 @@ namespace FlowSERVER1.ExtraForms {
             this.Close();
         }
 
+        private void txtFieldComment_TextChanged(object sender, EventArgs e) {
+            lblCountCharComment.Text = $"{txtFieldComment.TextLength}/295";
+        }
     }
 }

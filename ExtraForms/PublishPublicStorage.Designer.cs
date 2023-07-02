@@ -118,6 +118,7 @@
             this.txtFieldComment.SelectedText = "";
             this.txtFieldComment.Size = new System.Drawing.Size(475, 136);
             this.txtFieldComment.TabIndex = 33;
+            this.txtFieldComment.TextChanged += new System.EventHandler(this.txtFieldComment_TextChanged);
             // 
             // label6
             // 
