@@ -18,6 +18,7 @@ using System.Timers;
 using System.Data.SqlClient;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
@@ -86,6 +87,12 @@ namespace FlowSERVER1 {
 
             lblFileSize.Text = $"{FileSize.fileSize(_getByteAud):F2}Mb";
 
+            btnPauseAudio.Visible = true;
+            btnPlayAudio.Visible = false;
+
+            btnPlayAudio.SendToBack();
+            btnPauseAudio.BringToFront();
+
             if (_audType == "wav") {
                 using (MemoryStream ms = new MemoryStream(_getByteAud)) {
                     SoundPlayer player = new SoundPlayer(ms);
@@ -97,6 +104,8 @@ namespace FlowSERVER1 {
             else if (_audType == "mp3") {
                 await Task.Run(() => mp3ToWav(_getByteAud));
             }
+
+
         }
 
         /// <summary>
@@ -118,8 +127,7 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.", "Loader").ShowDialog());
-                    ShowAlert.Start();
+                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.", "Loader").ShowDialog()).Start();
 
                     pictureBox3.Enabled = true;
 
@@ -131,15 +139,16 @@ namespace FlowSERVER1 {
                         pictureBox3.Enabled = false;
                     }
                 }
-            }
-            catch (Exception) {
-                pictureBox3.Enabled = false;
-                guna2Button6.Visible = false;
-                guna2Button5.Visible = true;
-            }
 
-            guna2Button6.Visible = true;
-            guna2Button5.Visible = false;
+                btnPauseAudio.Visible = true;
+                btnPlayAudio.Visible = false;
+
+                btnPlayAudio.SendToBack();
+                btnPauseAudio.BringToFront();
+
+            } catch (Exception) {
+                new CustomAlert(title: "An error occurred","Failed to play this audio.").Show();
+            }
         }
 
         /// <summary>
@@ -169,7 +178,6 @@ namespace FlowSERVER1 {
             _timer.Tick += new EventHandler(timer_Tick);
             _timer.Start();
 
-            // Show this form to start timer 
             AudioHelp breakFixedValue = new AudioHelp();
             breakFixedValue.ShowDialog();
 
@@ -177,11 +185,7 @@ namespace FlowSERVER1 {
                 Application.OpenForms["AudioHelp"].Close();
             }
 
-            Application.OpenForms
-            .OfType<Form>()
-            .Where(form => String.Equals(form.Name, "AudioHelp"))
-            .ToList()
-            .ForEach(form => form.Close());
+            CloseForm.closeForm("AudioHelp");
         }
 
         private void timer_Tick(object sender, EventArgs e) {
@@ -201,8 +205,8 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button6_Click(object sender, EventArgs e) {
-            guna2Button6.Visible = false;
-            guna2Button5.Visible = true;
+            btnPauseAudio.Visible = false;
+            btnPlayAudio.Visible = true;
             pictureBox3.Enabled = false;
             if(_getSoundPlayer != null) {
                 _getSoundPlayer.Stop();

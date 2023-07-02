@@ -47,8 +47,8 @@
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPauseAudio = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPlayAudio = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
@@ -348,50 +348,50 @@
             this.btnShareFile.TabIndex = 55;
             this.btnShareFile.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
-            // guna2Button6
+            // btnPauseAudio
             // 
-            this.guna2Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button6.Animated = true;
-            this.guna2Button6.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button6.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button6.BorderRadius = 6;
-            this.guna2Button6.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button6.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button6.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button6.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
-            this.guna2Button6.ImageSize = new System.Drawing.Size(31, 31);
-            this.guna2Button6.Location = new System.Drawing.Point(1078, 571);
-            this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(46, 36);
-            this.guna2Button6.TabIndex = 36;
-            this.guna2Button6.Visible = false;
-            this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
+            this.btnPauseAudio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPauseAudio.Animated = true;
+            this.btnPauseAudio.BackColor = System.Drawing.Color.Transparent;
+            this.btnPauseAudio.BorderColor = System.Drawing.Color.Empty;
+            this.btnPauseAudio.BorderRadius = 6;
+            this.btnPauseAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPauseAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPauseAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPauseAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPauseAudio.FillColor = System.Drawing.Color.Empty;
+            this.btnPauseAudio.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnPauseAudio.ForeColor = System.Drawing.Color.White;
+            this.btnPauseAudio.Image = ((System.Drawing.Image)(resources.GetObject("btnPauseAudio.Image")));
+            this.btnPauseAudio.ImageSize = new System.Drawing.Size(31, 31);
+            this.btnPauseAudio.Location = new System.Drawing.Point(1079, 570);
+            this.btnPauseAudio.Name = "btnPauseAudio";
+            this.btnPauseAudio.Size = new System.Drawing.Size(46, 36);
+            this.btnPauseAudio.TabIndex = 36;
+            this.btnPauseAudio.Visible = false;
+            this.btnPauseAudio.Click += new System.EventHandler(this.guna2Button6_Click);
             // 
-            // guna2Button5
+            // btnPlayAudio
             // 
-            this.guna2Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button5.Animated = true;
-            this.guna2Button5.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button5.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button5.BorderRadius = 6;
-            this.guna2Button5.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button5.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button5.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button5.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button5.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button5.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button5.ForeColor = System.Drawing.Color.White;
-            this.guna2Button5.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button5.Image")));
-            this.guna2Button5.ImageSize = new System.Drawing.Size(34, 34);
-            this.guna2Button5.Location = new System.Drawing.Point(1079, 571);
-            this.guna2Button5.Name = "guna2Button5";
-            this.guna2Button5.Size = new System.Drawing.Size(46, 36);
-            this.guna2Button5.TabIndex = 35;
-            this.guna2Button5.Click += new System.EventHandler(this.guna2Button5_Click);
+            this.btnPlayAudio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPlayAudio.Animated = true;
+            this.btnPlayAudio.BackColor = System.Drawing.Color.Transparent;
+            this.btnPlayAudio.BorderColor = System.Drawing.Color.Empty;
+            this.btnPlayAudio.BorderRadius = 6;
+            this.btnPlayAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPlayAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPlayAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPlayAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPlayAudio.FillColor = System.Drawing.Color.Empty;
+            this.btnPlayAudio.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnPlayAudio.ForeColor = System.Drawing.Color.White;
+            this.btnPlayAudio.Image = ((System.Drawing.Image)(resources.GetObject("btnPlayAudio.Image")));
+            this.btnPlayAudio.ImageSize = new System.Drawing.Size(34, 34);
+            this.btnPlayAudio.Location = new System.Drawing.Point(1079, 570);
+            this.btnPlayAudio.Name = "btnPlayAudio";
+            this.btnPlayAudio.Size = new System.Drawing.Size(46, 36);
+            this.btnPlayAudio.TabIndex = 35;
+            this.btnPlayAudio.Click += new System.EventHandler(this.guna2Button5_Click);
             // 
             // pictureBox3
             // 
@@ -497,8 +497,8 @@
             this.Controls.Add(this.guna2VSeparator1);
             this.Controls.Add(this.btnShareFile);
             this.Controls.Add(this.lblUserComment);
-            this.Controls.Add(this.guna2Button6);
-            this.Controls.Add(this.guna2Button5);
+            this.Controls.Add(this.btnPauseAudio);
+            this.Controls.Add(this.btnPlayAudio);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.guna2Button8);
             this.Controls.Add(this.lblUploaderUsername);
@@ -527,8 +527,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button4;
         private System.Windows.Forms.Label lblFileName;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        public Guna.UI2.WinForms.Guna2Button guna2Button6;
-        public Guna.UI2.WinForms.Guna2Button guna2Button5;
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
         public System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblUserComment;
@@ -550,5 +548,7 @@
         public Guna.UI2.WinForms.Guna2Button btnEditComment;
         public Guna.UI2.WinForms.Guna2Button guna2Button7;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
+        private Guna.UI2.WinForms.Guna2Button btnPauseAudio;
+        private Guna.UI2.WinForms.Guna2Button btnPlayAudio;
     }
 }
