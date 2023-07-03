@@ -530,7 +530,6 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button8;
         public System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblUserComment;
-        public Guna.UI2.WinForms.Guna2Button btnShareFile;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
@@ -550,5 +549,6 @@
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private Guna.UI2.WinForms.Guna2Button btnPauseAudio;
         private Guna.UI2.WinForms.Guna2Button btnPlayAudio;
+        private Guna.UI2.WinForms.Guna2Button btnShareFile;
     }
 }

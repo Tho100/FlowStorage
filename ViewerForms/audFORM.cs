@@ -15,15 +15,12 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using Stripe.Terminal;
 using System.Timers;
-using System.Data.SqlClient;
-using FlowSERVER1.Helper;
+using FlowSERVER1.Helper; 
 using FlowSERVER1.Global;
 using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
-
-        readonly private MySqlConnection con = ConnectionModel.con;
 
         private string _TabName = "";
         private string _DirName = "";
@@ -35,7 +32,7 @@ namespace FlowSERVER1 {
         private TimeSpan _elapsedTime;
         private Mp3FileReader _NReader;
 
-        public audFORM(String fileName,String tableName,String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
+        public audFORM(String fileName, String tableName,String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
 
             InitializeComponent();
 

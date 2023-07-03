@@ -36,6 +36,8 @@ namespace FlowSERVER1 {
         
         public static HomePage instance { get; set;} = new HomePage();
         public string publicStorageUserComment {get; set; } = null;
+        public string publicStorageUserTag { get; set; } = null;
+        public bool publicStorageClosed { get; set; } = false;
         public string CurrentLang { get; set; }
 
         public List<string> fileTypeValuesSharedToOthers = new List<string>();
@@ -215,7 +217,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_COMMENT) VALUES (@username, @file_name, @date, @file_value,@comment)";
+                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_COMMENT, CUST_TAG) VALUES (@username, @file_name, @date, @file_value,@comment, @tag)";
                 var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername},
@@ -223,6 +225,7 @@ namespace FlowSERVER1 {
                     { "@date", todayDate},
                     { "@file_value", fileBase64Value},
                     { "@comment", EncryptionModel.Encrypt(publicStorageUserComment)},
+                    { "@tag", publicStorageUserTag},
                 };
 
                 await crud.Insert(insertQuery, param);
@@ -325,17 +328,17 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string)> filesInfo = new List<(string, string)>();
+                List<(string, string, string)> filesInfo = new List<(string, string, string)>();
 
                 string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string)> tuplesList = new List<(string, string)>();
+                        List<(string, string, string)> tuplesList = new List<(string, string, string)>();
                         while (await reader.ReadAsync()) {
                             string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                             string uploadDate = reader.GetString(1);
-                            tuplesList.Add((fileName, uploadDate));
+                            tuplesList.Add((fileName, uploadDate, String.Empty));
                         }
                         filesInfo.AddRange(tuplesList);
                     }
@@ -593,7 +596,7 @@ namespace FlowSERVER1 {
                 List<EventHandler> onPressedEvent = new List<EventHandler>();
                 List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
-                List<(string, string)> filesInfo = new List<(string, string)>();
+                List<(string, string, string)> filesInfo = new List<(string, string, string)>();
                 HashSet<string> filePaths = new HashSet<string>();
 
                 const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
@@ -611,7 +614,7 @@ namespace FlowSERVER1 {
                             }
 
                             filePaths.Add(filePath);
-                            filesInfo.Add((filePath, uploadDate));
+                            filesInfo.Add((filePath, uploadDate, String.Empty));
                         }
                         reader.Close();
                     }
@@ -1510,7 +1513,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string)> filesInfo = new List<(string, string)>();
+                List<(string, string, string)> filesInfo = new List<(string, string, string)>();
 
                 string selectFileDataQuery = null;
 
@@ -1521,14 +1524,15 @@ namespace FlowSERVER1 {
 
                 if(isFromMyPs == false) {
 
-                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_USERNAME FROM {_tableName}";
+                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {_tableName}";
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                         using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            List<(string, string)> tuplesList = new List<(string, string)>();
+                            List<(string, string, string)> tuplesList = new List<(string, string, string)>();
                             while (await reader.ReadAsync()) {
                                 string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                                 string uploadDate = reader.GetString(1);
-                                tuplesList.Add((fileName, uploadDate));
+                                string tagValue = reader.GetString(2);
+                                tuplesList.Add((fileName, uploadDate, tagValue));
                             }
                             filesInfo.AddRange(tuplesList);
                         }
@@ -1536,15 +1540,16 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_USERNAME FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username",Globals.custUsername);
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            List<(string, string)> tuplesList = new List<(string, string)>();
+                            List<(string, string, string)> tuplesList = new List<(string, string, string)>();
                             while (await reader.ReadAsync()) {
                                 string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                                 string uploadDate = reader.GetString(1);
-                                tuplesList.Add((fileName, uploadDate));
+                                string tagValue = reader.GetString(2);
+                                tuplesList.Add((fileName, uploadDate, tagValue));
                             }
                             filesInfo.AddRange(tuplesList);
                         }
@@ -1833,7 +1838,7 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
 
             }
-            catch (Exception) {
+            catch (Exception eq) {
                 new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
             }
 
@@ -2119,107 +2124,110 @@ namespace FlowSERVER1 {
 
                         new PublishPublicStorage(fileName: getName).ShowDialog();
 
-                        byte[] _toByte = File.ReadAllBytes(selectedItems);
-                        string _toBase64 = Convert.ToBase64String(_toByte);
+                        if(publicStorageClosed == false) {
+                        
+                            byte[] _toByte = File.ReadAllBytes(selectedItems);
+                            string _toBase64 = Convert.ToBase64String(_toByte);
 
-                        fileSizeInMB = (_toByte.Length / 1024) / 1024;
+                            fileSizeInMB = (_toByte.Length / 1024) / 1024;
 
-                        if (Globals.imageTypes.Contains(retrieved)) {
-                            curr++;
-                            var getImg = new Bitmap(selectedItems);
-                            var imgWidth = getImg.Width;
-                            var imgHeight = getImg.Height;
+                            if (Globals.imageTypes.Contains(retrieved)) {
+                                curr++;
+                                var getImg = new Bitmap(selectedItems);
+                                var imgWidth = getImg.Width;
+                                var imgHeight = getImg.Height;
 
-                            if (retrieved != ".ico") {
-                                String _compressedImage = compressor.compresImageToBase64(selectedItems);
-                                String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
-                                createPanelMain("ps_info_image", "PanImg", curr, _encryptedValue);
-                            }
-                            else {
-                                Image retrieveIcon = Image.FromFile(selectedItems);
-                                byte[] dataIco;
-                                using (MemoryStream msIco = new MemoryStream()) {
-                                    retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                    dataIco = msIco.ToArray();
-                                    String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                    String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
+                                if (retrieved != ".ico") {
+                                    String _compressedImage = compressor.compresImageToBase64(selectedItems);
+                                    String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
                                     createPanelMain("ps_info_image", "PanImg", curr, _encryptedValue);
                                 }
+                                else {
+                                    Image retrieveIcon = Image.FromFile(selectedItems);
+                                    byte[] dataIco;
+                                    using (MemoryStream msIco = new MemoryStream()) {
+                                        retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
+                                        dataIco = msIco.ToArray();
+                                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
+                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
+                                        createPanelMain("ps_info_image", "PanImg", curr, _encryptedValue);
+                                    }
+                                }
                             }
-                        }
 
-                        else if (Globals.textTypes.Contains(retrieved)) {
-                            txtCurr++;
-                            String nonLine = "";
-                            using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
-                                nonLine = ReadFileTxt.ReadToEnd();
+                            else if (Globals.textTypes.Contains(retrieved)) {
+                                txtCurr++;
+                                String nonLine = "";
+                                using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
+                                    nonLine = ReadFileTxt.ReadToEnd();
+                                }
+                                byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
+                                String getEncoded = Convert.ToBase64String(getBytes);
+                                String encryptText = EncryptionModel.Encrypt(getEncoded);
+                                createPanelMain("ps_info_text", "PanTxt", txtCurr, encryptText);
                             }
-                            byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                            String getEncoded = Convert.ToBase64String(getBytes);
-                            String encryptText = EncryptionModel.Encrypt(getEncoded);
-                            createPanelMain("ps_info_text", "PanTxt", txtCurr, encryptText);
-                        }
 
-                        else if (retrieved == ".exe") {
-                            exeCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_exe", "PanExe", exeCurr, encryptText);
+                            else if (retrieved == ".exe") {
+                                exeCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_exe", "PanExe", exeCurr, encryptText);
 
-                        }
-                        else if (Globals.videoTypes.Contains(retrieved)) {
-                            vidCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_video", "PanVid", vidCurr, encryptText);
-                        }
+                            }
+                            else if (Globals.videoTypes.Contains(retrieved)) {
+                                vidCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_video", "PanVid", vidCurr, encryptText);
+                            }
 
-                        else if (retrieved == ".xlsx" || retrieved == ".xls") {
-                            exlCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_excel", "PanExl", exlCurr, encryptText);
-                        }
+                            else if (retrieved == ".xlsx" || retrieved == ".xls") {
+                                exlCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_excel", "PanExl", exlCurr, encryptText);
+                            }
 
-                        else if (retrieved == ".mp3" || retrieved == ".wav") {
-                            audCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_audio", "PanAud", audCurr, encryptText);
+                            else if (retrieved == ".mp3" || retrieved == ".wav") {
+                                audCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_audio", "PanAud", audCurr, encryptText);
 
-                        }
+                            }
 
-                        else if (retrieved == ".apk") {
-                            apkCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_apk", "PanApk", apkCurr, encryptText);
-                        }
+                            else if (retrieved == ".apk") {
+                                apkCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_apk", "PanApk", apkCurr, encryptText);
+                            }
 
-                        else if (retrieved == ".pdf") {
-                            pdfCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_pdf", "PanPdf", pdfCurr, encryptText);
-                        }
+                            else if (retrieved == ".pdf") {
+                                pdfCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_pdf", "PanPdf", pdfCurr, encryptText);
+                            }
 
-                        else if (retrieved == ".pptx" || retrieved == ".ppt") {
-                            ptxCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_ptx", "PanPtx", ptxCurr, encryptText);
-                        }
-                        else if (retrieved == ".msi") {
-                            msiCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_msi", "PanMsi", msiCurr, encryptText);
-                        }
-                        else if (retrieved == ".docx") {
-                            docxCurr++;
-                            String encryptText = EncryptionModel.Encrypt(_toBase64);
-                            createPanelMain("ps_info_word", "PanDoc", docxCurr, encryptText);
+                            else if (retrieved == ".pptx" || retrieved == ".ppt") {
+                                ptxCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_ptx", "PanPtx", ptxCurr, encryptText);
+                            }
+                            else if (retrieved == ".msi") {
+                                msiCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_msi", "PanMsi", msiCurr, encryptText);
+                            }
+                            else if (retrieved == ".docx") {
+                                docxCurr++;
+                                String encryptText = EncryptionModel.Encrypt(_toBase64);
+                                createPanelMain("ps_info_word", "PanDoc", docxCurr, encryptText);
 
-                        }
-                        else {
+                            }
+                            else {
 
-                            UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(getName);
-                            unsupportedFileFormartForm.Show();
-                        }
+                                UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(getName);
+                                unsupportedFileFormartForm.Show();
+                            }
 
-                        closeUploadAlert();
+                            closeUploadAlert();
+                        }
 
                     }
                     catch (Exception) {
@@ -2232,6 +2240,8 @@ namespace FlowSERVER1 {
                    
                 }
             }
+
+            publicStorageClosed = false;
 
             buildRedundaneVisibility();
             closeUploadAlert();
@@ -3020,7 +3030,7 @@ namespace FlowSERVER1 {
         /// <param name="itemCurr"></param>
         /// 
 
-        List<(string, string)> filesInfoSharedOthers = new List<(string, string)>();
+        List<(string, string, string)> filesInfoSharedOthers = new List<(string, string, string)>();
         private async void _callFilesInformationOthers() {
 
             filesInfoSharedOthers.Clear();
@@ -3031,7 +3041,7 @@ namespace FlowSERVER1 {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
-                        filesInfoSharedOthers.Add((fileName, uploadDate));
+                        filesInfoSharedOthers.Add((fileName, uploadDate, String.Empty));
                     }
                 }
             }
@@ -3290,7 +3300,7 @@ namespace FlowSERVER1 {
         /// <param name="itemCurr"></param>
         /// 
 
-        List<(string, string)> filesInfoShared = new List<(string, string)>();
+        List<(string, string, string)> filesInfoShared = new List<(string, string, string)>();
         private async void _callFilesInformationShared() {
 
             filesInfoShared.Clear();
@@ -3301,7 +3311,7 @@ namespace FlowSERVER1 {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
-                        filesInfoShared.Add((fileName, uploadDate));
+                        filesInfoShared.Add((fileName, uploadDate, String.Empty));
                     }
                 }
             }

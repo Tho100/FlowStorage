@@ -1,4 +1,5 @@
 ﻿using Guna.UI2.WinForms;
+using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 namespace FlowSERVER1.Helper {
     public class PanelGenerator {
 
-        public void generatePanel(string parameterName, int length, List<(string,string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false) {
+        public void generatePanel(string parameterName, int length, List<(string,string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false) {
 
             for(int i=0; i<length; i++) {
 
@@ -32,12 +33,35 @@ namespace FlowSERVER1.Helper {
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
                 dateLab.Name = $"LabG{i}";
+                dateLab.BackColor = GlobalStyle.TransparentColor;
                 dateLab.Font = GlobalStyle.DateLabelFont;
                 dateLab.ForeColor = GlobalStyle.DarkGrayColor;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
                 dateLab.Location = GlobalStyle.DateLabelLoc;
                 dateLab.Text = filesInfo[i].Item2;
+
+                Guna2CircleButton seperatorButton = new Guna2CircleButton();
+                if(isFromPs) {
+                    panelF.Controls.Add(seperatorButton);
+                }
+                seperatorButton.Location = GlobalStyle.PsSeperatorBut;
+                seperatorButton.Size = GlobalStyle.PsSeperatorButSize;
+                seperatorButton.FillColor = GlobalStyle.PsSeperatorColor;
+                seperatorButton.BringToFront();
+
+                Label psButtonTag = new Label();
+                if(isFromPs) {
+                    panelF.Controls.Add(psButtonTag);
+                }
+                psButtonTag.Name = $"ButTag{i}";
+                psButtonTag.Font = GlobalStyle.PsLabelTagFont;
+                psButtonTag.BackColor = GlobalStyle.TransparentColor; 
+                psButtonTag.ForeColor = isFromPs == true ? GlobalStyle.psBackgroundColorTag[filesInfo[i].Item3] : GlobalStyle.TransparentColor;
+                psButtonTag.Visible = isFromPs == true;
+                psButtonTag.Location = GlobalStyle.PsLabelTagLoc;
+                psButtonTag.Text = isFromPs == true ? filesInfo[i].Item3 : String.Empty;
+                psButtonTag.BringToFront();
 
                 Label titleLab = new Label();
                 panelF.Controls.Add(titleLab);
@@ -88,9 +112,9 @@ namespace FlowSERVER1.Helper {
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = GlobalStyle.TransparentColor;
                 remBut.Image = GlobalStyle.GarbageImage; 
-                remBut.Visible = isFromPs == true ? false : true;
+                remBut.Visible = isFromPs == false;
                 remBut.Location = GlobalStyle.GarbageButtonLoc; 
-                remBut.Enabled = isFromPs == true ? false : true;
+                remBut.Enabled = isFromPs == false;
 
                 remBut.Click += onPressedMoreButton[i];
 

@@ -28,6 +28,12 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblFileName = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnPolitics = new Guna.UI2.WinForms.Guna2Button();
+            this.btnSoftware = new Guna.UI2.WinForms.Guna2Button();
+            this.btnGaming = new Guna.UI2.WinForms.Guna2Button();
+            this.btnEnter = new Guna.UI2.WinForms.Guna2Button();
             this.lblCountCharComment = new System.Windows.Forms.Label();
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -36,7 +42,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
+            this.btnRandom = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
+            this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -64,6 +72,8 @@
             this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
+            this.guna2Panel1.Controls.Add(this.label1);
+            this.guna2Panel1.Controls.Add(this.guna2Panel2);
             this.guna2Panel1.Controls.Add(this.lblCountCharComment);
             this.guna2Panel1.Controls.Add(this.txtFieldComment);
             this.guna2Panel1.Controls.Add(this.label6);
@@ -71,10 +81,117 @@
             this.guna2Panel1.Controls.Add(this.txtFieldFileName);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.Location = new System.Drawing.Point(21, 81);
+            this.guna2Panel1.Location = new System.Drawing.Point(16, 81);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(634, 385);
+            this.guna2Panel1.Size = new System.Drawing.Size(770, 524);
             this.guna2Panel1.TabIndex = 40;
+            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label1.Location = new System.Drawing.Point(25, 112);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 17);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Tags";
+            // 
+            // guna2Panel2
+            // 
+            this.guna2Panel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.guna2Panel2.BorderRadius = 8;
+            this.guna2Panel2.BorderThickness = 1;
+            this.guna2Panel2.Controls.Add(this.btnRandom);
+            this.guna2Panel2.Controls.Add(this.btnPolitics);
+            this.guna2Panel2.Controls.Add(this.btnSoftware);
+            this.guna2Panel2.Controls.Add(this.btnGaming);
+            this.guna2Panel2.Controls.Add(this.btnEnter);
+            this.guna2Panel2.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Panel2.Location = new System.Drawing.Point(21, 140);
+            this.guna2Panel2.Name = "guna2Panel2";
+            this.guna2Panel2.Size = new System.Drawing.Size(403, 95);
+            this.guna2Panel2.TabIndex = 35;
+            this.guna2Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint);
+            // 
+            // btnPolitics
+            // 
+            this.btnPolitics.BorderColor = System.Drawing.Color.Transparent;
+            this.btnPolitics.BorderRadius = 16;
+            this.btnPolitics.BorderThickness = 1;
+            this.btnPolitics.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPolitics.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPolitics.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPolitics.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPolitics.FillColor = System.Drawing.Color.Maroon;
+            this.btnPolitics.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPolitics.ForeColor = System.Drawing.Color.White;
+            this.btnPolitics.Location = new System.Drawing.Point(10, 47);
+            this.btnPolitics.Name = "btnPolitics";
+            this.btnPolitics.Size = new System.Drawing.Size(115, 30);
+            this.btnPolitics.TabIndex = 40;
+            this.btnPolitics.Text = "Politics";
+            this.btnPolitics.Click += new System.EventHandler(this.btnPolitics_Click);
+            // 
+            // btnSoftware
+            // 
+            this.btnSoftware.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSoftware.BorderRadius = 16;
+            this.btnSoftware.BorderThickness = 1;
+            this.btnSoftware.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSoftware.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSoftware.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSoftware.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSoftware.FillColor = System.Drawing.Color.Green;
+            this.btnSoftware.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSoftware.ForeColor = System.Drawing.Color.White;
+            this.btnSoftware.Location = new System.Drawing.Point(253, 11);
+            this.btnSoftware.Name = "btnSoftware";
+            this.btnSoftware.Size = new System.Drawing.Size(115, 30);
+            this.btnSoftware.TabIndex = 39;
+            this.btnSoftware.Text = "Software";
+            this.btnSoftware.Click += new System.EventHandler(this.btnSoftware_Click);
+            // 
+            // btnGaming
+            // 
+            this.btnGaming.BorderColor = System.Drawing.Color.Transparent;
+            this.btnGaming.BorderRadius = 16;
+            this.btnGaming.BorderThickness = 1;
+            this.btnGaming.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnGaming.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnGaming.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnGaming.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnGaming.FillColor = System.Drawing.Color.SteelBlue;
+            this.btnGaming.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGaming.ForeColor = System.Drawing.Color.White;
+            this.btnGaming.Location = new System.Drawing.Point(132, 11);
+            this.btnGaming.Name = "btnGaming";
+            this.btnGaming.Size = new System.Drawing.Size(115, 30);
+            this.btnGaming.TabIndex = 38;
+            this.btnGaming.Text = "Gaming";
+            this.btnGaming.Click += new System.EventHandler(this.btnGaming_Click);
+            // 
+            // btnEnter
+            // 
+            this.btnEnter.BorderColor = System.Drawing.Color.Transparent;
+            this.btnEnter.BorderRadius = 16;
+            this.btnEnter.BorderThickness = 1;
+            this.btnEnter.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnEnter.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnEnter.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnEnter.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnEnter.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnEnter.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEnter.ForeColor = System.Drawing.Color.White;
+            this.btnEnter.Location = new System.Drawing.Point(10, 11);
+            this.btnEnter.Name = "btnEnter";
+            this.btnEnter.Size = new System.Drawing.Size(115, 30);
+            this.btnEnter.TabIndex = 37;
+            this.btnEnter.Text = "Entertainment";
+            this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
             // 
             // lblCountCharComment
             // 
@@ -83,7 +200,7 @@
             this.lblCountCharComment.BackColor = System.Drawing.Color.Transparent;
             this.lblCountCharComment.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCountCharComment.ForeColor = System.Drawing.Color.Silver;
-            this.lblCountCharComment.Location = new System.Drawing.Point(452, 273);
+            this.lblCountCharComment.Location = new System.Drawing.Point(451, 419);
             this.lblCountCharComment.Name = "lblCountCharComment";
             this.lblCountCharComment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblCountCharComment.Size = new System.Drawing.Size(41, 17);
@@ -107,7 +224,7 @@
             this.txtFieldComment.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldComment.ForeColor = System.Drawing.Color.White;
             this.txtFieldComment.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldComment.Location = new System.Drawing.Point(22, 130);
+            this.txtFieldComment.Location = new System.Drawing.Point(21, 276);
             this.txtFieldComment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldComment.MaxLength = 295;
             this.txtFieldComment.Multiline = true;
@@ -127,7 +244,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(25, 103);
+            this.label6.Location = new System.Drawing.Point(24, 249);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(136, 17);
             this.label6.TabIndex = 32;
@@ -146,7 +263,7 @@
             this.btnUpload.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.btnUpload.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.Location = new System.Drawing.Point(22, 311);
+            this.btnUpload.Location = new System.Drawing.Point(21, 453);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(475, 51);
             this.btnUpload.TabIndex = 17;
@@ -170,7 +287,7 @@
             this.txtFieldFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldFileName.ForeColor = System.Drawing.Color.White;
             this.txtFieldFileName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldFileName.Location = new System.Drawing.Point(22, 43);
+            this.txtFieldFileName.Location = new System.Drawing.Point(21, 56);
             this.txtFieldFileName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldFileName.Name = "txtFieldFileName";
             this.txtFieldFileName.PasswordChar = '\0';
@@ -187,7 +304,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(26, 18);
+            this.label4.Location = new System.Drawing.Point(25, 31);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(70, 17);
             this.label4.TabIndex = 5;
@@ -208,7 +325,7 @@
             this.guna2Button1.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
-            this.guna2Button1.Location = new System.Drawing.Point(625, 13);
+            this.guna2Button1.Location = new System.Drawing.Point(752, 13);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 32);
             this.guna2Button1.TabIndex = 42;
@@ -221,15 +338,34 @@
             this.guna2Separator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Separator1.Location = new System.Drawing.Point(-5, 57);
             this.guna2Separator1.Name = "guna2Separator1";
-            this.guna2Separator1.Size = new System.Drawing.Size(746, 10);
+            this.guna2Separator1.Size = new System.Drawing.Size(873, 10);
             this.guna2Separator1.TabIndex = 41;
+            // 
+            // btnRandom
+            // 
+            this.btnRandom.BorderColor = System.Drawing.Color.Transparent;
+            this.btnRandom.BorderRadius = 16;
+            this.btnRandom.BorderThickness = 1;
+            this.btnRandom.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRandom.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRandom.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRandom.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRandom.FillColor = System.Drawing.Color.DimGray;
+            this.btnRandom.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRandom.ForeColor = System.Drawing.Color.White;
+            this.btnRandom.Location = new System.Drawing.Point(132, 47);
+            this.btnRandom.Name = "btnRandom";
+            this.btnRandom.Size = new System.Drawing.Size(115, 30);
+            this.btnRandom.TabIndex = 41;
+            this.btnRandom.Text = "Random";
+            this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
             // 
             // PublishPublicStorage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(676, 493);
+            this.ClientSize = new System.Drawing.Size(803, 622);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.guna2Button1);
@@ -241,6 +377,7 @@
             this.Text = "Public Storage - Upload";
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
+            this.guna2Panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -253,10 +390,17 @@
         private System.Windows.Forms.Label lblCountCharComment;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private System.Windows.Forms.Label label6;
-        public Guna.UI2.WinForms.Guna2Button btnUpload;
-        public Guna.UI2.WinForms.Guna2TextBox txtFieldFileName;
         private System.Windows.Forms.Label label4;
         public Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
+        private Guna.UI2.WinForms.Guna2Button btnUpload;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
+        private Guna.UI2.WinForms.Guna2TextBox txtFieldFileName;
+        private System.Windows.Forms.Label label1;
+        private Guna.UI2.WinForms.Guna2Button btnSoftware;
+        private Guna.UI2.WinForms.Guna2Button btnGaming;
+        private Guna.UI2.WinForms.Guna2Button btnEnter;
+        private Guna.UI2.WinForms.Guna2Button btnPolitics;
+        private Guna.UI2.WinForms.Guna2Button btnRandom;
     }
 }
