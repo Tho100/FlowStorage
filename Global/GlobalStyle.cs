@@ -49,10 +49,11 @@ namespace FlowSERVER1 {
         public static readonly Dictionary<string, Color> psBackgroundColorTag = new Dictionary<string, Color>
         {
             {"Gaming",Color.SteelBlue},
-            {"Politics",Color.Maroon},
-            {"Software",Color.Green},
-            {"Entertainment",Color.FromArgb(255, 128, 0)},
+            {"Politics",Color.Firebrick},
+            {"Software",Color.MediumSeaGreen},
+            {"Entertainment",Color.Orange},
             {"Random",Color.DimGray},
+            {"Music",Color.Tomato}
         };
 
     }

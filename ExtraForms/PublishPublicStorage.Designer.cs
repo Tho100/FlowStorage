@@ -30,6 +30,7 @@
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnRandom = new Guna.UI2.WinForms.Guna2Button();
             this.btnPolitics = new Guna.UI2.WinForms.Guna2Button();
             this.btnSoftware = new Guna.UI2.WinForms.Guna2Button();
             this.btnGaming = new Guna.UI2.WinForms.Guna2Button();
@@ -42,7 +43,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.btnRandom = new Guna.UI2.WinForms.Guna2Button();
+            this.btnMusic = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
@@ -105,6 +106,7 @@
             this.guna2Panel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Panel2.BorderRadius = 8;
             this.guna2Panel2.BorderThickness = 1;
+            this.guna2Panel2.Controls.Add(this.btnMusic);
             this.guna2Panel2.Controls.Add(this.btnRandom);
             this.guna2Panel2.Controls.Add(this.btnPolitics);
             this.guna2Panel2.Controls.Add(this.btnSoftware);
@@ -117,6 +119,25 @@
             this.guna2Panel2.TabIndex = 35;
             this.guna2Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint);
             // 
+            // btnRandom
+            // 
+            this.btnRandom.BorderColor = System.Drawing.Color.Transparent;
+            this.btnRandom.BorderRadius = 16;
+            this.btnRandom.BorderThickness = 1;
+            this.btnRandom.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRandom.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRandom.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRandom.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRandom.FillColor = System.Drawing.Color.DimGray;
+            this.btnRandom.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRandom.ForeColor = System.Drawing.Color.White;
+            this.btnRandom.Location = new System.Drawing.Point(253, 47);
+            this.btnRandom.Name = "btnRandom";
+            this.btnRandom.Size = new System.Drawing.Size(115, 30);
+            this.btnRandom.TabIndex = 41;
+            this.btnRandom.Text = "Random";
+            this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
+            // 
             // btnPolitics
             // 
             this.btnPolitics.BorderColor = System.Drawing.Color.Transparent;
@@ -126,7 +147,7 @@
             this.btnPolitics.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnPolitics.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnPolitics.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnPolitics.FillColor = System.Drawing.Color.Maroon;
+            this.btnPolitics.FillColor = System.Drawing.Color.Firebrick;
             this.btnPolitics.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPolitics.ForeColor = System.Drawing.Color.White;
             this.btnPolitics.Location = new System.Drawing.Point(10, 47);
@@ -145,7 +166,7 @@
             this.btnSoftware.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnSoftware.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnSoftware.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnSoftware.FillColor = System.Drawing.Color.Green;
+            this.btnSoftware.FillColor = System.Drawing.Color.MediumSeaGreen;
             this.btnSoftware.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSoftware.ForeColor = System.Drawing.Color.White;
             this.btnSoftware.Location = new System.Drawing.Point(253, 11);
@@ -183,7 +204,7 @@
             this.btnEnter.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnEnter.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnEnter.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnEnter.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnEnter.FillColor = System.Drawing.Color.Orange;
             this.btnEnter.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEnter.ForeColor = System.Drawing.Color.White;
             this.btnEnter.Location = new System.Drawing.Point(10, 11);
@@ -341,24 +362,24 @@
             this.guna2Separator1.Size = new System.Drawing.Size(873, 10);
             this.guna2Separator1.TabIndex = 41;
             // 
-            // btnRandom
+            // btnMusic
             // 
-            this.btnRandom.BorderColor = System.Drawing.Color.Transparent;
-            this.btnRandom.BorderRadius = 16;
-            this.btnRandom.BorderThickness = 1;
-            this.btnRandom.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnRandom.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnRandom.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnRandom.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnRandom.FillColor = System.Drawing.Color.DimGray;
-            this.btnRandom.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRandom.ForeColor = System.Drawing.Color.White;
-            this.btnRandom.Location = new System.Drawing.Point(132, 47);
-            this.btnRandom.Name = "btnRandom";
-            this.btnRandom.Size = new System.Drawing.Size(115, 30);
-            this.btnRandom.TabIndex = 41;
-            this.btnRandom.Text = "Random";
-            this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
+            this.btnMusic.BorderColor = System.Drawing.Color.Transparent;
+            this.btnMusic.BorderRadius = 16;
+            this.btnMusic.BorderThickness = 1;
+            this.btnMusic.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnMusic.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnMusic.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnMusic.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnMusic.FillColor = System.Drawing.Color.Tomato;
+            this.btnMusic.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMusic.ForeColor = System.Drawing.Color.White;
+            this.btnMusic.Location = new System.Drawing.Point(132, 47);
+            this.btnMusic.Name = "btnMusic";
+            this.btnMusic.Size = new System.Drawing.Size(115, 30);
+            this.btnMusic.TabIndex = 42;
+            this.btnMusic.Text = "Music";
+            this.btnMusic.Click += new System.EventHandler(this.guna2Button2_Click_1);
             // 
             // PublishPublicStorage
             // 
@@ -402,5 +423,6 @@
         private Guna.UI2.WinForms.Guna2Button btnEnter;
         private Guna.UI2.WinForms.Guna2Button btnPolitics;
         private Guna.UI2.WinForms.Guna2Button btnRandom;
+        private Guna.UI2.WinForms.Guna2Button btnMusic;
     }
 }

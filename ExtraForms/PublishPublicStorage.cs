@@ -52,10 +52,11 @@ namespace FlowSERVER1.ExtraForms {
 
         private void btnEnter_Click(object sender, EventArgs e) {
             HomePage.instance.publicStorageUserTag = "Entertainment";
-            btnEnter.FillColor = Color.FromArgb(255, 128, 0);
+            btnEnter.FillColor = Color.Orange;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
             btnPolitics.FillColor = Color.DarkGray;
         }
 
@@ -66,29 +67,43 @@ namespace FlowSERVER1.ExtraForms {
             btnEnter.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
             btnPolitics.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
         }
 
         private void btnSoftware_Click(object sender, EventArgs e) {
             HomePage.instance.publicStorageUserTag = "Software";
-            btnSoftware.FillColor = Color.Green;
+            btnSoftware.FillColor = Color.MediumSeaGreen;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
             btnPolitics.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
         }
 
         private void btnPolitics_Click(object sender, EventArgs e) {
             HomePage.instance.publicStorageUserTag = "Politics";
-            btnPolitics.FillColor = Color.Maroon;
+            btnPolitics.FillColor = Color.Firebrick;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
         }
 
         private void btnRandom_Click(object sender, EventArgs e) {
             HomePage.instance.publicStorageUserTag = "Random";
             btnRandom.FillColor = Color.DimGray;
+            btnGaming.FillColor = Color.DarkGray;
+            btnEnter.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
+            btnSoftware.FillColor = Color.DarkGray;
+            btnPolitics.FillColor = Color.DarkGray;
+        }
+
+        private void guna2Button2_Click_1(object sender, EventArgs e) {
+            HomePage.instance.publicStorageUserTag = "Music";
+            btnMusic.FillColor = Color.Tomato;
+            btnRandom.FillColor = Color.DarkGray;
             btnGaming.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
