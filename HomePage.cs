@@ -1946,6 +1946,24 @@ namespace FlowSERVER1 {
                             dateLabTxt.Location = GlobalStyle.DateLabelLoc;
                             dateLabTxt.Text = todayDate;
 
+                            Guna2CircleButton seperatorButton = new Guna2CircleButton();
+                            mainPanelTxt.Controls.Add(seperatorButton);
+                            seperatorButton.Location = GlobalStyle.PsSeperatorBut;
+                            seperatorButton.Size = GlobalStyle.PsSeperatorButSize;
+                            seperatorButton.FillColor = GlobalStyle.PsSeperatorColor;
+                            seperatorButton.BringToFront();
+
+                            Label psButtonTag = new Label();
+                            mainPanelTxt.Controls.Add(psButtonTag);
+                            psButtonTag.Name = $"ButTag{itemCurr}";
+                            psButtonTag.Font = GlobalStyle.PsLabelTagFont;
+                            psButtonTag.BackColor = GlobalStyle.TransparentColor;
+                            psButtonTag.ForeColor = GlobalStyle.psBackgroundColorTag[publicStorageUserTag];
+                            psButtonTag.Visible = true;
+                            psButtonTag.Location = GlobalStyle.PsLabelTagLoc;
+                            psButtonTag.Text = publicStorageUserTag;
+                            psButtonTag.BringToFront();
+
                             Label titleLab = new Label();
                             mainPanelTxt.Controls.Add(titleLab);
                             titleLab.Name = "LabVidUp" + itemCurr;

@@ -13,6 +13,7 @@ namespace FlowSERVER1.Global {
         static public readonly string homePdfTable = "file_info_pdf";
         static public readonly string homeExcelTable = "file_info_excel";
         static public readonly string homePtxTable = "file_info_ptx";
+        static public readonly string homeMsiTable = "file_info_msi";
         static public readonly string homeAudioTable = "file_info_audi";
         static public readonly string homeWordTable = "file_info_word";
         static public readonly string homeApkTable = "file_info_apk";
@@ -43,9 +44,9 @@ namespace FlowSERVER1.Global {
         };
 
         static public readonly HashSet<string> publicTables = new HashSet<string>
-        { "file_info", "file_info_expand", "file_info_exe", "file_info_vid",
-          "file_info_excel", "file_info_msi", "file_info_audi", "file_info_apk",
-          "file_info_pdf", "file_info_word", "file_info_ptx", "file_info_directory"
+        { homeImageTable, homeTextTable, homeExeTable, homeVideoTable,
+          homeExcelTable, homeMsiTable, homeAudioTable, homeApkTable,
+          homePdfTable, homeWordTable, homePtxTable, "file_info_directory"
         };
 
         static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>

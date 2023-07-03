@@ -33,9 +33,9 @@ namespace FlowSERVER1 {
         static public readonly Font PsLabelTagFont = new Font(PsLabelTagFontName, PsLabelTagFontSize, FontStyle.Bold);
 
         // Seperator button
-        static public readonly Point PsSeperatorBut = new Point(92, 196);
-        static public readonly Size PsSeperatorButSize = new Size(9,9);
-        static public readonly Color PsSeperatorColor = Color.FromArgb(10, 10, 10);
+        static public readonly Point PsSeperatorBut = new Point(90, 198);
+        static public readonly Size PsSeperatorButSize = new Size(7,7);
+        static public readonly Color PsSeperatorColor = Color.FromArgb(22, 22, 22);
 
         // Garbage button
         static public readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
