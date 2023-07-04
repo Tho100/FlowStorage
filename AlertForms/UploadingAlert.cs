@@ -272,7 +272,7 @@ namespace FlowSERVER1 {
                 if (TableName == "null") {
 
                     Control foundControl = null;
-                    foreach(Control _getControls in HomePage.instance.flowLayoutPanel1.Controls) {
+                    foreach(Control _getControls in HomePage.instance.flwLayoutHome.Controls) {
                         if(_getControls.Name == ControlName) {
                             foundControl = _getControls; 
                             break;
@@ -280,20 +280,20 @@ namespace FlowSERVER1 {
                     }
 
                     if (foundControl != null) {
-                        HomePage.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        HomePage.instance.flwLayoutHome.Controls.Remove(foundControl);
                         foundControl.Dispose();
                     }
                 
-                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
 
-                    if(HomePage.instance.flowLayoutPanel1.Controls.Count == 0) {
+                    if(HomePage.instance.flwLayoutHome.Controls.Count == 0) {
                         HomePage.instance.btnGarbageImage.Visible = true;
                         HomePage.instance.lblEmptyHere.Visible = true;
                     }
 
                 } else if (TableName == "upload_info_directory") {
                     Control foundControl = null;
-                    foreach (Control _getControls in DirectoryForm.instance.flowLayoutPanel1.Controls) {
+                    foreach (Control _getControls in DirectoryForm.instance.flwLayoutDirectory.Controls) {
                         if (_getControls.Name == ControlName) {
                             foundControl = _getControls;
                             break;
@@ -301,18 +301,18 @@ namespace FlowSERVER1 {
                     }
 
                     if (foundControl != null) {
-                        DirectoryForm.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        DirectoryForm.instance.flwLayoutDirectory.Controls.Remove(foundControl);
                         foundControl.Dispose();
                     }
 
-                    if (DirectoryForm.instance.flowLayoutPanel1.Controls.Count == 0) {
+                    if (DirectoryForm.instance.flwLayoutDirectory.Controls.Count == 0) {
                         DirectoryForm.instance.guna2Button6.Visible = true;
                         DirectoryForm.instance.label8.Visible = true;
                     }
 
                 } else if (TableName == "folder_upload_info") {
                     Control foundControl = null;
-                    foreach (Control _getControls in HomePage.instance.flowLayoutPanel1.Controls) {
+                    foreach (Control _getControls in HomePage.instance.flwLayoutHome.Controls) {
                         if (_getControls.Name == ControlName) {
                             foundControl = _getControls;
                             break;
@@ -320,7 +320,7 @@ namespace FlowSERVER1 {
                     }
 
                     if (foundControl != null) {
-                        HomePage.instance.flowLayoutPanel1.Controls.Remove(foundControl);
+                        HomePage.instance.flwLayoutHome.Controls.Remove(foundControl);
                         foundControl.Dispose();
                     }
                 }

@@ -163,7 +163,7 @@ namespace FlowSERVER1 {
             double getDurationSeconds = _NReader.TotalTime.TotalSeconds;
             int minutes = (int)(getDurationSeconds / 60);
             int seconds = (int)(getDurationSeconds % 60);
-            label8.Text = $"{minutes}:{seconds}";
+            lblDuration.Text = $"{minutes}:{seconds}";
 
             var _setupWaveOut = new WaveOut();
             _setupWaveOut.Init(_NReader);
@@ -190,7 +190,7 @@ namespace FlowSERVER1 {
             var remainingTime = _NReader.TotalTime.Subtract(_elapsedTime);
             int minutes = remainingTime.Minutes;
             int seconds = remainingTime.Seconds;
-            label4.Text = $"{minutes}:{seconds}";
+            lblDurationLeft.Text = $"{minutes}:{seconds}";
         }
 
 

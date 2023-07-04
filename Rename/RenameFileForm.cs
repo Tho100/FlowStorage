@@ -1,4 +1,5 @@
-﻿using Guna.UI2.WinForms;
+﻿using FlowSERVER1.Global;
+using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace FlowSERVER1 {
 
             this.lblFileName.Text = titleFile;
 
-            txtFieldNewFileName.Text = titleFile;
+            txtFieldNewFileName.Text = titleFile.Substring(0,titleFile.Length-4);
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
@@ -103,9 +104,9 @@ namespace FlowSERVER1 {
 
             Control[] matches = new Control[0];
 
-            if (tableName != "cust_sharing" && tableName != "folder_upload_info" && tableName != "file_info_directory") {
+            if (tableName != GlobalsTable.sharingTable && tableName != GlobalsTable.folderUploadTable && tableName != "upload_info_directory") {
                 matches = HomePage.instance.Controls.Find(panelName, true);
-            } else if (tableName == "file_info_directory") {
+            } else if (tableName == "upload_info_directory") {
                 matches = DirectoryForm.instance.Controls.Find(panelName, true);
             }
 

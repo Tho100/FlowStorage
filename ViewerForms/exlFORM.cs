@@ -320,7 +320,9 @@ namespace FlowSERVER1 {
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            guna2Button6.Visible = true;
+            if(this.TableName != "ps_info_excel") {
+                btnSaveChanges.Visible = true;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e) {

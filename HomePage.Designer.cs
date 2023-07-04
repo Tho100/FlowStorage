@@ -56,7 +56,7 @@
             this.lblMyFolders = new System.Windows.Forms.Label();
             this.lstFoldersPage = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flwLayoutHome = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblGreetingText = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -114,7 +114,7 @@
             this.pnlFolders.SuspendLayout();
             this.pnlSubPanelDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.flwLayoutHome.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnlDragAndDropUpload.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -528,19 +528,19 @@
             this.label3.Visible = false;
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // flowLayoutPanel1
+            // flwLayoutHome
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.flwLayoutHome.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(289, 113);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1007, 532);
-            this.flowLayoutPanel1.TabIndex = 16;
-            this.flowLayoutPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flowLayoutPanel1_Scroll);
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
+            this.flwLayoutHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.flwLayoutHome.Controls.Add(this.flowLayoutPanel2);
+            this.flwLayoutHome.Location = new System.Drawing.Point(289, 113);
+            this.flwLayoutHome.Name = "flwLayoutHome";
+            this.flwLayoutHome.Size = new System.Drawing.Size(1007, 532);
+            this.flwLayoutHome.TabIndex = 16;
+            this.flwLayoutHome.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flowLayoutPanel1_Scroll);
+            this.flwLayoutHome.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // flowLayoutPanel2
             // 
@@ -1532,7 +1532,7 @@
             this.Controls.Add(this.lblEmptyHere);
             this.Controls.Add(this.btnGarbageImage);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.flwLayoutHome);
             this.Controls.Add(this.lblGreetingText);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlMain);
@@ -1558,7 +1558,7 @@
             this.pnlSubPanelDetails.ResumeLayout(false);
             this.pnlSubPanelDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
-            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flwLayoutHome.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.pnlDragAndDropUpload.ResumeLayout(false);
             this.pnlDragAndDropUpload.PerformLayout();
@@ -1575,7 +1575,7 @@
 
         #endregion
         private Guna.UI2.WinForms.Guna2Panel pnlSubPanelDetails;
-        public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        public System.Windows.Forms.FlowLayoutPanel flwLayoutHome;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label lblGreetingText;
         public System.Windows.Forms.Label lblItemCountText;

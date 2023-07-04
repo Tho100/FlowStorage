@@ -410,7 +410,9 @@ namespace FlowSERVER1 {
             }
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
-           guna2Button6.Visible = true;
+            if(this.TableName != "ps_info_text") {
+                btnSaveChanges.Visible = true;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e) {

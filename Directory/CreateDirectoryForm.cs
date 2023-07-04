@@ -79,7 +79,7 @@ namespace FlowSERVER1
 
             try {
 
-                var flowlayout = HomePage.instance.flowLayoutPanel1;
+                var flowlayout = HomePage.instance.flwLayoutHome;
                 var panelPic = new Guna2Panel() {
                     Name = "DirPan" + currMain,
                     Width = 200,
@@ -192,12 +192,12 @@ namespace FlowSERVER1
                         panel.Dispose();
 
 
-                        if (HomePage.instance.flowLayoutPanel1.Controls.Count == 0) {
+                        if (HomePage.instance.flwLayoutHome.Controls.Count == 0) {
                             HomePage.instance.lblEmptyHere.Visible = true;
                             HomePage.instance.btnGarbageImage.Visible = true;
                         }
 
-                        HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                        HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
                     }
 
                 };
@@ -288,7 +288,7 @@ namespace FlowSERVER1
                             } else {
 
                                 generateDirectory(value_Dir, dirTitle);
-                                HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                                HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
 
                                 var crud = new Crud();
 

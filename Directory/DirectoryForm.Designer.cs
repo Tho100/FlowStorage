@@ -34,7 +34,7 @@
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flwLayoutDirectory = new System.Windows.Forms.FlowLayoutPanel();
             this.btnUploadFile = new Guna.UI2.WinForms.Guna2Button();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.btnCloseDirectory = new Guna.UI2.WinForms.Guna2Button();
@@ -72,7 +72,7 @@
             this.guna2Panel3.BorderThickness = 1;
             this.guna2Panel3.Controls.Add(this.label8);
             this.guna2Panel3.Controls.Add(this.guna2Button6);
-            this.guna2Panel3.Controls.Add(this.flowLayoutPanel1);
+            this.guna2Panel3.Controls.Add(this.flwLayoutDirectory);
             this.guna2Panel3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.guna2Panel3.Location = new System.Drawing.Point(12, 80);
             this.guna2Panel3.Name = "guna2Panel3";
@@ -111,15 +111,15 @@
             this.guna2Button6.TabIndex = 27;
             this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
             // 
-            // flowLayoutPanel1
+            // flwLayoutDirectory
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(16, 11);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1075, 551);
-            this.flowLayoutPanel1.TabIndex = 16;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
+            this.flwLayoutDirectory.AutoScroll = true;
+            this.flwLayoutDirectory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.flwLayoutDirectory.Location = new System.Drawing.Point(16, 11);
+            this.flwLayoutDirectory.Name = "flwLayoutDirectory";
+            this.flwLayoutDirectory.Size = new System.Drawing.Size(1075, 551);
+            this.flwLayoutDirectory.TabIndex = 16;
+            this.flwLayoutDirectory.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // btnUploadFile
             // 
@@ -481,7 +481,7 @@
         #endregion
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
-        public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        public System.Windows.Forms.FlowLayoutPanel flwLayoutDirectory;
         private Guna.UI2.WinForms.Guna2Button btnUploadFile;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         public Guna.UI2.WinForms.Guna2Button btnCloseDirectory;

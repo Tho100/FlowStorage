@@ -86,15 +86,15 @@ namespace FlowSERVER1 {
             var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
             form4Instances.ForEach(form => form.Close());
 
-            this.flowLayoutPanel1.HorizontalScroll.Maximum = 0;
-            this.flowLayoutPanel1.VerticalScroll.Maximum = 0;
-            this.flowLayoutPanel1.AutoScrollMinSize = new Size(0, 0);
+            this.flwLayoutHome.HorizontalScroll.Maximum = 0;
+            this.flwLayoutHome.VerticalScroll.Maximum = 0;
+            this.flwLayoutHome.AutoScrollMinSize = new Size(0, 0);
 
-            this.flowLayoutPanel1.BorderStyle = BorderStyle.None;
+            this.flwLayoutHome.BorderStyle = BorderStyle.None;
 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.HorizontalScroll.Visible = false;
-            this.flowLayoutPanel1.VerticalScroll.Visible = false;
+            this.flwLayoutHome.AutoScroll = true;
+            this.flwLayoutHome.HorizontalScroll.Visible = false;
+            this.flwLayoutHome.VerticalScroll.Visible = false;
 
             this.TopMost = false;
         }
@@ -293,7 +293,7 @@ namespace FlowSERVER1 {
         }
 
         private void buildRedundaneVisibility() {
-            if (flowLayoutPanel1.Controls.Count == 0) {
+            if (flwLayoutHome.Controls.Count == 0) {
                 showRedundane();
             }
             else {
@@ -561,7 +561,7 @@ namespace FlowSERVER1 {
 
                 buildRedundaneVisibility();
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
                 new CustomAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.").Show();
@@ -586,7 +586,7 @@ namespace FlowSERVER1 {
 
             new Thread(() => new RetrievalAlert("Flowstorage is retrieving your folder files.", "Loader").ShowDialog()).Start();
 
-            flowLayoutPanel1.Controls.Clear();
+            flwLayoutHome.Controls.Clear();
 
             try {
 
@@ -848,7 +848,7 @@ namespace FlowSERVER1 {
 
                 buildRedundaneVisibility();
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
                 CloseForm.closeForm("RetrievalAlert");
 
@@ -1090,7 +1090,7 @@ namespace FlowSERVER1 {
                 Multiselect = true
             };
 
-            int curFilesCount = flowLayoutPanel1.Controls.Count;
+            int curFilesCount = flwLayoutHome.Controls.Count;
             if (open.ShowDialog() == DialogResult.OK) { 
 
                 List<string> _filValues = open.FileNames.Select(Path.GetFileName).ToList();
@@ -1120,7 +1120,7 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    HashSet<string> existingLabels = new HashSet<string>(flowLayoutPanel1.Controls
+                    HashSet<string> existingLabels = new HashSet<string>(flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Select(label => label.Text.ToLower()));
@@ -1156,7 +1156,7 @@ namespace FlowSERVER1 {
                                 };
 
                                 Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                                flowLayoutPanel1.Controls.Add(panelTxt);
+                                flwLayoutHome.Controls.Add(panelTxt);
                                 var mainPanelTxt = (Guna2Panel)panelTxt;
 
                                 var textboxPic = new Guna2PictureBox();
@@ -1496,7 +1496,7 @@ namespace FlowSERVER1 {
 
                         }
 
-                        lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
                     }
                 }
             }
@@ -1835,7 +1835,7 @@ namespace FlowSERVER1 {
 
                 buildRedundaneVisibility();
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             catch (Exception eq) {
@@ -1851,7 +1851,7 @@ namespace FlowSERVER1 {
                 Multiselect = false
             };
 
-            int curFilesCount = flowLayoutPanel1.Controls.Count;
+            int curFilesCount = flwLayoutHome.Controls.Count;
             if (open.ShowDialog() == DialogResult.OK) {
 
                 List<string> _filValues = open.FileNames.Select(Path.GetFileName).ToList();
@@ -1882,7 +1882,7 @@ namespace FlowSERVER1 {
                 }
                 else {
 
-                    HashSet<string> existingLabels = new HashSet<string>(flowLayoutPanel1.Controls
+                    HashSet<string> existingLabels = new HashSet<string>(flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Select(label => label.Text.ToLower()));
@@ -1918,7 +1918,7 @@ namespace FlowSERVER1 {
                             };
 
                             Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                            flowLayoutPanel1.Controls.Add(panelTxt);
+                            flwLayoutHome.Controls.Add(panelTxt);
                             var mainPanelTxt = (Guna2Panel)panelTxt;
 
                             var textboxPic = new Guna2PictureBox();
@@ -2254,7 +2254,7 @@ namespace FlowSERVER1 {
 
                     }
 
-                    lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                    lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
                    
                 }
             }
@@ -2453,7 +2453,7 @@ namespace FlowSERVER1 {
                 };
 
                 Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                flowLayoutPanel1.Controls.Add(panelVid);
+                flwLayoutHome.Controls.Add(panelVid);
                 var mainPanelTxt = (Guna2Panel)panelVid;
                 _controlName = "PanExlFold" + _IntCurr;
 
@@ -2712,7 +2712,7 @@ namespace FlowSERVER1 {
             lstFoldersPage.Visible = true;
 
             clearRedundane();
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
             
         }
 
@@ -2761,7 +2761,7 @@ namespace FlowSERVER1 {
 
                     if(_numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
 
-                        flowLayoutPanel1.Controls.Clear();
+                        flwLayoutHome.Controls.Clear();
                         lstFoldersPage.Items.Add(_getDirTitle);
 
                         folderDialog(_getDirPath, _getDirTitle, _TitleValues);
@@ -2841,7 +2841,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            lblPsCount.Text = $"{flowLayoutPanel1.Controls.Count} Files";
+            lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
             buildRedundaneVisibility();
 
@@ -2864,7 +2864,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            lblPsCount.Text = $"{flowLayoutPanel1.Controls.Count} Files";
+            lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
             buildRedundaneVisibility();
 
@@ -2929,12 +2929,12 @@ namespace FlowSERVER1 {
                 lblCurrentPageText.Visible = true;
                 btnDeleteFolder.Visible = true;
 
-                flowLayoutPanel1.Controls.Clear();
+                flwLayoutHome.Controls.Clear();
 
                 if (_selectedFolder == "Home") {
 
                     buildButtonsOnHomePageSelected();
-                    flowLayoutPanel1.WrapContents = true;
+                    flwLayoutHome.WrapContents = true;
 
                     buildHomeFiles();
 
@@ -2981,12 +2981,12 @@ namespace FlowSERVER1 {
 
                 }
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             catch (Exception) {
 
-                flowLayoutPanel1.Controls.Clear();
+                flwLayoutHome.Controls.Clear();
 
                 buildRedundaneVisibility();
                 buildShowAlert(title: "Something went wrong", subheader: "Try to restart Flowstorage.");
@@ -3303,7 +3303,7 @@ namespace FlowSERVER1 {
 
                 buildRedundaneVisibility();
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
                 new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
@@ -3558,7 +3558,7 @@ namespace FlowSERVER1 {
 
                 buildRedundaneVisibility();
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
                 new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
@@ -3619,7 +3619,7 @@ namespace FlowSERVER1 {
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
                 Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                flowLayoutPanel1.Controls.Add(panelPic_Q);
+                flwLayoutHome.Controls.Add(panelPic_Q);
 
                 var panelF = (Guna2Panel)panelPic_Q;
 
@@ -3711,7 +3711,7 @@ namespace FlowSERVER1 {
 
                         panelPic_Q.Dispose();
 
-                        lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                        lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
                         buildRedundaneVisibility();
                         updateProgressBarValue();
@@ -3731,7 +3731,7 @@ namespace FlowSERVER1 {
                 };
             }
 
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
         }
 
         private void label10_Click(object sender, EventArgs e) {
@@ -3885,7 +3885,7 @@ namespace FlowSERVER1 {
 
             int selectedIndex = lstFoldersPage.SelectedIndex;
             
-            flowLayoutPanel1.Controls.Clear();
+            flwLayoutHome.Controls.Clear();
 
             if (selectedIndex == 1 && lblCurrentPageText.Text == "Shared To Me") {
                 fileTypeValuesSharedToMe.Clear();
@@ -3910,7 +3910,7 @@ namespace FlowSERVER1 {
             }
 
             buildRedundaneVisibility();
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
         }
 
@@ -3922,7 +3922,7 @@ namespace FlowSERVER1 {
         private async Task refreshHomePanels() {
 
             btnDeleteFolder.Visible = false;
-            flowLayoutPanel1.Controls.Clear();
+            flwLayoutHome.Controls.Clear();
 
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
@@ -3940,7 +3940,7 @@ namespace FlowSERVER1 {
             }
 
             buildRedundaneVisibility();
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
         }
 
         private async Task RefreshFolder() {
@@ -3983,8 +3983,8 @@ namespace FlowSERVER1 {
 
             List<Guna2Panel> disposedPanels = new List<Guna2Panel>();
 
-            for (int i = flowLayoutPanel1.Controls.Count - 1; i >= 0; i--) {
-                Control ctrl = flowLayoutPanel1.Controls[i];
+            for (int i = flwLayoutHome.Controls.Count - 1; i >= 0; i--) {
+                Control ctrl = flwLayoutHome.Controls[i];
                 if (ctrl is Guna2Panel panel) {
                     bool matchesSearchTerms = false;
                     foreach (string term in searchTerms) {
@@ -4003,7 +4003,7 @@ namespace FlowSERVER1 {
                         if (!disposedPanels.Contains(panel)) {
                             disposedPanels.Add(panel);
                         }
-                        flowLayoutPanel1.Controls.RemoveAt(i);
+                        flwLayoutHome.Controls.RemoveAt(i);
                         panel.Dispose();
                     }
                 }
@@ -4014,7 +4014,7 @@ namespace FlowSERVER1 {
 
                 string _selectedFolderSearch = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-                flowLayoutPanel1.Controls.Clear();
+                flwLayoutHome.Controls.Clear();
 
                 if (_selectedFolderSearch == "Home") {
                     await refreshHomePanels();
@@ -4033,7 +4033,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
             buildRedundaneVisibility();
         }
 
@@ -4049,7 +4049,7 @@ namespace FlowSERVER1 {
         private void guna2Button9_Click_1(object sender, EventArgs e) {
 
             if(lblCurrentPageText.Text == "Public Storage") {
-                flowLayoutPanel1.Controls.Clear();
+                flwLayoutHome.Controls.Clear();
                 buildHomeFiles();
             }
 
@@ -4190,7 +4190,7 @@ namespace FlowSERVER1 {
 
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (files.Length + flowLayoutPanel1.Controls.Count > Globals.uploadFileLimit[Globals.accountType]) {
+            if (files.Length + flwLayoutHome.Controls.Count > Globals.uploadFileLimit[Globals.accountType]) {
                 using (Form bgBlur = new Form()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -4245,7 +4245,7 @@ namespace FlowSERVER1 {
                         };
 
                         Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                        flowLayoutPanel1.Controls.Add(panelTxt);
+                        flwLayoutHome.Controls.Add(panelTxt);
                         var mainPanelTxt = (Guna2Panel)panelTxt;
 
                         Label dateLabTxt = new Label();
@@ -4583,7 +4583,7 @@ namespace FlowSERVER1 {
                     closeUploadAlert();
                 }
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             
@@ -4791,11 +4791,11 @@ namespace FlowSERVER1 {
                 Control[] matches = this.Controls.Find(panelName, true);
                 if (matches.Length > 0 && matches[0] is Guna2Panel) {
                     Guna2Panel myPanel = (Guna2Panel)matches[0];
-                    flowLayoutPanel1.Controls.Remove(myPanel);
+                    flwLayoutHome.Controls.Remove(myPanel);
                     myPanel.Dispose();
                 }
 
-                lblItemCountText.Text = flowLayoutPanel1.Controls.Count.ToString();
+                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
                 buildRedundaneVisibility();
 
@@ -4939,7 +4939,7 @@ namespace FlowSERVER1 {
             pnlFolders.SendToBack();
             pnlMain.SendToBack();
 
-            flowLayoutPanel1.Controls.Clear();
+            flwLayoutHome.Controls.Clear();
             buildRedundaneVisibility();
 
             buildPublicStorageFiles();
@@ -4947,7 +4947,7 @@ namespace FlowSERVER1 {
         }
 
         private void btnMyPsFiles_Click(object sender, EventArgs e) {
-            flowLayoutPanel1.Controls.Clear();
+            flwLayoutHome.Controls.Clear();
             buildMyPublicStorageFiles();
         }
     }

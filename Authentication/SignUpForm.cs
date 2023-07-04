@@ -81,7 +81,7 @@ namespace FlowSERVER1.Authentication {
 
                 accessHomePage.lstFoldersPage.Items.AddRange(itemsFolder.Concat(updatesTitle).ToArray());
                 accessHomePage.lstFoldersPage.SelectedIndex = 0;
-                accessHomePage.lblItemCountText.Text = accessHomePage.flowLayoutPanel1.Controls.Count.ToString();
+                accessHomePage.lblItemCountText.Text = accessHomePage.flwLayoutHome.Controls.Count.ToString();
 
                 buildGreetingLabel();
                 await getAccountTypeNumber();
@@ -349,7 +349,7 @@ namespace FlowSERVER1.Authentication {
 
             try {
 
-                Control flowlayout = accessHomePage.flowLayoutPanel1;
+                Control flowlayout = accessHomePage.flwLayoutHome;
 
                 string _getUser = txtBoxUsernameField.Text;
                 string _getEmail = txtBoxEmailField.Text;

@@ -37,7 +37,7 @@
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnSaveChanges = new Guna.UI2.WinForms.Guna2Button();
             this.label15 = new System.Windows.Forms.Label();
             this.lblFileSize = new System.Windows.Forms.Label();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
@@ -198,28 +198,28 @@
             this.label4.TabIndex = 73;
             this.label4.Text = "Uploaded By";
             // 
-            // guna2Button6
+            // btnSaveChanges
             // 
-            this.guna2Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button6.Animated = true;
-            this.guna2Button6.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button6.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button6.BorderRadius = 6;
-            this.guna2Button6.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button6.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button6.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button6.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.ImageSize = new System.Drawing.Size(17, 17);
-            this.guna2Button6.Location = new System.Drawing.Point(357, 17);
-            this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(123, 35);
-            this.guna2Button6.TabIndex = 75;
-            this.guna2Button6.Text = "Save Changes";
-            this.guna2Button6.Visible = false;
-            this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
+            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveChanges.Animated = true;
+            this.btnSaveChanges.BackColor = System.Drawing.Color.Transparent;
+            this.btnSaveChanges.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSaveChanges.BorderRadius = 6;
+            this.btnSaveChanges.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSaveChanges.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSaveChanges.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSaveChanges.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSaveChanges.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveChanges.ForeColor = System.Drawing.Color.White;
+            this.btnSaveChanges.ImageSize = new System.Drawing.Size(17, 17);
+            this.btnSaveChanges.Location = new System.Drawing.Point(357, 17);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.Size = new System.Drawing.Size(123, 35);
+            this.btnSaveChanges.TabIndex = 75;
+            this.btnSaveChanges.Text = "Save Changes";
+            this.btnSaveChanges.Visible = false;
+            this.btnSaveChanges.Click += new System.EventHandler(this.guna2Button6_Click);
             // 
             // label15
             // 
@@ -463,7 +463,7 @@
             this.Controls.Add(this.guna2Button12);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.lblFileSize);
-            this.Controls.Add(this.guna2Button6);
+            this.Controls.Add(this.btnSaveChanges);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.guna2VSeparator2);
@@ -513,7 +513,7 @@
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        public Guna.UI2.WinForms.Guna2Button guna2Button6;
+        public Guna.UI2.WinForms.Guna2Button btnSaveChanges;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;

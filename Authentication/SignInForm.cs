@@ -91,7 +91,7 @@ namespace FlowSERVER1 {
 
         private async void setupRedundane() {
 
-            var flowLayout = accessHomePage.flowLayoutPanel1;
+            var flowLayout = accessHomePage.flwLayoutHome;
             var garbageButton = accessHomePage.btnGarbageImage;
             var itsEmptyHereLabel = accessHomePage.lblEmptyHere;
 
@@ -207,7 +207,7 @@ namespace FlowSERVER1 {
 
                 Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
 
-                _form.flowLayoutPanel1.Controls.Add(panelPic_Q);
+                _form.flwLayoutHome.Controls.Add(panelPic_Q);
 
                 var panelF = (Guna2Panel)panelPic_Q;
 
@@ -283,7 +283,7 @@ namespace FlowSERVER1 {
 
                         panelPic_Q.Dispose();
 
-                        if (_form.flowLayoutPanel1.Controls.Count == 0) {
+                        if (_form.flwLayoutHome.Controls.Count == 0) {
                             _form.lblEmptyHere.Visible = true;
                             _form.btnGarbageImage.Visible = true;
                         }
@@ -346,7 +346,7 @@ namespace FlowSERVER1 {
                 };
 
                 Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                _form.flowLayoutPanel1.Controls.Add(panelPic_Q);
+                _form.flwLayoutHome.Controls.Add(panelPic_Q);
 
                 var panelF = (Guna2Panel)panelPic_Q; 
 
@@ -430,7 +430,7 @@ namespace FlowSERVER1 {
                         }
 
                         panelPic_Q.Dispose();
-                        if (_form.flowLayoutPanel1.Controls.Count == 0) {
+                        if (_form.flwLayoutHome.Controls.Count == 0) {
                             _form.lblEmptyHere.Visible = true;
                             _form.btnGarbageImage.Visible = true;
                         }
@@ -623,7 +623,7 @@ namespace FlowSERVER1 {
 
                 try {
 
-                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flowLayoutPanel1.Controls.Count.ToString();
+                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
                     HomePage.instance.fileTypeValuesSharedToMe.Clear();
                     HomePage.instance.fileTypeValuesSharedToOthers.Clear();
 

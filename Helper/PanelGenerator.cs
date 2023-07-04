@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace FlowSERVER1.Helper {
     public class PanelGenerator {
 
-        public void generatePanel(string parameterName, int length, List<(string,string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false) {
+        public void generatePanel(string parameterName, int length, List<(string,string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false, bool isFromDirectory = false) {
 
             for(int i=0; i<length; i++) {
 
@@ -25,8 +25,14 @@ namespace FlowSERVER1.Helper {
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
+
                 Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                HomePage.instance.flowLayoutPanel1.Controls.Add(panelPic_Q);
+
+                if(!isFromDirectory) {
+                    HomePage.instance.flwLayoutHome.Controls.Add(panelPic_Q);
+                } else {
+                    DirectoryForm.instance.flwLayoutDirectory.Controls.Add(panelPic_Q);
+                }
 
                 var panelF = (Guna2Panel)panelPic_Q;
 
