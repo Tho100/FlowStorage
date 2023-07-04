@@ -18,6 +18,8 @@ using ClosedXML.Excel;
 using System.Runtime.Serialization.Formatters.Binary;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
+using DocumentFormat.OpenXml.Bibliography;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
 
@@ -86,16 +88,13 @@ namespace FlowSERVER1 {
 
             try {
 
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your workbook.","Loader");
-                ShowAlert.Show();
-
                 generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName,isFromShared));
                 _sheetsByte = LoaderModel.LoadFile(tableName, DirectoryName, fileName);
 
             }
 
             catch (Exception) {
-                MessageBox.Show("Failed to load this workbook. It may be broken or unsupported format.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                new CustomAlert(title: "Failed to load this workbook",subheader: "It may be broken or unsupported format.").Show();
             }
         }
 

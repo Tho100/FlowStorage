@@ -836,7 +836,7 @@
             this.lblCountDirlUploadToday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCountDirlUploadToday.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCountDirlUploadToday.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblCountDirlUploadToday.Location = new System.Drawing.Point(249, 81);
+            this.lblCountDirlUploadToday.Location = new System.Drawing.Point(247, 81);
             this.lblCountDirlUploadToday.Name = "lblCountDirlUploadToday";
             this.lblCountDirlUploadToday.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblCountDirlUploadToday.Size = new System.Drawing.Size(73, 21);

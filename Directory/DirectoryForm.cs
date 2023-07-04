@@ -643,12 +643,6 @@ namespace FlowSERVER1
                                     var filePath = getName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
-
-                                        if (textType == ".csv" || textType == ".sql") {
-                                            Thread _showRetrievalCsvAlert = new Thread(() => new SheetRetrievalAlert().ShowDialog());
-                                            _showRetrievalCsvAlert.Start();
-                                        }
-
                                         txtFORM txtFormShow = new txtFORM("", "upload_info_directory", titleLab.Text, lblDirectoryName.Text, Globals.custUsername);
                                         txtFormShow.Show();
                                     };
@@ -660,8 +654,7 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.EXEImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        exeFORM displayExe = new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
-                                        displayExe.Show();
+                                        new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
                                     };
                                 }
 
