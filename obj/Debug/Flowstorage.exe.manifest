@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8HNrHreKOmKgc/0pKhE42pD9jymBW0NCXfy6SYVd84w=</dsig:DigestValue>
+        <dsig:DigestValue>PHtK8pQOKuPV9Bqyz/0B6+KFIS6OOdcBIXdsIpvg4FA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -230,7 +230,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZfV31F4uH5qrp2Fb+3ajwPQfl3EJbUC/5q1FHaOdUoY=</dsig:DigestValue>
+        <dsig:DigestValue>VlNfYrBOqVRV9FQScOLybIbvJYW/VjMCH3gbts/YnuI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1086,13 +1086,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Flowstorage.exe.config" size="7130">
+  <file name="Flowstorage.exe.config" size="7129">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Smd6kpD4nHssqYE5u/A0eQWKtxaziAOePJchwuNymzI=</dsig:DigestValue>
+      <dsig:DigestValue>3mGT8vmkIsR8+5y6taSt+GsnJtoB3o8dw0Rj7NnspKk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="libvlc\win-x64\hrtfs\dodeca_and_7channel_3DSL_HRTF.sofa" size="92388">

@@ -21,6 +21,9 @@ namespace FlowSERVER1.Global {
 
         static public readonly string folderUploadTable = "folder_upload_info";
         static public readonly string sharingTable = "cust_sharing";
+        static public readonly string directoryInfoTable = "file_info_directory";
+        static public readonly string directoryUploadTable = "upload_info_directory";
+
 
         static public readonly Dictionary<string, string> tableToFileType = new Dictionary<string, string>
         {
@@ -46,7 +49,7 @@ namespace FlowSERVER1.Global {
         static public readonly HashSet<string> publicTables = new HashSet<string>
         { homeImageTable, homeTextTable, homeExeTable, homeVideoTable,
           homeExcelTable, homeMsiTable, homeAudioTable, homeApkTable,
-          homePdfTable, homeWordTable, homePtxTable, "file_info_directory"
+          homePdfTable, homeWordTable, homePtxTable, directoryInfoTable
         };
 
         static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>

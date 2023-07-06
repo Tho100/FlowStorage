@@ -1831,14 +1831,14 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true);
+                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
 
                 buildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
-            catch (Exception eq) {
+            catch (Exception) {
                 new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
             }
 
@@ -4748,7 +4748,7 @@ namespace FlowSERVER1 {
                     command.ExecuteNonQuery();
                 }
 
-                if (tableName != "cust_sharing" && tableName != "folder_upload_info" && tableName != "file_info_directory") {
+                if (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName)) {
 
                     string removeQuery = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
@@ -4786,7 +4786,8 @@ namespace FlowSERVER1 {
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.ExecuteNonQuery();
                     }
-                }
+
+                } 
 
                 Control[] matches = this.Controls.Find(panelName, true);
                 if (matches.Length > 0 && matches[0] is Guna2Panel) {
@@ -4842,7 +4843,7 @@ namespace FlowSERVER1 {
 
                 SaverModel.SaveSelectedFile(titleFile, GlobalsTable.sharingTable, dirName, fromSharedFiles);
 
-            } else if (tableName != GlobalsTable.sharingTable && tableName != GlobalsTable.folderUploadTable && tableName != "upload_info_directory") {
+            } else if (tableName != GlobalsTable.sharingTable && tableName != GlobalsTable.folderUploadTable && tableName != GlobalsTable.directoryUploadTable) {
                 SaverModel.SaveSelectedFile(titleFile, tableName, dirName);
             }
 

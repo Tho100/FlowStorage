@@ -60,7 +60,7 @@ namespace FlowSERVER1 {
 
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 
-                if (_TableName == "upload_info_directory") {
+                if (_TableName == GlobalsTable.directoryUploadTable) {
 
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
@@ -89,7 +89,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                } else if (_TableName == "folder_upload_info") {
+                } else if (_TableName == GlobalsTable.folderUploadTable) {
 
                     string selectFileDataQuery = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
 

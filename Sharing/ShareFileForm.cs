@@ -392,7 +392,7 @@ namespace FlowSERVER1 {
                     await startSending(getFileMetadataSharedToOthers(Globals.custUsername, _FileName), getThumbnails);
                 } 
                 
-                else if (_IsFromTable == "upload_info_directory") {
+                else if (_IsFromTable == GlobalsTable.directoryUploadTable) {
                     string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Globals.custUsername, _FileName);
                     await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Globals.custUsername,_FileName));
                 } 

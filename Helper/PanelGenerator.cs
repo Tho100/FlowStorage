@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace FlowSERVER1.Helper {
     public class PanelGenerator {
 
-        public void generatePanel(string parameterName, int length, List<(string,string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false, bool isFromDirectory = false) {
+        public void generatePanel(string parameterName, int length, List<(string,string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false, bool moreButtonVisible = true, bool isFromDirectory = false) {
 
             for(int i=0; i<length; i++) {
 
@@ -118,9 +118,10 @@ namespace FlowSERVER1.Helper {
                 remBut.BorderThickness = 1;
                 remBut.BorderColor = GlobalStyle.TransparentColor;
                 remBut.Image = GlobalStyle.GarbageImage; 
-                remBut.Visible = isFromPs == false;
+                remBut.Visible = moreButtonVisible;
+                remBut.BringToFront();
                 remBut.Location = GlobalStyle.GarbageButtonLoc; 
-                remBut.Enabled = isFromPs == false;
+                remBut.Enabled = moreButtonVisible;
 
                 remBut.Click += onPressedMoreButton[i];
 

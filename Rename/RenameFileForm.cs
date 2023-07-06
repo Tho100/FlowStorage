@@ -43,7 +43,7 @@ namespace FlowSERVER1 {
 
         private async Task renameFileAsync(String newFileName) {
 
-            if (tableName != "cust_sharing" && tableName != "folder_upload_info" && tableName != "file_info_directory") {
+            if (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName)) {
 
                 string removeQuery = $"UPDATE {tableName} SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
@@ -90,7 +90,7 @@ namespace FlowSERVER1 {
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
-            else if (tableName == "file_info_directory") {
+            else if (tableName == GlobalsTable.directoryUploadTable) {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE upload_info_directory SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
