@@ -42,10 +42,8 @@ namespace FlowSERVER1 {
 
         private string previousSelectedItem = null;
 
-        private string get_ex;
         private string getName;
         private string retrieved;
-        private string retrievedName;
         private object keyValMain;
         private long fileSizeInMB;
         private string tableName;
@@ -1116,10 +1114,8 @@ namespace FlowSERVER1 {
 
                         _filValues.Add(Path.GetFileName(selectedItems));
 
-                        get_ex = open.FileName;
                         getName = Path.GetFileName(selectedItems);
                         retrieved = Path.GetExtension(selectedItems); 
-                        retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
                         fileSizeInMB = 0;
 
                         async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
@@ -1881,7 +1877,6 @@ namespace FlowSERVER1 {
 
                     getName = Path.GetFileName(selectedItems);
                     retrieved = Path.GetExtension(selectedItems);
-                    retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
                     fileSizeInMB = 0;
 
                     async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
