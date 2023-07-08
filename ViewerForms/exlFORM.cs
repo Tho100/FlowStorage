@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
-using System.Text.RegularExpressions;
 using MySql.Data.MySqlClient;
-using MySql.Data;
 using System.IO;
-using System.Xml;
-using ExcelDataReader;
 using ClosedXML.Excel;
 using System.Runtime.Serialization.Formatters.Binary;
+
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
-using DocumentFormat.OpenXml.Bibliography;
 using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
@@ -33,7 +23,6 @@ namespace FlowSERVER1 {
         private int _currentSheetIndex = 1;
         private int _changedIndex = 0;
         private byte[] _sheetsByte;
-        private bool _isFromShared;
         private bool IsFromSharing;
 
         readonly private MySqlConnection con = ConnectionModel.con;
@@ -59,7 +48,8 @@ namespace FlowSERVER1 {
             this.lblFileName.Text = fileName;
             this.DirectoryName = directoryName;
             this.TableName = tableName;
-            this._isFromShared = isFromShared;
+
+            MessageBox.Show(fileName + "\n" + tableName,directoryName);
 
             if (IsFromSharing == true) {
 
@@ -88,12 +78,13 @@ namespace FlowSERVER1 {
 
             try {
 
-                generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName,isFromShared));
+                generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName, isFromShared));
                 _sheetsByte = LoaderModel.LoadFile(tableName, DirectoryName, fileName);
 
             }
 
             catch (Exception) {
+
                 new CustomAlert(title: "Failed to load this workbook",subheader: "It may be broken or unsupported format.").Show();
             }
         }

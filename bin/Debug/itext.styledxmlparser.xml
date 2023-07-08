@@ -3133,105 +3133,6 @@
             <summary>Sets the quotes depth.</summary>
             <param name="quotesDepth">the new quotes depth</param>
         </member>
-        <member name="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode">
-            <summary><see cref="T:iText.StyledXmlParser.Node.IElementNode"/> implementation for content nodes.</summary>
-        </member>
-        <member name="F:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.attributes">
-            <summary>The attributes</summary>
-        </member>
-        <member name="F:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.tagName">
-            <summary>The tag name</summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.#ctor(iText.StyledXmlParser.Node.INode,System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
-            <summary>Creates a new <see cref="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode"/> instance.</summary>
-            <param name="parentNode">the parent node</param>
-            <param name="pseudoElementName">the pseudo element name</param>
-            <param name="attributes">the attributes</param>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Name">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.GetAttributes">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.GetAttribute(System.String)">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.GetAdditionalHtmlStyles">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AddAdditionalHtmlStyles(System.Collections.Generic.IDictionary{System.String,System.String})">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.GetLang">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes">
-            <summary>Simple <see cref="T:iText.StyledXmlParser.Node.IAttributes"/> implementation.</summary>
-        </member>
-        <member name="F:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.attributes">
-            <summary>The attributes.</summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
-            <summary>Creates a new <see cref="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes"/> instance.</summary>
-            <param name="attributes">the attributes</param>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.GetAttribute(System.String)">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.SetAttribute(System.String,System.String)">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.Size">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.GetEnumerator">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attributes.System#Collections#IEnumerable#GetEnumerator">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attribute">
-            <summary>Simple <see cref="T:iText.StyledXmlParser.Node.IAttributes"/> implementation.</summary>
-        </member>
-        <member name="F:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attribute.entry">
-            <summary>The entry.</summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attribute.#ctor(System.Collections.Generic.KeyValuePair{System.String,System.String})">
-            <summary>Creates a new <see cref="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attribute"/> instance.</summary>
-            <param name="entry">the entry</param>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attribute.GetKey">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.Attribute.GetValue">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator">
-            <summary> <see cref="T:iText.StyledXmlParser.Node.IAttribute"/> iterator.</summary>
-        </member>
-        <member name="F:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.iterator">
-            <summary>The iterator.</summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.#ctor(System.Collections.Generic.IEnumerator{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
-            <summary>Creates a new <see cref="T:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator"/> instance.</summary>
-            <param name="iterator">the iterator</param>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.Dispose">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.MoveNext">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="M:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.Reset">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="P:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.Current">
-            <summary><inheritDoc/></summary>
-        </member>
-        <member name="P:iText.StyledXmlParser.Css.Resolve.CssContentElementNode.AttributeIterator.System#Collections#IEnumerator#Current">
-            <summary><inheritDoc/></summary>
-        </member>
         <member name="T:iText.StyledXmlParser.Css.Resolve.CssDefaults">
             <summary>Helper class that allows you to get the default values of CSS properties.</summary>
         </member>
@@ -4882,9 +4783,6 @@
             </remarks>
             <param name="contentType">e.g. "text/html; charset=EUC-JP"</param>
             <returns>"EUC-JP", or null if not found. Charset is trimmed and uppercased.</returns>
-        </member>
-        <member name="M:iText.StyledXmlParser.Jsoup.Helper.DataUtil.MimeBoundary">
-            <summary>Creates a random string, suitable for use as a mime boundary</summary>
         </member>
         <member name="T:iText.StyledXmlParser.Jsoup.Helper.Validate">
             <summary>Simple validation methods.</summary>

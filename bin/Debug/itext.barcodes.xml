@@ -1743,7 +1743,7 @@
             <param name="datablock">size of a datablock</param>
             <param name="nc">size of a errorblock</param>
         </member>
-        <member name="T:iText.Barcodes.Exceptions.BarcodeExceptionMessageConstant">
+        <member name="T:iText.Barcodes.Exceptions.BarcodesExceptionMessageConstant">
             <summary>Class that bundles all the error message templates as constants.</summary>
         </member>
         <member name="T:iText.Barcodes.Exceptions.WriterException">

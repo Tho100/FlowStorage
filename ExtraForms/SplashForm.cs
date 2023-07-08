@@ -6,7 +6,8 @@ using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class SplashForm : Form {
-        private MySqlConnection con {get; set;} = ConnectionModel.con;
+
+        readonly private MySqlConnection con = ConnectionModel.con;
         private System.Timers.Timer keepAliveTimer;
 
         public SplashForm() {

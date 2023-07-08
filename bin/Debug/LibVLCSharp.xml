@@ -19,13 +19,6 @@
             the libvlc/libvlcsharp version match check.
             </summary>
         </member>
-        <member name="M:LibVLCSharp.Shared.Core.Native.XInitThreads">
-            <summary>
-            Initializes the X threading system
-            </summary>
-            <remarks>Linux X11 only</remarks>
-            <returns>non-zero on success, zero on failure</returns>
-        </member>
         <member name="M:LibVLCSharp.Shared.Core.EnsureVersionsMatch">
             <summary>
             Checks whether the major version of LibVLC and LibVLCSharp match <para/>
@@ -675,7 +668,6 @@
             and where applicable:
             <para>- setlocale() and textdomain(),</para>
             <para>- setenv(), unsetenv() and putenv(),</para>
-            <para>- with the X11 display system, XInitThreads()</para>
             (see also libvlc_media_player_set_xwindow()) and
             <para>- on Microsoft Windows, SetErrorMode().</para>
             <para>- sigprocmask() shall never be invoked; pthread_sigmask() can be used.</para>
@@ -727,7 +719,6 @@
             and where applicable:
             <para>- setlocale() and textdomain(),</para>
             <para>- setenv(), unsetenv() and putenv(),</para>
-            <para>- with the X11 display system, XInitThreads()</para>
             (see also libvlc_media_player_set_xwindow()) and
             <para>- on Microsoft Windows, SetErrorMode().</para>
             <para>- sigprocmask() shall never be invoked; pthread_sigmask() can be used.</para>
@@ -991,6 +982,14 @@
             <summary>
             Retrieve the libvlc compiler version.
             Example: "gcc version 4.2.3 (Ubuntu 4.2.3-2ubuntu6)"
+            </summary>
+        </member>
+        <member name="P:LibVLCSharp.Shared.LibVLC.Clock">
+            <summary>
+            Return the current time as defined by LibVLC. The unit is the microsecond.
+            Time increases monotonically (regardless of time zone changes and RTC adjustments).
+            The origin is arbitrary but consistent across the whole system (e.g. the system uptime, the time since the system was booted).
+            On systems that support it, the POSIX monotonic clock is used.
             </summary>
         </member>
         <member name="T:LibVLCSharp.Shared.LibVLC.InternalExitCallback">

@@ -11,8 +11,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\MySql.Data.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Buffers.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Ubiety.Dns.Core.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ZstdNet.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Google.Protobuf.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Google.Protobuf.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\K4os.Compression.LZ4.xml
@@ -1306,7 +1304,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Core.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\Xamarin.Forms.Xaml.xml
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\fr\LibVLCSharp.Forms.resources.dll
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\XamlC.stamp
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.shareFileFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AForge.Imaging.dll
@@ -1353,3 +1350,14 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AlertFo
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Settings.FeedbackForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Sharing.SharingAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ExtraForms.PublishPublicStorage.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DocumentFormat.OpenXml.Framework.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\itext.bouncy-castle-connector.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.IO.Pipelines.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DocumentFormat.OpenXml.Framework.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\itext.bouncy-castle-connector.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Drawing.Common.pdb
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Drawing.Common.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.IO.Pipelines.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\System.Text.Encoding.CodePages.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\BouncyCastle.Crypto.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\ZstdNet.dll

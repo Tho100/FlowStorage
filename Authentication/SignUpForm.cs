@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using FlowSERVER1.AlertForms;
+﻿using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -50,7 +49,7 @@ namespace FlowSERVER1.Authentication {
                 string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
 
                 if (accountStartupValidation(username) == String.Empty) {
-                    guna2Panel7.Visible = true;
+                    pnlRegistration.Visible = true;
                     return;
                 }
 
@@ -87,20 +86,23 @@ namespace FlowSERVER1.Authentication {
                 await getAccountTypeNumber();
                 await getCurrentLang();
 
-                if (int.TryParse(accessHomePage.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(accessHomePage.lblLimitUploadText.Text, out int getLimitedValue)) {
-                    int calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
-                    accessHomePage.lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-                    accessHomePage.progressBarUsageStorage.Value = calculatePercentageUsage;
-                }
+                int getCurrentCount = int.Parse(accessHomePage.lblItemCountText.Text);
+                int getLimitedValue = int.Parse(accessHomePage.lblLimitUploadText.Text);
+                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
+                accessHomePage.lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
-                guna2Panel7.Visible = false;
+                accessHomePage.progressBarUsageStorage.Value = calculatePercentageUsage;
+
+                pnlRegistration.Visible = false;
 
                 buildUILanguage(accessHomePage.CurrentLang);
                 showHomePage();
 
-            } catch (Exception FlowstorageDirNotFound) {
+            }
+            catch (Exception FlowstorageDirNotFound) {
                 // TODO: Ignore
             }
+
             finally {
 
                 try {
@@ -624,7 +626,7 @@ namespace FlowSERVER1.Authentication {
             label11.Visible = false;
             label12.Visible = false;
             label30.Visible = false;
-            guna2Panel7.Visible = false;
+            pnlRegistration.Visible = false;
 
             accessHomePage.lblLimitUploadText.Text = "25";
 
@@ -644,6 +646,14 @@ namespace FlowSERVER1.Authentication {
         }
 
         private void txtBoxAuth1Field_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void SignUpForm_Load(object sender, EventArgs e) {
+
+        }
+
+        private void bannerPictureBox_Click(object sender, EventArgs e) {
 
         }
     }

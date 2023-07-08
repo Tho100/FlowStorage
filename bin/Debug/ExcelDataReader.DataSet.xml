@@ -6,16 +6,16 @@
     <members>
         <member name="T:ExcelDataReader.ExcelDataReaderExtensions">
             <summary>
-            ExcelDataReader DataSet extensions
+            ExcelDataReader DataSet extensions.
             </summary>
         </member>
         <member name="M:ExcelDataReader.ExcelDataReaderExtensions.AsDataSet(ExcelDataReader.IExcelDataReader,ExcelDataReader.ExcelDataSetConfiguration)">
             <summary>
-            Converts all sheets to a DataSet
+            Converts all sheets to a DataSet.
             </summary>
-            <param name="self">The IExcelDataReader instance</param>
-            <param name="configuration">An optional configuration object to modify the behavior of the conversion</param>
-            <returns>A dataset with all workbook contents</returns>
+            <param name="self">The IExcelDataReader instance.</param>
+            <param name="configuration">An optional configuration object to modify the behavior of the conversion.</param>
+            <returns>A dataset with all workbook contents.</returns>
         </member>
         <member name="T:ExcelDataReader.ExcelDataSetConfiguration">
             <summary>
@@ -65,6 +65,11 @@
         <member name="P:ExcelDataReader.ExcelDataTableConfiguration.FilterColumn">
             <summary>
             Gets or sets a callback to determine whether to include the specific column in the DataTable. Called once per column after reading the headers.
+            </summary>
+        </member>
+        <member name="P:ExcelDataReader.ExcelDataTableConfiguration.TransformValue">
+            <summary>
+            Gets or sets a callback to determine whether to transform the cell value.
             </summary>
         </member>
     </members>

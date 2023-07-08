@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignUpForm));
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
+            this.bannerPictureBox = new System.Windows.Forms.PictureBox();
+            this.pnlRegistration = new Guna.UI2.WinForms.Guna2Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -44,51 +44,52 @@
             this.txtBoxAuth0Field = new Guna.UI2.WinForms.Guna2TextBox();
             this.txtBoxUsernameField = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            this.guna2Panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bannerPictureBox)).BeginInit();
+            this.pnlRegistration.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox4
+            // bannerPictureBox
             // 
-            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.bannerPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox4.Image = global::FlowSERVER1.Properties.Resources.Untitled__82_1;
-            this.pictureBox4.Location = new System.Drawing.Point(-3, 0);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(562, 663);
-            this.pictureBox4.TabIndex = 52;
-            this.pictureBox4.TabStop = false;
+            this.bannerPictureBox.Image = global::FlowSERVER1.Properties.Resources.Untitled__82_1;
+            this.bannerPictureBox.Location = new System.Drawing.Point(-5, 0);
+            this.bannerPictureBox.Name = "bannerPictureBox";
+            this.bannerPictureBox.Size = new System.Drawing.Size(562, 665);
+            this.bannerPictureBox.TabIndex = 52;
+            this.bannerPictureBox.TabStop = false;
+            this.bannerPictureBox.Click += new System.EventHandler(this.bannerPictureBox_Click);
             // 
-            // guna2Panel7
+            // pnlRegistration
             // 
-            this.guna2Panel7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlRegistration.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.guna2Panel7.Controls.Add(this.pictureBox4);
-            this.guna2Panel7.Controls.Add(this.button1);
-            this.guna2Panel7.Controls.Add(this.richTextBox1);
-            this.guna2Panel7.Controls.Add(this.label30);
-            this.guna2Panel7.Controls.Add(this.label15);
-            this.guna2Panel7.Controls.Add(this.txtBoxAuth1Field);
-            this.guna2Panel7.Controls.Add(this.label21);
-            this.guna2Panel7.Controls.Add(this.label22);
-            this.guna2Panel7.Controls.Add(this.txtBoxEmailField);
-            this.guna2Panel7.Controls.Add(this.label14);
-            this.guna2Panel7.Controls.Add(this.label13);
-            this.guna2Panel7.Controls.Add(this.label16);
-            this.guna2Panel7.Controls.Add(this.label23);
-            this.guna2Panel7.Controls.Add(this.btnOpenLoginForm);
-            this.guna2Panel7.Controls.Add(this.label11);
-            this.guna2Panel7.Controls.Add(this.label12);
-            this.guna2Panel7.Controls.Add(this.txtBoxAuth0Field);
-            this.guna2Panel7.Controls.Add(this.txtBoxUsernameField);
-            this.guna2Panel7.Controls.Add(this.guna2Button11);
-            this.guna2Panel7.Location = new System.Drawing.Point(1, -1);
-            this.guna2Panel7.Name = "guna2Panel7";
-            this.guna2Panel7.Size = new System.Drawing.Size(1322, 826);
-            this.guna2Panel7.TabIndex = 29;
-            this.guna2Panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
+            this.pnlRegistration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.pnlRegistration.Controls.Add(this.bannerPictureBox);
+            this.pnlRegistration.Controls.Add(this.button1);
+            this.pnlRegistration.Controls.Add(this.richTextBox1);
+            this.pnlRegistration.Controls.Add(this.label30);
+            this.pnlRegistration.Controls.Add(this.label15);
+            this.pnlRegistration.Controls.Add(this.txtBoxAuth1Field);
+            this.pnlRegistration.Controls.Add(this.label21);
+            this.pnlRegistration.Controls.Add(this.label22);
+            this.pnlRegistration.Controls.Add(this.txtBoxEmailField);
+            this.pnlRegistration.Controls.Add(this.label14);
+            this.pnlRegistration.Controls.Add(this.label13);
+            this.pnlRegistration.Controls.Add(this.label16);
+            this.pnlRegistration.Controls.Add(this.label23);
+            this.pnlRegistration.Controls.Add(this.btnOpenLoginForm);
+            this.pnlRegistration.Controls.Add(this.label11);
+            this.pnlRegistration.Controls.Add(this.label12);
+            this.pnlRegistration.Controls.Add(this.txtBoxAuth0Field);
+            this.pnlRegistration.Controls.Add(this.txtBoxUsernameField);
+            this.pnlRegistration.Controls.Add(this.guna2Button11);
+            this.pnlRegistration.Location = new System.Drawing.Point(1, -1);
+            this.pnlRegistration.Name = "pnlRegistration";
+            this.pnlRegistration.Size = new System.Drawing.Size(1322, 826);
+            this.pnlRegistration.TabIndex = 29;
+            this.pnlRegistration.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
             // 
             // button1
             // 
@@ -377,22 +378,23 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.ClientSize = new System.Drawing.Size(1325, 661);
-            this.Controls.Add(this.guna2Panel7);
+            this.Controls.Add(this.pnlRegistration);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SignUpForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Flowstorage";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            this.guna2Panel7.ResumeLayout(false);
-            this.guna2Panel7.PerformLayout();
+            this.Load += new System.EventHandler(this.SignUpForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.bannerPictureBox)).EndInit();
+            this.pnlRegistration.ResumeLayout(false);
+            this.pnlRegistration.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox4;
-        public Guna.UI2.WinForms.Guna2Panel guna2Panel7;
+        private System.Windows.Forms.PictureBox bannerPictureBox;
+        public Guna.UI2.WinForms.Guna2Panel pnlRegistration;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label30;

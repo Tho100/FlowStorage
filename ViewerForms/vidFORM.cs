@@ -193,8 +193,9 @@ namespace FlowSERVER1 {
                 btnPlayVideo.Visible = false;
                 btnPauseVideo.Visible = true;
 
-            } catch (Exception) {
-                MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                //MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 

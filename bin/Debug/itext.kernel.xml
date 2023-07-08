@@ -354,13 +354,6 @@
             <param name="grayColor">the DeviceGray color to be made darker</param>
             <returns>darker color</returns>
         </member>
-        <member name="M:iText.Kernel.Colors.DeviceN.#ctor(System.Collections.Generic.IList{System.String},iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.PdfFunction,System.Single[])">
-            <summary>Creates a color in new DeviceN color space.</summary>
-            <param name="names">the names oif the components</param>
-            <param name="alternateCs">the alternate color space</param>
-            <param name="tintTransform">the function to transform color to the alternate color space</param>
-            <param name="value">the values for the components of this color</param>
-        </member>
         <member name="M:iText.Kernel.Colors.DeviceN.#ctor(System.Collections.Generic.IList{System.String},iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.IPdfFunction,System.Single[])">
             <summary>Creates a color in a new DeviceN color space.</summary>
             <param name="names">the names oif the components</param>
@@ -895,13 +888,6 @@
             <param name="iccStream">ICC profile stream. User is responsible for closing the stream.</param>
             <param name="value">color value.</param>
         </member>
-        <member name="M:iText.Kernel.Colors.Separation.#ctor(System.String,iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.PdfFunction,System.Single)">
-            <summary>Creates a color in a new separation color space.</summary>
-            <param name="name">the name for the separation color</param>
-            <param name="alternateCs">the alternative color space</param>
-            <param name="tintTransform">the function to transform color to the alternate colorspace</param>
-            <param name="value">the color value</param>
-        </member>
         <member name="M:iText.Kernel.Colors.Separation.#ctor(System.String,iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.IPdfFunction,System.Single)">
             <summary>Creates a color in a new separation color space.</summary>
             <param name="name">the name for the separation color</param>
@@ -1000,6 +986,15 @@
             <param name="key">the key to be used in the cipher</param>
             <param name="initVector">initialization vector to be used in cipher</param>
         </member>
+        <member name="M:iText.Kernel.Crypto.AESCipherCBCnoPad.ProcessBlock(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Processes data block using created cipher.
+            </summary>
+            <param name="inp">Input data bytes</param>
+            <param name="inpOff">Input data offset</param>
+            <param name="inpLen">Input data length</param>
+            <returns>Processed bytes</returns>
+        </member>
         <member name="M:iText.Kernel.Crypto.AesDecryptor.#ctor(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Creates a new instance of
@@ -1020,12 +1015,12 @@
         </member>
         <member name="M:iText.Kernel.Crypto.CryptoUtil.CreateAsn1OutputStream(System.IO.Stream,System.String)">
             <summary>
-            Creates <see cref="T:Org.BouncyCastle.Asn1.DerOutputStream"/> instance which can be an implementation of one of the ASN1 encodings
+            Creates <see cref="!:DerOutputStream"/> instance which can be an implementation of one of the ASN1 encodings
             writing logic. This method also asserts for unexpected ASN1 encodings.
             </summary>
             <param name="outputStream">the underlying stream</param>
             <param name="asn1Encoding">ASN1 encoding that will be used for writing. Only DER and BER are allowed as values.</param>
-            <returns>a <see cref="T:Org.BouncyCastle.Asn1.DerOutputStream"/> instance. Exact stream implementation is chosen based on passed encoding.</returns>
+            <returns>a <see cref="!:DerOutputStream"/> instance. Exact stream implementation is chosen based on passed encoding.</returns>
             <exception cref="T:System.NotSupportedException"></exception>
         </member>
         <member name="T:iText.Kernel.Crypto.IVGenerator">
@@ -1241,7 +1236,8 @@
             The encryption key for a particular object/generation.
             It is recalculated with
             <see cref="M:iText.Kernel.Crypto.Securityhandler.SecurityHandler.SetHashKeyForNextObject(System.Int32,System.Int32)"/>
-            for every object individually based in its object/generation.
+            for every object individually based in its
+            object/generation.
             </remarks>
         </member>
         <member name="F:iText.Kernel.Crypto.Securityhandler.SecurityHandler.nextObjectKeySize">
@@ -1249,7 +1245,8 @@
             The encryption key length for a particular object/generation
             It is recalculated with
             <see cref="M:iText.Kernel.Crypto.Securityhandler.SecurityHandler.SetHashKeyForNextObject(System.Int32,System.Int32)"/>
-            for every object individually based in its object/generation.
+            for every object individually based in its
+            object/generation.
             </summary>
         </member>
         <member name="F:iText.Kernel.Crypto.Securityhandler.SecurityHandler.extra">
@@ -1675,7 +1672,7 @@
             Gets the descent of a
             <c>String</c>
             in points. The descent will always be
-            less than or equal to zero even if all the characters have an higher descent.
+            less than or equal to zero even if all the characters have a higher descent.
             </remarks>
             <param name="text">
             the
@@ -1689,7 +1686,7 @@
             <summary>Gets the descent of a char code in points.</summary>
             <remarks>
             Gets the descent of a char code in points. The descent will always be
-            less than or equal to zero even if all the characters have an higher descent.
+            less than or equal to zero even if all the characters have a higher descent.
             </remarks>
             <param name="unicode">the char code to get the descent of</param>
             <param name="fontSize">the font size</param>
@@ -2723,11 +2720,6 @@
             <summary>Get Unicode mapping name from ordering.</summary>
             <param name="ordering">the text ordering to base to unicode mapping on</param>
             <param name="horizontal">identifies whether the encoding is horizontal or vertical</param>
-            <returns>Unicode mapping name</returns>
-        </member>
-        <member name="M:iText.Kernel.Font.PdfType0Font.GetUniMapFromOrdering(System.String)">
-            <summary>Get Unicode mapping name from ordering.</summary>
-            <param name="ordering">the text ordering to base to unicode mapping on</param>
             <returns>Unicode mapping name</returns>
         </member>
         <member name="M:iText.Kernel.Font.PdfType0Font.DecodeIntoGlyphLine(iText.Kernel.Pdf.PdfString)">
@@ -11009,6 +11001,395 @@
             <summary>Updates current transformation matrix.</summary>
             <param name="newCtm">new current transformation matrix.</param>
         </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetFillColor">
+            <summary>Gets the current fill color.</summary>
+            <returns>
+            The canvas graphics state fill
+            <see cref="T:iText.Kernel.Colors.Color">color</see>
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetFillColor(iText.Kernel.Colors.Color)">
+            <summary>
+            Sets the current fill
+            <see cref="T:iText.Kernel.Colors.Color">color</see>.
+            </summary>
+            <param name="fillColor">The new fill color.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetStrokeColor">
+            <summary>Gets the current stroke color.</summary>
+            <returns>
+            The canvas graphics state stroke
+            <see cref="T:iText.Kernel.Colors.Color">color</see>
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetStrokeColor(iText.Kernel.Colors.Color)">
+            <summary>
+            Sets the current stroke
+            <see cref="T:iText.Kernel.Colors.Color">color</see>.
+            </summary>
+            <param name="strokeColor">The new stroke color.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetLineWidth">
+            <summary>Gets the current line width.</summary>
+            <returns>The canvas graphics state line width.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetLineWidth(System.Single)">
+            <summary>Sets the current line width.</summary>
+            <param name="lineWidth">The new line width.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetLineCapStyle">
+            <summary>Gets the current line cap style, see ISO-320001, 8.4.3.3 Line Cap Style.</summary>
+            <returns>The current cap style.</returns>
+            <seealso cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetLineCapStyle(System.Int32)">for more info.</seealso>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetLineCapStyle(System.Int32)">
+            <summary>Sets the current line cap style, see ISO-320001, 8.4.3.3 Line Cap Style.</summary>
+            <param name="lineCapStyle">The new cap style value.</param>
+            <seealso cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetLineCapStyle(System.Int32)">for more info.</seealso>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetLineJoinStyle">
+            <summary>Gets the current line join style, see ISO-320001, 8.4.3.4 Line Join Style.</summary>
+            <returns>The current line join style.</returns>
+            <seealso cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetLineJoinStyle(System.Int32)">for more info.</seealso>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetLineJoinStyle(System.Int32)">
+            <summary>Sets the current line join style, see ISO-320001, 8.4.3.4 Line Join Style.</summary>
+            <param name="lineJoinStyle">The new line join style value.</param>
+            <seealso cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetLineJoinStyle(System.Int32)">for more info.</seealso>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetMiterLimit">
+            <summary>Gets the current miter limit, see ISO-320001, 8.4.3.5 Miter Limit.</summary>
+            <returns>The current miter limit.</returns>
+            <seealso cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetMiterLimit(System.Single)">for more info.</seealso>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetMiterLimit(System.Single)">
+            <summary>Sets the current miter limit, see ISO-320001, 8.4.3.5 Miter Limit.</summary>
+            <param name="miterLimit">The new miter limit value.</param>
+            <seealso cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetMiterLimit(System.Single)">for more info.</seealso>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetDashPattern">
+            <summary>
+            Gets line dash pattern value,
+            <c>D</c>
+            key, see ISO-320001, 8.4.3.6 Line Dash Pattern,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetDashPattern(iText.Kernel.Pdf.PdfArray)"></see>.
+            </summary>
+            <returns>
+            a
+            <c>PdfArray</c>
+            , that represents line dash pattern.
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetDashPattern(iText.Kernel.Pdf.PdfArray)">
+            <summary>
+            Sets line dash pattern value,
+            <c>D</c>
+            key, see ISO-320001, 8.4.3.6 Line Dash Pattern,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetDashPattern(iText.Kernel.Pdf.PdfArray)"></see>.
+            </summary>
+            <param name="dashPattern">
+            a
+            <c>PdfArray</c>
+            , that represents line dash pattern.
+            </param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetRenderingIntent">
+            <summary>
+            Gets the rendering intent, see
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetRenderingIntent"/>.
+            </summary>
+            <returns>the rendering intent name.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetRenderingIntent(iText.Kernel.Pdf.PdfName)">
+            <summary>
+            Sets the rendering intent, see
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetRenderingIntent"/>.
+            </summary>
+            <param name="renderingIntent">the rendering intent name.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetFontSize">
+            <summary>Gets the font size.</summary>
+            <returns>The current font size.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetFontSize(System.Single)">
+            <summary>Sets the font size.</summary>
+            <param name="fontSize">The new font size.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetFont">
+            <summary>
+            Gets the current
+            <see cref="T:iText.Kernel.Font.PdfFont"/>.
+            </summary>
+            <returns>
+            The current
+            <see cref="T:iText.Kernel.Font.PdfFont"/>.
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetFont(iText.Kernel.Font.PdfFont)">
+            <summary>
+            Sets the current
+            <see cref="T:iText.Kernel.Font.PdfFont"/>.
+            </summary>
+            <param name="font">
+            The new
+            <see cref="T:iText.Kernel.Font.PdfFont"/>.
+            </param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetTextRenderingMode">
+            <summary>
+            Gets the current Text Rendering Mode, see ISO-320001, 9.3.6 Text Rendering Mode,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetTextRenderingMode(System.Int32)"/>.
+            </summary>
+            <returns>The current text rendering mode.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetTextRenderingMode(System.Int32)">
+            <summary>
+            Sets the current Text Rendering Mode, see ISO-320001, 9.3.6 Text Rendering Mode,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetTextRenderingMode(System.Int32)"/>.
+            </summary>
+            <param name="textRenderingMode">The new text rendering mode.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetTextRise">
+            <summary>
+            Get the current Text Rise, see ISO-320001, 9.3.7 Text Rise,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetTextRise(System.Single)"/>.
+            </summary>
+            <returns>The current text rise.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetTextRise(System.Single)">
+            <summary>
+            Set the current Text Rise, see ISO-320001, 9.3.7 Text Rise
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetTextRise(System.Single)"/>.
+            </summary>
+            <param name="textRise">The new text rise value.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetFlatnessTolerance">
+            <summary>
+            Gets the current Flatness Tolerance, see ISO-320001, 10.6.2 Flatness Tolerance,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetFlatnessTolerance(System.Single)"/>.
+            </summary>
+            <returns>The current flatness tolerance.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetFlatnessTolerance(System.Single)">
+            <summary>
+            Sets the current Flatness Tolerance, see ISO-320001, 10.6.2 Flatness Tolerance,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetFlatnessTolerance(System.Single)"/>.
+            </summary>
+            <param name="flatnessTolerance">The new flatness tolerance value.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetWordSpacing(System.Single)">
+            <summary>
+            Sets the Word Spacing, see ISO-320001, 9.3.3 Word Spacing,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetWordSpacing(System.Single)"/>.
+            </summary>
+            <param name="wordSpacing">The new word spacing value.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetWordSpacing">
+            <summary>
+            Gets the current Word Spacing, see ISO-320001, 9.3.3 Word Spacing,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetWordSpacing(System.Single)"/>
+            </summary>
+            <returns>The current word spacing</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetCharSpacing(System.Single)">
+            <summary>
+            Sets the Character Spacing, see ISO-320001, 9.3.2 Character Spacing,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetCharacterSpacing(System.Single)"/>
+            </summary>
+            <param name="characterSpacing">The new character spacing value.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetCharSpacing">
+            <summary>
+            Gets the current Character Spacing, see ISO-320001, 9.3.2 Character Spacing,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetCharacterSpacing(System.Single)"/>.
+            </summary>
+            <returns>The current character spacing value.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetLeading">
+            <summary>
+            Gets the current Leading, see ISO-320001, 9.3.5 Leading,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetLeading(System.Single)"/>.
+            </summary>
+            <returns>The current leading value.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetLeading(System.Single)">
+            <summary>
+            Sets the  Leading, see ISO-320001, 9.3.5 Leading,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetLeading(System.Single)"/>.
+            </summary>
+            <param name="leading">The new leading value.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetHorizontalScaling">
+            <summary>Gets the current Horizontal Scaling percentage, see ISO-320001, 9.3.4 Horizontal Scaling.</summary>
+            <remarks>
+            Gets the current Horizontal Scaling percentage, see ISO-320001, 9.3.4 Horizontal Scaling.
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetHorizontalScaling(System.Single)"/>.
+            </remarks>
+            <returns>The current horizontal scaling factor.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.SetHorizontalScaling(System.Single)">
+            <summary>
+            Sets the Horizontal Scaling percentage for text, see ISO-320001, 9.3.4 Horizontal Scaling,
+            <see cref="M:iText.Kernel.Pdf.Canvas.PdfCanvas.SetHorizontalScaling(System.Single)"/>.
+            </summary>
+            <param name="scale">The new horizontal scaling factor.</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetStrokeOverprint">
+            <summary>
+            Get the Stroke Overprint flag, see ISO 32000-1, 8.6.7 Overprint Control
+            and 11.7.4.5 Summary of Overprinting Behaviour,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetStrokeOverprintFlag"/>.
+            </summary>
+            <returns>The current stroke overprint flag.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetFillOverprint">
+            <summary>
+            Get the Fill Overprint flag, see ISO 32000-1, 8.6.7 Overprint Control
+            and 11.7.4.5 Summary of Overprinting Behaviour,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetFillOverprintFlag"/>.
+            </summary>
+            <returns>The current stroke overprint flag.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetOverprintMode">
+            <summary>
+            Get the Overprint Mode, see ISO 32000-1, 8.6.7 Overprint Control
+            and 11.7.4.5 Summary of Overprinting Behaviour,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetOverprintMode"/>.
+            </summary>
+            <returns>The current overprint mode.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetBlackGenerationFunction">
+            <summary>
+            Gets the current Black-generation function, see ISO32000-1, 11.7.5.3 Rendering Intent and Colour Conversions and
+            Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetBlackGenerationFunction"/>.
+            </summary>
+            <returns>the current black-generation function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetBlackGenerationFunction2">
+            <summary>
+            Gets the current overruling Black-generation function,
+            see ISO32000-1, 11.7.5.3 Rendering Intent and Colour Conversions and
+            Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetBlackGenerationFunction2"/>.
+            </summary>
+            <returns>the current overruling black-generation function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetUnderColorRemovalFunction">
+            <summary>
+            Gets the current Undercolor-removal function,
+            see ISO32000-1, 11.7.5.3 Rendering Intent and Colour Conversions and
+            Table 58 – Entries in a Graphics State Parameter Dictionary
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetUndercolorRemovalFunction"/>.
+            </summary>
+            <returns>the current black-generation function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetUnderColorRemovalFunction2">
+            <summary>
+            Gets the current overruling Undercolor-removal function,
+            see ISO32000-1, 11.7.5.3 Rendering Intent and Colour Conversions and
+            Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetUndercolorRemovalFunction2"/>.
+            </summary>
+            <returns>the current undercolor-removal function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetTransferFunction">
+            <summary>
+            Gets the current Transfer function,
+            see ISO32000-1, 11.7.5.3 Rendering Intent and Colour Conversions and
+            Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetTransferFunction"/>.
+            </summary>
+            <returns>the current transfer function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetTransferFunction2">
+            <summary>
+            Gets the current overruling transer function,
+            see ISO32000-1, 11.7.5.3 Rendering Intent and Colour Conversions and
+            Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetTransferFunction2"/>.
+            </summary>
+            <returns>the current overruling transer function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetHalftone">
+            <summary>
+            Gets the current halftone ,
+            see ISO32000-1, 10.5 Halftones and Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetHalftone"/>.
+            </summary>
+            <returns>the current halftone.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetSmoothnessTolerance">
+            <summary>
+            Gets the current Smoothness Tolerance,
+            see ISO32000-1, 10.6.3 Smoothness Tolerance and Table 58 – Entries in a Graphics State Parameter Dictionary,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetSmothnessTolerance"/>.
+            </summary>
+            <returns>the current smoothness tolerance function.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetAutomaticStrokeAdjustment">
+            <summary>
+            Gets the current Apply Automatic Stroke Adjustment flag, see ISO 32000-1, 10.6.5 Automatic Stroke Adjustment,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetAutomaticStrokeAdjustmentFlag"/>.
+            </summary>
+            <returns>The current automatic stroke adjustment flag.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetBlendMode">
+            <summary>
+            Gets the current Blend Mode, see ISO 32000-1, 11.3.5 Blend Mode and
+            11.6.3 Specifying Blending Colour Space and Blend Mode,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetBlendMode"/>.
+            </summary>
+            <returns>The current blend mode.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetSoftMask">
+            <summary>
+            Gets the current Soft Mask, see ISO 32000-1, 11.3.7.2 Source Shape and Opacity,
+            11.6.4.3 Mask Shape and Opacity and 11.6.5.2 Soft-Mask Dictionaries,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetSoftMask"/>.
+            </summary>
+            <returns>The current soft mask.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetStrokeOpacity">
+            <summary>
+            Gets the current Stroke Opacity value, see ISO 32000-1, 11.3.7.2 Source Shape and Opacity
+            and 11.6.4.4 Constant Shape and Opacity,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetStrokeOpacity"/>.
+            </summary>
+            <returns>the current stroke opacity value.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetFillOpacity">
+            <summary>
+            Gets the current Fill Opacity value, see ISO 32000-1, 11.3.7.2 Source Shape and Opacity
+            and 11.6.4.4 Constant Shape and Opacity,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetFillOpacity"/>.
+            </summary>
+            <returns>the current fill opacity value.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetAlphaIsShape">
+            <summary>
+            Gets the current Alpha is shape flag, see ISO 32000-1, 11.3.7.2 Source Shape and Opacity and
+            11.6.4.3 Mask Shape and Opacity,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetAlphaSourceFlag"/>
+            .
+            </summary>
+            <returns>The current alpha is shape flag.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetTextKnockout">
+            <summary>
+            Gets the current Text Knockout flag, see ISO 32000-1, 9.3.8 Text Knockout,
+            <see cref="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.GetTextKnockoutFlag"/>.
+            </summary>
+            <returns>The current text knockout flag.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.GetHTP">
+            <summary>
+            Gets the current Halftone Phase, see Portable Document Format Reference Manual Version 1.2,
+            7.12 Extended graphics states and PostScript Language Reference Manual, Second Edition,
+            7.3.3, Halftone Phase.
+            </summary>
+            <returns>the current halftone phase.</returns>
+        </member>
         <member name="M:iText.Kernel.Pdf.Canvas.CanvasGraphicsState.UpdateFromExtGState(iText.Kernel.Pdf.Extgstate.PdfExtGState)">
             <summary>Updates current graphic state with values from extended graphic state dictionary.</summary>
             <param name="extGState">the wrapper around the extended graphic state dictionary</param>
@@ -14625,22 +15006,6 @@
             <param name="y">the vertical position of the xObject</param>
             <returns>the current canvas</returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.Canvas.PdfCanvas.AddXObject(iText.Kernel.Pdf.Xobject.PdfXObject,System.Single,System.Single)">
-            <summary>
-            Adds
-            <see cref="T:iText.Kernel.Pdf.Xobject.PdfXObject"/>
-            to the specified position in the case of
-            <see cref="T:iText.Kernel.Pdf.Xobject.PdfImageXObject"/>
-            or moves to the specified offset in the case of
-            <see cref="T:iText.Kernel.Pdf.Xobject.PdfFormXObject"/>.
-            </summary>
-            <param name="xObject">the xObject to add</param>
-            <param name="x">the horizontal offset of the formXObject position or the horizontal position of the imageXObject
-                </param>
-            <param name="y">the vertical offset of the formXObject position or the vertical position of the imageXObject
-                </param>
-            <returns>the current canvas</returns>
-        </member>
         <member name="M:iText.Kernel.Pdf.Canvas.PdfCanvas.AddXObjectFittedIntoRectangle(iText.Kernel.Pdf.Xobject.PdfXObject,iText.Kernel.Geom.Rectangle)">
             <summary>
             Adds
@@ -14818,17 +15183,6 @@
             <param name="form">the formXObject to add</param>
             <param name="x">the horizontal position of the formXObject</param>
             <param name="y">the vertical position of the formXObject</param>
-            <returns>the current canvas</returns>
-        </member>
-        <member name="M:iText.Kernel.Pdf.Canvas.PdfCanvas.AddForm(iText.Kernel.Pdf.Xobject.PdfFormXObject,System.Single,System.Single)">
-            <summary>
-            Adds
-            <see cref="T:iText.Kernel.Pdf.Xobject.PdfFormXObject"/>
-            to the canvas and moves to the specified offset.
-            </summary>
-            <param name="form">the formXObject to add</param>
-            <param name="x">the horizontal offset of the formXObject position</param>
-            <param name="y">the vertical offset of the formXObject position</param>
             <returns>the current canvas</returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Canvas.PdfCanvas.AddFormFittedIntoRectangle(iText.Kernel.Pdf.Xobject.PdfFormXObject,iText.Kernel.Geom.Rectangle)">
@@ -16202,25 +16556,25 @@
             Function
             </returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.SetFunction(iText.Kernel.Pdf.Function.PdfFunction)">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.SetFunction(iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>
             Sets the function that represents color transitions
             across the shading geometry as one object.
             </summary>
             <param name="function">
             The
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             to set.
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.SetFunction(iText.Kernel.Pdf.Function.PdfFunction[])">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.SetFunction(iText.Kernel.Pdf.Function.IPdfFunction[])">
             <summary>
             Sets the function object that represents color transitions
             across the shading geometry as an array of functions.
             </summary>
             <param name="functions">
             The array of
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             to be set.
             </param>
         </member>
@@ -16264,7 +16618,7 @@
             will be created
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.FunctionBased.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.PdfFunction)">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.FunctionBased.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates the new instance of the class.</summary>
             <param name="colorSpace">
             the
@@ -16273,11 +16627,11 @@
             </param>
             <param name="function">
             the
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             , that is used to calculate color transitions.
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.FunctionBased.#ctor(iText.Kernel.Pdf.PdfObject,iText.Kernel.Pdf.Function.PdfFunction)">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.FunctionBased.#ctor(iText.Kernel.Pdf.PdfObject,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates the new instance of the class.</summary>
             <param name="colorSpace">
             the
@@ -16286,7 +16640,7 @@
             </param>
             <param name="function">
             the
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             , that is used to calculate color transitions.
             </param>
         </member>
@@ -16433,7 +16787,7 @@
             beyond the starting and ending points of the axis, respectively.
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.Axial.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.Function.PdfFunction)">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.Axial.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates the new instance of the class.</summary>
             <param name="cs">
             the
@@ -16449,11 +16803,11 @@
             </param>
             <param name="function">
             the
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             object, that is used to calculate color transitions.
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.Axial.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.Function.PdfFunction)">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.Axial.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates the new instance of the class.</summary>
             <param name="cs">
             the
@@ -16477,7 +16831,7 @@
             </param>
             <param name="function">
             the
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             object, that is used to calculate color transitions.
             </param>
         </member>
@@ -16706,7 +17060,7 @@
             beyond the starting and ending points of the axis, respectively.
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.Radial.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.Function.PdfFunction)">
+        <member name="M:iText.Kernel.Pdf.Colorspace.PdfShading.Radial.#ctor(iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.PdfArray,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates the new instance of the class.</summary>
             <param name="cs">
             the
@@ -16726,7 +17080,7 @@
             </param>
             <param name="function">
             the
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
             object, that is used to calculate color transitions.
             </param>
         </member>
@@ -17667,15 +18021,6 @@
             Note that not every wrapper require this, only those that have such warning in documentation.
             </remarks>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfSpecialCs.Separation.#ctor(System.String,iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.PdfFunction)">
-            <summary>Creates a new separation color space.</summary>
-            <param name="name">The name for the separation color</param>
-            <param name="alternateSpace">The alternate colorspace</param>
-            <param name="tintTransform">
-            The function how the transform colors in the separation color space
-            to the alternate color space
-            </param>
-        </member>
         <member name="M:iText.Kernel.Pdf.Colorspace.PdfSpecialCs.Separation.#ctor(System.String,iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates a new separation color space.</summary>
             <param name="name">The name for the separation color</param>
@@ -17693,24 +18038,11 @@
             to perform the calculation
             </returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfSpecialCs.DeviceN.#ctor(System.Collections.Generic.IList{System.String},iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.PdfFunction)">
-            <summary>Creates a new DeviceN colorspace.</summary>
-            <param name="names">the names of the components</param>
-            <param name="alternateSpace">the alternate colorspace</param>
-            <param name="tintTransform">the function to transform colors to the alternate colorspace</param>
-        </member>
         <member name="M:iText.Kernel.Pdf.Colorspace.PdfSpecialCs.DeviceN.#ctor(System.Collections.Generic.IList{System.String},iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.IPdfFunction)">
             <summary>Creates a new DiviceN colorspace.</summary>
             <param name="names">the names of the components</param>
             <param name="alternateSpace">the alternate colorspace</param>
             <param name="tintTransform">the function to transform colors to the alternate colorspace</param>
-        </member>
-        <member name="M:iText.Kernel.Pdf.Colorspace.PdfSpecialCs.NChannel.#ctor(System.Collections.Generic.IList{System.String},iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.PdfFunction,iText.Kernel.Pdf.PdfDictionary)">
-            <summary>Creates a new NChannel colorspace.</summary>
-            <param name="names">the names for the components</param>
-            <param name="alternateSpace">the alternative colorspace</param>
-            <param name="tintTransform">the function to transform colors to the alternate color space</param>
-            <param name="attributes">NChannel specific attributes</param>
         </member>
         <member name="M:iText.Kernel.Pdf.Colorspace.PdfSpecialCs.NChannel.#ctor(System.Collections.Generic.IList{System.String},iText.Kernel.Pdf.Colorspace.PdfColorSpace,iText.Kernel.Pdf.Function.IPdfFunction,iText.Kernel.Pdf.PdfDictionary)">
             <summary>Creates a new NChannel colorspace.</summary>
@@ -17994,7 +18326,7 @@
             <see cref="T:iText.Kernel.Pdf.EncryptionProperties"/>
             </returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.EncryptionProperties.SetPublicKeyEncryption(Org.BouncyCastle.X509.X509Certificate[],System.Int32[],System.Int32)">
+        <member name="M:iText.Kernel.Pdf.EncryptionProperties.SetPublicKeyEncryption(iText.Commons.Bouncycastle.Cert.IX509Certificate[],System.Int32[],System.Int32)">
             <summary>Sets the certificate encryption options for the document.</summary>
             <remarks>
             Sets the certificate encryption options for the document.
@@ -18432,8 +18764,9 @@
             <returns>
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , should be
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>.
+            , should be an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetBlackGenerationFunction(iText.Kernel.Pdf.PdfObject)">
@@ -18444,8 +18777,11 @@
             <param name="blackGenerationFunction">
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , shall be
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>.
+            , shall be an object representing custom function
+            (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such
+            function objects).
             </param>
             <returns>object itself.</returns>
         </member>
@@ -18458,12 +18794,14 @@
             key.
             </summary>
             <returns>
-            a
+            the returned value is
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            value, should be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            or
-            <see cref="T:iText.Kernel.Pdf.PdfName"/>.
+            value, which is either a
+            <see cref="T:iText.Kernel.Pdf.PdfName"/>
+            of
+            a predefined value or an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetBlackGenerationFunction2(iText.Kernel.Pdf.PdfObject)">
@@ -18491,9 +18829,11 @@
             <param name="blackGenerationFunction2">
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            value, shall be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            or
+            value, shall be an object representing custom function
+            (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such
+            function objects) or
             <c>Default</c>.
             </param>
             <returns>object itself.</returns>
@@ -18507,8 +18847,9 @@
             <returns>
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , should be
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>.
+            , should be an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetUndercolorRemovalFunction(iText.Kernel.Pdf.PdfObject)">
@@ -18520,8 +18861,11 @@
             <param name="undercolorRemovalFunction">
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , shall be
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>.
+            , shall be an object representing custom function
+            (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating
+            such function objects).
             </param>
             <returns>object itself.</returns>
         </member>
@@ -18534,12 +18878,14 @@
             key.
             </summary>
             <returns>
-            a
+            the returned value is
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            value, should be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            or
-            <see cref="T:iText.Kernel.Pdf.PdfName"/>.
+            value, which is either a
+            <see cref="T:iText.Kernel.Pdf.PdfName"/>
+            of
+            a predefined value or an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetUndercolorRemovalFunction2(iText.Kernel.Pdf.PdfObject)">
@@ -18567,9 +18913,11 @@
             <param name="undercolorRemovalFunction2">
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            value, shall be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            or
+            value, shall be an object representing custom function
+            (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such
+            function objects) or
             <c>Default</c>.
             </param>
             <returns>object itself.</returns>
@@ -18581,14 +18929,16 @@
             key.
             </summary>
             <returns>
-            a
+            the returned value is
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , should be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            ,
-            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            value, which is either a
+            <see cref="T:iText.Kernel.Pdf.PdfName"/>
             or
-            <see cref="T:iText.Kernel.Pdf.PdfName"/>.
+            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            of
+            a predefined value or an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetTransferFunction(iText.Kernel.Pdf.PdfObject)">
@@ -18600,12 +18950,14 @@
             <param name="transferFunction">
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , shall be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            ,
-            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            , shall be either a
+            <see cref="T:iText.Kernel.Pdf.PdfName"/>
             or
-            <see cref="T:iText.Kernel.Pdf.PdfName"/>.
+            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            of
+            a predefined value or an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </param>
             <returns>object itself.</returns>
         </member>
@@ -18618,14 +18970,16 @@
             key.
             </summary>
             <returns>
-            a
+            the returned value is
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , should be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            ,
-            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            value, which is either a
+            <see cref="T:iText.Kernel.Pdf.PdfName"/>
             or
-            <see cref="T:iText.Kernel.Pdf.PdfName"/>.
+            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            of
+            a predefined value or an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Extgstate.PdfExtGState.SetTransferFunction2(iText.Kernel.Pdf.PdfObject)">
@@ -18653,14 +19007,14 @@
             <param name="transferFunction2">
             a
             <see cref="T:iText.Kernel.Pdf.PdfObject"/>
-            , shall be either
-            <see cref="T:iText.Kernel.Pdf.Function.PdfFunction"/>
-            ,
-            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
-            ,
+            , shall be either a
             <see cref="T:iText.Kernel.Pdf.PdfName"/>
             or
-            <c>Default</c>.
+            <see cref="T:iText.Kernel.Pdf.PdfArray"/>
+            of
+            a predefined value or an object representing custom function (see
+            <see cref="T:iText.Kernel.Pdf.Function.IPdfFunction"/>
+            object wrapper for convenience API in reading/manipulating such function objects).
             </param>
             <returns>object itself.</returns>
         </member>
@@ -19870,21 +20224,6 @@
             items containing the result
             </returns>
         </member>
-        <member name="T:iText.Kernel.Pdf.Function.PdfFunction">
-            <summary>The class that represents the Pdf Function.</summary>
-        </member>
-        <member name="T:iText.Kernel.Pdf.Function.PdfFunction.Type0">
-            <summary>Represents a type 0 pdf function.</summary>
-        </member>
-        <member name="T:iText.Kernel.Pdf.Function.PdfFunction.Type2">
-            <summary>Represents a type 2 pdf function.</summary>
-        </member>
-        <member name="T:iText.Kernel.Pdf.Function.PdfFunction.Type3">
-            <summary>Represents a type 3 pdf function.</summary>
-        </member>
-        <member name="T:iText.Kernel.Pdf.Function.PdfFunction.Type4">
-            <summary>Represents a type 4 pdf function.</summary>
-        </member>
         <member name="M:iText.Kernel.Pdf.Function.PdfFunctionFactory.Create(iText.Kernel.Pdf.PdfObject)">
             <summary>
             Factory method to create a function instance based on an existing
@@ -20074,7 +20413,7 @@
             <summary>Gets value of N field.</summary>
             <returns>the value of N field</returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.Function.PdfType2Function.SetN(System.Int32)">
+        <member name="M:iText.Kernel.Pdf.Function.PdfType2Function.SetN(System.Double)">
             <summary>sets value of N field.</summary>
             <param name="value">the value of N field</param>
         </member>
@@ -20095,6 +20434,28 @@
             <param name="dict">the function dictionary</param>
         </member>
         <member name="M:iText.Kernel.Pdf.Function.PdfType3Function.#ctor(System.Double[],System.Double[],System.Collections.Generic.IList{iText.Kernel.Pdf.Function.AbstractPdfFunction{iText.Kernel.Pdf.PdfDictionary}},System.Double[],System.Double[])">
+            <summary>(see ISO-320001 Table 41).</summary>
+            <param name="domain">
+            the valid input domain, input will be clipped to this domain
+            contains a min max pair per input component
+            </param>
+            <param name="range">
+            the valid output range, oputput will be clipped to this range
+            contains a min max pair per output component
+            </param>
+            <param name="functions">The list of functions to stitch</param>
+            <param name="bounds">
+            (Required) An array of k − 1 numbers that, in combination with Domain, shall define
+            the intervals to which each function from the Functions array shall apply.
+            Bounds elements shall be in order of increasing value, and each value shall be within
+            the domain defined by Domain.
+            </param>
+            <param name="encode">
+            (Required) An array of 2 × k numbers that, taken in pairs, shall map each subset of the domain
+            defined by Domain and the Bounds array to the domain of the corresponding function.
+            </param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Function.PdfType3Function.#ctor(System.Single[],System.Single[],System.Collections.Generic.IList{iText.Kernel.Pdf.Function.AbstractPdfFunction{iText.Kernel.Pdf.PdfDictionary}},System.Single[],System.Single[])">
             <summary>(see ISO-320001 Table 41).</summary>
             <param name="domain">
             the valid input domain, input will be clipped to this domain
@@ -20211,6 +20572,89 @@
             <param name="eStart">the start of expected range</param>
             <param name="eEnd">the end of expected range</param>
             <returns>the mapped value</returns>
+        </member>
+        <member name="T:iText.Kernel.Pdf.GenericNameTree">
+            <summary>
+            Abstract representation of a name tree structure, as used in PDF for various purposes
+            such as the Dests tree, the ID tree of structure elements and the embedded file tree.
+            </summary>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.#ctor(iText.Kernel.Pdf.PdfDocument)">
+            <summary>Creates a name tree structure in the current document.</summary>
+            <param name="pdfDoc">the document in which the name tree lives</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.AddEntry(iText.Kernel.Pdf.PdfString,iText.Kernel.Pdf.PdfObject)">
+            <summary>Add an entry to the name tree.</summary>
+            <param name="key">key of the entry</param>
+            <param name="value">object to add</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.AddEntry(System.String,iText.Kernel.Pdf.PdfObject)">
+            <summary>Add an entry to the name tree.</summary>
+            <param name="key">key of the entry</param>
+            <param name="value">object to add</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.RemoveEntry(iText.Kernel.Pdf.PdfString)">
+            <summary>Remove an entry from the name tree.</summary>
+            <param name="key">key of the entry</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.GetEntry(iText.Kernel.Pdf.PdfString)">
+            <summary><inheritDoc/></summary>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.GetEntry(System.String)">
+            <summary><inheritDoc/></summary>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.IsModified">
+            <summary>Check if the tree is modified.</summary>
+            <returns>True if the object has been modified, false otherwise.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.SetModified">
+            <summary>Sets the modified flag to true.</summary>
+            <remarks>Sets the modified flag to true. It means that the object has been modified.</remarks>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.BuildTree">
+            <summary>
+            Build a
+            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>
+            containing the name tree.
+            </summary>
+            <returns>
+            
+            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>
+            containing the name tree
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.GenericNameTree.ReadTree(iText.Kernel.Pdf.PdfDictionary)">
+            <summary>
+            Read the entries in a name tree structure from a dictionary object into a linked hash map
+            with fixed order.
+            </summary>
+            <param name="dictionary">a dictionary object</param>
+            <returns>a map containing the entries in the tree</returns>
+        </member>
+        <member name="T:iText.Kernel.Pdf.IPdfNameTreeAccess">
+            <summary>Abstract access interface to a PDF name tree.</summary>
+        </member>
+        <member name="M:iText.Kernel.Pdf.IPdfNameTreeAccess.GetEntry(iText.Kernel.Pdf.PdfString)">
+            <summary>Retrieve an entry from the name tree.</summary>
+            <param name="key">key of entry to retrieve</param>
+            <returns>
+            retrieved entry or
+            <see langword="null"/>
+            if absent
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.IPdfNameTreeAccess.GetEntry(System.String)">
+            <summary>Retrieve an entry from the name tree.</summary>
+            <param name="key">key of entry to retrieve</param>
+            <returns>
+            retrieved entry or
+            <see langword="null"/>
+            if absent
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.IPdfNameTreeAccess.GetKeys">
+            <summary>Retrieve the set of keys in the name tree.</summary>
+            <returns>set of all keys in the name tree</returns>
         </member>
         <member name="T:iText.Kernel.Pdf.IPdfPageExtraCopier">
             <summary>
@@ -22199,7 +22643,7 @@
             <summary>this method return map containing all pages of the document with associated outlines.</summary>
             <returns>map containing all pages of the document with associated outlines</returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.PdfCatalog.AddNamedDestination(System.String,iText.Kernel.Pdf.PdfObject)">
+        <member name="M:iText.Kernel.Pdf.PdfCatalog.AddNamedDestination(iText.Kernel.Pdf.PdfString,iText.Kernel.Pdf.PdfObject)">
             <summary>This methods adds new name to the Dests NameTree.</summary>
             <remarks>This methods adds new name to the Dests NameTree. It throws an exception, if the name already exists.
                 </remarks>
@@ -22209,7 +22653,7 @@
             See ISO 32000-1 12.3.2.3 for more info.
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.PdfCatalog.AddNameToNameTree(System.String,iText.Kernel.Pdf.PdfObject,iText.Kernel.Pdf.PdfName)">
+        <member name="M:iText.Kernel.Pdf.PdfCatalog.AddNameToNameTree(iText.Kernel.Pdf.PdfString,iText.Kernel.Pdf.PdfObject,iText.Kernel.Pdf.PdfName)">
             <summary>This methods adds a new name to the specified NameTree.</summary>
             <remarks>This methods adds a new name to the specified NameTree. It throws an exception, if the name already exists.
                 </remarks>
@@ -22257,7 +22701,7 @@
             <summary>This method sets the root outline element in the catalog.</summary>
             <param name="outline">the outline dictionary that shall be the root of the document’s outline hierarchy</param>
         </member>
-        <member name="M:iText.Kernel.Pdf.PdfCatalog.ConstructOutlines(iText.Kernel.Pdf.PdfDictionary,System.Collections.Generic.IDictionary{System.String,iText.Kernel.Pdf.PdfObject})">
+        <member name="M:iText.Kernel.Pdf.PdfCatalog.ConstructOutlines(iText.Kernel.Pdf.PdfDictionary,iText.Kernel.Pdf.IPdfNameTreeAccess)">
             <summary>
             Construct
             <see cref="T:iText.Kernel.Pdf.PdfCatalog">dictionary</see>
@@ -22418,6 +22862,12 @@
         <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.ESIC_1_7_EXTENSIONLEVEL5">
             <summary>An instance of this class for ETSI 1.7 Extension level 5.</summary>
         </member>
+        <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.ISO_32001">
+            <summary>An instance of this class for ISO/TS 32001.</summary>
+        </member>
+        <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.ISO_32002">
+            <summary>An instance of this class for ISO/TS 32002.</summary>
+        </member>
         <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.prefix">
             <summary>The prefix used in the Extensions dictionary added to the Catalog.</summary>
         </member>
@@ -22427,11 +22877,29 @@
         <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.extensionLevel">
             <summary>The extension level within the base version.</summary>
         </member>
+        <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.url">
+            <summary>The extension URL (ISO 32000-2:2020).</summary>
+        </member>
+        <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.extensionRevision">
+            <summary>The extension revision (ISO 32000-2:2020).</summary>
+        </member>
+        <member name="F:iText.Kernel.Pdf.PdfDeveloperExtension.isMultiValued">
+            <summary>Whether the extension prefix is multivalued (ISO 32000-2:2020).</summary>
+        </member>
         <member name="M:iText.Kernel.Pdf.PdfDeveloperExtension.#ctor(iText.Kernel.Pdf.PdfName,iText.Kernel.Pdf.PdfName,System.Int32)">
             <summary>Creates a PdfDeveloperExtension object.</summary>
             <param name="prefix">the prefix referring to the developer</param>
             <param name="baseVersion">the number of the base version</param>
-            <param name="extensionLevel">the extension level within the baseverion.</param>
+            <param name="extensionLevel">the extension level within the base version</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.PdfDeveloperExtension.#ctor(iText.Kernel.Pdf.PdfName,iText.Kernel.Pdf.PdfName,System.Int32,System.String,System.String,System.Boolean)">
+            <summary>Creates a PdfDeveloperExtension object.</summary>
+            <param name="prefix">the prefix referring to the developer</param>
+            <param name="baseVersion">the number of the base version</param>
+            <param name="extensionLevel">the extension level within the base version</param>
+            <param name="extensionRevision">the extension revision identifier</param>
+            <param name="url">the URL specifying where to find more information about the extension</param>
+            <param name="isMultiValued">flag indicating whether the extension prefix can have multiple values</param>
         </member>
         <member name="M:iText.Kernel.Pdf.PdfDeveloperExtension.GetPrefix">
             <summary>Gets the prefix name.</summary>
@@ -22444,6 +22912,10 @@
         <member name="M:iText.Kernel.Pdf.PdfDeveloperExtension.GetExtensionLevel">
             <summary>Gets the extension level within the baseVersion.</summary>
             <returns>an integer</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.PdfDeveloperExtension.IsMultiValued">
+            <summary>Indicates whether the extension prefix is multivalued (ISO 32000-2:2020).</summary>
+            <returns>true if multivalued</returns>
         </member>
         <member name="M:iText.Kernel.Pdf.PdfDeveloperExtension.GetDeveloperExtensions">
             <summary>
@@ -22872,11 +23344,7 @@
         <member name="M:iText.Kernel.Pdf.PdfDocument.GetPage(System.Int32)">
             <summary>Gets the page by page number.</summary>
             <param name="pageNum">page number.</param>
-            <returns>
-            page by page number. may return
-            <see langword="null"/>
-            in case the page tree is broken
-            </returns>
+            <returns>page by page number.</returns>
         </member>
         <member name="M:iText.Kernel.Pdf.PdfDocument.GetPage(iText.Kernel.Pdf.PdfDictionary)">
             <summary>
@@ -23518,6 +23986,16 @@
             See ISO 32000-1 12.3.2.3 for more info.
             </param>
         </member>
+        <member name="M:iText.Kernel.Pdf.PdfDocument.AddNamedDestination(iText.Kernel.Pdf.PdfString,iText.Kernel.Pdf.PdfObject)">
+            <summary>This methods adds new name in the Dests NameTree.</summary>
+            <remarks>This methods adds new name in the Dests NameTree. It throws an exception, if the name already exists.
+                </remarks>
+            <param name="key">Name of the destination.</param>
+            <param name="value">
+            An object destination refers to. Must be an array or a dictionary with key /D and array.
+            See ISO 32000-1 12.3.2.3 for more info.
+            </param>
+        </member>
         <member name="M:iText.Kernel.Pdf.PdfDocument.ListIndirectReferences">
             <summary>Gets static copy of cross reference table.</summary>
             <returns>a static copy of cross reference table</returns>
@@ -23761,23 +24239,6 @@
             <see cref="T:iText.Kernel.Pdf.Tagutils.TagStructureContext"/>.
             </summary>
         </member>
-        <member name="M:iText.Kernel.Pdf.PdfDocument.StoreLinkAnnotation(iText.Kernel.Pdf.PdfPage,iText.Kernel.Pdf.Annot.PdfLinkAnnotation)">
-            <summary>Save the link annotation in a temporary storage for further copying.</summary>
-            <remarks>
-            Save the link annotation in a temporary storage for further copying.
-            Save destinations in a temporary storage for further copying.
-            </remarks>
-            <param name="page">
-            just copied
-            <see cref="T:iText.Kernel.Pdf.PdfPage"/>
-            link annotation belongs to.
-            </param>
-            <param name="annotation">
-            
-            <see cref="T:iText.Kernel.Pdf.Annot.PdfLinkAnnotation"/>
-            itself.
-            </param>
-        </member>
         <member name="M:iText.Kernel.Pdf.PdfDocument.StoreDestinationToReaddress(iText.Kernel.Pdf.Navigation.PdfDestination,System.Action{iText.Kernel.Pdf.Navigation.PdfDestination},System.Action{iText.Kernel.Pdf.Navigation.PdfDestination})">
             <summary>Save destinations in a temporary storage for further copying.</summary>
             <param name="destination">
@@ -24008,7 +24469,7 @@
             of the target document for encryption
             </param>
         </member>
-        <member name="M:iText.Kernel.Pdf.PdfEncryption.#ctor(Org.BouncyCastle.X509.X509Certificate[],System.Int32[],System.Int32,iText.Kernel.Pdf.PdfVersion)">
+        <member name="M:iText.Kernel.Pdf.PdfEncryption.#ctor(iText.Commons.Bouncycastle.Cert.IX509Certificate[],System.Int32[],System.Int32,iText.Kernel.Pdf.PdfVersion)">
             <summary>Creates the certificate encryption.</summary>
             <remarks>
             Creates the certificate encryption.
@@ -24414,23 +24875,12 @@
         </member>
         <member name="M:iText.Kernel.Pdf.PdfNameTree.GetNames">
             <summary>Retrieves the names stored in the name tree</summary>
+            <remarks>
+            Retrieves the names stored in the name tree
+            <para />
+            When non-textual names are required, use
+            </remarks>
             <returns>Map containing the PdfObjects stored in the tree</returns>
-        </member>
-        <member name="M:iText.Kernel.Pdf.PdfNameTree.AddEntry(System.String,iText.Kernel.Pdf.PdfObject)">
-            <summary>Add an entry to the name tree</summary>
-            <param name="key">key of the entry</param>
-            <param name="value">object to add</param>
-        </member>
-        <member name="M:iText.Kernel.Pdf.PdfNameTree.IsModified">
-            <returns>True if the object has been modified, false otherwise.</returns>
-        </member>
-        <member name="M:iText.Kernel.Pdf.PdfNameTree.SetModified">
-            <summary>Sets the modified flag to true.</summary>
-            <remarks>Sets the modified flag to true. It means that the object has been modified.</remarks>
-        </member>
-        <member name="M:iText.Kernel.Pdf.PdfNameTree.BuildTree">
-            <summary>Build a PdfDictionary containing the name tree</summary>
-            <returns>PdfDictionary containing the name tree</returns>
         </member>
         <member name="T:iText.Kernel.Pdf.PdfNull">
             <summary>Representation of the null object in the PDF specification.</summary>
@@ -25697,6 +26147,31 @@
             <see cref="T:iText.Kernel.Pdf.PdfPage"/>.
             </returns>
         </member>
+        <member name="M:iText.Kernel.Pdf.PdfPage.CopyTo(iText.Kernel.Pdf.PdfDocument,iText.Kernel.Pdf.IPdfPageExtraCopier,System.Boolean,System.Int32)">
+            <summary>Copies page and adds it to the specified document to the end or by index if the corresponding parameter is true.
+                </summary>
+            <remarks>
+            Copies page and adds it to the specified document to the end or by index if the corresponding parameter is true.
+            <br /><br />
+            NOTE: Works only for pages from the document opened in reading mode, otherwise an exception is thrown.
+            </remarks>
+            <param name="toDocument">a document to copy page to.</param>
+            <param name="copier">
+            a copier which bears a special copy logic. May be null.
+            It is recommended to use the same instance of
+            <see cref="T:iText.Kernel.Pdf.IPdfPageExtraCopier"/>
+            for the same output document.
+            </param>
+            <param name="addPageToDocument">true if page should be added to document.</param>
+            <param name="pageInsertIndex">
+            position to add the page to, if -1 page will be added to the end of the document,
+            will be ignored if addPageToDocument is false.
+            </param>
+            <returns>
+            copied
+            <see cref="T:iText.Kernel.Pdf.PdfPage"/>.
+            </returns>
+        </member>
         <member name="M:iText.Kernel.Pdf.PdfPage.CopyAsFormXObject(iText.Kernel.Pdf.PdfDocument)">
             <summary>Copies page as FormXObject to the specified document.</summary>
             <param name="toDocument">a document to copy to.</param>
@@ -26042,10 +26517,40 @@
             <summary>Removes an annotation from the page.</summary>
             <remarks>
             Removes an annotation from the page.
-            <br /><br />
-            NOTE: If document is tagged, PdfDocument's PdfTagStructure instance will point at annotation tag parent after method call.
+            <para />
+            When document is tagged a corresponding logical structure content item for this annotation
+            will be removed; its immediate structure element parent will be removed as well if the following
+            conditions are met: annotation content item was its single child and structure element role
+            is either Annot or Form.
             </remarks>
-            <param name="annotation">an annotation to be removed.</param>
+            <param name="annotation">an annotation to be removed</param>
+            <returns>
+            this
+            <see cref="T:iText.Kernel.Pdf.PdfPage"/>
+            instance.
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.PdfPage.RemoveAnnotation(iText.Kernel.Pdf.Annot.PdfAnnotation,System.Boolean)">
+            <summary>Removes an annotation from the page.</summary>
+            <remarks>
+            Removes an annotation from the page.
+            <para />
+            When document is tagged a corresponding logical structure content item for this annotation
+            will be removed; its immediate structure element parent will be removed as well if the following
+            conditions are met: annotation content item was its single child and structure element role
+            is either Annot or Form.
+            </remarks>
+            <param name="annotation">an annotation to be removed</param>
+            <param name="rememberTagPointer">
+            if set to true, the
+            <see cref="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.GetAutoTaggingPointer"/>
+            instance of
+            <see cref="T:iText.Kernel.Pdf.Tagutils.TagTreePointer"/>
+            will be moved to the parent of the removed
+            annotation tag. Can be used to add a new annotation to the same place in the
+            tag structure. (E.g. when merged Acroform field is split into a field and
+            a pure widget, the page annotation needs to be replaced by the new one)
+            </param>
             <returns>
             this
             <see cref="T:iText.Kernel.Pdf.PdfPage"/>
@@ -26229,18 +26734,18 @@
         </member>
         <member name="M:iText.Kernel.Pdf.PdfPage.Put(iText.Kernel.Pdf.PdfName,iText.Kernel.Pdf.PdfObject)">
             <summary>
-            Helper method that associate specified value with specified key in the underlined
+            Helper method that associates specified value with the specified key in the underlying
             <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>.
             </summary>
             <remarks>
-            Helper method that associate specified value with specified key in the underlined
-            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>.
-            May be used in chain.
+            Helper method that associates specified value with the specified key in the underlying
+            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>
+            . Can be used in method chaining.
             </remarks>
             <param name="key">
             the
             <see cref="T:iText.Kernel.Pdf.PdfName"/>
-            key with which the specified value is to be associated.
+            key with which the specified value is to be associated
             </param>
             <param name="value">
             the
@@ -26251,6 +26756,29 @@
             this
             <see cref="T:iText.Kernel.Pdf.PdfPage"/>
             object.
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.PdfPage.Remove(iText.Kernel.Pdf.PdfName)">
+            <summary>
+            Helper method that removes the value associated with the specified key
+            from the underlying
+            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>.
+            </summary>
+            <remarks>
+            Helper method that removes the value associated with the specified key
+            from the underlying
+            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>
+            . Can be used in method chaining.
+            </remarks>
+            <param name="key">
+            the
+            <see cref="T:iText.Kernel.Pdf.PdfName"/>
+            key for which associated value is to be removed
+            </param>
+            <returns>
+            this
+            <see cref="T:iText.Kernel.Pdf.PdfPage"/>
+            object
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.PdfPage.IsPageRotationInverseMatrixWritten">
@@ -27615,6 +28143,13 @@
             <param name="bytes">byte array to manipulate with.</param>
             <returns>Hexadecimal string or string with escaped symbols in byte array view.</returns>
         </member>
+        <member name="T:iText.Kernel.Pdf.PdfStringComparator">
+            <summary>
+            Compare
+            <see cref="T:iText.Kernel.Pdf.PdfString"/>
+            objects by value.
+            </summary>
+        </member>
         <member name="T:iText.Kernel.Pdf.PdfTextArray">
             <summary>
             <see cref="T:iText.Kernel.Pdf.PdfTextArray"/>
@@ -28365,20 +28900,20 @@
             instance
             </returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.ReaderProperties.SetPublicKeySecurityParams(Org.BouncyCastle.X509.X509Certificate,Org.BouncyCastle.Crypto.ICipherParameters)">
+        <member name="M:iText.Kernel.Pdf.ReaderProperties.SetPublicKeySecurityParams(iText.Commons.Bouncycastle.Cert.IX509Certificate,iText.Commons.Bouncycastle.Crypto.IPrivateKey)">
             <summary>
             Defines the certificate which will be used if the document is encrypted with public key
             encryption (see Pdf 1.7 specification, 7.6.4. Public-Key Security Handlers)
             </summary>
             <param name="certificate">
             the recipient
-            <see cref="T:Org.BouncyCastle.X509.X509Certificate"/>
+            <see cref="T:iText.Commons.Bouncycastle.Cert.IX509Certificate"/>
             ,
             serves as recipient identifier
             </param>
             <param name="certificateKey">
             the recipient private
-            <see cref="T:Org.BouncyCastle.Crypto.ICipherParameters"/>
+            <see cref="T:iText.Commons.Bouncycastle.Crypto.IPrivateKey"/>
             to the certificate
             </param>
             <returns>
@@ -28387,14 +28922,14 @@
             instance
             </returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.ReaderProperties.SetPublicKeySecurityParams(Org.BouncyCastle.X509.X509Certificate)">
+        <member name="M:iText.Kernel.Pdf.ReaderProperties.SetPublicKeySecurityParams(iText.Commons.Bouncycastle.Cert.IX509Certificate)">
             <summary>
             Defines the certificate which will be used if the document is encrypted with public key
             encryption (see Pdf 1.7 specification, 7.6.4. Public-Key Security Handlers)
             </summary>
             <param name="certificate">
             the recipient
-            <see cref="T:Org.BouncyCastle.X509.X509Certificate"/>
+            <see cref="T:iText.Commons.Bouncycastle.Cert.IX509Certificate"/>
             ,
             serves as recipient identifier
             </param>
@@ -28809,6 +29344,18 @@
             </param>
             <returns>attributes dictionary.</returns>
         </member>
+        <member name="M:iText.Kernel.Pdf.Tagging.PdfStructElem.GetStructureElementId">
+            <summary>Gets the structure element's ID string, if it has one.</summary>
+            <returns>the structure element's ID string, or null if there is none</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagging.PdfStructElem.SetStructureElementId(iText.Kernel.Pdf.PdfString)">
+            <summary>Sets the structure element's ID string.</summary>
+            <remarks>
+            Sets the structure element's ID string.
+            This value can be used by other structure elements to reference this one.
+            </remarks>
+            <param name="id">the element's ID string to be set</param>
+        </member>
         <member name="M:iText.Kernel.Pdf.Tagging.PdfStructElem.GetParent">
             <returns>parent of the current structure element. Returns null if parent isn't set or if either current element or parent are invalid.
                 </returns>
@@ -29013,6 +29560,39 @@
             <summary>Returns files associated with structure element.</summary>
             <param name="create">defines whether AF arrays will be created if it doesn't exist</param>
             <returns>associated files array</returns>
+        </member>
+        <member name="T:iText.Kernel.Pdf.Tagging.PdfStructIdTree">
+            <summary>Models the tree of structure element IDs.</summary>
+            <remarks>
+            Models the tree of structure element IDs.
+            This is an optional feature of tagged PDF documents.
+            </remarks>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagging.PdfStructIdTree.ReadFromDictionary(iText.Kernel.Pdf.PdfDocument,iText.Kernel.Pdf.PdfDictionary)">
+            <summary>Parse a structure element ID tree into its in-memory representation.</summary>
+            <param name="pdfDoc">
+            the associated
+            <see cref="T:iText.Kernel.Pdf.PdfDocument"/>
+            </param>
+            <param name="dict">
+            the
+            <see cref="T:iText.Kernel.Pdf.PdfDictionary"/>
+            from which to parse the tree
+            </param>
+            <returns>
+            the parsed
+            <see cref="T:iText.Kernel.Pdf.Tagging.PdfStructIdTree"/>
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagging.PdfStructIdTree.GetStructElemById(iText.Kernel.Pdf.PdfString)">
+            <summary>Retrieve a structure element by ID, if it has one.</summary>
+            <param name="id">the ID of the structure element to retrieve</param>
+            <returns>the structure element with the given ID if one exists, or null otherwise.</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagging.PdfStructIdTree.GetStructElemById(System.Byte[])">
+            <summary>Retrieve a structure element by ID, if it has one.</summary>
+            <param name="id">the ID of the structure element to retrieve</param>
+            <returns>the structure element with the given ID if one exists, or null otherwise.</returns>
         </member>
         <member name="T:iText.Kernel.Pdf.Tagging.PdfStructTreeRoot">
             <summary>Represents a wrapper-class for structure tree root dictionary.</summary>
@@ -29261,6 +29841,24 @@
             <summary>Returns files associated with structure tree root.</summary>
             <param name="create">defines whether AF arrays will be created if it doesn't exist</param>
             <returns>associated files array</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagging.PdfStructTreeRoot.GetIdTree">
+            <summary>
+            Returns the document's structure element ID tree wrapped in a
+            <see cref="T:iText.Kernel.Pdf.Tagging.PdfStructIdTree"/>
+            object.
+            </summary>
+            <remarks>
+            Returns the document's structure element ID tree wrapped in a
+            <see cref="T:iText.Kernel.Pdf.Tagging.PdfStructIdTree"/>
+            object. If no such tree exists, it is initialized. The initialization happens lazily,
+            and does not trigger any PDF object changes unless populated.
+            </remarks>
+            <returns>
+            the
+            <see cref="T:iText.Kernel.Pdf.Tagging.PdfStructIdTree"/>
+            of the document
+            </returns>
         </member>
         <member name="T:iText.Kernel.Pdf.Tagging.StandardNamespaces">
             <summary>
@@ -29660,6 +30258,58 @@
             <summary>Gets the attributes list.</summary>
             <returns>the attributes list</returns>
         </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.AccessibilityProperties.GetStructureElementId">
+            <summary>Gets the associated structure element's ID string, if it has one.</summary>
+            <remarks>
+            Gets the associated structure element's ID string, if it has one.
+            <para />
+            See also
+            <see cref="M:iText.Kernel.Pdf.Tagging.PdfStructElem.GetStructureElementId"/>.
+            </remarks>
+            <returns>the structure element's ID string, or null if there is none</returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.AccessibilityProperties.SetStructureElementId(System.Byte[])">
+            <summary>Sets the associated structure element's ID.</summary>
+            <remarks>
+            Sets the associated structure element's ID. Passing
+            <see langword="null"/>
+            removes the ID.
+            <para />
+            See also
+            <see cref="M:iText.Kernel.Pdf.Tagging.PdfStructElem.SetStructureElementId(iText.Kernel.Pdf.PdfString)"/>.
+            </remarks>
+            <param name="id">the element's ID to be set</param>
+            <returns>
+            this
+            <see cref="T:iText.Kernel.Pdf.Tagutils.AccessibilityProperties"/>
+            instance
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.AccessibilityProperties.SetStructureElementIdString(System.String)">
+            <summary>Sets the associated structure element's ID.</summary>
+            <remarks>
+            Sets the associated structure element's ID. Passing
+            <see langword="null"/>
+            removes the ID.
+            If non-null, the argument will be encoded in UTF-8 (without BOM), since ID
+            strings are considered binary data in PDF.
+            <para />
+            See also
+            <see cref="M:iText.Kernel.Pdf.Tagging.PdfStructElem.SetStructureElementId(iText.Kernel.Pdf.PdfString)"/>.
+            </remarks>
+            <param name="id">the element's ID to be set</param>
+            <returns>
+            this
+            <see cref="T:iText.Kernel.Pdf.Tagutils.AccessibilityProperties"/>
+            instance
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.BackedAccessibilityProperties.GetStructureElementId">
+            <summary><inheritDoc/></summary>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.BackedAccessibilityProperties.SetStructureElementId(System.Byte[])">
+            <summary><inheritDoc/></summary>
+        </member>
         <member name="T:iText.Kernel.Pdf.Tagutils.DefaultAccessibilityProperties">
             <summary>
             The class represents a basic implementation of
@@ -29685,6 +30335,12 @@
             instance based on structure element role.
             </summary>
             <param name="role">the structure element role</param>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.DefaultAccessibilityProperties.GetStructureElementId">
+            <summary><inheritDoc/></summary>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.DefaultAccessibilityProperties.SetStructureElementId(System.Byte[])">
+            <summary><inheritDoc/></summary>
         </member>
         <member name="T:iText.Kernel.Pdf.Tagutils.IRoleMappingResolver">
             <summary>
@@ -29986,7 +30642,7 @@
             <see cref="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.GetDocumentDefaultNamespace"/>
             for more info.
             <para />
-            Be careful when changing this property value. It is most recommended to do it right after the
+            Be careful when changing this property value. It is most recommended doing it right after the
             <see cref="T:iText.Kernel.Pdf.PdfDocument"/>
             was
             created, before any content was added. Changing this value after any content was added might result in the mingled
@@ -30143,6 +30799,30 @@
             otherwise returns null
             </returns>
         </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.RemoveAnnotationTag(iText.Kernel.Pdf.Annot.PdfAnnotation,System.Boolean)">
+            <summary>Removes annotation content item from the tag structure and sets autoTaggingPointer if true is passed.
+                </summary>
+            <remarks>
+            Removes annotation content item from the tag structure and sets autoTaggingPointer if true is passed.
+            If annotation is not added to the document or is not tagged, nothing will happen.
+            </remarks>
+            <param name="annotation">
+            the
+            <see cref="T:iText.Kernel.Pdf.Annot.PdfAnnotation"/>
+            that will be removed from the tag structure
+            </param>
+            <param name="setAutoTaggingPointer">
+            true if
+            <see cref="T:iText.Kernel.Pdf.Tagutils.TagTreePointer"/>
+            should be set to autoTaggingPointer
+            </param>
+            <returns>
+            
+            <see cref="T:iText.Kernel.Pdf.Tagutils.TagTreePointer"/>
+            instance which points at annotation tag parent if annotation was removed,
+            otherwise returns null
+            </returns>
+        </member>
         <member name="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.RemoveContentItem(iText.Kernel.Pdf.PdfPage,System.Int32)">
             <summary>Removes content item from the tag structure.</summary>
             <remarks>
@@ -30263,6 +30943,29 @@
             at which given
             <see cref="T:iText.Kernel.Pdf.Tagutils.TagTreePointer"/>
             points.
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.GetTagPointerById(System.Byte[])">
+            <summary>Retrieve a pointer to a structure element by ID.</summary>
+            <param name="id">the ID of the element to retrieve</param>
+            <returns>
+            a
+            <see cref="T:iText.Kernel.Pdf.Tagutils.TagTreePointer"/>
+            to the element in question, or null if there is none.
+            </returns>
+        </member>
+        <member name="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.GetTagPointerByIdString(System.String)">
+            <summary>Retrieve a pointer to a structure element by ID.</summary>
+            <remarks>
+            Retrieve a pointer to a structure element by ID. * The ID will be encoded as a
+            UTF-8 string and passed to
+            <see cref="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.GetTagPointerById(System.Byte[])"/>.
+            </remarks>
+            <param name="id">the ID of the element to retrieve</param>
+            <returns>
+            a
+            <see cref="T:iText.Kernel.Pdf.Tagutils.TagTreePointer"/>
+            to the element in question, or null if there is none.
             </returns>
         </member>
         <member name="M:iText.Kernel.Pdf.Tagutils.TagStructureContext.CreatePointerForStructElem(iText.Kernel.Pdf.Tagging.PdfStructElem)">
@@ -31160,7 +31863,7 @@
             instance
             </returns>
         </member>
-        <member name="M:iText.Kernel.Pdf.WriterProperties.SetPublicKeyEncryption(Org.BouncyCastle.X509.X509Certificate[],System.Int32[],System.Int32)">
+        <member name="M:iText.Kernel.Pdf.WriterProperties.SetPublicKeyEncryption(iText.Commons.Bouncycastle.Cert.IX509Certificate[],System.Int32[],System.Int32)">
             <summary>Sets the certificate encryption options for the document.</summary>
             <remarks>
             Sets the certificate encryption options for the document. An array of one or more public certificates
@@ -32065,6 +32768,13 @@
             <see cref="T:iText.Kernel.Utils.CompareTool"/>
             class description.
             <para />
+            Note, that this method uses
+            <see cref="T:iText.IO.Util.ImageMagickHelper"/>
+            and
+            <see cref="T:iText.IO.Util.GhostscriptHelper"/>
+            classes and therefore may
+            create temporary files and directories.
+            <para />
             During comparison for every page of the two documents an image file will be created in the folder specified by
             outPath parameter. Then those page images will be compared and if there are any differences for some pages,
             another image file will be created with marked differences on it.
@@ -32085,6 +32795,13 @@
             For more info about needed configuration for visual comparison process see
             <see cref="T:iText.Kernel.Utils.CompareTool"/>
             class description.
+            <para />
+            Note, that this method uses
+            <see cref="T:iText.IO.Util.ImageMagickHelper"/>
+            and
+            <see cref="T:iText.IO.Util.GhostscriptHelper"/>
+            classes and therefore may
+            create temporary files and directories.
             <para />
             During comparison for every page of two documents an image file will be created in the folder specified by
             outPath parameter. Then those page images will be compared and if there are any differences for some pages,
@@ -39732,15 +40449,6 @@
         </member>
         <member name="M:iText.Kernel.XMP.XMPVersionInfo.GetMessage">
             <returns>Returns a comprehensive version information string.</returns>
-        </member>
-        <member name="M:KernelExtensions.Digest(Org.BouncyCastle.Crypto.IDigest,System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            IMPORTANT: USE THIS METHOD CAREFULLY.
-            This method serves as replacement for the java method MessageDigest#digest(byte[] buf, int offset, int len).
-            However for now, we simply omit len parameter, because it doesn't affect anything for all current usages
-            (there are two of them at the moment of the method addition which are in StandardHandlerUsingAes256 class).
-            This may be not true for future possible usages, so be aware.
-            </summary>
         </member>
     </members>
 </doc>

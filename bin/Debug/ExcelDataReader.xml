@@ -6,7 +6,7 @@
     <members>
         <member name="T:ExcelDataReader.CellError">
             <summary>
-            Formula error
+            Formula error. 
             </summary>
         </member>
         <member name="F:ExcelDataReader.CellError.NULL">
@@ -56,22 +56,22 @@
         </member>
         <member name="P:ExcelDataReader.CellRange.FromColumn">
             <summary>
-            Gets the column the range starts in
+            Gets the column the range starts in.
             </summary>
         </member>
         <member name="P:ExcelDataReader.CellRange.FromRow">
             <summary>
-            Gets the row the range starts in
+            Gets the row the range starts in.
             </summary>
         </member>
         <member name="P:ExcelDataReader.CellRange.ToColumn">
             <summary>
-            Gets the column the range ends in
+            Gets the column the range ends in.
             </summary>
         </member>
         <member name="P:ExcelDataReader.CellRange.ToRow">
             <summary>
-            Gets the row the range ends in
+            Gets the row the range ends in.
             </summary>
         </member>
         <member name="M:ExcelDataReader.CellRange.ToString">
@@ -170,8 +170,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffBlankCell">
             <summary>
-            Represents blank cell
-            Base class for all cell types
+            Represents a blank cell and is a base class for all cell types.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBlankCell.RowIndex">
@@ -202,7 +201,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF">
             <summary>
-            Represents BIFF BOF record
+            Represents BIFF BOF record.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF.Version">
@@ -212,36 +211,36 @@
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF.Type">
             <summary>
-            Gets the type of the BIFF block
+            Gets the type of the BIFF block.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF.CreationId">
             <summary>
             Gets the creation Id.
             </summary>
-            <remarks>Not used before BIFF5</remarks>
+            <remarks>Not used before BIFF5.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF.CreationYear">
             <summary>
             Gets the creation year.
             </summary>
-            <remarks>Not used before BIFF5</remarks>
+            <remarks>Not used before BIFF5.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF.HistoryFlag">
             <summary>
             Gets the file history flag.
             </summary>
-            <remarks>Not used before BIFF8</remarks>
+            <remarks>Not used before BIFF8.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBOF.MinVersionToOpen">
             <summary>
             Gets the minimum Excel version to open this file.
             </summary>
-            <remarks>Not used before BIFF8</remarks>
+            <remarks>Not used before BIFF8.</remarks>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffBoundSheet">
             <summary>
-            Represents Sheet record in Workbook Globals
+            Represents Sheet record in Workbook Globals.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffBoundSheet.StartOffset">
@@ -266,17 +265,17 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffContinue">
             <summary>
-            Represents additional space for very large records
+            Represents additional space for very large records.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffDefaultRowHeight.RowHeight">
             <summary>
-            Gets the row height in twips
+            Gets the row height in twips.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffDimensions">
             <summary>
-            Represents Dimensions of worksheet
+            Represents Dimensions of worksheet.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffDimensions.FirstRow">
@@ -301,12 +300,12 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffEof">
             <summary>
-            Represents BIFF EOF resord
+            Represents BIFF EOF resord.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffFilePass">
             <summary>
-            Represents FILEPASS record containing XOR obfuscation details or a an EncryptionInfo structure
+            Represents FILEPASS record containing XOR obfuscation details or a an EncryptionInfo structure.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffFont">
@@ -316,7 +315,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffFormatString">
             <summary>
-            Represents a string value of format
+            Represents a string value of format.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffFormatString.GetValue(System.Text.Encoding)">
@@ -326,7 +325,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffFormulaCell">
             <summary>
-            Represents a cell containing formula
+            Represents a cell containing formula.
             </summary>
         </member>
         <member name="F:ExcelDataReader.Core.BinaryFormat.XlsBiffFormulaCell.FormulaValueType.String">
@@ -361,7 +360,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffFormulaString">
             <summary>
-            Represents a string value of formula
+            Represents a string value of formula.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffFormulaString.GetValue(System.Text.Encoding)">
@@ -381,7 +380,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffIntegerCell">
             <summary>
-            Represents a constant integer number in range 0..65535
+            Represents a constant integer number in range 0..65535.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffIntegerCell.Value">
@@ -391,18 +390,18 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffInterfaceHdr">
             <summary>
-            Represents InterfaceHdr record in Wokrbook Globals
+            Represents InterfaceHdr record in Wokrbook Globals.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffInterfaceHdr.CodePage">
             <summary>
-            Gets the CodePage for Interface Header
+            Gets the CodePage for Interface Header.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffLabelCell">
             <summary>
             [MS-XLS] 2.4.148 Label
-            Represents a string
+            Represents a string.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffLabelCell.GetValue(System.Text.Encoding)">
@@ -412,12 +411,12 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffLabelSSTCell">
             <summary>
-            Represents a string stored in SST
+            Represents a string stored in SST.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffLabelSSTCell.SSTIndex">
             <summary>
-            Gets the index of string in Shared String Table
+            Gets the index of string in Shared String Table.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffMergeCells">
@@ -428,126 +427,126 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffMSODrawing">
             <summary>
-            Represents MSO Drawing record
+            Represents MSO Drawing record.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffMulBlankCell">
             <summary>
-            Represents multiple Blank cell
+            Represents multiple Blank cell.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffMulBlankCell.LastColumnIndex">
             <summary>
-            Gets the zero-based index of last described column
+            Gets the zero-based index of last described column.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffMulBlankCell.GetXF(System.UInt16)">
             <summary>
-            Returns format forspecified column, column must be between ColumnIndex and LastColumnIndex
+            Returns format forspecified column, column must be between ColumnIndex and LastColumnIndex.
             </summary>
-            <param name="columnIdx">Index of column</param>
-            <returns>Format</returns>
+            <param name="columnIdx">Index of column.</param>
+            <returns>Format.</returns>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffMulRKCell">
             <summary>
-            Represents multiple RK number cells
+            Represents multiple RK number cells.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffMulRKCell.LastColumnIndex">
             <summary>
-            Gets the zero-based index of last described column
+            Gets the zero-based index of last described column.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffMulRKCell.GetXF(System.UInt16)">
             <summary>
-            Returns format for specified column
+            Returns format for specified column.
             </summary>
-            <param name="columnIdx">Index of column, must be between ColumnIndex and LastColumnIndex</param>
+            <param name="columnIdx">Index of column, must be between ColumnIndex and LastColumnIndex.</param>
             <returns>The format.</returns>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffMulRKCell.GetValue(System.UInt16)">
             <summary>
-            Gets the value for specified column
+            Gets the value for specified column.
             </summary>
-            <param name="columnIdx">Index of column, must be between ColumnIndex and LastColumnIndex</param>
+            <param name="columnIdx">Index of column, must be between ColumnIndex and LastColumnIndex.</param>
             <returns>The value.</returns>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffNumberCell">
             <summary>
-            Represents a floating-point number 
+            Represents a floating-point number. 
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffNumberCell.Value">
             <summary>
-            Gets the value of this cell
+            Gets the value of this cell.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffQuickTip">
             <summary>
-            For now QuickTip will do nothing, it seems to have a different
+            For now QuickTip will do nothing, it seems to have a different.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffRecord">
             <summary>
-            Represents basic BIFF record
-            Base class for all BIFF record types
+            Represents basic BIFF record.
+            Base class for all BIFF record types.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRecord.Id">
             <summary>
-            Gets the type Id of this entry
+            Gets the type Id of this entry.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRecord.RecordSize">
             <summary>
-            Gets the data size of this entry
+            Gets the data size of this entry.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRecord.Size">
             <summary>
-            Gets the whole size of structure
+            Gets the whole size of structure.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffRKCell">
             <summary>
-            Represents an RK number cell
+            Represents an RK number cell.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRKCell.Value">
             <summary>
-            Gets the value of this cell
+            Gets the value of this cell.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffRKCell.NumFromRK(System.UInt32)">
             <summary>
-            Decodes RK-encoded number
+            Decodes RK-encoded number.
             </summary>
-            <param name="rk">Encoded number</param>
+            <param name="rk">Encoded number.</param>
             <returns>The number.</returns>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffRow">
             <summary>
-            Represents row record in table
+            Represents row record in table.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.RowIndex">
             <summary>
-            Gets the zero-based index of row described
+            Gets the zero-based index of row described.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.FirstDefinedColumn">
             <summary>
-            Gets the index of first defined column
+            Gets the index of first defined column.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.LastDefinedColumn">
             <summary>
-            Gets the index of last defined column
+            Gets the index of last defined column.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.UseDefaultRowHeight">
             <summary>
-            Gets a value indicating whether to use the default row height instead of the RowHeight property
+            Gets a value indicating whether to use the default row height instead of the RowHeight property.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.RowHeight">
@@ -557,110 +556,110 @@
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.UseXFormat">
             <summary>
-            Gets a value indicating whether the XFormat property is used
+            Gets a value indicating whether the XFormat property is used.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffRow.XFormat">
             <summary>
-            Gets the default format for this row
+            Gets the default format for this row.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffSimpleValueRecord">
             <summary>
-            Represents record with the only two-bytes value
+            Represents record with the only two-bytes value.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffSimpleValueRecord.Value">
             <summary>
-            Gets the value
+            Gets the value.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffSST">
             <summary>
-            Represents a Shared String Table in BIFF8 format
+            Represents a Shared String Table in BIFF8 format.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffSST.Count">
             <summary>
-            Gets the number of strings in SST
+            Gets the number of strings in SST.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffSST.UniqueCount">
             <summary>
-            Gets the count of unique strings in SST
+            Gets the count of unique strings in SST.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffSST.ReadContinueStrings(ExcelDataReader.Core.BinaryFormat.XlsBiffContinue)">
             <summary>
-            Parses strings out of a Continue record
+            Parses strings out of a Continue record.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffSST.GetString(System.UInt32,System.Text.Encoding)">
             <summary>
-            Returns string at specified index
+            Returns string at specified index.
             </summary>
-            <param name="sstIndex">Index of string to get</param>
-            <param name="encoding">Workbook encoding</param>
-            <returns>string value if it was found, empty string otherwise</returns>
+            <param name="sstIndex">Index of string to get.</param>
+            <param name="encoding">Workbook encoding.</param>
+            <returns>string value if it was found, empty string otherwise.</returns>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffSST.ReadSstStrings">
             <summary>
-            Parses strings out of this SST record
+            Parses strings out of this SST record.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffStream">
             <summary>
-            Represents a BIFF stream
+            Represents a BIFF stream.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.Size">
             <summary>
-            Gets the size of BIFF stream in bytes
+            Gets the size of BIFF stream in bytes.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.Position">
             <summary>
-            Gets or sets the current position in BIFF stream
+            Gets or sets the current position in BIFF stream.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.CipherTransform">
             <summary>
-            Gets or sets the ICryptoTransform instance used to decrypt the current block
+            Gets or sets the ICryptoTransform instance used to decrypt the current block.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.CipherBlock">
             <summary>
-            Gets or sets the current block number being decrypted with CipherTransform
+            Gets or sets the current block number being decrypted with CipherTransform.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.Seek(System.Int32,System.IO.SeekOrigin)">
             <summary>
-            Sets stream pointer to the specified offset
+            Sets stream pointer to the specified offset.
             </summary>
-            <param name="offset">Offset value</param>
-            <param name="origin">Offset origin</param>
+            <param name="offset">Offset value.</param>
+            <param name="origin">Offset origin.</param>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.Read">
             <summary>
-            Reads record under cursor and advances cursor position to next record
+            Reads record under cursor and advances cursor position to next record.
             </summary>
             <returns>The record -or- null.</returns>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.GetRecord(System.IO.Stream)">
             <summary>
-            Returns record at specified offset
+            Returns record at specified offset.
             </summary>
-            <param name="stream">The stream</param>
+            <param name="stream">The stream.</param>
             <returns>The record -or- null.</returns>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.CreateBlockDecryptor(System.Int32)">
             <summary>
-            Create an ICryptoTransform instance to decrypt a 1024-byte block
+            Create an ICryptoTransform instance to decrypt a 1024-byte block.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsBiffStream.AlignBlockDecryptor(System.Int32)">
             <summary>
-            Decrypt some dummy bytes to align the decryptor with the position in the current 1024-byte block
+            Decrypt some dummy bytes to align the decryptor with the position in the current 1024-byte block.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffUncalced">
@@ -671,57 +670,57 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1">
             <summary>
-            Represents Workbook's global window description
+            Represents Workbook's global window description.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.Left">
             <summary>
-            Gets the X position of a window
+            Gets the X position of a window.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.Top">
             <summary>
-            Gets the Y position of a window
+            Gets the Y position of a window.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.Width">
             <summary>
-            Gets the width of the window
+            Gets the width of the window.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.Height">
             <summary>
-            Gets the height of the window
+            Gets the height of the window.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.Flags">
             <summary>
-            Gets the window flags
+            Gets the window flags.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.ActiveTab">
             <summary>
-            Gets the active workbook tab (zero-based)
+            Gets the active workbook tab (zero-based).
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.FirstVisibleTab">
             <summary>
-            Gets the first visible workbook tab (zero-based)
+            Gets the first visible workbook tab (zero-based).
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.SelectedTabCount">
             <summary>
-            Gets the number of selected workbook tabs
+            Gets the number of selected workbook tabs.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsBiffWindow1.TabRatio">
             <summary>
-            Gets the workbook tab width to horizontal scrollbar width
+            Gets the workbook tab width to horizontal scrollbar width.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsByteString">
             <summary>
-            Word-sized string, stored as single bytes with encoding from CodePage record. Used in BIFF2-5 
+            Word-sized string, stored as single bytes with encoding from CodePage record. Used in BIFF2-5. 
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsByteString.CharacterCount">
@@ -736,7 +735,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsInternalString">
             <summary>
-            Plain string without backing storage. Used internally
+            Plain string without backing storage. Used internally.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsShortByteString">
@@ -757,7 +756,7 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsSSTReader">
             <summary>
-            Helper class for parsing the BIFF8 Shared String Table (SST)
+            Helper class for parsing the BIFF8 Shared String Table (SST).
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsSSTReader.CurrentRecordOffset">
@@ -798,22 +797,22 @@
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsSSTStringHeader.FormatCount">
             <summary>
-            Gets the number of formats used for formatting (0 if string has no formatting)
+            Gets the number of formats used for formatting (0 if string has no formatting).
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsSSTStringHeader.ExtendedStringSize">
             <summary>
-            Gets the size of extended string in bytes, 0 if there is no one
+            Gets the size of extended string in bytes, 0 if there is no one.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsSSTStringHeader.HeadSize">
             <summary>
-            Gets the head (before string data) size in bytes
+            Gets the head (before string data) size in bytes.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsSSTStringHeader.TailSize">
             <summary>
-            Gets the tail (after string data) size in bytes
+            Gets the tail (after string data) size in bytes.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsUnicodeString">
@@ -829,27 +828,27 @@
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsWorkbook">
             <summary>
-            Represents Globals section of workbook
+            Represents Globals section of workbook.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsWorkbook.SST">
             <summary>
-            Gets or sets the Shared String Table of workbook
+            Gets or sets the Shared String Table of workbook.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.BinaryFormat.XlsWorksheet">
             <summary>
-            Represents Worksheet section in workbook
+            Represents Worksheet section in workbook.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsWorksheet.Name">
             <summary>
-            Gets the worksheet name
+            Gets the worksheet name.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsWorksheet.VisibleState">
             <summary>
-            Gets the visibility of worksheet
+            Gets the visibility of worksheet.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.BinaryFormat.XlsWorksheet.DataOffset">
@@ -861,12 +860,12 @@
             <summary>
             Find how many rows to read at a time and their offset in the file.
             If rows are stored sequentially in the file, returns a block size of up to 32 rows.
-            If rows are stored non-sequentially, the block size may extend up to the entire worksheet stream
+            If rows are stored non-sequentially, the block size may extend up to the entire worksheet stream.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsWorksheet.ReadSingleCell(ExcelDataReader.Core.BinaryFormat.XlsBiffStream,ExcelDataReader.Core.BinaryFormat.XlsBiffBlankCell,System.Int32)">
             <summary>
-            Reads additional records if needed: a string record might follow a formula result
+            Reads additional records if needed: a string record might follow a formula result.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.BinaryFormat.XlsWorksheet.GetXfIndexForCell(ExcelDataReader.Core.BinaryFormat.XlsBiffBlankCell,ExcelDataReader.Core.BinaryFormat.XlsBiffRecord)">
@@ -898,12 +897,12 @@
         </member>
         <member name="P:ExcelDataReader.Core.CommonWorkbook.ExtendedFormats">
             <summary>
-            Gets the Cell XFs
+            Gets the Cell XFs.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CommonWorkbook.CellStyleExtendedFormats">
             <summary>
-            Gets the Cell Style XFs
+            Gets the Cell Style XFs.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.CommonWorkbook.AddNumberFormat(System.Int32,System.String)">
@@ -913,77 +912,77 @@
         </member>
         <member name="T:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry">
             <summary>
-            Represents single Root Directory record
+            Represents single Root Directory record.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.EntryName">
             <summary>
-            Gets or sets the name of directory entry
+            Gets or sets the name of directory entry.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.EntryType">
             <summary>
-            Gets or sets the entry type
+            Gets or sets the entry type.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.EntryColor">
             <summary>
-            Gets or sets the entry "color" in directory tree
+            Gets or sets the entry "color" in directory tree.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.LeftSiblingSid">
             <summary>
-            Gets or sets the SID of left sibling
+            Gets or sets the SID of left sibling.
             </summary>
-            <remarks>0xFFFFFFFF if there's no one</remarks>
+            <remarks>0xFFFFFFFF if there's no one.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.RightSiblingSid">
             <summary>
-            Gets or sets the SID of right sibling
+            Gets or sets the SID of right sibling.
             </summary>
-            <remarks>0xFFFFFFFF if there's no one</remarks>
+            <remarks>0xFFFFFFFF if there's no one.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.ChildSid">
             <summary>
-            Gets or sets the SID of first child (if EntryType is STGTY_STORAGE)
+            Gets or sets the SID of first child (if EntryType is STGTY_STORAGE).
             </summary>
-            <remarks>0xFFFFFFFF if there's no one</remarks>
+            <remarks>0xFFFFFFFF if there's no one.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.ClassId">
             <summary>
-            Gets or sets the CLSID of container (if EntryType is STGTY_STORAGE)
+            Gets or sets the CLSID of container (if EntryType is STGTY_STORAGE).
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.UserFlags">
             <summary>
-            Gets or sets the user flags of container (if EntryType is STGTY_STORAGE)
+            Gets or sets the user flags of container (if EntryType is STGTY_STORAGE).
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.CreationTime">
             <summary>
-            Gets or sets the creation time of entry
+            Gets or sets the creation time of entry.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.LastWriteTime">
             <summary>
-            Gets or sets the last modification time of entry
+            Gets or sets the last modification time of entry.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.StreamFirstSector">
             <summary>
-            Gets or sets the first sector of data stream (if EntryType is STGTY_STREAM)
+            Gets or sets the first sector of data stream (if EntryType is STGTY_STREAM).
             </summary>
-            <remarks>if EntryType is STGTY_ROOT, this can be first sector of MiniStream</remarks>
+            <remarks>if EntryType is STGTY_ROOT, this can be first sector of MiniStream.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.StreamSize">
             <summary>
-            Gets or sets the size of data stream (if EntryType is STGTY_STREAM)
+            Gets or sets the size of data stream (if EntryType is STGTY_STREAM).
             </summary>
-            <remarks>if EntryType is STGTY_ROOT, this can be size of MiniStream</remarks>
+            <remarks>if EntryType is STGTY_ROOT, this can be size of MiniStream.</remarks>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.IsEntryMiniStream">
             <summary>
-            Gets or sets a value indicating whether this entry relats to a ministream
+            Gets or sets a value indicating whether this entry relats to a ministream.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundDirectoryEntry.PropType">
@@ -1003,12 +1002,12 @@
         </member>
         <member name="T:ExcelDataReader.Core.CompoundFormat.CompoundHeader">
             <summary>
-            Represents Excel file header
+            Represents Excel file header.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.Signature">
             <summary>
-            Gets or sets the file signature
+            Gets or sets the file signature.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.IsSignatureValid">
@@ -1018,93 +1017,93 @@
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.ClassId">
             <summary>
-            Gets or sets the class id. Typically filled with zeroes
+            Gets or sets the class id. Typically filled with zeroes.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.Version">
             <summary>
-            Gets or sets the version. Must be 0x003E
+            Gets or sets the version. Must be 0x003E.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.DllVersion">
             <summary>
-            Gets or sets the dll version. Must be 0x0003
+            Gets or sets the dll version. Must be 0x0003.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.ByteOrder">
             <summary>
-            Gets or sets the byte order. Must be 0xFFFE
+            Gets or sets the byte order. Must be 0xFFFE.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.SectorSizeInPot">
             <summary>
-            Gets or sets the sector size in Pot
+            Gets or sets the sector size in Pot.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.SectorSize">
             <summary>
-            Gets the sector size. Typically 512
+            Gets the sector size. Typically 512.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.MiniSectorSizeInPot">
             <summary>
-            Gets or sets the mini sector size in Pot
+            Gets or sets the mini sector size in Pot.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.MiniSectorSize">
             <summary>
-            Gets the mini sector size. Typically 64
+            Gets the mini sector size. Typically 64.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.DirectorySectorCount">
             <summary>
             Gets or sets the number of directory sectors. If Major Version is 3, the Number of 
-            Directory Sectors MUST be zero. This field is not supported for version 3 compound files
+            Directory Sectors MUST be zero. This field is not supported for version 3 compound files.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.FatSectorCount">
             <summary>
-            Gets or sets the number of FAT sectors
+            Gets or sets the number of FAT sectors.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.RootDirectoryEntryStart">
             <summary>
-            Gets or sets the number of first Root Directory Entry (Property Set Storage, FAT Directory) sector
+            Gets or sets the number of first Root Directory Entry (Property Set Storage, FAT Directory) sector.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.TransactionSignature">
             <summary>
-            Gets or sets the transaction signature, 0 for Excel
+            Gets or sets the transaction signature, 0 for Excel.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.MiniStreamCutoff">
             <summary>
-            Gets or sets the maximum size for small stream, typically 4096 bytes
+            Gets or sets the maximum size for small stream, typically 4096 bytes.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.MiniFatFirstSector">
             <summary>
-            Gets or sets the first sector of Mini FAT, FAT_EndOfChain if there's no one
+            Gets or sets the first sector of Mini FAT, FAT_EndOfChain if there's no one.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.MiniFatSectorCount">
             <summary>
-            Gets or sets the number of sectors in Mini FAT, 0 if there's no one
+            Gets or sets the number of sectors in Mini FAT, 0 if there's no one.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.DifFirstSector">
             <summary>
-            Gets or sets the first sector of DIF, FAT_EndOfChain if there's no one
+            Gets or sets the first sector of DIF, FAT_EndOfChain if there's no one.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.DifSectorCount">
             <summary>
-            Gets or sets the number of sectors in DIF, 0 if there's no one
+            Gets or sets the number of sectors in DIF, 0 if there's no one.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.CompoundFormat.CompoundHeader.First109DifSectorChain">
             <summary>
-            Gets or sets the first 109 locations in the DIF sector chain
+            Gets or sets the first 109 locations in the DIF sector chain.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.CsvFormat.CsvAnalyzer.Analyze(System.IO.Stream,System.Char[],System.Text.Encoding,System.Int32,System.Int32@,System.Char@,System.Text.Encoding@,System.Int32@,System.Int32@)">
@@ -1121,13 +1120,13 @@
         </member>
         <member name="P:ExcelDataReader.Core.ExtendedFormat.ParentCellStyleXf">
             <summary>
-            Gets or sets the index to the parent Cell Style CF record with overrides for this XF. Only used with Cell XFs.
-            0xFFF means no override
+            Gets the to the parent Cell Style CF record with overrides for this XF. Only used with Cell XFs.
+            0xFFF means no override.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.Helpers">
             <summary>
-            Helpers class
+            Helpers class.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.Helpers.IsSingleByteEncoding(System.Text.Encoding)">
@@ -1147,13 +1146,13 @@
         </member>
         <member name="T:ExcelDataReader.Core.IWorkbook`1">
             <summary>
-            The common workbook interface between the binary and OpenXml formats
+            The common workbook interface between the binary and OpenXml formats.
             </summary>
-            <typeparam name="TWorksheet">A type implementing IWorksheet</typeparam>
+            <typeparam name="TWorksheet">A type implementing IWorksheet.</typeparam>
         </member>
         <member name="T:ExcelDataReader.Core.IWorksheet">
             <summary>
-            The common worksheet interface between the binary and OpenXml formats
+            The common worksheet interface between the binary and OpenXml formats.
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.NumberFormat.NumberFormatString">
@@ -1179,12 +1178,12 @@
         </member>
         <member name="P:ExcelDataReader.Core.NumberFormat.NumberFormatString.IsDateTimeFormat">
             <summary>
-            Gets a value indicating whether the format represents a DateTime
+            Gets a value indicating whether the format represents a DateTime.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.NumberFormat.NumberFormatString.IsTimeSpanFormat">
             <summary>
-            Gets a value indicating whether the format represents a TimeSpan
+            Gets a value indicating whether the format represents a TimeSpan.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.NumberFormat.Parser.ParseNumberTokens(System.Collections.Generic.List{System.String},System.Int32,System.Collections.Generic.List{System.String}@,System.Boolean@,System.Collections.Generic.List{System.String}@)">
@@ -1200,12 +1199,12 @@
         </member>
         <member name="T:ExcelDataReader.Core.OfficeCrypto.AgileEncryption">
             <summary>
-            Represents "Agile Encryption" used in XLSX (Office 2010 and newer)
+            Represents "Agile Encryption" used in XLSX (Office 2010 and newer).
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.OfficeCrypto.EncryptionInfo">
             <summary>
-            Base class for the various encryption schemes used by Excel
+            Base class for the various encryption schemes used by Excel.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.OfficeCrypto.EncryptionInfo.IsXor">
@@ -1234,12 +1233,12 @@
         </member>
         <member name="M:ExcelDataReader.Core.OfficeCrypto.StandardEncryption.GenerateCryptoApiSecretKey(System.String,System.Byte[],ExcelDataReader.Core.OfficeCrypto.HashIdentifier,System.Int32)">
             <summary>
-            2.3.5.2 RC4 CryptoAPI Encryption Key Generation
+            2.3.5.2 RC4 CryptoAPI Encryption Key Generation.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.OfficeCrypto.StandardEncryption.GenerateEcma376SecretKey(System.String,System.Byte[],ExcelDataReader.Core.OfficeCrypto.HashIdentifier,System.Int32,System.Int32)">
             <summary>
-            2.3.4.7 ECMA-376 Document Encryption Key Generation (Standard Encryption)
+            2.3.4.7 ECMA-376 Document Encryption Key Generation (Standard Encryption).
             </summary>
         </member>
         <member name="T:ExcelDataReader.Core.OfficeCrypto.XorEncryption">
@@ -1255,7 +1254,7 @@
         </member>
         <member name="M:ExcelDataReader.Core.OfficeCrypto.XorManaged.CreateXorArray_Method1(System.Byte[])">
             <summary>
-            Generates a 16 byte obfuscation array based on the POI/LibreOffice implementations
+            Generates a 16 byte obfuscation array based on the POI/LibreOffice implementations.
             </summary>
         </member>
         <member name="P:ExcelDataReader.Core.OfficeCrypto.XorManaged.XorTransform.XorArrayIndex">
@@ -1271,7 +1270,22 @@
         </member>
         <member name="T:ExcelDataReader.Core.OpenXmlFormat.XlsxSST">
             <summary>
-            Shared string table
+            Shared string table.
+            </summary>
+        </member>
+        <member name="T:ExcelDataReader.Core.OpenXmlFormat.XmlFormat.XmlProperNamespaces">
+            <summary>
+            Keeps the proper XML namespaces according to the format of the EXCEL file.
+            </summary>
+        </member>
+        <member name="P:ExcelDataReader.Core.OpenXmlFormat.XmlFormat.XmlProperNamespaces.NsSpreadsheetMl">
+            <summary>
+            Gets the SpreadsheetMl namespace. 
+            </summary>
+        </member>
+        <member name="P:ExcelDataReader.Core.OpenXmlFormat.XmlFormat.XmlProperNamespaces.NsDocumentRelationship">
+            <summary>
+            Gets the DocumentRelationship namespace.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Core.OpenXmlFormat.XmlFormat.XmlRecordReader.Dispose(System.Boolean)">
@@ -1298,15 +1312,9 @@
             Gets the workbook reader.
             </summary>
         </member>
-        <member name="M:ExcelDataReader.Core.OpenXmlFormat.ZipWorker.GetWorkbookRelsStream">
-            <summary>
-            Gets the workbook rels stream.
-            </summary>
-            <returns>The rels stream.</returns>
-        </member>
         <member name="M:ExcelDataReader.Core.ReferenceHelper.ParseReference(System.String,System.Int32@,System.Int32@)">
             <summary>
-            Logic for the Excel dimensions. Ex: A15
+            Logic for the Excel dimensions. Ex: A15.
             </summary>
             <param name="value">The value.</param>
             <param name="column">The column, 1-based.</param>
@@ -1327,17 +1335,12 @@
             Gets the cells in this row.
             </summary>
         </member>
-        <member name="T:ExcelDataReader.ExcelBinaryReader">
-            <summary>
-            ExcelDataReader Class
-            </summary>
-        </member>
         <member name="T:ExcelDataReader.ExcelDataReader`2">
             <summary>
             A generic implementation of the IExcelDataReader interface using IWorkbook/IWorksheet to enumerate data.
             </summary>
-            <typeparam name="TWorkbook">A type implementing IWorkbook</typeparam>
-            <typeparam name="TWorksheet">A type implementing IWorksheet</typeparam>
+            <typeparam name="TWorkbook">A type implementing IWorkbook.</typeparam>
+            <typeparam name="TWorksheet">A type implementing IWorksheet.</typeparam>
         </member>
         <member name="M:ExcelDataReader.ExcelDataReader`2.GetSchemaTable">
             <inheritdoc />
@@ -1353,7 +1356,7 @@
         <member name="P:ExcelDataReader.ExcelReaderConfiguration.FallbackEncoding">
             <summary>
             Gets or sets a value indicating the encoding to use when the input XLS lacks a CodePage record, 
-            or when the input CSV lacks a BOM and does not parse as UTF8. Default: cp1252. (XLS BIFF2-5 and CSV only)
+            or when the input CSV lacks a BOM and does not parse as UTF8. Default: cp1252. (XLS BIFF2-5 and CSV only).
             </summary>
         </member>
         <member name="P:ExcelDataReader.ExcelReaderConfiguration.Password">
@@ -1363,29 +1366,29 @@
         </member>
         <member name="P:ExcelDataReader.ExcelReaderConfiguration.AutodetectSeparators">
             <summary>
-            Gets or sets an array of CSV separator candidates. The reader autodetects which best fits the input data. Default: , ; TAB | # (CSV only)
+            Gets or sets an array of CSV separator candidates. The reader autodetects which best fits the input data. Default: , ; TAB | # (CSV only).
             </summary>
         </member>
         <member name="P:ExcelDataReader.ExcelReaderConfiguration.LeaveOpen">
             <summary>
-            Gets or sets a value indicating whether to leave the stream open after the IExcelDataReader object is disposed. Default: false
+            Gets or sets a value indicating whether to leave the stream open after the IExcelDataReader object is disposed. Default: false.
             </summary>
         </member>
         <member name="P:ExcelDataReader.ExcelReaderConfiguration.AnalyzeInitialCsvRows">
             <summary>
             Gets or sets a value indicating the number of rows to analyze for encoding, separator and field count in a CSV.
             When set, this option causes the IExcelDataReader.RowCount property to throw an exception.
-            Default: 0 - analyzes the entire file (CSV only, has no effect on other formats)
+            Default: 0 - analyzes the entire file (CSV only, has no effect on other formats).
             </summary>
         </member>
         <member name="T:ExcelDataReader.ExcelReaderFactory">
             <summary>
-            The ExcelReader Factory
+            The ExcelReader Factory.
             </summary>
         </member>
         <member name="M:ExcelDataReader.ExcelReaderFactory.CreateReader(System.IO.Stream,ExcelDataReader.ExcelReaderConfiguration)">
             <summary>
-            Creates an instance of <see cref="T:ExcelDataReader.ExcelBinaryReader"/> or <see cref="T:ExcelDataReader.ExcelOpenXmlReader"/>
+            Creates an instance of <see cref="T:ExcelDataReader.ExcelBinaryReader"/> or <see cref="T:ExcelDataReader.ExcelOpenXmlReader"/>.
             </summary>
             <param name="fileStream">The file stream.</param>
             <param name="configuration">The configuration object.</param>
@@ -1393,7 +1396,7 @@
         </member>
         <member name="M:ExcelDataReader.ExcelReaderFactory.CreateBinaryReader(System.IO.Stream,ExcelDataReader.ExcelReaderConfiguration)">
             <summary>
-            Creates an instance of <see cref="T:ExcelDataReader.ExcelBinaryReader"/>
+            Creates an instance of <see cref="T:ExcelDataReader.ExcelBinaryReader"/>.
             </summary>
             <param name="fileStream">The file stream.</param>
             <param name="configuration">The configuration object.</param>
@@ -1401,7 +1404,7 @@
         </member>
         <member name="M:ExcelDataReader.ExcelReaderFactory.CreateOpenXmlReader(System.IO.Stream,ExcelDataReader.ExcelReaderConfiguration)">
             <summary>
-            Creates an instance of <see cref="T:ExcelDataReader.ExcelOpenXmlReader"/>
+            Creates an instance of <see cref="T:ExcelDataReader.ExcelOpenXmlReader"/>.
             </summary>
             <param name="fileStream">The file stream.</param>
             <param name="configuration">The reader configuration -or- <see langword="null"/> to use the default configuration.</param>
@@ -1409,7 +1412,7 @@
         </member>
         <member name="M:ExcelDataReader.ExcelReaderFactory.CreateCsvReader(System.IO.Stream,ExcelDataReader.ExcelReaderConfiguration)">
             <summary>
-            Creates an instance of ExcelCsvReader
+            Creates an instance of ExcelCsvReader.
             </summary>
             <param name="fileStream">The file stream.</param>
             <param name="configuration">The reader configuration -or- <see langword="null"/> to use the default configuration.</param>
@@ -1424,18 +1427,18 @@
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.CompoundDocumentException"/> class.
             </summary>
-            <param name="message">The error message</param>
+            <param name="message">The error message.</param>
         </member>
         <member name="M:ExcelDataReader.Exceptions.CompoundDocumentException.#ctor(System.String,System.Exception)">
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.CompoundDocumentException"/> class.
             </summary>
-            <param name="message">The error message</param>
-            <param name="inner">The inner exception</param>
+            <param name="message">The error message.</param>
+            <param name="inner">The inner exception.</param>
         </member>
         <member name="T:ExcelDataReader.Exceptions.ExcelReaderException">
             <summary>
-            Base class for exceptions thrown by ExcelDataReader
+            Base class for exceptions thrown by ExcelDataReader.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Exceptions.ExcelReaderException.#ctor">
@@ -1447,25 +1450,25 @@
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.ExcelReaderException"/> class.
             </summary>
-            <param name="message">The error message</param>
+            <param name="message">The error message.</param>
         </member>
         <member name="M:ExcelDataReader.Exceptions.ExcelReaderException.#ctor(System.String,System.Exception)">
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.ExcelReaderException"/> class.
             </summary>
-            <param name="message">The error message</param>
-            <param name="inner">The inner exception</param>
+            <param name="message">The error message.</param>
+            <param name="inner">The inner exception.</param>
         </member>
         <member name="M:ExcelDataReader.Exceptions.ExcelReaderException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.ExcelReaderException"/> class.
             </summary>
-            <param name="info">The serialization info</param>
-            <param name="context">The streaming context</param>
+            <param name="info">The serialization info.</param>
+            <param name="context">The streaming context.</param>
         </member>
         <member name="T:ExcelDataReader.Exceptions.HeaderException">
             <summary>
-            Thrown when ExcelDataReader cannot parse the header
+            Thrown when ExcelDataReader cannot parse the header.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Exceptions.HeaderException.#ctor">
@@ -1477,32 +1480,32 @@
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.HeaderException"/> class.
             </summary>
-            <param name="message">The error message</param>
+            <param name="message">The error message.</param>
         </member>
         <member name="M:ExcelDataReader.Exceptions.HeaderException.#ctor(System.String,System.Exception)">
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.HeaderException"/> class.
             </summary>
-            <param name="message">The error message</param>
-            <param name="inner">The inner exception</param>
+            <param name="message">The error message.</param>
+            <param name="inner">The inner exception.</param>
         </member>
         <member name="M:ExcelDataReader.Exceptions.HeaderException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.HeaderException"/> class.
             </summary>
-            <param name="info">The serialization info</param>
-            <param name="context">The streaming context</param>
+            <param name="info">The serialization info.</param>
+            <param name="context">The streaming context.</param>
         </member>
         <member name="T:ExcelDataReader.Exceptions.InvalidPasswordException">
             <summary>
-            Thrown when ExcelDataReader cannot open a password protected document because the password
+            Thrown when ExcelDataReader cannot open a password protected document because the password.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Exceptions.InvalidPasswordException.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:ExcelDataReader.Exceptions.InvalidPasswordException"/> class.
             </summary>
-            <param name="message">The error message</param>
+            <param name="message">The error message.</param>
         </member>
         <member name="T:ExcelDataReader.HeaderFooter">
             <summary>
@@ -1551,7 +1554,7 @@
         </member>
         <member name="T:ExcelDataReader.IExcelDataReader">
             <summary>
-            The ExcelDataReader interface
+            The ExcelDataReader interface.
             </summary>
         </member>
         <member name="P:ExcelDataReader.IExcelDataReader.Name">
@@ -1636,7 +1639,7 @@
         </member>
         <member name="T:ExcelDataReader.Log.ILog">
             <summary>
-            Custom interface for logging messages
+            Custom interface for logging messages.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Log.ILog.Debug(System.String,System.Object[])">
@@ -1688,14 +1691,14 @@
         </member>
         <member name="T:ExcelDataReader.Log.Log">
             <summary>
-            logger type initialization
+            Logger type initialization.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Log.Log.InitializeWith``1">
             <summary>
-            Sets up logging to be with a certain type
+            Sets up logging to be with a certain type.
             </summary>
-            <typeparam name="T">The type of ILog for the application to use</typeparam>
+            <typeparam name="T">The type of ILog for the application to use.</typeparam>
         </member>
         <member name="M:ExcelDataReader.Log.Log.GetLoggerFor(System.Type)">
             <summary>
@@ -1730,7 +1733,7 @@
         </member>
         <member name="T:ExcelDataReader.Log.LogManager">
             <summary>
-            2.0 version of LogExtensions, not as awesome as Extension methods
+            2.0 version of LogExtensions, not as awesome as Extension methods.
             </summary>
         </member>
         <member name="M:ExcelDataReader.Log.LogManager.Log``1(``0)">

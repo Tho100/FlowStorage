@@ -1893,6 +1893,11 @@
             Indicates the legend  display at the top right of the chart.
             </summary>
         </member>
+        <member name="T:Spire.Presentation.Charts.MaxColor">
+            <summary>
+            for Map chart max color.
+            </summary>
+        </member>
         <member name="T:Spire.Presentation.Charts.PictureType">
             <summary>
             Indicates mode of bar picture filling.
@@ -2213,6 +2218,17 @@
             Tick mark type is Outside
             </summary>
         </member>
+        <member name="T:Spire.Presentation.Charts.ValueColors">
+            <summary>
+            for Map chart value colors.
+            </summary>
+        </member>
+        <member name="M:Spire.Presentation.Charts.ValueColors.SaveEx(Spire.Presentation.Converter.OpenXML.PptxBaseXmlElement)">
+            <summary>
+            for save.
+            </summary>
+            <param name="target"></param>
+        </member>
         <member name="P:Spire.Presentation.Charts.IChartAxis.IsCrossCategories">
             <summary>
              Indicates that the value axis crosses the category axis between categorie
@@ -2466,6 +2482,11 @@
             The value of this property must be between 0 and 500.
             </summary>
         </member>
+        <member name="P:Spire.Presentation.Charts.IChartAxis.LabelsDistance">
+            <summary>
+            Labels distance from axis.
+            </summary>
+        </member>
         <member name="T:Spire.Presentation.Charts.ChartAxis">
             <summary>
             Encapsulates the object that represents a chart's axis.
@@ -2693,6 +2714,11 @@
         <member name="P:Spire.Presentation.Charts.ChartAxis.HistogramAxisFormatProperty">
             <summary>
             returns an Object that holds the information required for Histogram series
+            </summary>
+        </member>
+        <member name="P:Spire.Presentation.Charts.ChartAxis.LabelsDistance">
+            <summary>
+             Labels distance from axis.
             </summary>
         </member>
         <member name="T:Spire.Presentation.Charts.CellRange">
@@ -2944,6 +2970,11 @@
             It represents the label position in tree map chart
             </summary>
         </member>
+        <member name="F:Spire.Presentation.Charts.ChartSeriesDataFormat.m_valueColors">
+            <summary>
+            Map chart valueColor .
+            </summary>
+        </member>
         <member name="P:Spire.Presentation.Charts.ChartSeriesDataFormat.MarkerFill">
             <summary>
             Gets or sets the marker fill
@@ -3139,6 +3170,16 @@
             Gets / Sets the Display label position in Tree map chart
             </summary>
             <remarks>By Default the Label is overlapped</remarks>
+        </member>
+        <member name="P:Spire.Presentation.Charts.ChartSeriesDataFormat.MinValueColor">
+            <summary>
+            Get or Set the map chart series minimum value color.
+            </summary>
+        </member>
+        <member name="P:Spire.Presentation.Charts.ChartSeriesDataFormat.MaxValueColor">
+            <summary>
+            Get or Set the map chart series max value color.
+            </summary>
         </member>
         <member name="T:Spire.Presentation.Charts.ChartDataLabel">
             <summary>
@@ -14775,6 +14816,16 @@
             <param name="ashape"></param>
             <returns></returns>
         </member>
+        <member name="F:Spire.Presentation.Diagrams.SmartArtLayoutType.PictureOrganizationChart">
+            <summary>
+            Picture Organization Chart.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.Diagrams.SmartArtLayoutType.NameAndTitleOrganizationChart">
+            <summary>
+            Name And Title Organization Chart.
+            </summary>
+        </member>
         <member name="P:Spire.Presentation.Diagrams.ISmartArtNode.Line">
             <summary>
             Gets the LineFormat object that contains line formatting properties for a SmartArtNode.
@@ -18090,6 +18141,17 @@
             office365 Morph
             </summary>
         </member>
+        <member name="T:Spire.Presentation.Drawing.Transition.CoverSlideTransition">
+            <summary>
+            Eight direction slide transition effect.
+            </summary>
+        </member>
+        <member name="M:Spire.Presentation.Drawing.Transition.CoverSlideTransition.#ctor(Spire.Presentation.Drawing.Transition.TransitionType)">
+            <summary>
+            Constructor for eight direction slide transition effects.
+            </summary>
+            <param name="type">Type of a transition effect.</param>
+        </member>
         <member name="P:Spire.Presentation.Drawing.Transition.CoverSlideTransition.Direction">
             <summary>
             Direction of transition.
@@ -18866,6 +18928,12 @@
             </summary>
             <param name="file">audio file</param>
         </member>
+        <member name="M:Spire.Presentation.Drawing.TimeLine.TimeNodeAudio.SetAudioData(System.IO.Stream)">
+            <summary>
+            Set Audio Data.
+            </summary>
+            <param name="stream"></param>
+        </member>
         <member name="M:Spire.Presentation.Drawing.TimeLine.TimeNodeAudio.GetAudioData">
             <summary>
             GetTimeNodeAudio : get audio bytes
@@ -18885,6 +18953,45 @@
         <member name="P:Spire.Presentation.Drawing.TimeLine.TimeNodeAudio.SoundName">
             <summary>
             SoundName
+            </summary>
+        </member>
+        <member name="T:Spire.Presentation.License.LicenseProvider">
+            <summary>
+            Class Spire.Presentation.License.LicenseProvider.
+            </summary>  
+        </member>
+        <member name="M:Spire.Presentation.License.LicenseProvider.SetLicense(System.String)">
+            <summary>
+            Provides a license by a license file path, which will be used for loading license.
+            </summary>
+            <param name="licenseFileFullPath">License file full path.</param>
+        </member>
+        <member name="M:Spire.Presentation.License.LicenseProvider.SetLicense(System.IO.Stream)">
+            <summary>
+            Provides a license by a license stream, which will be used for loading license.
+            </summary>
+            <param name="licenseFileStream">License data stream.</param>
+        </member>
+        <member name="M:Spire.Presentation.License.LicenseProvider.SetLicenseKey(System.String)">
+            <summary>
+            Provides a license by a license key, which will be used for loading license.
+            </summary>
+            <param name="key">The value of the Key attribute of the element License of you license xml file.</param>
+        </member>
+        <member name="M:Spire.Presentation.License.LicenseProvider.SetLicenseFileName(System.String)">
+            <summary>
+             Sets the license file name, which will be used for loading license.
+            </summary>
+            <param name="licenseFileName">License file name.</param>
+        </member>
+        <member name="M:Spire.Presentation.License.LicenseProvider.ClearLicense">
+            <summary>
+            Clear all cached license.
+            </summary>
+        </member>
+        <member name="M:Spire.Presentation.License.LicenseProvider.LoadLicense">
+            <summary>
+            Load the license provided by current setting to the license cache.
             </summary>
         </member>
         <member name="F:Spire.Presentation.Ole.DataStructure.DoubleSize">
@@ -18979,6 +19086,13 @@
             Gets or sets the left margin (points) in a TextFrame.
             Read/write <see cref="T:System.Double"/>.
             </summary>
+        </member>
+        <member name="P:Spire.Presentation.ITextFrameProperties.ColumnCount">
+            <summary>
+            Sets TextFrame to multiple columns
+            Get the number of columns in the TextFrame
+            </summary>
+            
         </member>
         <member name="P:Spire.Presentation.ITextFrameProperties.MarginRight">
             <summary>
@@ -24687,6 +24801,19 @@
              Represents the distance in points from the left edge of the comment to the left edge of the slide.
             </summary>
         </member>
+        <member name="M:Spire.Presentation.Comment.Reply(Spire.Presentation.ICommentAuthor,System.String,System.DateTime)">
+            <summary>
+            reply the comment. Do nothing if the comment is a reply
+            </summary>
+            <param name="author">reply author.</param>
+            <param name="reply">reply.</param>
+            <param name="time">time.</param>
+        </member>
+        <member name="P:Spire.Presentation.Comment.IsReply">
+            <summary>
+            if the comment is reply.
+            </summary>
+        </member>
         <member name="T:Spire.Presentation.OleObject">
             <summary>
             Represents an Ole object.
@@ -26047,6 +26174,12 @@
             Dispose object and free resources.
             </summary>
         </member>
+        <member name="M:Spire.Presentation.IAutoShape.SetRoundRadius(System.Single)">
+            <summary>
+            set the arc radius.
+            </summary>
+            <param name="radius">the arc radius.</param>
+        </member>
         <member name="T:Spire.Presentation.AutoShape">
             <summary>
              Represents an AutoShape.
@@ -26470,6 +26603,11 @@
             <summary>
             Gets or sets the width of a column.
             Read/Write <see cref="T:System.Double"/>.
+            </summary>
+        </member>
+        <member name="M:Spire.Presentation.TableColumn.AdjustColumnByTextWidth">
+            <summary>
+            adjust column width by text width.
             </summary>
         </member>
         <member name="T:Spire.Presentation.Connector">
@@ -29001,6 +29139,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Spire.Presentation.SlideList.Append(Spire.Presentation.ILayout)">
+            <summary>
+            Append a new slide based on template.
+            </summary>
+            <param name="template">layout template.</param>
+            <returns></returns>
+        </member>
         <member name="M:Spire.Presentation.SlideList.Append(Spire.Presentation.ISlide)">
             <summary>
             Adds a slide to the collection.
@@ -29016,6 +29161,14 @@
             Insert a empty slide to collection.
             </summary>
             <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Presentation.SlideList.Insert(System.Int32,Spire.Presentation.ILayout)">
+            <summary>
+            Insert a new slide based on template.
+            </summary>
+            <param name="index">the index in collection.</param>
+            <param name="template">layout template.</param>
             <returns></returns>
         </member>
         <member name="M:Spire.Presentation.SlideList.Insert(System.Int32,Spire.Presentation.SlideLayoutType)">
@@ -30051,6 +30204,11 @@
             Saves the document to the SVG Format. 
             </summary>
         </member>
+        <member name="M:Spire.Presentation.Presentation.OnlineSaveToFile(System.String,Spire.Presentation.FileFormat)">
+            <summary>
+            used for online. 
+            </summary>
+        </member>
         <member name="M:Spire.Presentation.Presentation.SaveToFile(System.String,Spire.Presentation.FileFormat)">
             <summary>
             Saves the document to the specified file. 
@@ -30357,6 +30515,141 @@
         <member name="T:Spire.Presentation.FileFormat">
             <summary>
             Specifies the type of file format.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Auto">
+            <summary>
+            Auto:Automatically choose the format based on the file name.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.PPT">
+            <summary>
+            PPT format.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Pptx2007">
+            <summary>
+            2007 version pptx.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Pptx2010">
+            <summary>
+            2010 version pptx.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Pptx2013">
+            <summary>
+            2013 version pptx.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Pptx2016">
+            <summary>
+            2016 version pptx.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Pptx2019">
+            <summary>
+            2019 version pptx.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Pptm">
+            <summary>
+            A presentation with macros enabled.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Ppsx2007">
+            <summary>
+            2007 version ppsx.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Ppsx2010">
+            <summary>
+            2010 version ppsx
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Ppsx2013">
+            <summary>
+            2013 version ppsx
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Ppsx2016">
+            <summary>
+            2016 version ppsx
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Ppsx2019">
+            <summary>
+            2019 version ppsx
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.PPS">
+            <summary>
+            97-2003 version pps
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.ODP">
+            <summary>
+            ODP file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.UOP">
+            <summary>
+            Uop file
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Html">
+            <summary>
+            Html file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Tiff">
+            <summary>
+            Tiff file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.XPS">
+            <summary>
+            XPS file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.PCL">
+            <summary>
+            PCL file
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.PS">
+            <summary>
+            PS file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.OFD">
+            <summary>
+            OFD file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.PDF">
+            <summary>
+            PDF file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Potx">
+            <summary>
+            Potx file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Dps">
+            <summary>
+            Represents WPS file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Dpt">
+            <summary>
+            Represents WPS file.
+            </summary>
+        </member>
+        <member name="F:Spire.Presentation.FileFormat.Bin">
+            <summary>
+            Bin for cloud.
             </summary>
         </member>
         <member name="T:Spire.Presentation.Order">

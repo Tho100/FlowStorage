@@ -34,29 +34,11 @@ namespace FlowSERVER1 {
         readonly private Crud crud = new Crud();
         readonly private ImageCompressor compressor = new ImageCompressor();
         
-        public static HomePage instance { get; set;} = new HomePage();
-        public string publicStorageUserComment {get; set; } = null;
+        public static HomePage instance { get; set; } = new HomePage();
+        public string publicStorageUserComment { get; set; } = null;
         public string publicStorageUserTag { get; set; } = null;
         public bool publicStorageClosed { get; set; } = false;
         public string CurrentLang { get; set; }
-
-        public List<string> fileTypeValuesSharedToOthers = new List<string>();
-        public List<string> fileTypeValuesSharedToMe = new List<string>();
-
-        private List<string> base64EncodedImageSharedOthers = new List<string>();
-        private List<string> base64EncodedThumbnailSharedOthers = new List<string>();
-
-        private List<string> base64EncodedThumbnailSharedToMe = new List<string>();
-        private List<string> base64EncodedImageSharedToMe = new List<string>();
-
-        private List<string> base64EncodedImageFolder = new List<string>();
-        private List<string> base64EncodedThumbnailFolder = new List<string>();
-
-        private List<string> base64EncodedImageHome = new List<string>();
-        private List<string> base64EncodedThumbnailHome = new List<string>();
-
-        private List<string> base64EncodedImagePs = new List<string>();
-        private List<string> base64EncodedThumbnailPs = new List<string>();
 
         private string previousSelectedItem = null;
 
@@ -129,9 +111,9 @@ namespace FlowSERVER1 {
                             var toBase64 = Convert.ToBase64String(stream.ToArray());
 
                             if (lblCurrentPageText.Text == "Home") {
-                                base64EncodedThumbnailHome.Add(toBase64);
+                                GlobalsData.base64EncodedThumbnailHome.Add(toBase64);
                             } else if (lblCurrentPageText.Text == "Public Storage") {
-                                base64EncodedThumbnailPs.Add(toBase64);
+                                GlobalsData.base64EncodedThumbnailPs.Add(toBase64);
                             }
 
                             command.Parameters.AddWithValue("@thumbnail_value", toBase64);
@@ -193,7 +175,7 @@ namespace FlowSERVER1 {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
 
                             var toBase64 = Convert.ToBase64String(stream.ToArray());
-                            base64EncodedThumbnailPs.Add(toBase64);
+                            GlobalsData.base64EncodedThumbnailPs.Add(toBase64);
 
                             command.Parameters.AddWithValue("@thumbnail_value", toBase64);
                         }
@@ -346,7 +328,7 @@ namespace FlowSERVER1 {
 
                 if(_tableName == GlobalsTable.homeImageTable) {
 
-                    if (base64EncodedImageHome.Count == 0) {
+                    if (GlobalsData.base64EncodedImageHome.Count == 0) {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -354,7 +336,7 @@ namespace FlowSERVER1 {
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    base64EncodedImageHome.Add(base64String);
+                                    GlobalsData.base64EncodedImageHome.Add(base64String);
                                 }
                             }
                         }
@@ -363,7 +345,7 @@ namespace FlowSERVER1 {
 
                 if(_tableName == GlobalsTable.homeVideoTable) {
 
-                    if (base64EncodedThumbnailHome.Count == 0) {
+                    if (GlobalsData.base64EncodedThumbnailHome.Count == 0) {
 
                         const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username";
                         using (var command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -371,7 +353,7 @@ namespace FlowSERVER1 {
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
-                                    base64EncodedThumbnailHome.Add(readBase64.GetString(0));
+                                    GlobalsData.base64EncodedThumbnailHome.Add(readBase64.GetString(0));
                                 }
                             }
                         }
@@ -393,8 +375,8 @@ namespace FlowSERVER1 {
 
                     if (_tableName == GlobalsTable.homeImageTable) {
 
-                        if (base64EncodedImageHome.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageHome[i]);
+                        if (GlobalsData.base64EncodedImageHome.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageHome[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 Image setImageStream = Image.FromStream(toMs);
                                 imageValues.Add(setImageStream);
@@ -450,8 +432,8 @@ namespace FlowSERVER1 {
 
                     if (_tableName == GlobalsTable.homeVideoTable) {
 
-                        if(base64EncodedThumbnailHome.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailHome[i]);
+                        if(GlobalsData.base64EncodedThumbnailHome.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailHome[i]);
                             using (var toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }
@@ -630,12 +612,12 @@ namespace FlowSERVER1 {
 
                             previousSelectedItem = selectedItem;
 
-                            base64EncodedImageFolder.Clear();
-                            base64EncodedThumbnailFolder.Clear();
+                            GlobalsData.base64EncodedImageFolder.Clear();
+                            GlobalsData.base64EncodedThumbnailFolder.Clear();
                         }
                     }
 
-                    if (base64EncodedImageFolder.Count == 0) {
+                    if (GlobalsData.base64EncodedImageFolder.Count == 0) {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -644,7 +626,7 @@ namespace FlowSERVER1 {
                             using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    base64EncodedImageFolder.Add(base64String);
+                                    GlobalsData.base64EncodedImageFolder.Add(base64String);
                                 }
                             }
                         }
@@ -668,8 +650,8 @@ namespace FlowSERVER1 {
 
                     if (Globals.imageTypesFolder.Contains(typeValues[i])) {
 
-                        if (base64EncodedImageFolder.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageFolder[i]);
+                        if (GlobalsData.base64EncodedImageFolder.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageFolder[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 Image setImageStream = Image.FromStream(toMs);
                                 imageValues.Add(setImageStream);
@@ -727,7 +709,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.videoTypesFolder.Contains(typeValues[i])) {
 
-                        if(base64EncodedThumbnailFolder.Count == 0) {
+                        if(GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
 
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
                             using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
@@ -736,15 +718,15 @@ namespace FlowSERVER1 {
                                 command.Parameters.AddWithValue("@ext", typeValues[i]);
                                 using(MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while(await readBase64.ReadAsync()) {
-                                        base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
+                                        GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
                                     }
                                 }
                             }
                         }
 
-                        if(base64EncodedThumbnailFolder.Count > 0) {
+                        if(GlobalsData.base64EncodedThumbnailFolder.Count > 0) {
 
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailFolder[0]);
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailFolder[0]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }   
@@ -1233,7 +1215,7 @@ namespace FlowSERVER1 {
 
                                 if (nameTable == GlobalsTable.homeImageTable) {
 
-                                    base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
+                                    GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
                                     await insertFileData(keyVal, nameTable);
 
                                     textboxPic.Image = new Bitmap(selectedItems);
@@ -1518,8 +1500,8 @@ namespace FlowSERVER1 {
                 string selectFileDataQuery = null;
 
                 if(isFromMyPs == true) {
-                    base64EncodedImagePs.Clear();
-                    base64EncodedThumbnailPs.Clear();
+                    GlobalsData.base64EncodedImagePs.Clear();
+                    GlobalsData.base64EncodedThumbnailPs.Clear();
                 }
 
                 if(isFromMyPs == false) {
@@ -1586,7 +1568,7 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "ps_info_image") {
                     
-                    if (base64EncodedImagePs.Count == 0) {
+                    if (GlobalsData.base64EncodedImagePs.Count == 0) {
 
                         if(isFromMyPs == false) {
 
@@ -1595,7 +1577,7 @@ namespace FlowSERVER1 {
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                        base64EncodedImagePs.Add(base64String);
+                                        GlobalsData.base64EncodedImagePs.Add(base64String);
                                     }
                                 }
                             }
@@ -1608,7 +1590,7 @@ namespace FlowSERVER1 {
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                        base64EncodedImagePs.Add(base64String);
+                                        GlobalsData.base64EncodedImagePs.Add(base64String);
                                     }
                                 }
                             }
@@ -1620,7 +1602,7 @@ namespace FlowSERVER1 {
 
                 if (_tableName == "ps_info_video") {
 
-                    if (base64EncodedThumbnailPs.Count == 0) {
+                    if (GlobalsData.base64EncodedThumbnailPs.Count == 0) {
 
                         if(isFromMyPs == false) {
 
@@ -1628,7 +1610,7 @@ namespace FlowSERVER1 {
                             using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
-                                        base64EncodedThumbnailPs.Add(readBase64.GetString(0));
+                                        GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
                                     }
                                 }
                             }
@@ -1640,7 +1622,7 @@ namespace FlowSERVER1 {
                                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
-                                        base64EncodedThumbnailPs.Add(readBase64.GetString(0));
+                                        GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
                                     }
                                 }
                             }
@@ -1666,8 +1648,8 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "ps_info_image") {
 
-                        if (base64EncodedImagePs.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImagePs[i]);
+                        if (GlobalsData.base64EncodedImagePs.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImagePs[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 Image setImageStream = Image.FromStream(toMs);
                                 imageValues.Add(setImageStream);
@@ -1724,8 +1706,8 @@ namespace FlowSERVER1 {
 
                     if (_tableName == "ps_info_video") {
 
-                        if (base64EncodedThumbnailPs.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailPs[i]);
+                        if (GlobalsData.base64EncodedThumbnailPs.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailPs[i]);
                             using (var toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }
@@ -1991,7 +1973,7 @@ namespace FlowSERVER1 {
 
                             if (nameTable == "ps_info_image") {
 
-                                base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
+                                GlobalsData.base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
                                 await insertFileDataPublic(keyVal, nameTable);
 
                                 textboxPic.Image = new Bitmap(selectedItems);
@@ -2413,8 +2395,8 @@ namespace FlowSERVER1 {
             new Thread(() => new UploadingAlert(_getDirTitle, Globals.custUsername, GlobalsTable.folderUploadTable, "PanExlFold" + _IntCurr, _getDirTitle, _fileSize: fileSizeInMB)
             .ShowDialog()).Start();
 
-            base64EncodedImageFolder.Clear();
-            base64EncodedThumbnailFolder.Clear();
+            GlobalsData.base64EncodedImageFolder.Clear();
+            GlobalsData.base64EncodedThumbnailFolder.Clear();
 
             foreach (var _Files in Directory.EnumerateFiles(_getDirPath, "*")) {
 
@@ -2849,8 +2831,8 @@ namespace FlowSERVER1 {
 
         private async void buildMyPublicStorageFiles() {
 
-            base64EncodedImagePs.Clear();
-            base64EncodedThumbnailPs.Clear();
+            GlobalsData.base64EncodedImagePs.Clear();
+            GlobalsData.base64EncodedThumbnailPs.Clear();
 
             foreach (string tableName in GlobalsTable.publicTablesPs) {
                 if (GlobalsTable.tableToFileTypePs.ContainsKey(tableName)) {
@@ -2872,20 +2854,20 @@ namespace FlowSERVER1 {
 
         private async void buildSharedToMe() {
 
-            if (!fileTypeValuesSharedToMe.Any()) {
+            if (!GlobalsData.fileTypeValuesSharedToMe.Any()) {
                 const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            fileTypeValuesSharedToMe.Add(reader.GetString(0));
+                            GlobalsData.fileTypeValuesSharedToMe.Add(reader.GetString(0));
                         }
                     }
                 }
-                await buildFilePanelSharedToMe(fileTypeValuesSharedToMe, "DirParMe", fileTypeValuesSharedToMe.Count);
+                await buildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
             }
             else {
-                await buildFilePanelSharedToMe(fileTypeValuesSharedToMe, "DirParMe", fileTypeValuesSharedToMe.Count);
+                await buildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
             }
 
             buildRedundaneVisibility();
@@ -2894,20 +2876,19 @@ namespace FlowSERVER1 {
 
         private async void buildSharedToOthers() {
 
-            if (!fileTypeValuesSharedToOthers.Any()) {
+            if (!GlobalsData.fileTypeValuesSharedToOthers.Any()) {
                 const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
                 using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     using (var readTypeOthers = await command.ExecuteReaderAsync()) {
                         while (await readTypeOthers.ReadAsync()) {
-                            fileTypeValuesSharedToOthers.Add(readTypeOthers.GetString(0));
+                            GlobalsData.fileTypeValuesSharedToOthers.Add(readTypeOthers.GetString(0));
                         }
                     }
                 }
             }
-
            
-            await buildFilePanelSharedToOthers(fileTypeValuesSharedToOthers, "DirParOther", fileTypeValuesSharedToOthers.Count);
+            await buildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
             buildRedundaneVisibility();
         }
 
@@ -3089,7 +3070,7 @@ namespace FlowSERVER1 {
 
                 if(typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
-                    if(base64EncodedImageSharedOthers.Count == 0) {
+                    if(GlobalsData.base64EncodedImageSharedOthers.Count == 0) {
                         
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -3097,7 +3078,7 @@ namespace FlowSERVER1 {
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
-                                    base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                                    GlobalsData.base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
                                 }
                                 readBase64.Close();
                             }
@@ -3124,8 +3105,8 @@ namespace FlowSERVER1 {
 
                     if (Globals.imageTypes.Contains(typeValues[i])) {
 
-                        if (base64EncodedImageSharedOthers.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageSharedOthers[i]);
+                        if (GlobalsData.base64EncodedImageSharedOthers.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageSharedOthers[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }
@@ -3175,7 +3156,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                        if(base64EncodedThumbnailSharedOthers.Count == 0) {
+                        if(GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
 
                             const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
@@ -3184,15 +3165,15 @@ namespace FlowSERVER1 {
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
-                                        base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
+                                        GlobalsData.base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
                                     }
                                     readBase64.Close();
                                 }
                             }
                         }
 
-                        if (base64EncodedThumbnailSharedOthers.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailSharedOthers[0]);
+                        if (GlobalsData.base64EncodedThumbnailSharedOthers.Count > 0) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedOthers[0]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }
@@ -3350,14 +3331,14 @@ namespace FlowSERVER1 {
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
-                    if(base64EncodedImageSharedToMe.Count == 0) {
+                    if(GlobalsData.base64EncodedImageSharedToMe.Count == 0) {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
-                                    base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                                    GlobalsData.base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
                                 }
                                 readBase64.Close();
                             }
@@ -3381,8 +3362,8 @@ namespace FlowSERVER1 {
 
                     if (Globals.imageTypes.Contains(typeValues[i])) {
 
-                        if (base64EncodedImageSharedToMe.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedImageSharedToMe[i]);
+                        if (GlobalsData.base64EncodedImageSharedToMe.Count > i) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageSharedToMe[i]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }
@@ -3434,7 +3415,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                        if(base64EncodedThumbnailSharedToMe.Count == 0) {
+                        if(GlobalsData.base64EncodedThumbnailSharedToMe.Count == 0) {
 
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                             using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
@@ -3443,14 +3424,14 @@ namespace FlowSERVER1 {
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
-                                        base64EncodedThumbnailSharedToMe.Add(readBase64.GetString(0));
+                                        GlobalsData.base64EncodedThumbnailSharedToMe.Add(readBase64.GetString(0));
                                     }
                                 }
                             }
                         }
 
-                        if (base64EncodedThumbnailSharedToMe.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnailSharedToMe[0]);
+                        if (GlobalsData.base64EncodedThumbnailSharedToMe.Count > 0) {
+                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedToMe[0]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
                             }
@@ -3821,8 +3802,8 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName) {
 
-            base64EncodedImageSharedToMe.Clear();
-            base64EncodedThumbnailSharedToMe.Clear();
+            GlobalsData.base64EncodedImageSharedToMe.Clear();
+            GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
 
             if (typeValues.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
@@ -3854,8 +3835,8 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
 
-            base64EncodedImageSharedOthers.Clear();
-            base64EncodedThumbnailSharedOthers.Clear();
+            GlobalsData.base64EncodedImageSharedOthers.Clear();
+            GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
 
             if (typeValuesOthers.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
@@ -3888,24 +3869,24 @@ namespace FlowSERVER1 {
             flwLayoutHome.Controls.Clear();
 
             if (selectedIndex == 1 && lblCurrentPageText.Text == "Shared To Me") {
-                fileTypeValuesSharedToMe.Clear();
-                await RefreshGenerateUserShared(fileTypeValuesSharedToMe, "DirParMe");
+                GlobalsData.fileTypeValuesSharedToMe.Clear();
+                await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
             }
             else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared Files") {
-                fileTypeValuesSharedToOthers.Clear();
-                await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
+                GlobalsData.fileTypeValuesSharedToOthers.Clear();
+                await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
             } 
             else if (selectedIndex == 0 && lblCurrentPageText.Text == "Home") {
 
-                base64EncodedImageHome.Clear();
-                base64EncodedThumbnailHome.Clear();
+                GlobalsData.base64EncodedImageHome.Clear();
+                GlobalsData.base64EncodedThumbnailHome.Clear();
                 buildHomeFiles();
 
             }
             else if (lblCurrentPageText.Text == "Public Storage") {
 
-                base64EncodedImagePs.Clear();
-                base64EncodedThumbnailPs.Clear();
+                GlobalsData.base64EncodedImagePs.Clear();
+                GlobalsData.base64EncodedThumbnailPs.Clear();
                 buildPublicStorageFiles();
             }
 
@@ -3945,7 +3926,7 @@ namespace FlowSERVER1 {
 
         private async Task RefreshFolder() {
 
-            base64EncodedImageFolder.Clear();
+            GlobalsData.base64EncodedImageFolder.Clear();
 
             string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
@@ -4019,16 +4000,16 @@ namespace FlowSERVER1 {
                 if (_selectedFolderSearch == "Home") {
                     await refreshHomePanels();
                 } else if (_selectedFolderSearch == "Shared To Me") {
-                    fileTypeValuesSharedToMe.Clear();
-                    await RefreshGenerateUserShared(fileTypeValuesSharedToMe, "DirParMe");
+                    GlobalsData.fileTypeValuesSharedToMe.Clear();
+                    await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
                 } else if (_selectedFolderSearch == "Shared Files") {
-                    fileTypeValuesSharedToOthers.Clear();
-                    await RefreshGenerateUserSharedOthers(fileTypeValuesSharedToOthers, "DirParOther");
+                    GlobalsData.fileTypeValuesSharedToOthers.Clear();
+                    await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
                 } else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
                     await RefreshFolder();
                 } else if (lblCurrentPageText.Text == "Public Storage") {
-                    base64EncodedImagePs.Clear();
-                    base64EncodedThumbnailPs.Clear();
+                    GlobalsData.base64EncodedImagePs.Clear();
+                    GlobalsData.base64EncodedThumbnailPs.Clear();
                     buildPublicStorageFiles();
                 }
             }
@@ -4140,9 +4121,9 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    base64EncodedImageHome.Clear();
-                    base64EncodedThumbnailHome.Clear();
-                    base64EncodedImageSharedOthers.Clear();
+                    GlobalsData.base64EncodedImageHome.Clear();
+                    GlobalsData.base64EncodedThumbnailHome.Clear();
+                    GlobalsData.base64EncodedImageSharedOthers.Clear();
 
                     HomePage.instance.lstFoldersPage.Items.Clear();
 
@@ -4323,7 +4304,7 @@ namespace FlowSERVER1 {
 
                         if (nameTable == GlobalsTable.homeImageTable) {
 
-                            base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
+                            GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
                             await insertFileData(keyVal,GlobalsTable.homeImageTable);
 
                             textboxPic.Image = new Bitmap(selectedItems);
@@ -4950,6 +4931,10 @@ namespace FlowSERVER1 {
         private void btnMyPsFiles_Click(object sender, EventArgs e) {
             flwLayoutHome.Controls.Clear();
             buildMyPublicStorageFiles();
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e) {
+
         }
     }
 }

@@ -3317,6 +3317,9 @@
             Image mimes cache for embedding image.
             </summary>
         </member>
+        <member name="M:Spire.Xls.Core.Converter.Spreadsheet.ExcelToHtmlConverter.BuildBody(Spire.Xls.Core.Converter.Spreadsheet.WorkbookConverter,Spire.Xls.Core.Spreadsheet.HTMLOptions)">
+            Build body in html.
+        </member>
         <member name="M:Spire.Xls.Core.Converter.Spreadsheet.FormulaOP.BuiltIn.NormalDistribution.Normsinv(System.Double)">
             	      * Returns the inverse of the standard normal cumulative distribution. 
             		  * The distribution has a mean of zero and a standard deviation of one.
@@ -12746,6 +12749,12 @@
             True if the chart type is histogram or pareto. Otherwise false
             </summary>
         </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.Charts.XlsChart.MoveChartsheet(System.Int32)">
+            <summary>
+            Moves chartsheet into new position.
+            </summary>
+            <param name="destIndex">Destination index.</param>
+        </member>
         <member name="P:Spire.Xls.Core.Spreadsheet.Charts.XlsChart.SeriesDataFromRange">
             <summary>
             True if series are in rows in DataRange;
@@ -14345,6 +14354,11 @@
             If true - format has smothed line; otherwise false. Read-only.
             </summary>
         </member>
+        <member name="P:Spire.Xls.Core.Spreadsheet.Charts.XlsChartSerieDataFormat.IsSmoothedLine">
+            <summary>
+            True if the line series has a smoothed line.
+            </summary>
+        </member>
         <member name="P:Spire.Xls.Core.Spreadsheet.Charts.XlsChartSerieDataFormat.SerieType">
             <summary>
             Gets serie type. Read only.
@@ -14960,6 +14974,21 @@
             Clears error bars.
             </summary>
         </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.PivotTables.PivotConditionalFormatCollection.AddPivotConditionalFormat">
+            <summary>
+            Add pivot table condition format.
+            </summary>
+        </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.PivotTables.PivotConditionalFormatCollection.AddPivotConditionalFormat(Spire.Xls.Core.IPivotField)">
+            <summary>
+            Add pivot field condition format.
+            </summary>
+        </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.PivotTables.PivotConditionalFormatCollection.AddPivotConditionalFormat(Spire.Xls.Core.Spreadsheet.PivotTables.PivotDataField)">
+            <summary>
+            Add pivot data field condition format.
+            </summary>
+        </member>
         <member name="T:Spire.Xls.Core.Spreadsheet.PivotTables.PivotReportFilter">
             <summary>
             Represent the report filter of PivotTable
@@ -15421,6 +15450,13 @@
             <summary>
             Represent the custom Style for this PivotTable
             </summary>
+        </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.PivotTables.XlsPivotTable.ApplyStyleToRange(Spire.Xls.Core.IXLSRange,Spire.Xls.CellStyle)">
+            <summary>
+            Apply style to range in pivot table.
+            </summary>
+            <param name="cellRange">Range in pivot table.</param>
+            <param name="style">Style that apply to range.</param>
         </member>
         <member name="M:Spire.Xls.Core.Spreadsheet.PivotTables.XlsPivotTable.ChangeDataSource(Spire.Xls.Core.IXLSRange)">
             <summary>
@@ -18119,7 +18155,7 @@
              <param name="isVertical">Specifies to import data vertically or horizontally.</param>
              <returns></returns>
         </member>
-        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.InsertArray``1(``0[],System.Int32,System.Int32,System.Boolean)">
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.InsertArray``1(``0[],System.Int32,System.Int32,System.Boolean,System.Boolean)">
             <summary>
             Imports an array of objects into a worksheet. 
             </summary>
@@ -18250,6 +18286,17 @@
             <param name="firstRow">The row number of the first cell to import in.</param>
             <param name="firstColumn">The column number of the first cell to import in.</param>
             <param name="isVertical">Specifies to import data vertically or horizontally.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.InsertArrayList(System.Collections.ArrayList,System.Int32,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Imports an arraylist of data into a worksheet.
+            </summary>
+            <param name="arrayList">Data arraylist.</param>
+            <param name="firstRow">The row number of the first cell to import in.</param>
+            <param name="firstColumn">The column number of the first cell to import in.</param>
+            <param name="isVertical">Specifies to import data vertically or horizontally.</param>
+            <param name="isText">Specifies to import data as text or not.</param>
             <returns></returns>
         </member>
         <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.InsertDataColumn(System.Data.DataColumn,System.Boolean,System.Int32,System.Int32)">
@@ -18856,6 +18903,12 @@
             <param name="index">One-based row index to remove</param>
             <param name="count">Number of rows to delete.</param>
         </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.DeleteRows(System.Int32[])">
+            <summary>
+            Removes specified rows.
+            </summary>
+            <param name="rows">Index of all row that need to remove</param>
+        </member>
         <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.InsertColumn(System.Int32)">
             <summary>
             Inserts a new column into the worksheet. 
@@ -19275,6 +19328,15 @@
              Import function instead of placeholders.
              </remarks>
         </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.ReplaceAll(System.String,Spire.Xls.CellStyle,System.String,Spire.Xls.CellStyle)">
+            <summary>
+            Replaces cells' values with new data and style.
+            </summary>
+            <param name="oldValue">String value to replace.</param>
+            <param name="oldStyle">Cell style to replace.</param>
+            <param name="newValue">New value for the range with specified string.</param>
+            <param name="newStyle">New cell style for the range.</param>
+        </member>
         <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.Replace(System.String,System.String[],System.Boolean)">
              <summary>
              Replaces cells' values with new data.
@@ -19500,6 +19562,15 @@
             <param name="separator">Seperator.</param>
             <param name="encoding">Encoding to use.</param>
         </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.SaveToFile(System.String,System.String,System.Text.Encoding,System.Boolean)">
+            <summary>
+            Save worksheet to file..
+            </summary>
+            <param name="fileName">File name.</param>
+            <param name="separator">Seperator.</param>
+            <param name="encoding">Encoding to use.</param>
+            <param name="addQuotationsForStringValue">Add double Quotation marks for string value.</param>
+        </member>
         <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.SaveToStream(System.IO.Stream,System.String)">
             <summary>
             Save worksheet to stream.
@@ -19536,6 +19607,15 @@
             <param name="stream">Stream to save.</param>
             <param name="separator">Current seperator.</param>
             <param name="encoding">Encoding to use.</param>
+        </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.SaveToStream(System.IO.Stream,System.String,System.Text.Encoding,System.Boolean)">
+            <summary>
+            Save worksheet to stream.
+            </summary>
+            <param name="stream">Stream to save.</param>
+            <param name="separator">Current seperator.</param>
+            <param name="encoding">Encoding to use.</param>
+            <param name="addQuotationsForStringValue">Add double Quotation marks for string value.</param>
         </member>
         <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheet.SaveToXps(System.String)">
             <summary>
@@ -19967,6 +20047,12 @@
             Gets index of the last data column of the worksheet.
             </summary>
         </member>
+        <member name="M:Spire.Xls.Core.Spreadsheet.XlsWorksheetBase.MoveSheet(System.Int32)">
+            <summary>
+            Moves sheet into new position, including chartsheet and worksheet.
+            </summary>
+            <param name="destIndex">Destination index.</param>
+        </member>
         <member name="P:Spire.Xls.Core.Spreadsheet.XlsWorksheetBase.Index">
             <summary>
             Returns the index number of the object within the collection of objects.
@@ -20167,6 +20253,11 @@
             Unprotects this worksheet using specified password.
             </summary>
             <param name="password">Password to unprotect.</param>
+        </member>
+        <member name="P:Spire.Xls.Core.Spreadsheet.XlsWorksheetBase.Shapes">
+            <summary>
+            Shapes collection.
+            </summary>
         </member>
         <member name="P:Spire.Xls.Core.Spreadsheet.AutoFilter.CustomFilter.FilterOperatorType">
             <summary>
@@ -33725,6 +33816,61 @@
             </summary>
             <param name="column">The column field on which you want to base the filter . for exapmle: sheet.AutoFilters[0]</param>
         </member>
+        <member name="T:Spire.Xls.GoalSeek">
+             <summary>
+             Goal seek.
+             </summary>
+        </member>
+        <member name="P:Spire.Xls.GoalSeek.MaxIterations">
+             <summary>
+             Gets or sets max iterations.
+             </summary>
+        </member>
+        <member name="M:Spire.Xls.GoalSeek.TryCalculate(Spire.Xls.CellRange,System.Double,Spire.Xls.CellRange)">
+             <summary>
+             Try goal seek calculate.
+             </summary>
+        </member>
+        <member name="M:Spire.Xls.GoalSeek.TryCalculate(Spire.Xls.CellRange,System.Double,Spire.Xls.CellRange,System.Double)">
+             <summary>
+             Try goal seek calculate.
+             </summary>
+        </member>
+        <member name="T:Spire.Xls.GoalSeekResult">
+             <summary>
+             Goal seek calculate result.
+             </summary>
+        </member>
+        <member name="M:Spire.Xls.GoalSeekResult.Determine">
+             <summary>
+             Determine the result.
+             </summary>
+        </member>
+        <member name="P:Spire.Xls.GoalSeekResult.TargetCellName">
+             <summary>
+             Gets the name of target cell.
+             </summary>
+        </member>
+        <member name="P:Spire.Xls.GoalSeekResult.VariableCellName">
+             <summary>
+             Gets the name of variable cell.
+             </summary>
+        </member>
+        <member name="P:Spire.Xls.GoalSeekResult.Iterations">
+             <summary>
+             Gets the iterations.
+             </summary>
+        </member>
+        <member name="P:Spire.Xls.GoalSeekResult.TargetValue">
+             <summary>
+             Gets the target value.
+             </summary>
+        </member>
+        <member name="P:Spire.Xls.GoalSeekResult.GuessResult">
+             <summary>
+             Gets the guess result value.
+             </summary>
+        </member>
         <member name="P:Spire.Xls.TextSaveOptions.RetainHiddenData">
             <summary>
             Gets or sets whether retain hidden data. Default is true.
@@ -33748,6 +33894,45 @@
         <member name="T:Spire.Xls.License.XLSProtect">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:Spire.Xls.License.LicenseProvider">
+            <summary>
+            Class Spire.Doc.LicenseProvider.
+            </summary>  
+        </member>
+        <member name="M:Spire.Xls.License.LicenseProvider.SetLicense(System.String)">
+            <summary>
+            Provides a license by a license file path, which will be used for loading license.
+            </summary>
+            <param name="licenseFileFullPath">License file full path.</param>
+        </member>
+        <member name="M:Spire.Xls.License.LicenseProvider.SetLicense(System.IO.Stream)">
+            <summary>
+            Provides a license by a license stream, which will be used for loading license.
+            </summary>
+            <param name="licenseFileStream">License data stream.</param>
+        </member>
+        <member name="M:Spire.Xls.License.LicenseProvider.SetLicenseKey(System.String)">
+            <summary>
+            Provides a license by a license key, which will be used for loading license.
+            </summary>
+            <param name="key">The value of the Key attribute of the element License of you license xml file.</param>
+        </member>
+        <member name="M:Spire.Xls.License.LicenseProvider.SetLicenseFileName(System.String)">
+            <summary>
+             Sets the license file name, which will be used for loading license.
+            </summary>
+            <param name="licenseFileName">License file name.</param>
+        </member>
+        <member name="M:Spire.Xls.License.LicenseProvider.ClearLicense">
+            <summary>
+            Clear all cached license.
+            </summary>
+        </member>
+        <member name="M:Spire.Xls.License.LicenseProvider.LoadLicense">
+            <summary>
+            Load the license provided by current setting to the license cache.
             </summary>
         </member>
         <member name="M:Spire.Xls.Compound.MemoryStorage.ContainsStorage(System.String)">
@@ -33788,6 +33973,11 @@
             <summary>
             Indicates whether the width and height of the cells is automatically fitted by cell value. 
             The default value is false.
+            </summary>
+        </member>
+        <member name="P:Spire.Xls.ConverterSetting.ToImageWithoutMargins">
+            <summary>
+            To image without margins. Default false.
             </summary>
         </member>
         <member name="P:Spire.Xls.ConverterSetting.SheetFitToPage">
@@ -43255,6 +43445,24 @@
             </summary>
             <param name="fileName">File name</param>
             <param name="fileFormat">File format</param>
+        </member>
+        <member name="M:Spire.Xls.Workbook.SaveToFile(System.String,System.String,System.Boolean)">
+             <summary>
+             Saves changes to the workbook in a different file.
+             <example>The following code illustrates how to save the active worksheet in a different file with separator:
+             <code>
+                 <para>//Create workbook</para>
+                 <para>Workbook workbook = new Workbook();</para>
+                 <para>workbook.LoadFromFile("Sample.xlsx");</para>
+            
+                 <para>//Save to file</para>
+                 <para>workbook.SaveToFile("Result.csv" , ",", true);</para>
+             </code>
+             </example>
+             </summary>
+             <param name="fileName">File name.</param>
+             <param name="separator">Current separator.</param>
+             <param name="addQuotationsForStringValue">Add double Quotation marks for string value.</param>
         </member>
         <member name="M:Spire.Xls.Workbook.SaveToFile(System.String,System.String)">
              <summary>

@@ -1870,7 +1870,7 @@
             <param name="messageParams">additional params.</param>
             <returns>object itself.</returns>
         </member>
-        <member name="T:iText.IO.Exceptions.IoExceptionMessage">
+        <member name="T:iText.IO.Exceptions.IoExceptionMessageConstant">
             <summary>Class containing constants to be used in exceptions in the IO module.</summary>
         </member>
         <member name="T:iText.IO.Font.CFFFont.Item">
@@ -2378,10 +2378,7 @@
             <param name="length">number of bytes to process</param>
             <returns>string that contains decoded representation of the given sequence</returns>
         </member>
-        <member name="T:iText.IO.Font.Cmap.CMapCidByte">
-            <author>psoares</author>
-        </member>
-        <member name="M:iText.IO.Font.Cmap.CMapCidByte.GetCodeSpaceRanges">
+        <member name="M:iText.IO.Font.Cmap.CMapCidToCodepoint.GetCodeSpaceRanges">
             <summary>
             Returns a list containing sequential pairs of code space beginning and endings:
             (begincodespacerange1, endcodespacerange1, begincodespacerange2, endcodespacerange1, ...)
@@ -2394,6 +2391,16 @@
         </member>
         <member name="T:iText.IO.Font.Cmap.CMapCidUni">
             <author>psoares</author>
+        </member>
+        <member name="T:iText.IO.Font.Cmap.CMapCodepointToCid">
+            <summary>Class represents real codepoint-CID mapping without any additional manipulation.</summary>
+            <remarks>
+            Class represents real codepoint-CID mapping without any additional manipulation.
+            <para />
+            See
+            <see cref="T:iText.IO.Font.Cmap.CMapCidToCodepoint"/>
+            for CID-codepoint representation.
+            </remarks>
         </member>
         <member name="F:iText.IO.Font.Cmap.CMapContentParser.COMMAND_TYPE">
             <summary>Commands have this type.</summary>
@@ -2481,6 +2488,17 @@
             <param name="offset">The offset into the byte array.</param>
             <param name="length">The length of the data we are getting.</param>
             <returns>The string that matches the lookup.</returns>
+        </member>
+        <member name="M:iText.IO.Font.Cmap.CMapToUnicode.GetCodeSpaceRanges">
+            <summary>
+            Returns a list containing sequential pairs of code space beginning and endings:
+            (begincodespacerange1, endcodespacerange1, begincodespacerange2, endcodespacerange1, ...)
+            </summary>
+            <returns>
+            list of
+            <c>byte[]</c>
+            that contain code space ranges
+            </returns>
         </member>
         <member name="T:iText.IO.Font.Cmap.CMapUniCid">
             <author>psoares</author>
@@ -2928,7 +2946,8 @@
             <summary>The font's encoding name.</summary>
             <remarks>
             The font's encoding name. This encoding is 'StandardEncoding' or 'AdobeStandardEncoding' for a font
-            that can be totally encoded according to the characters names. For all other names the font is treated as symbolic.
+            that can be totally encoded according to the characters names. For all other names the font is treated as
+            symbolic.
             </remarks>
         </member>
         <member name="M:iText.IO.Font.FontProgram.GetWidth(System.Int32)">
@@ -3002,7 +3021,8 @@
             <remarks>
             Sets the PostScript italic angle.
             <para />
-            Italic angle in counter-clockwise degrees from the vertical. Zero for upright text, negative for text that leans to the right (forward).
+            Italic angle in counter-clockwise degrees from the vertical. Zero for upright text, negative for text that leans
+            to the right (forward).
             </remarks>
             <param name="italicAngle">in counter-clockwise degrees from the vertical</param>
         </member>
@@ -6078,6 +6098,11 @@
         </member>
         <member name="M:iText.IO.Util.GhostscriptHelper.RunGhostScriptImageGeneration(System.String,System.String,System.String)">
             <summary>Runs Ghostscript to render the PDF's pages as PNG images.</summary>
+            <remarks>
+            Runs Ghostscript to render the PDF's pages as PNG images.
+            <para />
+            Note, that this method  may create temporary directory and files.
+            </remarks>
             <param name="pdf">Path to the PDF file to be rendered</param>
             <param name="outDir">Path to the output directory, in which the rendered pages will be stored</param>
             <param name="image">
@@ -6092,6 +6117,11 @@
         </member>
         <member name="M:iText.IO.Util.GhostscriptHelper.RunGhostScriptImageGeneration(System.String,System.String,System.String,System.String)">
             <summary>Runs Ghostscript to render the PDF's pages as PNG images.</summary>
+            <remarks>
+            Runs Ghostscript to render the PDF's pages as PNG images.
+            <para />
+            Note, that this method  may create temporary directory and files.
+            </remarks>
             <param name="pdf">Path to the PDF file to be rendered</param>
             <param name="outDir">Path to the output directory, in which the rendered pages will be stored</param>
             <param name="image">
@@ -6360,6 +6390,11 @@
         </member>
         <member name="M:iText.IO.Util.ImageMagickHelper.RunImageMagickImageCompare(System.String,System.String,System.String)">
             <summary>Runs imageMagick to visually compare images and generate difference output.</summary>
+            <remarks>
+            Runs imageMagick to visually compare images and generate difference output.
+            <para />
+            Note, that this method may create temporary files.
+            </remarks>
             <param name="outImageFilePath">Path to the output image file</param>
             <param name="cmpImageFilePath">Path to the cmp image file</param>
             <param name="diffImageName">Path to the difference output image file</param>
@@ -6368,6 +6403,11 @@
         <member name="M:iText.IO.Util.ImageMagickHelper.RunImageMagickImageCompare(System.String,System.String,System.String,System.String)">
             <summary>Runs imageMagick to visually compare images with the specified fuzziness value and generate difference output.
                 </summary>
+            <remarks>
+            Runs imageMagick to visually compare images with the specified fuzziness value and generate difference output.
+            <para />
+            Note, that this method may create temporary files.
+            </remarks>
             <param name="outImageFilePath">Path to the output image file</param>
             <param name="cmpImageFilePath">Path to the cmp image file</param>
             <param name="diffImageName">Path to the difference output image file</param>
@@ -6382,6 +6422,12 @@
             Runs imageMagick to visually compare images with the specified fuzziness value and given threshold
             and generate difference output.
             </summary>
+            <remarks>
+            Runs imageMagick to visually compare images with the specified fuzziness value and given threshold
+            and generate difference output.
+            <para />
+            Note, that this method may create temporary files.
+            </remarks>
             <param name="outImageFilePath">Path to the output image file</param>
             <param name="cmpImageFilePath">Path to the cmp image file</param>
             <param name="diffImageName">Path to the difference output image file</param>
@@ -6401,6 +6447,8 @@
             <see cref="T:iText.IO.Util.ImageMagickCompareResult"/>
             , containing comparing result information,
             such as boolean result value and the number of different pixels.
+            <para />
+            Note, that this method may create temporary files.
             </remarks>
             <param name="outImageFilePath">Path to the output image file</param>
             <param name="cmpImageFilePath">Path to the cmp image file</param>
@@ -6859,14 +6907,6 @@
             </summary>
             <param name="file">a given file</param>
             <returns>a valid Uri</returns>
-        </member>
-        <member name="M:iText.IO.Util.UrlUtil.GetFinalURL(System.Uri)">
-            <summary>
-            This method gets the last redirected url.
-            </summary>
-            <param name="uri">an initial url.</param>
-            
-            <returns>the last redirected url.</returns>
         </member>
         <member name="M:iText.IO.Util.UrlUtil.GetFileUriString(System.String)">
             <summary>

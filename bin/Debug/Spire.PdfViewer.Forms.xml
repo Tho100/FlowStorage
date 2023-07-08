@@ -61,7 +61,7 @@
             Unique ID
             </summary>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.#ctor(Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel,System.Int32,Spire.Pdf.Primitives.PdfDictionary)">
+        <member name="M:Spire.PdfViewer.Forms.Form.Annotations.FieldAnnotationModel.#ctor(Spire.PdfViewer.Forms.Form.Fields.AbstractFieldModel,System.Int32,Spire.Pdf.Core.PdfDictionary)">
             <summary>
             Constructor.
             </summary>
@@ -3892,14 +3892,14 @@
             </summary>
             <param name="g">Graphics.</param>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdateAnnotation(System.Int32,Spire.Pdf.Primitives.PdfDictionary)">
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdateAnnotation(System.Int32,Spire.Pdf.Core.PdfDictionary)">
             <summary>
             Update annotation when annotation have changed.
             </summary>
             <param name="pageIndex">Page index.</param>
             <param name="annotation">Annotation dictionary.</param>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdateAnnotation(System.Int32,Spire.Pdf.Primitives.PdfDictionary[])">
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdateAnnotation(System.Int32,Spire.Pdf.Core.PdfDictionary[])">
             <summary>
             Update annotation when annotation have changed.
             </summary>
@@ -3995,7 +3995,7 @@
             <param name="eastAsianFont">Whether use east asian font.</param>
             <returns>All page annotations metafile.</returns>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageAnnotationMetafile(Spire.Pdf.Primitives.PdfDictionary[],System.Boolean,System.Int32)">
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.GetPageAnnotationMetafile(Spire.Pdf.Core.PdfDictionary[],System.Boolean,System.Int32)">
             <summary>
             Get the page annotation metafile.
             </summary>
@@ -4012,23 +4012,22 @@
             <param name="findTextHighLightColor">Find text hightlight color.</param>
             <returns>Page highlight text metafile.</returns>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.DrawPageHighLightText(System.Drawing.Graphics,Spire.Pdf.General.Find.PdfTextFindCollection,System.Drawing.Color)">
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.DrawPageHighLightText(System.Drawing.Graphics,System.Collections.Generic.List{Spire.Pdf.Texts.PdfTextFragment},System.Drawing.Color)">
             <summary>
             Draw page highlight text.
             </summary>
             <param name="g">Graphics.</param>
-            <param name="ignoreCase">Ignore case.</param>
-            <param name="findText">Find text.</param>
-            <param name="findTextHighLightColor">Find text hightlight color.</param>
+            <param name="textFragments">The text fragments.</param>
+            <param name="highLightColor">Find text hightlight color.</param>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdatePageAnnotationMetafile(System.Int32,Spire.Pdf.Primitives.PdfDictionary)">
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdatePageAnnotationMetafile(System.Int32,Spire.Pdf.Core.PdfDictionary)">
             <summary>
             Update page annotation metafile when annotation have changed.
             </summary>
             <param name="pageIndex">Page index.</param>
             <param name="annotation">Annotation dictionary.</param>
         </member>
-        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdatePageAnnotationMetafile(System.Int32,Spire.Pdf.Primitives.PdfDictionary[])">
+        <member name="M:Spire.PdfViewer.Forms.WinformDocumentView.UpdatePageAnnotationMetafile(System.Int32,Spire.Pdf.Core.PdfDictionary[])">
             <summary>
             Update page annotation metafile when annotation have changed.
             </summary>
@@ -4169,11 +4168,72 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="T:Spire.PdfViewer.License.LicenseProvider">
+            <summary>
+            Class Spire.Doc.LicenseProvider.
+            </summary>  
+        </member>
+        <member name="M:Spire.PdfViewer.License.LicenseProvider.SetLicense(System.String)">
+            <summary>
+            Provides a license by a license file path, which will be used for loading license.
+            </summary>
+            <param name="licenseFileFullPath">License file full path.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.License.LicenseProvider.SetLicense(System.IO.Stream)">
+            <summary>
+            Provides a license by a license stream, which will be used for loading license.
+            </summary>
+            <param name="licenseFileStream">License data stream.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.License.LicenseProvider.SetLicenseKey(System.String)">
+            <summary>
+            Provides a license by a license key, which will be used for loading license.
+            </summary>
+            <param name="key">The value of the Key attribute of the element License of you license xml file.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.License.LicenseProvider.SetLicenseFileName(System.String)">
+            <summary>
+             Sets the license file name, which will be used for loading license.
+            </summary>
+            <param name="licenseFileName">License file name.</param>
+        </member>
+        <member name="M:Spire.PdfViewer.License.LicenseProvider.ClearLicense">
+            <summary>
+            Clear all cached license.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.License.LicenseProvider.LoadLicense">
+            <summary>
+            Load the license provided by current setting to the license cache.
+            </summary>
+        </member>
         <member name="M:Spire.PdfViewer.PdfViewerLicenseProtector.ApplyInternalLicenseToPdf(Spire.Pdf.PdfDocument)">
             <summary>
             Apply internal license to pdf.
             </summary>
             <param name="document">The document</param>
+        </member>
+        <member name="T:Spire.PdfViewer.Drawing.PdfViewerExceptions">
+            <summary>
+            Load pdf document throw exception information
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Drawing.PdfViewerExceptions.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:Spire.PdfViewer.Drawing.PdfViewerExceptions.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:Spire.PdfViewer.Drawing.RenderPageExceptionEventHandler">
+            <summary>
+            Define a delegate,when rendering a page,handing exceptions
+            </summary>
+            <param name="args"></param>
         </member>
         <member name="T:Spire.PdfViewer.DocumentOpenedEventHandler">
             <summary>
@@ -4209,28 +4269,6 @@
             </summary>
             <param name="sender"></param>
             <param name="percentage"></param>
-        </member>
-        <member name="T:Spire.PdfViewer.Drawing.PdfViewerExceptions">
-            <summary>
-            Load pdf document throw exception information
-            </summary>
-        </member>
-        <member name="M:Spire.PdfViewer.Drawing.PdfViewerExceptions.#ctor">
-            <summary>
-            Initializes a new instance of the class.
-            </summary>
-        </member>
-        <member name="M:Spire.PdfViewer.Drawing.PdfViewerExceptions.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the class.
-            </summary>
-            <param name="exception"></param>
-        </member>
-        <member name="T:Spire.PdfViewer.Drawing.RenderPageExceptionEventHandler">
-            <summary>
-            Define a delegate,when rendering a page,handing exceptions
-            </summary>
-            <param name="args"></param>
         </member>
     </members>
 </doc>

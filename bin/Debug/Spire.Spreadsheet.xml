@@ -7640,6 +7640,16 @@
             </summary>
             <returns>New instance cloned from current worksheet.</returns>
         </member>
+        <member name="P:Spire.Spreadsheet.Forms.Worksheet.ColumnHeaderVisible">
+            <summary>
+            Gets or sets a value indicating whether column header is visible.
+            </summary>
+        </member>
+        <member name="P:Spire.Spreadsheet.Forms.Worksheet.RowHeaderVisible">
+            <summary>
+            Gets or sets a value indicating whether row header is visible.
+            </summary>
+        </member>
         <member name="P:Spire.Spreadsheet.Forms.Worksheet.Spreadsheet">
             <summary>
             Gets Spreadsheet object.
@@ -8181,9 +8191,14 @@
             Event raised when worksheet is unfreezed.
             </summary>
         </member>
-        <member name="P:Spire.Spreadsheet.Forms.Worksheet.ScaleFactor">
+        <member name="P:Spire.Spreadsheet.Forms.Worksheet.Zoom">
             <summary>
             Get or set worksheet scale factor.
+            </summary>
+        </member>
+        <member name="M:Spire.Spreadsheet.Forms.Worksheet.ZoomToSelection">
+            <summary>
+            Zoom to selection.
             </summary>
         </member>
         <member name="E:Spire.Spreadsheet.Forms.Worksheet.Scaled">
@@ -9956,12 +9971,12 @@
         </member>
         <member name="P:Spire.Spreadsheet.Forms.Spreadsheet.ColumnHeaderVisible">
             <summary>
-            Gets or sets a value indicating whether column header is visible.
+            Gets or sets a value indicating whether column header of all worksheet is visible.
             </summary>
         </member>
         <member name="P:Spire.Spreadsheet.Forms.Spreadsheet.RowHeaderVisible">
             <summary>
-            Gets or sets a value indicating whether row header is visible.
+            Gets or sets a value indicating whether row header of all worksheet is visible.
             </summary>
         </member>
         <member name="P:Spire.Spreadsheet.Forms.Spreadsheet.ContextMenuVisible">
@@ -10043,6 +10058,11 @@
         <member name="P:Spire.Spreadsheet.Forms.Spreadsheet.MenuLanguageConfigPath">
             <summary>
             Gests or sets path of the file which is named as MenuLanguageConfig.xml.
+            </summary>
+        </member>
+        <member name="P:Spire.Spreadsheet.Forms.Spreadsheet.HideSortItemInFilter">
+            <summary>
+            Hide the sort item in filter menu.
             </summary>
         </member>
         <member name="P:Spire.Spreadsheet.Forms.Spreadsheet.Password">
@@ -20947,6 +20967,11 @@
             Represents an csv file.
             </summary>
         </member>
+        <member name="F:Spire.Spreadsheet.Forms.FileFormatType.PDF">
+            <summary>
+            Represents an pdf file.
+            </summary>
+        </member>
         <member name="P:Spire.Spreadsheet.Forms.ISpreadCell.Worksheet">
             <summary>
             Gets worksheet object.
@@ -21017,6 +21042,16 @@
             Indicates the cell is a formula or not.
             </summary>
             <returns>bool</returns>
+        </member>
+        <member name="P:Spire.Spreadsheet.Forms.IWorksheet.ColumnHeaderVisible">
+            <summary>
+            Gets or sets a value indicating whether row header is visible.
+            </summary>
+        </member>
+        <member name="P:Spire.Spreadsheet.Forms.IWorksheet.RowHeaderVisible">
+            <summary>
+            Gets or sets a value indicating whether row header is visible.
+            </summary>
         </member>
         <member name="P:Spire.Spreadsheet.Forms.IWorksheet.Spreadsheet">
             <summary>
@@ -21856,6 +21891,16 @@
         <member name="M:Spire.Spreadsheet.Forms.IWorksheet.CalculateAllValue">
             <summary>
             Caculate all value of whole sheet.
+            </summary>
+        </member>
+        <member name="P:Spire.Spreadsheet.Forms.IWorksheet.Zoom">
+            <summary>
+            Get or set worksheet zoom.
+            </summary>
+        </member>
+        <member name="M:Spire.Spreadsheet.Forms.IWorksheet.ZoomToSelection">
+            <summary>
+            Zoom to selection.
             </summary>
         </member>
         <member name="T:Spire.Spreadsheet.Forms.Rendering.BorderPainter">
@@ -23112,6 +23157,45 @@
         <member name="P:Spire.Spreadsheet.Forms.Properties.Resources.VSProject_script">
             <summary>
               查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="T:Spire.Spreadsheet.License.LicenseProvider">
+            <summary>
+            Class Spire.Spreadsheet.LicenseProvider.
+            </summary>  
+        </member>
+        <member name="M:Spire.Spreadsheet.License.LicenseProvider.SetLicense(System.String)">
+            <summary>
+            Provides a license by a license file path, which will be used for loading license.
+            </summary>
+            <param name="licenseFileFullPath">License file full path.</param>
+        </member>
+        <member name="M:Spire.Spreadsheet.License.LicenseProvider.SetLicense(System.IO.Stream)">
+            <summary>
+            Provides a license by a license stream, which will be used for loading license.
+            </summary>
+            <param name="licenseFileStream">License data stream.</param>
+        </member>
+        <member name="M:Spire.Spreadsheet.License.LicenseProvider.SetLicenseKey(System.String)">
+            <summary>
+            Provides a license by a license key, which will be used for loading license.
+            </summary>
+            <param name="key">The value of the Key attribute of the element License of you license xml file.</param>
+        </member>
+        <member name="M:Spire.Spreadsheet.License.LicenseProvider.SetLicenseFileName(System.String)">
+            <summary>
+             Sets the license file name, which will be used for loading license.
+            </summary>
+            <param name="licenseFileName">License file name.</param>
+        </member>
+        <member name="M:Spire.Spreadsheet.License.LicenseProvider.ClearLicense">
+            <summary>
+            Clear all cached license.
+            </summary>
+        </member>
+        <member name="M:Spire.Spreadsheet.License.LicenseProvider.LoadLicense">
+            <summary>
+            Load the license provided by current setting to the license cache.
             </summary>
         </member>
     </members>

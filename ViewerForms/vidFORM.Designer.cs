@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms.PlatformConfiguration;
-
-namespace FlowSERVER1 {
+﻿namespace FlowSERVER1 {
     partial class vidFORM {
         /// <summary>
         /// Required designer variable.

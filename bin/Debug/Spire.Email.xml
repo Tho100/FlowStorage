@@ -72,6 +72,45 @@
             Gets or sets file size for an attachment.
             </summary>
         </member>
+        <member name="T:Spire.Email.License.LicenseProvider">
+            <summary>
+            Class Spire.Doc.LicenseProvider.
+            </summary>  
+        </member>
+        <member name="M:Spire.Email.License.LicenseProvider.SetLicense(System.String)">
+            <summary>
+            Provides a license by a license file path, which will be used for loading license.
+            </summary>
+            <param name="licenseFileFullPath">License file full path.</param>
+        </member>
+        <member name="M:Spire.Email.License.LicenseProvider.SetLicense(System.IO.Stream)">
+            <summary>
+            Provides a license by a license stream, which will be used for loading license.
+            </summary>
+            <param name="licenseFileStream">License data stream.</param>
+        </member>
+        <member name="M:Spire.Email.License.LicenseProvider.SetLicenseKey(System.String)">
+            <summary>
+            Provides a license by a license key, which will be used for loading license.
+            </summary>
+            <param name="key">The value of the Key attribute of the element License of you license xml file.</param>
+        </member>
+        <member name="M:Spire.Email.License.LicenseProvider.SetLicenseFileName(System.String)">
+            <summary>
+             Sets the license file name, which will be used for loading license.
+            </summary>
+            <param name="licenseFileName">License file name.</param>
+        </member>
+        <member name="M:Spire.Email.License.LicenseProvider.ClearLicense">
+            <summary>
+            Clear all cached license.
+            </summary>
+        </member>
+        <member name="M:Spire.Email.License.LicenseProvider.LoadLicense">
+            <summary>
+            Load the license provided by current setting to the license cache.
+            </summary>
+        </member>
         <member name="P:Spire.Email.LinkedResource.ContentId">
             <summary>
             Gets or sets content id.

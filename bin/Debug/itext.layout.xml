@@ -1462,11 +1462,11 @@
             <returns>this Element.</returns>
         </member>
         <member name="M:iText.Layout.ElementPropertyContainer`1.SetFixedPosition(System.Single,System.Single,iText.Layout.Properties.UnitValue)">
-            <summary>Sets values for a absolute repositioning of the Element.</summary>
+            <summary>Sets values for an absolute repositioning of the Element.</summary>
             <remarks>
-            Sets values for a absolute repositioning of the Element.
+            Sets values for an absolute repositioning of the Element.
             The coordinates specified correspond to the
-            bottom-left corner of the element and it grows upwards.
+            bottom-left corner of the element, and it grows upwards.
             Also has as a side effect that the Element's
             <see cref="F:iText.Layout.Properties.Property.POSITION"/>
             is changed to
@@ -8873,6 +8873,108 @@
             representing symbol.
             </returns>
         </member>
+        <member name="T:iText.Layout.Properties.InlineVerticalAlignment">
+            <summary>
+            A property corresponding to the css vertical-align property and used to
+            set vertical alignment on inline blocks, it specifies the  type of alignment
+            and where needed a numerical value to complete it.
+            </summary>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.#ctor">
+            <summary>
+            Creates a default InlineVerticalAlignment, it gets the type
+            <see cref="!:InlineVerticalAlignmentType?.BASELINE"/>.
+            </summary>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.#ctor(System.Nullable{iText.Layout.Properties.InlineVerticalAlignmentType})">
+            <summary>Creates an InlineVerticalAlignment with a specified type.</summary>
+            <param name="type">
+            
+            <see cref="!:InlineVerticalAlignmentType?"/>
+            </param>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.#ctor(System.Nullable{iText.Layout.Properties.InlineVerticalAlignmentType},System.Single)">
+            <summary>Creates an InlineVerticalAlignment with a specified type and a value.</summary>
+            <remarks>
+            Creates an InlineVerticalAlignment with a specified type and a value.
+            This will throw a
+            <see cref="T:iText.Kernel.Exceptions.PdfException"/>
+            when used with a type that does not require a value.
+            </remarks>
+            <param name="type">
+            
+            <see cref="!:InlineVerticalAlignmentType?"/>
+            </param>
+            <param name="value">
+            In the case of
+            <see cref="!:InlineVerticalAlignmentType?.FIXED"/>
+            a lenth in pts,
+            in case of
+            <see cref="!:InlineVerticalAlignmentType?.FRACTION"/>
+            a multiplier value.
+            </param>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.GetType">
+            <summary>Gets the type of InlineVerticalAlignment.</summary>
+            <returns>
+            the type
+            <see cref="!:InlineVerticalAlignmentType?"/>
+            </returns>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.SetType(System.Nullable{iText.Layout.Properties.InlineVerticalAlignmentType})">
+            <summary>
+            Sets the type
+            <see cref="!:InlineVerticalAlignmentType?"/>.
+            </summary>
+            <param name="type">
+            
+            <see cref="!:InlineVerticalAlignmentType?"/>
+            </param>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.GetValue">
+            <summary>Gets the value.</summary>
+            <returns>
+            value In the case of
+            <see cref="!:InlineVerticalAlignmentType?.FIXED"/>
+            a lenth in pts,
+            in case of
+            <see cref="!:InlineVerticalAlignmentType?.FRACTION"/>
+            a multiplier value.
+            </returns>
+        </member>
+        <member name="M:iText.Layout.Properties.InlineVerticalAlignment.SetValue(System.Single)">
+            <summary>Sets the value.</summary>
+            <param name="value">
+            In the case of
+            <see cref="!:InlineVerticalAlignmentType?.FIXED"/>
+            a lenth in pts,
+            in case of
+            <see cref="!:InlineVerticalAlignmentType?.FRACTION"/>
+            a multiplier value.
+            </param>
+        </member>
+        <member name="T:iText.Layout.Properties.InlineVerticalAlignmentType">
+            <summary>
+            The possible values for
+            <see cref="M:iText.Layout.Properties.InlineVerticalAlignment.GetType"/>.
+            </summary>
+        </member>
+        <member name="F:iText.Layout.Properties.InlineVerticalAlignmentType.FIXED">
+            <summary>Fixed is used when a length value is given in css.</summary>
+            <remarks>
+            Fixed is used when a length value is given in css.
+            It needs a companion value in
+            <see cref="M:iText.Layout.Properties.InlineVerticalAlignment.SetValue(System.Single)"/>
+            </remarks>
+        </member>
+        <member name="F:iText.Layout.Properties.InlineVerticalAlignmentType.FRACTION">
+            <summary>Fixed is used when a percentage value is given in css.</summary>
+            <remarks>
+            Fixed is used when a percentage value is given in css.
+            It needs a companion value in
+            <see cref="M:iText.Layout.Properties.InlineVerticalAlignment.SetValue(System.Single)"/>
+            </remarks>
+        </member>
         <member name="T:iText.Layout.Properties.JustifyContent">
             <summary>
             A enum containing potential property values for
@@ -10120,7 +10222,7 @@
             <param name="rect">a rectangle the border box will be applied on.</param>
             <param name="reverse">
             indicates whether the border box will be applied
-            inside (in case of false) or outside (in case of false) the rectangle.
+            inside (in case of false) or outside (in case of true) the rectangle.
             </param>
             <returns>
             a
@@ -10134,7 +10236,7 @@
             <param name="rect">a rectangle paddings will be applied on.</param>
             <param name="reverse">
             indicates whether paddings will be applied
-            inside (in case of false) or outside (in case of false) the rectangle.
+            inside (in case of false) or outside (in case of true) the rectangle.
             </param>
             <returns>
             a
@@ -11589,6 +11691,16 @@
             </summary>
             <returns>new renderer instance</returns>
         </member>
+        <member name="M:iText.Layout.Renderer.LineHeightHelper.GetActualAscenderDescender(iText.Layout.Renderer.AbstractRenderer)">
+            <summary>Get actual ascender, descender.</summary>
+            <param name="renderer">the renderer to retrieve the ascender and descender from</param>
+            <returns>an array containing in this order actual ascender</returns>
+        </member>
+        <member name="M:iText.Layout.Renderer.LineHeightHelper.GetActualFontInfo(iText.Layout.Renderer.AbstractRenderer)">
+            <summary>Get actual ascender, descender, xHeight and leading.</summary>
+            <param name="renderer">the renderer to retrieve the font info from</param>
+            <returns>an array containing in this order actual ascender, descender, xHeight and leading</returns>
+        </member>
         <member name="M:iText.Layout.Renderer.LineRenderer.Length">
             <summary>Gets the total lengths of characters in this line.</summary>
             <remarks>
@@ -11606,7 +11718,8 @@
             <remarks>
             Calculates and sets encountered tab size.
             Returns null, if processing is finished and layout can be performed for the tab renderer;
-            otherwise, in case when the tab should be processed after the next element in the line, this method returns corresponding tab stop.
+            otherwise, in case when the tab should be processed after the next element in the line,
+            this method returns corresponding tab stop.
             </remarks>
         </member>
         <member name="M:iText.Layout.Renderer.LineRenderer.CalculateTab(iText.Kernel.Geom.Rectangle,System.Single,iText.Layout.Element.TabStop,System.Collections.Generic.IList{iText.Layout.Renderer.IRenderer},iText.Layout.Renderer.IRenderer)">
