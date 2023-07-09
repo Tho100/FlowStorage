@@ -63,7 +63,7 @@
             // 
             this.lblUploaderName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblUploaderName.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblUploaderName.Location = new System.Drawing.Point(12, 194);
+            this.lblUploaderName.Location = new System.Drawing.Point(11, 194);
             this.lblUploaderName.Name = "lblUploaderName";
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 35;
@@ -94,7 +94,7 @@
             this.pdfDocumentViewer1.Name = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.OnRenderPageExceptionEvent = null;
             this.pdfDocumentViewer1.PageLayoutMode = Spire.PdfViewer.Forms.PageLayoutMode.SinglePageContinuous;
-            this.pdfDocumentViewer1.Size = new System.Drawing.Size(686, 519);
+            this.pdfDocumentViewer1.Size = new System.Drawing.Size(765, 534);
             this.pdfDocumentViewer1.TabIndex = 52;
             this.pdfDocumentViewer1.Text = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.Threshold = 60;
@@ -144,7 +144,7 @@
             this.guna2VSeparator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2VSeparator1.Location = new System.Drawing.Point(341, 1);
             this.guna2VSeparator1.Name = "guna2VSeparator1";
-            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 612);
+            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 627);
             this.guna2VSeparator1.TabIndex = 58;
             // 
             // guna2Separator1
@@ -154,7 +154,7 @@
             this.guna2Separator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Separator1.Location = new System.Drawing.Point(347, 60);
             this.guna2Separator1.Name = "guna2Separator1";
-            this.guna2Separator1.Size = new System.Drawing.Size(726, 10);
+            this.guna2Separator1.Size = new System.Drawing.Size(805, 10);
             this.guna2Separator1.TabIndex = 59;
             this.guna2Separator1.Click += new System.EventHandler(this.guna2Separator1_Click);
             // 
@@ -182,7 +182,7 @@
             this.guna2VSeparator2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2VSeparator2.BackColor = System.Drawing.Color.Transparent;
             this.guna2VSeparator2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.guna2VSeparator2.Location = new System.Drawing.Point(815, -1);
+            this.guna2VSeparator2.Location = new System.Drawing.Point(894, -1);
             this.guna2VSeparator2.Name = "guna2VSeparator2";
             this.guna2VSeparator2.Size = new System.Drawing.Size(10, 66);
             this.guna2VSeparator2.TabIndex = 63;
@@ -213,7 +213,7 @@
             this.btnShareFile.ForeColor = System.Drawing.Color.White;
             this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
             this.btnShareFile.ImageSize = new System.Drawing.Size(17, 17);
-            this.btnShareFile.Location = new System.Drawing.Point(838, 17);
+            this.btnShareFile.Location = new System.Drawing.Point(917, 17);
             this.btnShareFile.Name = "btnShareFile";
             this.btnShareFile.Size = new System.Drawing.Size(38, 31);
             this.btnShareFile.TabIndex = 54;
@@ -236,7 +236,7 @@
             this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
             this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
             this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button8.Location = new System.Drawing.Point(926, 17);
+            this.guna2Button8.Location = new System.Drawing.Point(1005, 17);
             this.guna2Button8.Name = "guna2Button8";
             this.guna2Button8.Size = new System.Drawing.Size(38, 31);
             this.guna2Button8.TabIndex = 51;
@@ -258,7 +258,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(882, 17);
+            this.guna2Button4.Location = new System.Drawing.Point(961, 17);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 34;
@@ -280,7 +280,7 @@
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
             this.guna2Button3.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button3.Location = new System.Drawing.Point(970, 17);
+            this.guna2Button3.Location = new System.Drawing.Point(1049, 17);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(38, 31);
             this.guna2Button3.TabIndex = 33;
@@ -303,7 +303,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button1.Location = new System.Drawing.Point(970, 17);
+            this.guna2Button1.Location = new System.Drawing.Point(1049, 17);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(38, 31);
             this.guna2Button1.TabIndex = 32;
@@ -324,7 +324,7 @@
             this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(1014, 17);
+            this.guna2Button2.Location = new System.Drawing.Point(1093, 17);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(38, 31);
             this.guna2Button2.TabIndex = 30;
@@ -382,7 +382,7 @@
             this.txtFieldComment.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldComment.PlaceholderText = "Add a comment for receiver to see";
             this.txtFieldComment.SelectedText = "";
-            this.txtFieldComment.Size = new System.Drawing.Size(312, 292);
+            this.txtFieldComment.Size = new System.Drawing.Size(312, 307);
             this.txtFieldComment.TabIndex = 93;
             this.txtFieldComment.Visible = false;
             // 
@@ -410,7 +410,6 @@
             // 
             // guna2Button7
             // 
-            this.guna2Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button7.Animated = true;
             this.guna2Button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.guna2Button7.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -424,7 +423,7 @@
             this.guna2Button7.ForeColor = System.Drawing.Color.White;
             this.guna2Button7.Image = global::FlowSERVER1.Properties.Resources.icons8_done_26;
             this.guna2Button7.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button7.Location = new System.Drawing.Point(298, 248);
+            this.guna2Button7.Location = new System.Drawing.Point(297, 248);
             this.guna2Button7.Name = "guna2Button7";
             this.guna2Button7.Size = new System.Drawing.Size(38, 31);
             this.guna2Button7.TabIndex = 94;
@@ -436,7 +435,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1063, 612);
+            this.ClientSize = new System.Drawing.Size(1142, 627);
             this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.guna2Button7);
@@ -477,15 +476,15 @@
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label lblUploaderName;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
-        public Guna.UI2.WinForms.Guna2Button guna2Button3;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private System.Windows.Forms.Label lblFileName;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        public Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button8;
         private Spire.PdfViewer.Forms.PdfDocumentViewer pdfDocumentViewer1;
         private System.Windows.Forms.Label lblUserComment;
-        public Guna.UI2.WinForms.Guna2Button btnShareFile;
+        private Guna.UI2.WinForms.Guna2Button btnShareFile;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
@@ -497,7 +496,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        public Guna.UI2.WinForms.Guna2Button btnEditComment;
-        public Guna.UI2.WinForms.Guna2Button guna2Button7;
+        private Guna.UI2.WinForms.Guna2Button btnEditComment;
+        private Guna.UI2.WinForms.Guna2Button guna2Button7;
     }
 }

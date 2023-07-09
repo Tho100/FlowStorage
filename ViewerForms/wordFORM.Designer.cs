@@ -28,7 +28,6 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblUploaderName = new System.Windows.Forms.Label();
             this.lblFileName = new System.Windows.Forms.Label();
-            this.docDocumentViewer1 = new Spire.DocViewer.Forms.DocDocumentViewer();
             this.lblUserComment = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,6 +48,7 @@
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
+            this.docDocumentViewer1 = new Spire.DocViewer.Forms.DocDocumentViewer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +63,7 @@
             // 
             this.lblUploaderName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblUploaderName.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblUploaderName.Location = new System.Drawing.Point(14, 204);
+            this.lblUploaderName.Location = new System.Drawing.Point(12, 204);
             this.lblUploaderName.Name = "lblUploaderName";
             this.lblUploaderName.Size = new System.Drawing.Size(252, 37);
             this.lblUploaderName.TabIndex = 41;
@@ -79,23 +79,6 @@
             this.lblFileName.TabIndex = 37;
             this.lblFileName.Text = "label1";
             this.lblFileName.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // docDocumentViewer1
-            // 
-            this.docDocumentViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.docDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
-            this.docDocumentViewer1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.docDocumentViewer1.EnableHandTools = false;
-            this.docDocumentViewer1.Location = new System.Drawing.Point(353, 78);
-            this.docDocumentViewer1.Name = "docDocumentViewer1";
-            this.docDocumentViewer1.Size = new System.Drawing.Size(780, 541);
-            this.docDocumentViewer1.TabIndex = 42;
-            this.docDocumentViewer1.Text = "docDocumentViewer1";
-            this.docDocumentViewer1.ToPdfParameterList = null;
-            this.docDocumentViewer1.UseNewEngine = true;
-            this.docDocumentViewer1.ZoomMode = Spire.DocViewer.Forms.ZoomMode.Default;
             // 
             // lblUserComment
             // 
@@ -379,7 +362,6 @@
             // 
             // btnEditComment
             // 
-            this.btnEditComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditComment.Animated = true;
             this.btnEditComment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.btnEditComment.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -402,7 +384,6 @@
             // 
             // guna2Button12
             // 
-            this.guna2Button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button12.Animated = true;
             this.guna2Button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.guna2Button12.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -423,12 +404,30 @@
             this.guna2Button12.Visible = false;
             this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
+            // docDocumentViewer1
+            // 
+            this.docDocumentViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.docDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.docDocumentViewer1.EnableHandTools = false;
+            this.docDocumentViewer1.Location = new System.Drawing.Point(355, 76);
+            this.docDocumentViewer1.Name = "docDocumentViewer1";
+            this.docDocumentViewer1.Size = new System.Drawing.Size(771, 538);
+            this.docDocumentViewer1.TabIndex = 101;
+            this.docDocumentViewer1.Text = "docDocumentViewer1";
+            this.docDocumentViewer1.ToPdfParameterList = null;
+            this.docDocumentViewer1.UseNewEngine = true;
+            this.docDocumentViewer1.ZoomMode = Spire.DocViewer.Forms.ZoomMode.Default;
+            this.docDocumentViewer1.Click += new System.EventHandler(this.docDocumentViewer1_Click);
+            // 
             // wordFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1142, 627);
+            this.Controls.Add(this.docDocumentViewer1);
             this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.label15);
@@ -445,7 +444,6 @@
             this.Controls.Add(this.btnShareFile);
             this.Controls.Add(this.lblUserComment);
             this.Controls.Add(this.guna2Button8);
-            this.Controls.Add(this.docDocumentViewer1);
             this.Controls.Add(this.lblUploaderName);
             this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.guna2Button3);
@@ -469,15 +467,14 @@
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label lblUploaderName;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
-        public Guna.UI2.WinForms.Guna2Button guna2Button3;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private System.Windows.Forms.Label lblFileName;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        private Spire.DocViewer.Forms.DocDocumentViewer docDocumentViewer1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button8;
         private System.Windows.Forms.Label lblUserComment;
-        public Guna.UI2.WinForms.Guna2Button btnShareFile;
+        private Guna.UI2.WinForms.Guna2Button btnShareFile;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -489,7 +486,8 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        public Guna.UI2.WinForms.Guna2Button btnEditComment;
-        public Guna.UI2.WinForms.Guna2Button guna2Button12;
+        private Guna.UI2.WinForms.Guna2Button btnEditComment;
+        private Guna.UI2.WinForms.Guna2Button guna2Button12;
+        private Spire.DocViewer.Forms.DocDocumentViewer docDocumentViewer1;
     }
 }

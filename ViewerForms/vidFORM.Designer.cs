@@ -625,19 +625,19 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
-        public Guna.UI2.WinForms.Guna2Button guna2Button3;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label lblFileName;
-        public Guna.UI2.WinForms.Guna2Button btnPlayVideo;
+        private Guna.UI2.WinForms.Guna2Button btnPlayVideo;
         private System.Windows.Forms.Label lblUploaderName;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
-        public Guna.UI2.WinForms.Guna2Button btnPauseVideo;
+        private Guna.UI2.WinForms.Guna2Button btnPauseVideo;
         private LibVLCSharp.WinForms.VideoView videoViewer;
         private System.Windows.Forms.Label lblUserComment;
-        public Guna.UI2.WinForms.Guna2Button btnShareFile;
+        private Guna.UI2.WinForms.Guna2Button btnShareFile;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
@@ -646,15 +646,15 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label7;
-        public Guna.UI2.WinForms.Guna2Button guna2Button8;
-        public Guna.UI2.WinForms.Guna2Button guna2Button9;
+        private Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private Guna.UI2.WinForms.Guna2Button guna2Button9;
         private Guna.UI2.WinForms.Guna2TrackBar guna2TrackBar1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
-        public Guna.UI2.WinForms.Guna2Button btnReplayVideo;
+        private Guna.UI2.WinForms.Guna2Button btnReplayVideo;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        public Guna.UI2.WinForms.Guna2Button btnEditComment;
-        public Guna.UI2.WinForms.Guna2Button guna2Button12;
+        private Guna.UI2.WinForms.Guna2Button btnEditComment;
+        private Guna.UI2.WinForms.Guna2Button guna2Button12;
     }
 }

@@ -360,7 +360,7 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Label lblUploaderName;
         private System.Windows.Forms.Label label4;
@@ -374,9 +374,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label7;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        public Guna.UI2.WinForms.Guna2Button btnEditComment;
-        public Guna.UI2.WinForms.Guna2Button guna2Button9;
+        private Guna.UI2.WinForms.Guna2Button btnEditComment;
+        private Guna.UI2.WinForms.Guna2Button guna2Button9;
     }
 }

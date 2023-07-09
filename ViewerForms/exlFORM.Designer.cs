@@ -549,15 +549,15 @@
         }
 
         #endregion
-        public Guna.UI2.WinForms.Guna2Button guna2Button3;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
         private System.Windows.Forms.DataGridView dataGridView1;
         private Guna.UI2.WinForms.Guna2ComboBox guna2ComboBox1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button8;
-        public Guna.UI2.WinForms.Guna2Button btnShareFile;
+        private Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private Guna.UI2.WinForms.Guna2Button btnShareFile;
         private System.Windows.Forms.Label lblUploaderName;
         private System.Windows.Forms.Label lblUserComment;
         private System.Windows.Forms.Label lblFileName;
@@ -569,11 +569,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label6;
-        public Guna.UI2.WinForms.Guna2Button btnSaveChanges;
+        private Guna.UI2.WinForms.Guna2Button btnSaveChanges;
         private System.Windows.Forms.Label lblFileSize;
         private System.Windows.Forms.Label label8;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        public Guna.UI2.WinForms.Guna2Button btnEditComment;
-        public Guna.UI2.WinForms.Guna2Button guna2Button9;
+        private Guna.UI2.WinForms.Guna2Button btnEditComment;
+        private Guna.UI2.WinForms.Guna2Button guna2Button9;
     }
 }

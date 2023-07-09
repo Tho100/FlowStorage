@@ -49,8 +49,6 @@ namespace FlowSERVER1 {
             this.DirectoryName = directoryName;
             this.TableName = tableName;
 
-            MessageBox.Show(fileName + "\n" + tableName,directoryName);
-
             if (IsFromSharing == true) {
 
                 btnEditComment.Visible = true;
@@ -148,8 +146,9 @@ namespace FlowSERVER1 {
                     var _dataSource = _formatter.Deserialize(_stream);
                     dataGridView1.DataSource = _dataSource;
 
-                } catch (Exception) {
-                    MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                } catch (Exception eq) {
+                    MessageBox.Show(eq.Message);
+                    //MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
 
             }
@@ -283,6 +282,16 @@ namespace FlowSERVER1 {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName);
+                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                else if (TableName == "ps_info_excel") {
+
+                    const string updateQue = "UPDATE ps_info_excel SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
+                        command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }

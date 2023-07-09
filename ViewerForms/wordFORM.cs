@@ -195,5 +195,9 @@ namespace FlowSERVER1 {
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
 
         }
+
+        private void docDocumentViewer1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

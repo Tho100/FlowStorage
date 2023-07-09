@@ -524,11 +524,11 @@
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label lblUploaderUsername;
-        public Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
         private System.Windows.Forms.Label lblFileName;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
-        public Guna.UI2.WinForms.Guna2Button guna2Button8;
-        public System.Windows.Forms.PictureBox pictureBox3;
+        private Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button8;
+        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblUserComment;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
@@ -544,8 +544,8 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
-        public Guna.UI2.WinForms.Guna2Button btnEditComment;
-        public Guna.UI2.WinForms.Guna2Button guna2Button7;
+        private Guna.UI2.WinForms.Guna2Button btnEditComment;
+        private Guna.UI2.WinForms.Guna2Button guna2Button7;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private Guna.UI2.WinForms.Guna2Button btnPauseAudio;
         private Guna.UI2.WinForms.Guna2Button btnPlayAudio;
