@@ -1,15 +1,9 @@
-﻿using Guna.UI2.WinForms;
+﻿using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
@@ -52,11 +46,11 @@ namespace FlowSERVER1 {
                 if(authcase0 == retrieveCase().ElementAt(0) && authcase1 == retrieveCase().ElementAt(1)) {
                     saveFiles(retrieveRecov());
                 } else {
-                    MessageBox.Show("Password or PIN is incorrect.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    new CustomAlert(title: "Export failed", subheader: "Password or PIN is incorrect.").Show();
                 }
 
             } catch (Exception) {
-                MessageBox.Show("Failed to export recovery key.","Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                new CustomAlert(title: "Export failed", subheader: "An unknown error occurred, are you connected to the internet?").Show();
             }
         }
 
@@ -98,6 +92,10 @@ namespace FlowSERVER1 {
             if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox2.Text, "[^0-9]")) {
                 guna2TextBox2.Text = guna2TextBox2.Text.Remove(guna2TextBox2.Text.Length - 1);
             }
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+
         }
     }
 }

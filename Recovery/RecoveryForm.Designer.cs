@@ -143,6 +143,7 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(353, 274);
             this.guna2Panel1.TabIndex = 38;
+            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // guna2Button1
             // 
@@ -261,7 +262,7 @@
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 336);
             this.guna2VSeparator1.TabIndex = 45;
             // 
-            // RecovFORM
+            // RecoveryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -277,7 +278,7 @@
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RecovFORM";
+            this.Name = "RecoveryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backup Recovery Key";
             this.Load += new System.EventHandler(this.RecovFORM_Load);

@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
-using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
 
@@ -55,8 +51,6 @@ namespace FlowSERVER1 {
             fileExtension = _FileTitle.Split('.').Last();
 
             try {
-
-                List<String> _base64Encoded = new List<string>();
 
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
 

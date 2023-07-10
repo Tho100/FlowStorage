@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.IO;
-using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public partial class msiFORM : Form {
 
-        public string _TableName;
-        public string _DirectoryName;
+        public string TableName;
+        public string DirectoryName;
 
         public msiFORM(String fileName,String tableName, String directoryName,String uploaderUsername, bool _isFromShared = false) {
             InitializeComponent();
+            this.TableName = tableName;
+            this.DirectoryName = directoryName;
         }
 
         private void msiFORM_Load(object sender, EventArgs e) {
@@ -30,7 +22,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirectoryName);
+            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName);
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {

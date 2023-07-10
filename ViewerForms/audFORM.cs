@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using System.IO;
-using System.Globalization;
-using System.Diagnostics;
 using System.Media;
 using NAudio.Wave;
 using System.Linq;
-using System.Drawing;
-using System.Dynamic;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Text.RegularExpressions;
-using Stripe.Terminal;
-using System.Timers;
+
 using FlowSERVER1.Helper; 
 using FlowSERVER1.Global;
 using FlowSERVER1.AlertForms;
@@ -22,8 +14,8 @@ using FlowSERVER1.AlertForms;
 namespace FlowSERVER1 {
     public partial class audFORM : Form {
 
-        private string _TabName = "";
-        private string _DirName = "";
+        private string TableName;
+        private string DirectoryName;
 
         private bool isFromShared;
         private bool IsFromSharing;
@@ -37,8 +29,8 @@ namespace FlowSERVER1 {
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this._TabName = tableName;
-            this._DirName = directoryName;
+            this.TableName = tableName;
+            this.DirectoryName = directoryName;
             this.isFromShared = _isFromShared;
             this.IsFromSharing = _isFromSharing;
 
@@ -128,7 +120,7 @@ namespace FlowSERVER1 {
 
                     pictureBox3.Enabled = true;
 
-                    byte[] byteAud = LoaderModel.LoadFile(_TabName, _DirName, lblFileName.Text, isFromShared);
+                    byte[] byteAud = LoaderModel.LoadFile(TableName, DirectoryName, lblFileName.Text, isFromShared);
 
                     await setupPlayer(audType, byteAud);
 
@@ -246,7 +238,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TabName, _DirName,isFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName, isFromShared);
             this.TopMost = true;
         }
 
@@ -268,7 +260,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if (_TabName == "upload_info_directory") {
+            if (TableName == "upload_info_directory") {
 
                 Application.OpenForms
                     .OfType<Form>()
@@ -290,18 +282,12 @@ namespace FlowSERVER1 {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TabName, _DirName);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
             _showSharingFileFORM.Show();
         }
 
         private void label7_Click(object sender, EventArgs e) {
 
-        }
-
-        private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
-            //int position = guna2TrackBar1.Value;
-            //_getSoundPlayer.Stop(); // Stop the current playing audio
-            //setupPlayer(_audType, _getByteAud, position);
         }
 
         private void label4_Click(object sender, EventArgs e) {

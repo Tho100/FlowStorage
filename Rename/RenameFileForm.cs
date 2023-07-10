@@ -15,7 +15,6 @@ namespace FlowSERVER1 {
     public partial class RenameFileForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        
         private string titleFile {get; set; }
         private string tableName{ get; set; }
         private string panelName { get; set; }

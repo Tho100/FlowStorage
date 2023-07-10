@@ -1,11 +1,7 @@
 ﻿using Guna.UI2.WinForms;
-using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1.Helper {

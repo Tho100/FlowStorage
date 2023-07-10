@@ -1,37 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
 using MySql.Data.MySqlClient;
-using System.IO;
-using System.Text.RegularExpressions;
+
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
     public partial class apkFORM : Form {
 
-        readonly private MySqlConnection con = ConnectionModel.con;
-
-        private string _TableName;
-        private string _DirName;
+        private string TableName;
+        private string DirectoryName;
         private bool IsFromSharing;   
-        private bool isFromShared = false;
 
         public apkFORM(String fileName, String uploaderName,String tableName, String directoryName, bool _isFromShared = false, bool _isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this._TableName = tableName;
-            this._DirName = directoryName;
-            this.isFromShared = _isFromShared;
+            this.TableName = tableName;
+            this.DirectoryName = directoryName;            
             this.IsFromSharing = _isFromSharing;
 
             if (_isFromShared == true) {
@@ -82,7 +69,7 @@ namespace FlowSERVER1 {
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
                 ShowAlert.Show();
 
-                SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName);
 
             } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
@@ -91,7 +78,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing,_TableName,_DirName);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing,TableName,DirectoryName);
             _showSharingFileFORM.Show();
         }
 
@@ -116,6 +103,10 @@ namespace FlowSERVER1 {
             guna2Button7.Visible = true;
             lblUserComment.Visible = false;
             txtFieldComment.Text = lblUserComment.Text;
+        }
+
+        private void label7_Click(object sender, EventArgs e) {
+
         }
     }
 }

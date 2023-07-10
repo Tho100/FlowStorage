@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
 
             List<String> _concludeValue = new List<String>();
 
-            string checkPassword_Query = "SELECT " + _WhichColumn + " FROM information WHERE CUST_EMAIL = @email";
+            string checkPassword_Query = $"SELECT {_WhichColumn} FROM information WHERE CUST_EMAIL = @email";
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;

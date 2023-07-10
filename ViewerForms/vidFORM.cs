@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using LibVLCSharp.Shared.MediaPlayerElement;
-using LibVLCSharp.WinForms;
 using LibVLCSharp.Shared;
 using System.Threading;
-using System.Text.RegularExpressions;
+
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 

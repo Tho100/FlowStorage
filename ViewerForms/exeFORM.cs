@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using MySql.Data;
-using System.IO;
-using System.Globalization;
-using System.Text.RegularExpressions;
+
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 
@@ -20,14 +9,12 @@ namespace FlowSERVER1 {
 
         readonly public exeFORM instance;
 
-        readonly private MySqlConnection con = ConnectionModel.con;
-
         public byte[] GlobalByte;
-        public string _TableName;
-        public string _DirectoryName;
+        public string TableName;
+        public string DirectoryName;
 
-        private bool _isFromShared;
-        private bool IsFromSharing;  
+        private bool isFromShared;
+        private bool isFromSharing;  
 
         public exeFORM(String fileName,String tableName, String directoryName, String uploaderName,bool isFromShared = false, bool _isFromSharing = false) {
 
@@ -37,10 +24,10 @@ namespace FlowSERVER1 {
 
             lblFileName.Text = fileName;
 
-            this._TableName = tableName;
-            this._DirectoryName = directoryName;
-            this._isFromShared = isFromShared;
-            this.IsFromSharing = _isFromSharing;
+            this.TableName = tableName;
+            this.DirectoryName = directoryName;
+            this.isFromShared = isFromShared;
+            this.isFromSharing = _isFromSharing;
 
             if (isFromShared == true) {
                 
@@ -82,7 +69,7 @@ namespace FlowSERVER1 {
 
         }
         private void guna2Button4_Click(object sender, EventArgs e) {
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirectoryName,_isFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName, isFromShared);
         }
 
         private void label1_Click(object sender, EventArgs e) {
@@ -96,7 +83,7 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             string[] parts = lblFileName.Text.Split('.');
             string getExtension = "." + parts[1];
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, isFromSharing, TableName, DirectoryName);
             _showSharingFileFORM.Show();
         }
 

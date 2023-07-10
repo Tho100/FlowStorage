@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics;
-using MySql;
-using MySql.Data;
 using MySql.Data.MySqlClient;
-using Guna.UI2.WinForms;
-using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading;
-using System.Text.RegularExpressions;
-using Microsoft.WindowsAPICodePack.Shell.Interop;
-using System.Security.Cryptography;
+
 using FlowSERVER1.Authentication;
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
@@ -35,11 +25,11 @@ namespace FlowSERVER1 {
 
         private string returnedAuth0 {get; set; }
         private string returnedAuth1 {get; set; }
-        private string CurrentLang {get; set; } = "";
-        private int attemptCurr {get; set; } = 0;
+        private string CurrentLang {get; set; } = null;
         private string custEmail {get; set; }
         private string custUsername { get; set; }
         private string inputGetEmail {get; set; }
+        private int attemptCurr {get; set; } = 0;
         private HomePage _form {get; set; } =  HomePage.instance;
 
         public SignInForm(SignUpForm mainForm) {
@@ -138,7 +128,7 @@ namespace FlowSERVER1 {
             accessHomePage.btnGarbageImage.Visible = true;
         }
 
-        private async Task _generateUserFolder(String userName) {
+        private async Task generateUserFolder(String userName) {
 
             string[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
             _form.lstFoldersPage.Items.AddRange(itemFolder);
@@ -259,7 +249,7 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task generateUserData() {
 
-            await _generateUserFolder(custUsername);
+            await generateUserFolder(custUsername);
         }
 
         private void HomePage_HomePageClosed(object sender, FormClosedEventArgs e) {
@@ -330,21 +320,7 @@ namespace FlowSERVER1 {
             }
 
             Globals.accountType = accountType;
-
-            if (accountType == "Basic") {
-                return "30";
-            }
-            else if (accountType == "Max") {
-                return "500";
-            }
-            else if (accountType == "Express") {
-                return "1000";
-            }
-            else if (accountType == "Supreme") {
-                return "2000";
-            }
-
-            return "0";
+            return Globals.uploadFileLimit[accountType].ToString();
         }
 
         /// <summary>
@@ -667,14 +643,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
@@ -689,10 +657,6 @@ namespace FlowSERVER1 {
 
         private void guna2CheckBox2_CheckedChanged(object sender, EventArgs e) {
 
-        }
-
-        private void guna2Button4_Click_1(object sender, EventArgs e) {
-            this.Close();
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
@@ -725,15 +689,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void label5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button5_Click(object sender, EventArgs e) {
 
         }
 
@@ -745,11 +701,6 @@ namespace FlowSERVER1 {
             this.Close();
 
         }
-
-        private void trackBar1_Scroll(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.Close();
         }

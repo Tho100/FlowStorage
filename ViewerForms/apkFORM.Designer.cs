@@ -168,6 +168,7 @@
             this.label7.Size = new System.Drawing.Size(195, 23);
             this.label7.TabIndex = 70;
             this.label7.Text = "APK File";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // pictureBox1
             // 

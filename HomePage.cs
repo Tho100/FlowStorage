@@ -33,7 +33,6 @@ namespace FlowSERVER1 {
 
         readonly private Crud crud = new Crud();
         readonly private ImageCompressor compressor = new ImageCompressor();
-        
         public static HomePage instance { get; set; } = new HomePage();
         public string publicStorageUserComment { get; set; } = null;
         public string publicStorageUserTag { get; set; } = null;
@@ -280,11 +279,18 @@ namespace FlowSERVER1 {
             }
         }
 
+        /// <summary>
+        /// (Un-Displayed when flowlayout is not empty
+        /// </summary>
         private void clearRedundane() {
             btnGarbageImage.Visible = false;
             lblEmptyHere.Visible = false;
         }
 
+        /// <summary>
+        /// (Displayed when flowlayout is empty)
+        /// Show "It's empty here" text and garbage image
+        /// </summary>
         private void showRedundane() {
             btnGarbageImage.Visible = true;
             lblEmptyHere.Visible = true;
@@ -292,14 +298,11 @@ namespace FlowSERVER1 {
 
         /// <summary>
         /// 
-        /// Generate user files on startup
+        /// Get user Home files metadata: file name, upload date
         /// 
         /// </summary>
-        /// <param name="_tableName"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="currItem"></param>
-        /// 
-
+        /// <param name="tableName"></param>
+        /// <returns></returns>
         private async Task<List<(string, string, string)>> getFileMetadataHome(string tableName) {
 
             if (GlobalsData.filesMetadataCacheHome.ContainsKey(tableName)) {
@@ -324,7 +327,16 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task buildFilePanelHome(String _tableName, String parameterName, int currItem) {
+        /// <summary>
+        /// 
+        /// Generate user Home files panel on startup
+        /// 
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="currItem"></param>
+        /// <returns></returns>
+        private async Task buildFilePanelHome(String tableName, String parameterName, int currItem) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -332,9 +344,9 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string, string)> filesInfo = await getFileMetadataHome(_tableName);
+                List<(string, string, string)> filesInfo = await getFileMetadataHome(tableName);
 
-                if (_tableName == GlobalsTable.homeImageTable) {
+                if (tableName == GlobalsTable.homeImageTable) {
 
                     if (GlobalsData.base64EncodedImageHome.Count == 0) {
 
@@ -351,7 +363,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if(_tableName == GlobalsTable.homeVideoTable) {
+                if(tableName == GlobalsTable.homeVideoTable) {
 
                     if (GlobalsData.base64EncodedThumbnailHome.Count == 0) {
 
@@ -374,14 +386,14 @@ namespace FlowSERVER1 {
 
                     EventHandler moreOptionOnPressedEvent = (sender, e) => {
                         lblFileNameOnPanel.Text = filesInfo[accessIndex].Item1;
-                        lblFileTableName.Text = _tableName;
+                        lblFileTableName.Text = tableName;
                         lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
                     };
 
                     onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                    if (_tableName == GlobalsTable.homeImageTable) {
+                    if (tableName == GlobalsTable.homeImageTable) {
 
                         if (GlobalsData.base64EncodedImageHome.Count > i) {
                             byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageHome[i]);
@@ -408,7 +420,7 @@ namespace FlowSERVER1 {
                     }
 
 
-                    if (_tableName == GlobalsTable.homeTextTable) {
+                    if (tableName == GlobalsTable.homeTextTable) {
 
                         var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
                         var textTypeToImage = Globals.textTypeToImage[getExtension];
@@ -426,7 +438,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (_tableName == GlobalsTable.homeExeTable) {
+                    if (tableName == GlobalsTable.homeExeTable) {
 
                         imageValues.Add(Globals.EXEImage);
 
@@ -438,7 +450,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(exeOnPressed);
                     }
 
-                    if (_tableName == GlobalsTable.homeVideoTable) {
+                    if (tableName == GlobalsTable.homeVideoTable) {
 
                         if(GlobalsData.base64EncodedThumbnailHome.Count > i) {
                             byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailHome[i]);
@@ -461,7 +473,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (_tableName == GlobalsTable.homeExcelTable) {
+                    if (tableName == GlobalsTable.homeExcelTable) {
 
                         imageValues.Add(Globals.EXCELImage);
 
@@ -472,7 +484,7 @@ namespace FlowSERVER1 {
 
                         onPressedEvent.Add(excelOnPressed);
                     }
-                    if (_tableName == GlobalsTable.homeAudioTable) {
+                    if (tableName == GlobalsTable.homeAudioTable) {
 
                         imageValues.Add(Globals.AudioImage);
 
@@ -484,7 +496,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (_tableName == GlobalsTable.homeApkTable) {
+                    if (tableName == GlobalsTable.homeApkTable) {
 
                         imageValues.Add(Globals.APKImage);
 
@@ -496,7 +508,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (_tableName == GlobalsTable.homePdfTable) {
+                    if (tableName == GlobalsTable.homePdfTable) {
 
                         imageValues.Add(Globals.PDFImage);
 
@@ -508,7 +520,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (_tableName == GlobalsTable.homePtxTable) {
+                    if (tableName == GlobalsTable.homePtxTable) {
 
                         imageValues.Add(Globals.PTXImage);
 
@@ -520,7 +532,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (_tableName == "file_info_msi") {
+                    if (tableName == "file_info_msi") {
 
                         imageValues.Add(Globals.MSIImage);
                     
@@ -533,7 +545,7 @@ namespace FlowSERVER1 {
                     
                     }
 
-                    if (_tableName == GlobalsTable.homeWordTable) {
+                    if (tableName == GlobalsTable.homeWordTable) {
 
                         imageValues.Add(Globals.DOCImage);
 
@@ -554,7 +566,7 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                new CustomAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.").Show();
+                buildShowAlert(title: "Something went wrong","Failed to load your files. Try to hit the refresh button.");
             }
 
         }
@@ -844,7 +856,7 @@ namespace FlowSERVER1 {
 
             } catch (Exception) {
                 CloseForm.closeForm("RetrievalAlert");
-                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
+                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
         }
 
@@ -1838,7 +1850,7 @@ namespace FlowSERVER1 {
 
             }
             catch (Exception) {
-                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
+                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
 
         }
@@ -1886,7 +1898,7 @@ namespace FlowSERVER1 {
                     string selectedFileName = Path.GetFileName(selectedItems);
 
                     if (existingLabels.Contains(selectedFileName.ToLower().Trim())) {
-                        new CustomAlert(title: "Upload Failed",$"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}").Show();
+                        buildShowAlert(title: "Upload Failed",$"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}");
                         return;
                     }
 
@@ -3297,7 +3309,7 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
+                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
         }
 
@@ -3552,7 +3564,7 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                new CustomAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.").Show();
+                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
         }
 

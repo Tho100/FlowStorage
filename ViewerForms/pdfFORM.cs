@@ -3,10 +3,8 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Linq;
-using System.Drawing;
 using System.Threading;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 
@@ -18,12 +16,9 @@ namespace FlowSERVER1 {
     /// 
     public partial class pdfFORM : Form {
 
-        private string _TableName;
-        private string _DirName;
-        private bool _IsFromShared;
+        private string TableName;
+        private string DirectoryName;
         private bool IsFromSharing;
-
-        readonly private MySqlConnection con = ConnectionModel.con;
 
         /// <summary>
         /// Load file based on table name 
@@ -33,17 +28,16 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public pdfFORM(String fileName, String tableName, String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
+        public pdfFORM(String fileName, String tableName, String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this._TableName = tableName;
-            this._DirName = directoryName;
-            this._IsFromShared = _isFromShared;
-            this.IsFromSharing = _isFromSharing;
+            this.TableName = tableName;
+            this.DirectoryName = directoryName;
+            this.IsFromSharing = isFromSharing;
 
-            if (_isFromShared == true) {
+            if (isFromShared == true) {
 
                 btnEditComment.Visible = true;
 
@@ -72,7 +66,7 @@ namespace FlowSERVER1 {
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").
                 ShowDialog()).Start();
 
-                setupPdf(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text,_isFromShared));
+                setupPdf(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text,isFromShared));
 
             } catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -131,7 +125,7 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
 
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirName);
+            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName);
 
             this.TopMost = true;
         }
@@ -171,7 +165,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirName);
+            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
             _showSharingFileFORM.Show();
         }
 
