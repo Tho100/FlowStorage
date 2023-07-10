@@ -35,7 +35,7 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2CheckBox2 = new Guna.UI2.WinForms.Guna2CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblAlert = new System.Windows.Forms.Label();
             this.guna2TextBox2 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
@@ -234,20 +234,20 @@
             this.guna2CheckBox2.UseVisualStyleBackColor = false;
             this.guna2CheckBox2.CheckedChanged += new System.EventHandler(this.guna2CheckBox2_CheckedChanged);
             // 
-            // label4
+            // lblAlert
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label4.Location = new System.Drawing.Point(57, 291);
-            this.label4.Name = "label4";
-            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label4.Size = new System.Drawing.Size(266, 20);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Password or PIN number is incorrect";
-            this.label4.Visible = false;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblAlert.BackColor = System.Drawing.Color.Transparent;
+            this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.lblAlert.Location = new System.Drawing.Point(57, 291);
+            this.lblAlert.Name = "lblAlert";
+            this.lblAlert.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAlert.Size = new System.Drawing.Size(266, 20);
+            this.lblAlert.TabIndex = 19;
+            this.lblAlert.Text = "Password or PIN number is incorrect";
+            this.lblAlert.Visible = false;
+            this.lblAlert.Click += new System.EventHandler(this.label4_Click);
             // 
             // guna2TextBox2
             // 
@@ -385,7 +385,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2CheckBox2);
             this.Controls.Add(this.guna2Button2);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblAlert);
             this.Controls.Add(this.guna2TextBox1);
             this.Controls.Add(this.guna2TextBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -404,7 +404,7 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblAlert;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
         public Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         public Guna.UI2.WinForms.Guna2Button guna2Button1;

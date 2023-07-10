@@ -386,76 +386,76 @@ namespace FlowSERVER1.Authentication {
 
                 if (existsInfosUser.Count >= 1 || existsInfosMail.Count >= 1) {
                     if (existsInfosUser.Count >= 1) {
-                        label11.Visible = true;
-                        label11.Text = "Username is taken.";
+                        lblAlertUsername.Visible = true;
+                        lblAlertUsername.Text = "Username is taken.";
                     }
                     if (existsInfosMail.Count >= 1) {
-                        label22.Visible = true;
-                        label22.Text = "Email already exists.";
+                        lblAlertEmail.Visible = true;
+                        lblAlertEmail.Text = "Email already exists.";
                     }
                 }
                 else {
 
-                    label22.Visible = false;
-                    label12.Visible = false;
-                    label11.Visible = false;
+                    lblAlertEmail.Visible = false;
+                    lblAlertPassword.Visible = false;
+                    lblAlertUsername.Visible = false;
 
                     if (_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%")) {
-                        label11.Visible = true;
-                        label11.Text = "Special characters is not allowed.";
+                        lblAlertUsername.Visible = true;
+                        lblAlertUsername.Text = "Special characters is not allowed.";
                         return;
                     }
 
                     if (String.IsNullOrEmpty(_getPin)) {
-                        label30.Visible = true;
-                        label30.Text = "Please add a PIN number.";
+                        lblAlertPin.Visible = true;
+                        lblAlertPin.Text = "Please add a PIN number.";
                         return;
                     }
 
                     if (!(_getPin.All(char.IsDigit))) {
-                        label30.Visible = true;
-                        label30.Text = "PIN must be a number.";
+                        lblAlertPin.Visible = true;
+                        lblAlertPin.Text = "PIN must be a number.";
                         return;
                     }
 
                     if (_getPin.Length != 3) {
-                        label30.Visible = true;
-                        label30.Text = "PIN Number must have 3 digits.";
+                        lblAlertPin.Visible = true;
+                        lblAlertPin.Text = "PIN Number must have 3 digits.";
                         return;
                     }
 
                     if (!validateEmailUser(_getEmail) == true) {
-                        label22.Visible = true;
-                        label22.Text = "Entered email is not valid.";
+                        lblAlertEmail.Visible = true;
+                        lblAlertEmail.Text = "Entered email is not valid.";
                         return;
                     }
 
                     if (_getUser.Length > 20) {
-                        label11.Visible = true;
-                        label11.Text = "Username character length limit is 20.";
+                        lblAlertUsername.Visible = true;
+                        lblAlertUsername.Text = "Username character length limit is 20.";
                         return;
                     }
 
                     if (_getPass.Length < 5) {
-                        label12.Visible = true;
-                        label12.Text = "Password must be longer than 5 characters.";
+                        lblAlertPassword.Visible = true;
+                        lblAlertPassword.Text = "Password must be longer than 5 characters.";
                         return;
                     }
 
                     if (String.IsNullOrEmpty(_getEmail)) {
-                        label22.Visible = true;
-                        label22.Text = "Please add your email";
+                        lblAlertEmail.Visible = true;
+                        lblAlertEmail.Text = "Please add your email";
                         return;
                     }
 
                     if (String.IsNullOrEmpty(_getPass)) {
-                        label12.Visible = true;
+                        lblAlertPassword.Visible = true;
                         return;
 
                     }
 
                     if (String.IsNullOrEmpty(_getUser)) {
-                        label11.Visible = true;
+                        lblAlertUsername.Visible = true;
                         return;
                     }
 
@@ -623,9 +623,9 @@ namespace FlowSERVER1.Authentication {
 
         private void clearRegistrationValue() {
 
-            label11.Visible = false;
-            label12.Visible = false;
-            label30.Visible = false;
+            lblAlertUsername.Visible = false;
+            lblAlertPassword.Visible = false;
+            lblAlertPin.Visible = false;
             pnlRegistration.Visible = false;
 
             accessHomePage.lblLimitUploadText.Text = "25";

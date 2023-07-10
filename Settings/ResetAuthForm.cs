@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
@@ -71,26 +72,26 @@ namespace FlowSERVER1 {
                 var _getOldPass = guna2TextBox2.Text;
 
                 if(_getNewPass != _getVerify) {
-                    label4.Visible = true;
-                    label4.Text = "New password does not match.";
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "New password does not match.";
                     return;
                 }
 
                 if(_getNewPass == String.Empty) {
-                    label4.Visible = true;
-                    label4.Text = "Please add a new password.";
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "Please add a new password.";
                     return;
                 }
 
                 if(_getVerify == String.Empty) {
-                    label4.Visible = true;
-                    label4.Text = "New password does not match.";
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "New password does not match.";
                     return;
                 }
 
                 if(authReturnOriginal(CurrentUsername) != computeAuthCase(_getOldPass)) {
-                    label4.Visible = true;
-                    label4.Text = "Password is incorrect.";
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "Password is incorrect.";
                     return;
                 }
 
@@ -120,7 +121,7 @@ namespace FlowSERVER1 {
 
             }
             catch (Exception) {
-                MessageBox.Show("There's a problem while attempting to change your password.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(title: "An error occurred", subheader: "Failed to change your password due to unknown error, are you connected to the internet?").Show();
             }
         }
 

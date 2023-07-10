@@ -16,7 +16,7 @@ using MySql.Data.MySqlClient;
 namespace FlowSERVER1 {
     public partial class ChangeUsernameForm : Form {
 
-        private String CurrentUsername;
+        private string CurrentUsername;
 
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private Crud crud = new Crud();
@@ -134,26 +134,26 @@ namespace FlowSERVER1 {
                 var _getCustPass = guna2TextBox2.Text;
 
                 if(_getNewUsername == CurrentUsername) {
-                    label4.Text = "Please enter a new username.";
-                    label4.Visible = true;
+                    lblAlert.Text = "Please enter a new username.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
                 if(_getNewUsername == String.Empty) {
-                    label4.Text = "Please enter a username.";
-                    label4.Visible = true;
+                    lblAlert.Text = "Please enter a username.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
                 if(_getCustPass == String.Empty) {
-                    label4.Text = "Please enter your password.";
-                    label4.Visible = true;
+                    lblAlert.Text = "Please enter your password.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
                 if(verifyIfNotExists(_getNewUsername) > 0) {
-                    label4.Text = "Username is taken.";
-                    label4.Visible = true;
+                    lblAlert.Text = "Username is taken.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
@@ -178,18 +178,17 @@ namespace FlowSERVER1 {
 
                     updateLocalUsername(_getNewUsername);
 
-                    CustomAlert alert = new CustomAlert(title: "Username Updated",$"You've changed your username to '{_getNewUsername}' from {CurrentUsername}. Restart to fully apply changes.");
-                    alert.Show();
+                    new CustomAlert(title: "Username Updated",$"You've changed your username to '{_getNewUsername}' from {CurrentUsername}. Restart to fully apply changes.").Show();
 
                     Globals.custUsername = _getNewUsername;
 
                 } else {
-                    label4.Visible = true;
-                    label4.Text = "Password is incorrect.";
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "Password is incorrect.";
                 }
 
             } catch (Exception) {
-                MessageBox.Show("There's a problem while attempting to change your username.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                new CustomAlert(title: "An error occurred", subheader: "Failed to change your username due to unknown error, are you connected to the internet?").Show();
             }
         }
 

@@ -28,19 +28,19 @@
             this.pnlRegistration = new Guna.UI2.WinForms.Guna2Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.label30 = new System.Windows.Forms.Label();
+            this.lblAlertPin = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtBoxAuth1Field = new Guna.UI2.WinForms.Guna2TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
+            this.lblAlertEmail = new System.Windows.Forms.Label();
             this.txtBoxEmailField = new Guna.UI2.WinForms.Guna2TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.btnOpenLoginForm = new Guna.UI2.WinForms.Guna2Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lblAlertUsername = new System.Windows.Forms.Label();
+            this.lblAlertPassword = new System.Windows.Forms.Label();
             this.txtBoxAuth0Field = new Guna.UI2.WinForms.Guna2TextBox();
             this.txtBoxUsernameField = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
@@ -69,19 +69,19 @@
             this.pnlRegistration.Controls.Add(this.bannerPictureBox);
             this.pnlRegistration.Controls.Add(this.button1);
             this.pnlRegistration.Controls.Add(this.richTextBox1);
-            this.pnlRegistration.Controls.Add(this.label30);
+            this.pnlRegistration.Controls.Add(this.lblAlertPin);
             this.pnlRegistration.Controls.Add(this.label15);
             this.pnlRegistration.Controls.Add(this.txtBoxAuth1Field);
             this.pnlRegistration.Controls.Add(this.label21);
-            this.pnlRegistration.Controls.Add(this.label22);
+            this.pnlRegistration.Controls.Add(this.lblAlertEmail);
             this.pnlRegistration.Controls.Add(this.txtBoxEmailField);
             this.pnlRegistration.Controls.Add(this.label14);
             this.pnlRegistration.Controls.Add(this.label13);
             this.pnlRegistration.Controls.Add(this.label16);
             this.pnlRegistration.Controls.Add(this.label23);
             this.pnlRegistration.Controls.Add(this.btnOpenLoginForm);
-            this.pnlRegistration.Controls.Add(this.label11);
-            this.pnlRegistration.Controls.Add(this.label12);
+            this.pnlRegistration.Controls.Add(this.lblAlertUsername);
+            this.pnlRegistration.Controls.Add(this.lblAlertPassword);
             this.pnlRegistration.Controls.Add(this.txtBoxAuth0Field);
             this.pnlRegistration.Controls.Add(this.txtBoxUsernameField);
             this.pnlRegistration.Controls.Add(this.guna2Button11);
@@ -110,17 +110,17 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.Visible = false;
             // 
-            // label30
+            // lblAlertPin
             // 
-            this.label30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label30.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label30.Location = new System.Drawing.Point(990, 471);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(214, 20);
-            this.label30.TabIndex = 48;
-            this.label30.Text = "PIN Number must have 3 digits.";
-            this.label30.Visible = false;
+            this.lblAlertPin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.lblAlertPin.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlertPin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.lblAlertPin.Location = new System.Drawing.Point(990, 471);
+            this.lblAlertPin.Name = "lblAlertPin";
+            this.lblAlertPin.Size = new System.Drawing.Size(214, 20);
+            this.lblAlertPin.TabIndex = 48;
+            this.lblAlertPin.Text = "PIN Number must have 3 digits.";
+            this.lblAlertPin.Visible = false;
             // 
             // label15
             // 
@@ -172,17 +172,17 @@
             this.label21.TabIndex = 41;
             this.label21.Text = "Email";
             // 
-            // label22
+            // lblAlertEmail
             // 
-            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label22.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label22.Location = new System.Drawing.Point(634, 359);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(338, 20);
-            this.label22.TabIndex = 43;
-            this.label22.Text = "Please add email";
-            this.label22.Visible = false;
+            this.lblAlertEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.lblAlertEmail.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlertEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.lblAlertEmail.Location = new System.Drawing.Point(634, 359);
+            this.lblAlertEmail.Name = "lblAlertEmail";
+            this.lblAlertEmail.Size = new System.Drawing.Size(338, 20);
+            this.lblAlertEmail.TabIndex = 43;
+            this.lblAlertEmail.Text = "Please add email";
+            this.lblAlertEmail.Visible = false;
             // 
             // txtBoxEmailField
             // 
@@ -276,29 +276,29 @@
             this.btnOpenLoginForm.Text = "Sign In";
             this.btnOpenLoginForm.Click += new System.EventHandler(this.guna2Button10_Click);
             // 
-            // label11
+            // lblAlertUsername
             // 
-            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label11.Location = new System.Drawing.Point(636, 251);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(415, 20);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "Please add username";
-            this.label11.Visible = false;
+            this.lblAlertUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.lblAlertUsername.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlertUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.lblAlertUsername.Location = new System.Drawing.Point(636, 251);
+            this.lblAlertUsername.Name = "lblAlertUsername";
+            this.lblAlertUsername.Size = new System.Drawing.Size(415, 20);
+            this.lblAlertUsername.TabIndex = 20;
+            this.lblAlertUsername.Text = "Please add username";
+            this.lblAlertUsername.Visible = false;
             // 
-            // label12
+            // lblAlertPassword
             // 
-            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label12.Location = new System.Drawing.Point(636, 471);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(336, 20);
-            this.label12.TabIndex = 19;
-            this.label12.Text = "Please add password";
-            this.label12.Visible = false;
+            this.lblAlertPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.lblAlertPassword.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlertPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.lblAlertPassword.Location = new System.Drawing.Point(636, 471);
+            this.lblAlertPassword.Name = "lblAlertPassword";
+            this.lblAlertPassword.Size = new System.Drawing.Size(336, 20);
+            this.lblAlertPassword.TabIndex = 19;
+            this.lblAlertPassword.Text = "Please add password";
+            this.lblAlertPassword.Visible = false;
             // 
             // txtBoxAuth0Field
             // 
@@ -397,19 +397,19 @@
         public Guna.UI2.WinForms.Guna2Panel pnlRegistration;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label lblAlertPin;
         private System.Windows.Forms.Label label15;
         public Guna.UI2.WinForms.Guna2TextBox txtBoxAuth1Field;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label lblAlertEmail;
         public Guna.UI2.WinForms.Guna2TextBox txtBoxEmailField;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label23;
         public Guna.UI2.WinForms.Guna2Button btnOpenLoginForm;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblAlertUsername;
+        private System.Windows.Forms.Label lblAlertPassword;
         public Guna.UI2.WinForms.Guna2TextBox txtBoxAuth0Field;
         public Guna.UI2.WinForms.Guna2TextBox txtBoxUsernameField;
         public Guna.UI2.WinForms.Guna2Button guna2Button11;

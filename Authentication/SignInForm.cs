@@ -113,7 +113,7 @@ namespace FlowSERVER1 {
             Globals.custUsername = custUsername;
             Globals.custEmail = custEmail;
 
-            garbageButton.Visible = itsEmptyHereLabel.Visible = label4.Visible = false;
+            garbageButton.Visible = itsEmptyHereLabel.Visible = lblAlert.Visible = false;
 
             buildGreetingLabel();
 
@@ -179,7 +179,7 @@ namespace FlowSERVER1 {
 
             }
             catch (Exception) {
-                label4.Visible = true;
+                lblAlert.Visible = true;
             }
 
             if (EncryptionModel.computeAuthCase(inputAuth0) == returnedAuth0 &&
@@ -235,7 +235,7 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         private void closeFormOnLimit() {
-            label4.Visible = true;
+            lblAlert.Visible = true;
             if (attemptCurr == 5) {
                 this.Close();
             }

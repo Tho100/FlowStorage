@@ -35,7 +35,7 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2TextBox3 = new Guna.UI2.WinForms.Guna2TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblAlert = new System.Windows.Forms.Label();
             this.guna2TextBox2 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -112,7 +112,7 @@
             this.guna2Panel1.Controls.Add(this.guna2Button2);
             this.guna2Panel1.Controls.Add(this.guna2TextBox3);
             this.guna2Panel1.Controls.Add(this.label5);
-            this.guna2Panel1.Controls.Add(this.label4);
+            this.guna2Panel1.Controls.Add(this.lblAlert);
             this.guna2Panel1.Controls.Add(this.guna2TextBox2);
             this.guna2Panel1.Controls.Add(this.guna2TextBox1);
             this.guna2Panel1.Controls.Add(this.guna2Button1);
@@ -231,19 +231,19 @@
             this.label5.TabIndex = 20;
             this.label5.Text = "Current Username";
             // 
-            // label4
+            // lblAlert
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.label4.Location = new System.Drawing.Point(85, 279);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(125, 17);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Username is taken.";
-            this.label4.Visible = false;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.lblAlert.AutoSize = true;
+            this.lblAlert.BackColor = System.Drawing.Color.Transparent;
+            this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.lblAlert.Location = new System.Drawing.Point(85, 282);
+            this.lblAlert.Name = "lblAlert";
+            this.lblAlert.Size = new System.Drawing.Size(125, 17);
+            this.lblAlert.TabIndex = 19;
+            this.lblAlert.Text = "Username is taken.";
+            this.lblAlert.Visible = false;
+            this.lblAlert.Click += new System.EventHandler(this.label4_Click);
             // 
             // guna2TextBox2
             // 
@@ -378,7 +378,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
         private System.Windows.Forms.Label label3;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblAlert;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
         public Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         public Guna.UI2.WinForms.Guna2Button guna2Button1;
