@@ -58,8 +58,9 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
+
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
@@ -82,7 +83,6 @@ namespace FlowSERVER1 {
             }
 
             catch (Exception) {
-
                 new CustomAlert(title: "Failed to load this workbook",subheader: "It may be broken or unsupported format.").Show();
             }
         }
@@ -109,6 +109,7 @@ namespace FlowSERVER1 {
                 using (MemoryStream _toStream = new MemoryStream(_getByte)) {
                     using (XLWorkbook workBook = new XLWorkbook(_toStream)) {
                         var worksheetNames = workBook.Worksheets;
+
                         if (onlyOnceVarible == 1) {
                             guna2ComboBox1.Items.AddRange(worksheetNames.ToArray());
                         }
@@ -147,21 +148,12 @@ namespace FlowSERVER1 {
                     dataGridView1.DataSource = _dataSource;
 
                 } catch (Exception eq) {
-                    MessageBox.Show(eq.Message);
-                    //MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    guna2TextBox1.Text = eq.Message;
+
+                    MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
 
             }
-        }
-
-        /// <summary>
-        /// Change workbook sheet on combobox selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            _changedIndex = guna2ComboBox1.SelectedIndex;
-            generateSheet(_sheetsByte);
         }
 
         private void Form5_Load(object sender, EventArgs e) {
@@ -183,14 +175,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 0;
             this.WindowState = FormWindowState.Maximized;
@@ -198,29 +182,9 @@ namespace FlowSERVER1 {
             guna2Button3.Visible = true;
         }
 
-        private void spreadsheet1_Load(object sender, EventArgs e) {
-
-        }
-
-        private void spreadsheet1_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
             SaverModel.SaveSelectedFile(lblFileName.Text,TableName,DirectoryName);
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-
-        }
-
-        private void spreadsheet1_Load_1(object sender, EventArgs e) {
-
-        }
-
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e) {
-
         }
 
         private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e) {
@@ -353,6 +317,16 @@ namespace FlowSERVER1 {
 
         private void guna2Separator1_Click(object sender, EventArgs e) {
 
+        }
+
+        /// <summary>
+        /// Change workbook sheet on combobox selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2ComboBox1_SelectedIndexChanged_1(object sender, EventArgs e) {
+            _changedIndex = guna2ComboBox1.SelectedIndex;
+            generateSheet(_sheetsByte);
         }
     }
 }

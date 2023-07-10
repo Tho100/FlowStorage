@@ -564,7 +564,7 @@
             this.lblGreetingText.ForeColor = System.Drawing.Color.LightGray;
             this.lblGreetingText.Location = new System.Drawing.Point(285, 25);
             this.lblGreetingText.Name = "lblGreetingText";
-            this.lblGreetingText.Size = new System.Drawing.Size(279, 30);
+            this.lblGreetingText.Size = new System.Drawing.Size(351, 30);
             this.lblGreetingText.TabIndex = 18;
             this.lblGreetingText.Text = "Good morning Aqweqweshy :)";
             this.lblGreetingText.Click += new System.EventHandler(this.label1_Click);
@@ -1550,6 +1550,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Flowstorage";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HomePage_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();

@@ -216,8 +216,7 @@ namespace FlowSERVER1 {
                 publicStorageUserComment = null;
             }
 
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+            catch (Exception) {
                 buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
             }
         }
@@ -299,6 +298,31 @@ namespace FlowSERVER1 {
         /// <param name="_tableName"></param>
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
+        /// 
+
+        private async Task<List<(string, string, string)>> getFileMetadataHome(string tableName) {
+
+            if (GlobalsData.filesMetadataCacheHome.ContainsKey(tableName)) {
+                return GlobalsData.filesMetadataCacheHome[tableName];
+            }
+            else {
+                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {tableName} WHERE CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+                        while (await reader.ReadAsync()) {
+                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                            string uploadDate = reader.GetString(1);
+                            filesInfo.Add((fileName, uploadDate, string.Empty));
+                        }
+
+                        GlobalsData.filesMetadataCacheHome[tableName] = filesInfo;
+                        return filesInfo;
+                    }
+                }
+            }
+        }
 
         private async Task buildFilePanelHome(String _tableName, String parameterName, int currItem) {
 
@@ -308,23 +332,9 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+                List<(string, string, string)> filesInfo = await getFileMetadataHome(_tableName);
 
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {_tableName} WHERE CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string, string)> tuplesList = new List<(string, string, string)>();
-                        while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            tuplesList.Add((fileName, uploadDate, String.Empty));
-                        }
-                        filesInfo.AddRange(tuplesList);
-                    }
-                }
-
-                if(_tableName == GlobalsTable.homeImageTable) {
+                if (_tableName == GlobalsTable.homeImageTable) {
 
                     if (GlobalsData.base64EncodedImageHome.Count == 0) {
 
@@ -406,7 +416,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender,e) => {
 
-                            txtFORM displayPic = new txtFORM("IGNORETHIS", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1,"null",Globals.custUsername);
+                            txtFORM displayPic = new txtFORM("NOT_NULL", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1,"null",Globals.custUsername);
                             displayPic.Show();
                      
                             clearRedundane();
@@ -1049,8 +1059,7 @@ namespace FlowSERVER1 {
         /// generate panel for selected file
         /// 
         /// </summary>
-
-        // Add File  
+ 
         int curr = 0;
         int txtCurr = 0;
         int exeCurr = 0;
@@ -1073,8 +1082,6 @@ namespace FlowSERVER1 {
             int curFilesCount = flwLayoutHome.Controls.Count;
             if (open.ShowDialog() == DialogResult.OK) { 
 
-                List<string> _filValues = open.FileNames.Select(Path.GetFileName).ToList();
-
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     Form bgBlur = new Form();
                     using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(Globals.accountType)) {
@@ -1096,8 +1103,6 @@ namespace FlowSERVER1 {
                         bgBlur.Dispose();
                     };
 
-                    _filValues.Clear();
-
                 } else {
 
                     HashSet<string> existingLabels = new HashSet<string>(flwLayoutHome.Controls
@@ -1105,14 +1110,14 @@ namespace FlowSERVER1 {
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Select(label => label.Text.ToLower()));
 
+                    GlobalsData.filesMetadataCacheHome.Clear();
+
                     foreach (var selectedItems in open.FileNames) {
 
                         string selectedFileName = Path.GetFileName(selectedItems);
                         if (existingLabels.Contains(selectedFileName.ToLower().Trim())) {
                             continue;
                         }
-
-                        _filValues.Add(Path.GetFileName(selectedItems));
 
                         getName = Path.GetFileName(selectedItems);
                         retrieved = Path.GetExtension(selectedItems); 
@@ -1212,6 +1217,7 @@ namespace FlowSERVER1 {
                                 if (nameTable == GlobalsTable.homeImageTable) {
 
                                     GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
+
                                     await insertFileData(keyVal, nameTable);
 
                                     textboxPic.Image = new Bitmap(selectedItems);
@@ -1240,7 +1246,7 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Click += (sender_t, e_t) => {
 
-                                        txtFORM txtFormShow = new txtFORM("IGNORETHIS", GlobalsTable.homeTextTable, filePath,"null",Globals.custUsername);
+                                        txtFORM txtFormShow = new txtFORM("NOT_NULL", GlobalsTable.homeTextTable, filePath,"null",Globals.custUsername);
                                         txtFormShow.Show();
                                     };
                                 }
@@ -1364,6 +1370,7 @@ namespace FlowSERVER1 {
                             fileSizeInMB = (_toByte.Length/1024)/1024;
 
                             if (Globals.imageTypes.Contains(retrieved)) {
+
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
@@ -1477,10 +1484,36 @@ namespace FlowSERVER1 {
                         lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
                     }
                 }
+
             }
 
             buildRedundaneVisibility();
             closeUploadAlert();
+        }
+
+        private async Task<List<(string, string, string)>> getFileMetadataPublicStorage(string tableName) {
+
+            if (GlobalsData.filesMetadataCachePs.ContainsKey(tableName)) {
+                return GlobalsData.filesMetadataCachePs[tableName];
+            }
+            else {
+
+                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {tableName}";
+                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+                        while (await reader.ReadAsync()) {
+                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                            string uploadDate = reader.GetString(1);
+                            string tagValue = reader.GetString(2);
+                            filesInfo.Add((fileName, uploadDate, tagValue));
+                        }
+
+                        GlobalsData.filesMetadataCachePs[tableName] = filesInfo;
+                        return filesInfo;
+                    }
+                }
+            }
         }
 
         private async Task buildFilePanelPublicStorage(String _tableName, String parameterName, int currItem, bool isFromMyPs = false) {
@@ -1491,36 +1524,24 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+                List<(string, string, string)> filesInfo;
 
-                string selectFileDataQuery = null;
+                if(isFromMyPs == false) {
+                    filesInfo = await getFileMetadataPublicStorage(_tableName);
+                } else {
+                    filesInfo = new List<(string,string,string)>();
+                }
 
                 if(isFromMyPs == true) {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
                 }
 
-                if(isFromMyPs == false) {
+                if(isFromMyPs) {
 
-                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {_tableName}";
+                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {_tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
-                        using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            List<(string, string, string)> tuplesList = new List<(string, string, string)>();
-                            while (await reader.ReadAsync()) {
-                                string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                                string uploadDate = reader.GetString(1);
-                                string tagValue = reader.GetString(2);
-                                tuplesList.Add((fileName, uploadDate, tagValue));
-                            }
-                            filesInfo.AddRange(tuplesList);
-                        }
-                    }
-
-                } else {
-
-                    selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {_tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username",Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             List<(string, string, string)> tuplesList = new List<(string, string, string)>();
                             while (await reader.ReadAsync()) {
@@ -1533,7 +1554,7 @@ namespace FlowSERVER1 {
                         }
                     }
                 }
-
+                
                 List<string> usernameList = new List<string>();
 
                 string selectUploaderNameQuery = null;
@@ -1677,7 +1698,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            txtFORM displayPic = new txtFORM("IGNORETHIS", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
+                            txtFORM displayPic = new txtFORM("NOT_NULL", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
                             displayPic.Show();
 
 
@@ -1832,8 +1853,6 @@ namespace FlowSERVER1 {
             int curFilesCount = flwLayoutHome.Controls.Count;
             if (open.ShowDialog() == DialogResult.OK) {
 
-                List<string> _filValues = open.FileNames.Select(Path.GetFileName).ToList();
-
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     Form bgBlur = new Form();
                     using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(Globals.accountType)) {
@@ -1855,8 +1874,6 @@ namespace FlowSERVER1 {
                         bgBlur.Dispose();
                     };
 
-                    _filValues.Clear();
-
                 }
                 else {
 
@@ -1873,7 +1890,7 @@ namespace FlowSERVER1 {
                         return;
                     }
 
-                    _filValues.Add(Path.GetFileName(selectedItems));
+                    GlobalsData.filesMetadataCachePs.Clear();
 
                     getName = Path.GetFileName(selectedItems);
                     retrieved = Path.GetExtension(selectedItems);
@@ -1997,7 +2014,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Click += (sender_t, e_t) => {
 
-                                    txtFORM txtFormShow = new txtFORM("IGNORETHIS", "ps_info_text", filePath, "null", Globals.custUsername);
+                                    txtFORM txtFormShow = new txtFORM("NOT_NULL", "ps_info_text", filePath, "null", Globals.custUsername);
                                     txtFormShow.Show();
                                 };
                             }
@@ -2293,8 +2310,9 @@ namespace FlowSERVER1 {
                 } else {
                     MessageBox.Show("You can only upload a file on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
-            } catch (Exception) {
-                buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                //buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
             }
                 
         }
@@ -2789,9 +2807,7 @@ namespace FlowSERVER1 {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
-
                         clearRedundane();
-
                         await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
                     }
                     else {
@@ -2801,7 +2817,6 @@ namespace FlowSERVER1 {
             }
 
             buildRedundaneVisibility();
-
         }
 
         private async void buildPublicStorageFiles() {
@@ -3900,6 +3915,8 @@ namespace FlowSERVER1 {
             btnDeleteFolder.Visible = false;
             flwLayoutHome.Controls.Clear();
 
+            GlobalsData.filesMetadataCacheHome.Clear();
+
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
@@ -4327,7 +4344,7 @@ namespace FlowSERVER1 {
 
                             textboxPic.Click += (sender_t, e_t) => {
 
-                                txtFORM txtFormShow = new txtFORM("IGNORETHIS", GlobalsTable.homeTextTable, filePath, "null", Globals.custUsername);
+                                txtFORM txtFormShow = new txtFORM("NOT_NULL", GlobalsTable.homeTextTable, filePath, "null", Globals.custUsername);
                                 txtFormShow.Show();
                             };
                         }
@@ -4733,6 +4750,8 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
+                    GlobalsData.filesMetadataCacheHome.Clear();
+
                 } else if (tableName == "folder_upload_info") {
 
                     const string removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
@@ -4929,6 +4948,10 @@ namespace FlowSERVER1 {
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void HomePage_FormClosing(object sender, FormClosingEventArgs e) {
 
         }
     }

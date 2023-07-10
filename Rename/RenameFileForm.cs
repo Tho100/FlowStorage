@@ -53,6 +53,8 @@ namespace FlowSERVER1 {
                     await command.ExecuteNonQueryAsync();
                 }
 
+                GlobalsData.filesMetadataCacheHome.Clear();
+
             }
             else if (tableName == "folder_upload_info") {
 
