@@ -158,13 +158,14 @@ namespace FlowSERVER1 {
 
             try {
 
-                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB,CUST_COMMENT) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value,@comment)";
+                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB,CUST_COMMENT,CUST_TAG) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value,@comment, @tag)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@date", todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
                     command.Parameters.AddWithValue("@comment", EncryptionModel.Encrypt(publicStorageUserComment));
+                    command.Parameters.AddWithValue("@tag", publicStorageUserTag);
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
                         var toBitMap = shellFile.Thumbnail.Bitmap;
@@ -1655,8 +1656,6 @@ namespace FlowSERVER1 {
                                     }
                                 }
                             }
-
-
                         }
                     }
                 }
@@ -3902,14 +3901,16 @@ namespace FlowSERVER1 {
 
                 GlobalsData.base64EncodedImageHome.Clear();
                 GlobalsData.base64EncodedThumbnailHome.Clear();
-                buildHomeFiles();
+                await refreshHomePanels();
+                //buildHomeFiles();
 
             }
             else if (lblCurrentPageText.Text == "Public Storage") {
 
                 GlobalsData.base64EncodedImagePs.Clear();
                 GlobalsData.base64EncodedThumbnailPs.Clear();
-                buildPublicStorageFiles();
+                await refreshPublicStoragePanels();
+                //buildPublicStorageFiles();
             }
 
             buildRedundaneVisibility();
@@ -3922,10 +3923,31 @@ namespace FlowSERVER1 {
             return controls.SelectMany(c => GetAllControls(c)).Concat(controls);
         }
 
+        private async Task refreshPublicStoragePanels() {
+
+            GlobalsData.filesMetadataCachePs.Clear();
+
+            foreach (string tableName in GlobalsTable.publicTablesPs) {
+                if (GlobalsTable.tableToFileTypePs.ContainsKey(tableName)) {
+                    string fileType = GlobalsTable.tableToFileTypePs[tableName];
+                    if (fileType != null) {
+
+                        clearRedundane();
+
+                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
+                    }
+                }
+            }
+
+            lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
+
+            buildRedundaneVisibility();
+
+        }
+
         private async Task refreshHomePanels() {
 
             btnDeleteFolder.Visible = false;
-            flwLayoutHome.Controls.Clear();
 
             GlobalsData.filesMetadataCacheHome.Clear();
 
@@ -3948,7 +3970,7 @@ namespace FlowSERVER1 {
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
         }
 
-        private async Task RefreshFolder() {
+        private async Task refreshFolder() {
 
             GlobalsData.base64EncodedImageFolder.Clear();
 
@@ -4030,7 +4052,7 @@ namespace FlowSERVER1 {
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
                     await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
                 } else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
-                    await RefreshFolder();
+                    await refreshFolder();
                 } else if (lblCurrentPageText.Text == "Public Storage") {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
