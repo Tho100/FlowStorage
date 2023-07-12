@@ -3821,7 +3821,7 @@ namespace FlowSERVER1 {
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName) {
+        private async Task refreshGenerateUserShared(List<string> typeValues, string dirName) {
 
             GlobalsData.base64EncodedImageSharedToMe.Clear();
             GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
@@ -3854,7 +3854,7 @@ namespace FlowSERVER1 {
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
+        private async Task refreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
 
             GlobalsData.base64EncodedImageSharedOthers.Clear();
             GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
@@ -3891,18 +3891,17 @@ namespace FlowSERVER1 {
 
             if (selectedIndex == 1 && lblCurrentPageText.Text == "Shared To Me") {
                 GlobalsData.fileTypeValuesSharedToMe.Clear();
-                await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                await refreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
             }
             else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared Files") {
                 GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                await refreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
             } 
             else if (selectedIndex == 0 && lblCurrentPageText.Text == "Home") {
 
                 GlobalsData.base64EncodedImageHome.Clear();
                 GlobalsData.base64EncodedThumbnailHome.Clear();
                 await refreshHomePanels();
-                //buildHomeFiles();
 
             }
             else if (lblCurrentPageText.Text == "Public Storage") {
@@ -3910,7 +3909,6 @@ namespace FlowSERVER1 {
                 GlobalsData.base64EncodedImagePs.Clear();
                 GlobalsData.base64EncodedThumbnailPs.Clear();
                 await refreshPublicStoragePanels();
-                //buildPublicStorageFiles();
             }
 
             buildRedundaneVisibility();
@@ -4044,13 +4042,13 @@ namespace FlowSERVER1 {
                 flwLayoutHome.Controls.Clear();
 
                 if (_selectedFolderSearch == "Home") {
-                    await refreshHomePanels();
+                    buildHomeFiles();
                 } else if (_selectedFolderSearch == "Shared To Me") {
                     GlobalsData.fileTypeValuesSharedToMe.Clear();
-                    await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                    await refreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
                 } else if (_selectedFolderSearch == "Shared Files") {
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                    await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                    await refreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
                 } else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
                     await refreshFolder();
                 } else if (lblCurrentPageText.Text == "Public Storage") {

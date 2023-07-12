@@ -57,7 +57,9 @@ namespace FlowSERVER1.ExtraForms {
             btnRandom.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
             btnMusic.FillColor = Color.DarkGray;
-            btnPolitics.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
+            btnData.FillColor = Color.DarkGray;
+            btnCreativity.FillColor = Color.DarkGray;
         }
 
         private void btnGaming_Click(object sender, EventArgs e) {
@@ -66,8 +68,10 @@ namespace FlowSERVER1.ExtraForms {
             btnRandom.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
-            btnPolitics.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
             btnMusic.FillColor = Color.DarkGray;
+            btnData.FillColor = Color.DarkGray;
+            btnCreativity.FillColor = Color.DarkGray;
         }
 
         private void btnSoftware_Click(object sender, EventArgs e) {
@@ -76,18 +80,22 @@ namespace FlowSERVER1.ExtraForms {
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
-            btnPolitics.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
             btnMusic.FillColor = Color.DarkGray;
+            btnData.FillColor = Color.DarkGray;
+            btnCreativity.FillColor = Color.DarkGray;
         }
 
         private void btnPolitics_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Politics";
-            btnPolitics.FillColor = Color.Firebrick;
+            HomePage.instance.publicStorageUserTag = "Education";
+            btnEducation.FillColor = Color.Firebrick;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
             btnMusic.FillColor = Color.DarkGray;
+            btnData.FillColor = Color.DarkGray;
+            btnCreativity.FillColor = Color.DarkGray;
         }
 
         private void btnRandom_Click(object sender, EventArgs e) {
@@ -97,7 +105,9 @@ namespace FlowSERVER1.ExtraForms {
             btnEnter.FillColor = Color.DarkGray;
             btnMusic.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
-            btnPolitics.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
+            btnData.FillColor = Color.DarkGray;
+            btnCreativity.FillColor = Color.DarkGray;
         }
 
         private void guna2Button2_Click_1(object sender, EventArgs e) {
@@ -107,7 +117,37 @@ namespace FlowSERVER1.ExtraForms {
             btnGaming.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
             btnSoftware.FillColor = Color.DarkGray;
-            btnPolitics.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
+            btnData.FillColor = Color.DarkGray;
+            btnCreativity.FillColor = Color.DarkGray;
+        }
+
+        private void PublishPublicStorage_Load(object sender, EventArgs e) {
+
+        }
+
+        private void btnData_Click(object sender, EventArgs e) {
+            HomePage.instance.publicStorageUserTag = "Data";
+            btnData.FillColor = Color.DarkTurquoise;
+            btnCreativity.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
+            btnGaming.FillColor = Color.DarkGray;
+            btnRandom.FillColor = Color.DarkGray;
+            btnSoftware.FillColor = Color.DarkGray;
+            btnEnter.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
+        }
+
+        private void btnCreativity_Click(object sender, EventArgs e) {
+            HomePage.instance.publicStorageUserTag = "Creativity";
+            btnCreativity.FillColor = Color.BlueViolet;
+            btnData.FillColor = Color.DarkGray;
+            btnEducation.FillColor = Color.DarkGray;
+            btnGaming.FillColor = Color.DarkGray;
+            btnRandom.FillColor = Color.DarkGray;
+            btnSoftware.FillColor = Color.DarkGray;
+            btnEnter.FillColor = Color.DarkGray;
+            btnMusic.FillColor = Color.DarkGray;
         }
     }
 }

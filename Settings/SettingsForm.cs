@@ -36,7 +36,6 @@ namespace FlowSERVER1 {
         private int CurrDateStats = 0;
         private string userJoinedDate = null;
 
-
         readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audi", "info_excel" };
         readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
 
@@ -222,7 +221,7 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "POR") {
                     label37.Text = "Limitado a 500";
                 }
-                guna2Button5.Enabled = false;
+                btnOpenMaxPayment.Enabled = false;
             }
             else if (accountType == "Express") {
                 if (CurrentLang == "US") {
@@ -243,8 +242,8 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "POR") {
                     label37.Text = "Limitado a 450";
                 }
-                guna2Button5.Enabled = false;
-                guna2Button6.Enabled = false;
+                btnOpenMaxPayment.Enabled = false;
+                btnOpenExpressPayment.Enabled = false;
             }
             else if (accountType == "Supreme") {
                 if (CurrentLang == "US") {
@@ -265,9 +264,9 @@ namespace FlowSERVER1 {
                 else if (CurrentLang == "POR") {
                     label37.Text = "Limitado a 2000";
                 }
-                guna2Button5.Enabled = false;
-                guna2Button6.Enabled = false;
-                guna2Button7.Enabled = false;
+                btnOpenMaxPayment.Enabled = false;
+                btnOpenExpressPayment.Enabled = false;
+                btnOpenSupremePayment.Enabled = false;
             }
         }
         private async Task countTotalAll() {
@@ -398,8 +397,20 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             _selectedAcc = "Max";
-            guna2Button8.Visible = true;
+            btnUseMax.Visible = true;
             System.Diagnostics.Process.Start("https://buy.stripe.com/test_9AQ16Y9Hb6GbfKwcMP"); // Live mode
+        }
+
+        private void guna2Button7_Click(object sender, EventArgs e) {
+            _selectedAcc = "Supreme";
+            btnUseSupreme.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+            _selectedAcc = "Express";
+            btnUseExpress.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
         }
 
         private void label6_Click(object sender, EventArgs e) {
@@ -416,18 +427,6 @@ namespace FlowSERVER1 {
 
         private void label38_Click(object sender, EventArgs e) {
 
-        }
-
-        private void guna2Button7_Click(object sender, EventArgs e) {
-            _selectedAcc = "Supreme";
-            guna2Button10.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-            _selectedAcc = "Express";
-            guna2Button9.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
@@ -516,21 +515,21 @@ namespace FlowSERVER1 {
 
         void setupRedundane(String _selectedAcc) {
             if (_selectedAcc == "Supreme") {
-                guna2Button6.Enabled = false;
-                guna2Button7.Enabled = false;
-                guna2Button5.Enabled = false;
-                guna2Button10.Visible = false;
+                btnOpenExpressPayment.Enabled = false;
+                btnOpenSupremePayment.Enabled = false;
+                btnOpenMaxPayment.Enabled = false;
+                btnUseSupreme.Visible = false;
                 label37.Text = "Limited to 2000";
             }
             else if (_selectedAcc == "Express") {
-                guna2Button6.Enabled = false;
-                guna2Button5.Enabled = false;
-                guna2Button9.Visible = false;
+                btnOpenExpressPayment.Enabled = false;
+                btnOpenMaxPayment.Enabled = false;
+                btnUseExpress.Visible = false;
                 label37.Text = "Limited to 1000";
             }
             else if (_selectedAcc == "Max") {
-                guna2Button5.Enabled = false;
-                guna2Button8.Visible = false;
+                btnOpenMaxPayment.Enabled = false;
+                btnUseMax.Visible = false;
                 label37.Text = "Limited to 500";
             }
         }
@@ -557,7 +556,9 @@ namespace FlowSERVER1 {
 
                 ///var _setupApiKey = DecryptApi("0afe74-gksuwpe8r", ConfigurationManager.ConnectionStrings["asfhuwdajdwdwpo=#k"].ConnectionString);
 
-                const string key = "sk_test_"; // Replace with valid KEY
+                string dateTimeNow = DateTime.Now.ToString("dd/MM/yyyy");
+
+                const string key = "sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN"; // Replace with valid KEY
                 Stripe.StripeConfiguration.SetApiKey(key);
 
                 var service = new Stripe.CustomerService();
@@ -585,12 +586,14 @@ namespace FlowSERVER1 {
                     }
 
 
-                    const string insertBuyerQuery = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID) VALUES (@username,@email,@type,@id)";
+                    const string insertBuyerQuery = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID,PURCHASE_DATE) VALUES (@username,@email,@type,@id,@date)";
                     using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
                         commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
                         commandSecond.Parameters.AddWithValue("@email", Globals.custEmail);
                         commandSecond.Parameters.AddWithValue("@type", _selectedAcc);
                         commandSecond.Parameters.AddWithValue("@id", lastId);
+                        commandSecond.Parameters.AddWithValue("@date", dateTimeNow);
+
                         await commandSecond.ExecuteNonQueryAsync();
                     }
 
