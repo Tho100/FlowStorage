@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 using FlowSERVER1.AlertForms;
+using Guna.UI2.WinForms;
 
 namespace FlowSERVER1 {
 
@@ -20,6 +21,7 @@ namespace FlowSERVER1 {
         private string DirectoryName;
         private string TableName;
 
+        private int previousSelectedIndex = 0;
         private int _currentSheetIndex = 1;
         private int _changedIndex = 0;
         private byte[] _sheetsByte;
@@ -75,16 +77,9 @@ namespace FlowSERVER1 {
 
             lblUploaderName.Text = uploaderName;
 
-            try {
-
-                generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName, isFromShared));
-                _sheetsByte = LoaderModel.LoadFile(tableName, DirectoryName, fileName);
-
-            }
-
-            catch (Exception) {
-                new CustomAlert(title: "Failed to load this workbook",subheader: "It may be broken or unsupported format.").Show();
-            }
+            generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName, isFromShared));
+            _sheetsByte = LoaderModel.LoadFile(tableName, DirectoryName, fileName);
+           
         }
 
 
@@ -92,13 +87,13 @@ namespace FlowSERVER1 {
         /// Essential variable to prevent sheetname duplication
         /// </summary>
 
-        int onlyOnceVarible = 0; 
+        int onlyOnceVarible = 0;
 
         /// <summary>
         /// Start generating workbook sheets
         /// </summary>
         /// <param name=""></param>
-        private void generateSheet(Byte[] _getByte) {
+        private void generateSheet(byte[] _getByte) {
 
             lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
 
@@ -108,51 +103,41 @@ namespace FlowSERVER1 {
 
                 using (MemoryStream _toStream = new MemoryStream(_getByte)) {
                     using (XLWorkbook workBook = new XLWorkbook(_toStream)) {
+
                         var worksheetNames = workBook.Worksheets;
 
                         if (onlyOnceVarible == 1) {
                             guna2ComboBox1.Items.AddRange(worksheetNames.ToArray());
                         }
 
-                        guna2ComboBox1.SelectedIndex = _changedIndex;
-                        _currentSheetIndex = _changedIndex + 1;
+                        if (_changedIndex >= 0 && _changedIndex < worksheetNames.Count) {
+                            guna2ComboBox1.SelectedIndex = _changedIndex;
+                            _currentSheetIndex = _changedIndex + 1;
 
-                        IXLWorksheet workSheet = workBook.Worksheet(_currentSheetIndex);
+                            IXLWorksheet workSheet = workBook.Worksheet(_currentSheetIndex);
+                            DataTable dt = new DataTable();
 
-                        DataTable dt = new DataTable();
-
-                        bool firstRow = true;
-                        foreach (IXLRangeRow row in workSheet.RangeUsed().Rows()) {
-                            if (firstRow) {
-                                foreach (IXLCell cell in row.Cells()) {
-                                    dt.Columns.Add(cell.Value.ToString());
+                            bool firstRow = true;
+                            foreach (IXLRangeRow row in workSheet.RangeUsed().Rows()) {
+                                if (firstRow) {
+                                    foreach (IXLCell cell in row.Cells()) {
+                                        dt.Columns.Add(cell.Value.ToString());
+                                    }
+                                    firstRow = false;
                                 }
-                                firstRow = false;
+                                else {
+                                    dt.Rows.Add(row.Cells().Select(c => c.Value.ToString()).ToArray());
+                                }
                             }
-                            else {
-                                dt.Rows.Add(row.Cells().Select(c => c.Value.ToString()).ToArray());
-                            }
-                        }
 
-                        dataGridView1.DataSource = dt;
+                            dataGridView1.DataSource = dt;
+                        }
                     }
                 }
-
-            } catch (Exception) {
-                
-                try {
-
-                    var _formatter = new BinaryFormatter();
-                    var _stream = new MemoryStream(_getByte);
-                    var _dataSource = _formatter.Deserialize(_stream);
-                    dataGridView1.DataSource = _dataSource;
-
-                } catch (Exception eq) {
-                    guna2TextBox1.Text = eq.Message;
-
-                    MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                }
-
+            }
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                new CustomAlert(title: "Failed to load this workbook", subheader: "It may be broken or unsupported format.").Show();
             }
         }
 
@@ -207,7 +192,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                if (TableName == "file_info_excel") {
+                if (TableName == GlobalsTable.homeExcelTable) {
                     const string updateQue = "UPDATE file_info_excel SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
@@ -324,9 +309,25 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
         private void guna2ComboBox1_SelectedIndexChanged_1(object sender, EventArgs e) {
-            _changedIndex = guna2ComboBox1.SelectedIndex;
-            generateSheet(_sheetsByte);
+
+            try {
+
+                int selectedIndex = guna2ComboBox1.SelectedIndex;
+
+                if (selectedIndex != previousSelectedIndex) {
+
+                    previousSelectedIndex = selectedIndex;
+                    _changedIndex = selectedIndex;
+
+                    _currentSheetIndex = selectedIndex + 1;
+                    generateSheet(_sheetsByte);
+                }
+            }
+            catch (Exception ex) {
+            }
+
         }
     }
 }
