@@ -1,30 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
-using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class ChangeUsernameForm : Form {
 
-        private string CurrentUsername;
-
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private Crud crud = new Crud();
 
-        public ChangeUsernameForm(String _CurrentUsername) {
+        public ChangeUsernameForm() {
             InitializeComponent();
-            this.CurrentUsername = _CurrentUsername;
-            this.guna2TextBox3.Text = CurrentUsername;
+            this.txtFieldCurrentUsername.Text = Globals.custUsername;
         }
 
         private void chagneUserForm_Load(object sender, EventArgs e) {
@@ -44,7 +36,7 @@ namespace FlowSERVER1 {
 
             var param = new Dictionary<string, string>
             {
-                { "@username",CurrentUsername},
+                { "@username",Globals.custUsername},
             };
 
 
@@ -57,7 +49,7 @@ namespace FlowSERVER1 {
             string updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + _setUsername + "' WHERE CUST_FROM = @username";
             var param = new Dictionary<string, string>
 {
-                { "@username", CurrentUsername}
+                { "@username", Globals.custUsername}
             };
 
 
@@ -130,10 +122,10 @@ namespace FlowSERVER1 {
 
             try {
 
-                var _getNewUsername = guna2TextBox1.Text;
-                var _getCustPass = guna2TextBox2.Text;
+                var _getNewUsername = txtFieldNewUsername.Text;
+                var _getCustPass = txtFieldAuth.Text;
 
-                if(_getNewUsername == CurrentUsername) {
+                if(_getNewUsername == Globals.custUsername) {
                     lblAlert.Text = "Please enter a new username.";
                     lblAlert.Visible = true;
                     return;
@@ -157,7 +149,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                if(authReturnOriginal(CurrentUsername) == EncryptionModel.computeAuthCase(_getCustPass)) {
+                if(authReturnOriginal(Globals.custUsername) == EncryptionModel.computeAuthCase(_getCustPass)) {
 
                     string[] tableNames = {
                         "information","cust_type","file_info", "file_info_expand", 
@@ -178,7 +170,7 @@ namespace FlowSERVER1 {
 
                     updateLocalUsername(_getNewUsername);
 
-                    new CustomAlert(title: "Username Updated",$"You've changed your username to '{_getNewUsername}' from {CurrentUsername}. Restart to fully apply changes.").Show();
+                    new CustomAlert(title: "Username Updated",$"You've changed your username to '{_getNewUsername}' from {Globals.custUsername}. Restart to fully apply changes.").Show();
 
                     Globals.custUsername = _getNewUsername;
 
@@ -199,13 +191,13 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             guna2Button5.Visible = false;
             guna2Button6.Visible = true;
-            guna2TextBox2.PasswordChar = '\0';
+            txtFieldAuth.PasswordChar = '\0';
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
-            guna2TextBox2.PasswordChar = '*';
+            txtFieldAuth.PasswordChar = '*';
         }
     }
 }

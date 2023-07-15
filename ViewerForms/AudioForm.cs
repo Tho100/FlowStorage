@@ -12,29 +12,29 @@ using FlowSERVER1.Global;
 using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
-    public partial class audFORM : Form {
+    public partial class AudioForm : Form {
 
-        private string TableName;
-        private string DirectoryName;
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
 
-        private bool isFromShared;
-        private bool IsFromSharing;
+        private bool _isFromShared { get; set; }
+        private bool _isFromSharing { get; set; }
 
-        private System.Windows.Forms.Timer _timer;
-        private TimeSpan _elapsedTime;
-        private Mp3FileReader _NReader;
+        private System.Windows.Forms.Timer _elapsedTickTimer { get; set; }
+        private TimeSpan _elapsedTime { get; set; }
+        private Mp3FileReader _NReader { get; set; }
 
-        public audFORM(String fileName, String tableName,String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
+        public AudioForm(String fileName, String tableName,String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this.TableName = tableName;
-            this.DirectoryName = directoryName;
-            this.isFromShared = _isFromShared;
-            this.IsFromSharing = _isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
+            this._isFromSharing = isFromSharing;
 
-            if (_isFromShared == true) {
+            if (isFromShared == true) {
 
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
@@ -120,7 +120,7 @@ namespace FlowSERVER1 {
 
                     pictureBox3.Enabled = true;
 
-                    byte[] byteAud = LoaderModel.LoadFile(TableName, DirectoryName, lblFileName.Text, isFromShared);
+                    byte[] byteAud = LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared);
 
                     await setupPlayer(audType, byteAud);
 
@@ -162,10 +162,10 @@ namespace FlowSERVER1 {
             _setupWaveOut.Play();
             _mp3WaveOut = _setupWaveOut;
 
-            _timer = new System.Windows.Forms.Timer();
-            _timer.Interval = 1000; 
-            _timer.Tick += new EventHandler(timer_Tick);
-            _timer.Start();
+            _elapsedTickTimer = new System.Windows.Forms.Timer();
+            _elapsedTickTimer.Interval = 1000;
+            _elapsedTickTimer.Tick += new EventHandler(timer_Tick);
+            _elapsedTickTimer.Start();
 
             AudioHelp breakFixedValue = new AudioHelp();
             breakFixedValue.ShowDialog();
@@ -238,7 +238,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName, isFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
             this.TopMost = true;
         }
 
@@ -260,7 +260,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if (TableName == "upload_info_directory") {
+            if (_tableName == "upload_info_directory") {
 
                 Application.OpenForms
                     .OfType<Form>()
@@ -282,8 +282,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void label7_Click(object sender, EventArgs e) {

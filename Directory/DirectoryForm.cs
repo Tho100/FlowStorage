@@ -1,6 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading.Tasks;
 using System.Threading;
+
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
@@ -26,15 +26,11 @@ namespace FlowSERVER1
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        private string _extName { get; set; }
-
-        private string get_ex { get; set; }
-        private string getName { get; set; }
-        private string retrieved { get; set; }
-        private string retrievedName { get; set; }
-        private string varDate { get; set; }
-        private long fileSizeInMB { get; set; }
-        private object keyValMain { get; set; }
+        private string _loadedExtensionType { get; set; }
+        private string _uploadedExtensionType { get; set; }
+        private string _fileName { get; set; }
+        private string _todayDate { get; set; }
+        private long _fileSizeInMB { get; set; }
 
         /// <summary>
         /// 
@@ -78,7 +74,7 @@ namespace FlowSERVER1
             foreach (string ext in fileExtensions.Keys) {
                 int count = _countRow(ext);
                 if (count > 0) {
-                    _extName = ext;
+                    _loadedExtensionType = ext;
                     string controlName = fileExtensions[ext].Item1;
                     string tableName = fileExtensions[ext].Item2;
                     buildFilePanelOnLoad(tableName, controlName, count);
@@ -141,7 +137,7 @@ namespace FlowSERVER1
             using (MySqlCommand command = new MySqlCommand(selectFileDataDir, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                command.Parameters.AddWithValue("@ext", _extName); 
+                command.Parameters.AddWithValue("@ext", _loadedExtensionType); 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -153,7 +149,7 @@ namespace FlowSERVER1
 
             List<string> base64EncodedImage = new List<string>();
 
-            if (Globals.imageTypes.Contains(_extName)) {
+            if (Globals.imageTypes.Contains(_loadedExtensionType)) {
 
                 if(base64EncodedImage.Count == 0) {
 
@@ -161,7 +157,7 @@ namespace FlowSERVER1
                     using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", _extName);
+                        command.Parameters.AddWithValue("@ext", _loadedExtensionType);
 
                         using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
@@ -174,7 +170,7 @@ namespace FlowSERVER1
 
             List<string> base64EncodedThumbnail = new List<string>();
 
-            if(Globals.videoTypes.Contains(_extName)) {
+            if(Globals.videoTypes.Contains(_loadedExtensionType)) {
 
                 if(base64EncodedThumbnail.Count == 0) {
 
@@ -182,7 +178,7 @@ namespace FlowSERVER1
                     using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", _extName);
+                        command.Parameters.AddWithValue("@ext", _loadedExtensionType);
                         using (var readBase64 = await command.ExecuteReaderAsync()) {
                             while (await readBase64.ReadAsync()) {
                                 base64EncodedThumbnail.Add(readBase64.GetString(0));
@@ -221,7 +217,7 @@ namespace FlowSERVER1
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     };
 
@@ -245,7 +241,7 @@ namespace FlowSERVER1
                         var getHeight = getImgName.Image.Height;
 
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         vidFormShow.Show();
                     };
 
@@ -259,7 +255,7 @@ namespace FlowSERVER1
                     imageValues.Add(Globals.textTypeToImage[textTypes]);
 
                     EventHandler videoOnPressed = (sender, e) => {
-                        txtFORM displayPic = new txtFORM("", "upload_info_directory", fileName, lblDirectoryName.Text, Globals.custUsername);
+                        TextForm displayPic = new TextForm("", "upload_info_directory", fileName, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     };
 
@@ -283,7 +279,7 @@ namespace FlowSERVER1
                     imageValues.Add(Globals.EXCELImage);
 
                     EventHandler videoOnPressed = (sender, e) => {
-                        exlFORM exlForm = new exlFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        ExcelForm exlForm = new ExcelForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         exlForm.Show();
                     };
 
@@ -295,7 +291,7 @@ namespace FlowSERVER1
                     imageValues.Add(Globals.AudioImage);
 
                     EventHandler videoOnPressed = (sender, e) => {
-                        audFORM audioOnPressed = new audFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        AudioForm audioOnPressed = new AudioForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         audioOnPressed.Show();
                     };
 
@@ -307,7 +303,7 @@ namespace FlowSERVER1
                     imageValues.Add(Globals.APKImage);
 
                     EventHandler videoOnPressed = (sender, e) => {
-                        apkFORM displayPic = new apkFORM(fileName, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
+                        ApkForm displayPic = new ApkForm(fileName, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
                         displayPic.Show();
                     };
 
@@ -319,7 +315,7 @@ namespace FlowSERVER1
                     imageValues.Add(Globals.PDFImage);
 
                     EventHandler videoOnPressed = (sender, e) => {
-                        new pdfFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new PdfForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
                     };
 
                     onPressedEvent.Add(videoOnPressed);
@@ -353,7 +349,7 @@ namespace FlowSERVER1
                     imageValues.Add(Globals.DOCImage);
 
                     EventHandler videoOnPressed = (sender, e) => {
-                        new wordFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new WordDocForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
                     };
 
                     onPressedEvent.Add(videoOnPressed);
@@ -422,11 +418,11 @@ namespace FlowSERVER1
                 var param = new Dictionary<string, string>
                 {
                     { "@CUST_USERNAME", Globals.custUsername},
-                    { "@CUST_FILE_PATH", EncryptionModel.Encrypt(getName)},
-                    { "@UPLOAD_DATE", varDate},
+                    { "@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName)},
+                    { "@UPLOAD_DATE", _todayDate},
                     { "@CUST_FILE", setValue},
                     { "@CUST_THUMB", ""},
-                    { "@FILE_EXT", retrieved},
+                    { "@FILE_EXT", _uploadedExtensionType},
                     { "@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text)}
                 };
 
@@ -442,13 +438,12 @@ namespace FlowSERVER1
 
         private async Task containThumbUpload(string filePath, object keyValMain) {
 
-            using (var command = new MySqlCommand()) {
-                command.Connection = con;
-                command.CommandText = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)"; ;
-                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName));
+            const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)"; 
+            using (var command = new MySqlCommand(insertQuery, con)) {
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
                 command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                command.Parameters.AddWithValue("@FILE_EXT", retrieved);
-                command.Parameters.AddWithValue("@UPLOAD_DATE", varDate);
+                command.Parameters.AddWithValue("@FILE_EXT", _uploadedExtensionType);
+                command.Parameters.AddWithValue("@UPLOAD_DATE", _todayDate);
                 command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text));
                 command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
 
@@ -475,7 +470,7 @@ namespace FlowSERVER1
                 Multiselect = true
             };
 
-            varDate = DateTime.Now.ToString("dd/MM/yyyy");
+            _todayDate = DateTime.Now.ToString("dd/MM/yyyy");
         
             int curFilesCount = flwLayoutDirectory.Controls.Count;
 
@@ -521,15 +516,13 @@ namespace FlowSERVER1
 
                         _filValues.Add(Path.GetFileName(selectedItems));
 
-                        get_ex = open.FileName;
-                        getName = Path.GetFileName(selectedItems);
-                        retrieved = Path.GetExtension(selectedItems); 
-                        retrievedName = Path.GetFileNameWithoutExtension(open.FileName);
-                        fileSizeInMB = 0;
+                        _fileName = Path.GetFileName(selectedItems);
+                        _uploadedExtensionType = Path.GetExtension(selectedItems);
+                        _fileSizeInMB = 0;
 
                         async void createPanelMain(string nameTable, string panName, int itemCurr, string keyVal) {
 
-                            if (fileSizeInMB < 8000) {
+                            if (_fileSizeInMB < 8000) {
 
                                 var panelTxt = new Guna2Panel() {
                                     Name = panName + itemCurr,
@@ -573,7 +566,7 @@ namespace FlowSERVER1
                                 dateLabTxt.Visible = true;
                                 dateLabTxt.Enabled = true;
                                 dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                                dateLabTxt.Text = varDate;
+                                dateLabTxt.Text = _todayDate;
 
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
@@ -586,7 +579,7 @@ namespace FlowSERVER1
                                 titleLab.Width = 160;
                                 titleLab.Height = 20;
                                 titleLab.AutoEllipsis = true;
-                                titleLab.Text = getName;
+                                titleLab.Text = _fileName;
 
                                 Guna2Button remButTxt = new Guna2Button();
                                 mainPanelTxt.Controls.Add(remButTxt);
@@ -612,7 +605,7 @@ namespace FlowSERVER1
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
 
-                                new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog())
+                                new Thread(() => new UploadingAlert(_fileName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: _fileSizeInMB).ShowDialog())
                                 .Start();
 
                                 if (nameTable == GlobalsTable.homeImageTable) {
@@ -627,7 +620,7 @@ namespace FlowSERVER1
                                         var getHeight = getImgName.Image.Height;
                                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPic.Show();
                                     };
 
@@ -640,10 +633,10 @@ namespace FlowSERVER1
                                     string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                                     textboxPic.Image = Globals.textTypeToImage[textType];
 
-                                    var filePath = getName;
+                                    var filePath = _fileName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
-                                        txtFORM txtFormShow = new txtFORM("", "upload_info_directory", titleLab.Text, lblDirectoryName.Text, Globals.custUsername);
+                                        TextForm txtFormShow = new TextForm("", "upload_info_directory", titleLab.Text, lblDirectoryName.Text, Globals.custUsername);
                                         txtFormShow.Show();
                                     };
                                 }
@@ -658,7 +651,7 @@ namespace FlowSERVER1
                                     };
                                 }
 
-                                if (nameTable == GlobalsTable.homeAudioTable) {
+                                if (nameTable == GlobalsTable.homeVideoTable) {
 
                                     await containThumbUpload(selectedItems,keyVal); 
 
@@ -672,7 +665,7 @@ namespace FlowSERVER1
                                         var getHeight = getImgName.Image.Height;
                                         Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                        vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         vidShow.Show();
                                     };
 
@@ -683,7 +676,7 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.AudioImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        audFORM displayPic = new audFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        AudioForm displayPic = new AudioForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPic.Show();
                                     };
                                 }
@@ -694,7 +687,7 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.EXCELImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        exlFORM displayPic = new exlFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        ExcelForm displayPic = new ExcelForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPic.Show();
                                     };
                                 }
@@ -705,7 +698,7 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
-                                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
+                                        ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
                                         displayPic.Show();
                                     };
                                 }
@@ -715,7 +708,7 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.PDFImage;
                                     textboxPic.Click += (sender_pd, e_pd) => {
-                                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        PdfForm displayPdf = new PdfForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayPdf.ShowDialog();
                                     };
                                 }
@@ -746,7 +739,7 @@ namespace FlowSERVER1
 
                                     textboxPic.Image = Globals.DOCImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        wordFORM displayWord = new wordFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                                        WordDocForm displayWord = new WordDocForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                                         displayWord.ShowDialog();
                                     };
                                 }
@@ -769,10 +762,13 @@ namespace FlowSERVER1
 
                         try {
 
-                            Byte[] _getBytesSelectedFiles = File.ReadAllBytes(selectedItems);
-                            fileSizeInMB = (_getBytesSelectedFiles.Length / 1024) / 1024;
+                            byte[] getBytesSelectedFiles = File.ReadAllBytes(selectedItems);
+                            string toBase64String = Convert.ToBase64String(getBytesSelectedFiles);
+                            string encryptBase64String = EncryptionModel.Encrypt(toBase64String);
 
-                            if (Globals.imageTypes.Contains(retrieved)) {
+                            _fileSizeInMB = (getBytesSelectedFiles.Length / 1024) / 1024;
+
+                            if (Globals.imageTypes.Contains(_uploadedExtensionType)) {
 
                                 curr++;
 
@@ -780,7 +776,7 @@ namespace FlowSERVER1
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                if (retrieved != ".ico") {
+                                if (_uploadedExtensionType != ".ico") {
 
                                     string _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
                                     string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
@@ -803,7 +799,7 @@ namespace FlowSERVER1
                                 }
                             }
 
-                            else if (Globals.textTypes.Contains(retrieved)) {
+                            else if (Globals.textTypes.Contains(_uploadedExtensionType)) {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { 
@@ -816,60 +812,42 @@ namespace FlowSERVER1
 
                                 createPanelMain("file_info_expand", "PanTxt", txtCurr, encryptText);
                             }
-                            else if (retrieved == ".exe") {
+                            else if (_uploadedExtensionType == ".exe") {
                                 exeCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_exe", "PanExe", exeCurr, _encryptValue);
+                                createPanelMain("file_info_exe", "PanExe", exeCurr, encryptBase64String);
 
                             }
-                            else if (Globals.videoTypes.Contains(retrieved)) {
+                            else if (Globals.videoTypes.Contains(_uploadedExtensionType)) {
                                 vidCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_vid", "PanVid", vidCurr, _encryptValue);
+                                createPanelMain("file_info_vid", "PanVid", vidCurr, encryptBase64String);
                             }
-                            else if (retrieved == ".xlsx" || retrieved == ".xls") {
+                            else if (_uploadedExtensionType == ".xlsx" || _uploadedExtensionType == ".xls") {
                                 exlCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_excel", "PanExl", exlCurr, _encryptValue);
+                                createPanelMain("file_info_excel", "PanExl", exlCurr, encryptBase64String);
                             }
-                            else if (retrieved == ".mp3" || retrieved == ".wav") {
+                            else if (_uploadedExtensionType == ".mp3" || _uploadedExtensionType == ".wav") {
                                 audCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_audi", "PanAud", audCurr, _encryptValue); 
+                                createPanelMain("file_info_audi", "PanAud", audCurr, encryptBase64String); 
                             }
-                            else if (retrieved == ".apk") {
+                            else if (_uploadedExtensionType == ".apk") {
                                 apkCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_apk", "PanApk", apkCurr, _encryptValue);
+                                createPanelMain("file_info_apk", "PanApk", apkCurr, encryptBase64String);
                             }
-                            else if (retrieved == ".pdf") {
+                            else if (_uploadedExtensionType == ".pdf") {
                                 pdfCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_pdf", "PanPdf", pdfCurr, _encryptValue);
+                                createPanelMain("file_info_pdf", "PanPdf", pdfCurr, encryptBase64String);
                             }
-                            else if (retrieved == ".pptx" || retrieved == ".ppt") {
+                            else if (_uploadedExtensionType == ".pptx" || _uploadedExtensionType == ".ppt") {
                                 ptxCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_ptx", "PanPtx", ptxCurr, _encryptValue);
+                                createPanelMain("file_info_ptx", "PanPtx", ptxCurr, encryptBase64String);
                             }
-                            else if (retrieved == ".msi") {
+                            else if (_uploadedExtensionType == ".msi") {
                                 msiCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_msi", "PanMsi", msiCurr, _encryptValue);
+                                createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptBase64String);
                             }
-                            else if (retrieved == ".docx") {
+                            else if (_uploadedExtensionType == ".docx") {
                                 docxCurr++;
-                                var _toBase64 = Convert.ToBase64String(_getBytesSelectedFiles);
-                                var _encryptValue = EncryptionModel.Encrypt(_toBase64);
-                                createPanelMain("file_info_word", "PanDoc", docxCurr, _encryptValue);
+                                createPanelMain("file_info_word", "PanDoc", docxCurr, encryptBase64String);
                             }
 
                             CloseForm.closeForm("UploadAlrt");

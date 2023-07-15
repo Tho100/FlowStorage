@@ -1,35 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Threading;
 using Microsoft.WindowsAPICodePack.Shell;
+
 using FlowSERVER1.Sharing;
 using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
     public partial class AskSharingAuthForm : Form {
-        private String CustUsername {get; set; }
-        private String _currentFileName {get; set; }
-        private String _FileName { get; set; }
-        private String _FilePath { get; set; }
-        private String _retrieved { get; set; }
+        private string _receiverUsername {get; set; }
+        private string _FileName { get; set; }
+        private string _FilePath { get; set; }
+        private string _retrieved { get; set; }
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public AskSharingAuthForm(String _custUsername,String _fileName,String _fileExtension) {
+        public AskSharingAuthForm(String receiverUsername,String fileName,String fileExtension) {
             InitializeComponent();
-            CustUsername = _custUsername;
-            _currentFileName = _fileName;
-            _FileName = _fileName;
-            _retrieved = _fileExtension;
+            this._receiverUsername = receiverUsername;
+            this._FileName = fileName;
+            this._retrieved = fileExtension;
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
@@ -98,7 +92,7 @@ namespace FlowSERVER1 {
 
             const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB)";
             using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                command.Parameters.AddWithValue("@CUST_TO", CustUsername);
+                command.Parameters.AddWithValue("@CUST_TO", _receiverUsername);
                 command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
                 command.Parameters.AddWithValue("@CUST_THUMB", thumbValue);
                 command.Parameters.AddWithValue("@CUST_FILE_PATH", encryptedFileName);
@@ -113,18 +107,16 @@ namespace FlowSERVER1 {
         String _controlName = null;
         private async Task startSharing() {
 
-            int _accType = accountType(CustUsername);
-            int _countReceiverFile = countReceiverShared(CustUsername);
+            int _accType = accountType(_receiverUsername);
+            int _countReceiverFile = countReceiverShared(_receiverUsername);
             long fileSizeInMB = 0;
 
             if (_accType != _countReceiverFile) {
 
-                _currentFileName = txtFieldShareToName.Text;
-
                 byte[] _getBytes = File.ReadAllBytes(_FilePath);
                 fileSizeInMB = (_getBytes.Length / 1024) / 1024;
 
-                new Thread(() => new SharingAlert(shareToName: CustUsername).ShowDialog()).Start();
+                new Thread(() => new SharingAlert(shareToName: _receiverUsername).ShowDialog()).Start();
 
                 if (Globals.imageTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
@@ -184,7 +176,7 @@ namespace FlowSERVER1 {
                 }
 
                 CloseForm.closeForm("SharingAlert");
-                new SucessSharedAlert(_FileName, CustUsername).Show();
+                new SucessSharedAlert(_FileName, _receiverUsername).Show();
 
                 this.Close();
             }
@@ -219,7 +211,7 @@ namespace FlowSERVER1 {
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
             var _getInput = txtFieldShareToName.Text;
-            var _decryptionOutput = EncryptionModel.computeAuthCase(getInformationSharing(CustUsername));
+            var _decryptionOutput = EncryptionModel.computeAuthCase(getInformationSharing(_receiverUsername));
             
             if(EncryptionModel.computeAuthCase(_getInput) == _decryptionOutput) {
                 await startSharing();

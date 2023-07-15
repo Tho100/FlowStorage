@@ -31,7 +31,7 @@ namespace FlowSERVER1 {
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;
-                command.Parameters.AddWithValue("@email", guna2TextBox1.Text);
+                command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
 
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
                     while (readerPass_.Read()) {
@@ -56,7 +56,7 @@ namespace FlowSERVER1 {
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;
-                command.Parameters.AddWithValue("@email", guna2TextBox1.Text);
+                command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
 
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
                     while (readerPass_.Read()) {
@@ -81,7 +81,7 @@ namespace FlowSERVER1 {
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.CommandText = checkPassword_Query;
-                command.Parameters.AddWithValue("@email", guna2TextBox1.Text);
+                command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
 
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
                     while (readerPass_.Read()) {
@@ -103,37 +103,37 @@ namespace FlowSERVER1 {
             try {
 
                 if(emailExistsCheck() == "") {
-                    label4.Text = "Account not found.";
-                    label4.Visible = true;
+                    lblAlert.Text = "Account not found.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
                 if(returnValues("CUST_PIN") == "") {
-                    label4.Text = "Account not found.";
-                    label4.Visible = true;
+                    lblAlert.Text = "Account not found.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
-                if(EncryptionModel.computeAuthCase(guna2TextBox4.Text) != returnValues("CUST_PIN")) {
-                    label4.Text = "PIN key is incorrect.";
-                    label4.Visible = true;
+                if(EncryptionModel.computeAuthCase(txtFieldPin.Text) != returnValues("CUST_PIN")) {
+                    lblAlert.Text = "PIN key is incorrect.";
+                    lblAlert.Visible = true;
                     return;
                 }
 
-                if(guna2TextBox2.Text != returnValuesRecov()) {
-                    label4.Visible = true;
-                    label4.Text = "Invalid recovery key.";
+                if(txtFieldRecoveryKey.Text != returnValuesRecov()) {
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "Invalid recovery key.";
                     return;
                 }
 
-                ResetAuthForm _showPasswordRecovery = new ResetAuthForm(Globals.custUsername);
+                ResetAuthForm _showPasswordRecovery = new ResetAuthForm();
                 _showPasswordRecovery.Show();
 
                 this.Close();
 
 
             } catch (Exception) {
-                label4.Visible = true;
+                lblAlert.Visible = true;
             }
         }
 
@@ -146,8 +146,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox4.Text, "[^0-9]")) {
-                guna2TextBox4.Text = guna2TextBox4.Text.Remove(guna2TextBox4.Text.Length - 1);
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPin.Text, "[^0-9]")) {
+                txtFieldPin.Text = txtFieldPin.Text.Remove(txtFieldPin.Text.Length - 1);
             }
         }
     }

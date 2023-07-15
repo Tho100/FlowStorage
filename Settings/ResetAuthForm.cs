@@ -15,12 +15,8 @@ namespace FlowSERVER1 {
     public partial class ResetAuthForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-
-        private string CurrentUsername;
-
-        public ResetAuthForm(String _currentUsername) {
+        public ResetAuthForm() {
             InitializeComponent();
-            this.CurrentUsername = _currentUsername;
         }
 
         private void label4_Click(object sender, EventArgs e) {
@@ -89,7 +85,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                if(authReturnOriginal(CurrentUsername) != computeAuthCase(_getOldPass)) {
+                if(authReturnOriginal(Globals.custUsername) != computeAuthCase(_getOldPass)) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Password is incorrect.";
                     return;
@@ -97,7 +93,7 @@ namespace FlowSERVER1 {
 
                 if (MessageBox.Show("Do you want to proceed your action?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes) {
 
-                    setupInformationUpdate(CurrentUsername, _getNewPass);
+                    setupInformationUpdate(Globals.custUsername, _getNewPass);
 
                     Form bgBlur = new Form();
                     using (SuccessResetAuthAlert displayDirectory = new SuccessResetAuthAlert()) {

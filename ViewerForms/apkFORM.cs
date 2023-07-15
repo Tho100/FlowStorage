@@ -6,20 +6,22 @@ using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
-    public partial class apkFORM : Form {
+    public partial class ApkForm : Form {
 
-        private string TableName;
-        private string DirectoryName;
-        private bool IsFromSharing;   
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
+        private bool _isFromSharing { get; set; }
+        private bool _isFromShared { get; set; }
 
-        public apkFORM(String fileName, String uploaderName,String tableName, String directoryName, bool _isFromShared = false, bool _isFromSharing = false) {
+        public ApkForm(String fileName, String uploaderName,String tableName, String directoryName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this.TableName = tableName;
-            this.DirectoryName = directoryName;            
-            this.IsFromSharing = _isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;            
+            this._isFromSharing = isFromSharing;
+            this._isFromShared = isFromShared;
 
             if (_isFromShared == true) {
 
@@ -69,7 +71,7 @@ namespace FlowSERVER1 {
                 RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
                 ShowAlert.Show();
 
-                SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName);
+                SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
 
             } catch (Exception) {
                 MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
@@ -78,8 +80,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing,TableName,DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private async void guna2Button7_Click(object sender, EventArgs e) {

@@ -22,35 +22,24 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public static string _selectedAcc;
+        public int tokenCheckCurr { get; set; }= 0;
 
-        public int tokenCheckCurr = 0;
+        private List<int> _totalUploadToday { get; set; } = new List<int>();
+        private List<int> _totalUploadAllTime { get; set; } = new List<int>();
+        private List<string> _totalUploadDirectoryToday { get; set; } = new List<string>();
 
-        private List<int> TotalUploadToday = new List<int>();
-        private List<int> TotalUploadOvertime = new List<int>();
-        private List<string> TotalUploadDirectoryToday = new List<string>();
+        private string _currentUserLanguage { get; set; } = "US";
+        private string _newSelectedUserLanguage { get; set; } = null;
 
-        private string CurrentLang = null;
-        private string NewLang = null;
-
-        private int CurrDateStats = 0;
-        private string userJoinedDate = null;
-
-        readonly private string[] tableNames = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audi", "info_excel" };
-        readonly private string[] chartTypes = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
+        private string _selectedAccountType { get; set; }
+        private bool _getAccountDateQueryExecuted { get; set; } = false;
+        private string _userCreatedAccountDate { get; set; } = "0/0/0";
 
         public SettingsForm() {
 
             InitializeComponent();
 
-            var settingsAlertForms = Application.OpenForms
-              .OfType<Form>()
-              .Where(form => form.Name == "SettingsLoadingAlert")
-              .ToList();
-
-            foreach (var form in settingsAlertForms) {
-                form.Close();
-            }
+            CloseForm.closeForm("SettingsLoadingAlert");
 
             instance = this;
 
@@ -73,14 +62,17 @@ namespace FlowSERVER1 {
             try {
 
                 await getCurrentLang();
-                setupUILanguage(CurrentLang);
+                setupUILanguage(_currentUserLanguage);
                 setupRedundane(lblAccountType.Text);
                 await GetAccountType();
                 await countTotalAll();
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
-                foreach ((string tableName, string chartName) in tableNames.Zip(chartTypes, (a, b) => (a, b))) {
+                string[] _halfTablesName = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audi", "info_excel" };
+                string[] _chartXAxisValues = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
+
+                foreach ((string tableName, string chartName) in _halfTablesName.Zip(_chartXAxisValues, (a, b) => (a, b))) {
                     await generateChart(chartName, "file_" + tableName.ToLower());
                     await TotalUploadFileTodayCount("file_" + tableName.ToLower());
                     await TotalUploadFile("file_" + tableName.ToLower());
@@ -88,10 +80,10 @@ namespace FlowSERVER1 {
 
                 await TotalUploadDirectoryTodayCount();
 
-                int _totalUploadTodayCount = this.TotalUploadToday.Sum(x => Convert.ToInt32(x));
+                int _totalUploadTodayCount = _totalUploadToday.Sum(x => Convert.ToInt32(x));
                 lblCountFileUploadToday.Text = _totalUploadTodayCount.ToString();
 
-                int _totalUploadOvertime = this.TotalUploadOvertime.Sum(x => Convert.ToInt32(x));
+                int _totalUploadOvertime = _totalUploadAllTime.Sum(x => Convert.ToInt32(x));
                 lblTotalUploadFileCount.Text = _totalUploadOvertime.ToString();
 
             } catch (Exception) {
@@ -127,7 +119,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                this.TotalUploadOvertime.Add(totalCount);
+                _totalUploadAllTime.Add(totalCount);
             }
         }
 
@@ -146,7 +138,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@date", currentDate);
 
                 int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                this.TotalUploadToday.Add(totalCount);
+                _totalUploadToday.Add(totalCount);
             }
         }
 
@@ -165,12 +157,12 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        this.TotalUploadDirectoryToday.Add(reader.GetString(0));
+                        _totalUploadDirectoryToday.Add(reader.GetString(0));
                     }
                 }
             }
 
-            int distinctDirCount = this.TotalUploadDirectoryToday.Distinct().Count();
+            int distinctDirCount = _totalUploadDirectoryToday.Distinct().Count();
             lblCountDirlUploadToday.Text = distinctDirCount.ToString();
         }
 
@@ -186,82 +178,82 @@ namespace FlowSERVER1 {
             }
 
             if (accountType == "Basic") {
-                if(this.CurrentLang == "US") {
+                if(this._currentUserLanguage == "US") {
                     label37.Text = "Limited to 20";
-                } else if (CurrentLang == "MY") {
+                } else if (_currentUserLanguage == "MY") {
                     label37.Text = "Terhad Kepada 20";
-                } else if (CurrentLang == "GER") {
+                } else if (_currentUserLanguage == "GER") {
                     label37.Text = "Begrenzt Auf 20";
-                } else if (CurrentLang == "JAP") {
+                } else if (_currentUserLanguage == "JAP") {
                     label37.Text = "20 個限定";
-                } else if (CurrentLang == "ESP") {
+                } else if (_currentUserLanguage == "ESP") {
                     label37.Text = "Limitado a 20";
                 }
-                else if (CurrentLang == "POR") {
+                else if (_currentUserLanguage == "POR") {
                     label37.Text = "Limitado a 20";
                 }
 
             }
             else if (accountType == "Max") {
-                if (CurrentLang == "US") {
+                if (_currentUserLanguage == "US") {
                     label37.Text = "Limited to 500";
                 }
-                else if (CurrentLang == "MY") {
+                else if (_currentUserLanguage == "MY") {
                     label37.Text = "Terhad Kepada 500";
                 }
-                else if (CurrentLang == "GER") {
+                else if (_currentUserLanguage == "GER") {
                     label37.Text = "Begrenzt Auf 500";
                 }
-                else if (CurrentLang == "JAP") {
+                else if (_currentUserLanguage == "JAP") {
                     label37.Text = "500 個限定";
                 }
-                else if (CurrentLang == "ESP") {
+                else if (_currentUserLanguage == "ESP") {
                     label37.Text = "Limitado a 500";
                 }
-                else if (CurrentLang == "POR") {
+                else if (_currentUserLanguage == "POR") {
                     label37.Text = "Limitado a 500";
                 }
                 btnOpenMaxPayment.Enabled = false;
             }
             else if (accountType == "Express") {
-                if (CurrentLang == "US") {
+                if (_currentUserLanguage == "US") {
                     label37.Text = "Limited to 1000";
                 }
-                else if (CurrentLang == "MY") {
+                else if (_currentUserLanguage == "MY") {
                     label37.Text = "Terhad Kepada 1000";
                 }
-                else if (CurrentLang == "GER") {
+                else if (_currentUserLanguage == "GER") {
                     label37.Text = "Begrenzt Auf 1000";
                 }
-                else if (CurrentLang == "JAP") {
+                else if (_currentUserLanguage == "JAP") {
                     label37.Text = "1000 個限定";
                 }
-                else if (CurrentLang == "ESP") {
+                else if (_currentUserLanguage == "ESP") {
                     label37.Text = "Limitado a 1000";
                 }
-                else if (CurrentLang == "POR") {
+                else if (_currentUserLanguage == "POR") {
                     label37.Text = "Limitado a 450";
                 }
                 btnOpenMaxPayment.Enabled = false;
                 btnOpenExpressPayment.Enabled = false;
             }
             else if (accountType == "Supreme") {
-                if (CurrentLang == "US") {
+                if (_currentUserLanguage == "US") {
                     label37.Text = "Limited to 2000";
                 }
-                else if (CurrentLang == "MY") {
+                else if (_currentUserLanguage == "MY") {
                     label37.Text = "Terhad Kepada 2000";
                 }
-                else if (CurrentLang == "GER") {
+                else if (_currentUserLanguage == "GER") {
                     label37.Text = "Begrenzt Auf 2000";
                 }
-                else if (CurrentLang == "JAP") {
+                else if (_currentUserLanguage == "JAP") {
                     label37.Text = "2000 個限定";
                 }
-                else if (CurrentLang == "ESP") {
+                else if (_currentUserLanguage == "ESP") {
                     label37.Text = "Limitado a 2000";
                 }
-                else if (CurrentLang == "POR") {
+                else if (_currentUserLanguage == "POR") {
                     label37.Text = "Limitado a 2000";
                 }
                 btnOpenMaxPayment.Enabled = false;
@@ -396,19 +388,19 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            _selectedAcc = "Max";
+            _selectedAccountType = "Max";
             btnUseMax.Visible = true;
             System.Diagnostics.Process.Start("https://buy.stripe.com/test_9AQ16Y9Hb6GbfKwcMP"); // Live mode
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
-            _selectedAcc = "Supreme";
+            _selectedAccountType = "Supreme";
             btnUseSupreme.Visible = true;
             System.Diagnostics.Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
-            _selectedAcc = "Express";
+            _selectedAccountType = "Express";
             btnUseExpress.Visible = true;
             System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
         }
@@ -581,7 +573,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.Parameters.AddWithValue("@email", Globals.custEmail);
-                        command.Parameters.AddWithValue("@type", _selectedAcc);
+                        command.Parameters.AddWithValue("@type", _selectedAccountType);
                         await command.ExecuteNonQueryAsync();
                     }
 
@@ -590,7 +582,7 @@ namespace FlowSERVER1 {
                     using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
                         commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
                         commandSecond.Parameters.AddWithValue("@email", Globals.custEmail);
-                        commandSecond.Parameters.AddWithValue("@type", _selectedAcc);
+                        commandSecond.Parameters.AddWithValue("@type", _selectedAccountType);
                         commandSecond.Parameters.AddWithValue("@id", lastId);
                         commandSecond.Parameters.AddWithValue("@date", dateTimeNow);
 
@@ -600,13 +592,13 @@ namespace FlowSERVER1 {
                     var delService = new Stripe.CustomerService();
                     delService.Delete(lastId);
 
-                    PaymentSuceededAlert _showSucceeded = new PaymentSuceededAlert(_selectedAcc);
+                    PaymentSuceededAlert _showSucceeded = new PaymentSuceededAlert(_selectedAccountType);
                     _showSucceeded.Show();
 
-                    lblAccountType.Text = _selectedAcc;
-                    Globals.accountType = _selectedAcc;
+                    lblAccountType.Text = _selectedAccountType;
+                    Globals.accountType = _selectedAccountType;
 
-                    setupRedundane(_selectedAcc);
+                    setupRedundane(_selectedAccountType);
 
                 } else {
                     new CustomAlert(
@@ -636,7 +628,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button13_Click(object sender, EventArgs e) {
-            ChangeUsernameForm _ShowUsernameChangerForm = new ChangeUsernameForm(Globals.custUsername);
+            ChangeUsernameForm _ShowUsernameChangerForm = new ChangeUsernameForm();
             _ShowUsernameChangerForm.Show();
         }
 
@@ -653,7 +645,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button12_Click(object sender, EventArgs e) {
-            ResetAuthForm _showChangePassForm = new ResetAuthForm(Globals.custUsername);
+            ResetAuthForm _showChangePassForm = new ResetAuthForm();
             _showChangePassForm.Show();
         }
 
@@ -677,164 +669,164 @@ namespace FlowSERVER1 {
             string greeting = null;
 
             if (hours >= 1 && hours <= 12) {
-                if (NewLang == "US") {
+                if (_newSelectedUserLanguage == "US") {
                     greeting = "Good Morning, " + Globals.custUsername;
                 }
-                else if (NewLang == "MY") {
+                else if (_newSelectedUserLanguage == "MY") {
                     greeting = "Selemat Pagi, " + Globals.custUsername;
                 }
-                else if (NewLang == "GER") {
+                else if (_newSelectedUserLanguage == "GER") {
                     greeting = "Guten Morgen, " + Globals.custUsername;
                 }
-                else if (NewLang == "JAP") {
+                else if (_newSelectedUserLanguage == "JAP") {
                     greeting = "おはよう " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "ESP") {
+                else if (_newSelectedUserLanguage == "ESP") {
                     greeting = "Buen día " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "FRE") {
+                else if (_newSelectedUserLanguage == "FRE") {
                     greeting = "Bonjour " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "POR") {
+                else if (_newSelectedUserLanguage == "POR") {
                     greeting = "Bom dia " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "CHI") {
+                else if (_newSelectedUserLanguage == "CHI") {
                     greeting = "早上好 " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "RUS") {
+                else if (_newSelectedUserLanguage == "RUS") {
                     greeting = "Доброе утро " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "DUT") {
+                else if (_newSelectedUserLanguage == "DUT") {
                     greeting = "Goedemorgen " + Globals.custUsername + " :)";
                 }
             }
 
             else if (hours >= 12 && hours <= 16) {
-                if (NewLang == "US") {
+                if (_newSelectedUserLanguage == "US") {
                     greeting = "Good Afternoon " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "MY") {
+                else if (_newSelectedUserLanguage == "MY") {
                     greeting = "Selamat Petang " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "GER") {
+                else if (_newSelectedUserLanguage == "GER") {
                     greeting = "Guten Tag " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "JAP") {
+                else if (_newSelectedUserLanguage == "JAP") {
                     greeting = "こんにちは " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "ESP") {
+                else if (_newSelectedUserLanguage == "ESP") {
                     greeting = "Buenas tardes " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "FRE") {
+                else if (_newSelectedUserLanguage == "FRE") {
                     greeting = "Bon après-midi " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "POR") {
+                else if (_newSelectedUserLanguage == "POR") {
                     greeting = "Boa tarde " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "CHI") {
+                else if (_newSelectedUserLanguage == "CHI") {
                     greeting = "下午好 " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "RUS") {
+                else if (_newSelectedUserLanguage == "RUS") {
                     greeting = "Добрый день " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "DUT") {
+                else if (_newSelectedUserLanguage == "DUT") {
                     greeting = "Goedemiddag " + Globals.custUsername + " :)";
                 }
             }
             else if (hours >= 16 && hours <= 21) {
                 if (hours == 20 || hours == 21) {
-                    if (NewLang == "US") {
+                    if (_newSelectedUserLanguage == "US") {
                         greeting = "Good Late Evening, " + Globals.custUsername;
                     }
-                    else if (NewLang == "MY") {
+                    else if (_newSelectedUserLanguage == "MY") {
                         greeting = "Selamat Lewat-Petang, " + Globals.custUsername;
-                    } else if (NewLang == "GER") {
+                    } else if (_newSelectedUserLanguage == "GER") {
                         greeting = "Guten späten Abend, " + Globals.custUsername;
                     }
-                    else if (NewLang == "JAP") {
+                    else if (_newSelectedUserLanguage == "JAP") {
                         greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "ESP") {
+                    else if (_newSelectedUserLanguage == "ESP") {
                         greeting = "buenas tardes " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "FRE") {
+                    else if (_newSelectedUserLanguage == "FRE") {
                         greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "POR") {
+                    else if (_newSelectedUserLanguage == "POR") {
                         greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "CHI") {
+                    else if (_newSelectedUserLanguage == "CHI") {
                         greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "RUS") {
+                    else if (_newSelectedUserLanguage == "RUS") {
                         greeting = "Добрый день " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "DUT") {
+                    else if (_newSelectedUserLanguage == "DUT") {
                         greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
 
                 }
                 else {
-                    if (NewLang == "US") {
+                    if (_newSelectedUserLanguage == "US") {
                         greeting = "Good Evening, " + Globals.custUsername;
                     }
-                    else if (NewLang == "MY") {
+                    else if (_newSelectedUserLanguage == "MY") {
                         greeting = "Selamat Petang, " + Globals.custUsername;
-                    } else if (NewLang == "GER") {
+                    } else if (_newSelectedUserLanguage == "GER") {
                         greeting = "Guten Abend, " + Globals.custUsername;
-                    } else if (NewLang == "JAP") {
+                    } else if (_newSelectedUserLanguage == "JAP") {
                         greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "ESP") {
+                    else if (_newSelectedUserLanguage == "ESP") {
                         greeting = "Buenas terdes " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "FRE") {
+                    else if (_newSelectedUserLanguage == "FRE") {
                         greeting = "bonne soirée " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "POR") {
+                    else if (_newSelectedUserLanguage == "POR") {
                         greeting = "Boa noite " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "CHI") {
+                    else if (_newSelectedUserLanguage == "CHI") {
                         greeting = "晚上好 " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "RUS") {
+                    else if (_newSelectedUserLanguage == "RUS") {
                         greeting = "Добрый вечер " + Globals.custUsername + " :)";
                     }
-                    else if (NewLang == "DUT") {
+                    else if (_newSelectedUserLanguage == "DUT") {
                         greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
                 }
 
             }
             else if (hours >= 21 && hours <= 24) {
-                if (NewLang == "US") {
+                if (_newSelectedUserLanguage == "US") {
                     greeting = "Good Night, " + Globals.custUsername;
                 }
-                else if (NewLang == "MY") {
+                else if (_newSelectedUserLanguage == "MY") {
                     greeting = "Selamat Malam, " + Globals.custUsername;
                 }
-                else if (NewLang == "GER") {
+                else if (_newSelectedUserLanguage == "GER") {
                     greeting = "Guten Nacth, " + Globals.custUsername;
                 }
-                else if (NewLang == "JAP") {
+                else if (_newSelectedUserLanguage == "JAP") {
                     greeting = "おやすみ " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "ESP") {
+                else if (_newSelectedUserLanguage == "ESP") {
                     greeting = "Buenas noches " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "FRE") {
+                else if (_newSelectedUserLanguage == "FRE") {
                     greeting = "bonne nuit " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "POR") {
+                else if (_newSelectedUserLanguage == "POR") {
                     greeting = "Boa noite " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "CHI") {
+                else if (_newSelectedUserLanguage == "CHI") {
                     greeting = "晚安 " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "RUS") {
+                else if (_newSelectedUserLanguage == "RUS") {
                     greeting = "Спокойной ночи " + Globals.custUsername + " :)";
                 }
-                else if (NewLang == "DUT") {
+                else if (_newSelectedUserLanguage == "DUT") {
                     greeting = "Welterusten " + Globals.custUsername + " :)";
                 }
             }
@@ -1449,7 +1441,7 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader _readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await _readLang.ReadAsync()) {
-                        CurrentLang = _readLang.GetString(0);
+                        _currentUserLanguage = _readLang.GetString(0);
                     }
                 }
             }
@@ -1915,25 +1907,25 @@ namespace FlowSERVER1 {
 
         private void guna2Button18_Click(object sender, EventArgs e) {
             languageChanger("MY");
-            NewLang = "MY";
+            _newSelectedUserLanguage = "MY";
             setupTime();
         }
 
         private void guna2Button17_Click(object sender, EventArgs e) {
             languageChanger("JAP");
-            NewLang = "JAP";
+            _newSelectedUserLanguage = "JAP";
             setupTime();
         }
 
         private void guna2Button19_Click(object sender, EventArgs e) {
             languageChanger("US");
-            NewLang = "US";
+            _newSelectedUserLanguage = "US";
             setupTime();
         }
 
         private void guna2Button15_Click(object sender, EventArgs e) {
             languageChanger("GER");
-            NewLang = "GER";
+            _newSelectedUserLanguage = "GER";
             setupTime();
         }
 
@@ -1947,25 +1939,25 @@ namespace FlowSERVER1 {
 
         private void guna2Button16_Click(object sender, EventArgs e) {
             languageChanger("ESP");
-            NewLang = "ESP";
+            _newSelectedUserLanguage = "ESP";
             setupTime();
         }
 
         private void guna2Button20_Click(object sender, EventArgs e) {
             languageChanger("FRE");
-            NewLang = "FRE";
+            _newSelectedUserLanguage = "FRE";
             setupTime();
         }
 
         private void guna2Button21_Click(object sender, EventArgs e) {
             languageChanger("POR");
-            NewLang = "POR";
+            _newSelectedUserLanguage = "POR";
             setupTime();
         }
 
         private void guna2Button22_Click(object sender, EventArgs e) {
             languageChanger("CHI");
-            NewLang = "CHI";
+            _newSelectedUserLanguage = "CHI";
             setupTime();
         }
 
@@ -2110,79 +2102,79 @@ namespace FlowSERVER1 {
 
                 if(guna2TabControl1.SelectedIndex == 1) {
 
-                    if(CurrDateStats == 0) {
+                    if(_getAccountDateQueryExecuted == false) {
 
                         const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
 
                         using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
-                            userJoinedDate = command.ExecuteScalar()?.ToString();
+                            _userCreatedAccountDate = command.ExecuteScalar()?.ToString();
                         }
 
-                        CurrDateStats++;
+                        _getAccountDateQueryExecuted = true;
 
                     } else {
-                        lblAccountCreatedDate.Text = userJoinedDate;
+                        lblAccountCreatedDate.Text = _userCreatedAccountDate;
                     }
 
                 }
 
                 if(guna2TabControl1.SelectedIndex == 3) {
-                    if (CurrentLang == "US") {
+                    if (_currentUserLanguage == "US") {
                         guna2Button19.Text = "Default";
                         guna2Button19.Enabled = false;
                         guna2Button19.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "MY") {
+                    if (_currentUserLanguage == "MY") {
                         guna2Button18.Text = "Default";
                         guna2Button18.Enabled = false;
                         guna2Button18.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "JAP") {
+                    if (_currentUserLanguage == "JAP") {
                         guna2Button17.Text = "Default";
                         guna2Button17.Enabled = false;
                         guna2Button17.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "GER") {
+                    if (_currentUserLanguage == "GER") {
                         guna2Button15.Text = "Default";
                         guna2Button15.Enabled = false;
                         guna2Button15.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "ESP") {
+                    if (_currentUserLanguage == "ESP") {
                         guna2Button16.Text = "Default";
                         guna2Button16.Enabled = false;
                         guna2Button16.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "FRE") {
+                    if (_currentUserLanguage == "FRE") {
                         guna2Button20.Text = "Default";
                         guna2Button20.Enabled = false;
                         guna2Button20.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "CHI") {
+                    if (_currentUserLanguage == "CHI") {
                         guna2Button22.Text = "Default";
                         guna2Button22.Enabled = false;
                         guna2Button22.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "POR") {
+                    if (_currentUserLanguage == "POR") {
                         guna2Button21.Text = "Default";
                         guna2Button21.Enabled = false;
                         guna2Button21.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "RUS") {
+                    if (_currentUserLanguage == "RUS") {
                         guna2Button31.Text = "Default";
                         guna2Button31.Enabled = false;
                         guna2Button31.ForeColor = Color.Gainsboro;
                     }
 
-                    if (CurrentLang == "DUT") {
+                    if (_currentUserLanguage == "DUT") {
                         guna2Button30.Text = "Default";
                         guna2Button30.Enabled = false;
                         guna2Button30.ForeColor = Color.Gainsboro;
@@ -2313,13 +2305,13 @@ namespace FlowSERVER1 {
 
         private void guna2Button31_Click(object sender, EventArgs e) {
             languageChanger("RUS");
-            NewLang = "RUS";
+            _newSelectedUserLanguage = "RUS";
             setupTime();
         }
 
         private void guna2Button30_Click(object sender, EventArgs e) {
             languageChanger("DUT");
-            NewLang = "DUT";
+            _newSelectedUserLanguage = "DUT";
             setupTime();
         }
 
@@ -2358,6 +2350,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Panel12_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void guna2Panel22_Paint(object sender, PaintEventArgs e) {
 
         }
     }

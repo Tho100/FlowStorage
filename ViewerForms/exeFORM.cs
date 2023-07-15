@@ -8,15 +8,12 @@ namespace FlowSERVER1 {
     public partial class exeFORM : Form {
 
         readonly public exeFORM instance;
+        public string _tableName { get; set; }
+        public string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
+        private bool _isFromSharing { get; set; }
 
-        public byte[] GlobalByte;
-        public string TableName;
-        public string DirectoryName;
-
-        private bool isFromShared;
-        private bool isFromSharing;  
-
-        public exeFORM(String fileName,String tableName, String directoryName, String uploaderName,bool isFromShared = false, bool _isFromSharing = false) {
+        public exeFORM(String fileName,String tableName, String directoryName, String uploaderName,bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -24,10 +21,10 @@ namespace FlowSERVER1 {
 
             lblFileName.Text = fileName;
 
-            this.TableName = tableName;
-            this.DirectoryName = directoryName;
-            this.isFromShared = isFromShared;
-            this.isFromSharing = _isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
+            this._isFromSharing = isFromSharing;
 
             if (isFromShared == true) {
                 
@@ -69,7 +66,7 @@ namespace FlowSERVER1 {
 
         }
         private void guna2Button4_Click(object sender, EventArgs e) {
-            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName, isFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
         }
 
         private void label1_Click(object sender, EventArgs e) {
@@ -83,8 +80,8 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             string[] parts = lblFileName.Text.Split('.');
             string getExtension = "." + parts[1];
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, isFromSharing, TableName, DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {

@@ -14,7 +14,7 @@ using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
-    public partial class wordFORM : Form {
+    public partial class WordDocForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
@@ -33,7 +33,7 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public wordFORM(String fileName,String tableName, String directoryName, String uploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
+        public WordDocForm(String fileName,String tableName, String directoryName, String uploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
 
             InitializeComponent();
 

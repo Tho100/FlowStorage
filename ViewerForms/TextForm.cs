@@ -22,16 +22,15 @@ namespace FlowSERVER1 {
     /// Load user text file 
     /// </summary>
 
-    public partial class txtFORM : Form {
+    public partial class TextForm : Form {
 
-        public readonly txtFORM instance;
+        public readonly TextForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        private bool IsFromSharing {get; set; }
-        private string DirectoryName {get; set; }
-        private string TableName { get; set; }
-        private string UploaderName { get; set; }
+        private bool _isFromSharing {get; set; }
+        private string _directoryName {get; set; }
+        private string _tableName { get; set; }
 
         /// <summary>
         /// 
@@ -44,7 +43,7 @@ namespace FlowSERVER1 {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public txtFORM(String getText,String tableName,String fileName,String directoryName,String uploaderName, bool _isFromSharing = false) {
+        public TextForm(String getText,String tableName,String fileName,String directoryName,String uploaderName, bool isFromSharing = false) {
             InitializeComponent();
 
             try {
@@ -52,18 +51,18 @@ namespace FlowSERVER1 {
                 instance = this;
 
                 this.lblFileName.Text = fileName;
-                this.TableName = tableName;
-                this.DirectoryName = directoryName;
-                this.UploaderName = uploaderName;
+                this._tableName = tableName;
+                this._directoryName = directoryName;
+                this._isFromSharing = isFromSharing;
 
                 var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
 
-                if (_isFromSharing == true) {
+                if (isFromSharing == true) {
 
                     btnEditComment.Visible = true;
                     guna2Button12.Visible = true;
 
-                    this.IsFromSharing = true;
+                    isFromSharing = true;
 
                     label4.Text = "Shared To";
                     btnShareFile.Visible = false;
@@ -154,15 +153,15 @@ namespace FlowSERVER1 {
                 } else if (tableName == "file_info_expand") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "cust_sharing" && IsFromSharing == false) {
+                } else if (tableName == "cust_sharing" && _isFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "cust_sharing" && IsFromSharing == true) {
+                } else if (tableName == "cust_sharing" && _isFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
                 } else if (tableName == "ps_info_text") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery, FileExt_, this.UploaderName);
+                    retrieveData(getTxtQuery, FileExt_, uploaderName);
                 }
 
             } catch (Exception) {
@@ -410,7 +409,7 @@ namespace FlowSERVER1 {
             }
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
-            if(this.TableName != "ps_info_text") {
+            if(this._tableName != "ps_info_text") {
                 btnSaveChanges.Visible = true;
             }
         }
@@ -434,15 +433,15 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void _saveChangesUpdate(String textValues) {
 
             try {
 
-                if(TableName == "file_info_expand") {
+                if(_tableName == "file_info_expand") {
 
                     const string updateQue = "UPDATE file_info_expand SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using(MySqlCommand command = new MySqlCommand(updateQue,con)) {
@@ -452,7 +451,7 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                } else if (TableName == "cust_sharing" && IsFromSharing == false) {
+                } else if (_tableName == "cust_sharing" && _isFromSharing == false) {
 
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
@@ -462,7 +461,7 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                } else if (TableName == "cust_sharing" && IsFromSharing == true) {
+                } else if (_tableName == "cust_sharing" && _isFromSharing == true) {
 
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
@@ -472,18 +471,18 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                } else if (TableName == "upload_info_directory") {
+                } else if (_tableName == "upload_info_directory") {
 
                     const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName);
+                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(_directoryName);
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
-                } else if (TableName == "folder_upload_info") {
+                } else if (_tableName == "folder_upload_info") {
 
                     const string updateQue = "UPDATE folder_upload_info SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {

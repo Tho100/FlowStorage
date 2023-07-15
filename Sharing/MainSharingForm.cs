@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using System.Globalization;
-using System.Diagnostics;
-using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading;
 
@@ -22,17 +16,15 @@ using FlowSERVER1.Helper;
 namespace FlowSERVER1 {
     public partial class MainSharingForm : Form {
 
-        readonly private ImageCompressor compressor = new ImageCompressor();
+        public MainSharingForm instance;
 
-        private string _FileName;
-        private string _FilePath;
-        private string _retrieved;
-        private string _getExt;
-        private byte[] _FileBytes;
+        readonly private ImageCompressor compressor = new ImageCompressor();
+        private string _fileName{ get; set; }
+        private string _fileFullPath { get; set; }
+        private string _fileExtension { get; set; }
+        private byte[] _fileBytes { get; set; }
 
         readonly private MySqlConnection con = ConnectionModel.con;
-
-        public MainSharingForm instance;
 
         public string _verifySetPas = "";
 
@@ -80,15 +72,15 @@ namespace FlowSERVER1 {
                 string fileName = _OpenDialog.SafeFileName;
                 string retrieved = Path.GetExtension(fileExtension);
 
-                _FileName = fileName;
-                _FilePath = _OpenDialog.FileName;
-                _getExt = fileExtension;
-                _retrieved = retrieved;
+                _fileName = fileName;
+                _fileFullPath = _OpenDialog.FileName;
+                _fileExtension = retrieved;
+
                 txtFieldFileName.Text = fileName;
 
-                _FileBytes = File.ReadAllBytes(_FilePath);
+                _fileBytes = File.ReadAllBytes(_fileFullPath);
 
-                lblFileSize.Text = $"File Size: {FileSize.fileSize(_FileBytes):F2}Mb";
+                lblFileSize.Text = $"File Size: {FileSize.fileSize(_fileBytes):F2}Mb";
                 lblFileSize.Visible = true;
             }
         }
@@ -110,10 +102,10 @@ namespace FlowSERVER1 {
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@CUST_TO", txtFieldShareToName.Text);
                     command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
-                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName));
+                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                     command.Parameters.AddWithValue("@CUST_FILE", setValue);
-                    command.Parameters.AddWithValue("@FILE_EXT", _retrieved);
+                    command.Parameters.AddWithValue("@FILE_EXT", _fileExtension);
                     command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(txtFieldComment.Text));
                     command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
                     command.Prepare();
@@ -144,50 +136,50 @@ namespace FlowSERVER1 {
 
                     new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
-                    string _toBase64 = Convert.ToBase64String(_FileBytes);
+                    string _toBase64 = Convert.ToBase64String(_fileBytes);
 
-                    if (Globals.imageTypes.Contains(_retrieved)) {
-                        string compressedImageBase64 = compressor.compresImageToBase64(_FilePath);
+                    if (Globals.imageTypes.Contains(_fileExtension)) {
+                        string compressedImageBase64 = compressor.compresImageToBase64(_fileFullPath);
                         string encryptText = EncryptionModel.Encrypt(compressedImageBase64);
                         await startSending(encryptText);
                     }
-                    else if (_retrieved == ".docx" || _retrieved == ".doc") {
+                    else if (_fileExtension == ".docx" || _fileExtension == ".doc") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);                    
                     }
-                    else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
+                    else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
-                    else if (_retrieved == ".exe") {
+                    else if (_fileExtension == ".exe") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
-                    else if (_retrieved == ".msi") {
+                    else if (_fileExtension == ".msi") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
-                    else if (_retrieved == ".mp3" || _retrieved == ".wav") {
+                    else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
 
-                    else if (_retrieved == ".pdf") {
+                    else if (_fileExtension == ".pdf") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
-                    else if (_retrieved == ".apk") {
+                    else if (_fileExtension == ".apk") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
-                    else if (_retrieved == ".xlsx" || _retrieved == ".xls") {
+                    else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
                     }
-                    else if (Globals.textTypes.Contains(_retrieved)) {
+                    else if (Globals.textTypes.Contains(_fileExtension)) {
 
                         var nonLine = "";
-                        using (StreamReader ReadFileTxt = new StreamReader(_FilePath)) { 
+                        using (StreamReader ReadFileTxt = new StreamReader(_fileFullPath)) { 
                             nonLine = ReadFileTxt.ReadToEnd();  
                         }
 
@@ -197,9 +189,9 @@ namespace FlowSERVER1 {
                         
                         await startSending(encryptText);
 
-                    } else if (Globals.videoTypes.Contains(_retrieved)) {
+                    } else if (Globals.videoTypes.Contains(_fileExtension)) {
 
-                        ShellFile shellFile = ShellFile.FromFilePath(_FilePath);
+                        ShellFile shellFile = ShellFile.FromFilePath(_fileFullPath);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
 
                         string toBase64Thumbnail;
@@ -382,7 +374,7 @@ namespace FlowSERVER1 {
 
                 string password = hasPassword(textBox1);
                 if (!string.IsNullOrEmpty(password)) {
-                    AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _retrieved);
+                    AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _fileExtension);
                     _askPassForm.Show();
                 }
                 else {

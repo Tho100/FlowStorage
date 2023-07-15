@@ -8,23 +8,21 @@ using System.Threading;
 
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
+using FlowSERVER1.AlertForms;
 
 namespace FlowSERVER1 {
-    public partial class vidFORM : Form {
+    public partial class VideoForm : Form {
 
-        public readonly vidFORM instance;
+        public readonly VideoForm instance;
 
-        readonly private static MySqlConnection con = ConnectionModel.con;
+        private MediaPlayer _mediaPlayer { get; set; }
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
+        private bool _isFromSharing { get; set; }
+        private bool _isEndReached { get; set; }
 
-        private MediaPlayer _mp;
-        private string _TableName;
-        private string _DirName;
-        private string _UploaderName;
-        private bool _IsFromShared;
-        private bool IsFromSharing;
-        private bool _IsEndReached;
-
-        public vidFORM(Image getThumb, int width, int height, String fileName,String tableName, String directoryName,String uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
+        public VideoForm(Image getThumb, int width, int height, String fileName,String tableName, String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -34,11 +32,10 @@ namespace FlowSERVER1 {
             guna2PictureBox1.Image = setupImage;
 
             this.lblFileName.Text = fileName;
-            this._TableName = tableName;
-            this._DirName = directoryName;
-            this._UploaderName = uploaderName;
-            this._IsFromShared = _isFromShared;
-            this.IsFromSharing = _isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
+            this._isFromSharing = isFromSharing;
 
             if (_isFromShared == true) {
 
@@ -79,8 +76,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            if(_mp != null) {
-                _mp.Stop();
+            if(_mediaPlayer != null) {
+                _mediaPlayer.Stop();
             } 
             this.Close();
         }
@@ -129,16 +126,16 @@ namespace FlowSERVER1 {
             LibVLC _setLibVLC = new LibVLC();
             var _setMedia = new Media(_setLibVLC, new StreamMediaInput(_toStream));
 
-            _mp?.Dispose();
-            _mp = new MediaPlayer(_setMedia);
+            _mediaPlayer?.Dispose();
+            _mediaPlayer = new MediaPlayer(_setMedia);
 
             videoViewer.MediaPlayer?.Dispose();
-            videoViewer.MediaPlayer = _mp;
+            videoViewer.MediaPlayer = _mediaPlayer;
 
-            _mp.Play();
+            _mediaPlayer.Play();
 
-            _mp.PositionChanged += MediaPlayer_PositionChanged;
-            _mp.EndReached += MediaPlayer_EndReached;
+            _mediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
+            _mediaPlayer.EndReached += MediaPlayer_EndReached;
 
             _setLibVLC.Dispose();           
 
@@ -156,20 +153,20 @@ namespace FlowSERVER1 {
 
             try {
 
-                if(_mp != null) {
+                if(_mediaPlayer != null) {
 
                     videoViewer.Visible = true;
 
-                    if (_IsEndReached) {
+                    if (_isEndReached) {
 
-                        _mp.Position = 0;
-                        _IsEndReached = false;
+                        _mediaPlayer.Position = 0;
+                        _isEndReached = false;
 
-                        setupPlayer(LoaderModel.LoadFile(_TableName, _DirName, lblFileName.Text));
+                        setupPlayer(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text));
 
                     }
 
-                    _mp.Play();
+                    _mediaPlayer.Play();
 
                 } else {
 
@@ -178,16 +175,15 @@ namespace FlowSERVER1 {
                     guna2PictureBox1.Visible = false;
                     videoViewer.Visible = true;
 
-                    setupPlayer(LoaderModel.LoadFile(_TableName, _DirName, lblFileName.Text, _IsFromShared));
+                    setupPlayer(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
                 }
 
                 btnPlayVideo.Visible = false;
                 btnPauseVideo.Visible = true;
 
-            } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //MessageBox.Show("Failed to play this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            } catch (Exception) {
+                new CustomAlert(title: "An error occurred",subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
             }
         }
 
@@ -203,7 +199,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirName, _IsFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
         }
 
         private void videoView1_Click(object sender, EventArgs e) {
@@ -228,8 +224,8 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button6_Click_1(object sender, EventArgs e) {
-            if(_mp != null) {
-                _mp.Pause();
+            if(_mediaPlayer != null) {
+                _mediaPlayer.Pause();
                 btnPlayVideo.Visible = true;
                 btnPauseVideo.Visible = false;
             }
@@ -241,8 +237,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button7_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length-4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void label1_Click(object sender, EventArgs e) {
@@ -271,9 +267,9 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
-            if (_mp != null && _mp.IsPlaying) {
-                long newPosition = (long)(_mp.Length * guna2TrackBar1.Value / 100.0);
-                _mp.Time = newPosition;
+            if (_mediaPlayer != null && _mediaPlayer.IsPlaying) {
+                long newPosition = (long)(_mediaPlayer.Length * guna2TrackBar1.Value / 100.0);
+                _mediaPlayer.Time = newPosition;
             }
         }
 
@@ -287,7 +283,7 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) {
             guna2TrackBar1.Invoke((MethodInvoker)delegate {
-                guna2TrackBar1.Value = (int)(_mp.Position * 100);
+                guna2TrackBar1.Value = (int)(_mediaPlayer.Position * 100);
             });
         }
 
@@ -302,16 +298,15 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void MediaPlayer_EndReached(object sender, EventArgs e) {
             guna2TrackBar1.Value = 100;
-            //guna2Button10.Visible = true;
             btnPlayVideo.Visible = true;
             btnPauseVideo.Visible = false;
-            _IsEndReached = true;
+            _isEndReached = true;
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {
             guna2TrackBar1.Value = 0;
-            _mp.Stop();
-            _mp.Play();
+            _mediaPlayer.Stop();
+            _mediaPlayer.Play();
             btnReplayVideo.Visible = false;
             btnPauseVideo.Visible = true;
         }

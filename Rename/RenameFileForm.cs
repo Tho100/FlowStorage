@@ -15,25 +15,25 @@ namespace FlowSERVER1 {
     public partial class RenameFileForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private string titleFile {get; set; }
-        private string tableName{ get; set; }
-        private string panelName { get; set; }
-        private string sharedToName { get; set; }
-        private string dirName { get; set; }
+        private string _fileName {get; set; }
+        private string _tableName{ get; set; }
+        private string _panelName { get; set; }
+        private string _sharedToName { get; set; }
+        private string _directoryName { get; set; }
 
-        public RenameFileForm(String _fileName,String _tableName, String _panelName, String _dirName = "", String _sharedToName = "") {
+        public RenameFileForm(String fileName,String tableName, String panelName, String directoryName = "", String sharedToName = "") {
 
             InitializeComponent();
 
-            this.titleFile = _fileName;
-            this.tableName = _tableName;
-            this.panelName = _panelName;
-            this.sharedToName = _sharedToName;
-            this.dirName = _dirName;
+            this._fileName = fileName;
+            this._tableName = tableName;
+            this._panelName = panelName;
+            this._sharedToName = sharedToName;
+            this._directoryName = directoryName;
 
-            this.lblFileName.Text = titleFile;
+            this.lblFileName.Text = fileName;
 
-            txtFieldNewFileName.Text = titleFile.Substring(0,titleFile.Length-4);
+            txtFieldNewFileName.Text = fileName.Substring(0, fileName.Length-4);
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
@@ -42,12 +42,12 @@ namespace FlowSERVER1 {
 
         private async Task renameFileAsync(String newFileName) {
 
-            if (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName)) {
+            if (GlobalsTable.publicTables.Contains(_tableName) || GlobalsTable.publicTablesPs.Contains(_tableName)) {
 
-                string removeQuery = $"UPDATE {tableName} SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                string removeQuery = $"UPDATE {_tableName} SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
+                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     await command.ExecuteNonQueryAsync();
                 }
@@ -55,48 +55,48 @@ namespace FlowSERVER1 {
                 GlobalsData.filesMetadataCacheHome.Clear();
 
             }
-            else if (tableName == "folder_upload_info") {
+            else if (_tableName == "folder_upload_info") {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                    command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(dirName));
+                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                    command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_directoryName));
                     command.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     await command.ExecuteNonQueryAsync();
                 }
 
             }
-            else if (tableName == "cust_sharing" && sharedToName != "sharedToName") {
+            else if (_tableName == "cust_sharing" && _sharedToName != "sharedToName") {
 
                 const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
                     cmd.Parameters.AddWithValue("@username", Globals.custUsername);
-                    cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
+                    cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     cmd.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
-                    cmd.Parameters.AddWithValue("@sharedname", sharedToName);
+                    cmd.Parameters.AddWithValue("@sharedname", _sharedToName);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
 
             }
-            else if (tableName == "cust_sharing" && sharedToName == "sharedToName") {
+            else if (_tableName == "cust_sharing" && _sharedToName == "sharedToName") {
 
                 const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
                     cmd.Parameters.AddWithValue("@username", Globals.custUsername);
-                    cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
+                    cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     cmd.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
-                    cmd.Parameters.AddWithValue("@sharedname", sharedToName);
+                    cmd.Parameters.AddWithValue("@sharedname", _sharedToName);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
-            else if (tableName == GlobalsTable.directoryUploadTable) {
+            else if (_tableName == GlobalsTable.directoryUploadTable) {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE upload_info_directory SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirName));
+                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_directoryName));
                     command.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     await command.ExecuteNonQueryAsync();
                 }
@@ -105,10 +105,10 @@ namespace FlowSERVER1 {
 
             Control[] matches = new Control[0];
 
-            if (tableName != GlobalsTable.sharingTable && tableName != GlobalsTable.folderUploadTable && tableName != "upload_info_directory") {
-                matches = HomePage.instance.Controls.Find(panelName, true);
-            } else if (tableName == "upload_info_directory") {
-                matches = DirectoryForm.instance.Controls.Find(panelName, true);
+            if (_tableName != GlobalsTable.sharingTable && _tableName != GlobalsTable.folderUploadTable && _tableName != "upload_info_directory") {
+                matches = HomePage.instance.Controls.Find(_panelName, true);
+            } else if (_tableName == "upload_info_directory") {
+                matches = DirectoryForm.instance.Controls.Find(_panelName, true);
             }
 
             if (matches.Length > 0 && matches[0] is Guna2Panel) {
@@ -126,7 +126,7 @@ namespace FlowSERVER1 {
 
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
-            string fileExtensions = titleFile.Split('.').Last();
+            string fileExtensions = _fileName.Split('.').Last();
             string newFileName = txtFieldNewFileName.Text + "." + fileExtensions;
 
             if(String.IsNullOrEmpty(newFileName)) {

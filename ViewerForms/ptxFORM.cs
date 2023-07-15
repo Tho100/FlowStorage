@@ -22,12 +22,10 @@ namespace FlowSERVER1 {
     /// </summary>
     public partial class ptxFORM : Form {
 
-        private readonly MySqlConnection con = ConnectionModel.con;
-
-        private string _TableName;
-        private string _DirectoryName;
-        private bool _IsFromShared;
-        private bool IsFromSharing;  
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
+        private bool _isFromSharing { get; set; }
 
         /// <summary>
         /// 
@@ -39,15 +37,15 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public ptxFORM(string fileName,string tableName, string directoryName,string uploaderName, bool _isFromShared = false, bool _isFromSharing = false) {
+        public ptxFORM(string fileName,string tableName, string directoryName,string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this._TableName = tableName;
-            this._DirectoryName = directoryName;
-            this._IsFromShared = _isFromShared;
-            this.IsFromSharing = _isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
+            this._isFromSharing = isFromSharing;
 
             if (_isFromShared == true) {
 
@@ -76,10 +74,10 @@ namespace FlowSERVER1 {
 
             try {
 
-                Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader").ShowDialog());
-                ShowAlert.Start();
+                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader")
+                .ShowDialog());
 
-                setupPtx(LoaderModel.LoadFile(_TableName, _DirectoryName, lblFileName.Text, _isFromShared));
+                setupPtx(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
             }  catch (Exception) {
                 MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -101,7 +99,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text, _TableName, _DirectoryName, _IsFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
             this.TopMost = true;
         }
 
@@ -150,8 +148,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {

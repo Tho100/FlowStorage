@@ -15,9 +15,9 @@ using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
-    public partial class picFORM : Form {
+    public partial class PicForm : Form {
 
-        public readonly picFORM instance; 
+        public readonly PicForm instance; 
 
         private bool IsDragging {get; set; } = false;
         private bool IsVisibleFilterPanel {get; set; } = false;
@@ -29,31 +29,36 @@ namespace FlowSERVER1 {
         private int brightnessValue { get; set; }
         private float saturationValue {get; set; }
 
-        private string TableName {get; set; }
-        private string Directoryname {get; set; }
-        private bool IsFromShared {get; set; } 
-        private bool IsFromSharing {get; set; } 
-        private MySqlConnection con {get; set; } = ConnectionModel.con;
+        private string _tableName {get; set; }
+        private string _directoryName {get; set; }
+        private bool _isFromShared {get; set; } 
+        private bool _isFromSharing {get; set; } 
+        private MySqlConnection con { get; set; } = ConnectionModel.con;
 
-        public picFORM(Image userImage, int width, int height,string title,string tableName, string directoryName, string uploaderName,bool _IsFromShared = false, bool _isFromSharing = false) {
+        public PicForm(Image userImage, int width, int height, string title, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+
             InitializeComponent();
 
             instance = this;
 
             filterPanel.MouseDown += filterPanel_MouseDown;
-            initializePicture(userImage,width,height,title, tableName, directoryName, uploaderName, _IsFromShared, _isFromSharing);
-
+            initializePicture(
+                userImage, width, height, title, tableName, directoryName, 
+                uploaderName, isFromShared, isFromSharing);
         }
 
-        private void initializePicture(Image userImage, int width, int height, string title, string tableName, string directoryName, string uploaderName, bool _IsFromShared = false, bool _isFromSharing = true) {
-
+        private void initializePicture(
+            Image userImage, int width, int height, 
+            string title, string tableName, string directoryName, 
+            string uploaderName, bool isFromShared = false, bool isFromSharing = true) {
 
             this.lblFileName.Text = title;
-            this.TableName = tableName;
-            this.Directoryname = directoryName;
-            this.IsFromShared = _IsFromShared;
-            this.IsFromSharing = _isFromSharing;
             this.lblImageResolution.Text = $"({width}x{height})";
+
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
+            this._isFromSharing = isFromSharing;
 
             var setupImage = new Bitmap(userImage);
 
@@ -62,7 +67,7 @@ namespace FlowSERVER1 {
 
             guna2PictureBox1.Image = setupImage;
 
-            if (_IsFromShared == true) {
+            if (isFromShared == true) {
                 label4.Text = "Shared To";
                 btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
@@ -111,7 +116,7 @@ namespace FlowSERVER1 {
         
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, Directoryname, IsFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
             this.TopMost = true;
         }
 
@@ -129,8 +134,9 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text,getExtension,IsFromSharing, TableName, Directoryname);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension,
+                _isFromSharing, _tableName, _directoryName).Show();
+            
         }
 
         private void label7_Click(object sender, EventArgs e) {
@@ -329,9 +335,9 @@ namespace FlowSERVER1 {
 
             try {
   
-                if (IsFromShared == true) {
+                if (_isFromShared == true) {
                     await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename",values);
-                } else if (IsFromShared == true) {
+                } else if (_isFromShared == true) {
                     await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
                 } else {
                     await executeChanges("UPDATE file_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);

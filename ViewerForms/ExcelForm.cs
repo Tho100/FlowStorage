@@ -5,27 +5,26 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using ClosedXML.Excel;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 using FlowSERVER1.AlertForms;
-using Guna.UI2.WinForms;
 
 namespace FlowSERVER1 {
 
-    public partial class exlFORM : Form {
+    public partial class ExcelForm : Form {
 
-        readonly public exlFORM instance;
+        readonly public ExcelForm instance;
 
-        private string DirectoryName;
-        private string TableName;
+        private string _directoryName { get; set; }
+        private string _tableName { get; set; }
 
-        private int previousSelectedIndex = 0;
-        private int _currentSheetIndex = 1;
-        private int _changedIndex = 0;
-        private byte[] _sheetsByte;
-        private bool IsFromSharing;
+        private int _previousSelectedIndex { get; set; } = 0;
+        private int _currentSheetIndex { get; set; } = 1;
+        private int _changedIndex { get; set; } = 0;
+        private byte[] _sheetsByte { get; set; }
+        private bool _isFromSharing { get; set; }
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
@@ -39,7 +38,7 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public exlFORM(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false) {
+        public ExcelForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false) {
 
             InitializeComponent();
 
@@ -48,10 +47,10 @@ namespace FlowSERVER1 {
             instance = this;
 
             this.lblFileName.Text = fileName;
-            this.DirectoryName = directoryName;
-            this.TableName = tableName;
+            this._directoryName = directoryName;
+            this._tableName = tableName;
 
-            if (IsFromSharing == true) {
+            if (_isFromSharing == true) {
 
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
@@ -77,8 +76,8 @@ namespace FlowSERVER1 {
 
             lblUploaderName.Text = uploaderName;
 
-            generateSheet(LoaderModel.LoadFile(tableName, DirectoryName, fileName, isFromShared));
-            _sheetsByte = LoaderModel.LoadFile(tableName, DirectoryName, fileName);
+            generateSheet(LoaderModel.LoadFile(tableName, _directoryName, fileName, isFromShared));
+            _sheetsByte = LoaderModel.LoadFile(tableName, _directoryName, fileName);
            
         }
 
@@ -129,14 +128,12 @@ namespace FlowSERVER1 {
                                     dt.Rows.Add(row.Cells().Select(c => c.Value.ToString()).ToArray());
                                 }
                             }
-
                             dataGridView1.DataSource = dt;
                         }
                     }
                 }
             }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
+            catch (Exception) {
                 new CustomAlert(title: "Failed to load this workbook", subheader: "It may be broken or unsupported format.").Show();
             }
         }
@@ -169,7 +166,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text,TableName,DirectoryName);
+            SaverModel.SaveSelectedFile(lblFileName.Text,_tableName,_directoryName);
         }
 
         private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e) {
@@ -182,67 +179,69 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
+
             string[] parts = lblFileName.Text.Split('.');
             string getExtension = "." + parts[1];
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
-            _showSharingFileFORM.Show();
+
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
-        private void _saveChangesUpdate(String textValues) {
+        private async Task saveChangesUpdate(string textValues) {
 
             try {
 
-                if (TableName == GlobalsTable.homeExcelTable) {
+                if (_tableName == GlobalsTable.homeExcelTable) {
                     const string updateQue = "UPDATE file_info_excel SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
                     }
 
                 }
-                else if (TableName == "cust_sharing" && IsFromSharing == false) {
+                else if (_tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
 
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
                     }
 
                 }
-                else if (TableName == "cust_sharing" && IsFromSharing == true) {
+                else if (_tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
 
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
                     }
 
                 }
-                else if (TableName == "upload_info_directory") {
+                else if (_tableName == GlobalsTable.directoryUploadTable) {
 
                     const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(DirectoryName);
+                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(_directoryName);
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
                 }
-                else if (TableName == "ps_info_excel") {
+                else if (_tableName == "ps_info_excel") {
 
                     const string updateQue = "UPDATE ps_info_excel SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
                         command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
                         command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
                     }
                 }
 
@@ -252,23 +251,78 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void guna2Button6_Click(object sender, EventArgs e) {
+        private byte[] convertDataGridViewToByteArray(DataGridView dataGridView) {
+            using (MemoryStream memoryStream = new MemoryStream()) {
+                using (XLWorkbook workbook = new XLWorkbook()) {
+                    foreach (IXLWorksheet rowSheets in guna2ComboBox1.Items) {
+                        IXLWorksheet sheets = (IXLWorksheet)rowSheets;
+                        string sheetsName = sheets.Name.ToString();
 
-            var _getDataSources = dataGridView1.DataSource;
-            var _formatter = new BinaryFormatter();
-            var _stream = new MemoryStream();
-            _formatter.Serialize(_stream, _getDataSources);
+                        DataTable dt = new DataTable();
+                        foreach (DataGridViewColumn column in dataGridView.Columns) {
+                            dt.Columns.Add(column.HeaderText);
+                        }
 
-            byte[] _getByte = _stream.ToArray();
-            string _toBase64Encoded = Convert.ToBase64String(_getByte);
-            string _encryptedString = EncryptionModel.Encrypt(_toBase64Encoded);
+                        foreach (DataGridViewRow row in dataGridView.Rows) {
+                            if (row.IsNewRow)
+                                continue;
 
-            _saveChangesUpdate(_encryptedString);
+                            DataRow dataRow = dt.NewRow();
+                            for (int i = 0; i < dataGridView.Columns.Count; i++) {
+                                dataRow[i] = row.Cells[i].Value;
+                            }
+                            dt.Rows.Add(dataRow);
+                        }
 
+                        workbook.Worksheets.Add(dt, sheetsName);
+                    }
+
+                    workbook.SaveAs(memoryStream);
+                }
+
+                return memoryStream.ToArray();
+            }
+        }
+
+        /*private byte[] convertDataGridViewToByteArray(DataGridView dataGridView) {
+
+            DataTable dt = dataGridView.DataSource as DataTable;
+            if (dt != null) {
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    using (XLWorkbook workbook = new XLWorkbook()) {
+                        foreach (IXLWorksheet rowSheets in guna2ComboBox1.Items) {
+                            IXLWorksheet sheets = (IXLWorksheet)rowSheets;
+                            string sheetsName = sheets.Name.ToString();
+                            workbook.Worksheets.Add(dt, sheetsName);
+                        }
+
+                        workbook.SaveAs(memoryStream);
+                    }
+
+                    return memoryStream.ToArray();
+                }
+            }
+
+            return null;
+        }*/
+
+        private async void guna2Button6_Click(object sender, EventArgs e) {
+
+            byte[] updatedBytes = convertDataGridViewToByteArray(dataGridView1);
+
+            if (updatedBytes != null) {
+                string toBase64String = Convert.ToBase64String(updatedBytes);
+                string encryptedBase64 = EncryptionModel.Encrypt(toBase64String);
+                await saveChangesUpdate(encryptedBase64);
+                MessageBox.Show("Changes saved successfully.");
+            }
+            else {
+                MessageBox.Show("Failed to save changes.");
+            }
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            if(this.TableName != "ps_info_excel") {
+            if(this._tableName != "ps_info_excel") {
                 btnSaveChanges.Visible = true;
             }
         }
@@ -316,9 +370,9 @@ namespace FlowSERVER1 {
 
                 int selectedIndex = guna2ComboBox1.SelectedIndex;
 
-                if (selectedIndex != previousSelectedIndex) {
+                if (selectedIndex != _previousSelectedIndex) {
 
-                    previousSelectedIndex = selectedIndex;
+                    _previousSelectedIndex = selectedIndex;
                     _changedIndex = selectedIndex;
 
                     _currentSheetIndex = selectedIndex + 1;

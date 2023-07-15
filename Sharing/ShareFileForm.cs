@@ -1,42 +1,34 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Sharing;
-using Guna.UI2.WinForms;
-using Microsoft.WindowsAPICodePack.Shell;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
+using FlowSERVER1.Sharing;
+
 namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
 
-
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public static string _FileName { get; set; }
-        public static string _FileExt {get; set ;}
-        public static string _IsFromTable {get; set;}
-        public static string _DirectoryName { get; set; }
-        public static bool _IsFromShared { get; set; }
+        private string _fileName { get; set; }
+        private string _fileExtension {get; set ;}
+        private string _tableName {get; set;}
+        private string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
 
-        public shareFileFORM(String FileName,String FileExtension,bool IsFromShared, String IsFrom,String DirectoryName) {
+        public shareFileFORM(String fileName,String fileExtension,bool isFromShared, String tableName,String directoryName) {
             InitializeComponent();
-            _FileName = FileName;
-            _FileExt = FileExtension;
-            _IsFromShared = IsFromShared;
-            _IsFromTable = IsFrom;
-            _DirectoryName = DirectoryName;
-            lblFileName.Text = FileName;
+
+            this._fileName = fileName;
+            this._fileExtension = fileExtension;
+            this._isFromShared = isFromShared;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+
+            lblFileName.Text = fileName;
         }
 
         /// <summary>
@@ -309,10 +301,10 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
                 command.Parameters.AddWithValue("@CUST_TO", txtFieldShareToName.Text);
                 command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
-                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_FileName));
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
                 command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                 command.Parameters.AddWithValue("@CUST_FILE", setValue);
-                command.Parameters.AddWithValue("@FILE_EXT", _FileExt);
+                command.Parameters.AddWithValue("@FILE_EXT", _fileExtension);
                 command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(txtFieldComment.Text));
                 command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
@@ -331,79 +323,79 @@ namespace FlowSERVER1 {
 
                 new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
-                if (_IsFromShared == false && _IsFromTable == "cust_sharing") {
-                    string getThumbnails = await retrieveThumbnailShared(_FileName,"CUST_TO");
-                    await startSending(getFileMetadataSharedToMe(Globals.custUsername, _FileName), getThumbnails);
-                } else if (_IsFromTable != "upload_info_directory" && _IsFromTable != GlobalsTable.folderUploadTable) {
+                if (_isFromShared == false && _tableName == "cust_sharing") {
+                    string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_TO");
+                    await startSending(getFileMetadataSharedToMe(Globals.custUsername, _fileName), getThumbnails);
+                } else if (_tableName != "upload_info_directory" && _tableName != GlobalsTable.folderUploadTable) {
 
-                    if (Globals.imageTypes.Contains(_FileExt)) {
-                        string finalTable = _IsFromTable == "ps_info_image" ? "ps_info_image" : GlobalsTable.homeImageTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));  
+                    if (Globals.imageTypes.Contains(_fileExtension)) {
+                        string finalTable = _tableName == "ps_info_image" ? "ps_info_image" : GlobalsTable.homeImageTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));  
                     } 
                     
-                    else if (_FileExt == ".xlsx" || _FileExt == ".xls") {
-                        string finalTable = _IsFromTable == "ps_info_excel" ? "ps_info_excel" : GlobalsTable.homeExcelTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
+                        string finalTable = _tableName == "ps_info_excel" ? "ps_info_excel" : GlobalsTable.homeExcelTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
                     
-                    else if (Globals.textTypes.Contains(_FileExt)) {
-                        string finalTable = _IsFromTable == "ps_info_text" ? "ps_info_text" : GlobalsTable.homeTextTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (Globals.textTypes.Contains(_fileExtension)) {
+                        string finalTable = _tableName == "ps_info_text" ? "ps_info_text" : GlobalsTable.homeTextTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_FileExt == ".pdf") {
-                        string finalTable = _IsFromTable == "ps_info_pdf" ? "ps_info_pdf" : GlobalsTable.homePdfTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".pdf") {
+                        string finalTable = _tableName == "ps_info_pdf" ? "ps_info_pdf" : GlobalsTable.homePdfTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_FileExt == ".pptx" || _FileExt == ".ppt") {
-                        string finalTable = _IsFromTable == "ps_info_ptx" ? "ps_info_ptx" : GlobalsTable.homePtxTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
+                        string finalTable = _tableName == "ps_info_ptx" ? "ps_info_ptx" : GlobalsTable.homePtxTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_FileExt == ".docx" || _FileExt == ".doc") {
-                        string finalTable = _IsFromTable == "ps_info_word" ? "ps_info_word" : GlobalsTable.homeWordTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".docx" || _fileExtension == ".doc") {
+                        string finalTable = _tableName == "ps_info_word" ? "ps_info_word" : GlobalsTable.homeWordTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_FileExt == ".wav" || _FileExt == ".mp3") {
-                        string finalTable = _IsFromTable == "ps_info_audio" ? "ps_info_audio" : GlobalsTable.homeAudioTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".wav" || _fileExtension == ".mp3") {
+                        string finalTable = _tableName == "ps_info_audio" ? "ps_info_audio" : GlobalsTable.homeAudioTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (Globals.videoTypes.Contains(_FileExt)) {
-                        string finalTable = _IsFromTable == "ps_info_video" ? "ps_info_video" : GlobalsTable.homeVideoTable;
-                        string getThumbnails = await retrieveThumbnails(finalTable,Globals.custUsername,_FileName);
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable),getThumbnails);
+                    else if (Globals.videoTypes.Contains(_fileExtension)) {
+                        string finalTable = _tableName == "ps_info_video" ? "ps_info_video" : GlobalsTable.homeVideoTable;
+                        string getThumbnails = await retrieveThumbnails(finalTable,Globals.custUsername, _fileName);
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable),getThumbnails);
                     }
                     
-                    else if (_FileExt == ".exe") {
-                        string finalTable = _IsFromTable == "ps_info_exe" ? "ps_info_exe" : GlobalsTable.homeExeTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".exe") {
+                        string finalTable = _tableName == "ps_info_exe" ? "ps_info_exe" : GlobalsTable.homeExeTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
                     
-                    else if (_FileExt == ".apk") {
-                        string finalTable = _IsFromTable == "ps_info_apk" ? "ps_info_apk" : GlobalsTable.homeApkTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_FileName), finalTable));
+                    else if (_fileExtension == ".apk") {
+                        string finalTable = _tableName == "ps_info_apk" ? "ps_info_apk" : GlobalsTable.homeApkTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
 
-                } else if (_IsFromShared == true && _IsFromTable == GlobalsTable.sharingTable) {
-                    string getThumbnails = await retrieveThumbnailShared(_FileName, "CUST_FROM");
-                    await startSending(getFileMetadataSharedToOthers(Globals.custUsername, _FileName), getThumbnails);
+                } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
+                    string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_FROM");
+                    await startSending(getFileMetadataSharedToOthers(Globals.custUsername, _fileName), getThumbnails);
                 } 
                 
-                else if (_IsFromTable == GlobalsTable.directoryUploadTable) {
-                    string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _DirectoryName, Globals.custUsername, _FileName);
-                    await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_DirectoryName,Globals.custUsername,_FileName));
+                else if (_tableName == GlobalsTable.directoryUploadTable) {
+                    string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _directoryName, Globals.custUsername, _fileName);
+                    await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_directoryName,Globals.custUsername, _fileName));
                 } 
                 
-                else if (_IsFromTable == GlobalsTable.folderUploadTable) {
-                    string getThumbnails = await retrieveThumbnailsExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _DirectoryName, Globals.custUsername, _FileName);
-                    await startSending(await getFileMetadataExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _DirectoryName, Globals.custUsername, _FileName));
+                else if (_tableName == GlobalsTable.folderUploadTable) {
+                    string getThumbnails = await retrieveThumbnailsExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, Globals.custUsername, _fileName);
+                    await startSending(await getFileMetadataExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, Globals.custUsername, _fileName));
                 }
 
                 CloseForm.closeForm("SharingAlert");
-                new SucessSharedAlert(_FileName, txtFieldShareToName.Text).Show();
+                new SucessSharedAlert(_fileName, txtFieldShareToName.Text).Show();
 
             }
         }
@@ -423,7 +415,7 @@ namespace FlowSERVER1 {
                     new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} does not exist.").Show();
                     return;
                 }
-                if (fileIsUploaded(txtFieldShareToName.Text, _FileName) > 0) {
+                if (fileIsUploaded(txtFieldShareToName.Text, _fileName) > 0) {
                     new CustomAlert(title: "Sharing failed", subheader: "This file is already shared.").Show();
                     return;
                 }
@@ -434,7 +426,7 @@ namespace FlowSERVER1 {
                 }
 
                 if (hasPassword(txtFieldShareToName.Text) != "") {
-                    new AskSharingAuthForm(txtFieldShareToName.Text, _FileName, _FileName.Substring(_FileName.Length-4)).Show();
+                    new AskSharingAuthForm(txtFieldShareToName.Text, _fileName, _fileName.Substring(_fileName.Length-4)).Show();
                     return;
                 }
 

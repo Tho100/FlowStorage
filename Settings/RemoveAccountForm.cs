@@ -61,8 +61,8 @@ namespace FlowSERVER1 {
 
             try {
 
-                var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"), "0123456789085746");
-                var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"), "0123456789085746");
+                var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"));
+                var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"));
 
                 if(guna2TextBox2.Text == decryptPin) {
                     if (guna2TextBox1.Text == decryptPass) {

@@ -20,40 +20,7 @@ namespace FlowSERVER1
     public partial class CreateDirectoryForm : Form
     {
         public static CreateDirectoryForm instance;
-        private MySqlConnection con = ConnectionModel.con;
-
-        /// <summary>
-        /// 
-        /// Initialize panel data
-        /// 
-        /// </summary>
-
-        // Date label
-        private const string DateLabelFontName = "Segoe UI Semibold";
-        private const float DateLabelFontSize = 9f; 
-        private readonly Font DateLabelFont = new Font(DateLabelFontName, DateLabelFontSize, FontStyle.Bold);
-
-        // Title label
-        private const string TitleLabelFontName = "Segoe UI Semibold";
-        private const float TitleLabelFontSize = 11f; 
-        private readonly Font TitleLabelFont = new Font(TitleLabelFontName, TitleLabelFontSize, FontStyle.Bold);
-
-        // Panel
-        private readonly Color BorderColor = ColorTranslator.FromHtml("#212121");
-        private readonly Color DarkGrayColor = Color.DarkGray;
-        private readonly Color GainsboroColor = Color.Gainsboro;
-        private readonly Color TransparentColor = Color.Transparent;
-        private readonly Point TitleLabelLoc = new Point(12, 166); 
-        private readonly Point DateLabelLoc = new Point(12, 192); 
-
-        // Garbage button
-        private readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");
-        private readonly Color FillColor = ColorTranslator.FromHtml("#4713BF");
-        private readonly Image GarbageImage = FlowSERVER1.Properties.Resources.icons8_menu_vertical_30;
-        private readonly Point GarbageButtonLoc = new Point(165, 188);
-        private readonly Point GarbageOffset = new Point(2, 0);
-
-        private readonly Image DirectoryGarbageImage = FlowSERVER1.Properties.Resources.icons8_garbage_66__1_;
+        private readonly MySqlConnection con = ConnectionModel.con;
 
         public CreateDirectoryForm() {
             InitializeComponent();
@@ -84,10 +51,10 @@ namespace FlowSERVER1
                     Name = "DirPan" + currMain,
                     Width = 200,
                     Height = 222,
-                    BorderColor = BorderColor,
+                    BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
-                    BackColor = TransparentColor,
+                    BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
 
@@ -103,11 +70,11 @@ namespace FlowSERVER1
                 dirName.Text = getDirTitle;
                 dirName.Visible = true;
                 dirName.Enabled = true;
-                dirName.Font = TitleLabelFont;
-                dirName.ForeColor = GainsboroColor;
+                dirName.Font = GlobalStyle.TitleLabelFont;
+                dirName.ForeColor = GlobalStyle.GainsboroColor;
                 dirName.Visible = true;
                 dirName.Enabled = true;
-                dirName.Location = TitleLabelLoc;
+                dirName.Location = GlobalStyle.TitleLabelLoc;
                 dirName.Width = 160;
                 dirName.Height = 20;
                 dirName.AutoEllipsis = true;
@@ -117,11 +84,11 @@ namespace FlowSERVER1
                 directoryLab.Name = "DirLab" + currMain;
                 directoryLab.Visible = true;
                 directoryLab.Enabled = true;
-                directoryLab.Font = DateLabelFont;
-                directoryLab.ForeColor = DarkGrayColor;
+                directoryLab.Font = GlobalStyle.DateLabelFont;
+                directoryLab.ForeColor = GlobalStyle.DarkGrayColor;
                 directoryLab.Visible = true;
                 directoryLab.Enabled = true;
-                directoryLab.Location = DateLabelLoc;
+                directoryLab.Location = GlobalStyle.DateLabelLoc;
                 directoryLab.Text = "Directory";
 
                 Guna2PictureBox picBanner = new Guna2PictureBox();
@@ -154,14 +121,14 @@ namespace FlowSERVER1
                 remButTxt.Name = "RemTxtBut" + currMain;
                 remButTxt.Width = 29;
                 remButTxt.Height = 26;
-                remButTxt.ImageOffset = GarbageOffset;
-                remButTxt.FillColor = TransparentColor;
+                remButTxt.ImageOffset = GlobalStyle.GarbageOffset;
+                remButTxt.FillColor = GlobalStyle.TransparentColor;
                 remButTxt.BorderRadius = 6;
                 remButTxt.BorderThickness = 1;
-                remButTxt.BorderColor = TransparentColor;
-                remButTxt.Image = DirectoryGarbageImage;
+                remButTxt.BorderColor = GlobalStyle.TransparentColor;
+                remButTxt.Image = Globals.DirectoryGarbageImage;
                 remButTxt.Visible = true;
-                remButTxt.Location = GarbageButtonLoc;
+                remButTxt.Location = GlobalStyle.GarbageButtonLoc;
                 remButTxt.BringToFront();
 
                 remButTxt.Click += (sender_tx, e_tx) => {
@@ -225,7 +192,7 @@ namespace FlowSERVER1
             }
         }
      
-        private void DisplayErrorUpgrade(String accType) {
+        private void DisplayErrorUpgrade() {
             Form bgBlur = new Form();
             using (LimitedDirAlert displayPic = new LimitedDirAlert()) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
@@ -305,7 +272,7 @@ namespace FlowSERVER1
                             }
                         }
                         else {
-                            DisplayErrorUpgrade(Globals.accountType);
+                            DisplayErrorUpgrade();
                         }
                     }
                     else {
@@ -313,7 +280,7 @@ namespace FlowSERVER1
                     }
                 }
                 catch (Exception) {
-                    // @ 
+                    new CustomAlert(title: "An error occurred",subheader: "Failed to create directory. Please try again later.").Show();
                 }
             }
         }

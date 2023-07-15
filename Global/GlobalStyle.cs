@@ -34,8 +34,7 @@ namespace FlowSERVER1 {
 
         // Seperator button
         static public readonly Point PsSeperatorBut = new Point(90, 198);
-        static public readonly Size PsSeperatorButSize = new Size(7,7);
-        static public readonly Color PsSeperatorColor = Color.FromArgb(22, 22, 22);
+        static public readonly Size PsSeperatorButSize = new Size(5,5);
 
         // Garbage button
         static public readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");

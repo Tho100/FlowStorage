@@ -14,11 +14,11 @@ namespace FlowSERVER1 {
     /// PDF Viewer form
     /// </summary>
     /// 
-    public partial class pdfFORM : Form {
+    public partial class PdfForm : Form {
 
-        private string TableName;
-        private string DirectoryName;
-        private bool IsFromSharing;
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
+        private bool _isFromSharing { get; set; }
 
         /// <summary>
         /// Load file based on table name 
@@ -28,14 +28,14 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public pdfFORM(String fileName, String tableName, String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public PdfForm(String fileName, String tableName, String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this.TableName = tableName;
-            this.DirectoryName = directoryName;
-            this.IsFromSharing = isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromSharing = isFromSharing;
 
             if (isFromShared == true) {
 
@@ -125,7 +125,7 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
 
-            SaverModel.SaveSelectedFile(lblFileName.Text, TableName, DirectoryName);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromSharing);
 
             this.TopMost = true;
         }
@@ -165,8 +165,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, TableName, DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension, 
+                _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void label6_Click(object sender, EventArgs e) {

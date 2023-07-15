@@ -472,11 +472,11 @@
     <Compile Include="Sharing\SharingAlert.Designer.cs">
       <DependentUpon>SharingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\apkFORM.cs">
+    <Compile Include="ViewerForms\ApkForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\apkFORM.Designer.cs">
-      <DependentUpon>apkFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\ApkForm.Designer.cs">
+      <DependentUpon>ApkForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sharing\AskSharingAuthForm.cs">
       <SubType>Form</SubType>
@@ -484,11 +484,11 @@
     <Compile Include="Sharing\AskSharingAuthForm.Designer.cs">
       <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\audFORM.cs">
+    <Compile Include="ViewerForms\AudioForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\audFORM.Designer.cs">
-      <DependentUpon>audFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\AudioForm.Designer.cs">
+      <DependentUpon>AudioForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtraForms\AudioHelp.cs">
       <SubType>Form</SubType>
@@ -574,11 +574,11 @@
     <Compile Include="Directory\CreateDirectoryForm.Designer.cs">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\exlFORM.cs">
+    <Compile Include="ViewerForms\ExcelForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\exlFORM.Designer.cs">
-      <DependentUpon>exlFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\ExcelForm.Designer.cs">
+      <DependentUpon>ExcelForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Globals.cs" />
     <Compile Include="AlertForms\LimitedFolderAlert.cs">
@@ -618,17 +618,17 @@
     <Compile Include="Sharing\PassSharingFORM.Designer.cs">
       <DependentUpon>PassSharingFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\pdfFORM.cs">
+    <Compile Include="ViewerForms\PdfForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\pdfFORM.Designer.cs">
-      <DependentUpon>pdfFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\PdfForm.Designer.cs">
+      <DependentUpon>PdfForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\picFORM.cs">
+    <Compile Include="ViewerForms\PicForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\picFORM.Designer.cs">
-      <DependentUpon>picFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\PicForm.Designer.cs">
+      <DependentUpon>PicForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -728,11 +728,11 @@
     <Compile Include="Sharing\SucessSharedAlert.Designer.cs">
       <DependentUpon>SucessSharedAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\txtFORM.cs">
+    <Compile Include="ViewerForms\TextForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\txtFORM.Designer.cs">
-      <DependentUpon>txtFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\TextForm.Designer.cs">
+      <DependentUpon>TextForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AlertForms\UnknownTypeAlert.cs">
       <SubType>Form</SubType>
@@ -764,17 +764,17 @@
     <Compile Include="ExtraForms\AccessTokenVerifyForm.Designer.cs">
       <DependentUpon>AccessTokenVerifyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\vidFORM.cs">
+    <Compile Include="ViewerForms\VideoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\vidFORM.Designer.cs">
-      <DependentUpon>vidFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\VideoForm.Designer.cs">
+      <DependentUpon>VideoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\wordFORM.cs">
+    <Compile Include="ViewerForms\WordDocForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\wordFORM.Designer.cs">
-      <DependentUpon>wordFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\WordDocForm.Designer.cs">
+      <DependentUpon>WordDocForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AlertForms\CustomAlert.resx">
       <DependentUpon>CustomAlert.cs</DependentUpon>
@@ -794,14 +794,14 @@
     <EmbeddedResource Include="Sharing\SharingAlert.resx">
       <DependentUpon>SharingAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\apkFORM.resx">
-      <DependentUpon>apkFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\ApkForm.resx">
+      <DependentUpon>ApkForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sharing\AskSharingAuthForm.resx">
       <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\audFORM.resx">
-      <DependentUpon>audFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\AudioForm.resx">
+      <DependentUpon>AudioForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\AudioHelp.resx">
       <DependentUpon>AudioHelp.cs</DependentUpon>
@@ -843,8 +843,8 @@
     <EmbeddedResource Include="Directory\CreateDirectoryForm.resx">
       <DependentUpon>CreateDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\exlFORM.resx">
-      <DependentUpon>exlFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\ExcelForm.resx">
+      <DependentUpon>ExcelForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\LimitedFolderAlert.resx">
@@ -865,11 +865,11 @@
     <EmbeddedResource Include="Sharing\PassSharingFORM.resx">
       <DependentUpon>PassSharingFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\pdfFORM.resx">
-      <DependentUpon>pdfFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\PdfForm.resx">
+      <DependentUpon>PdfForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\picFORM.resx">
-      <DependentUpon>picFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\PicForm.resx">
+      <DependentUpon>PicForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Authentication\SignInForm.resx">
       <DependentUpon>SignInForm.cs</DependentUpon>
@@ -922,8 +922,8 @@
     <EmbeddedResource Include="Sharing\SucessSharedAlert.resx">
       <DependentUpon>SucessSharedAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\txtFORM.resx">
-      <DependentUpon>txtFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\TextForm.resx">
+      <DependentUpon>TextForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\UnknownTypeAlert.resx">
       <DependentUpon>UnknownTypeAlert.cs</DependentUpon>
@@ -940,11 +940,11 @@
     <EmbeddedResource Include="ExtraForms\AccessTokenVerifyForm.resx">
       <DependentUpon>AccessTokenVerifyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\vidFORM.resx">
-      <DependentUpon>vidFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\VideoForm.resx">
+      <DependentUpon>VideoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\wordFORM.resx">
-      <DependentUpon>wordFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\WordDocForm.resx">
+      <DependentUpon>WordDocForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="mycert.pfx" />
     <None Include="packages.config" />

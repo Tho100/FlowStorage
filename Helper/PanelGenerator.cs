@@ -49,7 +49,7 @@ namespace FlowSERVER1.Helper {
                 }
                 seperatorButton.Location = GlobalStyle.PsSeperatorBut;
                 seperatorButton.Size = GlobalStyle.PsSeperatorButSize;
-                seperatorButton.FillColor = GlobalStyle.PsSeperatorColor;
+                seperatorButton.FillColor = GlobalStyle.DarkGrayColor;
                 seperatorButton.BringToFront();
 
                 Label psButtonTag = new Label();

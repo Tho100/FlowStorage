@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Threading;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -33,21 +32,20 @@ namespace FlowSERVER1 {
 
         readonly private Crud crud = new Crud();
         readonly private ImageCompressor compressor = new ImageCompressor();
+
         public static HomePage instance { get; set; } = new HomePage();
         public string publicStorageUserComment { get; set; } = null;
         public string publicStorageUserTag { get; set; } = null;
         public bool publicStorageClosed { get; set; } = false;
         public string CurrentLang { get; set; }
 
+        private string _fileName { get; set; }
+        private string _fileExtension { get; set; }
+        private long _fileSizeInMB { get; set; }
+
+        private string _todayDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
+
         private string previousSelectedItem = null;
-
-        private string getName;
-        private string retrieved;
-        private object keyValMain;
-        private long fileSizeInMB;
-        private string tableName;
-
-        private string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
 
         public HomePage() {
 
@@ -98,7 +96,7 @@ namespace FlowSERVER1 {
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@date", todayDate);
+                    command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
@@ -125,7 +123,7 @@ namespace FlowSERVER1 {
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
+                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
 
 
@@ -138,8 +136,8 @@ namespace FlowSERVER1 {
                 var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername},
-                    { "@file_name", EncryptionModel.Encrypt(getName)},
-                    { "@date", todayDate},
+                    { "@file_name", EncryptionModel.Encrypt(_fileName)},
+                    { "@date", _todayDate},
                     { "@file_value", setValue}
                 };
 
@@ -150,7 +148,7 @@ namespace FlowSERVER1 {
             }
 
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
+                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
         }
 
@@ -162,7 +160,7 @@ namespace FlowSERVER1 {
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@date", todayDate);
+                    command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
                     command.Parameters.AddWithValue("@comment", EncryptionModel.Encrypt(publicStorageUserComment));
                     command.Parameters.AddWithValue("@tag", publicStorageUserTag);
@@ -188,7 +186,7 @@ namespace FlowSERVER1 {
                 publicStorageUserComment = null;
 
             } catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
+                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
 
         }
@@ -201,8 +199,8 @@ namespace FlowSERVER1 {
                 var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername},
-                    { "@file_name", EncryptionModel.Encrypt(getName)},
-                    { "@date", todayDate},
+                    { "@file_name", EncryptionModel.Encrypt(_fileName)},
+                    { "@date", _todayDate},
                     { "@file_value", fileBase64Value},
                     { "@comment", EncryptionModel.Encrypt(publicStorageUserComment)},
                     { "@tag", publicStorageUserTag},
@@ -217,7 +215,7 @@ namespace FlowSERVER1 {
             }
 
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {getName}");
+                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
         }
 
@@ -411,7 +409,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeImageTable, "null", Globals.custUsername);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeImageTable, "null", Globals.custUsername);
                             displayPic.Show();
                         };
 
@@ -429,7 +427,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender,e) => {
 
-                            txtFORM displayPic = new txtFORM("NOT_NULL", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1,"null",Globals.custUsername);
+                            TextForm displayPic = new TextForm("NOT_NULL", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1,"null",Globals.custUsername);
                             displayPic.Show();
                      
                             clearRedundane();
@@ -467,7 +465,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeVideoTable,"null",Globals.custUsername);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeVideoTable,"null",Globals.custUsername);
                             vidFormShow.Show();
                         };
 
@@ -479,7 +477,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            exlFORM exlForm = new exlFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExcelTable, "null",Globals.custUsername);
+                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExcelTable, "null",Globals.custUsername);
                             exlForm.Show();
                         };
 
@@ -490,7 +488,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender ,e) => {
-                            audFORM displayPic = new audFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeAudioTable, "null",Globals.custUsername);
+                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.homeAudioTable, "null",Globals.custUsername);
                             displayPic.Show();
                         };
 
@@ -502,7 +500,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            apkFORM displayPic = new apkFORM(filesInfo[accessIndex].Item1, Globals.custUsername, GlobalsTable.homeApkTable, "null");
+                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, Globals.custUsername, GlobalsTable.homeApkTable, "null");
                             displayPic.Show();
                         };
 
@@ -514,7 +512,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            pdfFORM displayPdf = new pdfFORM(filesInfo[accessIndex].Item1, GlobalsTable.homePdfTable, "null", Globals.custUsername);
+                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.homePdfTable, "null", Globals.custUsername);
                             displayPdf.Show();
                         };
 
@@ -551,7 +549,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            wordFORM displayMsi = new wordFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, "null", Globals.custUsername);
+                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, "null", Globals.custUsername);
                             displayMsi.Show();
                         };
 
@@ -686,7 +684,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
                             displayPic.Show();
                         };
 
@@ -705,7 +703,7 @@ namespace FlowSERVER1 {
                         EventHandler textOnPressed = (sender, e) => {
 
 
-                            txtFORM displayPic = new txtFORM("", GlobalsTable.folderUploadTable, fileName, "null", Globals.custUsername);
+                            TextForm displayPic = new TextForm("", GlobalsTable.folderUploadTable, fileName, "null", Globals.custUsername);
                             displayPic.Show();
 
 
@@ -761,7 +759,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername);
+                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername);
                             displayVid.Show();
                         };
 
@@ -773,7 +771,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            new exlFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
                         };
 
                         onPressedEvent.Add(excelOnPressed);
@@ -783,7 +781,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
-                            new audFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new AudioForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
                         };
 
                         onPressedEvent.Add(audioOnPressed);
@@ -794,7 +792,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            new apkFORM(fileName, Globals.custUsername, GlobalsTable.folderUploadTable, _foldTitle);
+                            new ApkForm(fileName, Globals.custUsername, GlobalsTable.folderUploadTable, _foldTitle);
                         };
 
                         onPressedEvent.Add(apkOnPressed);
@@ -805,7 +803,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            new pdfFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new PdfForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
                         };
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -816,7 +814,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         EventHandler ptxOnPressed = (sender, e) => {
-                            new wordFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
                         };
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -839,7 +837,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            new wordFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
                         };
 
                         onPressedEvent.Add(wordOnPressed);
@@ -1132,13 +1130,13 @@ namespace FlowSERVER1 {
                             continue;
                         }
 
-                        getName = Path.GetFileName(selectedItems);
-                        retrieved = Path.GetExtension(selectedItems); 
-                        fileSizeInMB = 0;
+                        _fileName = Path.GetFileName(selectedItems);
+                        _fileExtension = Path.GetExtension(selectedItems); 
+                        _fileSizeInMB = 0;
 
                         async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                            if (fileSizeInMB < 1500) {
+                            if (_fileSizeInMB < 1500) {
 
                                 var panelTxt = new Guna2Panel() {
                                     Name = panName + itemCurr,
@@ -1178,7 +1176,7 @@ namespace FlowSERVER1 {
                                 dateLabTxt.Visible = true;
                                 dateLabTxt.Enabled = true;
                                 dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                                dateLabTxt.Text = todayDate;
+                                dateLabTxt.Text = _todayDate;
 
                                 Label titleLab = new Label();
                                 mainPanelTxt.Controls.Add(titleLab);
@@ -1191,7 +1189,7 @@ namespace FlowSERVER1 {
                                 titleLab.Width = 160;
                                 titleLab.Height = 20;
                                 titleLab.AutoEllipsis = true;
-                                titleLab.Text = getName;
+                                titleLab.Text = _fileName;
 
                                 Guna2Button remButTxt = new Guna2Button();
                                 mainPanelTxt.Controls.Add(remButTxt);
@@ -1224,7 +1222,7 @@ namespace FlowSERVER1 {
                                     panelTxt.ShadowDecoration.Enabled = false;
                                 };
 
-                                new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog())
+                                new Thread(() => new UploadingAlert(_fileName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: _fileSizeInMB).ShowDialog())
                                     .Start();
 
                                 if (nameTable == GlobalsTable.homeImageTable) {
@@ -1242,7 +1240,7 @@ namespace FlowSERVER1 {
 
                                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                        picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, GlobalsTable.homeImageTable, "null",Globals.custUsername);
+                                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, GlobalsTable.homeImageTable, "null",Globals.custUsername);
                                         displayPic.Show();
                                     };
 
@@ -1255,11 +1253,11 @@ namespace FlowSERVER1 {
 
                                     await insertFileData(keyVal,nameTable);
 
-                                    var filePath = getName;
+                                    var filePath = _fileName;
 
                                     textboxPic.Click += (sender_t, e_t) => {
 
-                                        txtFORM txtFormShow = new txtFORM("NOT_NULL", GlobalsTable.homeTextTable, filePath,"null",Globals.custUsername);
+                                        TextForm txtFormShow = new TextForm("NOT_NULL", GlobalsTable.homeTextTable, filePath,"null",Globals.custUsername);
                                         txtFormShow.Show();
                                     };
                                 }
@@ -1277,7 +1275,7 @@ namespace FlowSERVER1 {
 
                                 if (nameTable == GlobalsTable.homeVideoTable) {
 
-                                    await insertFileVideo(selectedItems, nameTable, getName, keyVal);
+                                    await insertFileVideo(selectedItems, nameTable, _fileName, keyVal);
 
                                     ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
                                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -1289,7 +1287,7 @@ namespace FlowSERVER1 {
                                         var getHeight = getImgName.Image.Height;
                                         Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                        vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, "null",Globals.custUsername);
+                                        VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, "null",Globals.custUsername);
                                         vidShow.Show();
                                     };
                                     clearRedundane();
@@ -1302,7 +1300,7 @@ namespace FlowSERVER1 {
                                     var _getHeight = this.Height;
                                     textboxPic.Image = Globals.AudioImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        audFORM displayPic = new audFORM(titleLab.Text, GlobalsTable.homeAudioTable, "null",Globals.custUsername);
+                                        AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, "null",Globals.custUsername);
                                         displayPic.Show();
                                     };
                                 }
@@ -1313,7 +1311,7 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Image = Globals.EXCELImage;
                                     textboxPic.Click += (sender_ex, e_ex) => {
-                                        exlFORM displayPic = new exlFORM(titleLab.Text, GlobalsTable.homeExcelTable, "null", Globals.custUsername);
+                                        ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, "null", Globals.custUsername);
                                         displayPic.Show();
                                     };
                                 }
@@ -1324,7 +1322,7 @@ namespace FlowSERVER1 {
       
                                     textboxPic.Image = Globals.APKImage;
                                     textboxPic.Click += (sender_gi, e_gi) => {
-                                        apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null");
+                                        ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null");
                                         displayPic.Show();
                                     };
                                 }
@@ -1335,7 +1333,7 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Image = Globals.PDFImage;
                                     textboxPic.Click += (sender_pd, e_pd) => {
-                                        pdfFORM displayPdf = new pdfFORM(titleLab.Text, GlobalsTable.homePdfTable, "null",Globals.custUsername);
+                                        PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, "null",Globals.custUsername);
                                         displayPdf.ShowDialog();
                                     };
                                 }
@@ -1367,7 +1365,7 @@ namespace FlowSERVER1 {
 
                                     textboxPic.Image = Globals.DOCImage;
                                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                                        wordFORM displayWord = new wordFORM(titleLab.Text, GlobalsTable.homeWordTable, "null",Globals.custUsername);
+                                        WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, "null",Globals.custUsername);
                                         displayWord.ShowDialog();
                                     };
                                 }
@@ -1379,17 +1377,20 @@ namespace FlowSERVER1 {
 
                         try {
 
-                            Byte[] _toByte = File.ReadAllBytes(selectedItems);
-                            fileSizeInMB = (_toByte.Length/1024)/1024;
+                            Byte[] retrieveBytes = File.ReadAllBytes(selectedItems);
+                            _fileSizeInMB = (retrieveBytes.Length/1024)/1024;
 
-                            if (Globals.imageTypes.Contains(retrieved)) {
+                            var convertToBase64 = Convert.ToBase64String(retrieveBytes);
+                            string encryptText = EncryptionModel.Encrypt(convertToBase64);
+
+                            if (Globals.imageTypes.Contains(_fileExtension)) {
 
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                if (retrieved != ".ico") {
+                                if (_fileExtension != ".ico") {
                                     String _compressedImage = compressor.compresImageToBase64(selectedItems);
                                     String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
                                     createPanelMain(GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
@@ -1407,7 +1408,7 @@ namespace FlowSERVER1 {
                                 }
                             }
 
-                            else if (Globals.textTypes.Contains(retrieved)) {
+                            else if (Globals.textTypes.Contains(_fileExtension)) {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) { 
@@ -1415,74 +1416,56 @@ namespace FlowSERVER1 {
                                 }
                                 byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                                 String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptText = EncryptionModel.Encrypt(getEncoded);
-                                createPanelMain(GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptText);
+                                String encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
+                                createPanelMain(GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
                             }
 
-                            else if (retrieved == ".exe") {
+                            else if (_fileExtension == ".exe") {
                                 exeCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
 
                             }
-                            else if (Globals.videoTypes.Contains(retrieved)) {
+                            else if (Globals.videoTypes.Contains(_fileExtension)) {
                                 vidCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
                             }
 
-                            else if (retrieved == ".xlsx" || retrieved == ".xls") {
+                            else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
                                 exlCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homeExcelTable,"PanExl",exlCurr,encryptText);
                             }
 
-                            else if (retrieved == ".mp3" || retrieved == ".wav") {
+                            else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
                                 audCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText); 
                                 
                             }
 
-                            else if (retrieved == ".apk") {
+                            else if (_fileExtension == ".apk") {
                                 apkCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
                             }
 
-                            else if (retrieved == ".pdf") {
+                            else if (_fileExtension == ".pdf") {
                                 pdfCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
                             }
 
-                            else if (retrieved == ".pptx" || retrieved == ".ppt") {
+                            else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
                                 ptxCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
                             }
-                            else if (retrieved == ".msi") {
+                            else if (_fileExtension == ".msi") {
                                 msiCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptText);
                             }
-                            else if (retrieved == ".docx") {
+                            else if (_fileExtension == ".docx") {
                                 docxCurr++;
-                                var _toBase64 = Convert.ToBase64String(_toByte);
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain(GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
 
                             } else {
 
-                                UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(getName);
+                                UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(_fileName);
                                 unsupportedFileFormartForm.Show();
                             }
 
@@ -1691,7 +1674,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "ps_info_image", "null", uploaderName);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "ps_info_image", "null", uploaderName);
                             displayPic.Show();
                         };
 
@@ -1709,7 +1692,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            txtFORM displayPic = new txtFORM("NOT_NULL", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
+                            TextForm displayPic = new TextForm("NOT_NULL", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
                             displayPic.Show();
 
 
@@ -1748,7 +1731,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "ps_info_video", "null", uploaderName);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "ps_info_video", "null", uploaderName);
                             vidFormShow.Show();
                         };
 
@@ -1760,7 +1743,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            exlFORM exlForm = new exlFORM(filesInfo[accessIndex].Item1, "ps_info_excel", "null", uploaderName);
+                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, "ps_info_excel", "null", uploaderName);
                             exlForm.Show();
                         };
 
@@ -1771,7 +1754,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
-                            audFORM displayPic = new audFORM(filesInfo[accessIndex].Item1, "ps_info_audio", "null", uploaderName);
+                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, "ps_info_audio", "null", uploaderName);
                             displayPic.Show();
                         };
 
@@ -1783,7 +1766,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            apkFORM displayPic = new apkFORM(filesInfo[accessIndex].Item1, uploaderName, "ps_info_apk", "null");
+                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, "ps_info_apk", "null");
                             displayPic.Show();
                         };
 
@@ -1795,7 +1778,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            pdfFORM displayPdf = new pdfFORM(filesInfo[accessIndex].Item1, "ps_info_pdf", "null", uploaderName);
+                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, "ps_info_pdf", "null", uploaderName);
                             displayPdf.Show();
                         };
 
@@ -1832,7 +1815,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            wordFORM displayMsi = new wordFORM(filesInfo[accessIndex].Item1, "ps_info_word", "null", uploaderName);
+                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, "ps_info_word", "null", uploaderName);
                             displayMsi.Show();
                         };
 
@@ -1903,13 +1886,13 @@ namespace FlowSERVER1 {
 
                     GlobalsData.filesMetadataCachePs.Clear();
 
-                    getName = Path.GetFileName(selectedItems);
-                    retrieved = Path.GetExtension(selectedItems);
-                    fileSizeInMB = 0;
+                    _fileName = Path.GetFileName(selectedItems);
+                    _fileExtension = Path.GetExtension(selectedItems);
+                    _fileSizeInMB = 0;
 
                     async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                        if (fileSizeInMB < 1500) {
+                        if (_fileSizeInMB < 1500) {
 
                             var panelTxt = new Guna2Panel() {
                                 Name = panName + itemCurr,
@@ -1949,13 +1932,13 @@ namespace FlowSERVER1 {
                             dateLabTxt.Visible = true;
                             dateLabTxt.Enabled = true;
                             dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                            dateLabTxt.Text = todayDate;
+                            dateLabTxt.Text = _todayDate;
 
                             Guna2CircleButton seperatorButton = new Guna2CircleButton();
                             mainPanelTxt.Controls.Add(seperatorButton);
                             seperatorButton.Location = GlobalStyle.PsSeperatorBut;
                             seperatorButton.Size = GlobalStyle.PsSeperatorButSize;
-                            seperatorButton.FillColor = GlobalStyle.PsSeperatorColor;
+                            seperatorButton.FillColor = GlobalStyle.DarkGrayColor;
                             seperatorButton.BringToFront();
 
                             Label psButtonTag = new Label();
@@ -1980,7 +1963,7 @@ namespace FlowSERVER1 {
                             titleLab.Width = 160;
                             titleLab.Height = 20;
                             titleLab.AutoEllipsis = true;
-                            titleLab.Text = getName;
+                            titleLab.Text = _fileName;
 
                             textboxPic.MouseHover += (_senderM, _ev) => {
                                 panelTxt.ShadowDecoration.Enabled = true;
@@ -1991,7 +1974,7 @@ namespace FlowSERVER1 {
                                 panelTxt.ShadowDecoration.Enabled = false;
                             };
 
-                            new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).ShowDialog())
+                            new Thread(() => new UploadingAlert(_fileName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: _fileSizeInMB).ShowDialog())
                             .Start();
 
                             if (nameTable == "ps_info_image") {
@@ -2008,7 +1991,7 @@ namespace FlowSERVER1 {
 
                                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                    picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, "ps_info_image", "null", Globals.custUsername);
+                                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, "ps_info_image", "null", Globals.custUsername);
                                     displayPic.Show();
                                 };
 
@@ -2021,11 +2004,11 @@ namespace FlowSERVER1 {
 
                                 await insertFileDataPublic(keyVal, nameTable);
 
-                                var filePath = getName;
+                                var filePath = _fileName;
 
                                 textboxPic.Click += (sender_t, e_t) => {
 
-                                    txtFORM txtFormShow = new txtFORM("NOT_NULL", "ps_info_text", filePath, "null", Globals.custUsername);
+                                    TextForm txtFormShow = new TextForm("NOT_NULL", "ps_info_text", filePath, "null", Globals.custUsername);
                                     txtFormShow.Show();
                                 };
                             }
@@ -2043,7 +2026,7 @@ namespace FlowSERVER1 {
 
                             if (nameTable == "ps_info_video") {
 
-                                await insertFileVideoPublic(selectedItems, getName, keyVal);
+                                await insertFileVideoPublic(selectedItems, _fileName, keyVal);
 
                                 ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
                                 Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -2055,7 +2038,7 @@ namespace FlowSERVER1 {
                                     var getHeight = getImgName.Image.Height;
                                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                    vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, "ps_info_video", "null", Globals.custUsername);
+                                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, "ps_info_video", "null", Globals.custUsername);
                                     vidShow.Show();
                                 };
                                 clearRedundane();
@@ -2067,7 +2050,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.AudioImage;
                                 textboxPic.Click += (sender_ex, e_ex) => {
-                                    audFORM displayPic = new audFORM(titleLab.Text, "ps_info_audio", "null", Globals.custUsername);
+                                    AudioForm displayPic = new AudioForm(titleLab.Text, "ps_info_audio", "null", Globals.custUsername);
                                     displayPic.Show();
                                 };
                             }
@@ -2078,7 +2061,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.EXCELImage;
                                 textboxPic.Click += (sender_ex, e_ex) => {
-                                    exlFORM displayPic = new exlFORM(titleLab.Text, "ps_info_excel", "null", Globals.custUsername);
+                                    ExcelForm displayPic = new ExcelForm(titleLab.Text, "ps_info_excel", "null", Globals.custUsername);
                                     displayPic.Show();
                                 };
                             }
@@ -2089,7 +2072,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.APKImage;
                                 textboxPic.Click += (sender_gi, e_gi) => {
-                                    apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, "ps_info_apk", "null");
+                                    ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, "ps_info_apk", "null");
                                     displayPic.Show();
                                 };
                             }
@@ -2100,7 +2083,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.PDFImage;
                                 textboxPic.Click += (sender_pd, e_pd) => {
-                                    pdfFORM displayPdf = new pdfFORM(titleLab.Text, "ps_info_pdf", "null", Globals.custUsername);
+                                    PdfForm displayPdf = new PdfForm(titleLab.Text, "ps_info_pdf", "null", Globals.custUsername);
                                     displayPdf.ShowDialog();
                                 };
                             }
@@ -2132,7 +2115,7 @@ namespace FlowSERVER1 {
 
                                 textboxPic.Image = Globals.DOCImage;
                                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                                    wordFORM displayWord = new wordFORM(titleLab.Text, "ps_info_word", "null", Globals.custUsername);
+                                    WordDocForm displayWord = new WordDocForm(titleLab.Text, "ps_info_word", "null", Globals.custUsername);
                                     displayWord.ShowDialog();
                                 };
                             }
@@ -2145,22 +2128,23 @@ namespace FlowSERVER1 {
 
                     try {
 
-                        new PublishPublicStorage(fileName: getName).ShowDialog();
+                        new PublishPublicStorage(fileName: _fileName).ShowDialog();
 
                         if(publicStorageClosed == false) {
                         
-                            byte[] _toByte = File.ReadAllBytes(selectedItems);
-                            string _toBase64 = Convert.ToBase64String(_toByte);
+                            byte[] retrieveBytes = File.ReadAllBytes(selectedItems);
+                            string toBase64String = Convert.ToBase64String(retrieveBytes);
+                            string encryptText = EncryptionModel.Encrypt(toBase64String);
 
-                            fileSizeInMB = (_toByte.Length / 1024) / 1024;
+                            _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
 
-                            if (Globals.imageTypes.Contains(retrieved)) {
+                            if (Globals.imageTypes.Contains(_fileExtension)) {
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                if (retrieved != ".ico") {
+                                if (_fileExtension != ".ico") {
                                     String _compressedImage = compressor.compresImageToBase64(selectedItems);
                                     String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
                                     createPanelMain("ps_info_image", "PanImg", curr, _encryptedValue);
@@ -2178,7 +2162,7 @@ namespace FlowSERVER1 {
                                 }
                             }
 
-                            else if (Globals.textTypes.Contains(retrieved)) {
+                            else if (Globals.textTypes.Contains(_fileExtension)) {
                                 txtCurr++;
                                 String nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
@@ -2186,66 +2170,57 @@ namespace FlowSERVER1 {
                                 }
                                 byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                                 String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptText = EncryptionModel.Encrypt(getEncoded);
-                                createPanelMain("ps_info_text", "PanTxt", txtCurr, encryptText);
+                                String encryptTextValues = EncryptionModel.Encrypt(getEncoded);
+                                createPanelMain("ps_info_text", "PanTxt", txtCurr, encryptTextValues);
                             }
 
-                            else if (retrieved == ".exe") {
+                            else if (_fileExtension == ".exe") {
                                 exeCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_exe", "PanExe", exeCurr, encryptText);
 
                             }
-                            else if (Globals.videoTypes.Contains(retrieved)) {
+                            else if (Globals.videoTypes.Contains(_fileExtension)) {
                                 vidCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_video", "PanVid", vidCurr, encryptText);
                             }
 
-                            else if (retrieved == ".xlsx" || retrieved == ".xls") {
+                            else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
                                 exlCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_excel", "PanExl", exlCurr, encryptText);
                             }
 
-                            else if (retrieved == ".mp3" || retrieved == ".wav") {
+                            else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
                                 audCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_audio", "PanAud", audCurr, encryptText);
 
                             }
 
-                            else if (retrieved == ".apk") {
+                            else if (_fileExtension == ".apk") {
                                 apkCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_apk", "PanApk", apkCurr, encryptText);
                             }
 
-                            else if (retrieved == ".pdf") {
+                            else if (_fileExtension == ".pdf") {
                                 pdfCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_pdf", "PanPdf", pdfCurr, encryptText);
                             }
 
-                            else if (retrieved == ".pptx" || retrieved == ".ppt") {
+                            else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
                                 ptxCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_ptx", "PanPtx", ptxCurr, encryptText);
                             }
-                            else if (retrieved == ".msi") {
+                            else if (_fileExtension == ".msi") {
                                 msiCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_msi", "PanMsi", msiCurr, encryptText);
                             }
-                            else if (retrieved == ".docx") {
+                            else if (_fileExtension == ".docx") {
                                 docxCurr++;
-                                String encryptText = EncryptionModel.Encrypt(_toBase64);
                                 createPanelMain("ps_info_word", "PanDoc", docxCurr, encryptText);
 
                             }
                             else {
 
-                                UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(getName);
+                                UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(_fileName);
                                 unsupportedFileFormartForm.Show();
                             }
 
@@ -2414,9 +2389,9 @@ namespace FlowSERVER1 {
             string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             int _IntCurr = 0;
-            long fileSizeInMB = 0;
+            long _fileSizeInMB = 0;
 
-            new Thread(() => new UploadingAlert(_getDirTitle, Globals.custUsername, GlobalsTable.folderUploadTable, "PanExlFold" + _IntCurr, _getDirTitle, _fileSize: fileSizeInMB)
+            new Thread(() => new UploadingAlert(_getDirTitle, Globals.custUsername, GlobalsTable.folderUploadTable, "PanExlFold" + _IntCurr, _getDirTitle, _fileSize: _fileSizeInMB)
             .ShowDialog()).Start();
 
             GlobalsData.base64EncodedImageFolder.Clear();
@@ -2542,7 +2517,7 @@ namespace FlowSERVER1 {
                 dateLabExl.Visible = true;
                 dateLabExl.Enabled = true;
                 dateLabExl.Location = GlobalStyle.DateLabelLoc;
-                dateLabExl.Text = todayDate;
+                dateLabExl.Text = _todayDate;
 
                 lblEmptyHere.Visible = false;
                 btnGarbageImage.Visible = false;
@@ -2553,8 +2528,11 @@ namespace FlowSERVER1 {
 
                 try {
 
-                    Byte[] _getBytes = File.ReadAllBytes(_Files);
-                    fileSizeInMB = (_getBytes.Length / 1024) / 1024;
+                    byte[] retrieveBytes = File.ReadAllBytes(_Files);
+                    string toBase64String = Convert.ToBase64String(retrieveBytes);
+                    string encryptValues = EncryptionModel.Encrypt(toBase64String);
+
+                    _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
 
                     if (Globals.imageTypes.Contains(_extTypes)) {
 
@@ -2571,7 +2549,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
                             displayPic.Show();
 
                         };
@@ -2594,21 +2572,18 @@ namespace FlowSERVER1 {
 
                         textboxExl.Click += (sender_t, e_t) => {
 
-                            txtFORM displayPic = new txtFORM("", GlobalsTable.folderUploadTable, titleLab.Text, "null", Globals.custUsername);
+                            TextForm displayPic = new TextForm("", GlobalsTable.folderUploadTable, titleLab.Text, "null", Globals.custUsername);
                             displayPic.Show();
                         };
 
                     }
 
                     if (_extTypes == ".apk") {
-
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
-                            apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.folderUploadTable, "null");
+                            ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.folderUploadTable, "null");
                             displayPic.ShowDialog();
                         };
                     }
@@ -2623,8 +2598,7 @@ namespace FlowSERVER1 {
                             toBase64BitmapThumbnail = toBase64;
                         }
 
-                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(_getBytes));
-                        await setupUpload(_tempToBase64, toBase64BitmapThumbnail);
+                        await setupUpload(encryptValues, toBase64BitmapThumbnail);
 
                         textboxExl.Image = toBitMap;
                         textboxExl.Click += (sender_vid, e_vid) => {
@@ -2634,52 +2608,44 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM displayVid = new vidFORM(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
+                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayVid.ShowDialog();
                         };
                     }
 
                     if (_extTypes == ".pdf") {
 
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            pdfFORM displayPic = new pdfFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
+                            PdfForm displayPic = new PdfForm(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
 
                     if (_extTypes == ".docx" || _extTypes == ".doc") {
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            wordFORM displayPic = new wordFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
+                            WordDocForm displayPic = new WordDocForm(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
 
                     if (_extTypes == ".xlsx" || _extTypes == ".xls") {
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
                         
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            exlFORM displayPic = new exlFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
+                            ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
 
 
                     if (_extTypes == ".pptx" || _extTypes == ".ppt") {
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
                         
                         textboxExl.Image = Globals.PTXImage;
@@ -2690,13 +2656,11 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".mp3" || _extTypes == ".wav") {
-                        String _tobase64 = Convert.ToBase64String(_getBytes);
-                        String encryptValues = EncryptionModel.Encrypt(_tobase64);
                         await setupUpload(encryptValues);
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            audFORM displayPic = new audFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
+                            AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3140,7 +3104,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             displayPic.Show();
                         };
 
@@ -3155,7 +3119,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            txtFORM displayTxt = new txtFORM("", GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName,true);
+                            TextForm displayTxt = new TextForm("", GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName,true);
                             displayTxt.Show();
 
                         };
@@ -3208,7 +3172,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             vidFormShow.Show();
                         };
 
@@ -3220,7 +3184,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            exlFORM exlForm = new exlFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            ExcelForm exlForm = new ExcelForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             exlForm.Show();
                         };
 
@@ -3231,7 +3195,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
-                            audFORM displayPic = new audFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            AudioForm displayPic = new AudioForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             displayPic.Show();
                         };
 
@@ -3243,7 +3207,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            apkFORM displayPic = new apkFORM(filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true);
+                            ApkForm displayPic = new ApkForm(filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true);
                             displayPic.Show();
                         };
 
@@ -3255,7 +3219,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            pdfFORM displayPdf = new pdfFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            PdfForm displayPdf = new PdfForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             displayPdf.Show();
                         };
 
@@ -3292,7 +3256,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            wordFORM displayMsi = new wordFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            WordDocForm displayMsi = new WordDocForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             displayMsi.Show();
                         };
 
@@ -3397,7 +3361,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayPic.Show();
                         };
 
@@ -3412,7 +3376,7 @@ namespace FlowSERVER1 {
 
                         EventHandler textOnPressed = (sender, e) => {
 
-                            txtFORM displayPic = new txtFORM("", GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
+                            TextForm displayPic = new TextForm("", GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
                             displayPic.Show();
 
                             clearRedundane();
@@ -3465,7 +3429,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            vidFORM vidFormShow = new vidFORM(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             vidFormShow.Show();
                         };
 
@@ -3477,7 +3441,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         EventHandler excelOnPressed = (sender, e) => {
-                            exlFORM exlForm = new exlFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            ExcelForm exlForm = new ExcelForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             exlForm.Show();
                         };
 
@@ -3488,7 +3452,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         EventHandler audioOnPressed = (sender, e) => {
-                            audFORM displayPic = new audFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            AudioForm displayPic = new AudioForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayPic.Show();
                         };
 
@@ -3500,7 +3464,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         EventHandler apkOnPressed = (sender, e) => {
-                            apkFORM displayPic = new apkFORM(filesInfoShared[accessIndex].Item1, UploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text,false);
+                            ApkForm displayPic = new ApkForm(filesInfoShared[accessIndex].Item1, UploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text,false);
                             displayPic.Show();
                         };
 
@@ -3512,7 +3476,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         EventHandler pdfOnPressed = (sender, e) => {
-                            pdfFORM displayPdf = new pdfFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            PdfForm displayPdf = new PdfForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayPdf.Show();
                         };
 
@@ -3549,7 +3513,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         EventHandler wordOnPressed = (sender, e) => {
-                            wordFORM displayMsi = new wordFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            WordDocForm displayMsi = new WordDocForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayMsi.Show();
                         };
                     }
@@ -3748,35 +3712,6 @@ namespace FlowSERVER1 {
             this.Invalidate();
             base.OnScroll(e);
         }
-
-        private async void backgroundWorker1_DoWork_3(object sender, DoWorkEventArgs e) {
-            await Task.Run(async () =>
-            {
-                using (var command = con.CreateCommand())
-                {
-                    command.CommandText = $"INSERT INTO {tableName} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE)";
-                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(getName));
-                    command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                    command.Parameters.AddWithValue("@UPLOAD_DATE", todayDate);
-                    command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
-                    command.CommandTimeout = 15000;
-
-                    await command.ExecuteNonQueryAsync();
-
-                    var form = Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.Name == "UploadAlrt");
-                    form?.Close();
-                    
-                }
-            });
-        }
-
-        private void backgroundWorker1_ProgressChanged_3(object sender, ProgressChangedEventArgs e) {
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted_3(object sender, RunWorkerCompletedEventArgs e) {
-
-        }
-
 
         /// ------------- TESTING ---------------
 
@@ -4250,13 +4185,13 @@ namespace FlowSERVER1 {
 
             foreach (var selectedItems in filePathList) {
 
-                getName = Path.GetFileName(selectedItems);
-                retrieved = Path.GetExtension(selectedItems);
-                fileSizeInMB = 0;
+                _fileName = Path.GetFileName(selectedItems);
+                _fileExtension = Path.GetExtension(selectedItems);
+                _fileSizeInMB = 0;
 
                 async void createPanelMain(String nameTable, String panName, int itemCurr, String keyVal) {
 
-                    if (fileSizeInMB < 1500) {
+                    if (_fileSizeInMB < 1500) {
 
                         var panelTxt = new Guna2Panel() {
                             Name = panName + itemCurr,
@@ -4281,7 +4216,7 @@ namespace FlowSERVER1 {
                         dateLabTxt.Visible = true;
                         dateLabTxt.Enabled = true;
                         dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                        dateLabTxt.Text = todayDate;
+                        dateLabTxt.Text = _todayDate;
 
                         Label titleLab = new Label();
                         mainPanelTxt.Controls.Add(titleLab);
@@ -4294,7 +4229,7 @@ namespace FlowSERVER1 {
                         titleLab.AutoEllipsis = true;
                         titleLab.Width = 160;
                         titleLab.Height = 20;
-                        titleLab.Text = getName;
+                        titleLab.Text = _fileName;
 
                         var textboxPic = new Guna2PictureBox();
                         mainPanelTxt.Controls.Add(textboxPic);
@@ -4343,7 +4278,7 @@ namespace FlowSERVER1 {
                             panelTxt.ShadowDecoration.Enabled = false;
                         };
 
-                        new Thread(() => new UploadingAlert(getName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: fileSizeInMB).
+                        new Thread(() => new UploadingAlert(_fileName, Globals.custUsername, "null", panName + itemCurr, "null", _fileSize: _fileSizeInMB).
                         ShowDialog()).Start();
 
                         if (nameTable == GlobalsTable.homeImageTable) {
@@ -4359,7 +4294,7 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                                picFORM displayPic = new picFORM(defaultImage, getWidth, getHeight, getName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
+                                PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
                                 displayPic.Show();
                             };
 
@@ -4371,21 +4306,19 @@ namespace FlowSERVER1 {
                             string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                             textboxPic.Image = Globals.textTypeToImage[textType];
 
-                            var filePath = getName;
+                            var filePath = _fileName;
                             await insertFileData(keyVal, GlobalsTable.homeTextTable);
 
                             textboxPic.Click += (sender_t, e_t) => {
 
-                                txtFORM txtFormShow = new txtFORM("NOT_NULL", GlobalsTable.homeTextTable, filePath, "null", Globals.custUsername);
+                                TextForm txtFormShow = new TextForm("NOT_NULL", GlobalsTable.homeTextTable, filePath, "null", Globals.custUsername);
                                 txtFormShow.Show();
                             };
                         }
 
                         if (nameTable == GlobalsTable.homeExeTable) {
 
-                            keyValMain = keyVal;
-                            tableName = GlobalsTable.homeExeTable;
-                            backgroundWorker1.RunWorkerAsync();
+                            await insertFileData(keyVal, GlobalsTable.homeExeTable);
 
                             textboxPic.Image = Globals.EXEImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
@@ -4396,7 +4329,7 @@ namespace FlowSERVER1 {
 
                         if (nameTable == GlobalsTable.homeVideoTable) {
 
-                            await insertFileVideo(selectedItems,nameTable, getName, keyVal);
+                            await insertFileVideo(selectedItems,nameTable, _fileName, keyVal);
 
                             ShellFile shellFile = ShellFile.FromFilePath(selectedItems);
                             Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -4408,7 +4341,7 @@ namespace FlowSERVER1 {
                                 var getHeight = getImgName.Image.Height;
                                 Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                                vidFORM vidShow = new vidFORM(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, "null", Globals.custUsername);
+                                VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, "null", Globals.custUsername);
                                 vidShow.Show();
                             };
                         }
@@ -4419,7 +4352,7 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.AudioImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
-                                audFORM displayPic = new audFORM(titleLab.Text, GlobalsTable.homeAudioTable, "null", Globals.custUsername);
+                                AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, "null", Globals.custUsername);
                                 displayPic.Show();
                             };
                         }
@@ -4430,20 +4363,18 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.EXCELImage;
                             textboxPic.Click += (sender_ex, e_ex) => {
-                                exlFORM displayPic = new exlFORM(titleLab.Text, GlobalsTable.homeExcelTable, "null", Globals.custUsername);
+                                ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, "null", Globals.custUsername);
                                 displayPic.Show();
                             };
                         }
 
                         if (nameTable == GlobalsTable.homeApkTable) {
 
-                            keyValMain = keyVal;
-                            tableName = GlobalsTable.homeApkTable;
-                            backgroundWorker1.RunWorkerAsync();
+                            await insertFileData(keyVal, GlobalsTable.homeApkTable);
 
                             textboxPic.Image = Globals.APKImage;
                             textboxPic.Click += (sender_gi, e_gi) => {
-                                apkFORM displayPic = new apkFORM(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null");
+                                ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, "null");
                                 displayPic.Show();
                             };
                         }
@@ -4454,7 +4385,7 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.PDFImage;
                             textboxPic.Click += (sender_pd, e_pd) => {
-                                pdfFORM displayPdf = new pdfFORM(titleLab.Text, GlobalsTable.homePdfTable, "null", Globals.custUsername);
+                                PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, "null", Globals.custUsername);
                                 displayPdf.ShowDialog();
                             };
                         }
@@ -4471,13 +4402,11 @@ namespace FlowSERVER1 {
                         }
                         if (nameTable == "file_info_msi") {
 
-                            keyValMain = keyVal;
-                            tableName = "file_info_msi";
-                            backgroundWorker1.RunWorkerAsync();
+                            await insertFileData(keyVal, GlobalsTable.homeMsiTable);
 
                             textboxPic.Image = Globals.MSIImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
-                                msiFORM displayMsi = new msiFORM(titleLab.Text, "file_info_msi", "null", Globals.custUsername);
+                                msiFORM displayMsi = new msiFORM(titleLab.Text, GlobalsTable.homeMsiTable, "null", Globals.custUsername);
                                 displayMsi.Show();
                             };
                         }
@@ -4488,7 +4417,7 @@ namespace FlowSERVER1 {
 
                             textboxPic.Image = Globals.DOCImage;
                             textboxPic.Click += (sender_ptx, e_ptx) => {
-                                wordFORM displayWord = new wordFORM(titleLab.Text, GlobalsTable.homeWordTable, "null", Globals.custUsername);
+                                WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, "null", Globals.custUsername);
                                 displayWord.ShowDialog();
                             };
                         }
@@ -4500,17 +4429,20 @@ namespace FlowSERVER1 {
 
                 try {
 
-                    Byte[] _toByte = File.ReadAllBytes(selectedItems);
-                    fileSizeInMB = (_toByte.Length / 1024) / 1024;
+                    byte[] readFileBytes = File.ReadAllBytes(selectedItems);
+                    string toBase64String = Convert.ToBase64String(readFileBytes);
+                    string encryptText = EncryptionModel.Encrypt(toBase64String);
 
-                    if (Globals.imageTypes.Contains(retrieved)) {
+                    _fileSizeInMB = (readFileBytes.Length / 1024) / 1024;
+
+                    if (Globals.imageTypes.Contains(_fileExtension)) {
                         curr++;
                         var getImg = new Bitmap(selectedItems);
                         var imgWidth = getImg.Width;
                         var imgHeight = getImg.Height;
 
-                        if (retrieved != ".ico") {
-                            String _tempToBase64 = Convert.ToBase64String(_toByte);
+                        if (_fileExtension != ".ico") {
+                            String _tempToBase64 = Convert.ToBase64String(readFileBytes);
                             String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
                             createPanelMain(GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
                         }
@@ -4527,7 +4459,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                    else if (Globals.textTypes.Contains(retrieved)) {
+                    else if (Globals.textTypes.Contains(_fileExtension)) {
                         txtCurr++;
                         String nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
@@ -4535,69 +4467,51 @@ namespace FlowSERVER1 {
                         }
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         String getEncoded = Convert.ToBase64String(getBytes);
-                        String encryptText = EncryptionModel.Encrypt(getEncoded);
-                        createPanelMain(GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptText);
+                        String encryptTextValue = EncryptionModel.Encrypt(getEncoded);
+                        createPanelMain(GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptTextValue);
                     }
 
-                    else if (retrieved == ".exe") {
+                    else if (_fileExtension == ".exe") {
                         exeCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
 
                     }
-                    else if (Globals.videoTypes.Contains(retrieved)) {
+                    else if (Globals.videoTypes.Contains(_fileExtension)) {
                         vidCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
                     }
 
-                    else if (retrieved == ".xlsx" || retrieved == ".xls") {
+                    else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
                         exlCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
                     }
 
-                    else if (retrieved == ".mp3" || retrieved == ".wav") {
+                    else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
                         audCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
                     }
 
-                    else if (retrieved == ".apk") {
+                    else if (_fileExtension == ".apk") {
                         apkCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
                     }
 
-                    else if (retrieved == ".pdf") {
+                    else if (_fileExtension == ".pdf") {
                         pdfCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
                     }
 
-                    else if (retrieved == ".pptx" || retrieved == ".ppt") {
+                    else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
                         ptxCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
                     }
-                    else if (retrieved == ".msi") {
+                    else if (_fileExtension == ".msi") {
                         msiCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain("file_info_msi", "PanMsi", msiCurr, encryptText);
                     }
-                    else if (retrieved == ".docx") {
+                    else if (_fileExtension == ".docx") {
                         docxCurr++;
-                        var _toBase64 = Convert.ToBase64String(_toByte);
-                        String encryptText = EncryptionModel.Encrypt(_toBase64);
                         createPanelMain(GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
                     }
 
