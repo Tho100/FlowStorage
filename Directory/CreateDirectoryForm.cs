@@ -1,24 +1,20 @@
-﻿using System;
+﻿
+using FlowSERVER1.AlertForms;
+
+using Guna.UI2.WinForms;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
-using MySql.Data.MySqlClient;
-using MySql.Data;
-using FlowSERVER1.AlertForms;
 
-namespace FlowSERVER1
-{
+namespace FlowSERVER1 {
     /// <summary>
     /// Create directory form class
     /// </summary>
-    public partial class CreateDirectoryForm : Form
-    {
+    public partial class CreateDirectoryForm : Form {
         public static CreateDirectoryForm instance;
         private readonly MySqlConnection con = ConnectionModel.con;
 
@@ -35,7 +31,7 @@ namespace FlowSERVER1
             HomePage.instance.btnGarbageImage.Visible = false;
             HomePage.instance.lblEmptyHere.Visible = false;
         }
-        
+
 
         /// <summary>
         /// Start generating user directory panel into main form
@@ -171,7 +167,7 @@ namespace FlowSERVER1
 
                 picBanner.Click += (sender_f, e_f) => {
 
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.","Loader");
+                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader");
                     ShowAlert.Show();
                     DirectoryForm displayDirectory = new DirectoryForm(getDirTitle);
                     displayDirectory.Show();
@@ -187,11 +183,12 @@ namespace FlowSERVER1
 
                 this.Close();
 
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 new CustomAlert(title: "Failed to create directory", subheader: "Are you connected to the internet?").Show();
             }
         }
-     
+
         private void DisplayErrorUpgrade() {
             Form bgBlur = new Form();
             using (LimitedDirAlert displayPic = new LimitedDirAlert()) {
@@ -250,9 +247,10 @@ namespace FlowSERVER1
 
                             value_Dir++;
 
-                            if( (string) HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
-                                MessageBox.Show("You can only create a directory on Home folder.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                            } else {
+                            if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
+                                MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else {
 
                                 generateDirectory(value_Dir, dirTitle);
                                 HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
@@ -280,7 +278,7 @@ namespace FlowSERVER1
                     }
                 }
                 catch (Exception) {
-                    new CustomAlert(title: "An error occurred",subheader: "Failed to create directory. Please try again later.").Show();
+                    new CustomAlert(title: "An error occurred", subheader: "Failed to create directory. Please try again later.").Show();
                 }
             }
         }

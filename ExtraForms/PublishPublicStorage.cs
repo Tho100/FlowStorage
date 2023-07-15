@@ -18,9 +18,9 @@ namespace FlowSERVER1.ExtraForms {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
 
-            HomePage.instance.publicStorageUserComment = null;
-            HomePage.instance.publicStorageUserTag = null;
-            HomePage.instance.publicStorageClosed = true;
+            HomePage.instance.PublicStorageUserComment = null;
+            HomePage.instance.PublicStorageUserTag = null;
+            HomePage.instance.PublicStorageClosed = true;
             this.Hide();
 
             return;
@@ -28,8 +28,8 @@ namespace FlowSERVER1.ExtraForms {
 
         private void guna2Button2_Click(object sender, EventArgs e) {
 
-            HomePage.instance.publicStorageUserComment = txtFieldComment.Text;
-            if(HomePage.instance.publicStorageUserTag == null) {
+            HomePage.instance.PublicStorageUserComment = txtFieldComment.Text;
+            if(HomePage.instance.PublicStorageUserTag == null) {
                 new CustomAlert(title: "Upload Failed","Please select a tag.").Show();
                 return;
             }
@@ -51,7 +51,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnEnter_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Entertainment";
+            HomePage.instance.PublicStorageUserTag = "Entertainment";
             btnEnter.FillColor = Color.Orange;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
@@ -63,7 +63,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnGaming_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Gaming";
+            HomePage.instance.PublicStorageUserTag = "Gaming";
             btnGaming.FillColor = Color.SteelBlue;
             btnRandom.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
@@ -75,7 +75,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnSoftware_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Software";
+            HomePage.instance.PublicStorageUserTag = "Software";
             btnSoftware.FillColor = Color.MediumSeaGreen;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
@@ -87,7 +87,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnPolitics_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Education";
+            HomePage.instance.PublicStorageUserTag = "Education";
             btnEducation.FillColor = Color.Firebrick;
             btnGaming.FillColor = Color.DarkGray;
             btnRandom.FillColor = Color.DarkGray;
@@ -99,7 +99,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnRandom_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Random";
+            HomePage.instance.PublicStorageUserTag = "Random";
             btnRandom.FillColor = Color.DimGray;
             btnGaming.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
@@ -111,7 +111,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void guna2Button2_Click_1(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Music";
+            HomePage.instance.PublicStorageUserTag = "Music";
             btnMusic.FillColor = Color.Tomato;
             btnRandom.FillColor = Color.DarkGray;
             btnGaming.FillColor = Color.DarkGray;
@@ -127,7 +127,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnData_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Data";
+            HomePage.instance.PublicStorageUserTag = "Data";
             btnData.FillColor = Color.DarkTurquoise;
             btnCreativity.FillColor = Color.DarkGray;
             btnEducation.FillColor = Color.DarkGray;
@@ -139,7 +139,7 @@ namespace FlowSERVER1.ExtraForms {
         }
 
         private void btnCreativity_Click(object sender, EventArgs e) {
-            HomePage.instance.publicStorageUserTag = "Creativity";
+            HomePage.instance.PublicStorageUserTag = "Creativity";
             btnCreativity.FillColor = Color.BlueViolet;
             btnData.FillColor = Color.DarkGray;
             btnEducation.FillColor = Color.DarkGray;
@@ -148,6 +148,10 @@ namespace FlowSERVER1.ExtraForms {
             btnSoftware.FillColor = Color.DarkGray;
             btnEnter.FillColor = Color.DarkGray;
             btnMusic.FillColor = Color.DarkGray;
+        }
+
+        private void txtFieldFileName_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

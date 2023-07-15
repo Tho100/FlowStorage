@@ -31,32 +31,28 @@ namespace FlowSERVER1 {
 
         private readonly MySqlConnection con = ConnectionModel.con;
 
-        private string UploaderName;
-        private string ControlName;
-        private string TableName;
-        private string FileName;
-        private string DirectoryName;
-        private string FileExt;
+        private string ControlName { get; set; }
+        private string TableName { get; set; }
+        private string FileName { get; set; }
+        private string DirectoryName { get; set; }
 
         private System.Windows.Forms.Timer timer;
         private int progressValue = 0;
 
-        public UploadingAlert(String _fileName,String _uploaderName,String _tableName,String _controlName,String _dirName, long _fileSize = 0) {
+        public UploadingAlert(String fileName, String tableName,String controlName,String directoryName, long fileSize = 0) {
 
             InitializeComponent();
 
             instance = this;
 
-            this.label1.Text = _fileName;
-            this.UploaderName = _uploaderName;
-            this.ControlName = _controlName;
-            this.TableName = _tableName;
-            this.FileName = _fileName;
-            this.DirectoryName = _dirName;
-            this.FileExt = _fileName.Substring(_fileName.Length-3);
+            this.label1.Text = fileName;
+            this.ControlName = controlName;
+            this.TableName = tableName;
+            this.FileName = fileName;
+            this.DirectoryName = directoryName;
 
-            if(_fileSize != 101) {
-                label3.Text = _fileSize.ToString() + "MB";
+            if(fileSize != 101) {
+                label3.Text = fileSize.ToString() + "MB";
                 label3.Visible = true;
             } else {
                 label3.Visible = false;
@@ -206,14 +202,14 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".pdf") {
                                 FileDeletionNormal(getName, GlobalsTable.homePdfTable);
                             }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
+                            else if (Globals.textTypes.Contains(FileExt)) {
                                 FileDeletionNormal(getName, GlobalsTable.homeTextTable);
                             }
                             else if (FileExt == ".exe") {
                                 FileDeletionNormal(getName, GlobalsTable.homeExeTable);
                             }
-                        } else if (TableName == "upload_info_directory") {
-                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                        } else if (TableName == GlobalsTable.directoryUploadTable) {
+                            if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionDirectory(getName);
                             }
                             else if (FileExt == ".msi") {
@@ -231,14 +227,14 @@ namespace FlowSERVER1 {
                             else if (FileExt == ".pdf") {
                                 FileDeletionDirectory(getName);
                             }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
+                            else if (Globals.textTypes.Contains(FileExt)) {
                                 FileDeletionDirectory(getName);
                             }
                             else if (FileExt == ".exe") {
                                 FileDeletionDirectory(getName);
                             }
-                        } else if (TableName == "folder_upload_info") {
-                            if (FileExt == ".png" || FileExt == ".jpeg" || FileExt == ".jpg" || FileExt == ".bmp") {
+                        } else if (TableName == GlobalsTable.folderUploadTable) {
+                            if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionFolder(getName, GlobalsTable.homeImageTable);
                             }
                             else if (FileExt == ".msi") {

@@ -30,6 +30,8 @@
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnData = new Guna.UI2.WinForms.Guna2Button();
+            this.btnCreativity = new Guna.UI2.WinForms.Guna2Button();
             this.btnMusic = new Guna.UI2.WinForms.Guna2Button();
             this.btnRandom = new Guna.UI2.WinForms.Guna2Button();
             this.btnEducation = new Guna.UI2.WinForms.Guna2Button();
@@ -44,8 +46,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.btnCreativity = new Guna.UI2.WinForms.Guna2Button();
-            this.btnData = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
@@ -122,6 +122,44 @@
             this.guna2Panel2.Size = new System.Drawing.Size(503, 95);
             this.guna2Panel2.TabIndex = 35;
             this.guna2Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint);
+            // 
+            // btnData
+            // 
+            this.btnData.BorderColor = System.Drawing.Color.Transparent;
+            this.btnData.BorderRadius = 16;
+            this.btnData.BorderThickness = 1;
+            this.btnData.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnData.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnData.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnData.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnData.FillColor = System.Drawing.Color.DarkTurquoise;
+            this.btnData.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnData.ForeColor = System.Drawing.Color.White;
+            this.btnData.Location = new System.Drawing.Point(374, 11);
+            this.btnData.Name = "btnData";
+            this.btnData.Size = new System.Drawing.Size(115, 30);
+            this.btnData.TabIndex = 44;
+            this.btnData.Text = "Data";
+            this.btnData.Click += new System.EventHandler(this.btnData_Click);
+            // 
+            // btnCreativity
+            // 
+            this.btnCreativity.BorderColor = System.Drawing.Color.Transparent;
+            this.btnCreativity.BorderRadius = 16;
+            this.btnCreativity.BorderThickness = 1;
+            this.btnCreativity.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCreativity.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCreativity.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCreativity.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCreativity.FillColor = System.Drawing.Color.BlueViolet;
+            this.btnCreativity.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreativity.ForeColor = System.Drawing.Color.White;
+            this.btnCreativity.Location = new System.Drawing.Point(253, 47);
+            this.btnCreativity.Name = "btnCreativity";
+            this.btnCreativity.Size = new System.Drawing.Size(115, 30);
+            this.btnCreativity.TabIndex = 43;
+            this.btnCreativity.Text = "Creativity";
+            this.btnCreativity.Click += new System.EventHandler(this.btnCreativity_Click);
             // 
             // btnMusic
             // 
@@ -340,6 +378,7 @@
             this.txtFieldFileName.SelectedText = "";
             this.txtFieldFileName.Size = new System.Drawing.Size(516, 44);
             this.txtFieldFileName.TabIndex = 16;
+            this.txtFieldFileName.TextChanged += new System.EventHandler(this.txtFieldFileName_TextChanged);
             // 
             // label4
             // 
@@ -384,44 +423,6 @@
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(873, 10);
             this.guna2Separator1.TabIndex = 41;
-            // 
-            // btnCreativity
-            // 
-            this.btnCreativity.BorderColor = System.Drawing.Color.Transparent;
-            this.btnCreativity.BorderRadius = 16;
-            this.btnCreativity.BorderThickness = 1;
-            this.btnCreativity.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnCreativity.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnCreativity.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnCreativity.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnCreativity.FillColor = System.Drawing.Color.BlueViolet;
-            this.btnCreativity.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreativity.ForeColor = System.Drawing.Color.White;
-            this.btnCreativity.Location = new System.Drawing.Point(253, 47);
-            this.btnCreativity.Name = "btnCreativity";
-            this.btnCreativity.Size = new System.Drawing.Size(115, 30);
-            this.btnCreativity.TabIndex = 43;
-            this.btnCreativity.Text = "Creativity";
-            this.btnCreativity.Click += new System.EventHandler(this.btnCreativity_Click);
-            // 
-            // btnData
-            // 
-            this.btnData.BorderColor = System.Drawing.Color.Transparent;
-            this.btnData.BorderRadius = 16;
-            this.btnData.BorderThickness = 1;
-            this.btnData.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnData.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnData.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnData.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnData.FillColor = System.Drawing.Color.DarkTurquoise;
-            this.btnData.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnData.ForeColor = System.Drawing.Color.White;
-            this.btnData.Location = new System.Drawing.Point(374, 11);
-            this.btnData.Name = "btnData";
-            this.btnData.Size = new System.Drawing.Size(115, 30);
-            this.btnData.TabIndex = 44;
-            this.btnData.Text = "Data";
-            this.btnData.Click += new System.EventHandler(this.btnData_Click);
             // 
             // PublishPublicStorage
             // 

@@ -1,28 +1,27 @@
-﻿using System;
+﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Authentication;
+
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.IO;
-using System.Configuration;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using FlowSERVER1.AlertForms;
-using FlowSERVER1.Authentication;
 
 namespace FlowSERVER1 {
-    
+
     public partial class SettingsForm : Form {
 
         static public SettingsForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public int tokenCheckCurr { get; set; }= 0;
+        public int tokenCheckCurr { get; set; } = 0;
 
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
@@ -86,8 +85,9 @@ namespace FlowSERVER1 {
                 int _totalUploadOvertime = _totalUploadAllTime.Sum(x => Convert.ToInt32(x));
                 lblTotalUploadFileCount.Text = _totalUploadOvertime.ToString();
 
-            } catch (Exception) {
-                new CustomAlert(title: "An error occurred","Something went wrong while trying to open Settings.");
+            }
+            catch (Exception) {
+                new CustomAlert(title: "An error occurred", "Something went wrong while trying to open Settings.");
             }
         }
 
@@ -97,7 +97,7 @@ namespace FlowSERVER1 {
         /// </summary>
         private string retrieveDisabled(String _custUsername) {
 
-            const string  querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
 
@@ -155,7 +155,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@date", currentDate);
 
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         _totalUploadDirectoryToday.Add(reader.GetString(0));
                     }
@@ -178,15 +178,19 @@ namespace FlowSERVER1 {
             }
 
             if (accountType == "Basic") {
-                if(this._currentUserLanguage == "US") {
+                if (this._currentUserLanguage == "US") {
                     label37.Text = "Limited to 20";
-                } else if (_currentUserLanguage == "MY") {
+                }
+                else if (_currentUserLanguage == "MY") {
                     label37.Text = "Terhad Kepada 20";
-                } else if (_currentUserLanguage == "GER") {
+                }
+                else if (_currentUserLanguage == "GER") {
                     label37.Text = "Begrenzt Auf 20";
-                } else if (_currentUserLanguage == "JAP") {
+                }
+                else if (_currentUserLanguage == "JAP") {
                     label37.Text = "20 個限定";
-                } else if (_currentUserLanguage == "ESP") {
+                }
+                else if (_currentUserLanguage == "ESP") {
                     label37.Text = "Limitado a 20";
                 }
                 else if (_currentUserLanguage == "POR") {
@@ -533,8 +537,8 @@ namespace FlowSERVER1 {
                 aes.IV = iv;
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
                 using (MemoryStream memoryStream = new MemoryStream(buffer)) {
-                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read)) {
-                        using (StreamReader streamReader = new StreamReader((Stream)cryptoStream)) {
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read)) {
+                        using (StreamReader streamReader = new StreamReader(cryptoStream)) {
                             return streamReader.ReadToEnd();
                         }
                     }
@@ -600,13 +604,15 @@ namespace FlowSERVER1 {
 
                     setupRedundane(_selectedAccountType);
 
-                } else {
+                }
+                else {
                     new CustomAlert(
                         title: "Cannot proceed",
                         subheader: "You have to make a payment on the web first to use this plan.").Show();
                 }
 
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 new CustomAlert(title: "Cannot proceed", subheader: "Failed to make a payment.").Show();
             }
         }
@@ -662,7 +668,7 @@ namespace FlowSERVER1 {
         }
 
         private void setupTime() {
-       
+
             DateTime now = DateTime.Now;
 
             var hours = now.Hour;
@@ -740,7 +746,8 @@ namespace FlowSERVER1 {
                     }
                     else if (_newSelectedUserLanguage == "MY") {
                         greeting = "Selamat Lewat-Petang, " + Globals.custUsername;
-                    } else if (_newSelectedUserLanguage == "GER") {
+                    }
+                    else if (_newSelectedUserLanguage == "GER") {
                         greeting = "Guten späten Abend, " + Globals.custUsername;
                     }
                     else if (_newSelectedUserLanguage == "JAP") {
@@ -772,9 +779,11 @@ namespace FlowSERVER1 {
                     }
                     else if (_newSelectedUserLanguage == "MY") {
                         greeting = "Selamat Petang, " + Globals.custUsername;
-                    } else if (_newSelectedUserLanguage == "GER") {
+                    }
+                    else if (_newSelectedUserLanguage == "GER") {
                         greeting = "Guten Abend, " + Globals.custUsername;
-                    } else if (_newSelectedUserLanguage == "JAP") {
+                    }
+                    else if (_newSelectedUserLanguage == "JAP") {
                         greeting = "こんばんは " + Globals.custUsername + " :)";
                     }
                     else if (_newSelectedUserLanguage == "ESP") {
@@ -838,7 +847,7 @@ namespace FlowSERVER1 {
 
             var Form_1 = HomePage.instance;
 
-            if(_custLang == "MY") {
+            if (_custLang == "MY") {
                 label21.Text = "Tetapan";
                 label75.Text = "Alamat Email";
                 tabPage5.Text = "Perkongsian Fail & API";
@@ -869,7 +878,7 @@ namespace FlowSERVER1 {
 
                 label2.Text = "Padam akaun saya";
                 label3.Text = "Akaun Flowstorage anda akan dipadam bersama-sama dengan data anda";
-                
+
                 lblSettings.Text = "Tetapan";
                 label1.Text = "Tetapan";
 
@@ -884,7 +893,7 @@ namespace FlowSERVER1 {
                 btnUpdatePassword.Text = "Ubah";
                 btnUpdateUsername.Text = "Ubah";
                 btnLogout.Text = "Log-Keluar";
-                btnLogout.TextOffset = new Point(4,0);
+                btnLogout.TextOffset = new Point(4, 0);
                 guna2Button11.Location = new Point(140, 61);
                 btnDltAccount.Text = "Padam Akaun";
 
@@ -898,7 +907,7 @@ namespace FlowSERVER1 {
                 Form_1.label2.Text = "Kiraan Item";
             }
 
-            if(_custLang == "US") {
+            if (_custLang == "US") {
                 label21.Text = "Settings";
                 label75.Text = "Email Address";
                 tabPage5.Text = "File Sharing";
@@ -957,7 +966,7 @@ namespace FlowSERVER1 {
                 Form_1.lblEssentials.Text = "Essentials";
             }
 
-            if(_custLang == "DUT") {
+            if (_custLang == "DUT") {
                 label21.Text = "Instellingen";
                 label75.Text = "E-mailadres";
                 tabPage5.Text = "Bestanden delen & API";
@@ -1016,7 +1025,7 @@ namespace FlowSERVER1 {
                 Form_1.lblEssentials.Text = "Essentials";
             }
 
-            if(_custLang == "RUS") {
+            if (_custLang == "RUS") {
                 label21.Text = "Настройки";
                 label75.Text = "электронная почта";
                 tabPage5.Text = "Общий доступ к файлам и API";
@@ -1075,7 +1084,7 @@ namespace FlowSERVER1 {
                 Form_1.lblEssentials.Text = "Основные";
             }
 
-            if(_custLang == "GER") {
+            if (_custLang == "GER") {
                 label21.Text = "Einstellungen";
                 label75.Text = "E-Mail-Addresse";
                 tabPage5.Text = "Datenaustausch & API";
@@ -1439,7 +1448,7 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
 
-                using (MySqlDataReader _readLang = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader _readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await _readLang.ReadAsync()) {
                         _currentUserLanguage = _readLang.GetString(0);
                     }
@@ -1451,8 +1460,8 @@ namespace FlowSERVER1 {
 
             const string updateLangQuery = "UPDATE lang_info SET CUST_LANG = @lang WHERE CUST_USERNAME = @username";
 
-            using(MySqlCommand command = new MySqlCommand(updateLangQuery,con)) {
-                command.Parameters.AddWithValue("@lang",_custLang);
+            using (MySqlCommand command = new MySqlCommand(updateLangQuery, con)) {
+                command.Parameters.AddWithValue("@lang", _custLang);
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.ExecuteNonQuery();
             }
@@ -1461,7 +1470,7 @@ namespace FlowSERVER1 {
         private void languageChanger(String _custLang) {
 
             ///////////////////////////////////////////////
-            
+
             if (_custLang == "US") {
                 guna2Button19.Text = "Default";
                 guna2Button19.ForeColor = Color.Gainsboro;
@@ -1548,9 +1557,9 @@ namespace FlowSERVER1 {
                 guna2Button31.Text = "Set as default";
                 guna2Button31.ForeColor = Color.FromArgb(55, 0, 179);
                 guna2Button31.Enabled = true;
-            } 
+            }
 
-            if(_custLang == "JAP") {
+            if (_custLang == "JAP") {
                 guna2Button17.Text = "Default";
                 guna2Button17.ForeColor = Color.Gainsboro;
                 guna2Button17.Enabled = false;
@@ -1594,7 +1603,7 @@ namespace FlowSERVER1 {
                 guna2Button31.Enabled = true;
             }
 
-            if(_custLang == "GER") {
+            if (_custLang == "GER") {
                 guna2Button15.Text = "Default";
                 guna2Button15.ForeColor = Color.Gainsboro;
                 guna2Button15.Enabled = false;
@@ -1985,8 +1994,8 @@ namespace FlowSERVER1 {
         private void disableSharing(String _custUsername) {
 
             const string disableSharingQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(disableSharingQuery,con)) {
-                command.Parameters.AddWithValue("@username",_custUsername);
+            using (MySqlCommand command = new MySqlCommand(disableSharingQuery, con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
                 command.ExecuteNonQuery();
             }
         }
@@ -1998,7 +2007,7 @@ namespace FlowSERVER1 {
         private void enableSharing(String _custUsername) {
 
             const string enabelSharingQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(enabelSharingQuery,con)) {
+            using (MySqlCommand command = new MySqlCommand(enabelSharingQuery, con)) {
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.ExecuteNonQuery();
             }
@@ -2011,7 +2020,7 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button24_Click(object sender, EventArgs e) {
 
-            if(MessageBox.Show("Disable file sharing? You can always enable this option again later.","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes) {
+            if (MessageBox.Show("Disable file sharing? You can always enable this option again later.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
                 guna2Button24.Enabled = false;
                 guna2Button24.Visible = false;
@@ -2050,7 +2059,7 @@ namespace FlowSERVER1 {
         private void tabPage5_Click(object sender, EventArgs e) {
         }
 
- 
+
         private string retrieveFileSharingPas() {
 
             string hasPass = "";
@@ -2077,10 +2086,10 @@ namespace FlowSERVER1 {
             string _localTok = "";
             const string getAccessTokQuery = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
 
-            using(MySqlCommand command = new MySqlCommand(getAccessTokQuery,con)) {
-                command.Parameters.AddWithValue("@username",custUsername);
-                using(MySqlDataReader reader = command.ExecuteReader()) {
-                    if(reader.Read()) {
+            using (MySqlCommand command = new MySqlCommand(getAccessTokQuery, con)) {
+                command.Parameters.AddWithValue("@username", custUsername);
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    if (reader.Read()) {
                         _localTok = EncryptionModel.Decrypt(reader.GetString(0));
                     }
                     reader.Close();
@@ -2100,26 +2109,27 @@ namespace FlowSERVER1 {
 
             try {
 
-                if(guna2TabControl1.SelectedIndex == 1) {
+                if (guna2TabControl1.SelectedIndex == 1) {
 
-                    if(_getAccountDateQueryExecuted == false) {
+                    if (_getAccountDateQueryExecuted == false) {
 
                         const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
 
-                        using(MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
+                        using (MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
                             _userCreatedAccountDate = command.ExecuteScalar()?.ToString();
                         }
 
                         _getAccountDateQueryExecuted = true;
 
-                    } else {
+                    }
+                    else {
                         lblAccountCreatedDate.Text = _userCreatedAccountDate;
                     }
 
                 }
 
-                if(guna2TabControl1.SelectedIndex == 3) {
+                if (guna2TabControl1.SelectedIndex == 3) {
                     if (_currentUserLanguage == "US") {
                         guna2Button19.Text = "Default";
                         guna2Button19.Enabled = false;
@@ -2181,16 +2191,17 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if(guna2TabControl1.SelectedIndex == 2) {
+                if (guna2TabControl1.SelectedIndex == 2) {
 
-                    if(retrieveFileSharingPas() != "DEF") {
+                    if (retrieveFileSharingPas() != "DEF") {
 
                         btnRmvSharingAuth.Visible = true;
                         btnRmvSharingAuth.Enabled = true;
 
                         guna2Button23.Visible = false;
                         guna2Button23.Enabled = false;
-                    } else {
+                    }
+                    else {
 
                         btnRmvSharingAuth.Visible = false;
                         btnRmvSharingAuth.Enabled = false;
@@ -2222,8 +2233,9 @@ namespace FlowSERVER1 {
                     }
                 }
 
-            } catch (Exception ex) {
-                Debug.WriteLine(ex.Message);    
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -2236,7 +2248,7 @@ namespace FlowSERVER1 {
 
             const string setPassSharingQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
 
-            using(MySqlCommand command = new MySqlCommand(setPassSharingQuery,con)) {
+            using (MySqlCommand command = new MySqlCommand(setPassSharingQuery, con)) {
                 command.Parameters.AddWithValue("@setPass", "DEF");
                 command.Parameters.AddWithValue("@username", _custUsername);
                 command.ExecuteNonQuery();
@@ -2245,7 +2257,7 @@ namespace FlowSERVER1 {
         }
         private void guna2Button27_Click(object sender, EventArgs e) {
 
-            if(MessageBox.Show("Remove File Sharing password?","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes) {
+            if (MessageBox.Show("Remove File Sharing password?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
                 removePasSharing(Globals.custUsername);
                 guna2Button23.Visible = true;
@@ -2262,10 +2274,11 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button28_Click(object sender, EventArgs e) {
-            if(tokenCheckCurr == 0) {
+            if (tokenCheckCurr == 0) {
                 AccessTokenVerifyForm _showVerForm = new AccessTokenVerifyForm();
                 _showVerForm.Show();
-            } else {
+            }
+            else {
                 guna2TextBox2.Enabled = true;
                 guna2Button28.Visible = false;
                 guna2Button29.Visible = true;
