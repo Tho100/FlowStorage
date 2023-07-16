@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
-
-using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
 
@@ -28,7 +26,7 @@ namespace FlowSERVER1 {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public PdfForm(String fileName, String tableName, String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public PdfForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -46,7 +44,8 @@ namespace FlowSERVER1 {
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
-            } else {
+            }
+            else {
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
@@ -66,9 +65,10 @@ namespace FlowSERVER1 {
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").
                 ShowDialog()).Start();
 
-                InitializePDF(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text,isFromShared));
+                InitializePDF(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text, isFromShared));
 
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -80,13 +80,13 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="pdfBytes"></param>
         private void InitializePDF(byte[] pdfBytes) {
-            if(pdfBytes != null) {
+            if (pdfBytes != null) {
                 lblFileSize.Text = $"{FileSize.fileSize(pdfBytes):F2}Mb";
                 MemoryStream convertToStream = new MemoryStream(pdfBytes);
                 pdfDocumentViewer1.LoadFromStream(convertToStream);
             }
         }
-       
+
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
         }
@@ -156,7 +156,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 

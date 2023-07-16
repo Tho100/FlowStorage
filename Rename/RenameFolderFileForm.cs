@@ -42,7 +42,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         
-        private async Task renameFolderAsync(string newFolderName,string oldFolderName) {
+        private async Task RenameFolderAsync(string newFolderName,string oldFolderName) {
 
             const string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
             using (MySqlCommand command = new MySqlCommand(queryRename, con)) {
@@ -93,7 +93,7 @@ namespace FlowSERVER1 {
             }
 
             lblAlert.Visible = false;
-            await renameFolderAsync(newFolderName,oldFolderName);
+            await RenameFolderAsync(newFolderName,oldFolderName);
 
         }
     }

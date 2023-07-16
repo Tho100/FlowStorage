@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-
+﻿using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+using System;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class exeFORM : Form {
@@ -13,7 +12,7 @@ namespace FlowSERVER1 {
         private bool _isFromShared { get; set; }
         private bool _isFromSharing { get; set; }
 
-        public exeFORM(String fileName,String tableName, String directoryName, String uploaderName,bool isFromShared = false, bool isFromSharing = false) {
+        public exeFORM(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -27,7 +26,7 @@ namespace FlowSERVER1 {
             this._isFromSharing = isFromSharing;
 
             if (isFromShared == true) {
-                
+
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 
@@ -80,7 +79,7 @@ namespace FlowSERVER1 {
         private void guna2Button5_Click(object sender, EventArgs e) {
             string[] parts = lblFileName.Text.Split('.');
             string getExtension = "." + parts[1];
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 

@@ -22,35 +22,35 @@ namespace FlowSERVER1 {
 
         }
 
-        string _valueToReturn = "";
-        private string returnValues(String _WhichColumn) {
+        private string SelectValueCustomColumn(String columnName) {
 
-            List<String> _concludeValue = new List<String>();
+            string returnedValue = null;
 
-            string checkPassword_Query = $"SELECT {_WhichColumn} FROM information WHERE CUST_EMAIL = @email";
+            List<string> listReturnedValues = new List<string>();
 
-            using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
-                command.CommandText = checkPassword_Query;
+            string query = $"SELECT {columnName} FROM information WHERE CUST_EMAIL = @email";
+
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
-
-                using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
-                    while (readerPass_.Read()) {
-                        _concludeValue.Add(readerPass_.GetString(0));
+                using (MySqlDataReader reader = command.ExecuteReader()) {
+                    while (reader.Read()) {
+                        listReturnedValues.Add(reader.GetString(0));
                     }
                 }
             }
 
-            if (_concludeValue.Count > 0 && _concludeValue[0] != "") {
-                _valueToReturn = _concludeValue[0];
+            if (listReturnedValues.Count > 0 && listReturnedValues[0] != "") {
+                returnedValue = listReturnedValues[0];
             }
 
-            return _valueToReturn;
+            return returnedValue;
         }
 
-        string _recovTok = "";
-        private string returnValuesRecov() {
+        private string ReturnRecoveryValue() {
 
-            List<String> _concludeValue = new List<String>();
+            string recoveryTokenValue = null;
+
+            List<string> listRecoveryToken = new List<string>();
 
             const string checkPassword_Query = "SELECT RECOV_TOK FROM information WHERE CUST_EMAIL = @email";
 
@@ -60,23 +60,23 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
                     while (readerPass_.Read()) {
-                        _concludeValue.Add(readerPass_.GetString(0));
+                        listRecoveryToken.Add(readerPass_.GetString(0));
                     }
                 }
             }
 
-            if (_concludeValue.Count > 0 && _concludeValue[0] != "") {
-                _recovTok = EncryptionModel.Decrypt(_concludeValue[0]);
+            if (listRecoveryToken.Count > 0 && listRecoveryToken[0] != "") {
+                recoveryTokenValue = EncryptionModel.Decrypt(listRecoveryToken[0]);
             }
 
-            return _recovTok;
+            return recoveryTokenValue;
         }
 
-        private string emailExistsCheck() {
+        private string EmailIsExistVerification() {
 
             List<String> _concludeValue = new List<String>();
 
-            string _custEmail = "";
+            string _custEmail = null;
             const string checkPassword_Query = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
 
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
@@ -102,25 +102,25 @@ namespace FlowSERVER1 {
 
             try {
 
-                if(emailExistsCheck() == "") {
+                if(EmailIsExistVerification() == null) {
                     lblAlert.Text = "Account not found.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(returnValues("CUST_PIN") == "") {
+                if(SelectValueCustomColumn("CUST_PIN") == null) {
                     lblAlert.Text = "Account not found.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(EncryptionModel.computeAuthCase(txtFieldPin.Text) != returnValues("CUST_PIN")) {
+                if(EncryptionModel.computeAuthCase(txtFieldPin.Text) != SelectValueCustomColumn("CUST_PIN")) {
                     lblAlert.Text = "PIN key is incorrect.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(txtFieldRecoveryKey.Text != returnValuesRecov()) {
+                if(txtFieldRecoveryKey.Text != ReturnRecoveryValue()) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Invalid recovery key.";
                     return;

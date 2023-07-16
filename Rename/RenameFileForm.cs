@@ -40,7 +40,7 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private async Task renameFileAsync(String newFileName) {
+        private async Task RenameFileAsync(String newFileName) {
 
             if (GlobalsTable.publicTables.Contains(_tableName) || GlobalsTable.publicTablesPs.Contains(_tableName)) {
 
@@ -133,7 +133,7 @@ namespace FlowSERVER1 {
                 return;
             }
 
-            await renameFileAsync(newFileName);
+            await RenameFileAsync(newFileName);
 
         }
 

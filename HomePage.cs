@@ -2510,6 +2510,27 @@ namespace FlowSERVER1 {
         /// <param name="parameterName">Custom parameter name for panel</param>
         /// <param name="currItem"></param>
 
+        private async Task InsertFileDataFolder(String filesFullPath, String folderName, String fileDataBase64, String thumbnailValue = null) {
+
+            const string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
+            using (var command = new MySqlCommand(insertFoldQue, con)) {
+                command.Parameters.AddWithValue("@FOLDER_TITLE", EncryptionModel.Encrypt(folderName));
+                command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
+                command.Parameters.AddWithValue("@FILE_TYPE", filesFullPath.Substring(filesFullPath.LastIndexOf('.') + 1));
+                command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(Path.GetFileName(filesFullPath)));
+                command.Parameters.AddWithValue("@CUST_FILE", fileDataBase64);
+                command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
+
+                await command.ExecuteNonQueryAsync();
+            }
+
+            foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadAlrt")) {
+                form.Close();
+            }
+
+        }
+
         private void OpenFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
 
             CloseRetrievalAlert();
@@ -2842,41 +2863,20 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void folderDialog(String _getDirPath, String _getDirTitle, String[] _TitleValues) {
+        private async void CreateFilePanelFolder(String getFolderPath, String getFolderName, String[] filesName) {
 
             string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             int _IntCurr = 0;
             long _fileSizeInMB = 0;
 
-            new Thread(() => new UploadingAlert(_getDirTitle, GlobalsTable.folderUploadTable, "PanExlFold" + _IntCurr, _getDirTitle, fileSize: _fileSizeInMB)
+            new Thread(() => new UploadingAlert(getFolderName, GlobalsTable.folderUploadTable, "PanExlFold" + _IntCurr, getFolderName, fileSize: _fileSizeInMB)
             .ShowDialog()).Start();
 
             GlobalsData.base64EncodedImageFolder.Clear();
             GlobalsData.base64EncodedThumbnailFolder.Clear();
 
-            foreach (var _Files in Directory.EnumerateFiles(_getDirPath, "*")) {
-
-                async Task setupUpload(String _tempToBase64, String thumbnailValue = null) {
-
-                    const string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
-                    using (var command = new MySqlCommand(insertFoldQue, con)) {
-                        command.Parameters.AddWithValue("@FOLDER_TITLE", EncryptionModel.Encrypt(_getDirTitle));
-                        command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
-                        command.Parameters.AddWithValue("@FILE_TYPE", _Files.Substring(_Files.LastIndexOf('.') + 1));
-                        command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
-                        command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(Path.GetFileName(_Files)));
-                        command.Parameters.AddWithValue("@CUST_FILE", _tempToBase64);
-                        command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
-
-                        await command.ExecuteNonQueryAsync();
-                    }
-
-                    foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadAlrt")) {
-                        form.Close();
-                    }
-
-                }
+            foreach (var filesFullPath in Directory.EnumerateFiles(getFolderPath, "*")) {
 
                 _IntCurr++;
 
@@ -2906,7 +2906,7 @@ namespace FlowSERVER1 {
                 titleLab.AutoEllipsis = true;
                 titleLab.Width = 160;
                 titleLab.Height = 20;
-                titleLab.Text = _TitleValues[_IntCurr - 1];
+                titleLab.Text = filesName[_IntCurr - 1];
 
                 var textboxExl = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxExl);
@@ -2979,11 +2979,11 @@ namespace FlowSERVER1 {
                 lblEmptyHere.Visible = false;
                 btnGarbageImage.Visible = false;
 
-                var _extTypes = Path.GetExtension(_Files);
+                var _extTypes = Path.GetExtension(filesFullPath);
 
                 try {
 
-                    byte[] retrieveBytes = File.ReadAllBytes(_Files);
+                    byte[] retrieveBytes = File.ReadAllBytes(filesFullPath);
                     string toBase64String = Convert.ToBase64String(retrieveBytes);
                     string encryptValues = EncryptionModel.Encrypt(toBase64String);
 
@@ -2991,11 +2991,11 @@ namespace FlowSERVER1 {
 
                     if (Globals.imageTypes.Contains(_extTypes)) {
 
-                        var _imgContent = new Bitmap(_Files);
+                        var _imgContent = new Bitmap(filesFullPath);
 
-                        string _compressedImage = compressor.compresImageToBase64(_Files);
-                        string _tobase64 = EncryptionModel.Encrypt(_compressedImage);
-                        await setupUpload(_tobase64);
+                        string compressImage = compressor.compresImageToBase64(filesFullPath);
+                        string compressedImageToBase64 = EncryptionModel.Encrypt(compressImage);
+                        await InsertFileDataFolder(filesFullPath, getFolderName, compressedImageToBase64);
 
                         textboxExl.Image = _imgContent;
                         textboxExl.Click += (sender_f, e_f) => {
@@ -3015,7 +3015,7 @@ namespace FlowSERVER1 {
                         textboxExl.Image = Globals.textTypeToImageFolder[_extTypes];
 
                         String nonLine = "";
-                        using (StreamReader ReadFileTxt = new StreamReader(_Files)) {
+                        using (StreamReader ReadFileTxt = new StreamReader(filesFullPath)) {
                             nonLine = ReadFileTxt.ReadToEnd();
                         }
 
@@ -3023,7 +3023,7 @@ namespace FlowSERVER1 {
                         String getEncoded = Convert.ToBase64String(getBytes);
                         String encryptEncoded = EncryptionModel.Encrypt(getEncoded);
 
-                        await setupUpload(encryptEncoded);
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptEncoded);
 
                         textboxExl.Click += (sender_t, e_t) => {
 
@@ -3034,7 +3034,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".apk") {
-                        await setupUpload(encryptValues);
+
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
@@ -3044,7 +3045,7 @@ namespace FlowSERVER1 {
                     }
                     if (Globals.videoTypes.Contains(_extTypes)) {
 
-                        ShellFile shellFile = ShellFile.FromFilePath(_Files);
+                        ShellFile shellFile = ShellFile.FromFilePath(filesFullPath);
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
                         String toBase64BitmapThumbnail;
                         using (var stream = new MemoryStream()) {
@@ -3053,7 +3054,7 @@ namespace FlowSERVER1 {
                             toBase64BitmapThumbnail = toBase64;
                         }
 
-                        await setupUpload(encryptValues, toBase64BitmapThumbnail);
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues, toBase64BitmapThumbnail);
 
                         textboxExl.Image = toBitMap;
                         textboxExl.Click += (sender_vid, e_vid) => {
@@ -3070,7 +3071,7 @@ namespace FlowSERVER1 {
 
                     if (_extTypes == ".pdf") {
 
-                        await setupUpload(encryptValues);
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3080,7 +3081,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".docx" || _extTypes == ".doc") {
-                        await setupUpload(encryptValues);
+
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3090,7 +3092,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".xlsx" || _extTypes == ".xls") {
-                        await setupUpload(encryptValues);
+
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3101,7 +3104,8 @@ namespace FlowSERVER1 {
 
 
                     if (_extTypes == ".pptx" || _extTypes == ".ppt") {
-                        await setupUpload(encryptValues);
+
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3111,7 +3115,8 @@ namespace FlowSERVER1 {
                     }
 
                     if (_extTypes == ".mp3" || _extTypes == ".wav") {
-                        await setupUpload(encryptValues);
+
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3174,22 +3179,21 @@ namespace FlowSERVER1 {
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
 
-                var _getDirPath = dialog.FileName;
-                int _countFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.TopDirectoryOnly).Length;
-                var _getDirTitle = new DirectoryInfo(_getDirPath).Name;
+                var getFolderPath = dialog.FileName;
+                var getFolderName = new DirectoryInfo(getFolderPath).Name;
 
-                if (!lstFoldersPage.Items.Contains(_getDirTitle)) {
+                if (!lstFoldersPage.Items.Contains(getFolderName)) {
 
-                    string[] _TitleValues = Directory.GetFiles(_getDirPath, "*").Select(Path.GetFileName).ToArray();
-                    int _numberOfFiles = Directory.GetFiles(_getDirPath, "*", SearchOption.AllDirectories).Length;
+                    string[] _TitleValues = Directory.GetFiles(getFolderPath, "*").Select(Path.GetFileName).ToArray();
+                    int _numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
 
                     if (_numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
 
                         flwLayoutHome.Controls.Clear();
-                        lstFoldersPage.Items.Add(_getDirTitle);
+                        lstFoldersPage.Items.Add(getFolderName);
 
-                        folderDialog(_getDirPath, _getDirTitle, _TitleValues);
-                        var _dirPosition = lstFoldersPage.Items.IndexOf(_getDirTitle);
+                        CreateFilePanelFolder(getFolderPath, getFolderName, _TitleValues);
+                        var _dirPosition = lstFoldersPage.Items.IndexOf(getFolderName);
 
                         lstFoldersPage.SelectedIndex = _dirPosition;
 
@@ -3929,7 +3933,7 @@ namespace FlowSERVER1 {
         }
 
         private void Form1_DragLeave(object sender, EventArgs e) => pnlDragAndDropUpload.Visible = false;
-        
+
 
         /// <summary>
         /// 
@@ -4146,7 +4150,7 @@ namespace FlowSERVER1 {
         private void label26_Click(object sender, EventArgs e) {
 
         }
-        
+
 
         /// <summary>
         /// 

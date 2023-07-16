@@ -89,12 +89,12 @@
             this.pdfDocumentViewer1.AutoScroll = true;
             this.pdfDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
             this.pdfDocumentViewer1.FormFillEnabled = false;
-            this.pdfDocumentViewer1.Location = new System.Drawing.Point(361, 81);
+            this.pdfDocumentViewer1.Location = new System.Drawing.Point(354, 76);
             this.pdfDocumentViewer1.MultiPagesThreshold = 60;
             this.pdfDocumentViewer1.Name = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.OnRenderPageExceptionEvent = null;
             this.pdfDocumentViewer1.PageLayoutMode = Spire.PdfViewer.Forms.PageLayoutMode.SinglePageContinuous;
-            this.pdfDocumentViewer1.Size = new System.Drawing.Size(765, 534);
+            this.pdfDocumentViewer1.Size = new System.Drawing.Size(778, 540);
             this.pdfDocumentViewer1.TabIndex = 52;
             this.pdfDocumentViewer1.Text = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.Threshold = 60;
@@ -430,7 +430,7 @@
             this.guna2Button7.Visible = false;
             this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click);
             // 
-            // pdfFORM
+            // PdfForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -461,7 +461,7 @@
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "pdfFORM";
+            this.Name = "PdfForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PDF Document";
             this.TopMost = true;

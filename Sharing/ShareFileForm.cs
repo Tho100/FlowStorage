@@ -60,7 +60,7 @@ namespace FlowSERVER1 {
         /// This function will do check if the 
         /// receiver has password enabled for their file sharing
         /// </summary>
-        private string hasPassword(String _custUsername) {
+        private string ReceiverHasAuthVerificaiton(String _custUsername) {
 
             string storeVal = "";
             const string queryGetSharingAuth = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
@@ -110,7 +110,7 @@ namespace FlowSERVER1 {
         /// This function will retrieve user current 
         /// file sharing status (enabeled or disabled)
         /// </summary>
-        private string retrieveDisabled(String _custUsername) {
+        private string RetrieveIsSharingDisabled(String _custUsername) {
 
             string isEnabled = "0";
             const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
@@ -133,7 +133,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
-        private int userIsExists(String _receiverUsername) {
+        private int UserExistVerification(String _receiverUsername) {
 
             int count = 0;
 
@@ -152,7 +152,7 @@ namespace FlowSERVER1 {
         /// <param name="_custUsername">Username of receiver</param>
         /// <param name="_fileName">File name to be send</param>
         /// <returns></returns>
-        private int fileIsUploaded(String _custUsername, String _fileName) {
+        private int FileIsUploadedVerification(String _custUsername, String _fileName) {
 
             int count = 0;
 
@@ -313,7 +313,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void startSharing() {
+        private async void StartSharingFile() {
 
             int _accType = accountType(txtFieldShareToName.Text);
             int _countReceiverFile = countReceiverShared(txtFieldShareToName.Text);
@@ -411,26 +411,26 @@ namespace FlowSERVER1 {
                 if (txtFieldShareToName.Text == String.Empty) {
                     return;
                 }
-                if (userIsExists(txtFieldShareToName.Text) == 0) {
+                if (UserExistVerification(txtFieldShareToName.Text) == 0) {
                     new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} does not exist.").Show();
                     return;
                 }
-                if (fileIsUploaded(txtFieldShareToName.Text, _fileName) > 0) {
+                if (FileIsUploadedVerification(txtFieldShareToName.Text, _fileName) > 0) {
                     new CustomAlert(title: "Sharing failed", subheader: "This file is already shared.").Show();
                     return;
                 }
 
-                if (!(retrieveDisabled(txtFieldShareToName.Text) == "0")) {
+                if (!(RetrieveIsSharingDisabled(txtFieldShareToName.Text) == "0")) {
                     new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} disabled their file sharing.").Show();
                     return;
                 }
 
-                if (hasPassword(txtFieldShareToName.Text) != "") {
+                if (ReceiverHasAuthVerificaiton(txtFieldShareToName.Text) != "") {
                     new AskSharingAuthForm(txtFieldShareToName.Text, _fileName, _fileName.Substring(_fileName.Length-4)).Show();
                     return;
                 }
 
-                startSharing();
+                StartSharingFile();
                                
             }
             catch (Exception) {

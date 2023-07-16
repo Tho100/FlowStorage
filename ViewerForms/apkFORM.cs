@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-
+﻿using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+using System;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class ApkForm : Form {
@@ -13,13 +11,13 @@ namespace FlowSERVER1 {
         private bool _isFromSharing { get; set; }
         private bool _isFromShared { get; set; }
 
-        public ApkForm(String fileName, String uploaderName,String tableName, String directoryName, bool isFromShared = false, bool isFromSharing = false) {
+        public ApkForm(String fileName, String uploaderName, String tableName, String directoryName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
             this._tableName = tableName;
-            this._directoryName = directoryName;            
+            this._directoryName = directoryName;
             this._isFromSharing = isFromSharing;
             this._isFromShared = isFromShared;
 
@@ -68,19 +66,20 @@ namespace FlowSERVER1 {
 
             try {
 
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.","Saver");
+                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.", "Saver");
                 ShowAlert.Show();
 
                 SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
 
-            } catch (Exception) {
-                MessageBox.Show("Failed to download this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Question);
+            }
+            catch (Exception) {
+                MessageBox.Show("Failed to download this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 

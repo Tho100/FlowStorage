@@ -407,11 +407,15 @@
             // 
             // documentViewer1
             // 
+            this.documentViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.documentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.documentViewer1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.documentViewer1.EnableHandTools = false;
-            this.documentViewer1.Location = new System.Drawing.Point(390, 98);
+            this.documentViewer1.Location = new System.Drawing.Point(354, 76);
             this.documentViewer1.Name = "documentViewer1";
-            this.documentViewer1.Size = new System.Drawing.Size(506, 281);
+            this.documentViewer1.Size = new System.Drawing.Size(778, 540);
             this.documentViewer1.TabIndex = 101;
             this.documentViewer1.Text = "documentViewer1";
             this.documentViewer1.ZoomMode = Spire.OfficeViewer.Forms.ZoomMode.Default;

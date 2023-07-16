@@ -1,38 +1,32 @@
-﻿using MySql.Data.MySqlClient;
+﻿using AForge.Imaging.Filters;
+using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AForge.Imaging.Filters;
-using FlowSERVER1.Helper;
+
 using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
     public partial class PicForm : Form {
 
-        public readonly PicForm instance; 
+        public readonly PicForm instance;
 
-        private bool IsDragging {get; set; } = false;
-        private bool IsVisibleFilterPanel {get; set; } = false;
-        private Point dragStartPosition {get; set; }
-        private Image defaultImage {get; set; } 
-        private Bitmap filteredImage {get; set; }
+        private bool IsDragging { get; set; } = false;
+        private bool IsVisibleFilterPanel { get; set; } = false;
+        private Point dragStartPosition { get; set; }
+        private Image defaultImage { get; set; }
+        private Bitmap filteredImage { get; set; }
         private bool isGrayed { get; set; }
         private int gaussianBlurValue { get; set; }
         private int brightnessValue { get; set; }
-        private float saturationValue {get; set; }
+        private float saturationValue { get; set; }
 
-        private string _tableName {get; set; }
-        private string _directoryName {get; set; }
-        private bool _isFromShared {get; set; } 
-        private bool _isFromSharing {get; set; } 
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
+        private bool _isFromSharing { get; set; }
         private MySqlConnection con { get; set; } = ConnectionModel.con;
 
         public PicForm(Image userImage, int width, int height, string title, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
@@ -43,13 +37,13 @@ namespace FlowSERVER1 {
 
             filterPanel.MouseDown += filterPanel_MouseDown;
             InitializePicture(
-                userImage, width, height, title, tableName, directoryName, 
+                userImage, width, height, title, tableName, directoryName,
                 uploaderName, isFromShared, isFromSharing);
         }
 
         private void InitializePicture(
-            Image userImage, int width, int height, 
-            string title, string tableName, string directoryName, 
+            Image userImage, int width, int height,
+            string title, string tableName, string directoryName,
             string uploaderName, bool isFromShared = false, bool isFromSharing = true) {
 
             this.lblFileName.Text = title;
@@ -113,7 +107,7 @@ namespace FlowSERVER1 {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
         }
-        
+
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
             SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
@@ -136,7 +130,7 @@ namespace FlowSERVER1 {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
             new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
-            
+
         }
 
         private void label7_Click(object sender, EventArgs e) {
@@ -144,15 +138,15 @@ namespace FlowSERVER1 {
         }
 
         private void filterPanel_Paint(object sender, PaintEventArgs e) {
-            
+
             filterPanel.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(filterPanel, true, null);
-            
+
         }
 
         private void filterPanel_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left) {
                 IsDragging = true;
-                filterPanel.BringToFront(); 
+                filterPanel.BringToFront();
                 filterPanel.MouseMove += filterPanel_MouseMove;
                 filterPanel.MouseDown += filterPanel_MouseDown;
                 dragStartPosition = e.Location;
@@ -167,7 +161,7 @@ namespace FlowSERVER1 {
                 Rectangle panelRect = new Rectangle(x, y, filterPanel.Width, filterPanel.Height);
                 if (filterPanel.Parent.ClientRectangle.Contains(panelRect)) {
                     filterPanel.Location = new Point(x, y);
-                    filterPanel.Invalidate(); 
+                    filterPanel.Invalidate();
                 }
             }
         }
@@ -195,7 +189,7 @@ namespace FlowSERVER1 {
             label8.Text = guna2TrackBar1.Value.ToString() + "%";
 
             int getValue = guna2TrackBar1.Value;
-            saturationValue = (float)getValue/100f;
+            saturationValue = getValue / 100f;
 
             applyFilters();
 
@@ -213,7 +207,7 @@ namespace FlowSERVER1 {
         /// <param name="value"></param>
         private void filterGaussianBlur(int value) {
 
-            int reduceValue = (int)(value*50/100);
+            int reduceValue = value * 50 / 100;
 
             GaussianBlur filter = new GaussianBlur();
 
@@ -272,11 +266,12 @@ namespace FlowSERVER1 {
                     filterSaturation(saturationValue);
                 }
 
-           
+
                 guna2PictureBox1.Image = filteredImage;
 
-            } catch (Exception) {
-                MessageBox.Show("Cannot apply Grayscale with this filter.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+            catch (Exception) {
+                MessageBox.Show("Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -320,11 +315,11 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        
+
         private async void guna2Button7_Click(object sender, EventArgs e) {
 
             ImageConverter convertByte = new ImageConverter();
-            byte[] byteVals = (byte[])convertByte.ConvertTo(filteredImage,typeof(byte[]));
+            byte[] byteVals = (byte[])convertByte.ConvertTo(filteredImage, typeof(byte[]));
             string toBase64String = Convert.ToBase64String(byteVals);
             string encryptVals = EncryptionModel.Encrypt(toBase64String);
             await saveChanges(encryptVals);
@@ -333,21 +328,24 @@ namespace FlowSERVER1 {
         private async Task saveChanges(string values) {
 
             try {
-  
+
                 if (_isFromShared == true) {
-                    await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename",values);
-                } else if (_isFromShared == true) {
+                    await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
+                }
+                else if (_isFromShared == true) {
                     await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
-                } else {
+                }
+                else {
                     await executeChanges("UPDATE file_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
                 }
 
-            } catch (Exception) {
-                MessageBox.Show("Failed to save changes.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (Exception) {
+                MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private async Task executeChanges(string query,string values) {
+        private async Task executeChanges(string query, string values) {
 
             string que = query;
             using (MySqlCommand command = new MySqlCommand(que, con)) {

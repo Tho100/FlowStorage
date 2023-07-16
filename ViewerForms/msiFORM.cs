@@ -7,7 +7,7 @@ namespace FlowSERVER1 {
         public string TableName;
         public string DirectoryName;
 
-        public msiFORM(String fileName,String tableName, String directoryName,String uploaderUsername, bool _isFromShared = false) {
+        public msiFORM(String fileName, String tableName, String directoryName, String uploaderUsername, bool _isFromShared = false) {
             InitializeComponent();
             this.TableName = tableName;
             this.DirectoryName = directoryName;

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using LibVLCSharp.Shared;
-using System.Threading;
-
+﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-using FlowSERVER1.AlertForms;
+using LibVLCSharp.Shared;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class VideoForm : Form {
@@ -22,7 +20,7 @@ namespace FlowSERVER1 {
         private bool _isFromSharing { get; set; }
         private bool _isEndReached { get; set; }
 
-        public VideoForm(Image getThumb, int width, int height, String fileName,String tableName, String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public VideoForm(Image getThumb, int width, int height, String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -64,7 +62,7 @@ namespace FlowSERVER1 {
         }
 
         public static Image ResizeImage(Image userImg, Size size) {
-            return (Image)(new Bitmap(userImg,size));
+            return new Bitmap(userImg, size);
         }
 
         private void vidFORM_Load(object sender, EventArgs e) {
@@ -76,9 +74,9 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            if(_videoMediaPlayer != null) {
+            if (_videoMediaPlayer != null) {
                 _videoMediaPlayer.Stop();
-            } 
+            }
             this.Close();
         }
 
@@ -137,7 +135,7 @@ namespace FlowSERVER1 {
             _videoMediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
             _videoMediaPlayer.EndReached += MediaPlayer_EndReached;
 
-            _setLibVLC.Dispose();           
+            _setLibVLC.Dispose();
 
         }
 
@@ -153,7 +151,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                if(_videoMediaPlayer != null) {
+                if (_videoMediaPlayer != null) {
 
                     videoViewer.Visible = true;
 
@@ -168,10 +166,11 @@ namespace FlowSERVER1 {
 
                     _videoMediaPlayer.Play();
 
-                } else {
+                }
+                else {
 
                     new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..", "Loader").ShowDialog()).Start();
-                        
+
                     guna2PictureBox1.Visible = false;
                     videoViewer.Visible = true;
 
@@ -182,8 +181,9 @@ namespace FlowSERVER1 {
                 btnPlayVideo.Visible = false;
                 btnPauseVideo.Visible = true;
 
-            } catch (Exception) {
-                new CustomAlert(title: "An error occurred",subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
+            }
+            catch (Exception) {
+                new CustomAlert(title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
             }
         }
 
@@ -224,7 +224,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button6_Click_1(object sender, EventArgs e) {
-            if(_videoMediaPlayer != null) {
+            if (_videoMediaPlayer != null) {
                 _videoMediaPlayer.Pause();
                 btnPlayVideo.Visible = true;
                 btnPauseVideo.Visible = false;
@@ -236,8 +236,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
-            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length-4);
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 
