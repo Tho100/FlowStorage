@@ -66,7 +66,7 @@ namespace FlowSERVER1 {
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").
                 ShowDialog()).Start();
 
-                setupPdf(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text,isFromShared));
+                InitializePDF(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text,isFromShared));
 
             } catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -79,23 +79,14 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <param name="pdfBytes"></param>
-        public void setupPdf(byte[] pdfBytes) {
+        private void InitializePDF(byte[] pdfBytes) {
             if(pdfBytes != null) {
                 lblFileSize.Text = $"{FileSize.fileSize(pdfBytes):F2}Mb";
-                var _getStream = new MemoryStream(pdfBytes);
-                LoadPdf(_getStream);
+                MemoryStream convertToStream = new MemoryStream(pdfBytes);
+                pdfDocumentViewer1.LoadFromStream(convertToStream);
             }
         }
-        /// <summary>
-        /// 
-        /// Load stream of PDF bytes into viewer
-        /// 
-        /// </summary>
-        /// <param name="stream"></param>
-        public void LoadPdf(Stream stream) {
-            pdfDocumentViewer1.LoadFromStream(stream);
-        }
-
+       
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
         }

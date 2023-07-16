@@ -28,7 +28,6 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblUploaderName = new System.Windows.Forms.Label();
             this.lblFileName = new System.Windows.Forms.Label();
-            this.officeViewer1 = new Spire.OfficeViewer.Forms.OfficeViewer();
             this.lblUserComment = new System.Windows.Forms.Label();
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -49,6 +48,7 @@
             this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             this.label15 = new System.Windows.Forms.Label();
             this.lblFileSize = new System.Windows.Forms.Label();
+            this.officeViewer1 = new Spire.OfficeViewer.Forms.OfficeViewer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,18 +80,6 @@
             this.lblFileName.TabIndex = 30;
             this.lblFileName.Text = "label1";
             this.lblFileName.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // officeViewer1
-            // 
-            this.officeViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.officeViewer1.Location = new System.Drawing.Point(351, 72);
-            this.officeViewer1.Name = "officeViewer1";
-            this.officeViewer1.Size = new System.Drawing.Size(779, 543);
-            this.officeViewer1.TabIndex = 35;
-            this.officeViewer1.Text = "officeViewer1";
-            this.officeViewer1.Click += new System.EventHandler(this.officeViewer1_Click);
             // 
             // lblUserComment
             // 
@@ -416,12 +404,24 @@
             this.lblFileSize.Text = "25MB";
             this.lblFileSize.Click += new System.EventHandler(this.lblFileSize_Click);
             // 
+            // officeViewer1
+            // 
+            this.officeViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.officeViewer1.Location = new System.Drawing.Point(354, 76);
+            this.officeViewer1.Name = "officeViewer1";
+            this.officeViewer1.Size = new System.Drawing.Size(778, 540);
+            this.officeViewer1.TabIndex = 101;
+            this.officeViewer1.Text = "officeViewer1";
+            // 
             // ptxFORM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1142, 627);
+            this.Controls.Add(this.officeViewer1);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.lblFileSize);
             this.Controls.Add(this.txtFieldComment);
@@ -438,7 +438,6 @@
             this.Controls.Add(this.btnShareFile);
             this.Controls.Add(this.lblUserComment);
             this.Controls.Add(this.guna2Button8);
-            this.Controls.Add(this.officeViewer1);
             this.Controls.Add(this.lblUploaderName);
             this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.guna2Button3);
@@ -466,7 +465,6 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private System.Windows.Forms.Label lblFileName;
         private Guna.UI2.WinForms.Guna2Button guna2Button2;
-        private Spire.OfficeViewer.Forms.OfficeViewer officeViewer1;
         private Guna.UI2.WinForms.Guna2Button guna2Button8;
         private System.Windows.Forms.Label lblUserComment;
         private Guna.UI2.WinForms.Guna2Button btnShareFile;
@@ -483,5 +481,6 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button7;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblFileSize;
+        private Spire.OfficeViewer.Forms.OfficeViewer officeViewer1;
     }
 }

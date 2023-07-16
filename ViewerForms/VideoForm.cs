@@ -15,7 +15,7 @@ namespace FlowSERVER1 {
 
         public readonly VideoForm instance;
 
-        private MediaPlayer _mediaPlayer { get; set; }
+        private MediaPlayer _videoMediaPlayer { get; set; }
         private string _tableName { get; set; }
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            var setupImage = resizeImage(getThumb, new Size(width, height));
+            var setupImage = ResizeImage(getThumb, new Size(width, height));
             guna2PictureBox1.Image = setupImage;
 
             this.lblFileName.Text = fileName;
@@ -63,7 +63,7 @@ namespace FlowSERVER1 {
             lblUploaderName.Text = uploaderName;
         }
 
-        public static Image resizeImage(Image userImg, Size size) {
+        public static Image ResizeImage(Image userImg, Size size) {
             return (Image)(new Bitmap(userImg,size));
         }
 
@@ -76,8 +76,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            if(_mediaPlayer != null) {
-                _mediaPlayer.Stop();
+            if(_videoMediaPlayer != null) {
+                _videoMediaPlayer.Stop();
             } 
             this.Close();
         }
@@ -117,7 +117,7 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <param name="_retrieveBytesValue"></param>
-        private void setupPlayer(byte[] _retrieveBytesValue) {
+        private void StartPlayVideo(byte[] _retrieveBytesValue) {
 
             lblFileSize.Text = $"{FileSize.fileSize(_retrieveBytesValue):F2}Mb";
 
@@ -126,16 +126,16 @@ namespace FlowSERVER1 {
             LibVLC _setLibVLC = new LibVLC();
             var _setMedia = new Media(_setLibVLC, new StreamMediaInput(_toStream));
 
-            _mediaPlayer?.Dispose();
-            _mediaPlayer = new MediaPlayer(_setMedia);
+            _videoMediaPlayer?.Dispose();
+            _videoMediaPlayer = new MediaPlayer(_setMedia);
 
             videoViewer.MediaPlayer?.Dispose();
-            videoViewer.MediaPlayer = _mediaPlayer;
+            videoViewer.MediaPlayer = _videoMediaPlayer;
 
-            _mediaPlayer.Play();
+            _videoMediaPlayer.Play();
 
-            _mediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
-            _mediaPlayer.EndReached += MediaPlayer_EndReached;
+            _videoMediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
+            _videoMediaPlayer.EndReached += MediaPlayer_EndReached;
 
             _setLibVLC.Dispose();           
 
@@ -153,20 +153,20 @@ namespace FlowSERVER1 {
 
             try {
 
-                if(_mediaPlayer != null) {
+                if(_videoMediaPlayer != null) {
 
                     videoViewer.Visible = true;
 
                     if (_isEndReached) {
 
-                        _mediaPlayer.Position = 0;
+                        _videoMediaPlayer.Position = 0;
                         _isEndReached = false;
 
-                        setupPlayer(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text));
+                        StartPlayVideo(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text));
 
                     }
 
-                    _mediaPlayer.Play();
+                    _videoMediaPlayer.Play();
 
                 } else {
 
@@ -175,7 +175,7 @@ namespace FlowSERVER1 {
                     guna2PictureBox1.Visible = false;
                     videoViewer.Visible = true;
 
-                    setupPlayer(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
+                    StartPlayVideo(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
                 }
 
@@ -224,8 +224,8 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button6_Click_1(object sender, EventArgs e) {
-            if(_mediaPlayer != null) {
-                _mediaPlayer.Pause();
+            if(_videoMediaPlayer != null) {
+                _videoMediaPlayer.Pause();
                 btnPlayVideo.Visible = true;
                 btnPauseVideo.Visible = false;
             }
@@ -267,9 +267,9 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
-            if (_mediaPlayer != null && _mediaPlayer.IsPlaying) {
-                long newPosition = (long)(_mediaPlayer.Length * guna2TrackBar1.Value / 100.0);
-                _mediaPlayer.Time = newPosition;
+            if (_videoMediaPlayer != null && _videoMediaPlayer.IsPlaying) {
+                long newPosition = (long)(_videoMediaPlayer.Length * guna2TrackBar1.Value / 100.0);
+                _videoMediaPlayer.Time = newPosition;
             }
         }
 
@@ -283,7 +283,7 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) {
             guna2TrackBar1.Invoke((MethodInvoker)delegate {
-                guna2TrackBar1.Value = (int)(_mediaPlayer.Position * 100);
+                guna2TrackBar1.Value = (int)(_videoMediaPlayer.Position * 100);
             });
         }
 
@@ -305,8 +305,8 @@ namespace FlowSERVER1 {
 
         private void guna2Button10_Click(object sender, EventArgs e) {
             guna2TrackBar1.Value = 0;
-            _mediaPlayer.Stop();
-            _mediaPlayer.Play();
+            _videoMediaPlayer.Stop();
+            _videoMediaPlayer.Play();
             btnReplayVideo.Visible = false;
             btnPauseVideo.Visible = true;
         }

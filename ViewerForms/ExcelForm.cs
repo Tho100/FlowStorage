@@ -76,7 +76,7 @@ namespace FlowSERVER1 {
 
             lblUploaderName.Text = uploaderName;
 
-            generateSheet(LoaderModel.LoadFile(tableName, _directoryName, fileName, isFromShared));
+            GenerateSpreadsheet(LoaderModel.LoadFile(tableName, _directoryName, fileName, isFromShared));
             _sheetsByte = LoaderModel.LoadFile(tableName, _directoryName, fileName);
            
         }
@@ -92,7 +92,7 @@ namespace FlowSERVER1 {
         /// Start generating workbook sheets
         /// </summary>
         /// <param name=""></param>
-        private void generateSheet(byte[] _getByte) {
+        private void GenerateSpreadsheet(byte[] _getByte) {
 
             lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
 
@@ -187,7 +187,7 @@ namespace FlowSERVER1 {
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 
-        private async Task saveChangesUpdate(string textValues) {
+        private async Task SaveChangesUpdate(string textValues) {
 
             try {
 
@@ -251,7 +251,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private byte[] convertDataGridViewToByteArray(DataGridView dataGridView) {
+        private byte[] ConvertDataGridViewToByteArray(DataGridView dataGridView) {
             using (MemoryStream memoryStream = new MemoryStream()) {
                 using (XLWorkbook workbook = new XLWorkbook()) {
                     foreach (IXLWorksheet rowSheets in guna2ComboBox1.Items) {
@@ -284,7 +284,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        /*private byte[] convertDataGridViewToByteArray(DataGridView dataGridView) {
+        private byte[] convertDataGridViewToByteArray(DataGridView dataGridView) {
 
             DataTable dt = dataGridView.DataSource as DataTable;
             if (dt != null) {
@@ -304,7 +304,7 @@ namespace FlowSERVER1 {
             }
 
             return null;
-        }*/
+        }
 
         private async void guna2Button6_Click(object sender, EventArgs e) {
 
@@ -313,7 +313,7 @@ namespace FlowSERVER1 {
             if (updatedBytes != null) {
                 string toBase64String = Convert.ToBase64String(updatedBytes);
                 string encryptedBase64 = EncryptionModel.Encrypt(toBase64String);
-                await saveChangesUpdate(encryptedBase64);
+                await SaveChangesUpdate(encryptedBase64);
                 MessageBox.Show("Changes saved successfully.");
             }
             else {
@@ -376,7 +376,7 @@ namespace FlowSERVER1 {
                     _changedIndex = selectedIndex;
 
                     _currentSheetIndex = selectedIndex + 1;
-                    generateSheet(_sheetsByte);
+                    GenerateSpreadsheet(_sheetsByte);
                 }
             }
             catch (Exception ex) {

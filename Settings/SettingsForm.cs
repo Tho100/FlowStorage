@@ -53,18 +53,18 @@ namespace FlowSERVER1 {
             ToolTip ToolTip1 = new ToolTip();
             ToolTip1.SetToolTip(guna2Button11, "Item upload indicate how many file/directory you can upload.");
 
-            initializeSettingsAsync();
+            InitializeSettingsAsync();
         }
 
-        private async void initializeSettingsAsync() {
+        private async void InitializeSettingsAsync() {
 
             try {
 
-                await getCurrentLang();
-                setupUILanguage(_currentUserLanguage);
-                setupRedundane(lblAccountType.Text);
+                await GetCurrentLanguage();
+                SetupUILanguage(_currentUserLanguage);
+                UpdateUIOnAccountType(lblAccountType.Text);
                 await GetAccountType();
-                await countTotalAll();
+                await CountTotalUploadDirectory();
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
@@ -72,7 +72,7 @@ namespace FlowSERVER1 {
                 string[] _chartXAxisValues = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
 
                 foreach ((string tableName, string chartName) in _halfTablesName.Zip(_chartXAxisValues, (a, b) => (a, b))) {
-                    await generateChart(chartName, "file_" + tableName.ToLower());
+                    await GenerateUploadChart(chartName, "file_" + tableName.ToLower());
                     await TotalUploadFileTodayCount("file_" + tableName.ToLower());
                     await TotalUploadFile("file_" + tableName.ToLower());
                 }
@@ -91,21 +91,141 @@ namespace FlowSERVER1 {
             }
         }
 
+        #region Sharing section
+
+        /// <summary>
+        /// This function will delete user file sharing password 
+        /// if they have one setup
+        /// </summary>
+        /// <param name="_custUsername"></param>
+        private void RemoveSharingAuth() {
+
+            const string setPassSharingQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
+
+            using (MySqlCommand command = new MySqlCommand(setPassSharingQuery, con)) {
+                command.Parameters.AddWithValue("@setPass", "DEF");
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.ExecuteNonQuery();
+            }
+
+        }
+        private void guna2Button27_Click(object sender, EventArgs e) {
+
+            if (MessageBox.Show("Remove File Sharing password?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+
+                RemoveSharingAuth();
+                guna2Button23.Visible = true;
+                guna2Button23.Enabled = true;
+
+                btnRmvSharingAuth.Visible = false;
+                btnRmvSharingAuth.Enabled = false;
+            }
+        }
+
         /// <summary>
         /// This function will retrieve the 
         /// current status of user file sharing (disabled, or enabled)
         /// </summary>
-        private string retrieveDisabled(String _custUsername) {
+        private string RetrieveIsSharingDisabled() {
 
             const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                 string isEnabled = Convert.ToString(command.ExecuteScalar());
                 string concludeOutput = isEnabled == "1" ? "1" : "0";
                 return concludeOutput;
             }
         }
+
+        /// <summary>
+        /// Function to start disabling file sharing
+        /// </summary>
+        /// <param name="_custUsername"></param>
+        private void DisableSharing(String _custUsername) {
+
+            const string disableSharingQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(disableSharingQuery, con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Function to enable file sharing
+        /// </summary>
+        /// <param name="_custUsername"></param>
+        private void EnableSharing(String _custUsername) {
+
+            const string enabelSharingQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(enabelSharingQuery, con)) {
+                command.Parameters.AddWithValue("@username", _custUsername);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Disable file sharing button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2Button24_Click(object sender, EventArgs e) {
+
+            if (MessageBox.Show("Disable file sharing? You can always enable this option again later.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+
+                guna2Button24.Enabled = false;
+                guna2Button24.Visible = false;
+
+                guna2Button26.Visible = true;
+                guna2Button26.Enabled = true;
+
+                lblDisableFileSharing.Text = "Enable File Sharing";
+                label68.Text = "Enabling file sharing will allows people to share a file to you";
+
+                DisableSharing(Globals.custUsername);
+
+            }
+        }
+
+        /// <summary>
+        /// Enable file sharing button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void guna2Button26_Click(object sender, EventArgs e) {
+
+            guna2Button24.Enabled = true;
+            guna2Button24.Visible = true;
+
+            guna2Button26.Visible = false;
+            guna2Button26.Enabled = false;
+
+            lblDisableFileSharing.Text = "Disable File Sharing";
+            label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
+
+            EnableSharing(Globals.custUsername);
+
+        }
+
+        private string RetrieveFileSharingAuth() {
+
+            string hasPass = "";
+            const string selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(selectQuery, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+
+                object result = command.ExecuteScalar();
+                if (result != null) {
+                    hasPass = result.ToString();
+                }
+            }
+
+            return hasPass;
+        }
+
+        #endregion END - Sharing section
+
+        #region User statistics section
 
         /// <summary>
         /// This function will tells user how many files
@@ -265,7 +385,7 @@ namespace FlowSERVER1 {
                 btnOpenSupremePayment.Enabled = false;
             }
         }
-        private async Task countTotalAll() {
+        private async Task CountTotalUploadDirectory() {
 
             const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
@@ -287,7 +407,7 @@ namespace FlowSERVER1 {
         /// <param name="_serName"></param>
         /// <param name="_tableName"></param>
 
-        private async Task generateChart(String _serName, String _tableName) {
+        private async Task GenerateUploadChart(String _serName, String _tableName) {
             string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
@@ -303,25 +423,33 @@ namespace FlowSERVER1 {
             }
         }
 
+        #endregion END - User statistics section
+
+        private void guna2Button14_Click(object sender, EventArgs e) => this.Close();
+
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
+        
+        private void guna2Button3_Click(object sender, EventArgs e) => this.Close();
+
+        private void guna2Button25_Click_1(object sender, EventArgs e) => this.Close();
+
+        private void guna2Button1_Click(object sender, EventArgs e) => new RemoveAccountForm().Show();
+
+        private void guna2Button23_Click(object sender, EventArgs e) => new PassSharingFORM().Show();
+        private void guna2Button12_Click(object sender, EventArgs e) => new ResetAuthForm().Show();
+        private void guna2Button13_Click(object sender, EventArgs e) => new ChangeUsernameForm().Show();
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+                => new RecoveryForm().Show();
+
+        private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
+
+        }
+
         private void remAccFORM_Load(object sender, EventArgs e) {
 
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            RemoveAccountForm con_Show = new RemoveAccountForm();
-            con_Show.Show();
-        }
-
-
-        private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
 
         }
 
@@ -336,9 +464,6 @@ namespace FlowSERVER1 {
         private void tabPage2_Click(object sender, EventArgs e) {
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            this.Close();
-        }
 
         private void tabPage1_Click(object sender, EventArgs e) {
 
@@ -391,24 +516,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e) {
-            _selectedAccountType = "Max";
-            btnUseMax.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/test_9AQ16Y9Hb6GbfKwcMP"); // Live mode
-        }
-
-        private void guna2Button7_Click(object sender, EventArgs e) {
-            _selectedAccountType = "Supreme";
-            btnUseSupreme.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-            _selectedAccountType = "Express";
-            btnUseExpress.Visible = true;
-            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
-        }
-
         private void label6_Click(object sender, EventArgs e) {
 
         }
@@ -433,55 +540,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label34_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label30_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label29_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator4_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label26_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label27_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label28_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label31_Click(object sender, EventArgs e) {
-
-        }
-
         private void label28_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void label27_Click_1(object sender, EventArgs e) {
 
         }
 
@@ -509,7 +568,7 @@ namespace FlowSERVER1 {
 
         }
 
-        void setupRedundane(String _selectedAcc) {
+        private void UpdateUIOnAccountType(String _selectedAcc) {
             if (_selectedAcc == "Supreme") {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenSupremePayment.Enabled = false;
@@ -546,7 +605,9 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void validatePayment() {
+        #region Account upggrade section
+
+        private async void ValdateAccountUpgradePayment() {
 
             try {
 
@@ -602,7 +663,7 @@ namespace FlowSERVER1 {
                     lblAccountType.Text = _selectedAccountType;
                     Globals.accountType = _selectedAccountType;
 
-                    setupRedundane(_selectedAccountType);
+                    UpdateUIOnAccountType(_selectedAccountType);
 
                 }
                 else {
@@ -617,25 +678,40 @@ namespace FlowSERVER1 {
             }
         }
 
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            _selectedAccountType = "Max";
+            btnUseMax.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/test_9AQ16Y9Hb6GbfKwcMP"); // Live mode
+        }
+
+        private void guna2Button7_Click(object sender, EventArgs e) {
+            _selectedAccountType = "Supreme";
+            btnUseSupreme.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e) {
+            _selectedAccountType = "Express";
+            btnUseExpress.Visible = true;
+            System.Diagnostics.Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
+        }
+
         private void guna2Button8_Click(object sender, EventArgs e) {
-            validatePayment();
+            ValdateAccountUpgradePayment();
         }
 
         private void guna2Button9_Click(object sender, EventArgs e) {
-            validatePayment();
+            ValdateAccountUpgradePayment();
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) {
-            validatePayment();
+            ValdateAccountUpgradePayment();
         }
+
+        #endregion END - Account upgrade section
 
         private void guna2Panel7_Paint_1(object sender, PaintEventArgs e) {
 
-        }
-
-        private void guna2Button13_Click(object sender, EventArgs e) {
-            ChangeUsernameForm _ShowUsernameChangerForm = new ChangeUsernameForm();
-            _ShowUsernameChangerForm.Show();
         }
 
         private void label9_Click(object sender, EventArgs e) {
@@ -650,24 +726,18 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button12_Click(object sender, EventArgs e) {
-            ResetAuthForm _showChangePassForm = new ResetAuthForm();
-            _showChangePassForm.Show();
-        }
-
         private void guna2Panel15_Paint(object sender, PaintEventArgs e) {
 
         }
-
-        private void guna2Button14_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        
 
         private void tabPage4_Click(object sender, EventArgs e) {
 
         }
 
-        private void setupTime() {
+        #region UI section
+
+        private void SetupUIGreeting() {
 
             DateTime now = DateTime.Now;
 
@@ -843,40 +913,40 @@ namespace FlowSERVER1 {
             HomePage.instance.lblGreetingText.Text = greeting;
 
         }
-        private void setupUILanguage(String _custLang) {
+        private void SetupUILanguage(String _custLang) {
 
             var Form_1 = HomePage.instance;
 
             if (_custLang == "MY") {
                 label21.Text = "Tetapan";
                 label75.Text = "Alamat Email";
-                tabPage5.Text = "Perkongsian Fail & API";
-                tabPage4.Text = "Bahasa";
-                tabPage3.Text = "Naik Taraf";
-                tabPage2.Text = "Perangkaan";
-                tabPage1.Text = "Akaun";
+                tabSharingPage.Text = "Perkongsian Fail & API";
+                tabLangPage.Text = "Bahasa";
+                tabUpgradePage.Text = "Naik Taraf";
+                tabStatsPage.Text = "Perangkaan";
+                tabAccountPage.Text = "Akaun";
                 label4.Text = "Nama Pengguna";
                 label7.Text = "Jenis Akaun";
                 label38.Text = "Muat Naik Item";
 
                 label70.Text = "Tetapan";
 
-                label67.Text = "Perlukan Kata-Laluan";
+                lblSetPassword.Text = "Perlukan Kata-Laluan";
                 label66.Text = "Minta kata-laluan sebelum orang dibenarkan berkongsi fail kepada anda";
 
-                label69.Text = "Melumpuhkan Perkongsian Fail";
+                lblDisableFileSharing.Text = "Melumpuhkan Perkongsian Fail";
                 label68.Text = "Melumpuhkan Perkongsian Fail akan tidak benarkan orang berkongsi fail kepada anda. Anda masih boleh berkongsi fail kepada orang lain";
 
-                label58.Text = "Ubah nama-pengguna";
+                lblChangeMyUsername.Text = "Ubah nama-pengguna";
                 label33.Text = "Nama pengguna akaun Flowstorage anda akan ditukar, data anda akan kekal";
 
-                label18.Text = "Ubah kata-laluan";
+                lblChangeMyPassword.Text = "Ubah kata-laluan";
                 label8.Text = "Ubah kata-laluan akaun Flowstorage anda";
 
-                label36.Text = "Log keluar akaun saya";
+                lblLogoutMyAccount.Text = "Log keluar akaun saya";
                 label35.Text = "Flowstorage tidak akan log masuk akaun anda secara automatik semasa permulaan";
 
-                label2.Text = "Padam akaun saya";
+                lblDeleteMyAccount.Text = "Padam akaun saya";
                 label3.Text = "Akaun Flowstorage anda akan dipadam bersama-sama dengan data anda";
 
                 lblSettings.Text = "Tetapan";
@@ -910,32 +980,32 @@ namespace FlowSERVER1 {
             if (_custLang == "US") {
                 label21.Text = "Settings";
                 label75.Text = "Email Address";
-                tabPage5.Text = "File Sharing";
-                tabPage4.Text = "Languages";
-                tabPage3.Text = "Upgrade";
-                tabPage2.Text = "Statistics";
-                tabPage1.Text = "Account";
+                tabSharingPage.Text = "File Sharing";
+                tabLangPage.Text = "Languages";
+                tabUpgradePage.Text = "Upgrade";
+                tabStatsPage.Text = "Statistics";
+                tabAccountPage.Text = "Account";
                 label4.Text = "Username";
                 label7.Text = "Account Type";
                 label38.Text = "Item Upload";
                 label70.Text = "Settings";
 
-                label67.Text = "Required Password";
+                lblSetPassword.Text = "Required Password";
                 label66.Text = "Ask for password before people can share a file to you";
 
-                label69.Text = "Disable File Sharing";
+                lblDisableFileSharing.Text = "Disable File Sharing";
                 label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
 
-                label58.Text = "Change my username";
+                lblChangeMyUsername.Text = "Change my username";
                 label33.Text = "Your Flowstorage account username will be changes but your data is remains";
 
-                label18.Text = "Change my password";
+                lblChangeMyPassword.Text = "Change my password";
                 label8.Text = "Change your Flowstorage account password";
 
-                label36.Text = "Logout my account";
+                lblLogoutMyAccount.Text = "Logout my account";
                 label35.Text = "Flowstorage will not automatically login your account on startup";
 
-                label2.Text = "Delete my account";
+                lblDeleteMyAccount.Text = "Delete my account";
                 label3.Text = "Your Flowstorage account along with your data will be deleted";
 
                 lblSettings.Text = "Settings";
@@ -969,32 +1039,32 @@ namespace FlowSERVER1 {
             if (_custLang == "DUT") {
                 label21.Text = "Instellingen";
                 label75.Text = "E-mailadres";
-                tabPage5.Text = "Bestanden delen & API";
-                tabPage4.Text = "Talen";
-                tabPage3.Text = "Opwaarderen";
-                tabPage2.Text = "Statistieken";
-                tabPage1.Text = "Account";
+                tabSharingPage.Text = "Bestanden delen & API";
+                tabLangPage.Text = "Talen";
+                tabUpgradePage.Text = "Opwaarderen";
+                tabStatsPage.Text = "Statistieken";
+                tabAccountPage.Text = "Account";
                 label4.Text = "Gebruikersnaam";
                 label7.Text = "Accounttype";
                 label38.Text = "Item uploaden";
                 label70.Text = "Instellingen";
 
-                label67.Text = "Vereist wachtwoord";
+                lblSetPassword.Text = "Vereist wachtwoord";
                 label66.Text = "Vraag om wachtwoord voordat mensen een bestand met je kunnen delen";
 
-                label69.Text = "Bestandsdeling uitschakelen";
+                lblDisableFileSharing.Text = "Bestandsdeling uitschakelen";
                 label68.Text = "Als u bestanden delen uitschakelt, kunnen mensen geen bestand met u delen. U kunt echter nog steeds met mensen delen.";
 
-                label58.Text = "Wijzig mijn gebruikersnaam";
+                lblChangeMyUsername.Text = "Wijzig mijn gebruikersnaam";
                 label33.Text = "De gebruikersnaam van uw Flowstorage-account wordt gewijzigd, maar uw gegevens blijven behouden";
 
-                label18.Text = "Mijn wachtwoord wijzigen";
+                lblChangeMyPassword.Text = "Mijn wachtwoord wijzigen";
                 label8.Text = "Wijzig het wachtwoord van uw Flowstorage-account";
 
-                label36.Text = "Mijn account afmelden";
+                lblLogoutMyAccount.Text = "Mijn account afmelden";
                 label35.Text = "Flowstorage logt niet automatisch in op uw account bij het opstarten";
 
-                label2.Text = "Verwijder mijn account";
+                lblDeleteMyAccount.Text = "Verwijder mijn account";
                 label3.Text = "Uw Flowstorage-account wordt samen met uw gegevens verwijderd";
 
                 lblSettings.Text = "Instellingen";
@@ -1028,32 +1098,32 @@ namespace FlowSERVER1 {
             if (_custLang == "RUS") {
                 label21.Text = "Настройки";
                 label75.Text = "электронная почта";
-                tabPage5.Text = "Общий доступ к файлам и API";
-                tabPage4.Text = "Языки";
-                tabPage3.Text = "Обновить";
-                tabPage2.Text = "Статистика";
-                tabPage1.Text = "Учетная запись";
+                tabSharingPage.Text = "Общий доступ к файлам и API";
+                tabLangPage.Text = "Языки";
+                tabUpgradePage.Text = "Обновить";
+                tabStatsPage.Text = "Статистика";
+                tabAccountPage.Text = "Учетная запись";
                 label4.Text = "Имя пользователя";
                 label7.Text = "Тип учетной записи";
                 label38.Text = "Загрузка элемента";
                 label70.Text = "Настройки";
 
-                label67.Text = "Требуемый пароль";
+                lblSetPassword.Text = "Требуемый пароль";
                 label66.Text = "Запрашивайте пароль, прежде чем люди смогут поделиться с вами файлом";
 
-                label69.Text = "Отключить общий доступ к файлам";
+                lblDisableFileSharing.Text = "Отключить общий доступ к файлам";
                 label68.Text = "Отключение общего доступа к файлам не позволит людям делиться файлами с вами. Однако вы все равно можете делиться с другими людьми.";
 
-                label58.Text = "Изменить мое имя пользователя";
+                lblChangeMyUsername.Text = "Изменить мое имя пользователя";
                 label33.Text = "Имя пользователя вашей учетной записи Flowstorage будет изменено, но ваши данные останутся";
 
-                label18.Text = "Изменить мой пароль";
+                lblChangeMyPassword.Text = "Изменить мой пароль";
                 label8.Text = "Измените пароль своей учетной записи Flowstorage";
 
-                label36.Text = "Выйти из моей учетной записи";
+                lblLogoutMyAccount.Text = "Выйти из моей учетной записи";
                 label35.Text = "Flowstorage не будет автоматически входить в вашу учетную запись при запуске";
 
-                label2.Text = "Удалить мою учетную запись";
+                lblDeleteMyAccount.Text = "Удалить мою учетную запись";
                 label3.Text = "Ваша учетная запись Flowstorage вместе с вашими данными будет удалена";
 
                 lblSettings.Text = "Настройки";
@@ -1087,33 +1157,33 @@ namespace FlowSERVER1 {
             if (_custLang == "GER") {
                 label21.Text = "Einstellungen";
                 label75.Text = "E-Mail-Addresse";
-                tabPage5.Text = "Datenaustausch & API";
-                tabPage4.Text = "Sprachen";
-                tabPage3.Text = "Aktualisierung";
-                tabPage2.Text = "Statistiken";
-                tabPage1.Text = "Konto";
+                tabSharingPage.Text = "Datenaustausch & API";
+                tabLangPage.Text = "Sprachen";
+                tabUpgradePage.Text = "Aktualisierung";
+                tabStatsPage.Text = "Statistiken";
+                tabAccountPage.Text = "Konto";
                 label4.Text = "Nutzername";
                 label7.Text = "Konto Typ";
                 label38.Text = "Artikel hochladen";
 
                 label70.Text = "Einstellungen";
 
-                label67.Text = "Erforderliches Passwort";
+                lblSetPassword.Text = "Erforderliches Passwort";
                 label66.Text = "Nach dem Passwort fragen, bevor andere eine Datei für Sie freigeben können";
 
-                label69.Text = "Dateifreigabe deaktivieren";
+                lblDisableFileSharing.Text = "Dateifreigabe deaktivieren";
                 label68.Text = "Das Deaktivieren der Dateifreigabe erlaubt anderen nicht, eine Datei mit Ihnen zu teilen. Sie können sie jedoch immer noch mit anderen teilen.";
 
-                label58.Text = "Ändere meinen Benutzernamen";
+                lblChangeMyUsername.Text = "Ändere meinen Benutzernamen";
                 label33.Text = "Der Benutzername Ihres Flowstorage-Kontos wird geändert, Ihre Daten bleiben jedoch erhalten";
 
-                label18.Text = "Ändere mein Passwort";
+                lblChangeMyPassword.Text = "Ändere mein Passwort";
                 label8.Text = "Ändern Sie das Passwort Ihres Flowstorage-Kontos";
 
-                label36.Text = "Von meinem Konto abmelden";
+                lblLogoutMyAccount.Text = "Von meinem Konto abmelden";
                 label35.Text = "Flowstorage meldet sich beim Start nicht automatisch in Ihrem Konto an";
 
-                label2.Text = "Mein Konto löschen";
+                lblDeleteMyAccount.Text = "Mein Konto löschen";
                 label3.Text = "Ihr Flowstorage-Konto wird zusammen mit Ihren Daten gelöscht";
 
                 lblSettings.Text = "Einstellungen";
@@ -1146,33 +1216,33 @@ namespace FlowSERVER1 {
 
             if (_custLang == "JAP") {
                 label21.Text = "設定";
-                tabPage5.Text = "ファイル共有";
-                tabPage4.Text = "言語";
-                tabPage3.Text = "アップグレード";
-                tabPage2.Text = "統計";
-                tabPage1.Text = "アカウント";
+                tabSharingPage.Text = "ファイル共有";
+                tabLangPage.Text = "言語";
+                tabUpgradePage.Text = "アップグレード";
+                tabStatsPage.Text = "統計";
+                tabAccountPage.Text = "アカウント";
                 label4.Text = "ユーザー名";
                 label7.Text = "口座の種類";
                 label38.Text = "アイテムのアップロード";
 
                 label70.Text = "設定";
 
-                label67.Text = "必要なパスワード";
+                lblSetPassword.Text = "必要なパスワード";
                 label66.Text = "ファイルを共有する前にパスワードを要求する";
 
-                label69.Text = "ファイル共有を無効にする";
+                lblDisableFileSharing.Text = "ファイル共有を無効にする";
                 label68.Text = "ファイル共有を無効にすると、他のユーザーがファイルを共有することはできなくなります。ただし、他のユーザーと共有することはできます。";
 
-                label58.Text = "ユーザー名を変更する";
+                lblChangeMyUsername.Text = "ユーザー名を変更する";
                 label33.Text = "Flowstorage アカウントのユーザー名は変更されますが、データはそのまま残ります";
 
-                label18.Text = "パスワードを変更する";
+                lblChangeMyPassword.Text = "パスワードを変更する";
                 label8.Text = "Flowstorage アカウントのパスワードを変更する";
 
-                label36.Text = "アカウントをログアウトする";
+                lblLogoutMyAccount.Text = "アカウントをログアウトする";
                 label35.Text = "Flowstorage は、起動時にアカウントに自動的にログインしません";
 
-                label2.Text = "アカウントを削除します";
+                lblDeleteMyAccount.Text = "アカウントを削除します";
                 label3.Text = "Flowstorage アカウントとデータが削除されます";
 
                 lblSettings.Text = "設定";
@@ -1206,33 +1276,33 @@ namespace FlowSERVER1 {
             if (_custLang == "ESP") {
                 label21.Text = "Ajustes";
                 label75.Text = "Correo electrónico";
-                tabPage5.Text = "Compartición de archivos & API";
-                tabPage4.Text = "Idiomas";
-                tabPage3.Text = "Mejora";
-                tabPage2.Text = "Estadísticas";
-                tabPage1.Text = "Cuenta";
+                tabSharingPage.Text = "Compartición de archivos & API";
+                tabLangPage.Text = "Idiomas";
+                tabUpgradePage.Text = "Mejora";
+                tabStatsPage.Text = "Estadísticas";
+                tabAccountPage.Text = "Cuenta";
                 label4.Text = "Nombre de usuario";
                 label7.Text = "Tipo de cuenta";
                 label38.Text = "Carga de artículo";
 
                 label70.Text = "Configuración";
 
-                label67.Text = "Contraseña requerida";
+                lblSetPassword.Text = "Contraseña requerida";
                 label66.Text = "Solicite la contraseña antes de que la gente pueda compartir un archivo con usted";
 
-                label69.Text = "Desactivar uso compartido de archivos";
+                lblDisableFileSharing.Text = "Desactivar uso compartido de archivos";
                 label68.Text = "Deshabilitar el uso compartido de archivos no permitirá que las personas compartan un archivo contigo. Sin embargo, aún puedes compartirlo con otras personas.";
 
-                label58.Text = "cambiar mi nombre de usuario";
+                lblChangeMyUsername.Text = "cambiar mi nombre de usuario";
                 label33.Text = "El nombre de usuario de su cuenta de Flowstorage cambiará, pero sus datos permanecerán";
 
-                label18.Text = "cambiar mi contraseña";
+                lblChangeMyPassword.Text = "cambiar mi contraseña";
                 label8.Text = "Cambiar la contraseña de su cuenta Flowstorage";
 
-                label36.Text = "cerrar sesión en mi cuenta";
+                lblLogoutMyAccount.Text = "cerrar sesión en mi cuenta";
                 label35.Text = "Flowstorage no iniciará sesión automáticamente en su cuenta al iniciar";
 
-                label2.Text = "Borrar mi cuenta";
+                lblDeleteMyAccount.Text = "Borrar mi cuenta";
                 label3.Text = "Se eliminará su cuenta de Flowstorage junto con sus datos";
 
                 lblSettings.Text = "Ajustes";
@@ -1265,33 +1335,33 @@ namespace FlowSERVER1 {
 
             if (_custLang == "FRE") {
                 label21.Text = "Paramètres";
-                tabPage5.Text = "Partage de fichiers & API";
-                tabPage4.Text = "Langages";
-                tabPage3.Text = "Améliorer";
-                tabPage2.Text = "Statistiques";
-                tabPage1.Text = "Compte";
+                tabSharingPage.Text = "Partage de fichiers & API";
+                tabLangPage.Text = "Langages";
+                tabUpgradePage.Text = "Améliorer";
+                tabStatsPage.Text = "Statistiques";
+                tabAccountPage.Text = "Compte";
                 label4.Text = "Nom d'utilisateur";
                 label7.Text = "Type de compte";
                 label38.Text = "Téléchargement de l'article";
 
                 label70.Text = "Paramètres";
 
-                label67.Text = "Mot de passe requis";
+                lblSetPassword.Text = "Mot de passe requis";
                 label66.Text = "Demandez un mot de passe avant que les gens puissent partager un fichier avec vous";
 
-                label69.Text = "Désactiver le partage de fichiers";
+                lblDisableFileSharing.Text = "Désactiver le partage de fichiers";
                 label68.Text = "La désactivation du partage de fichiers ne permettra pas aux autres de partager un fichier avec vous. Cependant, vous pouvez toujours partager avec d'autres personnes.";
 
-                label58.Text = "Changer mon nom d'utilisateur";
+                lblChangeMyUsername.Text = "Changer mon nom d'utilisateur";
                 label33.Text = "Le nom d'utilisateur de votre compte Flowstorage sera modifié, mais vos données resteront";
 
-                label18.Text = "Changer mon mot de passe";
+                lblChangeMyPassword.Text = "Changer mon mot de passe";
                 label8.Text = "Modifier le mot de passe de votre compte Flowstorage";
 
-                label36.Text = "Déconnecter mon compte";
+                lblLogoutMyAccount.Text = "Déconnecter mon compte";
                 label35.Text = "Flowstorage will not automatically login your account on startup";
 
-                label2.Text = "Supprimer mon compte";
+                lblDeleteMyAccount.Text = "Supprimer mon compte";
                 label3.Text = "Votre compte Flowstorage ainsi que vos données seront supprimés";
 
                 lblSettings.Text = "Paramètres";
@@ -1324,33 +1394,33 @@ namespace FlowSERVER1 {
 
             if (_custLang == "POR") {
                 label21.Text = "Configurações";
-                tabPage5.Text = "Compartilhamento de arquivos & API";
-                tabPage4.Text = "línguas";
-                tabPage3.Text = "Atualizar";
-                tabPage2.Text = "Estatisticas";
-                tabPage1.Text = "Conta";
+                tabSharingPage.Text = "Compartilhamento de arquivos & API";
+                tabLangPage.Text = "línguas";
+                tabUpgradePage.Text = "Atualizar";
+                tabStatsPage.Text = "Estatisticas";
+                tabAccountPage.Text = "Conta";
                 label4.Text = "Nome de usuário";
                 label7.Text = "tipo de conta";
                 label38.Text = "Carregamento de item";
 
                 label70.Text = "Configurações";
 
-                label67.Text = "Senha Necessária";
+                lblSetPassword.Text = "Senha Necessária";
                 label66.Text = "Pedir senha antes que as pessoas possam compartilhar um arquivo com você";
 
-                label69.Text = "Desativar Compartilhamento de Arquivos";
+                lblDisableFileSharing.Text = "Desativar Compartilhamento de Arquivos";
                 label68.Text = "Desativar o compartilhamento de arquivos não permitirá que as pessoas compartilhem um arquivo com você. No entanto, você ainda pode compartilhar com outras pessoas.";
 
-                label58.Text = "Alterar meu nome de usuário";
+                lblChangeMyUsername.Text = "Alterar meu nome de usuário";
                 label33.Text = "O nome de usuário da sua conta Flowstorage será alterado, mas seus dados permanecerão";
 
-                label18.Text = "Mudar minha senha";
+                lblChangeMyPassword.Text = "Mudar minha senha";
                 label8.Text = "Altere a senha da sua conta Flowstorage";
 
-                label36.Text = "Sair da minha conta";
+                lblLogoutMyAccount.Text = "Sair da minha conta";
                 label35.Text = "O Flowstorage não fará login automaticamente em sua conta na inicialização";
 
-                label2.Text = "Deletar minha conta";
+                lblDeleteMyAccount.Text = "Deletar minha conta";
                 label3.Text = "Sua conta Flowstorage junto com seus dados serão excluídos";
 
                 lblSettings.Text = "Configurações";
@@ -1383,33 +1453,33 @@ namespace FlowSERVER1 {
 
             if (_custLang == "CHI") {
                 label21.Text = "设置";
-                tabPage5.Text = "文件共享";
-                tabPage4.Text = "语言";
-                tabPage3.Text = "升级";
-                tabPage2.Text = "统计数据";
-                tabPage1.Text = "帐户";
+                tabSharingPage.Text = "文件共享";
+                tabLangPage.Text = "语言";
+                tabUpgradePage.Text = "升级";
+                tabStatsPage.Text = "统计数据";
+                tabAccountPage.Text = "帐户";
                 label4.Text = "用户名";
                 label7.Text = "帐户类型";
                 label38.Text = "项目上传";
 
                 label70.Text = "设置";
 
-                label67.Text = "需要密码";
+                lblSetPassword.Text = "需要密码";
                 label66.Text = "在别人分享文件给你之前要求输入密码";
 
-                label69.Text = "禁用文件共享";
+                lblDisableFileSharing.Text = "禁用文件共享";
                 label68.Text = "禁用文件共享将不允许其他人与您共享文件。但是您仍然可以与其他人共享。";
 
-                label58.Text = "更改我的用户名";
+                lblChangeMyUsername.Text = "更改我的用户名";
                 label33.Text = "您的 Flowstorage 帐户用户名将更改，但您的数据将保留";
 
-                label18.Text = "修改我的密码";
+                lblChangeMyPassword.Text = "修改我的密码";
                 label8.Text = "更改您的流存账户密码";
 
-                label36.Text = "注销我的帐户";
+                lblLogoutMyAccount.Text = "注销我的帐户";
                 label35.Text = "Flowstorage 不会在启动时自动登录您的帐户";
 
-                label2.Text = "删除我的账户";
+                lblDeleteMyAccount.Text = "删除我的账户";
                 label3.Text = "您的 Flowstorage 帐户以及您的数据将被删除";
 
                 lblSettings.Text = "设置";
@@ -1442,7 +1512,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task getCurrentLang() {
+        private async Task GetCurrentLanguage() {
 
             const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(_selectLang, con)) {
@@ -1456,7 +1526,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void updateLang(String _custLang) {
+        private void UpdateLanguage(String _custLang) {
 
             const string updateLangQuery = "UPDATE lang_info SET CUST_LANG = @lang WHERE CUST_USERNAME = @username";
 
@@ -1467,7 +1537,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void languageChanger(String _custLang) {
+        private void LanguageChanger(String _custLang) {
 
             ///////////////////////////////////////////////
 
@@ -1475,8 +1545,8 @@ namespace FlowSERVER1 {
                 guna2Button19.Text = "Default";
                 guna2Button19.ForeColor = Color.Gainsboro;
                 guna2Button19.Enabled = false;
-                updateLang("US");
-                setupUILanguage("US");
+                UpdateLanguage("US");
+                SetupUILanguage("US");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1519,8 +1589,8 @@ namespace FlowSERVER1 {
                 guna2Button18.Text = "Default";
                 guna2Button18.ForeColor = Color.Gainsboro;
                 guna2Button18.Enabled = false;
-                updateLang("MY");
-                setupUILanguage("MY");
+                UpdateLanguage("MY");
+                SetupUILanguage("MY");
 
                 guna2Button19.Text = "Set as default";
                 guna2Button19.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1563,8 +1633,8 @@ namespace FlowSERVER1 {
                 guna2Button17.Text = "Default";
                 guna2Button17.ForeColor = Color.Gainsboro;
                 guna2Button17.Enabled = false;
-                updateLang("JAP");
-                setupUILanguage("JAP");
+                UpdateLanguage("JAP");
+                SetupUILanguage("JAP");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1607,8 +1677,8 @@ namespace FlowSERVER1 {
                 guna2Button15.Text = "Default";
                 guna2Button15.ForeColor = Color.Gainsboro;
                 guna2Button15.Enabled = false;
-                updateLang("GER");
-                setupUILanguage("GER");
+                UpdateLanguage("GER");
+                SetupUILanguage("GER");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1652,8 +1722,8 @@ namespace FlowSERVER1 {
                 guna2Button16.Text = "Default";
                 guna2Button16.ForeColor = Color.Gainsboro;
                 guna2Button16.Enabled = false;
-                updateLang("ESP");
-                setupUILanguage("ESP");
+                UpdateLanguage("ESP");
+                SetupUILanguage("ESP");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1696,8 +1766,8 @@ namespace FlowSERVER1 {
                 guna2Button20.Text = "Default";
                 guna2Button20.ForeColor = Color.Gainsboro;
                 guna2Button20.Enabled = false;
-                updateLang("FRE");
-                setupUILanguage("FRE");
+                UpdateLanguage("FRE");
+                SetupUILanguage("FRE");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1740,8 +1810,8 @@ namespace FlowSERVER1 {
                 guna2Button21.Text = "Default";
                 guna2Button21.ForeColor = Color.Gainsboro;
                 guna2Button21.Enabled = false;
-                updateLang("POR");
-                setupUILanguage("POR");
+                UpdateLanguage("POR");
+                SetupUILanguage("POR");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1784,8 +1854,8 @@ namespace FlowSERVER1 {
                 guna2Button22.Text = "Default";
                 guna2Button22.ForeColor = Color.Gainsboro;
                 guna2Button22.Enabled = false;
-                updateLang("CHI");
-                setupUILanguage("CHI");
+                UpdateLanguage("CHI");
+                SetupUILanguage("CHI");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1828,8 +1898,8 @@ namespace FlowSERVER1 {
                 guna2Button31.Text = "Default";
                 guna2Button31.ForeColor = Color.Gainsboro;
                 guna2Button31.Enabled = false;
-                updateLang("RUS");
-                setupUILanguage("RUS");
+                UpdateLanguage("RUS");
+                SetupUILanguage("RUS");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1872,8 +1942,8 @@ namespace FlowSERVER1 {
                 guna2Button30.Text = "Default";
                 guna2Button30.ForeColor = Color.Gainsboro;
                 guna2Button30.Enabled = false;
-                updateLang("DUT");
-                setupUILanguage("DUT");
+                UpdateLanguage("DUT");
+                SetupUILanguage("DUT");
 
                 guna2Button18.Text = "Set as default";
                 guna2Button18.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1915,59 +1985,69 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button18_Click(object sender, EventArgs e) {
-            languageChanger("MY");
+            LanguageChanger("MY");
             _newSelectedUserLanguage = "MY";
-            setupTime();
+            SetupUIGreeting();
         }
 
         private void guna2Button17_Click(object sender, EventArgs e) {
-            languageChanger("JAP");
+            LanguageChanger("JAP");
             _newSelectedUserLanguage = "JAP";
-            setupTime();
+            SetupUIGreeting();
         }
 
         private void guna2Button19_Click(object sender, EventArgs e) {
-            languageChanger("US");
+            LanguageChanger("US");
             _newSelectedUserLanguage = "US";
-            setupTime();
+            SetupUIGreeting();
         }
 
-        private void guna2Button15_Click(object sender, EventArgs e) {
-            languageChanger("GER");
-            _newSelectedUserLanguage = "GER";
-            setupTime();
+        private void guna2Button31_Click(object sender, EventArgs e) {
+            LanguageChanger("RUS");
+            _newSelectedUserLanguage = "RUS";
+            SetupUIGreeting();
         }
 
-        private void guna2Panel21_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel20_Paint(object sender, PaintEventArgs e) {
-
+        private void guna2Button30_Click(object sender, EventArgs e) {
+            LanguageChanger("DUT");
+            _newSelectedUserLanguage = "DUT";
+            SetupUIGreeting();
         }
 
         private void guna2Button16_Click(object sender, EventArgs e) {
-            languageChanger("ESP");
+            LanguageChanger("ESP");
             _newSelectedUserLanguage = "ESP";
-            setupTime();
+            SetupUIGreeting();
         }
 
         private void guna2Button20_Click(object sender, EventArgs e) {
-            languageChanger("FRE");
+            LanguageChanger("FRE");
             _newSelectedUserLanguage = "FRE";
-            setupTime();
+            SetupUIGreeting();
         }
 
         private void guna2Button21_Click(object sender, EventArgs e) {
-            languageChanger("POR");
+            LanguageChanger("POR");
             _newSelectedUserLanguage = "POR";
-            setupTime();
+            SetupUIGreeting();
         }
 
         private void guna2Button22_Click(object sender, EventArgs e) {
-            languageChanger("CHI");
+            LanguageChanger("CHI");
             _newSelectedUserLanguage = "CHI";
-            setupTime();
+            SetupUIGreeting();
+        }
+
+        private void guna2Button15_Click(object sender, EventArgs e) {
+            LanguageChanger("GER");
+            _newSelectedUserLanguage = "GER";
+            SetupUIGreeting();
+        }
+
+        #endregion END - UI section
+
+        private void guna2Panel20_Paint(object sender, PaintEventArgs e) {
+
         }
 
         private void label56_Click(object sender, EventArgs e) {
@@ -1978,102 +2058,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button25_Click_1(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Button23_Click(object sender, EventArgs e) {
-            PassSharingFORM _passForm = new PassSharingFORM();
-            _passForm.Show();
-        }
-
-        /// <summary>
-        /// Function to start disabling file sharing
-        /// </summary>
-        /// <param name="_custUsername"></param>
-        private void disableSharing(String _custUsername) {
-
-            const string disableSharingQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(disableSharingQuery, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Function to enable file sharing
-        /// </summary>
-        /// <param name="_custUsername"></param>
-        private void enableSharing(String _custUsername) {
-
-            const string enabelSharingQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(enabelSharingQuery, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Disable file sharing button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void guna2Button24_Click(object sender, EventArgs e) {
-
-            if (MessageBox.Show("Disable file sharing? You can always enable this option again later.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
-
-                guna2Button24.Enabled = false;
-                guna2Button24.Visible = false;
-
-                guna2Button26.Visible = true;
-                guna2Button26.Enabled = true;
-
-                label69.Text = "Enable File Sharing";
-                label68.Text = "Enabling file sharing will allows people to share a file to you";
-
-                disableSharing(Globals.custUsername);
-
-            }
-        }
-
-        /// <summary>
-        /// Enable file sharing button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void guna2Button26_Click(object sender, EventArgs e) {
-
-            guna2Button24.Enabled = true;
-            guna2Button24.Visible = true;
-
-            guna2Button26.Visible = false;
-            guna2Button26.Enabled = false;
-
-            label69.Text = "Disable File Sharing";
-            label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
-
-            enableSharing(Globals.custUsername);
-
-        }
-
         private void tabPage5_Click(object sender, EventArgs e) {
-        }
-
-
-        private string retrieveFileSharingPas() {
-
-            string hasPass = "";
-            const string selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(selectQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                object result = command.ExecuteScalar();
-                if (result != null) {
-                    hasPass = result.ToString();
-                }
-            }
-
-            return hasPass;
         }
 
         /// <summary>
@@ -2193,7 +2178,7 @@ namespace FlowSERVER1 {
 
                 if (guna2TabControl1.SelectedIndex == 2) {
 
-                    if (retrieveFileSharingPas() != "DEF") {
+                    if (RetrieveFileSharingAuth() != "DEF") {
 
                         btnRmvSharingAuth.Visible = true;
                         btnRmvSharingAuth.Enabled = true;
@@ -2210,14 +2195,14 @@ namespace FlowSERVER1 {
                         guna2Button23.Enabled = true;
                     }
 
-                    if (retrieveDisabled(Globals.custUsername) == "1") {
+                    if (RetrieveIsSharingDisabled() == "1") {
                         guna2Button24.Enabled = false;
                         guna2Button24.Visible = false;
 
                         guna2Button26.Visible = true;
                         guna2Button26.Enabled = true;
 
-                        label69.Text = "Enable File Sharing";
+                        lblDisableFileSharing.Text = "Enable File Sharing";
                         label68.Text = "Enabling file sharing will allows people to share a file to you";
 
                     }
@@ -2228,7 +2213,7 @@ namespace FlowSERVER1 {
                         guna2Button26.Visible = false;
                         guna2Button26.Enabled = false;
 
-                        label69.Text = "Disable File Sharing";
+                        lblDisableFileSharing.Text = "Disable File Sharing";
                         label68.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
                     }
                 }
@@ -2236,35 +2221,6 @@ namespace FlowSERVER1 {
             }
             catch (Exception ex) {
                 Debug.WriteLine(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// This function will delete user file sharing password 
-        /// if they have one setup
-        /// </summary>
-        /// <param name="_custUsername"></param>
-        private void removePasSharing(String _custUsername) {
-
-            const string setPassSharingQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
-
-            using (MySqlCommand command = new MySqlCommand(setPassSharingQuery, con)) {
-                command.Parameters.AddWithValue("@setPass", "DEF");
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.ExecuteNonQuery();
-            }
-
-        }
-        private void guna2Button27_Click(object sender, EventArgs e) {
-
-            if (MessageBox.Show("Remove File Sharing password?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
-
-                removePasSharing(Globals.custUsername);
-                guna2Button23.Visible = true;
-                guna2Button23.Enabled = true;
-
-                btnRmvSharingAuth.Visible = false;
-                btnRmvSharingAuth.Enabled = false;
             }
         }
 
@@ -2292,14 +2248,6 @@ namespace FlowSERVER1 {
             guna2TextBox2.PasswordChar = '*';
         }
 
-        private void label65_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label64_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Panel14_Paint(object sender, PaintEventArgs e) {
 
         }
@@ -2314,18 +2262,6 @@ namespace FlowSERVER1 {
 
         private void guna2Panel13_Paint(object sender, PaintEventArgs e) {
 
-        }
-
-        private void guna2Button31_Click(object sender, EventArgs e) {
-            languageChanger("RUS");
-            _newSelectedUserLanguage = "RUS";
-            setupTime();
-        }
-
-        private void guna2Button30_Click(object sender, EventArgs e) {
-            languageChanger("DUT");
-            _newSelectedUserLanguage = "DUT";
-            setupTime();
         }
 
         private void label78_Click(object sender, EventArgs e) {
@@ -2344,16 +2280,7 @@ namespace FlowSERVER1 {
         private void label22_Click(object sender, EventArgs e) {
 
         }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            RecoveryForm showRecoveryForm = new RecoveryForm();
-            showRecoveryForm.Show();
-        }
-
-        private void label52_Click(object sender, EventArgs e) {
-
-        }
-
+           
         private void label76_Click(object sender, EventArgs e) {
 
         }
@@ -2367,6 +2294,10 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Panel22_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label58_Click(object sender, EventArgs e) {
 
         }
     }

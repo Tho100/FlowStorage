@@ -1740,6 +1740,11 @@
              they import.  The files will appear in topological order, so each file
              appears before any file that imports it.
             
+             Note: the files listed in files_to_generate will include runtime-retention
+             options only, but all other files will include source-retention options.
+             The source_file_descriptors field below is available in case you need
+             source-retention options for files_to_generate.
+            
              protoc guarantees that all proto_files will be written after
              the fields above, even though this is not technically guaranteed by the
              protobuf wire format.  This theoretically could allow a plugin to stream
@@ -1751,6 +1756,16 @@
              Type names of fields and extensions in the FileDescriptorProto are always
              fully qualified.
              </summary>
+        </member>
+        <member name="F:Google.Protobuf.Compiler.CodeGeneratorRequest.SourceFileDescriptorsFieldNumber">
+            <summary>Field number for the "source_file_descriptors" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Compiler.CodeGeneratorRequest.SourceFileDescriptors">
+            <summary>
+            File descriptors with all options, including source-retention options.
+            These descriptors are only provided for the files listed in
+            files_to_generate.
+            </summary>
         </member>
         <member name="F:Google.Protobuf.Compiler.CodeGeneratorRequest.CompilerVersionFieldNumber">
             <summary>Field number for the "compiler_version" field.</summary>
@@ -4601,10 +4616,17 @@
         </member>
         <member name="P:Google.Protobuf.Reflection.ExtensionRangeOptions.Declaration">
             <summary>
-            go/protobuf-stripping-extension-declarations
-            Like Metadata, but we use a repeated field to hold all extension
-            declarations. This should avoid the size increases of transforming a large
-            extension range into small ranges in generated binaries.
+            For external users: DO NOT USE. We are in the process of open sourcing
+            extension declaration and executing internal cleanups before it can be
+            used externally.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.ExtensionRangeOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.ExtensionRangeOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
             </summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.ExtensionRangeOptions.VerificationFieldNumber">
@@ -4680,20 +4702,6 @@
         </member>
         <member name="M:Google.Protobuf.Reflection.ExtensionRangeOptions.Types.Declaration.ClearType">
             <summary>Clears the value of the "type" field</summary>
-        </member>
-        <member name="F:Google.Protobuf.Reflection.ExtensionRangeOptions.Types.Declaration.IsRepeatedFieldNumber">
-            <summary>Field number for the "is_repeated" field.</summary>
-        </member>
-        <member name="P:Google.Protobuf.Reflection.ExtensionRangeOptions.Types.Declaration.IsRepeated">
-            <summary>
-            Deprecated. Please use "repeated".
-            </summary>
-        </member>
-        <member name="P:Google.Protobuf.Reflection.ExtensionRangeOptions.Types.Declaration.HasIsRepeated">
-            <summary>Gets whether the "is_repeated" field is set</summary>
-        </member>
-        <member name="M:Google.Protobuf.Reflection.ExtensionRangeOptions.Types.Declaration.ClearIsRepeated">
-            <summary>Clears the value of the "is_repeated" field</summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.ExtensionRangeOptions.Types.Declaration.ReservedFieldNumber">
             <summary>Field number for the "reserved" field.</summary>
@@ -5463,6 +5471,14 @@
         <member name="M:Google.Protobuf.Reflection.FileOptions.ClearRubyPackage">
             <summary>Clears the value of the "ruby_package" field</summary>
         </member>
+        <member name="F:Google.Protobuf.Reflection.FileOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
+            </summary>
+        </member>
         <member name="F:Google.Protobuf.Reflection.FileOptions.UninterpretedOptionFieldNumber">
             <summary>Field number for the "uninterpreted_option" field.</summary>
         </member>
@@ -5615,6 +5631,14 @@
         </member>
         <member name="M:Google.Protobuf.Reflection.MessageOptions.ClearDeprecatedLegacyJsonFieldConflicts">
             <summary>Clears the value of the "deprecated_legacy_json_field_conflicts" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.MessageOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
+            </summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.MessageOptions.UninterpretedOptionFieldNumber">
             <summary>Field number for the "uninterpreted_option" field.</summary>
@@ -5799,17 +5823,19 @@
         <member name="M:Google.Protobuf.Reflection.FieldOptions.ClearRetention">
             <summary>Clears the value of the "retention" field</summary>
         </member>
-        <member name="F:Google.Protobuf.Reflection.FieldOptions.TargetFieldNumber">
-            <summary>Field number for the "target" field.</summary>
-        </member>
-        <member name="P:Google.Protobuf.Reflection.FieldOptions.HasTarget">
-            <summary>Gets whether the "target" field is set</summary>
-        </member>
-        <member name="M:Google.Protobuf.Reflection.FieldOptions.ClearTarget">
-            <summary>Clears the value of the "target" field</summary>
-        </member>
         <member name="F:Google.Protobuf.Reflection.FieldOptions.TargetsFieldNumber">
             <summary>Field number for the "targets" field.</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldOptions.EditionDefaultsFieldNumber">
+            <summary>Field number for the "edition_defaults" field.</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
+            </summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.FieldOptions.UninterpretedOptionFieldNumber">
             <summary>Field number for the "uninterpreted_option" field.</summary>
@@ -5865,6 +5891,37 @@
             as an option. If it is unset, then the field may be freely used as an
             option on any kind of entity. Note: as of January 2023, support for this is
             in progress and does not yet have an effect (b/264593489).
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.EditionFieldNumber">
+            <summary>Field number for the "edition" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.HasEdition">
+            <summary>Gets whether the "edition" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.ClearEdition">
+            <summary>Clears the value of the "edition" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.ValueFieldNumber">
+            <summary>Field number for the "value" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.Value">
+            <summary>
+            Textproto value.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.HasValue">
+            <summary>Gets whether the "value" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FieldOptions.Types.EditionDefault.ClearValue">
+            <summary>Clears the value of the "value" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.OneofOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.OneofOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
             </summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.OneofOptions.UninterpretedOptionFieldNumber">
@@ -5926,6 +5983,14 @@
         <member name="M:Google.Protobuf.Reflection.EnumOptions.ClearDeprecatedLegacyJsonFieldConflicts">
             <summary>Clears the value of the "deprecated_legacy_json_field_conflicts" field</summary>
         </member>
+        <member name="F:Google.Protobuf.Reflection.EnumOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
+            </summary>
+        </member>
         <member name="F:Google.Protobuf.Reflection.EnumOptions.UninterpretedOptionFieldNumber">
             <summary>Field number for the "uninterpreted_option" field.</summary>
         </member>
@@ -5951,12 +6016,44 @@
         <member name="M:Google.Protobuf.Reflection.EnumValueOptions.ClearDeprecated">
             <summary>Clears the value of the "deprecated" field</summary>
         </member>
+        <member name="F:Google.Protobuf.Reflection.EnumValueOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumValueOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.EnumValueOptions.DebugRedactFieldNumber">
+            <summary>Field number for the "debug_redact" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumValueOptions.DebugRedact">
+            <summary>
+            Indicate that fields annotated with this enum value should not be printed
+            out when using debug formats, e.g. when the field contains sensitive
+            credentials.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumValueOptions.HasDebugRedact">
+            <summary>Gets whether the "debug_redact" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.EnumValueOptions.ClearDebugRedact">
+            <summary>Clears the value of the "debug_redact" field</summary>
+        </member>
         <member name="F:Google.Protobuf.Reflection.EnumValueOptions.UninterpretedOptionFieldNumber">
             <summary>Field number for the "uninterpreted_option" field.</summary>
         </member>
         <member name="P:Google.Protobuf.Reflection.EnumValueOptions.UninterpretedOption">
             <summary>
             The parser stores options it doesn't recognize here. See above.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.ServiceOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.ServiceOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
             </summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.ServiceOptions.DeprecatedFieldNumber">
@@ -6009,6 +6106,14 @@
         </member>
         <member name="M:Google.Protobuf.Reflection.MethodOptions.ClearIdempotencyLevel">
             <summary>Clears the value of the "idempotency_level" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.MethodOptions.FeaturesFieldNumber">
+            <summary>Field number for the "features" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodOptions.Features">
+            <summary>
+            Any features defined in the specific edition.
+            </summary>
         </member>
         <member name="F:Google.Protobuf.Reflection.MethodOptions.UninterpretedOptionFieldNumber">
             <summary>Field number for the "uninterpreted_option" field.</summary>
@@ -6140,6 +6245,73 @@
         </member>
         <member name="M:Google.Protobuf.Reflection.UninterpretedOption.Types.NamePart.ClearIsExtension">
             <summary>Clears the value of the "is_extension" field</summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.FeatureSet">
+            <summary>
+            TODO(b/274655146) Enums in C++ gencode (and potentially other languages) are
+            not well scoped.  This means that each of the feature enums below can clash
+            with each other.  The short names we've chosen maximize call-site
+            readability, but leave us very open to this scenario.  A future feature will
+            be designed and implemented to handle this, hopefully before we ever hit a
+            conflict here.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FeatureSet.FieldPresenceFieldNumber">
+            <summary>Field number for the "field_presence" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FeatureSet.HasFieldPresence">
+            <summary>Gets whether the "field_presence" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FeatureSet.ClearFieldPresence">
+            <summary>Clears the value of the "field_presence" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FeatureSet.EnumTypeFieldNumber">
+            <summary>Field number for the "enum_type" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FeatureSet.HasEnumType">
+            <summary>Gets whether the "enum_type" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FeatureSet.ClearEnumType">
+            <summary>Clears the value of the "enum_type" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FeatureSet.RepeatedFieldEncodingFieldNumber">
+            <summary>Field number for the "repeated_field_encoding" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FeatureSet.HasRepeatedFieldEncoding">
+            <summary>Gets whether the "repeated_field_encoding" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FeatureSet.ClearRepeatedFieldEncoding">
+            <summary>Clears the value of the "repeated_field_encoding" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FeatureSet.StringFieldValidationFieldNumber">
+            <summary>Field number for the "string_field_validation" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FeatureSet.HasStringFieldValidation">
+            <summary>Gets whether the "string_field_validation" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FeatureSet.ClearStringFieldValidation">
+            <summary>Clears the value of the "string_field_validation" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FeatureSet.MessageEncodingFieldNumber">
+            <summary>Field number for the "message_encoding" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FeatureSet.HasMessageEncoding">
+            <summary>Gets whether the "message_encoding" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FeatureSet.ClearMessageEncoding">
+            <summary>Clears the value of the "message_encoding" field</summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FeatureSet.JsonFormatFieldNumber">
+            <summary>Field number for the "json_format" field.</summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FeatureSet.HasJsonFormat">
+            <summary>Gets whether the "json_format" field is set</summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FeatureSet.ClearJsonFormat">
+            <summary>Clears the value of the "json_format" field</summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.FeatureSet.Types">
+            <summary>Container for nested types declared in the FeatureSet message type.</summary>
         </member>
         <member name="T:Google.Protobuf.Reflection.SourceCodeInfo">
             <summary>
@@ -8422,7 +8594,8 @@
             
              Note: this functionality is not currently available in the official
              protobuf release, and it is not used for type URLs beginning with
-             type.googleapis.com.
+             type.googleapis.com. As of May 2023, there are no widely used type server
+             implementations and no plans to implement one.
             
              Schemes other than `http`, `https` (or the empty scheme) might be
              used with implementation specific semantics.

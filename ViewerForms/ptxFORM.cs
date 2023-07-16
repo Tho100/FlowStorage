@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.IO;
-using System.Globalization;
-using System.Threading;
-using System.Text.RegularExpressions;
+﻿using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+using System;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
 
@@ -37,7 +29,7 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public ptxFORM(string fileName,string tableName, string directoryName,string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public ptxFORM(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -77,21 +69,20 @@ namespace FlowSERVER1 {
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader")
                 .ShowDialog());
 
-                setupPtx(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
+                InitializePTX(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
-            }  catch (Exception) {
-                MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (Exception) {
+                MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        public void setupPtx(Byte[] _getByte) {
-            var _memoryStream = new MemoryStream(_getByte);
-            lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
-            LoadPtx(_memoryStream);
-        }
-        public void LoadPtx(Stream _getStream) {
-            officeViewer1.LoadFromStream(_getStream);
-           
+        private void InitializePTX(Byte[] ptxByte) {
+            if(ptxByte != null) {
+                lblFileSize.Text = $"{FileSize.fileSize(ptxByte):F2}Mb";
+                MemoryStream convertToStream = new MemoryStream(ptxByte);
+                officeViewer1.LoadFromStream(convertToStream);
+            }
         }
 
         private void label2_Click(object sender, EventArgs e) {
@@ -148,7 +139,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 
@@ -175,6 +166,10 @@ namespace FlowSERVER1 {
         }
 
         private void lblFileSize_Click(object sender, EventArgs e) {
+
+        }
+
+        private void docDocumentViewer1_Click(object sender, EventArgs e) {
 
         }
     }

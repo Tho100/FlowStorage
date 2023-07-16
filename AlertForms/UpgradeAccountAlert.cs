@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class UpgradeAccountAlert : Form {
-        public UpgradeAccountAlert(String _curAcc) {
+        public UpgradeAccountAlert() {
             InitializeComponent();
-            this.label3.Text = $"Current Account: {_curAcc}"; 
+            this.label3.Text = $"Current Account: {Globals.accountType}"; 
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {

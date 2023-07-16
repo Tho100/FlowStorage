@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
+using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using Guna.UI2.WinForms;
-using System.IO;
 using System.Text.RegularExpressions;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
 
@@ -28,8 +22,8 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        private bool _isFromSharing {get; set; }
-        private string _directoryName {get; set; }
+        private bool _isFromSharing { get; set; }
+        private string _directoryName { get; set; }
         private string _tableName { get; set; }
 
         /// <summary>
@@ -43,7 +37,8 @@ namespace FlowSERVER1 {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public TextForm(String getText,String tableName,String fileName,String directoryName,String uploaderName, bool isFromSharing = false) {
+        public TextForm(String getText, String tableName, String fileName, String directoryName, String uploaderName, bool isFromSharing = false) {
+
             InitializeComponent();
 
             try {
@@ -106,17 +101,8 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (FileExt_ == ".py") {
-                        pythonSyntax();
-                    }
-                    if (FileExt_ == ".html") {
-                        htmlSyntax();
-                    }
-                    if (FileExt_ == ".css") {
-                        cssSyntax();
-                    }
-
-                } else if (getText == "" && tableName == "folder_upload_info") {
+                }
+                else if (getText == "" && tableName == "folder_upload_info") {
 
                     const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
@@ -137,34 +123,39 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (FileExt_ == ".py") {
-                        pythonSyntax();
-                    }
-                    if (FileExt_ == ".html") {
-                        htmlSyntax();
-                    }
-                    if (FileExt_ == ".css") {
-                        cssSyntax();
-                    }
-                    if (FileExt_ == ".js") {
-                        jsSyntax();
-                    }
-
-                } else if (tableName == "file_info_expand") {
+                }
+                else if (tableName == "file_info_expand") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "cust_sharing" && _isFromSharing == false) {
+                    RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
+                }
+                else if (tableName == "cust_sharing" && _isFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "cust_sharing" && _isFromSharing == true) {
+                    RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
+                }
+                else if (tableName == "cust_sharing" && _isFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery,FileExt_, Globals.custUsername);
-                } else if (tableName == "ps_info_text") {
+                    RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
+                }
+                else if (tableName == "ps_info_text") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    retrieveData(getTxtQuery, FileExt_, uploaderName);
+                    RetrieveTextData(getTxtQuery, FileExt_, uploaderName);
                 }
 
-            } catch (Exception) {
+                if (FileExt_ == ".py") {
+                    PythonSyntax();
+                }
+                if (FileExt_ == ".html") {
+                    HTMLSyntax();
+                }
+                if (FileExt_ == ".css") {
+                    CSSSyntax();
+                }
+                if (FileExt_ == ".js") {
+                    JSSyntax();
+                }
+
+            }
+            catch (Exception) {
 
                 Application.OpenForms
                 .OfType<Form>()
@@ -172,18 +163,18 @@ namespace FlowSERVER1 {
                 .ToList()
                 .ForEach(form => form.Close());
 
-                MessageBox.Show("Failed to load this file.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private async void retrieveData(String PerformQue,String FileExtension, String uploaderName) {
+        private async void RetrieveTextData(String PerformQue, String FileExtension, String uploaderName) {
 
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", uploaderName);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
 
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
                         Byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
 
@@ -196,16 +187,16 @@ namespace FlowSERVER1 {
             }
 
             if (FileExtension == ".py") {
-                pythonSyntax();
+                PythonSyntax();
             }
             if (FileExtension == ".html") {
-                htmlSyntax();
+                HTMLSyntax();
             }
             if (FileExtension == ".css") {
-                cssSyntax();
+                CSSSyntax();
             }
             if (FileExtension == ".js") {
-                jsSyntax();
+                JSSyntax();
             }
 
         }
@@ -214,7 +205,7 @@ namespace FlowSERVER1 {
         /// Syntax colorizer (py,js,html,css)
         /// </summary>
 
-        public void pythonSyntax() {
+        private void PythonSyntax() {
             Color _blueRGB = Color.FromArgb(49, 100, 169);
             Color _purpleRGB = Color.FromArgb(142, 94, 175);
             Color _yellowRGB = Color.FromArgb(250, 195, 4);
@@ -230,25 +221,25 @@ namespace FlowSERVER1 {
             ColorizePattern("if", _purpleRGB);
             ColorizePattern("break", _purpleRGB);
             ColorizePattern("return", _purpleRGB);
-           
+
             ColorizePattern("input", _yellowRGB);
             ColorizePattern("print", _yellowRGB);
             ColorizePattern("\\)", Color.Yellow);
             ColorizePattern("\\(", Color.Yellow);
 
-            ColorizePattern("'",_brownRGB);
+            ColorizePattern("'", _brownRGB);
             ColorizePattern("//", _Gray);
 
         }
 
-        public void jsSyntax() {
+        private void JSSyntax() {
             Color _blueRGB = Color.FromArgb(49, 100, 169);
             Color _purpleRGB = Color.FromArgb(142, 94, 175);
             Color _yellowRGB = Color.FromArgb(250, 195, 4);
 
             ColorizePattern("def", _blueRGB);
             ColorizePattern("class", _blueRGB);
-            ColorizePattern("let",_blueRGB);
+            ColorizePattern("let", _blueRGB);
             ColorizePattern("this", _blueRGB);
 
             ColorizePattern("import", _purpleRGB);
@@ -264,12 +255,12 @@ namespace FlowSERVER1 {
             ColorizePattern("\\(", Color.Yellow);
         }
 
-        public void htmlSyntax() {
+        private void HTMLSyntax() {
             Color _blueRGB = Color.FromArgb(30, 58, 165);
             Color _cyanRGB = Color.FromArgb(96, 194, 251);
 
-            ColorizePattern("div",_blueRGB);
-            ColorizePattern("!DOCTYPE",_blueRGB);
+            ColorizePattern("div", _blueRGB);
+            ColorizePattern("!DOCTYPE", _blueRGB);
             ColorizePattern("/head", _blueRGB);
             ColorizePattern("head", _blueRGB);
             ColorizePattern("body", _blueRGB);
@@ -300,16 +291,15 @@ namespace FlowSERVER1 {
             ColorizePattern("class", _cyanRGB);
             ColorizePattern("charset", _cyanRGB);
 
-            ColorizePattern("\\<",Color.Gray);
+            ColorizePattern("\\<", Color.Gray);
             ColorizePattern("\\>", Color.Gray);
 
         }
-
-        public void cssSyntax() {
+        private void CSSSyntax() {
             Color _orangeRgb = Color.FromArgb(196, 135, 59);
             Color _cyanRGB = Color.FromArgb(96, 194, 251);
 
-            ColorizePattern("body",_orangeRgb);
+            ColorizePattern("body", _orangeRgb);
             ColorizePattern("class", _orangeRgb);
             ColorizePattern("button", _orangeRgb);
             ColorizePattern("h2", _orangeRgb);
@@ -332,7 +322,7 @@ namespace FlowSERVER1 {
             ColorizePattern("top", _cyanRGB);
             ColorizePattern("height", _cyanRGB);
             ColorizePattern("right", _cyanRGB);
-            ColorizePattern("font-weight",_cyanRGB);
+            ColorizePattern("font-weight", _cyanRGB);
             ColorizePattern("outline", _cyanRGB);
             ColorizePattern("z-index", _cyanRGB);
             ColorizePattern("border-radius", _cyanRGB);
@@ -400,16 +390,17 @@ namespace FlowSERVER1 {
             _OpenDialog.FileName = lblFileName.Text;
             _OpenDialog.Filter = "Files|*" + FileExt_;
             try {
-                if(_OpenDialog.ShowDialog() == DialogResult.OK) {
-                    File.WriteAllText(_OpenDialog.FileName,guna2textbox1.Text);
+                if (_OpenDialog.ShowDialog() == DialogResult.OK) {
+                    File.WriteAllText(_OpenDialog.FileName, guna2textbox1.Text);
                 }
-            } catch (Exception) {
-                MessageBox.Show("An error occurred while attempting to save file.","Flowstorage",
-                    MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (Exception) {
+                MessageBox.Show("An error occurred while attempting to save file.", "Flowstorage",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
-            if(this._tableName != "ps_info_text") {
+            if (this._tableName != "ps_info_text") {
                 btnSaveChanges.Visible = true;
             }
         }
@@ -433,25 +424,26 @@ namespace FlowSERVER1 {
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 
-        private void _saveChangesUpdate(String textValues) {
+        private void SaveChangesUpdate(String textValues) {
 
             try {
 
-                if(_tableName == "file_info_expand") {
+                if (_tableName == "file_info_expand") {
 
                     const string updateQue = "UPDATE file_info_expand SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    using(MySqlCommand command = new MySqlCommand(updateQue,con)) {
-                        command.Parameters.Add("@update",MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username",MySqlDbType.Text).Value = Globals.custUsername;
+                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
+                        command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
+                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                         command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
                         command.ExecuteNonQuery();
                     }
 
-                } else if (_tableName == "cust_sharing" && _isFromSharing == false) {
+                }
+                else if (_tableName == "cust_sharing" && _isFromSharing == false) {
 
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
@@ -461,7 +453,8 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                } else if (_tableName == "cust_sharing" && _isFromSharing == true) {
+                }
+                else if (_tableName == "cust_sharing" && _isFromSharing == true) {
 
                     const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
@@ -471,7 +464,8 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                } else if (_tableName == "upload_info_directory") {
+                }
+                else if (_tableName == "upload_info_directory") {
 
                     const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
@@ -482,7 +476,8 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                } else if (_tableName == "folder_upload_info") {
+                }
+                else if (_tableName == "folder_upload_info") {
 
                     const string updateQue = "UPDATE folder_upload_info SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
                     using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
@@ -495,23 +490,32 @@ namespace FlowSERVER1 {
 
                 }
 
-            } catch (Exception) {
-                MessageBox.Show("Failed to save changes.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (Exception) {
+                MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
 
-            DialogResult verifySave = MessageBox.Show("Save Changes? \nThe changes will also affect the user you've shared this file to.","Flowstorage",MessageBoxButtons.YesNo,MessageBoxIcon.Asterisk);
-    
-            if(verifySave == DialogResult.Yes) {
+            string verifySaveText = null;
+
+            if (_isFromSharing) {
+                verifySaveText = "Save Changes? \nThe changes will also affect the user you've shared this file to.";
+            }
+            else {
+                verifySaveText = "Save Changes?";
+            }
+            DialogResult verifySave = MessageBox.Show(verifySaveText, "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+
+            if (verifySave == DialogResult.Yes) {
 
                 string getStrings = richTextBox1.Text;
                 byte[] getBytesText = System.Text.Encoding.UTF8.GetBytes(getStrings);
                 string base64Strings = Convert.ToBase64String(getBytesText);
 
                 string encryptedEncoded = EncryptionModel.Encrypt(base64Strings);
-                _saveChangesUpdate(encryptedEncoded);
+                SaveChangesUpdate(encryptedEncoded);
             }
 
         }
@@ -527,7 +531,7 @@ namespace FlowSERVER1 {
 
         private async void guna2Button12_Click(object sender, EventArgs e) {
             if (lblUserComment.Text != txtFieldComment.Text) {
-                await new UpdateComment().saveChangesComment(txtFieldComment.Text,lblFileName.Text);
+                await new UpdateComment().saveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
             lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;

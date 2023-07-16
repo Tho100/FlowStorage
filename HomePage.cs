@@ -74,7 +74,17 @@ namespace FlowSERVER1 {
             this.TopMost = false;
         }
 
-        private void updateProgressBarValue() {
+        private void Form1_Load(object sender, EventArgs e) => Greeting.buildGreetingLabel(CurrentLang);
+        private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
+        private void guna2CircleButton1_Click(object sender, EventArgs e) => new ApiPageForm().Show();
+        private void guna2CircleButton2_Click(object sender, EventArgs e) => new FeedbackForm().Show();
+        private void guna2Button7_Click(object sender, EventArgs e) => new MainSharingForm().Show();
+        private void guna2Button3_Click_1(object sender, EventArgs e)
+            => new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem)).Show();
+        private void BuildShowAlert(String title, String subheader)
+            => new CustomAlert(title: title, subheader: subheader).Show();
+
+        private void UpdateProgressBarValue() {
 
             int getCurrentCount = int.Parse(lblItemCountText.Text);
             int getLimitedValue = int.Parse(lblLimitUploadText.Text);
@@ -85,7 +95,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task insertFileVideo(string selectedItems, string nameTable, string getNamePath, object keyValMain) {
+        private async Task InsertFileDataVideo(string selectedItems, string nameTable, string getNamePath, object keyValMain) {
 
             try {
 
@@ -117,17 +127,18 @@ namespace FlowSERVER1 {
                     await command.ExecuteNonQueryAsync();
                 }
 
-                closeUploadAlert();
-                updateProgressBarValue();
+                CloseUploadAlert();
+                UpdateProgressBarValue();
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
+                BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
 
 
         }
-        private async Task insertFileData(string setValue, string nameTable) {
+
+        private async Task InsertFileData(string setValue, string nameTable) {
 
             try {
 
@@ -142,16 +153,16 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                closeUploadAlert();
-                updateProgressBarValue();
+                CloseUploadAlert();
+                UpdateProgressBarValue();
             }
 
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
+                BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
         }
 
-        private async Task insertFileVideoPublic(string selectedItems, string getNamePath, object keyValMain) {
+        private async Task InsertFileVideoDataPublic(string selectedItems, string getNamePath, object keyValMain) {
 
             try {
 
@@ -179,19 +190,19 @@ namespace FlowSERVER1 {
                     await command.ExecuteNonQueryAsync();
                 }
 
-                closeUploadAlert();
-                updateProgressBarValue();
+                CloseUploadAlert();
+                UpdateProgressBarValue();
 
                 PublicStorageUserComment = null;
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
+                BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
 
         }
 
-        public async Task insertFileDataPublic(string fileBase64Value, string nameTable) {
+        public async Task InsertFileDataPublic(string fileBase64Value, string nameTable) {
 
             try {
 
@@ -208,33 +219,33 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                closeUploadAlert();
-                updateProgressBarValue();
+                CloseUploadAlert();
+                UpdateProgressBarValue();
 
                 PublicStorageUserComment = null;
             }
 
             catch (Exception) {
-                buildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
+                BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
         }
 
 
-        private void buildButtonsOnHomePageSelected() {
+        private void BuildButtonsOnHomePageSelected() {
 
             btnDownloadFolder.Visible = false;
             btnDeleteFolder.Visible = false;
             btnOpenRenameFolderPage.Visible = false;
         }
 
-        private void buildButtonOnSharedFilesSelected() {
+        private void BuildButtonOnSharedFilesSelected() {
             btnRefreshFiles.Visible = true;
             btnOpenRenameFolderPage.Visible = false;
             btnDeleteFolder.Visible = false;
             btnDownloadFolder.Visible = false;
         }
 
-        private void buildButtonsOnSharedToMeSelected() {
+        private void BuildButtonsOnSharedToMeSelected() {
             btnRefreshFiles.Visible = true;
             btnDownloadFolder.Visible = false;
             btnDeleteFolder.Visible = false;
@@ -249,14 +260,14 @@ namespace FlowSERVER1 {
             btnDownloadFolder.Visible = true;
         }
 
-        private void closeRetrievalAlert() {
+        private void CloseRetrievalAlert() {
             var retrievalAlertForm = Application.OpenForms
             .OfType<Form>()
             .FirstOrDefault(form => form.Name == "RetrievalAlert");
             retrievalAlertForm?.Close();
         }
 
-        private void closeUploadAlert() {
+        private void CloseUploadAlert() {
             Application.OpenForms
             .OfType<Form>()
             .Where(form => String.Equals(form.Name, "UploadAlrt"))
@@ -264,24 +275,19 @@ namespace FlowSERVER1 {
             .ForEach(form => form.Close());
         }
 
-        private void buildShowAlert(String title, String subheader) {
-            CustomAlert alert = new CustomAlert(title: title, subheader: subheader);
-            alert.Show();
-        }
-
-        private void buildRedundaneVisibility() {
+        private void BuildRedundaneVisibility() {
             if (flwLayoutHome.Controls.Count == 0) {
-                showRedundane();
+                ShowRedundane();
             }
             else {
-                clearRedundane();
+                ClearRedundane();
             }
         }
 
         /// <summary>
         /// (Un-Displayed when flowlayout is not empty
         /// </summary>
-        private void clearRedundane() {
+        private void ClearRedundane() {
             btnGarbageImage.Visible = false;
             lblEmptyHere.Visible = false;
         }
@@ -290,16 +296,37 @@ namespace FlowSERVER1 {
         /// (Displayed when flowlayout is empty)
         /// Show "It's empty here" text and garbage image
         /// </summary>
-        private void showRedundane() {
+        private void ShowRedundane() {
             btnGarbageImage.Visible = true;
             lblEmptyHere.Visible = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
-            Greeting.buildGreetingLabel(CurrentLang);
-        }
+        /// <summary>
+        /// This function will shows alert form that tells the user to upgrade 
+        /// their account when the total amount of files upload is exceeding
+        /// the amount of file they can upload 
+        /// </summary>
+        /// <param name="CurAcc"></param>
+        public void DisplayUpgradeAccountDialog() {
+            Form bgBlur = new Form();
+            using (UpgradeAccountAlert displayPic = new UpgradeAccountAlert()) {
+                bgBlur.StartPosition = FormStartPosition.Manual;
+                bgBlur.FormBorderStyle = FormBorderStyle.None;
+                bgBlur.Opacity = .24d;
+                bgBlur.BackColor = Color.Black;
+                bgBlur.WindowState = FormWindowState.Maximized;
+                bgBlur.TopMost = true;
+                bgBlur.Location = this.Location;
+                bgBlur.StartPosition = FormStartPosition.Manual;
+                bgBlur.ShowInTaskbar = false;
+                bgBlur.Show();
 
-        private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
+                displayPic.Owner = bgBlur;
+                displayPic.ShowDialog();
+
+                bgBlur.Dispose();
+            }
+        }
 
         /// <summary>
         /// 
@@ -329,7 +356,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        private async Task<List<(string, string, string)>> getFileMetadataHome(string tableName) {
+        private async Task<List<(string, string, string)>> GetFileMetadataHome(string tableName) {
 
             if (GlobalsData.filesMetadataCacheHome.ContainsKey(tableName)) {
                 return GlobalsData.filesMetadataCacheHome[tableName];
@@ -362,7 +389,7 @@ namespace FlowSERVER1 {
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
         /// <returns></returns>
-        private async Task buildFilePanelHome(String tableName, String parameterName, int currItem) {
+        private async Task BuildFilePanelHome(String tableName, String parameterName, int currItem) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -370,7 +397,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string, string)> filesInfo = await getFileMetadataHome(tableName);
+                List<(string, string, string)> filesInfo = await GetFileMetadataHome(tableName);
 
                 if (tableName == GlobalsTable.homeImageTable) {
 
@@ -456,9 +483,6 @@ namespace FlowSERVER1 {
 
                             TextForm displayPic = new TextForm("NOT_NULL", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, "null", Globals.custUsername);
                             displayPic.Show();
-
-                            clearRedundane();
-
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -587,18 +611,18 @@ namespace FlowSERVER1 {
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
 
         }
 
-        private async void createFilePanelHome(string fileFullPath, string tableName, string parameterName, int itemCurr, string keyVal) {
+        private async void CreateFilePanelHome(string fileFullPath, string tableName, string parameterName, int itemCurr, string keyVal) {
 
             if (_fileSizeInMB < 1500) {
 
@@ -693,7 +717,7 @@ namespace FlowSERVER1 {
 
                     GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = new Bitmap(fileFullPath);
                     textboxPic.Click += (sender_f, e_f) => {
@@ -715,7 +739,7 @@ namespace FlowSERVER1 {
                     string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                     textboxPic.Image = Globals.textTypeToImage[textType];
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     var filePath = _fileName;
 
@@ -728,7 +752,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homeExeTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.EXEImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
@@ -739,7 +763,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homeVideoTable) {
 
-                    await insertFileVideo(fileFullPath, tableName, _fileName, keyVal);
+                    await InsertFileDataVideo(fileFullPath, tableName, _fileName, keyVal);
 
                     ShellFile shellFile = ShellFile.FromFilePath(fileFullPath);
                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -754,11 +778,10 @@ namespace FlowSERVER1 {
                         VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, "null", Globals.custUsername);
                         vidShow.Show();
                     };
-                    clearRedundane();
                 }
                 if (tableName == GlobalsTable.homeAudioTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     var _getWidth = this.Width;
                     var _getHeight = this.Height;
@@ -771,7 +794,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homeExcelTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.EXCELImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
@@ -782,7 +805,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homeApkTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.APKImage;
                     textboxPic.Click += (sender_gi, e_gi) => {
@@ -793,7 +816,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homePdfTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.PDFImage;
                     textboxPic.Click += (sender_pd, e_pd) => {
@@ -804,7 +827,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homePtxTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -814,7 +837,7 @@ namespace FlowSERVER1 {
                 }
                 if (tableName == GlobalsTable.homeMsiTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -825,7 +848,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homeWordTable) {
 
-                    await insertFileData(keyVal, tableName);
+                    await InsertFileData(keyVal, tableName);
 
                     textboxPic.Image = Globals.DOCImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -840,7 +863,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void openDialogHomeFile() {
+        private void OpenDialogHomeFile() {
 
             var open = new OpenFileDialog {
                 Filter = Globals.filterFileType,
@@ -851,7 +874,7 @@ namespace FlowSERVER1 {
             if (open.ShowDialog() == DialogResult.OK) {
 
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
-                    DisplayError(Globals.accountType);
+                    DisplayUpgradeAccountDialog();
                 }
                 else {
 
@@ -889,9 +912,9 @@ namespace FlowSERVER1 {
                                 var imgHeight = getImg.Height;
 
                                 if (_fileExtension != ".ico") {
-                                    String _compressedImage = compressor.compresImageToBase64(selectedItems);
-                                    String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
-                                    createFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                                    String compressedImage = compressor.compresImageToBase64(selectedItems);
+                                    String encryptedValue = EncryptionModel.Encrypt(compressedImage);
+                                    CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                                 }
                                 else {
                                     Image retrieveIcon = Image.FromFile(selectedItems);
@@ -899,9 +922,9 @@ namespace FlowSERVER1 {
                                     using (MemoryStream msIco = new MemoryStream()) {
                                         retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                         dataIco = msIco.ToArray();
-                                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
-                                        createFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                                        String tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
+                                        String encryptedValue = EncryptionModel.Encrypt(tempToBase64);
+                                        CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                                     }
                                 }
                             }
@@ -915,52 +938,51 @@ namespace FlowSERVER1 {
                                 byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
                                 String getEncoded = Convert.ToBase64String(getBytes);
                                 String encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
-                                createFilePanelHome(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
                             }
 
                             else if (_fileExtension == ".exe") {
                                 exeCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
 
                             }
                             else if (Globals.videoTypes.Contains(_fileExtension)) {
                                 vidCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
                             }
 
                             else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
                                 exlCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
                             }
 
                             else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
                                 audCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
                             }
 
                             else if (_fileExtension == ".apk") {
                                 apkCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
                             }
 
                             else if (_fileExtension == ".pdf") {
                                 pdfCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
                             }
 
                             else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
                                 ptxCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
                             }
                             else if (_fileExtension == ".msi") {
                                 msiCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
                             }
                             else if (_fileExtension == ".docx") {
                                 docxCurr++;
-                                createFilePanelHome(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
-
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
                             }
                             else {
 
@@ -968,12 +990,12 @@ namespace FlowSERVER1 {
                                 unsupportedFileFormartForm.Show();
                             }
 
-                            closeUploadAlert();
+                            CloseUploadAlert();
 
                         }
                         catch (Exception) {
 
-                            closeUploadAlert();
+                            CloseUploadAlert();
 
                         }
 
@@ -983,18 +1005,18 @@ namespace FlowSERVER1 {
 
             }
 
-            buildRedundaneVisibility();
-            closeUploadAlert();
+            BuildRedundaneVisibility();
+            CloseUploadAlert();
         }
 
-        private async void buildHomeFiles() {
+        private async void BuildHomeFiles() {
 
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
-                        clearRedundane();
-                        await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
+                        ClearRedundane();
+                        await BuildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
                     }
                     else {
                         await buildDirectoryPanel(await crud.countRow(tableName));
@@ -1002,10 +1024,10 @@ namespace FlowSERVER1 {
                 }
             }
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
         }
 
-        private async Task refreshHomePanels() {
+        private async Task RefreshHomePanels() {
 
             btnDeleteFolder.Visible = false;
 
@@ -1016,9 +1038,9 @@ namespace FlowSERVER1 {
                     string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
 
-                        clearRedundane();
+                        ClearRedundane();
 
-                        await buildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
+                        await BuildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
                     }
                     else {
                         await buildDirectoryPanel(await crud.countRow(tableName));
@@ -1026,14 +1048,14 @@ namespace FlowSERVER1 {
                 }
             }
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
         }
 
         #endregion END - Home section
 
         #region Public Storage section
-        private async Task<List<(string, string, string)>> getFileMetadataPublicStorage(string tableName) {
+        private async Task<List<(string, string, string)>> GetFileMetadataPublicStorage(string tableName) {
 
             if (GlobalsData.filesMetadataCachePs.ContainsKey(tableName)) {
                 return GlobalsData.filesMetadataCachePs[tableName];
@@ -1058,7 +1080,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task buildFilePanelPublicStorage(String _tableName, String parameterName, int currItem, bool isFromMyPs = false) {
+        private async Task BuildFilePanelPublicStorage(String _tableName, String parameterName, int currItem, bool isFromMyPs = false) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -1069,7 +1091,7 @@ namespace FlowSERVER1 {
                 List<(string, string, string)> filesInfo;
 
                 if (isFromMyPs == false) {
-                    filesInfo = await getFileMetadataPublicStorage(_tableName);
+                    filesInfo = await GetFileMetadataPublicStorage(_tableName);
                 }
                 else {
                     filesInfo = new List<(string, string, string)>();
@@ -1241,13 +1263,8 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-
                             TextForm displayPic = new TextForm("NOT_NULL", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
                             displayPic.Show();
-
-
-                            clearRedundane();
-
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -1376,13 +1393,13 @@ namespace FlowSERVER1 {
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
 
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
 
         }
@@ -1477,7 +1494,7 @@ namespace FlowSERVER1 {
                 if (tableName == "ps_info_image") {
 
                     GlobalsData.base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = new Bitmap(fileFullPath);
                     textboxPic.Click += (sender_f, e_f) => {
@@ -1499,7 +1516,7 @@ namespace FlowSERVER1 {
                     string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                     textboxPic.Image = Globals.textTypeToImage[textType];
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     var filePath = _fileName;
 
@@ -1512,7 +1529,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_exe") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.EXEImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
@@ -1523,7 +1540,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_video") {
 
-                    await insertFileVideoPublic(fileFullPath, _fileName, keyVal);
+                    await InsertFileVideoDataPublic(fileFullPath, _fileName, keyVal);
 
                     ShellFile shellFile = ShellFile.FromFilePath(fileFullPath);
                     Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -1538,12 +1555,11 @@ namespace FlowSERVER1 {
                         VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, "ps_info_video", "null", Globals.custUsername);
                         vidShow.Show();
                     };
-                    clearRedundane();
                 }
 
                 if (tableName == "ps_info_audio") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.AudioImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
@@ -1554,7 +1570,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_excel") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.EXCELImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
@@ -1565,7 +1581,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_apk") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.APKImage;
                     textboxPic.Click += (sender_gi, e_gi) => {
@@ -1576,7 +1592,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_pdf") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.PDFImage;
                     textboxPic.Click += (sender_pd, e_pd) => {
@@ -1587,7 +1603,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_ptx") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1597,7 +1613,7 @@ namespace FlowSERVER1 {
                 }
                 if (tableName == "ps_info_msi") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1608,7 +1624,7 @@ namespace FlowSERVER1 {
 
                 if (tableName == "ps_info_word") {
 
-                    await insertFileDataPublic(keyVal, tableName);
+                    await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.DOCImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1634,7 +1650,7 @@ namespace FlowSERVER1 {
             if (open.ShowDialog() == DialogResult.OK) {
 
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
-                    DisplayError(Globals.accountType);
+                    DisplayUpgradeAccountDialog();
                 }
                 else {
 
@@ -1647,7 +1663,7 @@ namespace FlowSERVER1 {
                     string selectedFileName = Path.GetFileName(selectedItems);
 
                     if (existingLabels.Contains(selectedFileName.ToLower().Trim())) {
-                        buildShowAlert(title: "Upload Failed", $"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}");
+                        BuildShowAlert(title: "Upload Failed", $"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}");
                         return;
                     }
 
@@ -1755,13 +1771,13 @@ namespace FlowSERVER1 {
                                 unsupportedFileFormartForm.Show();
                             }
 
-                            closeUploadAlert();
+                            CloseUploadAlert();
                         }
 
                     }
                     catch (Exception) {
 
-                        closeUploadAlert();
+                        CloseUploadAlert();
 
                     }
 
@@ -1772,30 +1788,30 @@ namespace FlowSERVER1 {
 
             PublicStorageClosed = false;
 
-            buildRedundaneVisibility();
-            closeUploadAlert();
+            BuildRedundaneVisibility();
+            CloseUploadAlert();
         }
 
-        private async void buildPublicStorageFiles() {
+        private async void BuildPublicStorageFiles() {
 
             foreach (string tableName in GlobalsTable.publicTablesPs) {
                 if (GlobalsTable.tableToFileTypePs.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileTypePs[tableName];
                     if (fileType != null) {
 
-                        clearRedundane();
+                        ClearRedundane();
 
-                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
+                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
                     }
                 }
             }
 
             lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
         }
-        private async void buildMyPublicStorageFiles() {
+        private async void BuildMyPublicStorageFiles() {
 
             GlobalsData.base64EncodedImagePs.Clear();
             GlobalsData.base64EncodedThumbnailPs.Clear();
@@ -1805,19 +1821,19 @@ namespace FlowSERVER1 {
                     string fileType = GlobalsTable.tableToFileTypePs[tableName];
                     if (fileType != null) {
 
-                        clearRedundane();
+                        ClearRedundane();
 
-                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowMyPublicStorage(tableName), isFromMyPs: true);
+                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.countRowMyPublicStorage(tableName), isFromMyPs: true);
                     }
                 }
             }
 
             lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
         }
-        private async Task refreshPublicStoragePanels() {
+        private async Task RefreshPublicStoragePanels() {
 
             GlobalsData.filesMetadataCachePs.Clear();
 
@@ -1826,16 +1842,16 @@ namespace FlowSERVER1 {
                     string fileType = GlobalsTable.tableToFileTypePs[tableName];
                     if (fileType != null) {
 
-                        clearRedundane();
+                        ClearRedundane();
 
-                        await buildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
+                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
                     }
                 }
             }
 
             lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
         }
 
@@ -1847,7 +1863,7 @@ namespace FlowSERVER1 {
         /// Retrieve username of file that has been shared to
         /// </summary>
         /// <returns></returns>
-        private string uploaderName() {
+        private string UploaderName() {
 
             const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
@@ -1864,7 +1880,7 @@ namespace FlowSERVER1 {
         }
 
         List<(string, string, string)> filesInfoSharedOthers = new List<(string, string, string)>();
-        private async void _callFilesInformationOthers() {
+        private async void CallFilesInformationOthers() {
 
             filesInfoSharedOthers.Clear();
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
@@ -1881,7 +1897,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task buildFilePanelSharedToOthers(List<String> fileTypes, String parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToOthers(List<String> fileTypes, String parameterName, int itemCurr) {
 
             try {
 
@@ -2116,16 +2132,16 @@ namespace FlowSERVER1 {
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.generatePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
         }
-        private async void buildSharedToOthers() {
+        private async void BuildSharedToOthers() {
 
             if (!GlobalsData.fileTypeValuesSharedToOthers.Any()) {
                 const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
@@ -2139,8 +2155,8 @@ namespace FlowSERVER1 {
                 }
             }
 
-            await buildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
-            buildRedundaneVisibility();
+            await BuildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
+            BuildRedundaneVisibility();
         }
 
         /// <summary>
@@ -2153,7 +2169,7 @@ namespace FlowSERVER1 {
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task refreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
+        private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
 
             GlobalsData.base64EncodedImageSharedOthers.Clear();
             GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
@@ -2171,9 +2187,9 @@ namespace FlowSERVER1 {
                 }
             }
 
-            _callFilesInformationOthers();
+            CallFilesInformationOthers();
 
-            await buildFilePanelSharedToOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
+            await BuildFilePanelSharedToOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
         }
 
         #endregion END - Shared to others
@@ -2181,7 +2197,7 @@ namespace FlowSERVER1 {
         #region Shared to me section
 
         List<(string, string, string)> filesInfoShared = new List<(string, string, string)>();
-        private async void _callFilesInformationShared() {
+        private async void CallFilesInformationShared() {
 
             filesInfoShared.Clear();
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
@@ -2198,7 +2214,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task buildFilePanelSharedToMe(List<String> _extTypes, String parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToMe(List<String> extTypes, String parameterName, int itemCurr) {
 
             try {
 
@@ -2206,9 +2222,9 @@ namespace FlowSERVER1 {
                 List<EventHandler> onPressedEvent = new List<EventHandler>();
                 List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
-                var UploaderUsername = uploaderName();
+                var UploaderUsername = UploaderName();
 
-                List<string> typeValues = new List<string>(_extTypes);
+                List<string> typeValues = new List<string>(extTypes);
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
@@ -2271,12 +2287,8 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                         void textOnPressed(object sender, EventArgs e) {
-
                             TextForm displayPic = new TextForm("", GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
                             displayPic.Show();
-
-                            clearRedundane();
-
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -2412,23 +2424,24 @@ namespace FlowSERVER1 {
                             WordDocForm displayMsi = new WordDocForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayMsi.Show();
                         }
+                        onPressedEvent.Add(wordOnPressed);
                     }
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.generatePanel(parameterName, itemCurr, filesInfoShared, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
         }
 
-        private async void buildSharedToMe() {
+        private async void BuildSharedToMe() {
 
             if (!GlobalsData.fileTypeValuesSharedToMe.Any()) {
                 const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
@@ -2440,13 +2453,13 @@ namespace FlowSERVER1 {
                         }
                     }
                 }
-                await buildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
+                await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
             }
             else {
-                await buildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
+                await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
             }
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
         }
 
@@ -2460,7 +2473,7 @@ namespace FlowSERVER1 {
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task refreshGenerateUserShared(List<string> typeValues, string dirName) {
+        private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName) {
 
             GlobalsData.base64EncodedImageSharedToMe.Clear();
             GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
@@ -2478,9 +2491,9 @@ namespace FlowSERVER1 {
                 }
             }
 
-            _callFilesInformationShared();
+            CallFilesInformationShared();
 
-            await buildFilePanelSharedToMe(typeValues, dirName, typeValues.Count);
+            await BuildFilePanelSharedToMe(typeValues, dirName, typeValues.Count);
         }
 
         #endregion END - Shared to me
@@ -2497,7 +2510,42 @@ namespace FlowSERVER1 {
         /// <param name="parameterName">Custom parameter name for panel</param>
         /// <param name="currItem"></param>
 
-        private async Task refreshFolder() {
+        private void OpenFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
+
+            CloseRetrievalAlert();
+
+            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), EncryptionModel.Decrypt(folderTitle));
+            Directory.CreateDirectory(folderPath);
+
+            foreach (var (fileName, fileBytes) in files) {
+                var filePath = Path.Combine(folderPath, $"{fileName}");
+                File.WriteAllBytes(filePath, fileBytes);
+            }
+
+            Process.Start(folderPath);
+        }
+
+        private async Task DownloadUserFolder(string folderTitle) {
+
+            var files = new List<(string fileName, byte[] fileBytes)>();
+
+            using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@foldtitle", folderTitle);
+                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        var fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
+                        var fileBytes = Convert.FromBase64String(base64Encoded);
+                        files.Add((fileName, fileBytes));
+                    }
+                }
+            }
+
+            OpenFolderDownloadDialog(folderTitle, files);
+        }
+
+        private async Task RefreshFolder() {
 
             GlobalsData.base64EncodedImageFolder.Clear();
 
@@ -2517,14 +2565,13 @@ namespace FlowSERVER1 {
             }
 
             var currMainLength = typesValues.Count;
-            await buildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
+            await BuildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
         }
 
-        private async Task buildFilePanelFolder(List<String> _fileType, String _foldTitle, int currItem) {
+        private async Task BuildFilePanelFolder(List<String> fileType, String foldTitle, int currItem) {
 
-            clearRedundane();
-
-            closeUploadAlert();
+            ClearRedundane();
+            CloseUploadAlert();
 
             new Thread(() => new RetrievalAlert("Flowstorage is retrieving your folder files.", "Loader").ShowDialog()).Start();
 
@@ -2532,7 +2579,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<string> typeValues = new List<string>(_fileType);
+                List<string> typeValues = new List<string>(fileType);
 
                 List<Image> imageValues = new List<Image>();
                 List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -2544,7 +2591,7 @@ namespace FlowSERVER1 {
                 const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(_foldTitle));
+                    command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(foldTitle));
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
 
@@ -2582,7 +2629,7 @@ namespace FlowSERVER1 {
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
-                            command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(_foldTitle));
+                            command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(foldTitle));
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
@@ -2642,14 +2689,8 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-
-
                             TextForm displayPic = new TextForm("", GlobalsTable.folderUploadTable, fileName, "null", Globals.custUsername);
                             displayPic.Show();
-
-
-                            clearRedundane();
-
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -2660,7 +2701,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, "null");
+                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, "null");
                             displayExe.Show();
                         }
 
@@ -2674,7 +2715,7 @@ namespace FlowSERVER1 {
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
                             using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
                                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_foldTitle));
+                                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldTitle));
                                 command.Parameters.AddWithValue("@ext", typeValues[i]);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
@@ -2700,7 +2741,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername);
+                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername);
                             displayVid.Show();
                         }
 
@@ -2712,7 +2753,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -2722,7 +2763,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            new AudioForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new AudioForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -2733,7 +2774,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            new ApkForm(fileName, Globals.custUsername, GlobalsTable.folderUploadTable, _foldTitle);
+                            new ApkForm(fileName, Globals.custUsername, GlobalsTable.folderUploadTable, foldTitle);
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -2744,7 +2785,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            new PdfForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new PdfForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2755,7 +2796,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -2766,7 +2807,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            new msiFORM(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new msiFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2778,7 +2819,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, _foldTitle, Globals.custUsername).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -2788,7 +2829,7 @@ namespace FlowSERVER1 {
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.generatePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
@@ -2797,7 +2838,7 @@ namespace FlowSERVER1 {
             }
             catch (Exception) {
                 CloseForm.closeForm("RetrievalAlert");
-                buildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
         }
 
@@ -3096,7 +3137,7 @@ namespace FlowSERVER1 {
             lblMyFolders.Visible = true;
             lstFoldersPage.Visible = true;
 
-            clearRedundane();
+            ClearRedundane();
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
         }
@@ -3169,7 +3210,7 @@ namespace FlowSERVER1 {
         /// Garbage (delete folder) button is clicked
         /// </summary>
         /// <param name="foldName"></param>
-        private async void _removeFoldFunc(String foldName) {
+        private async void RemoveAndDeleteFolder(String foldName) {
 
             DialogResult verifyDeletion = MessageBox.Show($"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (verifyDeletion == DialogResult.Yes) {
@@ -3186,7 +3227,7 @@ namespace FlowSERVER1 {
                 int indexSelected = lstFoldersPage.Items.IndexOf("Home");
                 lstFoldersPage.SelectedIndex = indexSelected;
 
-                closeRetrievalAlert();
+                CloseRetrievalAlert();
 
             }
         }
@@ -3230,33 +3271,6 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        /// <summary>
-        /// This function will shows alert form that tells the user to upgrade 
-        /// their account when the total amount of files upload is exceeding
-        /// the amount of file they can upload 
-        /// </summary>
-        /// <param name="CurAcc"></param>
-        public void DisplayError(String CurAcc) {
-            Form bgBlur = new Form();
-            using (UpgradeAccountAlert displayPic = new UpgradeAccountAlert(CurAcc)) {
-                bgBlur.StartPosition = FormStartPosition.Manual;
-                bgBlur.FormBorderStyle = FormBorderStyle.None;
-                bgBlur.Opacity = .24d;
-                bgBlur.BackColor = Color.Black;
-                bgBlur.WindowState = FormWindowState.Maximized;
-                bgBlur.TopMost = true;
-                bgBlur.Location = this.Location;
-                bgBlur.StartPosition = FormStartPosition.Manual;
-                bgBlur.ShowInTaskbar = false;
-                bgBlur.Show();
-
-                displayPic.Owner = bgBlur;
-                displayPic.ShowDialog();
-
-                bgBlur.Dispose();
-            }
-        }
-
         #region Open dialog section (Home, Public Storage, Folder)
 
         /// <summary>
@@ -3275,10 +3289,10 @@ namespace FlowSERVER1 {
                     int currentUploadCount = Convert.ToInt32(lblItemCountText.Text);
 
                     if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
-                        openDialogHomeFile();
+                        OpenDialogHomeFile();
                     }
                     else {
-                        DisplayError(Globals.accountType);
+                        DisplayUpgradeAccountDialog();
                     }
 
                 }
@@ -3287,7 +3301,7 @@ namespace FlowSERVER1 {
                 }
             }
             catch (Exception) {
-                buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+                BuildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
             }
 
         }
@@ -3309,14 +3323,14 @@ namespace FlowSERVER1 {
                     openDialogPublicStorage();
                 }
                 else {
-                    DisplayError(Globals.accountType);
+                    DisplayUpgradeAccountDialog();
                 }
 
                 returnedCountValue.Clear();
 
             }
             catch (Exception) {
-                buildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+                BuildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
             }
         }
 
@@ -3364,8 +3378,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button7_Click(object sender, EventArgs e) => new MainSharingForm().Show();
-
         private void label3_Click(object sender, EventArgs e) {
 
         }
@@ -3392,10 +3404,10 @@ namespace FlowSERVER1 {
 
                 if (_selectedFolder == "Home") {
 
-                    buildButtonsOnHomePageSelected();
+                    BuildButtonsOnHomePageSelected();
                     flwLayoutHome.WrapContents = true;
 
-                    buildHomeFiles();
+                    BuildHomeFiles();
 
                 }
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
@@ -3417,27 +3429,27 @@ namespace FlowSERVER1 {
                     var mainTypes = typesValues.Distinct().ToList();
                     var currMainLength = typesValues.Count;
 
-                    await buildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
-                    buildRedundaneVisibility();
+                    await BuildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
+                    BuildRedundaneVisibility();
 
                 }
                 else if (_selectedIndex == 1) {
 
 
-                    buildButtonOnSharedFilesSelected();
-                    clearRedundane();
+                    BuildButtonOnSharedFilesSelected();
+                    ClearRedundane();
 
-                    _callFilesInformationShared();
-                    buildSharedToMe();
+                    CallFilesInformationShared();
+                    BuildSharedToMe();
 
                 }
                 else if (_selectedIndex == 2) {
 
-                    buildButtonsOnSharedToMeSelected();
-                    clearRedundane();
+                    BuildButtonsOnSharedToMeSelected();
+                    ClearRedundane();
 
-                    _callFilesInformationOthers();
-                    buildSharedToOthers();
+                    CallFilesInformationOthers();
+                    BuildSharedToOthers();
 
                 }
 
@@ -3448,17 +3460,17 @@ namespace FlowSERVER1 {
 
                 flwLayoutHome.Controls.Clear();
 
-                buildRedundaneVisibility();
-                buildShowAlert(title: "Something went wrong", subheader: "Try to restart Flowstorage.");
+                BuildRedundaneVisibility();
+                BuildShowAlert(title: "Something went wrong", subheader: "Try to restart Flowstorage.");
             }
         }
 
         private void guna2Button19_Click(object sender, EventArgs e) {
 
-            closeRetrievalAlert();
+            CloseRetrievalAlert();
 
             string _currentFold = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
-            _removeFoldFunc(_currentFold);
+            RemoveAndDeleteFolder(_currentFold);
 
         }
 
@@ -3595,8 +3607,8 @@ namespace FlowSERVER1 {
 
                         lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-                        buildRedundaneVisibility();
-                        updateProgressBarValue();
+                        BuildRedundaneVisibility();
+                        UpdateProgressBarValue();
                     }
                 };
 
@@ -3609,7 +3621,7 @@ namespace FlowSERVER1 {
                     DirectoryForm displayDirectory = new DirectoryForm(titleLab.Text);
                     displayDirectory.Show();
 
-                    closeRetrievalAlert();
+                    CloseRetrievalAlert();
                 };
             }
 
@@ -3678,27 +3690,27 @@ namespace FlowSERVER1 {
 
             if (selectedIndex == 1 && lblCurrentPageText.Text == "Shared To Me") {
                 GlobalsData.fileTypeValuesSharedToMe.Clear();
-                await refreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
             }
             else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared Files") {
                 GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                await refreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
             }
             else if (selectedIndex == 0 && lblCurrentPageText.Text == "Home") {
 
                 GlobalsData.base64EncodedImageHome.Clear();
                 GlobalsData.base64EncodedThumbnailHome.Clear();
-                await refreshHomePanels();
+                await RefreshHomePanels();
 
             }
             else if (lblCurrentPageText.Text == "Public Storage") {
 
                 GlobalsData.base64EncodedImagePs.Clear();
                 GlobalsData.base64EncodedThumbnailPs.Clear();
-                await refreshPublicStoragePanels();
+                await RefreshPublicStoragePanels();
             }
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
         }
@@ -3759,28 +3771,28 @@ namespace FlowSERVER1 {
                 flwLayoutHome.Controls.Clear();
 
                 if (_selectedFolderSearch == "Home") {
-                    buildHomeFiles();
+                    BuildHomeFiles();
                 }
                 else if (_selectedFolderSearch == "Shared To Me") {
                     GlobalsData.fileTypeValuesSharedToMe.Clear();
-                    await refreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                    await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
                 }
                 else if (_selectedFolderSearch == "Shared Files") {
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                    await refreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                    await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
                 }
                 else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
-                    await refreshFolder();
+                    await RefreshFolder();
                 }
                 else if (lblCurrentPageText.Text == "Public Storage") {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
-                    buildPublicStorageFiles();
+                    BuildPublicStorageFiles();
                 }
             }
 
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
@@ -3796,7 +3808,7 @@ namespace FlowSERVER1 {
 
             if (lblCurrentPageText.Text == "Public Storage") {
                 flwLayoutHome.Controls.Clear();
-                buildHomeFiles();
+                BuildHomeFiles();
             }
 
             lblCurrentPageText.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
@@ -3916,9 +3928,8 @@ namespace FlowSERVER1 {
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void Form1_DragLeave(object sender, EventArgs e) {
-            pnlDragAndDropUpload.Visible = false;
-        }
+        private void Form1_DragLeave(object sender, EventArgs e) => pnlDragAndDropUpload.Visible = false;
+        
 
         /// <summary>
         /// 
@@ -3952,7 +3963,7 @@ namespace FlowSERVER1 {
                     bgBlur.ShowInTaskbar = false;
                     bgBlur.Show();
 
-                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(Globals.accountType)) {
+                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert()) {
                         displayUpgrade.Owner = bgBlur;
                         displayUpgrade.ShowDialog();
                     }
@@ -3964,10 +3975,6 @@ namespace FlowSERVER1 {
         }
 
         private void DragDropHandleFiles(string[] files) {
-
-            List<Image> imageValues = new List<Image>();
-            List<EventHandler> onPressedEvent = new List<EventHandler>();
-            List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
 
             List<string> filePathList = new List<string>(files);
 
@@ -3992,9 +3999,9 @@ namespace FlowSERVER1 {
                         var imgHeight = getImg.Height;
 
                         if (_fileExtension != ".ico") {
-                            String _tempToBase64 = Convert.ToBase64String(readFileBytes);
-                            String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
-                            createFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                            String tempToBase64 = Convert.ToBase64String(readFileBytes);
+                            String encryptedValue = EncryptionModel.Encrypt(tempToBase64);
+                            CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                         }
                         else {
                             Image retrieveIcon = Image.FromFile(selectedItems);
@@ -4002,9 +4009,9 @@ namespace FlowSERVER1 {
                             using (MemoryStream msIco = new MemoryStream()) {
                                 retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                 dataIco = msIco.ToArray();
-                                String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
-                                createFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                                String tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
+                                String encryptedValue = EncryptionModel.Encrypt(tempToBase64);
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                             }
                         }
                     }
@@ -4018,58 +4025,58 @@ namespace FlowSERVER1 {
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         String getEncoded = Convert.ToBase64String(getBytes);
                         String encryptTextValue = EncryptionModel.Encrypt(getEncoded);
-                        createFilePanelHome(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptTextValue);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptTextValue);
                     }
 
                     else if (_fileExtension == ".exe") {
                         exeCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
 
                     }
                     else if (Globals.videoTypes.Contains(_fileExtension)) {
                         vidCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
                     }
 
                     else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
                         exlCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
                     }
 
                     else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
                         audCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
                     }
 
                     else if (_fileExtension == ".apk") {
                         apkCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
                     }
 
                     else if (_fileExtension == ".pdf") {
                         pdfCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
                     }
 
                     else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
                         ptxCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
                     }
                     else if (_fileExtension == ".msi") {
                         msiCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
                     }
                     else if (_fileExtension == ".docx") {
                         docxCurr++;
-                        createFilePanelHome(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
                     }
 
-                    closeUploadAlert();
+                    CloseUploadAlert();
 
                 }
                 catch (Exception) {
-                    closeUploadAlert();
+                    CloseUploadAlert();
                 }
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
@@ -4079,11 +4086,6 @@ namespace FlowSERVER1 {
         }
 
         #endregion END - Drag and upload section
-        private void guna2Button3_Click_1(object sender, EventArgs e) {
-
-            RenameFolderFileForm renameFolderForm = new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
-            renameFolderForm.Show();
-        }
 
         #region Filter type section
 
@@ -4144,51 +4146,7 @@ namespace FlowSERVER1 {
         private void label26_Click(object sender, EventArgs e) {
 
         }
-
-        private void guna2CircleButton1_Click(object sender, EventArgs e) {
-            ApiPageForm apiFORMShow = new ApiPageForm();
-            apiFORMShow.Show();
-        }
-
-        private void guna2CircleButton2_Click(object sender, EventArgs e) {
-            FeedbackForm feedbackFORMShow = new FeedbackForm();
-            feedbackFORMShow.Show();
-        }
-
-        private void _openFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
-
-            closeRetrievalAlert();
-
-            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), EncryptionModel.Decrypt(folderTitle));
-            Directory.CreateDirectory(folderPath);
-
-            foreach (var (fileName, fileBytes) in files) {
-                var filePath = Path.Combine(folderPath, $"{fileName}");
-                File.WriteAllBytes(filePath, fileBytes);
-            }
-
-            Process.Start(folderPath);
-        }
-
-        private async Task _downloadUserFolder(string folderTitle) {
-
-            var files = new List<(string fileName, byte[] fileBytes)>();
-
-            using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@foldtitle", folderTitle);
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        var fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
-                        var fileBytes = Convert.FromBase64String(base64Encoded);
-                        files.Add((fileName, fileBytes));
-                    }
-                }
-            }
-
-            _openFolderDownloadDialog(folderTitle, files);
-        }
+        
 
         /// <summary>
         /// 
@@ -4203,7 +4161,7 @@ namespace FlowSERVER1 {
 
             if (Globals.accountType == "Max" || Globals.accountType == "Express" || Globals.accountType == "Supreme") {
                 string folderTitleGet = EncryptionModel.Encrypt(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
-                await _downloadUserFolder(folderTitleGet);
+                await DownloadUserFolder(folderTitleGet);
             }
             else {
                 LimitedFolderAlert upgradeAccountFolderFORM = new LimitedFolderAlert(Globals.accountType, "Please upgrade your account \r\nplan to download folder.", false);
@@ -4295,7 +4253,7 @@ namespace FlowSERVER1 {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
 
                 int getCurrentCount = int.Parse(lblItemCountText.Text);
                 int getLimitedValue = int.Parse(lblLimitUploadText.Text);
@@ -4400,15 +4358,15 @@ namespace FlowSERVER1 {
             pnlMain.SendToBack();
 
             flwLayoutHome.Controls.Clear();
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
-            buildPublicStorageFiles();
+            BuildPublicStorageFiles();
 
         }
 
         private void btnMyPsFiles_Click(object sender, EventArgs e) {
             flwLayoutHome.Controls.Clear();
-            buildMyPublicStorageFiles();
+            BuildMyPublicStorageFiles();
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e) {

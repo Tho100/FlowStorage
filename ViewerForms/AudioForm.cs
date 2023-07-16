@@ -72,7 +72,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_audType"></param>
         /// <param name="_getByteAud"></param>
-        private async Task setupPlayer(String _audType, Byte[] _getByteAud, int startPosition = 0) {
+        private async Task StartPlayAudio(String _audType, Byte[] _getByteAud, int startPosition = 0) {
 
             lblFileSize.Text = $"{FileSize.fileSize(_getByteAud):F2}Mb";
 
@@ -91,9 +91,8 @@ namespace FlowSERVER1 {
                 }
             }
             else if (_audType == "mp3") {
-                await Task.Run(() => mp3ToWav(_getByteAud));
+                await Task.Run(() => ConvertMP3ToWav(_getByteAud));
             }
-
 
         }
 
@@ -122,7 +121,7 @@ namespace FlowSERVER1 {
 
                     byte[] byteAud = LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared);
 
-                    await setupPlayer(audType, byteAud);
+                    await StartPlayAudio(audType, byteAud);
 
                     if (LoaderModel.stopFileRetrievalLoad) {
                         pictureBox3.Enabled = false;
@@ -147,7 +146,7 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <param name="_mp3ByteIn"></param>
-        private void mp3ToWav(Byte[] _mp3ByteIn) {
+        private void ConvertMP3ToWav(Byte[] _mp3ByteIn) {
 
             Stream _setupStream = new MemoryStream(_mp3ByteIn);
             _NReader = new NAudio.Wave.Mp3FileReader(_setupStream);

@@ -48,7 +48,7 @@
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
-            this.docDocumentViewer1 = new Spire.DocViewer.Forms.DocDocumentViewer();
+            this.documentViewer1 = new Spire.OfficeViewer.Forms.DocumentViewer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -140,6 +140,7 @@
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(805, 10);
             this.guna2Separator1.TabIndex = 66;
+            this.guna2Separator1.Click += new System.EventHandler(this.guna2Separator1_Click);
             // 
             // guna2VSeparator1
             // 
@@ -404,30 +405,25 @@
             this.guna2Button12.Visible = false;
             this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
-            // docDocumentViewer1
+            // documentViewer1
             // 
-            this.docDocumentViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.docDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
-            this.docDocumentViewer1.EnableHandTools = false;
-            this.docDocumentViewer1.Location = new System.Drawing.Point(355, 76);
-            this.docDocumentViewer1.Name = "docDocumentViewer1";
-            this.docDocumentViewer1.Size = new System.Drawing.Size(771, 538);
-            this.docDocumentViewer1.TabIndex = 101;
-            this.docDocumentViewer1.Text = "docDocumentViewer1";
-            this.docDocumentViewer1.ToPdfParameterList = null;
-            this.docDocumentViewer1.UseNewEngine = true;
-            this.docDocumentViewer1.ZoomMode = Spire.DocViewer.Forms.ZoomMode.Default;
-            this.docDocumentViewer1.Click += new System.EventHandler(this.docDocumentViewer1_Click);
+            this.documentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.documentViewer1.EnableHandTools = false;
+            this.documentViewer1.Location = new System.Drawing.Point(390, 98);
+            this.documentViewer1.Name = "documentViewer1";
+            this.documentViewer1.Size = new System.Drawing.Size(506, 281);
+            this.documentViewer1.TabIndex = 101;
+            this.documentViewer1.Text = "documentViewer1";
+            this.documentViewer1.ZoomMode = Spire.OfficeViewer.Forms.ZoomMode.Default;
+            this.documentViewer1.Click += new System.EventHandler(this.documentViewer1_Click);
             // 
-            // wordFORM
+            // WordDocForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1142, 627);
-            this.Controls.Add(this.docDocumentViewer1);
+            this.Controls.Add(this.documentViewer1);
             this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.label15);
@@ -452,7 +448,7 @@
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "wordFORM";
+            this.Name = "WordDocForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Word Document Viewer";
             this.TopMost = true;
@@ -488,6 +484,6 @@
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private Guna.UI2.WinForms.Guna2Button btnEditComment;
         private Guna.UI2.WinForms.Guna2Button guna2Button12;
-        private Spire.DocViewer.Forms.DocDocumentViewer docDocumentViewer1;
+        private Spire.OfficeViewer.Forms.DocumentViewer documentViewer1;
     }
 }

@@ -42,12 +42,12 @@ namespace FlowSERVER1 {
             instance = this;
 
             filterPanel.MouseDown += filterPanel_MouseDown;
-            initializePicture(
+            InitializePicture(
                 userImage, width, height, title, tableName, directoryName, 
                 uploaderName, isFromShared, isFromSharing);
         }
 
-        private void initializePicture(
+        private void InitializePicture(
             Image userImage, int width, int height, 
             string title, string tableName, string directoryName, 
             string uploaderName, bool isFromShared = false, bool isFromSharing = true) {
@@ -199,7 +199,6 @@ namespace FlowSERVER1 {
 
             applyFilters();
 
-            //filterSaturation(toFloat);
         }
 
         private void label6_Click(object sender, EventArgs e) {

@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
+using System;
 using System.IO;
 using System.Threading;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class WordDocForm : Form {
 
-        readonly private MySqlConnection con = ConnectionModel.con;
-
-        public string _TableName;
-        public string _DirectoryName;
-        private bool _IsFromShared;
-        private bool IsFromSharing;  
+        private string _tableName { get; set; }
+        private string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
+        private bool _isFromSharing { get; set; }
 
         /// <summary>
         /// 
@@ -33,15 +23,15 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public WordDocForm(String fileName,String tableName, String directoryName, String uploaderName, bool _isFromShared = false, bool _isFromSharing = true) {
+        public WordDocForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = true) {
 
             InitializeComponent();
 
             this.lblFileName.Text = fileName;
-            this._TableName = tableName;
-            this._DirectoryName = directoryName;
-            this._IsFromShared = _isFromShared;
-            this.IsFromSharing = _isFromSharing;
+            this._tableName = tableName;
+            this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
+            this._isFromSharing = isFromSharing;
 
             if (_isFromShared == true) {
                 label4.Text = "Shared To";
@@ -67,29 +57,28 @@ namespace FlowSERVER1 {
 
             try {
 
-                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.","Loader").ShowDialog()).Start();
+                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.", "Loader").ShowDialog()).Start();
 
-                setupDocx(LoaderModel.LoadFile(_TableName, _DirectoryName, lblFileName.Text, _isFromShared));
+                InitializeDoc(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
                 CloseForm.closeForm("RetrievalAlert");
             }
-            catch (Exception) {
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        public void setupDocx(byte[] _getByte) {
 
-            lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
+        private void InitializeDoc(byte[] docBytes) {
 
-            var _getStream = new MemoryStream(_getByte);
-            loadDocx(_getStream);
-            
+            if (docBytes != null) {
+
+                lblFileSize.Text = $"{FileSize.fileSize(docBytes):F2}Mb";
+                MemoryStream docStream = new MemoryStream(docBytes);
+                documentViewer1.LoadFromStream(docStream);
+            }
+
         }
-
-        public void loadDocx(Stream _getStream) {
-           docDocumentViewer1.LoadFromStream(_getStream, Spire.Doc.FileFormat.Docx);
-        }
-
         private void wordFORM_Load(object sender, EventArgs e) {
 
         }
@@ -104,7 +93,7 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text,_TableName,_DirectoryName,_IsFromShared);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
             this.TopMost = true;
         }
 
@@ -161,8 +150,8 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
             string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            shareFileFORM _showSharingFileFORM = new shareFileFORM(lblFileName.Text, getExtension, IsFromSharing, _TableName, _DirectoryName);
-            _showSharingFileFORM.Show();
+            new shareFileFORM(lblFileName.Text, getExtension,
+                _isFromSharing, _tableName, _directoryName).Show();
 
         }
 
@@ -197,6 +186,22 @@ namespace FlowSERVER1 {
         }
 
         private void docDocumentViewer1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void guna2Separator1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e) {
+
+        }
+
+        private void docViewer1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void documentViewer1_Click(object sender, EventArgs e) {
 
         }
     }

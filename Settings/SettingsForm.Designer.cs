@@ -38,25 +38,25 @@
             System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblDeleteMyAccount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabAccountPage = new System.Windows.Forms.TabPage();
             this.lnkLblBackupRecovery = new System.Windows.Forms.LinkLabel();
             this.guna2Panel12 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnUpdatePassword = new Guna.UI2.WinForms.Guna2Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.lblChangeMyPassword = new System.Windows.Forms.Label();
             this.guna2Panel11 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnUpdateUsername = new Guna.UI2.WinForms.Guna2Button();
             this.label33 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
+            this.lblChangeMyUsername = new System.Windows.Forms.Label();
             this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
             this.label35 = new System.Windows.Forms.Label();
             this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
-            this.label36 = new System.Windows.Forms.Label();
+            this.lblLogoutMyAccount = new System.Windows.Forms.Label();
             this.lblSettings = new System.Windows.Forms.Label();
-            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnCloseTab1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.lblUserEmail = new System.Windows.Forms.Label();
@@ -70,7 +70,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnDltAccount = new Guna.UI2.WinForms.Guna2Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabStatsPage = new System.Windows.Forms.TabPage();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Separator4 = new Guna.UI2.WinForms.Guna2Separator();
             this.label29 = new System.Windows.Forms.Label();
@@ -99,8 +99,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnCloseTab2 = new Guna.UI2.WinForms.Guna2Button();
+            this.tabSharingPage = new System.Windows.Forms.TabPage();
             this.guna2Panel25 = new Guna.UI2.WinForms.Guna2Panel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.guna2CircleButton3 = new Guna.UI2.WinForms.Guna2CircleButton();
@@ -121,14 +121,14 @@
             this.btnRmvSharingAuth = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button23 = new Guna.UI2.WinForms.Guna2Button();
             this.label66 = new System.Windows.Forms.Label();
-            this.label67 = new System.Windows.Forms.Label();
+            this.lblSetPassword = new System.Windows.Forms.Label();
             this.guna2Panel23 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button26 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button24 = new Guna.UI2.WinForms.Guna2Button();
             this.label68 = new System.Windows.Forms.Label();
-            this.label69 = new System.Windows.Forms.Label();
-            this.guna2Button25 = new Guna.UI2.WinForms.Guna2Button();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lblDisableFileSharing = new System.Windows.Forms.Label();
+            this.btnCloseTab3 = new Guna.UI2.WinForms.Guna2Button();
+            this.tabLangPage = new System.Windows.Forms.TabPage();
             this.guna2Panel21 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button30 = new Guna.UI2.WinForms.Guna2Button();
             this.label64 = new System.Windows.Forms.Label();
@@ -170,8 +170,8 @@
             this.label57 = new System.Windows.Forms.Label();
             this.guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.guna2Button14 = new Guna.UI2.WinForms.Guna2Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnCloseTab4 = new Guna.UI2.WinForms.Guna2Button();
+            this.tabUpgradePage = new System.Windows.Forms.TabPage();
             this.label17 = new System.Windows.Forms.Label();
             this.guna2GradientPanel3 = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.label55 = new System.Windows.Forms.Label();
@@ -212,24 +212,24 @@
             this.label40 = new System.Windows.Forms.Label();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.guna2TabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabAccountPage.SuspendLayout();
             this.guna2Panel12.SuspendLayout();
             this.guna2Panel11.SuspendLayout();
             this.guna2Panel7.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabStatsPage.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.guna2Panel5.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.tabSharingPage.SuspendLayout();
             this.guna2Panel25.SuspendLayout();
             this.guna2Panel24.SuspendLayout();
             this.guna2Panel22.SuspendLayout();
             this.guna2Panel23.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabLangPage.SuspendLayout();
             this.guna2Panel21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox9)).BeginInit();
             this.guna2Panel28.SuspendLayout();
@@ -250,7 +250,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).BeginInit();
             this.guna2Panel15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).BeginInit();
-            this.tabPage3.SuspendLayout();
+            this.tabUpgradePage.SuspendLayout();
             this.guna2GradientPanel3.SuspendLayout();
             this.guna2Panel10.SuspendLayout();
             this.guna2GradientPanel2.SuspendLayout();
@@ -259,17 +259,17 @@
             this.guna2Panel8.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label2
+            // lblDeleteMyAccount
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label2.Location = new System.Drawing.Point(14, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(173, 25);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Delete my account";
+            this.lblDeleteMyAccount.AutoSize = true;
+            this.lblDeleteMyAccount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblDeleteMyAccount.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDeleteMyAccount.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblDeleteMyAccount.Location = new System.Drawing.Point(14, 19);
+            this.lblDeleteMyAccount.Name = "lblDeleteMyAccount";
+            this.lblDeleteMyAccount.Size = new System.Drawing.Size(173, 25);
+            this.lblDeleteMyAccount.TabIndex = 23;
+            this.lblDeleteMyAccount.Text = "Delete my account";
             // 
             // label3
             // 
@@ -286,11 +286,11 @@
             // 
             // guna2TabControl1
             // 
-            this.guna2TabControl1.Controls.Add(this.tabPage1);
-            this.guna2TabControl1.Controls.Add(this.tabPage2);
-            this.guna2TabControl1.Controls.Add(this.tabPage5);
-            this.guna2TabControl1.Controls.Add(this.tabPage4);
-            this.guna2TabControl1.Controls.Add(this.tabPage3);
+            this.guna2TabControl1.Controls.Add(this.tabAccountPage);
+            this.guna2TabControl1.Controls.Add(this.tabStatsPage);
+            this.guna2TabControl1.Controls.Add(this.tabSharingPage);
+            this.guna2TabControl1.Controls.Add(this.tabLangPage);
+            this.guna2TabControl1.Controls.Add(this.tabUpgradePage);
             this.guna2TabControl1.ItemSize = new System.Drawing.Size(199, 40);
             this.guna2TabControl1.Location = new System.Drawing.Point(0, -2);
             this.guna2TabControl1.Name = "guna2TabControl1";
@@ -317,24 +317,24 @@
             this.guna2TabControl1.TabMenuOrientation = Guna.UI2.WinForms.TabMenuOrientation.HorizontalTop;
             this.guna2TabControl1.Click += new System.EventHandler(this.guna2TabControl1_Click);
             // 
-            // tabPage1
+            // tabAccountPage
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.tabPage1.Controls.Add(this.lnkLblBackupRecovery);
-            this.tabPage1.Controls.Add(this.guna2Panel12);
-            this.tabPage1.Controls.Add(this.guna2Panel11);
-            this.tabPage1.Controls.Add(this.guna2Panel7);
-            this.tabPage1.Controls.Add(this.lblSettings);
-            this.tabPage1.Controls.Add(this.guna2Button3);
-            this.tabPage1.Controls.Add(this.guna2Panel2);
-            this.tabPage1.Controls.Add(this.guna2Panel1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 44);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(997, 522);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Account";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            this.tabAccountPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.tabAccountPage.Controls.Add(this.lnkLblBackupRecovery);
+            this.tabAccountPage.Controls.Add(this.guna2Panel12);
+            this.tabAccountPage.Controls.Add(this.guna2Panel11);
+            this.tabAccountPage.Controls.Add(this.guna2Panel7);
+            this.tabAccountPage.Controls.Add(this.lblSettings);
+            this.tabAccountPage.Controls.Add(this.btnCloseTab1);
+            this.tabAccountPage.Controls.Add(this.guna2Panel2);
+            this.tabAccountPage.Controls.Add(this.guna2Panel1);
+            this.tabAccountPage.Location = new System.Drawing.Point(4, 44);
+            this.tabAccountPage.Name = "tabAccountPage";
+            this.tabAccountPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAccountPage.Size = new System.Drawing.Size(997, 522);
+            this.tabAccountPage.TabIndex = 0;
+            this.tabAccountPage.Text = "Account";
+            this.tabAccountPage.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // lnkLblBackupRecovery
             // 
@@ -359,7 +359,7 @@
             this.guna2Panel12.BorderThickness = 1;
             this.guna2Panel12.Controls.Add(this.btnUpdatePassword);
             this.guna2Panel12.Controls.Add(this.label8);
-            this.guna2Panel12.Controls.Add(this.label18);
+            this.guna2Panel12.Controls.Add(this.lblChangeMyPassword);
             this.guna2Panel12.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel12.Location = new System.Drawing.Point(3, 153);
             this.guna2Panel12.Name = "guna2Panel12";
@@ -405,17 +405,17 @@
             this.label8.TabIndex = 27;
             this.label8.Text = "Change your Flowstorage account password";
             // 
-            // label18
+            // lblChangeMyPassword
             // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label18.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label18.Location = new System.Drawing.Point(13, 16);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(194, 25);
-            this.label18.TabIndex = 26;
-            this.label18.Text = "Change my password";
+            this.lblChangeMyPassword.AutoSize = true;
+            this.lblChangeMyPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblChangeMyPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChangeMyPassword.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblChangeMyPassword.Location = new System.Drawing.Point(13, 16);
+            this.lblChangeMyPassword.Name = "lblChangeMyPassword";
+            this.lblChangeMyPassword.Size = new System.Drawing.Size(194, 25);
+            this.lblChangeMyPassword.TabIndex = 26;
+            this.lblChangeMyPassword.Text = "Change my password";
             // 
             // guna2Panel11
             // 
@@ -423,7 +423,7 @@
             this.guna2Panel11.BorderThickness = 1;
             this.guna2Panel11.Controls.Add(this.btnUpdateUsername);
             this.guna2Panel11.Controls.Add(this.label33);
-            this.guna2Panel11.Controls.Add(this.label58);
+            this.guna2Panel11.Controls.Add(this.lblChangeMyUsername);
             this.guna2Panel11.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel11.Location = new System.Drawing.Point(3, 246);
             this.guna2Panel11.Name = "guna2Panel11";
@@ -469,17 +469,18 @@
             this.label33.TabIndex = 27;
             this.label33.Text = "Your Flowstorage account username will be changes but your data is remains";
             // 
-            // label58
+            // lblChangeMyUsername
             // 
-            this.label58.AutoSize = true;
-            this.label58.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label58.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label58.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label58.Location = new System.Drawing.Point(13, 16);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(198, 25);
-            this.label58.TabIndex = 26;
-            this.label58.Text = "Change my username";
+            this.lblChangeMyUsername.AutoSize = true;
+            this.lblChangeMyUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblChangeMyUsername.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChangeMyUsername.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblChangeMyUsername.Location = new System.Drawing.Point(13, 16);
+            this.lblChangeMyUsername.Name = "lblChangeMyUsername";
+            this.lblChangeMyUsername.Size = new System.Drawing.Size(198, 25);
+            this.lblChangeMyUsername.TabIndex = 26;
+            this.lblChangeMyUsername.Text = "Change my username";
+            this.lblChangeMyUsername.Click += new System.EventHandler(this.label58_Click);
             // 
             // guna2Panel7
             // 
@@ -487,7 +488,7 @@
             this.guna2Panel7.BorderThickness = 1;
             this.guna2Panel7.Controls.Add(this.label35);
             this.guna2Panel7.Controls.Add(this.btnLogout);
-            this.guna2Panel7.Controls.Add(this.label36);
+            this.guna2Panel7.Controls.Add(this.lblLogoutMyAccount);
             this.guna2Panel7.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel7.Location = new System.Drawing.Point(3, 339);
             this.guna2Panel7.Name = "guna2Panel7";
@@ -535,17 +536,17 @@
             this.btnLogout.Text = "Logout";
             this.btnLogout.Click += new System.EventHandler(this.guna2Button4_Click);
             // 
-            // label36
+            // lblLogoutMyAccount
             // 
-            this.label36.AutoSize = true;
-            this.label36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label36.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label36.Location = new System.Drawing.Point(13, 16);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(168, 25);
-            this.label36.TabIndex = 23;
-            this.label36.Text = "Logout my acount";
+            this.lblLogoutMyAccount.AutoSize = true;
+            this.lblLogoutMyAccount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblLogoutMyAccount.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogoutMyAccount.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblLogoutMyAccount.Location = new System.Drawing.Point(13, 16);
+            this.lblLogoutMyAccount.Name = "lblLogoutMyAccount";
+            this.lblLogoutMyAccount.Size = new System.Drawing.Size(177, 25);
+            this.lblLogoutMyAccount.TabIndex = 23;
+            this.lblLogoutMyAccount.Text = "Logout my account";
             // 
             // lblSettings
             // 
@@ -559,25 +560,25 @@
             this.lblSettings.Text = "Settings";
             this.lblSettings.Click += new System.EventHandler(this.label22_Click);
             // 
-            // guna2Button3
+            // btnCloseTab1
             // 
-            this.guna2Button3.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button3.BorderRadius = 5;
-            this.guna2Button3.BorderThickness = 1;
-            this.guna2Button3.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button3.ForeColor = System.Drawing.Color.GhostWhite;
-            this.guna2Button3.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button3.Image")));
-            this.guna2Button3.Location = new System.Drawing.Point(10, 15);
-            this.guna2Button3.Name = "guna2Button3";
-            this.guna2Button3.Size = new System.Drawing.Size(36, 30);
-            this.guna2Button3.TabIndex = 30;
-            this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
+            this.btnCloseTab1.BorderColor = System.Drawing.Color.Empty;
+            this.btnCloseTab1.BorderRadius = 5;
+            this.btnCloseTab1.BorderThickness = 1;
+            this.btnCloseTab1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnCloseTab1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCloseTab1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCloseTab1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnCloseTab1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseTab1.ForeColor = System.Drawing.Color.GhostWhite;
+            this.btnCloseTab1.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab1.Image")));
+            this.btnCloseTab1.Location = new System.Drawing.Point(10, 15);
+            this.btnCloseTab1.Name = "btnCloseTab1";
+            this.btnCloseTab1.Size = new System.Drawing.Size(36, 30);
+            this.btnCloseTab1.TabIndex = 30;
+            this.btnCloseTab1.Click += new System.EventHandler(this.guna2Button3_Click);
             // 
             // guna2Panel2
             // 
@@ -741,7 +742,7 @@
             this.guna2Panel1.BorderRadius = 5;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.label3);
-            this.guna2Panel1.Controls.Add(this.label2);
+            this.guna2Panel1.Controls.Add(this.lblDeleteMyAccount);
             this.guna2Panel1.Controls.Add(this.btnDltAccount);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel1.Location = new System.Drawing.Point(3, 431);
@@ -773,22 +774,22 @@
             this.btnDltAccount.Text = "Delete Account";
             this.btnDltAccount.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
-            // tabPage2
+            // tabStatsPage
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.tabPage2.Controls.Add(this.guna2Panel3);
-            this.tabPage2.Controls.Add(this.guna2Panel4);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.guna2Panel6);
-            this.tabPage2.Controls.Add(this.guna2Panel5);
-            this.tabPage2.Controls.Add(this.guna2Button2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 44);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(997, 522);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Statistics";
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            this.tabStatsPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.tabStatsPage.Controls.Add(this.guna2Panel3);
+            this.tabStatsPage.Controls.Add(this.guna2Panel4);
+            this.tabStatsPage.Controls.Add(this.label1);
+            this.tabStatsPage.Controls.Add(this.guna2Panel6);
+            this.tabStatsPage.Controls.Add(this.guna2Panel5);
+            this.tabStatsPage.Controls.Add(this.btnCloseTab2);
+            this.tabStatsPage.Location = new System.Drawing.Point(4, 44);
+            this.tabStatsPage.Name = "tabStatsPage";
+            this.tabStatsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabStatsPage.Size = new System.Drawing.Size(997, 522);
+            this.tabStatsPage.TabIndex = 1;
+            this.tabStatsPage.Text = "Statistics";
+            this.tabStatsPage.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // guna2Panel3
             // 
@@ -1213,42 +1214,42 @@
             this.label10.TabIndex = 30;
             this.label10.Text = "Statistics";
             // 
-            // guna2Button2
+            // btnCloseTab2
             // 
-            this.guna2Button2.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button2.BorderRadius = 5;
-            this.guna2Button2.BorderThickness = 1;
-            this.guna2Button2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button2.ForeColor = System.Drawing.Color.GhostWhite;
-            this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(10, 15);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(36, 30);
-            this.guna2Button2.TabIndex = 1;
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnCloseTab2.BorderColor = System.Drawing.Color.Empty;
+            this.btnCloseTab2.BorderRadius = 5;
+            this.btnCloseTab2.BorderThickness = 1;
+            this.btnCloseTab2.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnCloseTab2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCloseTab2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCloseTab2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnCloseTab2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseTab2.ForeColor = System.Drawing.Color.GhostWhite;
+            this.btnCloseTab2.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab2.Image")));
+            this.btnCloseTab2.Location = new System.Drawing.Point(10, 15);
+            this.btnCloseTab2.Name = "btnCloseTab2";
+            this.btnCloseTab2.Size = new System.Drawing.Size(36, 30);
+            this.btnCloseTab2.TabIndex = 1;
+            this.btnCloseTab2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // tabPage5
+            // tabSharingPage
             // 
-            this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.tabPage5.Controls.Add(this.guna2Panel25);
-            this.tabPage5.Controls.Add(this.guna2Separator6);
-            this.tabPage5.Controls.Add(this.guna2Panel24);
-            this.tabPage5.Controls.Add(this.label70);
-            this.tabPage5.Controls.Add(this.guna2Panel22);
-            this.tabPage5.Controls.Add(this.guna2Panel23);
-            this.tabPage5.Controls.Add(this.guna2Button25);
-            this.tabPage5.Location = new System.Drawing.Point(4, 44);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(997, 522);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "File Sharing";
-            this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
+            this.tabSharingPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.tabSharingPage.Controls.Add(this.guna2Panel25);
+            this.tabSharingPage.Controls.Add(this.guna2Separator6);
+            this.tabSharingPage.Controls.Add(this.guna2Panel24);
+            this.tabSharingPage.Controls.Add(this.label70);
+            this.tabSharingPage.Controls.Add(this.guna2Panel22);
+            this.tabSharingPage.Controls.Add(this.guna2Panel23);
+            this.tabSharingPage.Controls.Add(this.btnCloseTab3);
+            this.tabSharingPage.Location = new System.Drawing.Point(4, 44);
+            this.tabSharingPage.Name = "tabSharingPage";
+            this.tabSharingPage.Size = new System.Drawing.Size(997, 522);
+            this.tabSharingPage.TabIndex = 4;
+            this.tabSharingPage.Text = "File Sharing";
+            this.tabSharingPage.Click += new System.EventHandler(this.tabPage5_Click);
             // 
             // guna2Panel25
             // 
@@ -1504,7 +1505,7 @@
             this.guna2Panel22.Controls.Add(this.btnRmvSharingAuth);
             this.guna2Panel22.Controls.Add(this.guna2Button23);
             this.guna2Panel22.Controls.Add(this.label66);
-            this.guna2Panel22.Controls.Add(this.label67);
+            this.guna2Panel22.Controls.Add(this.lblSetPassword);
             this.guna2Panel22.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel22.Location = new System.Drawing.Point(3, 65);
             this.guna2Panel22.Name = "guna2Panel22";
@@ -1577,17 +1578,17 @@
             this.label66.TabIndex = 27;
             this.label66.Text = "Ask for password before people can share a file to you";
             // 
-            // label67
+            // lblSetPassword
             // 
-            this.label67.AutoSize = true;
-            this.label67.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label67.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label67.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label67.Location = new System.Drawing.Point(13, 16);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(123, 25);
-            this.label67.TabIndex = 26;
-            this.label67.Text = "Set Password";
+            this.lblSetPassword.AutoSize = true;
+            this.lblSetPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblSetPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSetPassword.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblSetPassword.Location = new System.Drawing.Point(13, 16);
+            this.lblSetPassword.Name = "lblSetPassword";
+            this.lblSetPassword.Size = new System.Drawing.Size(123, 25);
+            this.lblSetPassword.TabIndex = 26;
+            this.lblSetPassword.Text = "Set Password";
             // 
             // guna2Panel23
             // 
@@ -1596,7 +1597,7 @@
             this.guna2Panel23.Controls.Add(this.guna2Button26);
             this.guna2Panel23.Controls.Add(this.guna2Button24);
             this.guna2Panel23.Controls.Add(this.label68);
-            this.guna2Panel23.Controls.Add(this.label69);
+            this.guna2Panel23.Controls.Add(this.lblDisableFileSharing);
             this.guna2Panel23.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Panel23.Location = new System.Drawing.Point(3, 158);
             this.guna2Panel23.Name = "guna2Panel23";
@@ -1667,59 +1668,59 @@
             this.label68.Text = "Disabling file sharing will not allow people to share a file to you. You can stil" +
     "l share to people however.";
             // 
-            // label69
+            // lblDisableFileSharing
             // 
-            this.label69.AutoSize = true;
-            this.label69.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label69.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label69.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label69.Location = new System.Drawing.Point(13, 16);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(180, 25);
-            this.label69.TabIndex = 26;
-            this.label69.Text = "Disable File Sharing";
+            this.lblDisableFileSharing.AutoSize = true;
+            this.lblDisableFileSharing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblDisableFileSharing.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDisableFileSharing.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblDisableFileSharing.Location = new System.Drawing.Point(13, 16);
+            this.lblDisableFileSharing.Name = "lblDisableFileSharing";
+            this.lblDisableFileSharing.Size = new System.Drawing.Size(180, 25);
+            this.lblDisableFileSharing.TabIndex = 26;
+            this.lblDisableFileSharing.Text = "Disable File Sharing";
             // 
-            // guna2Button25
+            // btnCloseTab3
             // 
-            this.guna2Button25.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button25.BorderRadius = 5;
-            this.guna2Button25.BorderThickness = 1;
-            this.guna2Button25.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button25.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button25.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button25.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button25.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button25.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button25.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button25.ForeColor = System.Drawing.Color.GhostWhite;
-            this.guna2Button25.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button25.Image")));
-            this.guna2Button25.Location = new System.Drawing.Point(10, 15);
-            this.guna2Button25.Name = "guna2Button25";
-            this.guna2Button25.Size = new System.Drawing.Size(36, 30);
-            this.guna2Button25.TabIndex = 32;
-            this.guna2Button25.Click += new System.EventHandler(this.guna2Button25_Click_1);
+            this.btnCloseTab3.BorderColor = System.Drawing.Color.Empty;
+            this.btnCloseTab3.BorderRadius = 5;
+            this.btnCloseTab3.BorderThickness = 1;
+            this.btnCloseTab3.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnCloseTab3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCloseTab3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCloseTab3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnCloseTab3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseTab3.ForeColor = System.Drawing.Color.GhostWhite;
+            this.btnCloseTab3.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab3.Image")));
+            this.btnCloseTab3.Location = new System.Drawing.Point(10, 15);
+            this.btnCloseTab3.Name = "btnCloseTab3";
+            this.btnCloseTab3.Size = new System.Drawing.Size(36, 30);
+            this.btnCloseTab3.TabIndex = 32;
+            this.btnCloseTab3.Click += new System.EventHandler(this.guna2Button25_Click_1);
             // 
-            // tabPage4
+            // tabLangPage
             // 
-            this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.tabPage4.Controls.Add(this.guna2Panel21);
-            this.tabPage4.Controls.Add(this.guna2Panel28);
-            this.tabPage4.Controls.Add(this.guna2Panel20);
-            this.tabPage4.Controls.Add(this.guna2Panel18);
-            this.tabPage4.Controls.Add(this.guna2Panel13);
-            this.tabPage4.Controls.Add(this.guna2Panel19);
-            this.tabPage4.Controls.Add(this.guna2Panel17);
-            this.tabPage4.Controls.Add(this.guna2Panel14);
-            this.tabPage4.Controls.Add(this.guna2Panel16);
-            this.tabPage4.Controls.Add(this.guna2Panel15);
-            this.tabPage4.Controls.Add(this.label21);
-            this.tabPage4.Controls.Add(this.guna2Button14);
-            this.tabPage4.Location = new System.Drawing.Point(4, 44);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(997, 522);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Languages";
-            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            this.tabLangPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.tabLangPage.Controls.Add(this.guna2Panel21);
+            this.tabLangPage.Controls.Add(this.guna2Panel28);
+            this.tabLangPage.Controls.Add(this.guna2Panel20);
+            this.tabLangPage.Controls.Add(this.guna2Panel18);
+            this.tabLangPage.Controls.Add(this.guna2Panel13);
+            this.tabLangPage.Controls.Add(this.guna2Panel19);
+            this.tabLangPage.Controls.Add(this.guna2Panel17);
+            this.tabLangPage.Controls.Add(this.guna2Panel14);
+            this.tabLangPage.Controls.Add(this.guna2Panel16);
+            this.tabLangPage.Controls.Add(this.guna2Panel15);
+            this.tabLangPage.Controls.Add(this.label21);
+            this.tabLangPage.Controls.Add(this.btnCloseTab4);
+            this.tabLangPage.Location = new System.Drawing.Point(4, 44);
+            this.tabLangPage.Name = "tabLangPage";
+            this.tabLangPage.Size = new System.Drawing.Size(997, 522);
+            this.tabLangPage.TabIndex = 3;
+            this.tabLangPage.Text = "Languages";
+            this.tabLangPage.Click += new System.EventHandler(this.tabPage4_Click);
             // 
             // guna2Panel21
             // 
@@ -2302,42 +2303,42 @@
             this.label21.TabIndex = 34;
             this.label21.Text = "Settings";
             // 
-            // guna2Button14
+            // btnCloseTab4
             // 
-            this.guna2Button14.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button14.BorderRadius = 5;
-            this.guna2Button14.BorderThickness = 1;
-            this.guna2Button14.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button14.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button14.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button14.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button14.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button14.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button14.ForeColor = System.Drawing.Color.GhostWhite;
-            this.guna2Button14.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button14.Image")));
-            this.guna2Button14.Location = new System.Drawing.Point(10, 15);
-            this.guna2Button14.Name = "guna2Button14";
-            this.guna2Button14.Size = new System.Drawing.Size(36, 30);
-            this.guna2Button14.TabIndex = 33;
-            this.guna2Button14.Click += new System.EventHandler(this.guna2Button14_Click);
+            this.btnCloseTab4.BorderColor = System.Drawing.Color.Empty;
+            this.btnCloseTab4.BorderRadius = 5;
+            this.btnCloseTab4.BorderThickness = 1;
+            this.btnCloseTab4.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnCloseTab4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseTab4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCloseTab4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCloseTab4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnCloseTab4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseTab4.ForeColor = System.Drawing.Color.GhostWhite;
+            this.btnCloseTab4.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab4.Image")));
+            this.btnCloseTab4.Location = new System.Drawing.Point(10, 15);
+            this.btnCloseTab4.Name = "btnCloseTab4";
+            this.btnCloseTab4.Size = new System.Drawing.Size(36, 30);
+            this.btnCloseTab4.TabIndex = 33;
+            this.btnCloseTab4.Click += new System.EventHandler(this.guna2Button14_Click);
             // 
-            // tabPage3
+            // tabUpgradePage
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.tabPage3.Controls.Add(this.label17);
-            this.tabPage3.Controls.Add(this.guna2GradientPanel3);
-            this.tabPage3.Controls.Add(this.guna2Panel10);
-            this.tabPage3.Controls.Add(this.guna2GradientPanel2);
-            this.tabPage3.Controls.Add(this.guna2Panel9);
-            this.tabPage3.Controls.Add(this.guna2GradientPanel1);
-            this.tabPage3.Controls.Add(this.guna2Panel8);
-            this.tabPage3.Location = new System.Drawing.Point(4, 44);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(997, 522);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Upgrade";
-            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
+            this.tabUpgradePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.tabUpgradePage.Controls.Add(this.label17);
+            this.tabUpgradePage.Controls.Add(this.guna2GradientPanel3);
+            this.tabUpgradePage.Controls.Add(this.guna2Panel10);
+            this.tabUpgradePage.Controls.Add(this.guna2GradientPanel2);
+            this.tabUpgradePage.Controls.Add(this.guna2Panel9);
+            this.tabUpgradePage.Controls.Add(this.guna2GradientPanel1);
+            this.tabUpgradePage.Controls.Add(this.guna2Panel8);
+            this.tabUpgradePage.Location = new System.Drawing.Point(4, 44);
+            this.tabUpgradePage.Name = "tabUpgradePage";
+            this.tabUpgradePage.Size = new System.Drawing.Size(997, 522);
+            this.tabUpgradePage.TabIndex = 2;
+            this.tabUpgradePage.Text = "Upgrade";
+            this.tabUpgradePage.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // label17
             // 
@@ -2890,8 +2891,8 @@
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.remAccFORM_Load);
             this.guna2TabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabAccountPage.ResumeLayout(false);
+            this.tabAccountPage.PerformLayout();
             this.guna2Panel12.ResumeLayout(false);
             this.guna2Panel12.PerformLayout();
             this.guna2Panel11.ResumeLayout(false);
@@ -2902,16 +2903,16 @@
             this.guna2Panel2.PerformLayout();
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabStatsPage.ResumeLayout(false);
+            this.tabStatsPage.PerformLayout();
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel4.ResumeLayout(false);
             this.guna2Panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.guna2Panel5.ResumeLayout(false);
             this.guna2Panel5.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
+            this.tabSharingPage.ResumeLayout(false);
+            this.tabSharingPage.PerformLayout();
             this.guna2Panel25.ResumeLayout(false);
             this.guna2Panel25.PerformLayout();
             this.guna2Panel24.ResumeLayout(false);
@@ -2920,8 +2921,8 @@
             this.guna2Panel22.PerformLayout();
             this.guna2Panel23.ResumeLayout(false);
             this.guna2Panel23.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
+            this.tabLangPage.ResumeLayout(false);
+            this.tabLangPage.PerformLayout();
             this.guna2Panel21.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox9)).EndInit();
             this.guna2Panel28.ResumeLayout(false);
@@ -2942,8 +2943,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).EndInit();
             this.guna2Panel15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.tabUpgradePage.ResumeLayout(false);
+            this.tabUpgradePage.PerformLayout();
             this.guna2GradientPanel3.ResumeLayout(false);
             this.guna2GradientPanel3.PerformLayout();
             this.guna2Panel10.ResumeLayout(false);
@@ -2977,9 +2978,9 @@
         public System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
-        private Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button btnCloseTab2;
         public System.Windows.Forms.Label label1;
-        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button btnCloseTab1;
         public System.Windows.Forms.Label lblSettings;
         public System.Windows.Forms.Label label23;
         public System.Windows.Forms.Label label24;
@@ -3032,7 +3033,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel11;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel12;
         public System.Windows.Forms.Label label21;
-        private Guna.UI2.WinForms.Guna2Button guna2Button14;
+        private Guna.UI2.WinForms.Guna2Button btnCloseTab4;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel15;
         private Guna.UI2.WinForms.Guna2Button guna2Button17;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
@@ -3045,24 +3046,24 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button19;
         public System.Windows.Forms.Label label60;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox5;
-        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label lblDeleteMyAccount;
         public System.Windows.Forms.Label label3;
         public Guna.UI2.WinForms.Guna2TabControl guna2TabControl1;
         public Guna.UI2.WinForms.Guna2Button btnDltAccount;
         public System.Windows.Forms.Label label35;
-        public System.Windows.Forms.Label label36;
+        public System.Windows.Forms.Label lblLogoutMyAccount;
         public Guna.UI2.WinForms.Guna2Button btnLogout;
         public Guna.UI2.WinForms.Guna2Button guna2Button11;
         public System.Windows.Forms.Label label33;
-        public System.Windows.Forms.Label label58;
+        public System.Windows.Forms.Label lblChangeMyUsername;
         public Guna.UI2.WinForms.Guna2Button btnUpdateUsername;
         public Guna.UI2.WinForms.Guna2Button btnUpdatePassword;
         public System.Windows.Forms.Label label8;
-        public System.Windows.Forms.Label label18;
-        public System.Windows.Forms.TabPage tabPage2;
-        public System.Windows.Forms.TabPage tabPage3;
-        public System.Windows.Forms.TabPage tabPage4;
-        public System.Windows.Forms.TabPage tabPage1;
+        public System.Windows.Forms.Label lblChangeMyPassword;
+        public System.Windows.Forms.TabPage tabStatsPage;
+        public System.Windows.Forms.TabPage tabUpgradePage;
+        public System.Windows.Forms.TabPage tabLangPage;
+        public System.Windows.Forms.TabPage tabAccountPage;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel13;
         private Guna.UI2.WinForms.Guna2Button guna2Button15;
         public System.Windows.Forms.Label label27;
@@ -3083,17 +3084,17 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button21;
         public System.Windows.Forms.Label label62;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox7;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabSharingPage;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel22;
         public Guna.UI2.WinForms.Guna2Button guna2Button23;
         public System.Windows.Forms.Label label66;
-        public System.Windows.Forms.Label label67;
+        public System.Windows.Forms.Label lblSetPassword;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel23;
         public Guna.UI2.WinForms.Guna2Button guna2Button24;
         public System.Windows.Forms.Label label68;
-        public System.Windows.Forms.Label label69;
+        public System.Windows.Forms.Label lblDisableFileSharing;
         public System.Windows.Forms.Label label70;
-        private Guna.UI2.WinForms.Guna2Button guna2Button25;
+        private Guna.UI2.WinForms.Guna2Button btnCloseTab3;
         public Guna.UI2.WinForms.Guna2Button guna2Button26;
         public Guna.UI2.WinForms.Guna2Button btnRmvSharingAuth;
         private System.Windows.Forms.Label label72;

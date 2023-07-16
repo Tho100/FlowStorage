@@ -720,7 +720,7 @@ namespace FlowSERVER1 {
 
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     Form bgBlur = new Form();
-                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert(Globals.accountType)) {
+                    using (UpgradeAccountAlert displayUpgrade = new UpgradeAccountAlert()) {
                         bgBlur.StartPosition = FormStartPosition.Manual;
                         bgBlur.FormBorderStyle = FormBorderStyle.None;
                         bgBlur.Opacity = .24d;
@@ -871,7 +871,7 @@ namespace FlowSERVER1 {
 
         public void DisplayError(String CurAcc) {
             Form bgBlur = new Form();
-            using (UpgradeAccountAlert displayPic = new UpgradeAccountAlert(CurAcc)) {
+            using (UpgradeAccountAlert displayPic = new UpgradeAccountAlert()) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
                 bgBlur.FormBorderStyle = FormBorderStyle.None;
                 bgBlur.Opacity = .24d;
