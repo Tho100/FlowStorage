@@ -28,8 +28,8 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.guna2TextBox4 = new Guna.UI2.WinForms.Guna2TextBox();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.txtFieldFeedback = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnSendFeedback = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,8 +51,8 @@
             this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.label6);
-            this.guna2Panel1.Controls.Add(this.guna2TextBox4);
-            this.guna2Panel1.Controls.Add(this.guna2Button1);
+            this.guna2Panel1.Controls.Add(this.txtFieldFeedback);
+            this.guna2Panel1.Controls.Add(this.btnSendFeedback);
             this.guna2Panel1.Location = new System.Drawing.Point(25, 111);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(722, 395);
@@ -71,57 +71,57 @@
             this.label6.TabIndex = 41;
             this.label6.Text = "Feedback";
             // 
-            // guna2TextBox4
+            // txtFieldFeedback
             // 
-            this.guna2TextBox4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2TextBox4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2TextBox4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.BorderRadius = 8;
-            this.guna2TextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox4.DefaultText = "";
-            this.guna2TextBox4.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.guna2TextBox4.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.guna2TextBox4.ForeColor = System.Drawing.Color.White;
-            this.guna2TextBox4.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox4.Location = new System.Drawing.Point(23, 45);
-            this.guna2TextBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.guna2TextBox4.MaxLength = 295;
-            this.guna2TextBox4.Multiline = true;
-            this.guna2TextBox4.Name = "guna2TextBox4";
-            this.guna2TextBox4.PasswordChar = '\0';
-            this.guna2TextBox4.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox4.PlaceholderText = "Write your feedback";
-            this.guna2TextBox4.SelectedText = "";
-            this.guna2TextBox4.Size = new System.Drawing.Size(677, 265);
-            this.guna2TextBox4.TabIndex = 34;
-            this.guna2TextBox4.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
+            this.txtFieldFeedback.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldFeedback.BackColor = System.Drawing.Color.Transparent;
+            this.txtFieldFeedback.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldFeedback.BorderRadius = 8;
+            this.txtFieldFeedback.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFieldFeedback.DefaultText = "";
+            this.txtFieldFeedback.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtFieldFeedback.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtFieldFeedback.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldFeedback.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldFeedback.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldFeedback.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldFeedback.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.txtFieldFeedback.ForeColor = System.Drawing.Color.White;
+            this.txtFieldFeedback.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldFeedback.Location = new System.Drawing.Point(23, 45);
+            this.txtFieldFeedback.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFieldFeedback.MaxLength = 295;
+            this.txtFieldFeedback.Multiline = true;
+            this.txtFieldFeedback.Name = "txtFieldFeedback";
+            this.txtFieldFeedback.PasswordChar = '\0';
+            this.txtFieldFeedback.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldFeedback.PlaceholderText = "Write your feedback";
+            this.txtFieldFeedback.SelectedText = "";
+            this.txtFieldFeedback.Size = new System.Drawing.Size(677, 265);
+            this.txtFieldFeedback.TabIndex = 34;
+            this.txtFieldFeedback.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
-            // guna2Button1
+            // btnSendFeedback
             // 
-            this.guna2Button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button1.Animated = true;
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button1.BorderRadius = 10;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(555, 326);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(145, 46);
-            this.guna2Button1.TabIndex = 40;
-            this.guna2Button1.Text = "Send";
-            this.guna2Button1.TextOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnSendFeedback.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnSendFeedback.Animated = true;
+            this.btnSendFeedback.BackColor = System.Drawing.Color.Transparent;
+            this.btnSendFeedback.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnSendFeedback.BorderRadius = 10;
+            this.btnSendFeedback.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSendFeedback.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSendFeedback.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSendFeedback.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSendFeedback.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnSendFeedback.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSendFeedback.ForeColor = System.Drawing.Color.White;
+            this.btnSendFeedback.Location = new System.Drawing.Point(555, 326);
+            this.btnSendFeedback.Name = "btnSendFeedback";
+            this.btnSendFeedback.Size = new System.Drawing.Size(145, 46);
+            this.btnSendFeedback.TabIndex = 40;
+            this.btnSendFeedback.Text = "Send";
+            this.btnSendFeedback.TextOffset = new System.Drawing.Point(0, -1);
+            this.btnSendFeedback.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // guna2Separator1
             // 
@@ -209,10 +209,10 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private System.Windows.Forms.Label label3;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        public Guna.UI2.WinForms.Guna2Button btnSendFeedback;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label label1;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox4;
+        public Guna.UI2.WinForms.Guna2TextBox txtFieldFeedback;
         private System.Windows.Forms.Label label6;
     }
 }

@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using MySql.Data.MySqlClient;
-using System.Threading;
-
+﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Authentication;
-using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class SignInForm : Form {
@@ -31,17 +30,17 @@ namespace FlowSERVER1 {
         private string _inputGetEmail { get; set; }
         private int _attemptCurr { get; set; } = 0;
         private string _currentLang { get; set; } = "US";
-        private HomePage _homePage { get; set; } =  HomePage.instance;
+        private HomePage _homePage { get; set; } = HomePage.instance;
 
         public SignInForm(SignUpForm mainForm) {
             InitializeComponent();
 
             this.mainForm = mainForm;
-                
+
             instance = this;
         }
 
-        public void setupAutoLogin(String _custUsername) {
+        private void SetupAutoLogin(String _custUsername) {
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
 
@@ -63,7 +62,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private string returnAuthValues(string whichColumn) {
+        private string ReturnCustomColumn(string whichColumn) {
 
             var concludeValue = new List<string>();
 
@@ -80,7 +79,7 @@ namespace FlowSERVER1 {
             return concludeValue.FirstOrDefault() ?? string.Empty;
         }
 
-        private async void setupRedundane() {
+        private async void SetupRedundane() {
 
             var flowLayout = accessHomePage.flwLayoutHome;
             var garbageButton = accessHomePage.btnGarbageImage;
@@ -91,8 +90,8 @@ namespace FlowSERVER1 {
 
             using (var command = new MySqlCommand(selectUserQuery, con)) {
                 command.Parameters.AddWithValue("@email", _inputGetEmail);
-                using(MySqlDataReader readerUsername = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while(await readerUsername.ReadAsync()) {
+                using (MySqlDataReader readerUsername = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await readerUsername.ReadAsync()) {
                         _custUsername = readerUsername.GetString(0);
                     }
                 }
@@ -100,9 +99,9 @@ namespace FlowSERVER1 {
 
             using (var emailCommand = new MySqlCommand(selectEmailQuery, con)) {
                 emailCommand.Parameters.AddWithValue("@username", _custUsername);
-                using(MySqlDataReader reader = (MySqlDataReader) await emailCommand.ExecuteReaderAsync()) {
-                    while(await reader.ReadAsync()) {
-                        if(reader.GetString(0) != null) {
+                using (MySqlDataReader reader = (MySqlDataReader)await emailCommand.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        if (reader.GetString(0) != null) {
                             _custEmail = reader.GetString(0);
                         }
                     }
@@ -118,7 +117,7 @@ namespace FlowSERVER1 {
 
             Greeting.buildGreetingLabel(_currentLang);
 
-            if(flowLayout.Controls.Count == 0) {
+            if (flowLayout.Controls.Count == 0) {
                 buildEmptyBody();
             }
 
@@ -129,7 +128,7 @@ namespace FlowSERVER1 {
             accessHomePage.btnGarbageImage.Visible = true;
         }
 
-        private async Task generateUserFolder(String userName) {
+        private async Task GenerateUserFolders(String userName) {
 
             string[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
             _homePage.lstFoldersPage.Items.AddRange(itemFolder);
@@ -159,22 +158,22 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <returns>verifyStatus</returns>
-        private async Task<bool> verifyAuthentication() {
+        private async Task<bool> VerifyUserAuthentication() {
 
-            var _getEmail = guna2TextBox1.Text;
-            _inputGetEmail = _getEmail;
+            var inputEmail = txtFieldEmail.Text;
+            _inputGetEmail = inputEmail;
 
-            var inputAuth0 = guna2TextBox2.Text;
-            var inputAuth1 = guna2TextBox4.Text;
+            var inputAuth0 = txtFieldAuth.Text;
+            var inputAuth1 = txtFieldPIN.Text;
 
             bool authenticationSuccessful = false;
 
             try {
 
-                if (!string.IsNullOrEmpty(returnAuthValues("CUST_PASSWORD"))) {
-                    _returnedAuth0 = returnAuthValues("CUST_PASSWORD");
-                    if (!string.IsNullOrEmpty(returnAuthValues("CUST_PIN"))) {
-                        _returnedAuth1 = returnAuthValues("CUST_PIN");
+                if (!string.IsNullOrEmpty(ReturnCustomColumn("CUST_PASSWORD"))) {
+                    _returnedAuth0 = ReturnCustomColumn("CUST_PASSWORD");
+                    if (!string.IsNullOrEmpty(ReturnCustomColumn("CUST_PIN"))) {
+                        _returnedAuth1 = ReturnCustomColumn("CUST_PIN");
                     }
                 }
 
@@ -188,7 +187,7 @@ namespace FlowSERVER1 {
 
                 authenticationSuccessful = true;
 
-                setupRedundane();
+                SetupRedundane();
 
                 this.Close();
 
@@ -206,16 +205,17 @@ namespace FlowSERVER1 {
                     GlobalsData.fileTypeValuesSharedToMe.Clear();
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
 
-                    await generateUserData();
+                    await GenerateUserData();
 
                     RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
                     retrievalAlertForm?.Close();
 
                     if (guna2CheckBox2.Checked) {
-                        setupAutoLogin(Globals.custUsername);
+                        SetupAutoLogin(Globals.custUsername);
                     }
 
-                }  catch (Exception) {
+                }
+                catch (Exception) {
                     MessageBox.Show(
                         "An error occurred. Check your internet connection and try again.",
                         "Flowstorage",
@@ -224,7 +224,7 @@ namespace FlowSERVER1 {
                 }
             }
             else {
-                closeFormOnLimit();
+                CloseFormOnLimitSignInAttempt();
             }
 
             return authenticationSuccessful;
@@ -235,7 +235,7 @@ namespace FlowSERVER1 {
         /// Login failed for 5 attempts then close the form.
         /// 
         /// </summary>
-        private void closeFormOnLimit() {
+        private void CloseFormOnLimitSignInAttempt() {
             lblAlert.Visible = true;
             if (_attemptCurr == 5) {
                 this.Close();
@@ -248,18 +248,18 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <returns></returns>
-        private async Task generateUserData() {
+        private async Task GenerateUserData() {
 
-            await generateUserFolder(_custUsername);
+            await GenerateUserFolders(_custUsername);
         }
 
         private void HomePage_HomePageClosed(object sender, FormClosedEventArgs e) {
             if (Application.OpenForms.Count >= 1) {
-                Application.Exit(); 
+                Application.Exit();
             }
         }
 
-        private void showHomePage() {
+        private void ShowHomePageOnSuceededSignIn() {
             HomePage.instance.FormClosed += HomePage_HomePageClosed;
             HomePage.instance.Show();
             mainForm.Hide();
@@ -280,14 +280,14 @@ namespace FlowSERVER1 {
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
-                
+
                 _attemptCurr++;
 
-                var verifyAuthenticaton = await verifyAuthentication();
-                if(verifyAuthenticaton) {
+                var verifyAuthenticaton = await VerifyUserAuthentication();
+                if (verifyAuthenticaton) {
 
                     int calculatePercentageUsage = 0;
-                    if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(await getAccountTypeNumber(), out int getLimitedValue)) {
+                    if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(await GetUserAccountType(), out int getLimitedValue)) {
                         if (getLimitedValue == 0) {
                             HomePage.instance.lblUsagePercentage.Text = "0%";
                         }
@@ -295,11 +295,11 @@ namespace FlowSERVER1 {
                             calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
                             HomePage.instance.lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
                         }
-                        HomePage.instance.lblLimitUploadText.Text = await getAccountTypeNumber();
+                        HomePage.instance.lblLimitUploadText.Text = await GetUserAccountType();
                         HomePage.instance.progressBarUsageStorage.Value = calculatePercentageUsage;
                     }
 
-                    showHomePage();
+                    ShowHomePageOnSuceededSignIn();
 
                 }
 
@@ -310,7 +310,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task<string> getAccountTypeNumber() {
+        private async Task<string> GetUserAccountType() {
 
             string accountType = "";
 
@@ -421,7 +421,7 @@ namespace FlowSERVER1 {
                 Form_1.lblEssentials.Text = "要点";
             }
 
-            if(_custLang == "RUS") {
+            if (_custLang == "RUS") {
                 Form_1.lblUpload.Text = "Загрузить";
                 Form_1.label2.Text = "Количество предметов";
                 Form_1.btnUploadFile.Text = "Загрузить файл";
@@ -432,7 +432,7 @@ namespace FlowSERVER1 {
                 Form_1.lblEssentials.Text = "Основные";
             }
 
-            if(_custLang == "DUT") {
+            if (_custLang == "DUT") {
                 Form_1.lblUpload.Text = "Uploaden";
                 Form_1.label2.Text = "Aantal artikelen";
                 Form_1.btnUploadFile.Text = "Bestand uploaden";
@@ -468,13 +468,13 @@ namespace FlowSERVER1 {
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
-            guna2TextBox2.PasswordChar = '*';
+            txtFieldAuth.PasswordChar = '*';
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
-            guna2TextBox2.PasswordChar = '\0';
+            txtFieldAuth.PasswordChar = '\0';
         }
 
         private void guna2CheckBox2_CheckedChanged(object sender, EventArgs e) {
@@ -482,8 +482,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox4.Text, "[^0-9]")) {
-                guna2TextBox4.Text = guna2TextBox4.Text.Remove(guna2TextBox4.Text.Length - 1);
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPIN.Text, "[^0-9]")) {
+                txtFieldPIN.Text = txtFieldPIN.Text.Remove(txtFieldPIN.Text.Length - 1);
             }
         }
 
@@ -519,7 +519,7 @@ namespace FlowSERVER1 {
 
             ValidateRecoveryEmail _showPasswordRecovery = new ValidateRecoveryEmail();
             _showPasswordRecovery.Show();
-            
+
             this.Close();
 
         }

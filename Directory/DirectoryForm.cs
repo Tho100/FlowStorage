@@ -460,7 +460,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void createFilePanel(string fileFullPath, string tableName, string panName, int itemCurr, string keyVal) {
+        private async void CreateFilePanel(string fileFullPath, string tableName, string panName, int itemCurr, string keyVal) {
 
             if (_fileSizeInMB < 8000) {
 
@@ -701,7 +701,7 @@ namespace FlowSERVER1 {
         }
 
 
-        private void openDialogUpload(int accountTypeInt, String _AccountTypeStr_) {
+        private void OpenDialogUpload() {
 
             var form1 = HomePage.instance;
 
@@ -781,7 +781,7 @@ namespace FlowSERVER1 {
 
                                     string _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
                                     string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
-                                    createFilePanel(selectedItems, "file_info", "PanImg", curr, _encryptedValue);
+                                    CreateFilePanel(selectedItems, "file_info", "PanImg", curr, _encryptedValue);
 
                                 }
                                 else {
@@ -796,7 +796,7 @@ namespace FlowSERVER1 {
                                         string _tempToBase64 = Convert.ToBase64String(dataIco);
                                         string _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
 
-                                        createFilePanel(selectedItems, "file_info", "PanImg", curr, _encryptedValue);
+                                        CreateFilePanel(selectedItems, "file_info", "PanImg", curr, _encryptedValue);
                                     }
                                 }
                             }
@@ -812,44 +812,44 @@ namespace FlowSERVER1 {
                                 String getEncoded = Convert.ToBase64String(getBytes);
                                 String encryptText = EncryptionModel.Encrypt(getEncoded);
 
-                                createFilePanel(selectedItems, "file_info_expand", "PanTxt", txtCurr, encryptText);
+                                CreateFilePanel(selectedItems, "file_info_expand", "PanTxt", txtCurr, encryptText);
                             }
                             else if (_uploadedExtensionType == ".exe") {
                                 exeCurr++;
-                                createFilePanel(selectedItems, "file_info_exe", "PanExe", exeCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_exe", "PanExe", exeCurr, encryptBase64String);
 
                             }
                             else if (Globals.videoTypes.Contains(_uploadedExtensionType)) {
                                 vidCurr++;
-                                createFilePanel(selectedItems, "file_info_vid", "PanVid", vidCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_vid", "PanVid", vidCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".xlsx" || _uploadedExtensionType == ".xls") {
                                 exlCurr++;
-                                createFilePanel(selectedItems, "file_info_excel", "PanExl", exlCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_excel", "PanExl", exlCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".mp3" || _uploadedExtensionType == ".wav") {
                                 audCurr++;
-                                createFilePanel(selectedItems, "file_info_audi", "PanAud", audCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_audi", "PanAud", audCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".apk") {
                                 apkCurr++;
-                                createFilePanel(selectedItems, "file_info_apk", "PanApk", apkCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_apk", "PanApk", apkCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".pdf") {
                                 pdfCurr++;
-                                createFilePanel(selectedItems, "file_info_pdf", "PanPdf", pdfCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_pdf", "PanPdf", pdfCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".pptx" || _uploadedExtensionType == ".ppt") {
                                 ptxCurr++;
-                                createFilePanel(selectedItems, "file_info_ptx", "PanPtx", ptxCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_ptx", "PanPtx", ptxCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".msi") {
                                 msiCurr++;
-                                createFilePanel(selectedItems, "file_info_msi", "PanMsi", msiCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_msi", "PanMsi", msiCurr, encryptBase64String);
                             }
                             else if (_uploadedExtensionType == ".docx") {
                                 docxCurr++;
-                                createFilePanel(selectedItems, "file_info_word", "PanDoc", docxCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, "file_info_word", "PanDoc", docxCurr, encryptBase64String);
                             }
 
                             CloseForm.closeForm("UploadAlrt");
@@ -869,7 +869,7 @@ namespace FlowSERVER1 {
 
         }
 
-        public void DisplayError(String CurAcc) {
+        public void DisplayError() {
             Form bgBlur = new Form();
             using (UpgradeAccountAlert displayPic = new UpgradeAccountAlert()) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
@@ -890,8 +890,7 @@ namespace FlowSERVER1 {
             }
         }
 
-
-        private async Task<int> countTotalFilesDirectory(String directoryName) {
+        private async Task<int> CountDirectoryTotalFiles(String directoryName) {
 
             int count = 0;
 
@@ -910,13 +909,13 @@ namespace FlowSERVER1 {
 
             try {
 
-                int currentUploadCount = await countTotalFilesDirectory(lblDirectoryName.Text);
+                int currentUploadCount = await CountDirectoryTotalFiles(lblDirectoryName.Text);
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
-                    openDialogUpload(Globals.uploadFileLimit[Globals.accountType], Globals.accountType);
+                    OpenDialogUpload();
                 }
                 else {
-                    DisplayError(Globals.accountType);
+                    DisplayError();
                 }
 
             }

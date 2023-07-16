@@ -13,6 +13,7 @@ namespace FlowSERVER1 {
     public partial class AccessTokenVerifyForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private Crud crud = new Crud();
 
         public AccessTokenVerifyForm() {
             InitializeComponent();
@@ -29,22 +30,11 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private async void guna2Button2_Click(object sender, EventArgs e) {
 
-            string _queStr = "";
+            string userAuth = await crud.ReturnUserAuth();
 
-            const string _selectQue = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(_selectQue, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
-                        _queStr = reader.GetString(0);
-                    }
-                }
-            }
-
-            if (EncryptionModel.Decrypt(_queStr) == guna2TextBox1.Text) {
+            if (EncryptionModel.Decrypt(userAuth) == guna2TextBox1.Text) {
                 SettingsForm.instance.guna2Button28.Visible = false;
                 SettingsForm.instance.guna2Button29.Visible = true;
                 SettingsForm.instance.guna2TextBox2.PasswordChar = '\0';

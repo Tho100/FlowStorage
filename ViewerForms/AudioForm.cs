@@ -24,6 +24,9 @@ namespace FlowSERVER1 {
         private TimeSpan _elapsedTime { get; set; }
         private Mp3FileReader _NReader { get; set; }
 
+        private SoundPlayer _getSoundPlayer { get; set; }
+        private WaveOut _mp3WaveOut { get; set; }
+
         public AudioForm(String fileName, String tableName,String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
@@ -60,9 +63,6 @@ namespace FlowSERVER1 {
             pictureBox3.Enabled = false;
 
         }
-
-        SoundPlayer _getSoundPlayer = null;
-        WaveOut _mp3WaveOut = null;
 
         /// <summary>
         /// 

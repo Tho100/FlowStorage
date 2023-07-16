@@ -28,7 +28,7 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.label5 = new System.Windows.Forms.Label();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
-            this.txtFieldShareToName = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtFieldReceiverAuth = new Guna.UI2.WinForms.Guna2TextBox();
             this.lblAlert = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
@@ -81,32 +81,32 @@
             this.guna2Button4.TextOffset = new System.Drawing.Point(0, -2);
             this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click);
             // 
-            // txtFieldShareToName
+            // txtFieldReceiverAuth
             // 
-            this.txtFieldShareToName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtFieldShareToName.BackColor = System.Drawing.Color.Transparent;
-            this.txtFieldShareToName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFieldShareToName.BorderRadius = 8;
-            this.txtFieldShareToName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtFieldShareToName.DefaultText = "";
-            this.txtFieldShareToName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.txtFieldShareToName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.txtFieldShareToName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldShareToName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldShareToName.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFieldShareToName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldShareToName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFieldShareToName.ForeColor = System.Drawing.Color.White;
-            this.txtFieldShareToName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldShareToName.Location = new System.Drawing.Point(60, 59);
-            this.txtFieldShareToName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtFieldShareToName.Name = "txtFieldShareToName";
-            this.txtFieldShareToName.PasswordChar = '*';
-            this.txtFieldShareToName.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldShareToName.PlaceholderText = "Receiver Password";
-            this.txtFieldShareToName.SelectedText = "";
-            this.txtFieldShareToName.Size = new System.Drawing.Size(254, 44);
-            this.txtFieldShareToName.TabIndex = 17;
+            this.txtFieldReceiverAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldReceiverAuth.BackColor = System.Drawing.Color.Transparent;
+            this.txtFieldReceiverAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldReceiverAuth.BorderRadius = 8;
+            this.txtFieldReceiverAuth.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFieldReceiverAuth.DefaultText = "";
+            this.txtFieldReceiverAuth.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtFieldReceiverAuth.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtFieldReceiverAuth.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldReceiverAuth.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldReceiverAuth.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldReceiverAuth.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldReceiverAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFieldReceiverAuth.ForeColor = System.Drawing.Color.White;
+            this.txtFieldReceiverAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldReceiverAuth.Location = new System.Drawing.Point(60, 59);
+            this.txtFieldReceiverAuth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFieldReceiverAuth.Name = "txtFieldReceiverAuth";
+            this.txtFieldReceiverAuth.PasswordChar = '*';
+            this.txtFieldReceiverAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldReceiverAuth.PlaceholderText = "Receiver Password";
+            this.txtFieldReceiverAuth.SelectedText = "";
+            this.txtFieldReceiverAuth.Size = new System.Drawing.Size(254, 44);
+            this.txtFieldReceiverAuth.TabIndex = 17;
             // 
             // lblAlert
             // 
@@ -144,7 +144,7 @@
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.guna2Button4);
             this.guna2Panel1.Controls.Add(this.guna2Button3);
-            this.guna2Panel1.Controls.Add(this.txtFieldShareToName);
+            this.guna2Panel1.Controls.Add(this.txtFieldReceiverAuth);
             this.guna2Panel1.Controls.Add(this.guna2Button1);
             this.guna2Panel1.Controls.Add(this.label1);
             this.guna2Panel1.Controls.Add(this.guna2Button2);
@@ -258,7 +258,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         public Guna.UI2.WinForms.Guna2Button guna2Button4;
         public Guna.UI2.WinForms.Guna2Button guna2Button3;
-        private Guna.UI2.WinForms.Guna2TextBox txtFieldShareToName;
+        private Guna.UI2.WinForms.Guna2TextBox txtFieldReceiverAuth;
         public Guna.UI2.WinForms.Guna2Button guna2Button1;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label lblAlert;

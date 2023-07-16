@@ -172,5 +172,9 @@ namespace FlowSERVER1 {
         private void docDocumentViewer1_Click(object sender, EventArgs e) {
 
         }
+
+        private void guna2Separator1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

@@ -30,9 +30,9 @@ namespace FlowSERVER1 {
         private void label4_Click(object sender, EventArgs e) {
 
         }
-        private async Task setupChangeUsername(String _tableName, String _setUsername) {
+        private async Task SetupChangeUsername(String tableName, String setUsername) {
 
-            string updateUsernameQuery = $"UPDATE {_tableName} SET CUST_USERNAME = '" + _setUsername + "'WHERE CUST_USERNAME = @username";
+            string updateUsernameQuery = $"UPDATE {tableName} SET CUST_USERNAME = '" + setUsername + "'WHERE CUST_USERNAME = @username";
 
             var param = new Dictionary<string, string>
             {
@@ -44,9 +44,9 @@ namespace FlowSERVER1 {
            
         }
 
-        private async Task setupChangeUsernameSharing(String _setUsername) {
+        private async Task SetupChangeUsernameSharing(String setUsername) {
 
-            string updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + _setUsername + "' WHERE CUST_FROM = @username";
+            string updateQuery = "UPDATE cust_sharing SET CUST_FROM = '" + setUsername + "' WHERE CUST_FROM = @username";
             var param = new Dictionary<string, string>
 {
                 { "@username", Globals.custUsername}
@@ -57,13 +57,13 @@ namespace FlowSERVER1 {
 
         }
 
-        private int verifyIfNotExists(String _newUsername) {
+        private int UsernameIsExistVerification(String newUsername) {
 
             List<String> _usernameValues = new List<string>();
 
             const string getUsernameQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             using(MySqlCommand command = new MySqlCommand(getUsernameQuery,con)) {
-                command.Parameters.AddWithValue("@username",_newUsername);
+                command.Parameters.AddWithValue("@username", newUsername);
                 using(MySqlDataReader reader = command.ExecuteReader()) {
                     if(reader.Read()) {
                         _usernameValues.Add(reader.GetString(0));
@@ -74,36 +74,18 @@ namespace FlowSERVER1 {
 
             return _usernameValues.Count;
         }
-        private string authReturnOriginal(String _usernameEntered) {
-
-            List<string> _passValues = new List<string>();
-
-            const string getAuthQuery = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(getAuthQuery,con)) {
-                command.Parameters.AddWithValue("@username", _usernameEntered);
-                using(MySqlDataReader reader = command.ExecuteReader()) {
-                    if(reader.Read()) {
-                        _passValues.Add(reader.GetString(0));
-                    }
-                    reader.Close();
-                }
-            }
-
-            return _passValues[0];
-
-        }
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
         }
 
-        private void updateLocalUsername(String _custUsername) {
+        private void UpdateLocalUsername(String custUsername) {
 
             String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             if (!Directory.Exists(appDataPath)) {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername, "0123456789085746"));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
@@ -112,7 +94,7 @@ namespace FlowSERVER1 {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername, "0123456789085746"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername, "0123456789085746"));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
@@ -122,34 +104,34 @@ namespace FlowSERVER1 {
 
             try {
 
-                var _getNewUsername = txtFieldNewUsername.Text;
-                var _getCustPass = txtFieldAuth.Text;
+                var getNewUsername = txtFieldNewUsername.Text;
+                var getCustAuth = txtFieldAuth.Text;
 
-                if(_getNewUsername == Globals.custUsername) {
+                if(getNewUsername == Globals.custUsername) {
                     lblAlert.Text = "Please enter a new username.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(_getNewUsername == String.Empty) {
+                if(getNewUsername == String.Empty) {
                     lblAlert.Text = "Please enter a username.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(_getCustPass == String.Empty) {
+                if(getCustAuth == String.Empty) {
                     lblAlert.Text = "Please enter your password.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(verifyIfNotExists(_getNewUsername) > 0) {
+                if(UsernameIsExistVerification(getNewUsername) > 0) {
                     lblAlert.Text = "Username is taken.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(authReturnOriginal(Globals.custUsername) == EncryptionModel.computeAuthCase(_getCustPass)) {
+                if(await crud.ReturnUserAuth() == EncryptionModel.computeAuthCase(getCustAuth)) {
 
                     string[] tableNames = {
                         "information","cust_type","file_info", "file_info_expand", 
@@ -159,20 +141,20 @@ namespace FlowSERVER1 {
                     };
 
                     for(int i=0; i<tableNames.Length; i++) {
-                        await setupChangeUsername(tableNames[i], _getNewUsername);
+                        await SetupChangeUsername(tableNames[i], getNewUsername);
                     }
 
                     foreach(var publicTablesPs in GlobalsTable.publicTablesPs) {
-                        await setupChangeUsername(publicTablesPs, _getNewUsername);
+                        await SetupChangeUsername(publicTablesPs, getNewUsername);
                     }
 
-                    await setupChangeUsernameSharing(_getNewUsername);
+                    await SetupChangeUsernameSharing(getNewUsername);
 
-                    updateLocalUsername(_getNewUsername);
+                    UpdateLocalUsername(getNewUsername);
 
-                    new CustomAlert(title: "Username Updated",$"You've changed your username to '{_getNewUsername}' from {Globals.custUsername}. Restart to fully apply changes.").Show();
+                    new CustomAlert(title: "Username Updated",$"You've changed your username to '{getNewUsername}' from {Globals.custUsername}. Restart to fully apply changes.").Show();
 
-                    Globals.custUsername = _getNewUsername;
+                    Globals.custUsername = getNewUsername;
 
                 } else {
                     lblAlert.Visible = true;

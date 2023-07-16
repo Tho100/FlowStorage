@@ -29,13 +29,13 @@ namespace FlowSERVER1 {
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button3.Visible = false;
             guna2Button1.Visible = true;
-            txtFieldShareToName.PasswordChar = '*';
+            txtFieldReceiverAuth.PasswordChar = '*';
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             guna2Button3.Visible = true;
             guna2Button1.Visible = false;
-            txtFieldShareToName.PasswordChar = '\0';
+            txtFieldReceiverAuth.PasswordChar = '\0';
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
@@ -48,13 +48,13 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
-        private int accountType(String _receiverUsername) {
+        private int accountType(String receiverUsername) {
 
             int allowedReturn = 20;
 
             const string getAccountTypeQuery = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
             using(MySqlCommand command = new MySqlCommand(getAccountTypeQuery,con)) {
-                command.Parameters.AddWithValue("@username", _receiverUsername);
+                command.Parameters.AddWithValue("@username", receiverUsername);
                 using(MySqlDataReader reader = command.ExecuteReader()) {
                     if(reader.Read()) {
                         allowedReturn = Globals.uploadFileLimit[reader.GetString(0)];
@@ -71,11 +71,11 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
-        private int countReceiverShared(String _receiverUsername) {
+        private int CountReceiverSharedFiles(String receiverUsername) {
 
             const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
             using(MySqlCommand command = new MySqlCommand(countFileSharedQuery,con)) {
-                command.Parameters.AddWithValue("@username", _receiverUsername);
+                command.Parameters.AddWithValue("@username", receiverUsername);
                 return Convert.ToInt32(command.ExecuteScalar());
             }
 
@@ -108,7 +108,7 @@ namespace FlowSERVER1 {
         private async Task startSharing() {
 
             int _accType = accountType(_receiverUsername);
-            int _countReceiverFile = countReceiverShared(_receiverUsername);
+            int _countReceiverFile = CountReceiverSharedFiles(_receiverUsername);
             long fileSizeInMB = 0;
 
             if (_accType != _countReceiverFile) {
@@ -185,12 +185,12 @@ namespace FlowSERVER1 {
             }
         }
 
-        private string getInformationSharing(string shareToName) {
+        private string GetReceiverAuth(string shareToName) {
 
             string _storeVal = "";
-            const string _queryGet = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
+            const string query = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
 
-            using (MySqlCommand command = new MySqlCommand(_queryGet, con)) {
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", shareToName);
 
                 using (MySqlDataReader _readPas = command.ExecuteReader()) {
@@ -210,10 +210,10 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
-            var _getInput = txtFieldShareToName.Text;
-            var _decryptionOutput = EncryptionModel.computeAuthCase(getInformationSharing(_receiverUsername));
+            var receiverAuthInput = txtFieldReceiverAuth.Text;
+            var actualReceiverAuth = EncryptionModel.computeAuthCase(GetReceiverAuth(_receiverUsername));
             
-            if(EncryptionModel.computeAuthCase(_getInput) == _decryptionOutput) {
+            if(EncryptionModel.computeAuthCase(receiverAuthInput) == actualReceiverAuth) {
                 await startSharing();
             } else {
                 lblAlert.Visible = true;

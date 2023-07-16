@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
-    public partial class PassSharingFORM : Form {
+    public partial class AddAuthSharing : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public PassSharingFORM() {
+        public AddAuthSharing() {
             InitializeComponent();
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
-            guna2TextBox2.PasswordChar = '*';
+            txtFieldAuth.PasswordChar = '*';
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             guna2Button1.Visible = false;
             guna2Button3.Visible = true;
-            guna2TextBox2.PasswordChar = '\0';
+            txtFieldAuth.PasswordChar = '\0';
         }
 
         /// <summary>
@@ -38,8 +31,8 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
 
-            if(guna2TextBox2.Text != String.Empty) {
-                if(MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+            if (txtFieldAuth.Text != String.Empty) {
+                if (MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
                     SettingsForm.instance.guna2Button23.Visible = false;
                     SettingsForm.instance.guna2Button23.Enabled = false;
@@ -48,15 +41,16 @@ namespace FlowSERVER1 {
                     SettingsForm.instance.btnRmvSharingAuth.Enabled = true;
 
                     const string addSharingAuthQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
-                    using(MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {
-                        command.Parameters.AddWithValue("@getval",EncryptionModel.computeAuthCase(guna2TextBox2.Text));
-                        command.Parameters.AddWithValue("@username",Globals.custUsername);
+                    using (MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {
+                        command.Parameters.AddWithValue("@getval", EncryptionModel.computeAuthCase(txtFieldAuth.Text));
+                        command.Parameters.AddWithValue("@username", Globals.custUsername);
                         command.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("You've successfully added a password for File Sharing.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("You've successfully added a password for File Sharing.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            } else {
+            }
+            else {
                 lblAlert.Visible = true;
             }
         }

@@ -610,11 +610,11 @@
     <Compile Include="ViewerForms\msiFORM.Designer.cs">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\PassSharingFORM.cs">
+    <Compile Include="Sharing\AddAuthSharing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\PassSharingFORM.Designer.cs">
-      <DependentUpon>PassSharingFORM.cs</DependentUpon>
+    <Compile Include="Sharing\AddAuthSharing.Designer.cs">
+      <DependentUpon>AddAuthSharing.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewerForms\PdfForm.cs">
       <SubType>Form</SubType>
@@ -858,8 +858,8 @@
     <EmbeddedResource Include="ViewerForms\msiFORM.resx">
       <DependentUpon>msiFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\PassSharingFORM.resx">
-      <DependentUpon>PassSharingFORM.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\AddAuthSharing.resx">
+      <DependentUpon>AddAuthSharing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\PdfForm.resx">
       <DependentUpon>PdfForm.cs</DependentUpon>

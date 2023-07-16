@@ -1,32 +1,25 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1.Settings {
     public partial class FeedbackForm : Form {
 
-        readonly private MySqlConnection con = ConnectionModel.con;
         readonly private Crud crud = new Crud();
 
         public FeedbackForm() {
             InitializeComponent();
         }
 
-        private async Task sendFeedback(string inputFeedback) {
+        private async Task SendFeedback(string inputFeedback) {
 
             try {
 
                 string currentDate = DateTime.Now.ToString("dd/mm/yyyy");
 
                 const string query = "INSERT INTO feedback_info VALUES (@username,@feedback,@date)";
-                var param = new Dictionary<string, string> 
+                var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername },
                     { "@feedback", inputFeedback },
@@ -39,7 +32,8 @@ namespace FlowSERVER1.Settings {
                 var alertForm = new AlertForms.CustomAlert(title: "Feedback sent", subheader: $"Thank you {Globals.custUsername} for your feedback! We really appreciate it.");
                 alertForm.Show();
 
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 new AlertForms.CustomAlert(
                     title: "Failed to send feedback",
                     subheader: "Check your internet connection and try again."
@@ -48,7 +42,7 @@ namespace FlowSERVER1.Settings {
         }
 
         private async void guna2Button1_Click(object sender, EventArgs e) {
-            await sendFeedback(guna2TextBox4.Text);
+            await SendFeedback(txtFieldFeedback.Text);
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {

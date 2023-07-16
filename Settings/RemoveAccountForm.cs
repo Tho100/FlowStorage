@@ -1,14 +1,10 @@
-﻿using System;
+﻿using FlowSERVER1.Global;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.IO;
 
 namespace FlowSERVER1 {
     public partial class RemoveAccountForm : Form {
@@ -19,31 +15,31 @@ namespace FlowSERVER1 {
             InitializeComponent();
         }
 
-        private void remove_ItemsTab(String _tableName) {
+        private async Task RemoveUserData(String tableName) {
 
-            if (_tableName != "cust_sharing") {
-                string _remQueryBegin = $"DELETE FROM {_tableName} WHERE CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(_remQueryBegin, con)) {
+            if (tableName != "cust_sharing") {
+                string query = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                 }
             }
             else {
 
-                const string _remSharingBeings = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
-                using (MySqlCommand command = new MySqlCommand(_remSharingBeings, con)) {
+                const string query = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
+                using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                 }
             }
 
         }
 
-        private string returnValues(String _WhichColumn) {
+        private string ReturnCustomColumn(String columnName) {
 
             List<string> _concludeValue = new List<string>();
 
-            string checkPassword_Query = $"SELECT {_WhichColumn} FROM information WHERE CUST_USERNAME = @username";
+            string checkPassword_Query = $"SELECT {columnName} FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
@@ -57,64 +53,50 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private async void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
 
-                var decryptPass = EncryptionModel.Decrypt(returnValues("CUST_PASSWORD"));
-                var decryptPin = EncryptionModel.Decrypt(returnValues("CUST_PIN"));
+                var decryptPass = EncryptionModel.Decrypt(ReturnCustomColumn("CUST_PASSWORD"));
+                var decryptPin = EncryptionModel.Decrypt(ReturnCustomColumn("CUST_PIN"));
 
-                if(guna2TextBox2.Text == decryptPin) {
-                    if (guna2TextBox1.Text == decryptPass) {
-                        if(MessageBox.Show("Delete your account?\nYour data will be deleted PERMANENTLY.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
-                             
+                if (txtFieldPIN.Text == decryptPin) {
+                    if (txtFieldAuth.Text == decryptPass) {
+                        if (MessageBox.Show("Delete your account?\nYour data will be deleted PERMANENTLY.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+
                             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
                             String _getAuth = _getPath + "\\CUST_DATAS.txt";
                             if (File.Exists(_getAuth)) {
-                                Directory.Delete(_getPath,true);
+                                Directory.Delete(_getPath, true);
                             }
 
-                            remove_ItemsTab("information");
-                            remove_ItemsTab("file_info");
-                            remove_ItemsTab("file_info_expand");
-                            remove_ItemsTab("file_info_ptx");
-                            remove_ItemsTab("file_info_pdf");
-                            remove_ItemsTab("file_info_word");
-                            remove_ItemsTab("file_info_apk");
-                            remove_ItemsTab("file_info_exe");
-                            remove_ItemsTab("file_info_audi");
-                            remove_ItemsTab("file_info_vid");
-                            remove_ItemsTab("file_info_excel");
-                            remove_ItemsTab("file_info_directory");
-                            remove_ItemsTab("upload_info_directory");
-                            remove_ItemsTab("folder_upload_info");
-                            remove_ItemsTab("file_info_msi");
-                            remove_ItemsTab("cust_type");
-                            remove_ItemsTab("lang_info");
-                            remove_ItemsTab("cust_buyer");
-                            remove_ItemsTab("cust_sharing");
-                            remove_ItemsTab("sharing_info");
+                            foreach (string tablesName in GlobalsTable.publicTables) {
+                                await RemoveUserData(tablesName);
+                            }
 
                             this.Close();
 
                             Application.OpenForms["remAccFORM"].Close();
                             HomePage.instance.lstFoldersPage.Items.Clear();
                         }
-                    } else {
-                        label1.Visible = true;
-                        label1.Text = "Password is incorrect.";
                     }
-                } else {
-                    label1.Visible = true;
-                    label1.Text = "PIN is incorrect.";
+                    else {
+                        lblAlert.Visible = true;
+                        lblAlert.Text = "Password is incorrect.";
+                    }
                 }
-            } catch (Exception) {
-                MessageBox.Show("Failed to delete account.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                else {
+                    lblAlert.Visible = true;
+                    lblAlert.Text = "PIN is incorrect.";
+                }
+            }
+            catch (Exception) {
+                MessageBox.Show("Failed to delete account.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {
-            
+
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
@@ -126,8 +108,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox2.Text, "[^0-9]")) {
-                guna2TextBox2.Text = guna2TextBox2.Text.Remove(guna2TextBox2.Text.Length - 1);
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPIN.Text, "[^0-9]")) {
+                txtFieldPIN.Text = txtFieldPIN.Text.Remove(txtFieldPIN.Text.Length - 1);
             }
         }
 

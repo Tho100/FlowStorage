@@ -40,7 +40,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lblDeleteMyAccount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
+            this.tabControlSettings = new Guna.UI2.WinForms.Guna2TabControl();
             this.tabAccountPage = new System.Windows.Forms.TabPage();
             this.lnkLblBackupRecovery = new System.Windows.Forms.LinkLabel();
             this.guna2Panel12 = new Guna.UI2.WinForms.Guna2Panel();
@@ -211,7 +211,7 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.guna2TabControl1.SuspendLayout();
+            this.tabControlSettings.SuspendLayout();
             this.tabAccountPage.SuspendLayout();
             this.guna2Panel12.SuspendLayout();
             this.guna2Panel11.SuspendLayout();
@@ -284,38 +284,38 @@
             this.label3.TabIndex = 24;
             this.label3.Text = "Your Flowstorage account along with your data will be deleted.";
             // 
-            // guna2TabControl1
+            // tabControlSettings
             // 
-            this.guna2TabControl1.Controls.Add(this.tabAccountPage);
-            this.guna2TabControl1.Controls.Add(this.tabStatsPage);
-            this.guna2TabControl1.Controls.Add(this.tabSharingPage);
-            this.guna2TabControl1.Controls.Add(this.tabLangPage);
-            this.guna2TabControl1.Controls.Add(this.tabUpgradePage);
-            this.guna2TabControl1.ItemSize = new System.Drawing.Size(199, 40);
-            this.guna2TabControl1.Location = new System.Drawing.Point(0, -2);
-            this.guna2TabControl1.Name = "guna2TabControl1";
-            this.guna2TabControl1.SelectedIndex = 0;
-            this.guna2TabControl1.Size = new System.Drawing.Size(1005, 570);
-            this.guna2TabControl1.TabButtonHoverState.BorderColor = System.Drawing.Color.Empty;
-            this.guna2TabControl1.TabButtonHoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
-            this.guna2TabControl1.TabButtonHoverState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.guna2TabControl1.TabButtonHoverState.ForeColor = System.Drawing.Color.White;
-            this.guna2TabControl1.TabButtonHoverState.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
-            this.guna2TabControl1.TabButtonIdleState.BorderColor = System.Drawing.Color.Empty;
-            this.guna2TabControl1.TabButtonIdleState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.guna2TabControl1.TabButtonIdleState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.guna2TabControl1.TabButtonIdleState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(156)))), ((int)(((byte)(160)))), ((int)(((byte)(167)))));
-            this.guna2TabControl1.TabButtonIdleState.InnerColor = System.Drawing.Color.Gray;
-            this.guna2TabControl1.TabButtonSelectedState.BorderColor = System.Drawing.Color.Empty;
-            this.guna2TabControl1.TabButtonSelectedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2TabControl1.TabButtonSelectedState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.guna2TabControl1.TabButtonSelectedState.ForeColor = System.Drawing.Color.White;
-            this.guna2TabControl1.TabButtonSelectedState.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2TabControl1.TabButtonSize = new System.Drawing.Size(199, 40);
-            this.guna2TabControl1.TabIndex = 30;
-            this.guna2TabControl1.TabMenuBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.guna2TabControl1.TabMenuOrientation = Guna.UI2.WinForms.TabMenuOrientation.HorizontalTop;
-            this.guna2TabControl1.Click += new System.EventHandler(this.guna2TabControl1_Click);
+            this.tabControlSettings.Controls.Add(this.tabAccountPage);
+            this.tabControlSettings.Controls.Add(this.tabStatsPage);
+            this.tabControlSettings.Controls.Add(this.tabSharingPage);
+            this.tabControlSettings.Controls.Add(this.tabLangPage);
+            this.tabControlSettings.Controls.Add(this.tabUpgradePage);
+            this.tabControlSettings.ItemSize = new System.Drawing.Size(199, 40);
+            this.tabControlSettings.Location = new System.Drawing.Point(0, -2);
+            this.tabControlSettings.Name = "tabControlSettings";
+            this.tabControlSettings.SelectedIndex = 0;
+            this.tabControlSettings.Size = new System.Drawing.Size(1005, 570);
+            this.tabControlSettings.TabButtonHoverState.BorderColor = System.Drawing.Color.Empty;
+            this.tabControlSettings.TabButtonHoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
+            this.tabControlSettings.TabButtonHoverState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.tabControlSettings.TabButtonHoverState.ForeColor = System.Drawing.Color.White;
+            this.tabControlSettings.TabButtonHoverState.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
+            this.tabControlSettings.TabButtonIdleState.BorderColor = System.Drawing.Color.Empty;
+            this.tabControlSettings.TabButtonIdleState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabControlSettings.TabButtonIdleState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.tabControlSettings.TabButtonIdleState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(156)))), ((int)(((byte)(160)))), ((int)(((byte)(167)))));
+            this.tabControlSettings.TabButtonIdleState.InnerColor = System.Drawing.Color.Gray;
+            this.tabControlSettings.TabButtonSelectedState.BorderColor = System.Drawing.Color.Empty;
+            this.tabControlSettings.TabButtonSelectedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.tabControlSettings.TabButtonSelectedState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.tabControlSettings.TabButtonSelectedState.ForeColor = System.Drawing.Color.White;
+            this.tabControlSettings.TabButtonSelectedState.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.tabControlSettings.TabButtonSize = new System.Drawing.Size(199, 40);
+            this.tabControlSettings.TabIndex = 30;
+            this.tabControlSettings.TabMenuBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabControlSettings.TabMenuOrientation = Guna.UI2.WinForms.TabMenuOrientation.HorizontalTop;
+            this.tabControlSettings.Click += new System.EventHandler(this.guna2TabControl1_Click);
             // 
             // tabAccountPage
             // 
@@ -2883,14 +2883,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1004, 568);
-            this.Controls.Add(this.guna2TabControl1);
+            this.Controls.Add(this.tabControlSettings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.remAccFORM_Load);
-            this.guna2TabControl1.ResumeLayout(false);
+            this.tabControlSettings.ResumeLayout(false);
             this.tabAccountPage.ResumeLayout(false);
             this.tabAccountPage.PerformLayout();
             this.guna2Panel12.ResumeLayout(false);
@@ -3048,7 +3048,7 @@
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox5;
         public System.Windows.Forms.Label lblDeleteMyAccount;
         public System.Windows.Forms.Label label3;
-        public Guna.UI2.WinForms.Guna2TabControl guna2TabControl1;
+        public Guna.UI2.WinForms.Guna2TabControl tabControlSettings;
         public Guna.UI2.WinForms.Guna2Button btnDltAccount;
         public System.Windows.Forms.Label label35;
         public System.Windows.Forms.Label lblLogoutMyAccount;

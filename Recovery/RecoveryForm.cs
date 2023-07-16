@@ -27,7 +27,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void saveFiles(string contentValue) {
+        private void SaveRecoveryTokenToLocal(string contentValue) {
             SaveFileDialog _OpenDialog = new SaveFileDialog();
             _OpenDialog.FileName = "FlowstorageRECOVERYKEY.txt";
             if (_OpenDialog.ShowDialog() == DialogResult.OK) {
@@ -40,11 +40,11 @@ namespace FlowSERVER1 {
 
             try {
 
-                string authcase0 = EncryptionModel.computeAuthCase(guna2TextBox1.Text);
-                string authcase1 = EncryptionModel.computeAuthCase(guna2TextBox2.Text);
+                string authcase0 = EncryptionModel.computeAuthCase(txtFieldAuth.Text);
+                string authcase1 = EncryptionModel.computeAuthCase(txtFieldPIN.Text);
 
-                if(authcase0 == retrieveCase().ElementAt(0) && authcase1 == retrieveCase().ElementAt(1)) {
-                    saveFiles(retrieveRecov());
+                if(authcase0 == RetrieveCases().ElementAt(0) && authcase1 == RetrieveCases().ElementAt(1)) {
+                    SaveRecoveryTokenToLocal(RetrieveRecoveryToken());
                 } else {
                     new CustomAlert(title: "Export failed", subheader: "Password or PIN is incorrect.").Show();
                 }
@@ -54,7 +54,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private string retrieveRecov() {
+        private string RetrieveRecoveryToken() {
 
             string concludeStrings = "";
             const string query = "SELECT RECOV_TOK FROM information WHERE CUST_USERNAME = @username";
@@ -71,7 +71,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private List<string> retrieveCase() {
+        private List<string> RetrieveCases() {
 
             List<string> concludeStrings = new List<string>();
 
@@ -89,8 +89,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-            if (System.Text.RegularExpressions.Regex.IsMatch(guna2TextBox2.Text, "[^0-9]")) {
-                guna2TextBox2.Text = guna2TextBox2.Text.Remove(guna2TextBox2.Text.Length - 1);
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPIN.Text, "[^0-9]")) {
+                txtFieldPIN.Text = txtFieldPIN.Text.Remove(txtFieldPIN.Text.Length - 1);
             }
         }
 

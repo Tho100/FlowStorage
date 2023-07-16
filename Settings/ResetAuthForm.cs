@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using FlowSERVER1.AlertForms;
+﻿using FlowSERVER1.AlertForms;
 using MySql.Data.MySqlClient;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class ResetAuthForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private Crud crud = new Crud();
+
         public ResetAuthForm() {
             InitializeComponent();
         }
@@ -27,39 +22,18 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private string authReturnOriginal(String _usernameEntered) {
-
-            List<string> _passValues = new List<string>();
-
-            const string getUsername = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
-                command.Parameters.AddWithValue("@username", _usernameEntered);
-
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read()) {
-                        string getStringPassword = reader.GetString(0);
-                        _passValues.Add(getStringPassword);
-                    }
-                }
-            }
-
-            string passValuesString = _passValues[0];
-            return passValuesString;
-
-        }
-
-        private void setupInformationUpdate(String _custUsername,String _newPass) {
+        private void SetupInformationUpdate(String newAuth) {
 
             const string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(updatePasswordQuery, con)) {
-                command.Parameters.AddWithValue("@newpass", computeAuthCase(_newPass));
-                command.Parameters.AddWithValue("@username", _custUsername);
+                command.Parameters.AddWithValue("@newpass", EncryptionModel.computeAuthCase(newAuth));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.ExecuteNonQuery();
             }
 
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) {
+        private async void guna2Button1_Click(object sender, EventArgs e) {
 
             try {
 
@@ -67,25 +41,25 @@ namespace FlowSERVER1 {
                 var _getVerify = guna2TextBox3.Text;
                 var _getOldPass = guna2TextBox2.Text;
 
-                if(_getNewPass != _getVerify) {
+                if (_getNewPass != _getVerify) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "New password does not match.";
                     return;
                 }
 
-                if(_getNewPass == String.Empty) {
+                if (_getNewPass == String.Empty) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Please add a new password.";
                     return;
                 }
 
-                if(_getVerify == String.Empty) {
+                if (_getVerify == String.Empty) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "New password does not match.";
                     return;
                 }
 
-                if(authReturnOriginal(Globals.custUsername) != computeAuthCase(_getOldPass)) {
+                if (await crud.ReturnUserAuth() != EncryptionModel.computeAuthCase(_getOldPass)) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Password is incorrect.";
                     return;
@@ -93,7 +67,7 @@ namespace FlowSERVER1 {
 
                 if (MessageBox.Show("Do you want to proceed your action?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes) {
 
-                    setupInformationUpdate(Globals.custUsername, _getNewPass);
+                    SetupInformationUpdate(_getNewPass);
 
                     Form bgBlur = new Form();
                     using (SuccessResetAuthAlert displayDirectory = new SuccessResetAuthAlert()) {
@@ -119,18 +93,6 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 new CustomAlert(title: "An error occurred", subheader: "Failed to change your password due to unknown error, are you connected to the internet?").Show();
             }
-        }
-
-        private string computeAuthCase(string inputStr) {
-
-            SHA256 sha256 = SHA256.Create();
-
-            string _getAuthStrCase0 = inputStr;
-            byte[] _getAuthBytesCase0 = Encoding.UTF8.GetBytes(_getAuthStrCase0);
-            byte[] _authHashCase0 = sha256.ComputeHash(_getAuthBytesCase0);
-            string _authStrCase0 = BitConverter.ToString(_authHashCase0).Replace("-", "");
-
-            return _authStrCase0;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {

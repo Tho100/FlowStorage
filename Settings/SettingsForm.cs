@@ -428,14 +428,14 @@ namespace FlowSERVER1 {
         private void guna2Button14_Click(object sender, EventArgs e) => this.Close();
 
         private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
-        
+
         private void guna2Button3_Click(object sender, EventArgs e) => this.Close();
 
         private void guna2Button25_Click_1(object sender, EventArgs e) => this.Close();
 
         private void guna2Button1_Click(object sender, EventArgs e) => new RemoveAccountForm().Show();
 
-        private void guna2Button23_Click(object sender, EventArgs e) => new PassSharingFORM().Show();
+        private void guna2Button23_Click(object sender, EventArgs e) => new AddAuthSharing().Show();
         private void guna2Button12_Click(object sender, EventArgs e) => new ResetAuthForm().Show();
         private void guna2Button13_Click(object sender, EventArgs e) => new ChangeUsernameForm().Show();
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -729,7 +729,7 @@ namespace FlowSERVER1 {
         private void guna2Panel15_Paint(object sender, PaintEventArgs e) {
 
         }
-        
+
 
         private void tabPage4_Click(object sender, EventArgs e) {
 
@@ -2094,7 +2094,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                if (guna2TabControl1.SelectedIndex == 1) {
+                if (tabControlSettings.SelectedIndex == 1) {
 
                     if (_getAccountDateQueryExecuted == false) {
 
@@ -2114,7 +2114,7 @@ namespace FlowSERVER1 {
 
                 }
 
-                if (guna2TabControl1.SelectedIndex == 3) {
+                if (tabControlSettings.SelectedIndex == 3) {
                     if (_currentUserLanguage == "US") {
                         guna2Button19.Text = "Default";
                         guna2Button19.Enabled = false;
@@ -2176,7 +2176,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if (guna2TabControl1.SelectedIndex == 2) {
+                if (tabControlSettings.SelectedIndex == 2) {
 
                     if (RetrieveFileSharingAuth() != "DEF") {
 
@@ -2280,7 +2280,7 @@ namespace FlowSERVER1 {
         private void label22_Click(object sender, EventArgs e) {
 
         }
-           
+
         private void label76_Click(object sender, EventArgs e) {
 
         }

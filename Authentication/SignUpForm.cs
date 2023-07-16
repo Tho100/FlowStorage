@@ -49,7 +49,7 @@ namespace FlowSERVER1.Authentication {
 
                 string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
 
-                if (accountStartupValidation(username) == String.Empty) {
+                if (AccountStartupValidation(username) == String.Empty) {
                     pnlRegistration.Visible = true;
                     return;
                 }
@@ -83,9 +83,9 @@ namespace FlowSERVER1.Authentication {
                 accessHomePage.lstFoldersPage.SelectedIndex = 0;
                 accessHomePage.lblItemCountText.Text = accessHomePage.flwLayoutHome.Controls.Count.ToString();
 
-                buildGreetingLabel();
-                await getAccountTypeNumber();
-                await getCurrentLang();
+                BuildGreetingLabel();
+                await GetUserAccountType();
+                await GetUserLanguage();
 
                 int getCurrentCount = int.Parse(accessHomePage.lblItemCountText.Text);
                 int getLimitedValue = int.Parse(accessHomePage.lblLimitUploadText.Text);
@@ -96,8 +96,8 @@ namespace FlowSERVER1.Authentication {
 
                 pnlRegistration.Visible = false;
 
-                buildUILanguage();
-                showHomePage();
+                BuildUILanguage();
+                ShowHomePage();
 
             }
             catch (Exception) {
@@ -127,7 +127,7 @@ namespace FlowSERVER1.Authentication {
         /// display the HomePage
         /// 
         /// </summary>
-        private void showHomePage() {
+        private void ShowHomePage() {
             Hide();
             accessHomePage.ShowDialog();
             accessHomePage.FormClosed += HomePage_HomePageClosed;
@@ -148,7 +148,7 @@ namespace FlowSERVER1.Authentication {
             }
         }
 
-        private async Task<string> getAccountTypeNumber() {
+        private async Task<string> GetUserAccountType() {
 
             string accountType = "";
 
@@ -168,12 +168,12 @@ namespace FlowSERVER1.Authentication {
         /// <summary>
         /// Validate user entered email address format
         /// </summary>
-        /// <param name="_custEmail"></param>
+        /// <param name="emailInput"></param>
         /// <returns></returns>
-        private bool validateEmailUser(String _custEmail) {
+        private bool ValidateEmailInput(String emailInput) {
             const string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
-            return regex.IsMatch(_custEmail);
+            return regex.IsMatch(emailInput);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace FlowSERVER1.Authentication {
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        private string accountStartupValidation(string username) {
+        private string AccountStartupValidation(string username) {
 
             const string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
@@ -221,7 +221,7 @@ namespace FlowSERVER1.Authentication {
         /// Start genertating UI labels based on user language
         /// </summary>
         /// <param name="_custLang"></param>
-        private void buildUILanguage() {
+        private void BuildUILanguage() {
             var Form_1 = HomePage.instance;
             Form_1.label2.Text = "Item Count";
             Form_1.lblUpload.Text = "Upload";
@@ -321,7 +321,7 @@ namespace FlowSERVER1.Authentication {
                         return;
                     }
 
-                    if (!validateEmailUser(_getEmail) == true) {
+                    if (!ValidateEmailInput(_getEmail) == true) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Entered email is not valid.";
                         return;
@@ -367,12 +367,12 @@ namespace FlowSERVER1.Authentication {
                     Globals.custEmail = _getEmail;
                     Globals.accountType = "Basic";
 
-                    insertRegistrationData(_getUser, _getEmail, _getPass, _getPin);
+                    InsertUserRegistrationData(_getUser, _getEmail, _getPass, _getPin);
 
-                    await getCurrentLang();
-                    clearRegistrationValue();
-                    setupAutoLogin(_getUser);
-                    buildGreetingLabel();
+                    await GetUserLanguage();
+                    ClearRegistrationFields();
+                    StupAutoLogin(_getUser);
+                    BuildGreetingLabel();
 
                     accessHomePage.lblUsagePercentage.Text = "0%";
                     accessHomePage.progressBarUsageStorage.Value = 0;
@@ -381,7 +381,7 @@ namespace FlowSERVER1.Authentication {
                     accessHomePage.lstFoldersPage.Items.AddRange(itemsFolder);
                     accessHomePage.lstFoldersPage.SelectedIndex = 0;
 
-                    showHomePage();
+                    ShowHomePage();
                 }
             }
             catch (Exception) {
@@ -389,12 +389,12 @@ namespace FlowSERVER1.Authentication {
             }
         }
 
-        private void insertRegistrationData(string _getUser, string _getEmail, string _getPass, string _getPin) {
+        private void InsertUserRegistrationData(string getUser, string getEmail, string getAuth, string getPin) {
 
-            var _setupRecov = RandomString(16) + _getUser;
+            var _setupRecov = RandomString(16) + getUser;
             var _removeSpacesRecov = new string(_setupRecov.Where(c => !Char.IsWhiteSpace(c)).ToArray());
 
-            var _setupTok = (RandomString(12) + _getUser).ToLower();
+            var _setupTok = (RandomString(12) + getUser).ToLower();
             var _removeSpacesTok = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
 
             string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
@@ -407,11 +407,11 @@ namespace FlowSERVER1.Authentication {
 
                     command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK,ACCESS_TOK)
                             VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK,@ACCESS_TOK)";
-                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                    command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(_getPass));
+                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
+                    command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(getAuth));
                     command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                    command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
-                    command.Parameters.AddWithValue("@CUST_PIN", EncryptionModel.computeAuthCase(_getPin));
+                    command.Parameters.AddWithValue("@CUST_EMAIL", getEmail);
+                    command.Parameters.AddWithValue("@CUST_PIN", EncryptionModel.computeAuthCase(getPin));
                     command.Parameters.AddWithValue("@RECOV_TOK", EncryptionModel.Encrypt(_removeSpacesRecov));
                     command.Parameters.AddWithValue("@ACCESS_TOK", EncryptionModel.computeAuthCase(_removeSpacesTok));
 
@@ -420,22 +420,22 @@ namespace FlowSERVER1.Authentication {
                     command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
                             VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
                     command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
-                    command.Parameters.AddWithValue("@CUST_EMAIL", _getEmail);
+                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
+                    command.Parameters.AddWithValue("@CUST_EMAIL", getEmail);
                     command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
                     command.ExecuteNonQuery();
 
                     command.CommandText = @"INSERT INTO lang_info(CUST_USERNAME,CUST_LANG)
                             VALUES(@CUST_USERNAME,@CUST_LANG)";
                     command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
                     command.Parameters.AddWithValue("@CUST_LANG", "US");
                     command.ExecuteNonQuery();
 
                     command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS)
                             VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
                     command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@CUST_USERNAME", _getUser);
+                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
                     command.Parameters.AddWithValue("@DISABLED", "0");
                     command.Parameters.AddWithValue("@SET_PASS", "DEF");
                     command.ExecuteNonQuery();
@@ -454,7 +454,7 @@ namespace FlowSERVER1.Authentication {
         /// them into user default language (English on registration).
         /// 
         /// </summary>
-        private void buildGreetingLabel() {
+        private void BuildGreetingLabel() {
 
             DateTime now = DateTime.Now;
 
@@ -487,14 +487,14 @@ namespace FlowSERVER1.Authentication {
         /// called FlowStorageInfos located in %appdata%
         /// </summary>
         /// <param name="_custUsername">Username of user</param>
-        private void setupAutoLogin(String _custUsername) {
+        private void StupAutoLogin(String custUsername) {
 
             String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             if (!Directory.Exists(appDataPath)) {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
@@ -503,13 +503,13 @@ namespace FlowSERVER1.Authentication {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
         }
 
-        private async Task getCurrentLang() {
+        private async Task GetUserLanguage() {
             const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
             using (var command = new MySqlCommand(_selectLang, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -521,7 +521,7 @@ namespace FlowSERVER1.Authentication {
             }
         }
 
-        private void clearRegistrationValue() {
+        private void ClearRegistrationFields() {
 
             lblAlertUsername.Visible = false;
             lblAlertPassword.Visible = false;
@@ -536,10 +536,7 @@ namespace FlowSERVER1.Authentication {
             txtBoxAuth1Field.Text = String.Empty;
         }
 
-        private void guna2Button10_Click(object sender, EventArgs e) {
-            SignInForm login_page = new SignInForm(this);
-            login_page.Show();
-        }
+        private void guna2Button10_Click(object sender, EventArgs e) => new SignInForm(this).Show();
 
         private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
 

@@ -38,7 +38,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="currMain"></param>
         /// <param name="getDirTitle"></param>
-        private void generateDirectory(int currMain, string getDirTitle) {
+        private void GenerateDirectory(int currMain, string getDirTitle) {
 
             try {
 
@@ -252,7 +252,7 @@ namespace FlowSERVER1 {
                             }
                             else {
 
-                                generateDirectory(value_Dir, dirTitle);
+                                GenerateDirectory(value_Dir, dirTitle);
                                 HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
 
                                 var crud = new Crud();
