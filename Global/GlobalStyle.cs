@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlowSERVER1 {
     public class GlobalStyle {
@@ -34,7 +30,7 @@ namespace FlowSERVER1 {
 
         // Seperator button
         static public readonly Point PsSeperatorBut = new Point(83, 199);
-        static public readonly Size PsSeperatorButSize = new Size(5,5);
+        static public readonly Size PsSeperatorButSize = new Size(5, 5);
 
         // Garbage button
         static public readonly Color BorderColor2 = ColorTranslator.FromHtml("#232323");

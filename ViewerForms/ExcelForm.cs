@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Global;
 using FlowSERVER1.AlertForms;
+using System.Collections.Generic;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace FlowSERVER1 {
 
@@ -251,73 +253,42 @@ namespace FlowSERVER1 {
             }
         }
 
-        private byte[] ConvertDataGridViewToByteArray(DataGridView dataGridView) {
-            using (MemoryStream memoryStream = new MemoryStream()) {
-                using (XLWorkbook workbook = new XLWorkbook()) {
-                    foreach (IXLWorksheet rowSheets in guna2ComboBox1.Items) {
-                        IXLWorksheet sheets = (IXLWorksheet)rowSheets;
-                        string sheetsName = sheets.Name.ToString();
+        private byte[] UpdatedChangesBytes() {
 
-                        DataTable dt = new DataTable();
-                        foreach (DataGridViewColumn column in dataGridView.Columns) {
-                            dt.Columns.Add(column.HeaderText);
-                        }
+            string selectedSheetName = guna2ComboBox1.SelectedItem.ToString();
 
-                        foreach (DataGridViewRow row in dataGridView.Rows) {
-                            if (row.IsNewRow)
-                                continue;
+            using (var memoryStream = new MemoryStream(_sheetsByte)) {
+                using (var workbook = new XLWorkbook(memoryStream)) {
+                    var worksheet = workbook.Worksheet(selectedSheetName);
+                    DataTable dt = (DataTable)dataGridView1.DataSource;
 
-                            DataRow dataRow = dt.NewRow();
-                            for (int i = 0; i < dataGridView.Columns.Count; i++) {
-                                dataRow[i] = row.Cells[i].Value;
-                            }
-                            dt.Rows.Add(dataRow);
-                        }
+                    var existingTable = worksheet.Tables.FirstOrDefault();
+                    if (existingTable != null)
+                        worksheet.Cell(1, 1).Worksheet.Tables.Remove(existingTable.Name);
 
-                        workbook.Worksheets.Add(dt, sheetsName);
+                    worksheet.Clear();
+                    worksheet.Cell(1, 1).InsertTable(dt);
+
+                    using (var outputStream = new MemoryStream()) {
+                        workbook.SaveAs(outputStream);
+                        return outputStream.ToArray();
                     }
-
-                    workbook.SaveAs(memoryStream);
-                }
-
-                return memoryStream.ToArray();
-            }
-        }
-
-        private byte[] convertDataGridViewToByteArray(DataGridView dataGridView) {
-
-            DataTable dt = dataGridView.DataSource as DataTable;
-            if (dt != null) {
-                using (MemoryStream memoryStream = new MemoryStream()) {
-                    using (XLWorkbook workbook = new XLWorkbook()) {
-                        foreach (IXLWorksheet rowSheets in guna2ComboBox1.Items) {
-                            IXLWorksheet sheets = (IXLWorksheet)rowSheets;
-                            string sheetsName = sheets.Name.ToString();
-                            workbook.Worksheets.Add(dt, sheetsName);
-                        }
-
-                        workbook.SaveAs(memoryStream);
-                    }
-
-                    return memoryStream.ToArray();
                 }
             }
-
-            return null;
         }
 
         private async void guna2Button6_Click(object sender, EventArgs e) {
 
-            byte[] updatedBytes = convertDataGridViewToByteArray(dataGridView1);
+            byte[] updatedBytes = UpdatedChangesBytes();
 
             if (updatedBytes != null) {
                 string toBase64String = Convert.ToBase64String(updatedBytes);
                 string encryptedBase64 = EncryptionModel.Encrypt(toBase64String);
                 await SaveChangesUpdate(encryptedBase64);
-                MessageBox.Show("Changes saved successfully.");
+                MessageBox.Show("Changes saved successfully.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             else {
-                MessageBox.Show("Failed to save changes.");
+                MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }
 
@@ -366,22 +337,16 @@ namespace FlowSERVER1 {
 
         private void guna2ComboBox1_SelectedIndexChanged_1(object sender, EventArgs e) {
 
-            try {
+            int selectedIndex = guna2ComboBox1.SelectedIndex;
 
-                int selectedIndex = guna2ComboBox1.SelectedIndex;
+            if (selectedIndex != _previousSelectedIndex) {
 
-                if (selectedIndex != _previousSelectedIndex) {
+                _previousSelectedIndex = selectedIndex;
+                _changedIndex = selectedIndex;
 
-                    _previousSelectedIndex = selectedIndex;
-                    _changedIndex = selectedIndex;
-
-                    _currentSheetIndex = selectedIndex + 1;
-                    GenerateSpreadsheet(_sheetsByte);
-                }
+                _currentSheetIndex = selectedIndex + 1;
+                GenerateSpreadsheet(_sheetsByte);
             }
-            catch (Exception ex) {
-            }
-
         }
     }
 }
