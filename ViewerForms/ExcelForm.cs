@@ -1,17 +1,14 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.IO;
-using ClosedXML.Excel;
-using System.Threading.Tasks;
-
-using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
+﻿using ClosedXML.Excel;
 using FlowSERVER1.AlertForms;
-using System.Collections.Generic;
-using DocumentFormat.OpenXml.Spreadsheet;
+using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
+using MySql.Data.MySqlClient;
+using System;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlowSERVER1 {
 
@@ -35,16 +32,16 @@ namespace FlowSERVER1 {
         /// Load user excel workbook sheet based on table name 
         /// 
         /// </summary>
-        /// <param name="titleName"></param>
-        /// <param name="_TableName"></param>
-        /// <param name="_DirectoryName"></param>
-        /// <param name="_UploaderName"></param>
+        /// <param name="fileName"></param>
+        /// <param name="tableName"></param>
+        /// <param name="directoryName"></param>
+        /// <param name="uploaderName"></param>
 
         public ExcelForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false) {
 
             InitializeComponent();
 
-            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            gridExcelSpreadsheet.CellValueChanged += dataGridView1_CellValueChanged;
 
             instance = this;
 
@@ -62,7 +59,8 @@ namespace FlowSERVER1 {
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
-            } else {
+            }
+            else {
 
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
@@ -80,7 +78,7 @@ namespace FlowSERVER1 {
 
             GenerateSpreadsheet(LoaderModel.LoadFile(tableName, _directoryName, fileName, isFromShared));
             _sheetsByte = LoaderModel.LoadFile(tableName, _directoryName, fileName);
-           
+
         }
 
 
@@ -130,7 +128,7 @@ namespace FlowSERVER1 {
                                     dt.Rows.Add(row.Cells().Select(c => c.Value.ToString()).ToArray());
                                 }
                             }
-                            dataGridView1.DataSource = dt;
+                            gridExcelSpreadsheet.DataSource = dt;
                         }
                     }
                 }
@@ -143,7 +141,7 @@ namespace FlowSERVER1 {
         private void Form5_Load(object sender, EventArgs e) {
 
         }
-        
+
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 12;
             this.WindowState = FormWindowState.Normal;
@@ -151,9 +149,7 @@ namespace FlowSERVER1 {
             guna2Button3.Visible = false;
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
         private void label2_Click(object sender, EventArgs e) {
 
@@ -168,7 +164,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             this.TopMost = false;
-            SaverModel.SaveSelectedFile(lblFileName.Text,_tableName,_directoryName);
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
         }
 
         private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e) {
@@ -185,7 +181,7 @@ namespace FlowSERVER1 {
             string[] parts = lblFileName.Text.Split('.');
             string getExtension = "." + parts[1];
 
-            new shareFileFORM(lblFileName.Text, getExtension, 
+            new shareFileFORM(lblFileName.Text, getExtension,
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 
@@ -260,7 +256,7 @@ namespace FlowSERVER1 {
             using (var memoryStream = new MemoryStream(_sheetsByte)) {
                 using (var workbook = new XLWorkbook(memoryStream)) {
                     var worksheet = workbook.Worksheet(selectedSheetName);
-                    DataTable dt = (DataTable)dataGridView1.DataSource;
+                    DataTable dt = (DataTable)gridExcelSpreadsheet.DataSource;
 
                     var existingTable = worksheet.Tables.FirstOrDefault();
                     if (existingTable != null)
@@ -285,7 +281,7 @@ namespace FlowSERVER1 {
                 string toBase64String = Convert.ToBase64String(updatedBytes);
                 string encryptedBase64 = EncryptionModel.Encrypt(toBase64String);
                 await SaveChangesUpdate(encryptedBase64);
-                MessageBox.Show("Changes saved successfully.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else {
                 MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -293,7 +289,7 @@ namespace FlowSERVER1 {
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            if(this._tableName != "ps_info_excel") {
+            if (this._tableName != "ps_info_excel") {
                 btnSaveChanges.Visible = true;
             }
         }
