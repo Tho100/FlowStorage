@@ -219,7 +219,7 @@
             this.btnSaveChanges.TabIndex = 75;
             this.btnSaveChanges.Text = "Save Changes";
             this.btnSaveChanges.Visible = false;
-            this.btnSaveChanges.Click += new System.EventHandler(this.guna2Button6_Click);
+            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
             // label15
             // 

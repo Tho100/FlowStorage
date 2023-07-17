@@ -305,7 +305,7 @@ namespace FlowSERVER1 {
         private async void guna2Button7_Click_2(object sender, EventArgs e) {
 
             if(lblUserComment.Text != txtFieldComment.Text) {
-                await new UpdateComment().saveChangesComment(txtFieldComment.Text, lblFileName.Text);
+                await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
             lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;

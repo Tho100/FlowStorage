@@ -210,7 +210,7 @@
             this.btnUploadFolder.TabIndex = 29;
             this.btnUploadFolder.Text = "Upload Folder";
             this.btnUploadFolder.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnUploadFolder.Click += new System.EventHandler(this.guna2Button12_Click);
+            this.btnUploadFolder.Click += new System.EventHandler(this.btnUploadFolder_Click);
             // 
             // btnFileSharing
             // 
@@ -251,12 +251,12 @@
             this.btnUploadFile.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFile.Image")));
             this.btnUploadFile.ImageSize = new System.Drawing.Size(26, 26);
             this.btnUploadFile.Location = new System.Drawing.Point(4, 137);
-            this.btnUploadFile.Name = "btnUploadFile";
+            this.btnUploadFile.Name = "btnUploadFileHome";
             this.btnUploadFile.Size = new System.Drawing.Size(141, 33);
             this.btnUploadFile.TabIndex = 14;
             this.btnUploadFile.Text = "Upload File";
             this.btnUploadFile.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnUploadFile.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnUploadFile.Click += new System.EventHandler(this.btnUploadFileHome_Click);
             // 
             // btnCreateDirectory
             // 
@@ -464,7 +464,7 @@
             this.btnLogout.Size = new System.Drawing.Size(119, 33);
             this.btnLogout.TabIndex = 38;
             this.btnLogout.Text = "Logout";
-            this.btnLogout.Click += new System.EventHandler(this.guna2Button15_Click);
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // guna2PictureBox1
             // 
@@ -700,7 +700,7 @@
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(40, 36);
             this.btnSettings.TabIndex = 14;
-            this.btnSettings.Click += new System.EventHandler(this.guna2Button5_Click);
+            this.btnSettings.Click += new System.EventHandler(this.btnOpenSettings_Click);
             // 
             // guna2VSeparator1
             // 
@@ -1285,7 +1285,7 @@
             this.btnUploadPs.TabIndex = 37;
             this.btnUploadPs.Text = "Upload file";
             this.btnUploadPs.TextOffset = new System.Drawing.Point(4, 0);
-            this.btnUploadPs.Click += new System.EventHandler(this.guna2Button1_Click_1);
+            this.btnUploadPs.Click += new System.EventHandler(this.btnUploadPs_Click_1);
             // 
             // lblPsCount
             // 

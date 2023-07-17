@@ -450,11 +450,13 @@
     </Compile>
     <Compile Include="Global\GlobalsData.cs" />
     <Compile Include="Global\GlobalsTable.cs" />
+    <Compile Include="Helper\CallDialogResultSave.cs" />
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Helper\Greeting.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
     <Compile Include="Helper\ImageCompressor.cs" />
+    <Compile Include="Helper\UpdateChanges.cs" />
     <Compile Include="Helper\UpdateComment.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">

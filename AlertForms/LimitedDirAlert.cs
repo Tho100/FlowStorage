@@ -24,10 +24,8 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button2_Click_1(object sender, EventArgs e) {
-            this.Close();
-        }
-
+        private void guna2Button2_Click_1(object sender, EventArgs e) => this.Close();
+        
         private void guna2Button1_Click(object sender, EventArgs e) {
             var remAccShow = new SettingsForm();
             remAccShow.Show();

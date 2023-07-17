@@ -10,7 +10,7 @@ namespace FlowSERVER1.Helper {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public async Task saveChangesComment(string updatedComment, string fileName) {
+        public async Task SaveChangesComment(string updatedComment, string fileName) {
 
             const string query = "UPDATE cust_sharing SET CUST_COMMENT = @updatedComment WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {

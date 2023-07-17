@@ -10,6 +10,7 @@ namespace FlowSERVER1 {
     public partial class RecoveryForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private Crud crud = new Crud();
 
         public RecoveryForm() {
             InitializeComponent();
@@ -36,14 +37,14 @@ namespace FlowSERVER1 {
            
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) {
+        private async void guna2Button1_Click(object sender, EventArgs e) {
 
             try {
 
                 string authcase0 = EncryptionModel.computeAuthCase(txtFieldAuth.Text);
                 string authcase1 = EncryptionModel.computeAuthCase(txtFieldPIN.Text);
 
-                if(authcase0 == RetrieveCases().ElementAt(0) && authcase1 == RetrieveCases().ElementAt(1)) {
+                if(authcase0 == await crud.ReturnUserPIN() && authcase1 == await crud.ReturnUserAuth()) {
                     SaveRecoveryTokenToLocal(RetrieveRecoveryToken());
                 } else {
                     new CustomAlert(title: "Export failed", subheader: "Password or PIN is incorrect.").Show();
@@ -69,23 +70,6 @@ namespace FlowSERVER1 {
 
             return EncryptionModel.Decrypt(concludeStrings);
 
-        }
-
-        private List<string> RetrieveCases() {
-
-            List<string> concludeStrings = new List<string>();
-
-            const string query = "SELECT CUST_PASSWORD, CUST_PIN FROM information WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(query,con)) {
-                command.Parameters.AddWithValue("@username",Globals.custUsername);
-                using(MySqlDataReader read = command.ExecuteReader()) {
-                    while(read.Read()) { 
-                        concludeStrings.Add(read.GetString(0));
-                        concludeStrings.Add(read.GetString(1));
-                    }
-                }
-            }
-            return concludeStrings;
         }
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {

@@ -358,7 +358,7 @@ namespace FlowSERVER1 {
             }
 
             PanelGenerator panelGenerator = new PanelGenerator();
-            panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromDirectory: true);
+            panelGenerator.GeneratePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromDirectory: true);
         }
 
         private void Form3_Load(object sender, EventArgs e) {
@@ -905,7 +905,7 @@ namespace FlowSERVER1 {
             return count;
         }
 
-        private async void guna2Button2_Click_1(object sender, EventArgs e) {
+        private async void btnUploadFile_Click(object sender, EventArgs e) {
 
             try {
 

@@ -26,6 +26,8 @@ namespace FlowSERVER1 {
         private string _directoryName { get; set; }
         private string _tableName { get; set; }
 
+        readonly private UpdateChanges saveChanges = new UpdateChanges();
+
         /// <summary>
         /// 
         /// Retrieve text data based on table name 
@@ -428,94 +430,18 @@ namespace FlowSERVER1 {
                 _isFromSharing, _tableName, _directoryName).Show();
         }
 
-        private void SaveChangesUpdate(String textValues) {
+        private async void btnSaveChanges_Click(object sender, EventArgs e) {
 
-            try {
-
-                if (_tableName == "file_info_expand") {
-
-                    const string updateQue = "UPDATE file_info_expand SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                        command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
-                    }
-
-                }
-                else if (_tableName == "cust_sharing" && _isFromSharing == false) {
-
-                    const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                        command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
-                    }
-
-                }
-                else if (_tableName == "cust_sharing" && _isFromSharing == true) {
-
-                    const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                        command.Parameters.Add("@update", MySqlDbType.LongText).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
-                    }
-
-                }
-                else if (_tableName == "upload_info_directory") {
-
-                    const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                        command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(_directoryName);
-                        command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
-                    }
-
-                }
-                else if (_tableName == "folder_upload_info") {
-
-                    const string updateQue = "UPDATE folder_upload_info SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
-                    using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                        command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = textValues;
-                        command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                        command.Parameters.Add("@foldtitle", MySqlDbType.Text).Value = EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem));
-                        command.Parameters.Add("@filename", MySqlDbType.Text).Value = EncryptionModel.Encrypt(lblFileName.Text);
-                        command.ExecuteNonQuery();
-                    }
-
-                }
-
-            }
-            catch (Exception) {
-                MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-
-            string verifySaveText = null;
-
-            if (_isFromSharing) {
-                verifySaveText = "Save Changes? \nThe changes will also affect the user you've shared this file to.";
-            }
-            else {
-                verifySaveText = "Save Changes?";
-            }
-            DialogResult verifySave = MessageBox.Show(verifySaveText, "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-
-            if (verifySave == DialogResult.Yes) {
+            if (CallDialogResultSave.CallDialogResult(_isFromSharing) == DialogResult.Yes) {
 
                 string getStrings = richTextBox1.Text;
-                byte[] getBytesText = System.Text.Encoding.UTF8.GetBytes(getStrings);
+                byte[] getBytesText = Encoding.UTF8.GetBytes(getStrings);
                 string base64Strings = Convert.ToBase64String(getBytesText);
 
-                string encryptedEncoded = EncryptionModel.Encrypt(base64Strings);
-                SaveChangesUpdate(encryptedEncoded);
+                string fileName = lblFileName.Text;
+
+                await saveChanges.SaveChangesUpdate(fileName, base64Strings, _tableName, _isFromSharing, _directoryName);
+                MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -531,7 +457,7 @@ namespace FlowSERVER1 {
 
         private async void guna2Button12_Click(object sender, EventArgs e) {
             if (lblUserComment.Text != txtFieldComment.Text) {
-                await new UpdateComment().saveChangesComment(txtFieldComment.Text, lblFileName.Text);
+                await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
             lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;

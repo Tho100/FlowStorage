@@ -244,7 +244,7 @@ namespace FlowSERVER1.Authentication {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button11_Click(object sender, EventArgs e) {
+        private async void btnSignUp_Click(object sender, EventArgs e) {
 
             try {
 

@@ -10,6 +10,7 @@ namespace FlowSERVER1 {
     public partial class RemoveAccountForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private Crud crud = new Crud();
 
         public RemoveAccountForm() {
             InitializeComponent();
@@ -57,11 +58,11 @@ namespace FlowSERVER1 {
 
             try {
 
-                var decryptPass = EncryptionModel.Decrypt(ReturnCustomColumn("CUST_PASSWORD"));
-                var decryptPin = EncryptionModel.Decrypt(ReturnCustomColumn("CUST_PIN"));
+                string userReturnedAuth = await crud.ReturnUserAuth();
+                string userReturnedPin = await crud.ReturnUserPIN();
 
-                if (txtFieldPIN.Text == decryptPin) {
-                    if (txtFieldAuth.Text == decryptPass) {
+                if (txtFieldPIN.Text == userReturnedPin) {
+                    if (txtFieldAuth.Text == userReturnedAuth) {
                         if (MessageBox.Show("Delete your account?\nYour data will be deleted PERMANENTLY.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
                             String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";

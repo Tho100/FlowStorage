@@ -252,7 +252,7 @@ namespace FlowSERVER1 {
             btnOpenRenameFolderPage.Visible = false;
         }
 
-        private void buildButtonsOnFolderNameSelected() {
+        private void BuildButtonsOnFolderNameSelected() {
             btnDeleteFolder.Visible = true;
             btnRefreshFiles.Visible = false;
             btnOpenRenameFolderPage.Visible = true;
@@ -609,7 +609,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 BuildRedundaneVisibility();
 
@@ -1016,10 +1016,10 @@ namespace FlowSERVER1 {
                     string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
                         ClearRedundane();
-                        await BuildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
+                        await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
                     }
                     else {
-                        await buildDirectoryPanel(await crud.countRow(tableName));
+                        await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
                     }
                 }
             }
@@ -1040,10 +1040,10 @@ namespace FlowSERVER1 {
 
                         ClearRedundane();
 
-                        await BuildFilePanelHome(tableName, fileType, await crud.countRow(tableName));
+                        await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
                     }
                     else {
-                        await buildDirectoryPanel(await crud.countRow(tableName));
+                        await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
                     }
                 }
             }
@@ -1391,7 +1391,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
+                panelGenerator.GeneratePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
 
                 BuildRedundaneVisibility();
 
@@ -1801,7 +1801,7 @@ namespace FlowSERVER1 {
 
                         ClearRedundane();
 
-                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
+                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.CountTableRow(tableName), isFromMyPs: false);
                     }
                 }
             }
@@ -1823,7 +1823,7 @@ namespace FlowSERVER1 {
 
                         ClearRedundane();
 
-                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.countRowMyPublicStorage(tableName), isFromMyPs: true);
+                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.CountUserTableRow(tableName), isFromMyPs: true);
                     }
                 }
             }
@@ -1844,7 +1844,7 @@ namespace FlowSERVER1 {
 
                         ClearRedundane();
 
-                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.countRowPublicStorage(tableName), isFromMyPs: false);
+                        await BuildFilePanelPublicStorage(tableName, fileType, await crud.CountTableRow(tableName), isFromMyPs: false);
                     }
                 }
             }
@@ -2130,7 +2130,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 BuildRedundaneVisibility();
 
@@ -2429,7 +2429,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel(parameterName, itemCurr, filesInfoShared, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoShared, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 BuildRedundaneVisibility();
 
@@ -2529,6 +2529,45 @@ namespace FlowSERVER1 {
                 form.Close();
             }
 
+        }
+
+        private void OpenFolderDialog() {
+
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "";
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
+
+                var getFolderPath = dialog.FileName;
+                var getFolderName = new DirectoryInfo(getFolderPath).Name;
+
+                if (!lstFoldersPage.Items.Contains(getFolderName)) {
+
+                    string[] _TitleValues = Directory.GetFiles(getFolderPath, "*").Select(Path.GetFileName).ToArray();
+                    int _numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
+
+                    if (_numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
+
+                        flwLayoutHome.Controls.Clear();
+                        lstFoldersPage.Items.Add(getFolderName);
+
+                        CreateFilePanelFolder(getFolderPath, getFolderName, _TitleValues);
+                        var _dirPosition = lstFoldersPage.Items.IndexOf(getFolderName);
+
+                        lstFoldersPage.SelectedIndex = _dirPosition;
+
+                    }
+                    else {
+                        DisplayErrorFolder(Globals.accountType);
+                        lstFoldersPage.SelectedItem = "Home";
+                    }
+
+                }
+                else {
+                    MessageBox.Show("Folder already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
 
         private void OpenFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
@@ -2848,7 +2887,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.generatePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 BuildRedundaneVisibility();
 
@@ -3147,69 +3186,6 @@ namespace FlowSERVER1 {
 
         }
 
-        /// <summary>
-        /// 
-        /// Open FileDialog and ask user
-        /// to select file and send those file 
-        /// metadata into DB and generate panel file on folderDialog.
-        /// 
-        /// If condition is met then alert user to upgrade their account.
-        /// The condition; Trying to upload more than the number of 
-        /// folder they can upload according to their account plan
-        /// 
-        /// </summary>
-        /// 
-
-        private void guna2Button12_Click(object sender, EventArgs e) {
-
-            LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
-
-            List<string> foldersItems = lstFoldersPage.Items.Cast<string>().ToList();
-            List<string> execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
-            int countTotalFolders = foldersItems.Count(item => !execludedStringsItem.Contains(item));
-
-            if (Globals.uploadFolderLimit[Globals.accountType] == countTotalFolders) {
-                folderUploadFailed.Show();
-                return;
-            }
-
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "";
-            dialog.IsFolderPicker = true;
-
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
-
-                var getFolderPath = dialog.FileName;
-                var getFolderName = new DirectoryInfo(getFolderPath).Name;
-
-                if (!lstFoldersPage.Items.Contains(getFolderName)) {
-
-                    string[] _TitleValues = Directory.GetFiles(getFolderPath, "*").Select(Path.GetFileName).ToArray();
-                    int _numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
-
-                    if (_numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
-
-                        flwLayoutHome.Controls.Clear();
-                        lstFoldersPage.Items.Add(getFolderName);
-
-                        CreateFilePanelFolder(getFolderPath, getFolderName, _TitleValues);
-                        var _dirPosition = lstFoldersPage.Items.IndexOf(getFolderName);
-
-                        lstFoldersPage.SelectedIndex = _dirPosition;
-
-                    }
-                    else {
-                        DisplayErrorFolder(Globals.accountType);
-                        lstFoldersPage.SelectedItem = "Home";
-                    }
-
-                }
-                else {
-                    MessageBox.Show("Folder already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-
         /// This function will delete user folder if 
         /// Garbage (delete folder) button is clicked
         /// </summary>
@@ -3282,7 +3258,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private void btnUploadFileHome_Click(object sender, EventArgs e) {
 
             try {
 
@@ -3310,14 +3286,14 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void guna2Button1_Click_1(object sender, EventArgs e) {
+        private async void btnUploadPs_Click_1(object sender, EventArgs e) {
 
             try {
 
                 List<int> returnedCountValue = new List<int>();
 
                 foreach (string tableName in GlobalsTable.publicTablesPs) {
-                    int count = await crud.countRowMyPublicStorage(tableName);
+                    int count = await crud.CountUserTableRow(tableName);
                     returnedCountValue.Add(count);
                 }
 
@@ -3338,6 +3314,41 @@ namespace FlowSERVER1 {
             }
         }
 
+        /// <summary>
+        /// 
+        /// Open FileDialog and ask user
+        /// to select file and send those file 
+        /// metadata into DB and generate panel file on folderDialog.
+        /// 
+        /// If condition is met then alert user to upgrade their account.
+        /// The condition; Trying to upload more than the number of 
+        /// folder they can upload according to their account plan
+        /// 
+        /// </summary>
+        /// 
+
+        private void btnUploadFolder_Click(object sender, EventArgs e) {
+
+            try {
+
+                LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
+
+                List<string> foldersItems = lstFoldersPage.Items.Cast<string>().ToList();
+                List<string> execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
+                int countTotalFolders = foldersItems.Count(item => !execludedStringsItem.Contains(item));
+
+                if (Globals.uploadFolderLimit[Globals.accountType] == countTotalFolders) {
+                    folderUploadFailed.Show();
+                    return;
+                }
+
+                OpenFolderDialog();
+
+            } catch (Exception) {
+                BuildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload this folder.");
+            }
+        }
+
         #endregion END - Open dialog section (Home, Public Storage, Folder)
 
         /// <summary>
@@ -3345,7 +3356,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button5_Click(object sender, EventArgs e) {
+        private void btnOpenSettings_Click(object sender, EventArgs e) {
 
             Task.Run(() => new SettingsLoadingAlert().ShowDialog());
 
@@ -3416,7 +3427,7 @@ namespace FlowSERVER1 {
                 }
                 else if (_selectedFolder != "Home" && _selectedFolder != "Shared To Me" && _selectedFolder != "Shared Files") {
 
-                    buildButtonsOnFolderNameSelected();
+                    BuildButtonsOnFolderNameSelected();
 
                     var typesValues = new List<string>();
                     const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
@@ -3872,44 +3883,48 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button15_Click(object sender, EventArgs e) {
+        private void RefreshAllOnLogut() {
+
+            pnlMain.SendToBack();
+
+            HomePage.instance.label2.Text = "Item Count";
+            HomePage.instance.lblUpload.Text = "Upload";
+            HomePage.instance.btnUploadFile.Text = "Upload File";
+            HomePage.instance.btnUploadFolder.Text = "Upload Folder";
+            HomePage.instance.btnCreateDirectory.Text = "Create Directory";
+            HomePage.instance.btnFileSharing.Text = "File Sharing";
+            HomePage.instance.btnFileSharing.Size = new Size(125, 47);
+            HomePage.instance.lblEssentials.Text = "Essentials";
+
+            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            String _getAuth = _getPath + "\\CUST_DATAS.txt";
+
+            if (File.Exists(_getAuth)) {
+                if (Directory.Exists(_getPath)) {
+                    Directory.Delete(_getPath, true);
+                }
+            }
+
+            GlobalsData.base64EncodedImageHome.Clear();
+            GlobalsData.base64EncodedThumbnailHome.Clear();
+            GlobalsData.base64EncodedImageSharedOthers.Clear();
+
+            HomePage.instance.lstFoldersPage.Items.Clear();
+
+            Hide();
+
+            SignUpForm signUpForm = new SignUpForm();
+            signUpForm.ShowDialog();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e) {
 
             try {
 
                 DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                 if (_confirmation == DialogResult.Yes) {
-
-                    pnlMain.SendToBack();
-
-                    HomePage.instance.label2.Text = "Item Count";
-                    HomePage.instance.lblUpload.Text = "Upload";
-                    HomePage.instance.btnUploadFile.Text = "Upload File";
-                    HomePage.instance.btnUploadFolder.Text = "Upload Folder";
-                    HomePage.instance.btnCreateDirectory.Text = "Create Directory";
-                    HomePage.instance.btnFileSharing.Text = "File Sharing";
-                    HomePage.instance.btnFileSharing.Size = new Size(125, 47);
-                    HomePage.instance.lblEssentials.Text = "Essentials";
-
-                    String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-                    String _getAuth = _getPath + "\\CUST_DATAS.txt";
-
-                    if (File.Exists(_getAuth)) {
-                        if (Directory.Exists(_getPath)) {
-                            Directory.Delete(_getPath, true);
-                        }
-                    }
-
-                    GlobalsData.base64EncodedImageHome.Clear();
-                    GlobalsData.base64EncodedThumbnailHome.Clear();
-                    GlobalsData.base64EncodedImageSharedOthers.Clear();
-
-                    HomePage.instance.lstFoldersPage.Items.Clear();
-
-                    Hide();
-
-                    SignUpForm signUpForm = new SignUpForm();
-                    signUpForm.ShowDialog();
-
+                    RefreshAllOnLogut();
                 }
             }
             catch (Exception) {
@@ -3917,6 +3932,7 @@ namespace FlowSERVER1 {
             }
         }
 
+        #region Drag and drop upload section
 
         private void Form1_DragEnter(object sender, DragEventArgs e) {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
@@ -3939,8 +3955,6 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
-        #region Drag and drop upload section
 
         private void Form1_DragDrop(object sender, DragEventArgs e) {
 
