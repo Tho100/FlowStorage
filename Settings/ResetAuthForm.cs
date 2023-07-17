@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
@@ -22,24 +23,24 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private void SetupInformationUpdate(String newAuth) {
+        private async Task StartInformationUpdate(String newAuth) {
 
             const string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(updatePasswordQuery, con)) {
                 command.Parameters.AddWithValue("@newpass", EncryptionModel.computeAuthCase(newAuth));
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
             }
 
         }
 
-        private async void guna2Button1_Click(object sender, EventArgs e) {
+        private async void btnConfirm_Click(object sender, EventArgs e) {
 
             try {
 
-                var _getNewPass = guna2TextBox1.Text;
-                var _getVerify = guna2TextBox3.Text;
-                var _getOldPass = guna2TextBox2.Text;
+                var _getNewPass = txtFieldNewAuth.Text;
+                var _getVerify = txtFieldVerifyNewAuth.Text;
+                var _getOldPass = txtFieldCurrentAuth.Text;
 
                 if (_getNewPass != _getVerify) {
                     lblAlert.Visible = true;
@@ -67,7 +68,7 @@ namespace FlowSERVER1 {
 
                 if (MessageBox.Show("Do you want to proceed your action?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes) {
 
-                    SetupInformationUpdate(_getNewPass);
+                    await StartInformationUpdate(_getNewPass);
 
                     Form bgBlur = new Form();
                     using (SuccessResetAuthAlert displayDirectory = new SuccessResetAuthAlert()) {
@@ -102,25 +103,25 @@ namespace FlowSERVER1 {
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button3.Visible = false;
             guna2Button4.Visible = true;
-            guna2TextBox1.PasswordChar = '\0';
+            txtFieldNewAuth.PasswordChar = '\0';
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             guna2Button4.Visible = false;
             guna2Button3.Visible = true;
-            guna2TextBox1.PasswordChar = '*';
+            txtFieldNewAuth.PasswordChar = '*';
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
             guna2Button5.Visible = false;
             guna2Button6.Visible = true;
-            guna2TextBox2.PasswordChar = '\0';
+            txtFieldCurrentAuth.PasswordChar = '\0';
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             guna2Button6.Visible = false;
             guna2Button5.Visible = true;
-            guna2TextBox2.PasswordChar = '*';
+            txtFieldCurrentAuth.PasswordChar = '*';
         }
 
         private void guna2Panel3_Paint(object sender, PaintEventArgs e) {

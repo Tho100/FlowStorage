@@ -100,6 +100,29 @@ namespace FlowSERVER1 {
             }
         }
 
+        private async Task StartUsernameUpdate(string getNewUsername) {
+
+            string[] tableNames = {
+                "information","cust_type","file_info", "file_info_expand",
+                "file_info_word", "file_info_excel", "file_info_pdf", "file_info_audi",
+                "file_info_vid", "sharing_info","lang_info","file_info_apk","file_info_exe",
+                "file_info_msi","file_info_directory","upload_info_directory","folder_upload_info"
+            };
+
+            for (int i = 0; i < tableNames.Length; i++) {
+                await SetupChangeUsername(tableNames[i], getNewUsername);
+            }
+
+            foreach (var publicTablesPs in GlobalsTable.publicTablesPs) {
+                await SetupChangeUsername(publicTablesPs, getNewUsername);
+            }
+
+            await SetupChangeUsernameSharing(getNewUsername);
+
+            UpdateLocalUsername(getNewUsername);
+            Globals.custUsername = getNewUsername;
+        }
+
         private async void guna2Button1_Click(object sender, EventArgs e) {
 
             try {
@@ -133,28 +156,9 @@ namespace FlowSERVER1 {
 
                 if(await crud.ReturnUserAuth() == EncryptionModel.computeAuthCase(getCustAuth)) {
 
-                    string[] tableNames = {
-                        "information","cust_type","file_info", "file_info_expand", 
-                        "file_info_word", "file_info_excel", "file_info_pdf", "file_info_audi", 
-                        "file_info_vid", "sharing_info","lang_info","file_info_apk","file_info_exe",
-                        "file_info_msi","file_info_directory","upload_info_directory","folder_upload_info"
-                    };
-
-                    for(int i=0; i<tableNames.Length; i++) {
-                        await SetupChangeUsername(tableNames[i], getNewUsername);
-                    }
-
-                    foreach(var publicTablesPs in GlobalsTable.publicTablesPs) {
-                        await SetupChangeUsername(publicTablesPs, getNewUsername);
-                    }
-
-                    await SetupChangeUsernameSharing(getNewUsername);
-
-                    UpdateLocalUsername(getNewUsername);
+                    await StartUsernameUpdate(getNewUsername);
 
                     new CustomAlert(title: "Username Updated",$"You've changed your username to '{getNewUsername}' from {Globals.custUsername}. Restart to fully apply changes.").Show();
-
-                    Globals.custUsername = getNewUsername;
 
                 } else {
                     lblAlert.Visible = true;

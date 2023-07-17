@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
@@ -218,69 +219,74 @@ namespace FlowSERVER1 {
         /// </summary>
 
         private int value_Dir = 0;
-        private async void guna2Button2_Click(object sender, EventArgs e) {
 
-            string filesCount = HomePage.instance.lblItemCountText.Text;
-            int totalFiles = int.Parse(filesCount);
+        private async Task ValidateAndCreateDirectory(int currentTotalFiles, string directoryName) {
 
-            string username = Globals.custUsername;
+            var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
+            countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
+            int countSameDir = Convert.ToInt32(await countSameDirCommand.ExecuteScalarAsync());
 
-            string dirTitle = guna2TextBox1.Text.Trim();
-            if (!String.IsNullOrEmpty(dirTitle)) {
+            if (countSameDir < 1) {
 
-                try {
+                var countTotalDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username", con);
+                countTotalDirCommand.Parameters.AddWithValue("@username", Globals.custUsername);
+                int countTotalDir = Convert.ToInt32(await countTotalDirCommand.ExecuteScalarAsync());
 
-                    var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
-                    countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(dirTitle));
-                    int countSameDir = Convert.ToInt32(countSameDirCommand.ExecuteScalar());
+                int maxFilesCount = Globals.uploadFileLimit[Globals.accountType];
+                int maxDirCount = Globals.uploadDirectoryLimit[Globals.accountType];
 
-                    if (countSameDir < 1) {
+                if (currentTotalFiles != maxFilesCount && countTotalDir != maxDirCount) {
 
-                        var countTotalDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username", con);
-                        countTotalDirCommand.Parameters.AddWithValue("@username", username);
-                        int countTotalDir = Convert.ToInt32(countTotalDirCommand.ExecuteScalar());
+                    value_Dir++;
 
-                        int maxFilesCount = Globals.uploadFileLimit[Globals.accountType];
-                        int maxDirCount = Globals.uploadDirectoryLimit[Globals.accountType];
-
-                        if (totalFiles != maxFilesCount && countTotalDir != maxDirCount) {
-
-                            value_Dir++;
-
-                            if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
-                                MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else {
-
-                                GenerateDirectory(value_Dir, dirTitle);
-                                HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
-
-                                var crud = new Crud();
-
-                                const string addDirQuery = "INSERT INTO file_info_directory VALUES (@dirname,@username)";
-                                var param = new Dictionary<string, string>
-                                {
-                                    { "@dirname", EncryptionModel.Encrypt(dirTitle)},
-                                    { "@username",Globals.custUsername}
-                                };
-
-
-                                await crud.Insert(addDirQuery, param);
-
-                            }
-                        }
-                        else {
-                            DisplayErrorUpgrade();
-                        }
+                    if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
+                        MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else {
-                        MessageBox.Show("Directory with this name already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        GenerateDirectory(value_Dir, directoryName);
+                        HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
+
+                        var crud = new Crud();
+
+                        const string addDirQuery = "INSERT INTO file_info_directory VALUES (@dirname,@username)";
+                        var param = new Dictionary<string, string>
+                        {
+                            { "@dirname", EncryptionModel.Encrypt(directoryName)},
+                            { "@username",Globals.custUsername}
+                        };
+
+
+                        await crud.Insert(addDirQuery, param);
+
                     }
                 }
-                catch (Exception) {
-                    new CustomAlert(title: "An error occurred", subheader: "Failed to create directory. Please try again later.").Show();
+                else {
+                    DisplayErrorUpgrade();
                 }
             }
+            else {
+                MessageBox.Show("Directory with this name already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async void btnCreateDirectory_Click(object sender, EventArgs e) {
+
+            try {
+
+                string filesCount = HomePage.instance.lblItemCountText.Text;
+                int totalFiles = int.Parse(filesCount);
+
+                string directoryNameInput = guna2TextBox1.Text.Trim();
+
+                if (!String.IsNullOrEmpty(directoryNameInput)) {
+                    await ValidateAndCreateDirectory(totalFiles, directoryNameInput);
+                }
+
+            } catch (Exception) {
+                new CustomAlert(title: "An error occurred", subheader: "Failed to create directory. Please try again later.").Show();
+            }
+
         }
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e) {

@@ -59,7 +59,7 @@
             this.btnCreateDirectory.Size = new System.Drawing.Size(297, 51);
             this.btnCreateDirectory.TabIndex = 17;
             this.btnCreateDirectory.Text = "Create";
-            this.btnCreateDirectory.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnCreateDirectory.Click += new System.EventHandler(this.btnCreateDirectory_Click);
             // 
             // label3
             // 
