@@ -606,11 +606,11 @@
     <Compile Include="ExtraForms\MobilePageForm.Designer.cs">
       <DependentUpon>MobilePageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\msiFORM.cs">
+    <Compile Include="ViewerForms\MsiForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\msiFORM.Designer.cs">
-      <DependentUpon>msiFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\MsiForm.Designer.cs">
+      <DependentUpon>MsiForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sharing\AddAuthSharing.cs">
       <SubType>Form</SubType>
@@ -857,8 +857,8 @@
     <EmbeddedResource Include="ExtraForms\MobilePageForm.resx">
       <DependentUpon>MobilePageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\msiFORM.resx">
-      <DependentUpon>msiFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\MsiForm.resx">
+      <DependentUpon>MsiForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sharing\AddAuthSharing.resx">
       <DependentUpon>AddAuthSharing.cs</DependentUpon>
@@ -995,9 +995,6 @@
     <None Include="Resources\icons8-pdf-60 %281%29.png" />
     <None Include="Resources\icons8-share-26.png" />
     <None Include="Resources\icons8-restart-500 %281%29.png" />
-    <None Include="Resources\icons8-sun-48.png" />
-    <None Include="Resources\icons8-moon-48.png" />
-    <None Include="Resources\icons8-night-601.png" />
     <None Include="Resources\Untitled %2882%291.png" />
     <None Include="Resources\Untitled %2883%29.png" />
     <None Include="Resources\icons8-netherlands-961.png" />

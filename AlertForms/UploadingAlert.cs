@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using Guna.UI2.WinForms;
 using System.Threading;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Linq;
 using System.Drawing;
+
 using FlowSERVER1.Global;
 
 namespace FlowSERVER1 {
@@ -188,7 +186,7 @@ namespace FlowSERVER1 {
                                 FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
                             }
                             else if (FileExt == ".msi") {
-                                FileDeletionNormal(FileName, "file_info_msi");
+                                FileDeletionNormal(FileName, GlobalsTable.homeMsiTable);
                             }
                             else if (FileExt == ".mp3" || FileExt == ".wav") {
                                 FileDeletionNormal(getName, GlobalsTable.homeAudioTable);
@@ -238,7 +236,7 @@ namespace FlowSERVER1 {
                                 FileDeletionFolder(getName, GlobalsTable.homeImageTable);
                             }
                             else if (FileExt == ".msi") {
-                                FileDeletionFolder(getName, "file_info_msi");
+                                FileDeletionFolder(getName, GlobalsTable.homeMsiTable);
                             }
                             else if (FileExt == ".mp3" || FileExt == ".wav") {
                                 FileDeletionFolder(getName, GlobalsTable.homeAudioTable);

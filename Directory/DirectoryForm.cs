@@ -340,7 +340,7 @@ namespace FlowSERVER1 {
                     imageValues.Add(Globals.MSIImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new msiFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
+                        new MsiForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
@@ -670,7 +670,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        msiFORM displayMsi = new msiFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        MsiForm displayMsi = new MsiForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayMsi.Show();
                     };
                 }

@@ -81,7 +81,7 @@ namespace FlowSERVER1 {
 
                 lblUploaderName.Text = uploaderName;
 
-                if (tableName == "upload_info_directory" && getText == "") {
+                if (tableName == GlobalsTable.directoryUploadTable && getText == "") {
 
                     const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
@@ -104,7 +104,7 @@ namespace FlowSERVER1 {
                     }
 
                 }
-                else if (getText == "" && tableName == "folder_upload_info") {
+                else if (getText == "" && tableName == GlobalsTable.folderUploadTable) {
 
                     const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
@@ -126,15 +126,15 @@ namespace FlowSERVER1 {
                     }
 
                 }
-                else if (tableName == "file_info_expand") {
+                else if (tableName == GlobalsTable.homeTextTable) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
                 }
-                else if (tableName == "cust_sharing" && _isFromSharing == false) {
+                else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
                 }
-                else if (tableName == "cust_sharing" && _isFromSharing == true) {
+                else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
                 }
