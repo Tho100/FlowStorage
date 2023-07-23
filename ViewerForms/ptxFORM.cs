@@ -153,6 +153,7 @@ namespace FlowSERVER1 {
         }
 
         private async void guna2Button7_Click(object sender, EventArgs e) {
+
             if (lblUserComment.Text != txtFieldComment.Text) {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
@@ -169,11 +170,11 @@ namespace FlowSERVER1 {
 
         }
 
-        private void docDocumentViewer1_Click(object sender, EventArgs e) {
+        private void guna2Separator1_Click(object sender, EventArgs e) {
 
         }
 
-        private void guna2Separator1_Click(object sender, EventArgs e) {
+        private void officeViewer1_Click_1(object sender, EventArgs e) {
 
         }
     }

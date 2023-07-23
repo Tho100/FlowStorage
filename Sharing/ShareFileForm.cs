@@ -12,6 +12,7 @@ namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private Crud crud = new Crud();
 
         private string _fileName { get; set; }
         private string _fileExtension {get; set ;}
@@ -29,31 +30,6 @@ namespace FlowSERVER1 {
             this._directoryName = directoryName;
 
             lblFileName.Text = fileName;
-        }
-
-        /// <summary>
-        /// This function will retrieves user 
-        /// account type 
-        /// </summary>
-        /// <param name="_receiverUsername">Receiver username who will received the file</param>
-        /// <returns></returns>
-        private int accountType(String _receiverUsername) {
-
-            string _accType = "";
-
-            const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(_getAccountTypeQue, con)) {
-                command.Parameters.AddWithValue("@username", _receiverUsername);
-
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read()) {
-                        _accType = reader.GetString(0);
-                    }
-                }
-            }
-
-            return Globals.uploadFileLimit[_accType];
-
         }
 
         /// <summary>
@@ -88,7 +64,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
-        private int countReceiverShared(String _receiverUsername) {
+        private int CountReceiverTotalShared(String _receiverUsername) {
 
             const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
             int fileCount = 0;
@@ -315,11 +291,11 @@ namespace FlowSERVER1 {
 
         private async void StartSharingFile() {
 
-            int _accType = accountType(txtFieldShareToName.Text);
-            int _countReceiverFile = countReceiverShared(txtFieldShareToName.Text);
+            int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
+            int receiverCurrentTotalUploaded = CountReceiverTotalShared(txtFieldShareToName.Text);
             string shareToName = txtFieldShareToName.Text;
 
-            if (_accType != _countReceiverFile) {
+            if (receiverUploadLimit != receiverCurrentTotalUploaded) {
 
                 new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
@@ -436,10 +412,6 @@ namespace FlowSERVER1 {
             catch (Exception) {
                 MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-            this.Close();
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {

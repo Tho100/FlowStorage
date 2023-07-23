@@ -29,6 +29,7 @@ namespace FlowSERVER1.Global {
             { "file_info_exe", "exeFile" },
             { "file_info_vid", "vidFile" },
             { "file_info_excel", "exlFile" },
+            { "file_info_msi", "msiFile" },
             { "file_info_pdf", "pdfFile" },
             { "file_info_apk", "apkFile" },
             { "file_info_word", "wordFile" },

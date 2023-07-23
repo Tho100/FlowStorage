@@ -587,7 +587,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            msiFORM displayMsi = new msiFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeMsiTable, "null", Globals.custUsername);
+                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.homeMsiTable, "null", Globals.custUsername);
                             displayMsi.Show();
                         }
 
@@ -841,7 +841,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        msiFORM displayMsi = new msiFORM(titleLab.Text, GlobalsTable.homeMsiTable, "null", Globals.custUsername);
+                        MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, "null", Globals.custUsername);
                         displayMsi.Show();
                     };
                 }
@@ -1369,7 +1369,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            msiFORM displayMsi = new msiFORM(filesInfo[accessIndex].Item1, "ps_info_msi", "null", uploaderName);
+                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, "ps_info_msi", "null", uploaderName);
                             displayMsi.Show();
                         }
 
@@ -1617,7 +1617,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        msiFORM displayMsi = new msiFORM(titleLab.Text, "ps_info_msi", "null", Globals.custUsername);
+                        MsiForm displayMsi = new MsiForm(titleLab.Text, "ps_info_msi", "null", Globals.custUsername);
                         displayMsi.Show();
                     };
                 }
@@ -2108,7 +2108,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            msiFORM displayMsi = new msiFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            MsiForm displayMsi = new MsiForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             displayMsi.Show();
                         }
 
@@ -2408,7 +2408,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            msiFORM displayMsi = new msiFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            MsiForm displayMsi = new MsiForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayMsi.Show();
                         }
 
@@ -2544,18 +2544,18 @@ namespace FlowSERVER1 {
 
                 if (!lstFoldersPage.Items.Contains(getFolderName)) {
 
-                    string[] _TitleValues = Directory.GetFiles(getFolderPath, "*").Select(Path.GetFileName).ToArray();
-                    int _numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
+                    string[] folderFilesName = Directory.GetFiles(getFolderPath, "*").Select(Path.GetFileName).ToArray();
+                    int numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
 
-                    if (_numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
+                    if (numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
 
                         flwLayoutHome.Controls.Clear();
                         lstFoldersPage.Items.Add(getFolderName);
 
-                        CreateFilePanelFolder(getFolderPath, getFolderName, _TitleValues);
-                        var _dirPosition = lstFoldersPage.Items.IndexOf(getFolderName);
+                        CreateFilePanelFolder(getFolderPath, getFolderName, folderFilesName);
+                        var folderListboxPosition = lstFoldersPage.Items.IndexOf(getFolderName);
 
-                        lstFoldersPage.SelectedIndex = _dirPosition;
+                        lstFoldersPage.SelectedIndex = folderListboxPosition;
 
                     }
                     else {
@@ -2867,7 +2867,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            new msiFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new MsiForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
                         }
 
                         onPressedEvent.Add(msiOnPressed);

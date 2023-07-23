@@ -71,47 +71,50 @@ namespace FlowSERVER1 {
             };
 
             foreach (string ext in fileExtensions.Keys) {
-                int count = _countRow(ext);
+                int count = CountFilesInDirectory(ext);
                 if (count > 0) {
                     _loadedExtensionType = ext;
                     string controlName = fileExtensions[ext].Item1;
                     string tableName = fileExtensions[ext].Item2;
-                    buildFilePanelOnLoad(tableName, controlName, count);
+                    BuildFilePanelOnLoad(tableName, controlName, count);
                 }
             }
 
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
             lblFilesCount.Text = $"{flwLayoutDirectory.Controls.Count} File(s)";
 
         }
 
-        private int _countRow(string ext) {
+        private int CountFilesInDirectory(string fileType) {
+
+            string encryptedDirectoryName = EncryptionModel.Encrypt(lblDirectoryName.Text);
+
             const string query = "SELECT COUNT(*) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                command.Parameters.AddWithValue("@ext", ext);
+                command.Parameters.AddWithValue("@dirname", encryptedDirectoryName);
+                command.Parameters.AddWithValue("@ext", fileType);
 
                 return Convert.ToInt32(command.ExecuteScalar());
             }
         }
 
-        private void buildRedundaneVisibility() {
+        private void BuildRedundaneVisibility() {
             if (flwLayoutDirectory.Controls.Count == 0) {
-                showRedundane();
+                ShowRedundane();
             }
             else {
-                clearRedundane();
+                ClearRedundane();
             }
         }
 
-        private void clearRedundane() {
+        private void ClearRedundane() {
             guna2Button6.Visible = false;
             label8.Visible = false;
         }
 
-        private void showRedundane() {
+        private void ShowRedundane() {
             guna2Button6.Visible = true;
             label8.Visible = true;
         }
@@ -125,7 +128,7 @@ namespace FlowSERVER1 {
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
 
-        private async void buildFilePanelOnLoad(String _tableName, String parameterName, int currItem) {
+        private async void BuildFilePanelOnLoad(String tableName, String parameterName, int currItem) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -201,7 +204,7 @@ namespace FlowSERVER1 {
 
                 onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                if (_tableName == GlobalsTable.homeImageTable) {
+                if (tableName == GlobalsTable.homeImageTable) {
 
                     if (base64EncodedImage.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
@@ -217,7 +220,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     }
 
@@ -225,7 +228,7 @@ namespace FlowSERVER1 {
 
                 }
 
-                if (_tableName == GlobalsTable.homeVideoTable) {
+                if (tableName == GlobalsTable.homeVideoTable) {
 
                     if (base64EncodedThumbnail.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail[i]);
@@ -241,7 +244,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
 
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         vidFormShow.Show();
                     }
 
@@ -249,107 +252,107 @@ namespace FlowSERVER1 {
                 }
 
 
-                if (_tableName == GlobalsTable.homeTextTable) {
+                if (tableName == GlobalsTable.homeTextTable) {
 
                     string textTypes = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
                     imageValues.Add(Globals.textTypeToImage[textTypes]);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        TextForm displayPic = new TextForm("", "upload_info_directory", fileName, lblDirectoryName.Text, Globals.custUsername);
+                        TextForm displayPic = new TextForm("", GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homeExeTable) {
+                if (tableName == GlobalsTable.homeExeTable) {
 
                     imageValues.Add(Globals.EXEImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        exeFORM displayExe = new exeFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        exeFORM displayExe = new exeFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayExe.Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homeExcelTable) {
+                if (tableName == GlobalsTable.homeExcelTable) {
 
                     imageValues.Add(Globals.EXCELImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        ExcelForm exlForm = new ExcelForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        ExcelForm exlForm = new ExcelForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         exlForm.Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homeAudioTable) {
+                if (tableName == GlobalsTable.homeAudioTable) {
 
                     imageValues.Add(Globals.AudioImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        AudioForm audioOnPressed = new AudioForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        AudioForm audioOnPressed = new AudioForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         audioOnPressed.Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homeApkTable) {
+                if (tableName == GlobalsTable.homeApkTable) {
 
                     imageValues.Add(Globals.APKImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        ApkForm displayPic = new ApkForm(fileName, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
+                        ApkForm displayPic = new ApkForm(fileName, Globals.custUsername, GlobalsTable.directoryUploadTable, lblDirectoryName.Text);
                         displayPic.Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homePdfTable) {
+                if (tableName == GlobalsTable.homePdfTable) {
 
                     imageValues.Add(Globals.PDFImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new PdfForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new PdfForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homePtxTable) {
+                if (tableName == GlobalsTable.homePtxTable) {
 
                     imageValues.Add(Globals.PTXImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new ptxFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new ptxFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (_tableName == GlobalsTable.homeMsiTable) {
+                if (tableName == GlobalsTable.homeMsiTable) {
 
                     imageValues.Add(Globals.MSIImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new msiFORM(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new msiFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
 
                 }
 
-                if (_tableName == GlobalsTable.homeWordTable) {
+                if (tableName == GlobalsTable.homeWordTable) {
 
                     imageValues.Add(Globals.DOCImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new WordDocForm(fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new WordDocForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
@@ -865,7 +868,7 @@ namespace FlowSERVER1 {
             }
 
             lblFilesCount.Text = $"{flwLayoutDirectory.Controls.Count} File(s)";
-            buildRedundaneVisibility();
+            BuildRedundaneVisibility();
 
         }
 
@@ -960,8 +963,7 @@ namespace FlowSERVER1 {
                     myPanel.Dispose();
                 }
 
-
-                buildRedundaneVisibility();
+                BuildRedundaneVisibility();
                 pnlFileOptions.Visible = false;
 
             }

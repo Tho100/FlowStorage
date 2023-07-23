@@ -415,6 +415,7 @@
             this.officeViewer1.Size = new System.Drawing.Size(778, 540);
             this.officeViewer1.TabIndex = 101;
             this.officeViewer1.Text = "officeViewer1";
+            this.officeViewer1.Click += new System.EventHandler(this.officeViewer1_Click_1);
             // 
             // ptxFORM
             // 

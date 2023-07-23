@@ -1,17 +1,13 @@
-﻿using FlowSERVER1.Global;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public class Crud {
 
         private readonly MySqlConnection con = ConnectionModel.con;
+
         public async Task<int> CountTableRow(String tableName) {
             using (var command = con.CreateCommand()) {
                 command.CommandText = $"SELECT COUNT(*) FROM {tableName}";
@@ -22,7 +18,7 @@ namespace FlowSERVER1 {
         public async Task<int> CountUserTableRow(String tableName) {
             using (var command = con.CreateCommand()) {
                 command.CommandText = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
-                command.Parameters.AddWithValue("@username",Globals.custUsername);
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
         }
@@ -47,8 +43,8 @@ namespace FlowSERVER1 {
             const string getAuthQuery = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getAuthQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                using (MySqlDataReader reader =  (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if(await reader.ReadAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
                         authValue = reader.GetString(0);
                     }
                 }
@@ -76,5 +72,20 @@ namespace FlowSERVER1 {
 
         }
 
+        public async Task<string> ReturnUserAccountType(string username) {
+
+            const string getAccountTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(getAccountTypeQuery, con)) {
+                command.Parameters.AddWithValue("@username", username);
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+
+            return "";
+        }
     }
 }

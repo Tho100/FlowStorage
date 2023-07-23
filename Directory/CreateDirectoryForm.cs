@@ -16,6 +16,7 @@ namespace FlowSERVER1 {
     /// Create directory form class
     /// </summary>
     public partial class CreateDirectoryForm : Form {
+
         public static CreateDirectoryForm instance;
         private readonly MySqlConnection con = ConnectionModel.con;
 

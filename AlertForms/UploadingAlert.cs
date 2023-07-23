@@ -45,17 +45,17 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            this.label1.Text = fileName;
+            this.lblFileName.Text = fileName;
             this.ControlName = controlName;
             this.TableName = tableName;
             this.FileName = fileName;
             this.DirectoryName = directoryName;
 
             if(fileSize != 101) {
-                label3.Text = fileSize.ToString() + "MB";
-                label3.Visible = true;
+                lblFileSize.Text = fileSize.ToString() + "MB";
+                lblFileSize.Visible = true;
             } else {
-                label3.Visible = false;
+                lblFileSize.Visible = false;
             }
 
             timer = new System.Windows.Forms.Timer();
@@ -67,11 +67,11 @@ namespace FlowSERVER1 {
 
         private void Timer_Tick(object sender, EventArgs e) {
             // Update the progress bar value
-            guna2ProgressBar1.Value = progressValue;
+            loadingProgressBar.Value = progressValue;
 
             // Increment the progress value
             progressValue++;
-            if (progressValue > guna2ProgressBar1.Maximum) {
+            if (progressValue > loadingProgressBar.Maximum) {
                 progressValue = 0; // Reset the progress value when it reaches the maximum
             }
         }
@@ -156,7 +156,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button10_Click(object sender, EventArgs e) {
+        private void btnCancelUpload_Click(object sender, EventArgs e) {
 
             try {
 
@@ -259,7 +259,6 @@ namespace FlowSERVER1 {
                                 FileDeletionFolder(getName, GlobalsTable.homeExeTable);
                             }
                         } else if (TableName == GlobalsTable.sharingTable) {
-                            // @ Note: Directory name refer to receiver name
                             FileDeletionSharing(getName);
                         }
                     }
@@ -287,7 +286,7 @@ namespace FlowSERVER1 {
                         HomePage.instance.lblEmptyHere.Visible = true;
                     }
 
-                } else if (TableName == "upload_info_directory") {
+                } else if (TableName == GlobalsTable.directoryUploadTable) {
                     Control foundControl = null;
                     foreach (Control _getControls in DirectoryForm.instance.flwLayoutDirectory.Controls) {
                         if (_getControls.Name == ControlName) {

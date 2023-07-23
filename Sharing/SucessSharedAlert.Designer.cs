@@ -45,9 +45,9 @@
             // 
             this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.LightGray;
-            this.label7.Location = new System.Drawing.Point(136, 111);
+            this.label7.Location = new System.Drawing.Point(135, 113);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(333, 58);
+            this.label7.Size = new System.Drawing.Size(325, 56);
             this.label7.TabIndex = 55;
             this.label7.Text = "File Name: whatt he fuckk.png";
             // 

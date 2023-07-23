@@ -26,13 +26,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UploadingAlert));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblFileName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnCancelUpload = new Guna.UI2.WinForms.Guna2Button();
+            this.lblFileSize = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.guna2ProgressBar1 = new Guna.UI2.WinForms.Guna2ProgressBar();
+            this.loadingProgressBar = new Guna.UI2.WinForms.Guna2ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -44,17 +44,17 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // label1
+            // lblFileName
             // 
-            this.label1.AutoEllipsis = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.LightGray;
-            this.label1.Location = new System.Drawing.Point(67, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(317, 22);
-            this.label1.TabIndex = 57;
-            this.label1.Text = "dwkajidawd.mp4";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.lblFileName.AutoEllipsis = true;
+            this.lblFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileName.ForeColor = System.Drawing.Color.LightGray;
+            this.lblFileName.Location = new System.Drawing.Point(67, 22);
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(317, 22);
+            this.lblFileName.TabIndex = 57;
+            this.lblFileName.Text = "dwkajidawd.mp4";
+            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -67,38 +67,38 @@
             this.label2.TabIndex = 58;
             this.label2.Text = "Uploading...";
             // 
-            // guna2Button10
+            // btnCancelUpload
             // 
-            this.guna2Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button10.Animated = true;
-            this.guna2Button10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2Button10.BorderRadius = 6;
-            this.guna2Button10.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button10.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button10.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button10.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.guna2Button10.ForeColor = System.Drawing.Color.White;
-            this.guna2Button10.Location = new System.Drawing.Point(399, 39);
-            this.guna2Button10.Name = "guna2Button10";
-            this.guna2Button10.Size = new System.Drawing.Size(88, 32);
-            this.guna2Button10.TabIndex = 59;
-            this.guna2Button10.Text = "Cancel";
-            this.guna2Button10.TextOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
+            this.btnCancelUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancelUpload.Animated = true;
+            this.btnCancelUpload.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.btnCancelUpload.BorderRadius = 6;
+            this.btnCancelUpload.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCancelUpload.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCancelUpload.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCancelUpload.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCancelUpload.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnCancelUpload.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnCancelUpload.ForeColor = System.Drawing.Color.White;
+            this.btnCancelUpload.Location = new System.Drawing.Point(399, 39);
+            this.btnCancelUpload.Name = "btnCancelUpload";
+            this.btnCancelUpload.Size = new System.Drawing.Size(88, 32);
+            this.btnCancelUpload.TabIndex = 59;
+            this.btnCancelUpload.Text = "Cancel";
+            this.btnCancelUpload.TextOffset = new System.Drawing.Point(0, -1);
+            this.btnCancelUpload.Click += new System.EventHandler(this.btnCancelUpload_Click);
             // 
-            // label3
+            // lblFileSize
             // 
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.LightGray;
-            this.label3.Location = new System.Drawing.Point(403, 12);
-            this.label3.Name = "label3";
-            this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label3.Size = new System.Drawing.Size(83, 19);
-            this.label3.TabIndex = 67;
-            this.label3.Text = "140MB";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.lblFileSize.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileSize.ForeColor = System.Drawing.Color.LightGray;
+            this.lblFileSize.Location = new System.Drawing.Point(403, 12);
+            this.lblFileSize.Name = "lblFileSize";
+            this.lblFileSize.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblFileSize.Size = new System.Drawing.Size(83, 19);
+            this.lblFileSize.TabIndex = 67;
+            this.lblFileSize.Text = "140MB";
+            this.lblFileSize.Click += new System.EventHandler(this.label3_Click);
             // 
             // pictureBox1
             // 
@@ -121,35 +121,35 @@
             this.pictureBox2.TabIndex = 68;
             this.pictureBox2.TabStop = false;
             // 
-            // guna2ProgressBar1
+            // loadingProgressBar
             // 
-            this.guna2ProgressBar1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2ProgressBar1.Location = new System.Drawing.Point(1, 79);
-            this.guna2ProgressBar1.Name = "guna2ProgressBar1";
-            this.guna2ProgressBar1.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2ProgressBar1.ProgressColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2ProgressBar1.Size = new System.Drawing.Size(500, 5);
-            this.guna2ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.guna2ProgressBar1.TabIndex = 69;
-            this.guna2ProgressBar1.Text = "guna2ProgressBar1";
-            this.guna2ProgressBar1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.loadingProgressBar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.loadingProgressBar.Location = new System.Drawing.Point(1, 79);
+            this.loadingProgressBar.Name = "loadingProgressBar";
+            this.loadingProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.loadingProgressBar.ProgressColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.loadingProgressBar.Size = new System.Drawing.Size(500, 5);
+            this.loadingProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.loadingProgressBar.TabIndex = 69;
+            this.loadingProgressBar.Text = "guna2ProgressBar1";
+            this.loadingProgressBar.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
-            // UploadAlrt
+            // UploadingAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ClientSize = new System.Drawing.Size(502, 86);
-            this.Controls.Add(this.guna2ProgressBar1);
+            this.Controls.Add(this.loadingProgressBar);
             this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblFileSize);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.guna2Button10);
+            this.Controls.Add(this.btnCancelUpload);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblFileName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "UploadAlrt";
+            this.Name = "UploadingAlert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Uploading File";
             this.TopMost = true;
@@ -165,11 +165,11 @@
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label label2;
-        public Guna.UI2.WinForms.Guna2Button guna2Button10;
+        public Guna.UI2.WinForms.Guna2Button btnCancelUpload;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblFileSize;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private Guna.UI2.WinForms.Guna2ProgressBar guna2ProgressBar1;
-        public System.Windows.Forms.Label label1;
+        private Guna.UI2.WinForms.Guna2ProgressBar loadingProgressBar;
+        public System.Windows.Forms.Label lblFileName;
     }
 }

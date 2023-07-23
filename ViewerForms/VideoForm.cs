@@ -12,7 +12,6 @@ namespace FlowSERVER1 {
     public partial class VideoForm : Form {
 
         public readonly VideoForm instance;
-
         private MediaPlayer _videoMediaPlayer { get; set; }
         private string _tableName { get; set; }
         private string _directoryName { get; set; }

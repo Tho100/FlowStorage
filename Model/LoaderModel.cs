@@ -24,20 +24,20 @@ namespace FlowSERVER1 {
                     RetrieveHomeDataAsync(_TableName);
                 }
 
-                else if (_TableName == "upload_info_directory") {
+                else if (_TableName == GlobalsTable.directoryUploadTable) {
                     RetrieveDirectoryDataAsync(_DirectoryName);
                  
                 }
 
-                else if (_TableName == "folder_upload_info") {
+                else if (_TableName == GlobalsTable.folderUploadTable) {
                     RetrieveFolderDataAsync(_DirectoryName);
                     
 
-                } else if (_TableName == "cust_sharing" && _isFromSharedTo == true) {
+                } else if (_TableName == GlobalsTable.sharingTable && _isFromSharedTo == true) {
                     RetrieveSharedTootherData();
                 }
 
-                else if (_TableName == "cust_sharing") {
+                else if (_TableName == GlobalsTable.sharingTable) {
                     RetrieveSharedToMeData();
 
                 }
