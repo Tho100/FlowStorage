@@ -53,6 +53,7 @@
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnReplayAudio = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
@@ -364,7 +365,7 @@
             this.btnPauseAudio.ForeColor = System.Drawing.Color.White;
             this.btnPauseAudio.Image = ((System.Drawing.Image)(resources.GetObject("btnPauseAudio.Image")));
             this.btnPauseAudio.ImageSize = new System.Drawing.Size(31, 31);
-            this.btnPauseAudio.Location = new System.Drawing.Point(1079, 570);
+            this.btnPauseAudio.Location = new System.Drawing.Point(1076, 570);
             this.btnPauseAudio.Name = "btnPauseAudio";
             this.btnPauseAudio.Size = new System.Drawing.Size(46, 36);
             this.btnPauseAudio.TabIndex = 36;
@@ -473,12 +474,36 @@
             this.guna2Button2.TabIndex = 29;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // audFORM
+            // btnReplayAudio
+            // 
+            this.btnReplayAudio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReplayAudio.Animated = true;
+            this.btnReplayAudio.BackColor = System.Drawing.Color.Transparent;
+            this.btnReplayAudio.BorderColor = System.Drawing.Color.Empty;
+            this.btnReplayAudio.BorderRadius = 6;
+            this.btnReplayAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnReplayAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnReplayAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnReplayAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnReplayAudio.FillColor = System.Drawing.Color.Empty;
+            this.btnReplayAudio.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnReplayAudio.ForeColor = System.Drawing.Color.White;
+            this.btnReplayAudio.Image = global::FlowSERVER1.Properties.Resources.icons8_restart_500__1_;
+            this.btnReplayAudio.ImageSize = new System.Drawing.Size(27, 27);
+            this.btnReplayAudio.Location = new System.Drawing.Point(1076, 568);
+            this.btnReplayAudio.Name = "btnReplayAudio";
+            this.btnReplayAudio.Size = new System.Drawing.Size(46, 36);
+            this.btnReplayAudio.TabIndex = 92;
+            this.btnReplayAudio.Visible = false;
+            this.btnReplayAudio.Click += new System.EventHandler(this.btnReplayAudio_Click);
+            // 
+            // AudioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1136, 617);
+            this.Controls.Add(this.btnReplayAudio);
             this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.label15);
@@ -508,7 +533,7 @@
             this.Controls.Add(this.guna2Button7);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "audFORM";
+            this.Name = "AudioForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audio Player";
             this.TopMost = true;
@@ -550,5 +575,6 @@
         private Guna.UI2.WinForms.Guna2Button btnPauseAudio;
         private Guna.UI2.WinForms.Guna2Button btnPlayAudio;
         private Guna.UI2.WinForms.Guna2Button btnShareFile;
+        private Guna.UI2.WinForms.Guna2Button btnReplayAudio;
     }
 }

@@ -529,7 +529,7 @@
     <Compile Include="Settings\RemoveAccountForm.Designer.cs">
       <DependentUpon>RemoveAccountForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConnectionModel.cs" />
+    <Compile Include="Model\ConnectionModel.cs" />
     <Compile Include="AlertForms\LimitedDirAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -542,7 +542,7 @@
     <Compile Include="Recovery\ValidateRecoveryEmail.Designer.cs">
       <DependentUpon>ValidateRecoveryEmail.cs</DependentUpon>
     </Compile>
-    <Compile Include="EncryptionModel.cs" />
+    <Compile Include="Model\EncryptionModel.cs" />
     <Compile Include="AlertForms\ErrorLoadAlert.cs">
       <SubType>Form</SubType>
     </Compile>

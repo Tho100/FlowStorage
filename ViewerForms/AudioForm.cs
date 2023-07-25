@@ -20,11 +20,11 @@ namespace FlowSERVER1 {
         private bool _isFromShared { get; set; }
         private bool _isFromSharing { get; set; }
 
+        private byte[] _audioBytes { get; set; }
         private System.Windows.Forms.Timer _elapsedTickTimer { get; set; }
         private TimeSpan _elapsedTime { get; set; }
         private Mp3FileReader _NReader { get; set; }
-
-        private SoundPlayer _getSoundPlayer { get; set; }
+        private SoundPlayer _wavAudioPlayer { get; set; }
         private WaveOut _mp3WaveOut { get; set; }
 
         public AudioForm(String fileName, String tableName,String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
@@ -66,39 +66,8 @@ namespace FlowSERVER1 {
 
         /// <summary>
         /// 
-        /// Play the audio from byte array based on the 
-        /// file type (.wav, .mp3)
-        /// 
-        /// </summary>
-        /// <param name="_audType"></param>
-        /// <param name="_getByteAud"></param>
-        private async Task StartPlayAudio(String _audType, Byte[] _getByteAud, int startPosition = 0) {
-
-            lblFileSize.Text = $"{FileSize.fileSize(_getByteAud):F2}Mb";
-
-            btnPauseAudio.Visible = true;
-            btnPlayAudio.Visible = false;
-
-            btnPlayAudio.SendToBack();
-            btnPauseAudio.BringToFront();
-
-            if (_audType == "wav") {
-                using (MemoryStream ms = new MemoryStream(_getByteAud)) {
-                    SoundPlayer player = new SoundPlayer(ms);
-                    _getSoundPlayer = player;
-                    player.Stream.Position = startPosition;
-                    player.Play();
-                }
-            }
-            else if (_audType == "mp3") {
-                await Task.Run(() => ConvertMP3ToWav(_getByteAud));
-            }
-
-        }
-
-        /// <summary>
-        /// 
-        /// Fetch audio byte array 
+        /// Fetch data/play/pause/resume audio
+        /// based on it's audio type (.wav, .mp3)
         /// 
         /// </summary>
         /// <param name="sender"></param>
@@ -107,9 +76,18 @@ namespace FlowSERVER1 {
 
             try {
 
-                string audType = lblFileName.Text.Substring(lblFileName.Text.Length - 3);
+                string audioType = lblFileName.Text.Substring(lblFileName.Text.Length - 3);
 
-                if (_mp3WaveOut != null) {
+                if(_wavAudioPlayer != null && audioType == "wav") {
+                    _wavAudioPlayer.Play();
+                    btnPauseAudio.Visible = true;
+                    btnPlayAudio.Visible = false;
+                    pictureBox3.Enabled = true;
+                    return;
+                }
+
+                if (_mp3WaveOut != null && audioType == "mp3") {
+                    _elapsedTickTimer.Start();
                     _mp3WaveOut.Resume();
                     pictureBox3.Enabled = true;
 
@@ -119,9 +97,10 @@ namespace FlowSERVER1 {
 
                     pictureBox3.Enabled = true;
 
-                    byte[] byteAud = LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared);
+                    byte[] audioBytes = LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared);
+                    _audioBytes = audioBytes;
 
-                    await StartPlayAudio(audType, byteAud);
+                    await StartPlayAudio(audioType, audioBytes);
 
                     if (LoaderModel.stopFileRetrievalLoad) {
                         pictureBox3.Enabled = false;
@@ -141,20 +120,46 @@ namespace FlowSERVER1 {
 
         /// <summary>
         /// 
+        /// Play the audio from byte array based on the 
+        /// file type (.wav, .mp3)
+        /// 
+        /// </summary>
+        /// <param name="_audType"></param>
+        /// <param name="_getByteAud"></param>
+        private async Task StartPlayAudio(string audioType, byte[] audioBytes) {
+
+            lblFileSize.Text = $"{FileSize.fileSize(audioBytes):F2}Mb";
+
+            btnPauseAudio.Visible = true;
+            btnPlayAudio.Visible = false;
+
+            btnPlayAudio.SendToBack();
+            btnPauseAudio.BringToFront();
+
+            if (audioType == "wav") {
+                await Task.Run(() => PlayAudioWave(audioBytes));
+            }
+            else if (audioType == "mp3") {
+                await Task.Run(() => PlayAudioMp3(audioBytes));
+            }
+        }
+
+        /// <summary>
+        /// 
         /// Convert .mp3 to .wav since the audio player only
         /// support .wav format
         /// 
         /// </summary>
         /// <param name="_mp3ByteIn"></param>
-        private void ConvertMP3ToWav(Byte[] _mp3ByteIn) {
+        private void PlayAudioMp3(byte[] mp3Bytes) {
 
-            Stream _setupStream = new MemoryStream(_mp3ByteIn);
-            _NReader = new NAudio.Wave.Mp3FileReader(_setupStream);
+            Stream _setupStream = new MemoryStream(mp3Bytes);
+            _NReader = new Mp3FileReader(_setupStream);
 
             double getDurationSeconds = _NReader.TotalTime.TotalSeconds;
             int minutes = (int)(getDurationSeconds / 60);
             int seconds = (int)(getDurationSeconds % 60);
-            lblDuration.Text = $"{minutes}:{seconds}";
+            lblDuration.Text = $"{minutes}:{seconds:D2}";
 
             var _setupWaveOut = new WaveOut();
             _setupWaveOut.Init(_NReader);
@@ -169,19 +174,43 @@ namespace FlowSERVER1 {
             AudioHelp breakFixedValue = new AudioHelp();
             breakFixedValue.ShowDialog();
 
-            if(Application.OpenForms["AudioHelp"] != null) {
+            if (Application.OpenForms["AudioHelp"] != null) {
                 Application.OpenForms["AudioHelp"].Close();
             }
 
             CloseForm.closeForm("AudioHelp");
         }
 
+        private void PlayAudioWave(byte[] waveBytes) {
+
+            using (MemoryStream ms = new MemoryStream(waveBytes)) {
+                SoundPlayer player = new SoundPlayer(ms);
+                _wavAudioPlayer = player;
+                player.Stream.Position = 0;
+                player.Play();
+            }
+        }
+
         private void timer_Tick(object sender, EventArgs e) {
-            _elapsedTime = _elapsedTime.Add(TimeSpan.FromSeconds(1));
-            var remainingTime = _NReader.TotalTime.Subtract(_elapsedTime);
-            int minutes = remainingTime.Minutes;
-            int seconds = remainingTime.Seconds;
-            lblDurationLeft.Text = $"{minutes}:{seconds}";
+
+            if (_elapsedTime >= _NReader.TotalTime) {
+
+                lblDurationLeft.Text = "0:00";
+
+                btnReplayAudio.Visible = true;
+                btnPauseAudio.Visible = false;
+                btnReplayAudio.BringToFront();
+                _elapsedTickTimer.Stop();
+
+            } else {
+
+                _elapsedTime = _elapsedTime.Add(TimeSpan.FromSeconds(1));
+                var remainingTime = _NReader.TotalTime.Subtract(_elapsedTime);
+                int minutes = remainingTime.Minutes;
+                int seconds = remainingTime.Seconds;
+                lblDurationLeft.Text = $"{minutes}:{seconds}";
+
+            }
         }
 
 
@@ -193,12 +222,20 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button6_Click(object sender, EventArgs e) {
+
             btnPauseAudio.Visible = false;
+            btnReplayAudio.Visible = false;
             btnPlayAudio.Visible = true;
             pictureBox3.Enabled = false;
-            if(_getSoundPlayer != null) {
-                _getSoundPlayer.Stop();
+
+            if(_elapsedTickTimer != null) {
+                _elapsedTickTimer.Stop();
             }
+
+            if(_wavAudioPlayer != null) {
+                _wavAudioPlayer.Stop();
+            }
+
             if (_mp3WaveOut != null) {
                 _mp3WaveOut.Pause();
             }
@@ -219,8 +256,8 @@ namespace FlowSERVER1 {
                 Application.OpenForms["AudioSubFORM"].Close();
             }
 
-            if(_getSoundPlayer != null) {
-                _getSoundPlayer.Stop();
+            if(_wavAudioPlayer != null) {
+                _wavAudioPlayer.Stop();
             }
             if (_mp3WaveOut != null) {
                 _mp3WaveOut.Stop();
@@ -247,7 +284,7 @@ namespace FlowSERVER1 {
 
             this.WindowState = FormWindowState.Minimized;
              
-            if(_getSoundPlayer != null || _NReader != null) {
+            if(_wavAudioPlayer != null || _NReader != null) {
 
                 if (!IsSubFormOpened) {
 
@@ -259,7 +296,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            if (_tableName == "upload_info_directory") {
+            if (_tableName == GlobalsTable.directoryUploadTable) {
 
                 Application.OpenForms
                     .OfType<Form>()
@@ -316,5 +353,19 @@ namespace FlowSERVER1 {
             lblUserComment.Refresh();
 
         }
+
+        private async void btnReplayAudio_Click(object sender, EventArgs e) {
+
+            btnPauseAudio.Visible = true;
+            string audioType = lblFileName.Text.Substring(lblFileName.Text.Length - 3);
+
+            _elapsedTickTimer.Stop();
+            _elapsedTime = TimeSpan.Zero;
+
+            await StartPlayAudio(audioType, _audioBytes);
+
+            _elapsedTickTimer.Start();
+        }
+
     }
 }
