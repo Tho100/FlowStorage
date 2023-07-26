@@ -44,9 +44,9 @@ namespace FlowSERVER1.Global {
         };
 
         static public readonly HashSet<string> publicTables = new HashSet<string>
-        { homeImageTable, homeTextTable, homeExeTable, homeVideoTable,
+        { directoryInfoTable, homeImageTable, homeTextTable, homeExeTable, homeVideoTable,
           homeExcelTable, homeMsiTable, homeAudioTable, homeApkTable,
-          homePdfTable, homeWordTable, homePtxTable, directoryInfoTable
+          homePdfTable, homeWordTable, homePtxTable
         };
 
         static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>
