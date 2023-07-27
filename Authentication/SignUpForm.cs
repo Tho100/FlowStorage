@@ -99,25 +99,15 @@ namespace FlowSERVER1.Authentication {
                 BuildUILanguage();
                 ShowHomePage();
 
-            }
-            catch (Exception) {
-                // TODO: Ignore
-            }
+            } finally {
 
-            finally {
+                string infosPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
 
-                try {
-
-                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
-
-                    new DirectoryInfo(path).Attributes |= (FileAttributes.Directory | FileAttributes.Hidden);
+                if(Directory.Exists(infosPath)) {
+                    new DirectoryInfo(infosPath).Attributes |= (FileAttributes.Directory | FileAttributes.Hidden);
                     Application.OpenForms.OfType<Form>().Where(form => form.Name == "LoadAlertFORM").ToList().ForEach(form => form.Close());
-
-                }
-                catch (Exception) {
-                    // TODO: Ignore
-                }
-
+                } 
+               
             }
         }
 

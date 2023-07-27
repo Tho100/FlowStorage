@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
-using System.IO;
-using System.Text.RegularExpressions;
 
 namespace FlowSERVER1 {
     public static class EncryptionModel {
-        public static string Encrypt(String _value, String _key = "") {
+        public static string Encrypt(String _value) {
             String toBase64 = "";
 
             try {
@@ -37,7 +32,7 @@ namespace FlowSERVER1 {
             return toBase64;
         }
 
-        public static string Decrypt(String _value, String _key = "") {
+        public static string Decrypt(String _value) {
 
             String toBase64 = "";
 
