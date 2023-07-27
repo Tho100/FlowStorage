@@ -96,7 +96,7 @@ namespace FlowSERVER1.Authentication {
 
                 pnlRegistration.Visible = false;
 
-                BuildUILanguage();
+                BuildUILanguage(accessHomePage.CurrentLang);
                 ShowHomePage();
 
             } finally {
@@ -211,18 +211,99 @@ namespace FlowSERVER1.Authentication {
         /// Start genertating UI labels based on user language
         /// </summary>
         /// <param name="_custLang"></param>
-        private void BuildUILanguage() {
-            var Form_1 = HomePage.instance;
-            Form_1.label2.Text = "Item Count";
-            Form_1.lblUpload.Text = "Upload";
-            Form_1.btnUploadFile.Text = "Upload File";
-            Form_1.btnUploadFolder.Text = "Upload Folder";
-            Form_1.btnCreateDirectory.Text = "Create Directory";
-            Form_1.btnFileSharing.Text = "File Sharing";
-            Form_1.btnFileSharing.Size = new Size(125, 47);
-            Form_1.lblEssentials.Text = "Essentials";
-        }
+        private void BuildUILanguage(string userLanguage) {
 
+            var homePage = HomePage.instance;
+
+            if(userLanguage == "US") {
+                homePage.label2.Text = "Item Count";
+                homePage.lblUpload.Text = "Upload";
+                homePage.btnUploadFile.Text = "Upload File";
+                homePage.btnUploadFolder.Text = "Upload Folder";
+                homePage.btnCreateDirectory.Text = "Create Directory";
+                homePage.btnFileSharing.Text = "File Sharing";
+                homePage.btnFileSharing.Size = new Size(125, 47);
+                homePage.lblEssentials.Text = "Essentials";
+            }
+
+            if (userLanguage == "GER") {
+                homePage.label2.Text = "Stückzahl";
+                homePage.lblUpload.Text = "Hochladen";
+                homePage.btnUploadFile.Text = "Datei hochladen";
+                homePage.btnUploadFolder.Text = "Ordner hochladen";
+                homePage.btnCreateDirectory.Text = "Verzeichnis erstellen";
+                homePage.btnFileSharing.Text = "Datenaustausch";
+                homePage.btnFileSharing.Size = new Size(159, 47);
+                homePage.lblEssentials.Text = "Essentials";
+            }
+
+            if (userLanguage == "JAP") {
+                homePage.label2.Text = "アイテム数";
+                homePage.lblUpload.Text = "アップロード";
+                homePage.btnUploadFile.Text = "ファイルをアップロードする";
+                homePage.btnUploadFolder.Text = "フォルダのアップロード";
+                homePage.btnCreateDirectory.Text = "ディレクトリの作成";
+                homePage.btnFileSharing.Text = "ファイル共有";
+                homePage.btnFileSharing.Size = new Size(125, 47);
+                homePage.lblEssentials.Text = "必需品";
+            }
+
+            if (userLanguage == "ESP") {
+                homePage.label2.Text = "Recuento de elementos";
+                homePage.lblUpload.Text = "Subir";
+                homePage.btnUploadFile.Text = "Subir archivo";
+                homePage.btnUploadFolder.Text = "Cargar carpeta";
+                homePage.btnCreateDirectory.Text = "Crear directorio";
+                homePage.btnFileSharing.Text = "Compartición de archivos";
+                homePage.btnFileSharing.Size = new Size(125, 47);
+                homePage.lblEssentials.Text = "Esenciales";
+            }
+
+            if (userLanguage == "FRE") {
+                homePage.label2.Text = "Nombre d'éléments";
+                homePage.lblUpload.Text = "Télécharger";
+                homePage.btnUploadFile.Text = "Téléverser un fichier";
+                homePage.btnUploadFolder.Text = "Télécharger le dossier";
+                homePage.btnCreateDirectory.Text = "Créer le répertoire";
+                homePage.btnFileSharing.Text = "Partage de fichiers";
+                homePage.btnFileSharing.Size = new Size(125, 47);
+                homePage.lblEssentials.Text = "Essentiel";
+            }
+
+            if (userLanguage == "POR") {
+                homePage.label2.Text = "Contagem de itens";
+                homePage.lblUpload.Text = "Carregar";
+                homePage.btnUploadFile.Text = "Subir arquivo";
+                homePage.btnUploadFolder.Text = "Carregar Pasta";
+                homePage.btnCreateDirectory.Text = "Criar diretório";
+                homePage.btnFileSharing.Text = "Compartilhamento de arquivos";
+                homePage.btnFileSharing.Size = new Size(125, 47);
+                homePage.lblEssentials.Text = "Essenciais";
+            }
+
+            if (userLanguage == "MY") {
+
+                homePage.label2.Text = "Kiraan Item";
+                homePage.lblUpload.Text = "Muat-Naik";
+                homePage.btnUploadFile.Text = "Muat-Naik Fail";
+                homePage.btnUploadFolder.Text = "Muat-Naik Folder";
+                homePage.btnCreateDirectory.Text = "Buat Direktori";
+                homePage.btnFileSharing.Text = "Perkongsian Fail";
+                homePage.btnFileSharing.Size = new Size(159, 47);
+                homePage.lblEssentials.Text = "Kepentingan";
+            }
+
+            if (userLanguage == "CHI") {
+                homePage.label2.Text = "物品数量";
+                homePage.lblUpload.Text = "上传";
+                homePage.btnUploadFile.Text = "上传文件";
+                homePage.btnUploadFolder.Text = "上传文件夹";
+                homePage.btnCreateDirectory.Text = "创建目录";
+                homePage.btnFileSharing.Text = "文件共享";
+                homePage.btnFileSharing.Size = new Size(125, 47);
+                homePage.lblEssentials.Text = "要点";
+            }
+        }
 
         /// <summary>
         /// 

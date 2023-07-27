@@ -85,7 +85,7 @@ namespace FlowSERVER1 {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername, "0123456789085746"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
@@ -94,7 +94,7 @@ namespace FlowSERVER1 {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername, "0123456789085746"));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
