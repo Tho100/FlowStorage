@@ -430,7 +430,7 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+                Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadingAlert")).ToList().ForEach(form => form.Close());
 
             }
             catch (Exception) {
@@ -459,7 +459,7 @@ namespace FlowSERVER1 {
                 await command.ExecuteNonQueryAsync();
             }
 
-            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadAlrt")).ToList().ForEach(form => form.Close());
+            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadingAlert")).ToList().ForEach(form => form.Close());
 
         }
 
@@ -698,7 +698,7 @@ namespace FlowSERVER1 {
                 MessageBox.Show("File is too large, max file size is 8GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadAlrt").ToList()) {
+            foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadingAlert").ToList()) {
                 form.Close();
             }
         }
@@ -855,11 +855,11 @@ namespace FlowSERVER1 {
                                 CreateFilePanel(selectedItems, "file_info_word", "PanDoc", docxCurr, encryptBase64String);
                             }
 
-                            CloseForm.closeForm("UploadAlrt");
+                            CloseForm.closeForm("UploadingAlert");
 
                         }
                         catch (Exception) {
-                            CloseForm.closeForm("UploadAlrt");
+                            CloseForm.closeForm("UploadingAlert");
                             new CustomAlert(title: "Some went wrong", subheader: "Failed to upload this file.").Show();
                         }
 
@@ -924,7 +924,7 @@ namespace FlowSERVER1 {
             }
             catch (Exception) {
 
-                CloseForm.closeForm("UploadAlrt");
+                CloseForm.closeForm("UploadingAlert");
 
                 new CustomAlert(title: "An error occurred", "Something went wrong while trying to upload files.").Show();
 

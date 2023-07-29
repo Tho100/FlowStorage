@@ -616,23 +616,30 @@ namespace FlowSERVER1 {
                 string dateTimeNow = DateTime.Now.ToString("dd/MM/yyyy");
 
                 const string key = "sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN"; // Replace with valid KEY
-                Stripe.StripeConfiguration.SetApiKey(key);
+                Stripe.StripeConfiguration.ApiKey = key; 
 
                 var service = new Stripe.CustomerService();
                 var customers = service.List();
-
-                string lastId = null;
-                string lastEmail = null;
 
                 List<string> custEmails = new List<string>();
 
                 foreach (Stripe.Customer customer in customers) {
                     custEmails.Add(customer.Email);
-                    lastId = customer.Id;
-                    lastEmail = customer.Email;
                 }
 
                 if (custEmails.Contains(Globals.custEmail)) {
+
+                    var options = new Stripe.CustomerListOptions {
+                        Email = Globals.custEmail,
+                        Limit = 1
+                    };
+
+                    var customersOptions = service.List(options);
+
+                    var customerBuyer = customersOptions.Data[0];
+                    var customerId = customerBuyer.Id;
+
+                    service.Delete(customerId, null);
 
                     const string updateUserAccountQuery = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
@@ -648,14 +655,11 @@ namespace FlowSERVER1 {
                         commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
                         commandSecond.Parameters.AddWithValue("@email", Globals.custEmail);
                         commandSecond.Parameters.AddWithValue("@type", _selectedAccountType);
-                        commandSecond.Parameters.AddWithValue("@id", lastId);
+                        commandSecond.Parameters.AddWithValue("@id", customerId);
                         commandSecond.Parameters.AddWithValue("@date", dateTimeNow);
 
                         await commandSecond.ExecuteNonQueryAsync();
                     }
-
-                    var delService = new Stripe.CustomerService();
-                    delService.Delete(lastId);
 
                     PaymentSuceededAlert _showSucceeded = new PaymentSuceededAlert(_selectedAccountType);
                     _showSucceeded.Show();

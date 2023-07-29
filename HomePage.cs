@@ -270,7 +270,7 @@ namespace FlowSERVER1 {
         private void CloseUploadAlert() {
             Application.OpenForms
             .OfType<Form>()
-            .Where(form => String.Equals(form.Name, "UploadAlrt"))
+            .Where(form => String.Equals(form.Name, "UploadingAlert"))
             .ToList()
             .ForEach(form => form.Close());
         }
@@ -861,6 +861,7 @@ namespace FlowSERVER1 {
             else {
                 MessageBox.Show("File is too large, max file size is 1.5GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
 
         private void OpenDialogHomeFile() {
@@ -2525,7 +2526,7 @@ namespace FlowSERVER1 {
                 await command.ExecuteNonQueryAsync();
             }
 
-            foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadAlrt")) {
+            foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadingAlert")) {
                 form.Close();
             }
 
@@ -3171,7 +3172,7 @@ namespace FlowSERVER1 {
 
             }
 
-            var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadAlrt");
+            var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadingAlert");
             uploadAlertForm?.Close();
 
             btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
