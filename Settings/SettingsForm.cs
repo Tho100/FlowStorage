@@ -1,6 +1,6 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Authentication;
-
+using FlowSERVER1.Model;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -50,8 +50,9 @@ namespace FlowSERVER1 {
                 axis.MinorGrid.Enabled = false;
             }
 
-            ToolTip ToolTip1 = new ToolTip();
-            ToolTip1.SetToolTip(guna2Button11, "Item upload indicate how many file/directory you can upload.");
+            if(Globals.accountType != "Basic") {
+                pnlCancelPlan.Visible = true;
+            }
 
             InitializeSettingsAsync();
         }
@@ -438,8 +439,9 @@ namespace FlowSERVER1 {
         private void guna2Button23_Click(object sender, EventArgs e) => new AddAuthSharing().Show();
         private void guna2Button12_Click(object sender, EventArgs e) => new ResetAuthForm().Show();
         private void guna2Button13_Click(object sender, EventArgs e) => new ChangeUsernameForm().Show();
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-                => new RecoveryForm().Show();
+        private void guna2Button1_Click_2(object sender, EventArgs e) => new RecoveryForm().Show();
+        private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custUsername);
+        private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custEmail);
 
         private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
 
@@ -480,7 +482,6 @@ namespace FlowSERVER1 {
                 DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (_confirmation == DialogResult.Yes) {
 
-                    guna2Panel1.SendToBack();
                     HomePage.instance.pnlMain.SendToBack();
 
                     HomePage.instance.label2.Text = "Item Count";
@@ -947,9 +948,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Ubah kata-laluan";
                 label8.Text = "Ubah kata-laluan akaun Flowstorage anda";
 
-                lblLogoutMyAccount.Text = "Log keluar akaun saya";
-                label35.Text = "Flowstorage tidak akan log masuk akaun anda secara automatik semasa permulaan";
-
                 lblDeleteMyAccount.Text = "Padam akaun saya";
                 label3.Text = "Akaun Flowstorage anda akan dipadam bersama-sama dengan data anda";
 
@@ -966,9 +964,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Ubah";
                 btnUpdateUsername.Text = "Ubah";
-                btnLogout.Text = "Log-Keluar";
-                btnLogout.TextOffset = new Point(4, 0);
-                guna2Button11.Location = new Point(140, 61);
                 btnDltAccount.Text = "Padam Akaun";
 
                 Form_1.lblUpload.Text = "Muat-Naik";
@@ -1006,9 +1001,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Change my password";
                 label8.Text = "Change your Flowstorage account password";
 
-                lblLogoutMyAccount.Text = "Logout my account";
-                label35.Text = "Flowstorage will not automatically login your account on startup";
-
                 lblDeleteMyAccount.Text = "Delete my account";
                 label3.Text = "Your Flowstorage account along with your data will be deleted";
 
@@ -1025,9 +1017,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Change";
                 btnUpdateUsername.Text = "Change";
-                btnLogout.Text = "Logout";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(121, 61);
                 btnDltAccount.Text = "Delete Account";
 
                 Form_1.lblUpload.Text = "Upload";
@@ -1065,9 +1054,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Mijn wachtwoord wijzigen";
                 label8.Text = "Wijzig het wachtwoord van uw Flowstorage-account";
 
-                lblLogoutMyAccount.Text = "Mijn account afmelden";
-                label35.Text = "Flowstorage logt niet automatisch in op uw account bij het opstarten";
-
                 lblDeleteMyAccount.Text = "Verwijder mijn account";
                 label3.Text = "Uw Flowstorage-account wordt samen met uw gegevens verwijderd";
 
@@ -1084,9 +1070,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Wijzigen";
                 btnUpdateUsername.Text = "Wijzigen";
-                btnLogout.Text = "Uitloggen";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(134, 61);
                 btnDltAccount.Text = "Aanmelden";
 
                 Form_1.lblUpload.Text = "Uploaden";
@@ -1124,9 +1107,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Изменить мой пароль";
                 label8.Text = "Измените пароль своей учетной записи Flowstorage";
 
-                lblLogoutMyAccount.Text = "Выйти из моей учетной записи";
-                label35.Text = "Flowstorage не будет автоматически входить в вашу учетную запись при запуске";
-
                 lblDeleteMyAccount.Text = "Удалить мою учетную запись";
                 label3.Text = "Ваша учетная запись Flowstorage вместе с вашими данными будет удалена";
 
@@ -1143,9 +1123,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Изменить";
                 btnUpdateUsername.Text = "Изменить";
-                btnLogout.Text = "Выход";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(166, 61);
                 btnDltAccount.Text = "Удалить аккаунт";
 
                 Form_1.lblUpload.Text = "Загрузить";
@@ -1184,9 +1161,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Ändere mein Passwort";
                 label8.Text = "Ändern Sie das Passwort Ihres Flowstorage-Kontos";
 
-                lblLogoutMyAccount.Text = "Von meinem Konto abmelden";
-                label35.Text = "Flowstorage meldet sich beim Start nicht automatisch in Ihrem Konto an";
-
                 lblDeleteMyAccount.Text = "Mein Konto löschen";
                 label3.Text = "Ihr Flowstorage-Konto wird zusammen mit Ihren Daten gelöscht";
 
@@ -1203,9 +1177,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Ändern";
                 btnUpdateUsername.Text = "Ändern";
-                btnLogout.Text = "Ausloggen";
-                btnLogout.TextOffset = new Point(10, 0);
-                guna2Button11.Location = new Point(155, 61);
                 btnDltAccount.Text = "Konto Löschen";
 
                 Form_1.lblUpload.Text = "Hochladen";
@@ -1243,9 +1214,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "パスワードを変更する";
                 label8.Text = "Flowstorage アカウントのパスワードを変更する";
 
-                lblLogoutMyAccount.Text = "アカウントをログアウトする";
-                label35.Text = "Flowstorage は、起動時にアカウントに自動的にログインしません";
-
                 lblDeleteMyAccount.Text = "アカウントを削除します";
                 label3.Text = "Flowstorage アカウントとデータが削除されます";
 
@@ -1262,9 +1230,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "変化";
                 btnUpdateUsername.Text = "変化";
-                btnLogout.Text = "ログアウト";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(199, 61);
                 btnDltAccount.Text = "アカウントを削除する";
 
                 Form_1.lblUpload.Text = "アップロード";
@@ -1303,9 +1268,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "cambiar mi contraseña";
                 label8.Text = "Cambiar la contraseña de su cuenta Flowstorage";
 
-                lblLogoutMyAccount.Text = "cerrar sesión en mi cuenta";
-                label35.Text = "Flowstorage no iniciará sesión automáticamente en su cuenta al iniciar";
-
                 lblDeleteMyAccount.Text = "Borrar mi cuenta";
                 label3.Text = "Se eliminará su cuenta de Flowstorage junto con sus datos";
 
@@ -1322,9 +1284,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Cambiar";
                 btnUpdateUsername.Text = "Cambiar";
-                btnLogout.Text = "Cerrar sesión";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(152, 61);
                 btnDltAccount.Text = "Borrar cuenta";
 
                 Form_1.lblUpload.Text = "Subir";
@@ -1362,9 +1321,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Changer mon mot de passe";
                 label8.Text = "Modifier le mot de passe de votre compte Flowstorage";
 
-                lblLogoutMyAccount.Text = "Déconnecter mon compte";
-                label35.Text = "Flowstorage will not automatically login your account on startup";
-
                 lblDeleteMyAccount.Text = "Supprimer mon compte";
                 label3.Text = "Votre compte Flowstorage ainsi que vos données seront supprimés";
 
@@ -1381,9 +1337,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Changement";
                 btnUpdateUsername.Text = "Changement";
-                btnLogout.Text = "Se déconnecter";
-                btnLogout.TextOffset = new Point(-3, 0);
-                guna2Button11.Location = new Point(230, 61);
                 btnDltAccount.Text = "Supprimer le compte";
 
                 Form_1.lblUpload.Text = "Télécharger";
@@ -1421,9 +1374,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "Mudar minha senha";
                 label8.Text = "Altere a senha da sua conta Flowstorage";
 
-                lblLogoutMyAccount.Text = "Sair da minha conta";
-                label35.Text = "O Flowstorage não fará login automaticamente em sua conta na inicialização";
-
                 lblDeleteMyAccount.Text = "Deletar minha conta";
                 label3.Text = "Sua conta Flowstorage junto com seus dados serão excluídos";
 
@@ -1440,9 +1390,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "Mudar";
                 btnUpdateUsername.Text = "Mudar";
-                btnLogout.Text = "Sair";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(196, 61);
                 btnDltAccount.Text = "Deletar conta";
 
                 Form_1.lblUpload.Text = "Carregar";
@@ -1480,9 +1427,6 @@ namespace FlowSERVER1 {
                 lblChangeMyPassword.Text = "修改我的密码";
                 label8.Text = "更改您的流存账户密码";
 
-                lblLogoutMyAccount.Text = "注销我的帐户";
-                label35.Text = "Flowstorage 不会在启动时自动登录您的帐户";
-
                 lblDeleteMyAccount.Text = "删除我的账户";
                 label3.Text = "您的 Flowstorage 帐户以及您的数据将被删除";
 
@@ -1500,9 +1444,6 @@ namespace FlowSERVER1 {
 
                 btnUpdatePassword.Text = "改变";
                 btnUpdateUsername.Text = "改变";
-                btnLogout.Text = "登出";
-                btnLogout.TextOffset = new Point(0, 0);
-                guna2Button11.Location = new Point(102, 61);
                 btnDltAccount.Text = "删除帐户";
 
                 Form_1.lblUpload.Text = "上传";
@@ -2284,24 +2225,63 @@ namespace FlowSERVER1 {
         private void label22_Click(object sender, EventArgs e) {
 
         }
-
-        private void label76_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel12_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel22_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void label58_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label5_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void label66_Click(object sender, EventArgs e) {
+
+        }
+
+        private void lblSetPassword_Click(object sender, EventArgs e) {
+
+        }
+
+        private async void guna2Button2_Click_2(object sender, EventArgs e) {
+
+            try {
+
+                StripeModel.AddNewCustomer(Globals.custEmail, "John", "Doe");
+                StripeModel.CancelCustomerSubscription(Globals.custEmail);
+                StripeModel.DeleteCustomer(Globals.custEmail);
+
+                const string updateUserAccountQuery = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@email", Globals.custEmail);
+                    command.Parameters.AddWithValue("@type", "Basic");
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                const string insertBuyerQuery = "DELETE FROM cust_buyer WHERE CUST_USERNAME = @username";
+                using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
+                    commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
+                    await commandSecond.ExecuteNonQueryAsync();
+                }
+
+                new CustomAlert(title: "Subscription plan cancelled successfully", subheader: $"You downgraded your account from {Globals.accountType} to Basic and you'll no longer be charged.").Show();
+
+                lblAccountType.Text = "Basic";
+                Globals.accountType = "Basic";
+
+                UpdateUIOnAccountType("Basic");
+
+            }
+            catch (Exception) {
+                new CustomAlert(title: "Failed to cancel subscription", subheader: "Something went wrong while trying to cancel your subscription plan please try again later.");
+            }
+
+        }
+
+        private void label18_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e) {
 
         }
     }

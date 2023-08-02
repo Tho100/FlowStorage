@@ -466,6 +466,7 @@
       <DependentUpon>ApiPageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\GetComment.cs" />
+    <Compile Include="Model\StripeModel.cs" />
     <Compile Include="Settings\FeedbackForm.cs">
       <SubType>Form</SubType>
     </Compile>
