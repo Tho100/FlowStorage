@@ -5,7 +5,7 @@ using System.Windows;
 namespace FlowSERVER1.Model {
     public class StripeModel {
 
-        static public void AddNewCustomer(String email, String firstName, String lastName) {
+        static public void AddNewCustomer(String email, String name) {
 
             const string key = "sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN"; // Replace with valid KEY
             Stripe.StripeConfiguration.ApiKey = key;
@@ -13,7 +13,7 @@ namespace FlowSERVER1.Model {
             var service = new Stripe.CustomerService();
             var options = new CustomerCreateOptions {
                 Email = email,
-                Name = $"{firstName} {lastName}",
+                Name = name,
             };
 
             service.Create(options);
@@ -33,11 +33,16 @@ namespace FlowSERVER1.Model {
             var customers = service.List(options);
 
             var customer = customers.Data[0];
+            var customerId = customer.Id;
+
+            if (customers.Data.Count == 0) {
+                return;
+            }
 
             var subscriptionService = new SubscriptionService();
             var subscriptions = subscriptionService.List(new SubscriptionListOptions {
-                Customer = customer.Id,
-                Limit = 1 
+                Customer = customerId,
+                Limit = 1
             });
 
             if (subscriptions.Data.Count == 0) {

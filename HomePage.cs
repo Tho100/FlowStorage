@@ -74,7 +74,7 @@ namespace FlowSERVER1 {
             this.TopMost = false;
         }
 
-        private void Form1_Load(object sender, EventArgs e) => Greeting.buildGreetingLabel(CurrentLang);
+        private void Form1_Load(object sender, EventArgs e) => UpdateLanguage.BuildGreetingLabel(CurrentLang);
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
         private void guna2CircleButton1_Click(object sender, EventArgs e) => new ApiPageForm().Show();
         private void guna2CircleButton2_Click(object sender, EventArgs e) => new FeedbackForm().Show();

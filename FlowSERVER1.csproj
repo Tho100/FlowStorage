@@ -453,7 +453,7 @@
     <Compile Include="Helper\CallDialogResultSave.cs" />
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
-    <Compile Include="Helper\Greeting.cs" />
+    <Compile Include="Helper\UpdateLanguage.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
     <Compile Include="Helper\ImageCompressor.cs" />
     <Compile Include="Helper\UpdateChanges.cs" />

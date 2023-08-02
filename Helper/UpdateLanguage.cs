@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace FlowSERVER1.Helper {
-    public class Greeting {
+    public class UpdateLanguage {
 
         /// <summary>
         /// 
@@ -14,7 +10,7 @@ namespace FlowSERVER1.Helper {
         /// 
         /// </summary>
 
-        public static void buildGreetingLabel(String CurrentLang) {
+        public static void BuildGreetingLabel(String CurrentLang) {
 
             var form = HomePage.instance;
             var lab1 = form.lblGreetingText;

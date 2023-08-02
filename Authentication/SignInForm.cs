@@ -115,7 +115,7 @@ namespace FlowSERVER1 {
 
             garbageButton.Visible = itsEmptyHereLabel.Visible = lblAlert.Visible = false;
 
-            Greeting.buildGreetingLabel(_currentLang);
+            UpdateLanguage.BuildGreetingLabel(_currentLang);
 
             if (flowLayout.Controls.Count == 0) {
                 buildEmptyBody();
@@ -196,7 +196,7 @@ namespace FlowSERVER1 {
 
                 await getCurrentLang();
                 setupUILanguage(_currentLang);
-                Greeting.buildGreetingLabel(_currentLang);
+                UpdateLanguage.BuildGreetingLabel(_currentLang);
 
                 try {
 

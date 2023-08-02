@@ -47,6 +47,8 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
+                    Globals.sharingAuthStatus = "NOT_NULL";
+
                     MessageBox.Show("You've successfully added a password for File Sharing.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
