@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
-    public partial class ResetAuthForm : Form {
+    public partial class ChangeAuthForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private Crud crud = new Crud();
 
-        public ResetAuthForm() {
+        public ChangeAuthForm() {
             InitializeComponent();
         }
 

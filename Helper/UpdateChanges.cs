@@ -7,6 +7,7 @@ namespace FlowSERVER1.Helper {
     public class UpdateChanges {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         public async Task SaveChangesUpdate(string fileName, string updatedValues, string tableName, bool isFromSharing, string directoryOrFolderName) {
 
             if (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName)) {

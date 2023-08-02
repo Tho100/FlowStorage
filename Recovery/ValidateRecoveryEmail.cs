@@ -126,7 +126,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                ResetAuthForm _showPasswordRecovery = new ResetAuthForm();
+                ChangeAuthForm _showPasswordRecovery = new ChangeAuthForm();
                 _showPasswordRecovery.Show();
 
                 this.Close();

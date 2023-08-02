@@ -1,6 +1,5 @@
 ﻿using Stripe;
 using System;
-using System.Windows;
 
 namespace FlowSERVER1.Model {
     public class StripeModel {
