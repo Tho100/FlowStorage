@@ -146,7 +146,7 @@
             // pictureBox5
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pictureBox5.Image = global::FlowSERVER1.Properties.Resources.flowstorageLogo__15_;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
             this.pictureBox5.Location = new System.Drawing.Point(12, 18);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(182, 57);
@@ -251,7 +251,7 @@
             this.btnUploadFile.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFile.Image")));
             this.btnUploadFile.ImageSize = new System.Drawing.Size(26, 26);
             this.btnUploadFile.Location = new System.Drawing.Point(4, 137);
-            this.btnUploadFile.Name = "btnUploadFileHome";
+            this.btnUploadFile.Name = "btnUploadFile";
             this.btnUploadFile.Size = new System.Drawing.Size(141, 33);
             this.btnUploadFile.TabIndex = 14;
             this.btnUploadFile.Text = "Upload File";
@@ -773,7 +773,6 @@
             this.guna2Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.guna2Panel1.BorderRadius = 12;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.guna2Button25);
             this.guna2Panel1.Controls.Add(this.guna2Button24);
@@ -1353,7 +1352,7 @@
             this.btnOpenFilterType.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnOpenFilterType.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.btnOpenFilterType.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenFilterType.ForeColor = System.Drawing.Color.White;
+            this.btnOpenFilterType.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnOpenFilterType.Image = global::FlowSERVER1.Properties.Resources.icons8_sort_down_50;
             this.btnOpenFilterType.ImageAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.btnOpenFilterType.ImageOffset = new System.Drawing.Point(0, -1);
@@ -1391,7 +1390,7 @@
             this.txtBoxSearchFile.Name = "txtBoxSearchFile";
             this.txtBoxSearchFile.PasswordChar = '\0';
             this.txtBoxSearchFile.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtBoxSearchFile.PlaceholderText = "Search Flowstorage Files...";
+            this.txtBoxSearchFile.PlaceholderText = "Search in Flowstorage";
             this.txtBoxSearchFile.SelectedText = "";
             this.txtBoxSearchFile.Size = new System.Drawing.Size(379, 41);
             this.txtBoxSearchFile.TabIndex = 29;

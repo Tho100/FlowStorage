@@ -594,12 +594,6 @@
     <Compile Include="AlertForms\LimitedFolderAlert.Designer.cs">
       <DependentUpon>LimitedFolderAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="AlertForms\LoadingAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\LoadingAlert.Designer.cs">
-      <DependentUpon>LoadingAlert.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\LoaderModel.cs" />
     <Compile Include="ExtraForms\MobilePageForm.cs">
       <SubType>Form</SubType>
@@ -851,9 +845,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\LimitedFolderAlert.resx">
       <DependentUpon>LimitedFolderAlert.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\LoadingAlert.resx">
-      <DependentUpon>LoadingAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\MobilePageForm.resx">
       <DependentUpon>MobilePageForm.cs</DependentUpon>
