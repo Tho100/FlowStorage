@@ -562,7 +562,7 @@
     <Compile Include="AlertForms\RecoveryFailedAlert.Designer.cs">
       <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper\FileSize.cs" />
+    <Compile Include="Helper\GetFileSize.cs" />
     <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -61,7 +61,8 @@ namespace FlowSERVER1 {
             try {
 
                 await GetCurrentLanguage();
-                SetupUILanguage(_currentUserLanguage);
+
+                InitializeUILanguage(_currentUserLanguage);
                 InitiailizeUIOnAccountType(lblAccountType.Text);
                 InitializeUploadLimitLabel();
 
@@ -674,10 +675,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Panel11_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void guna2Panel15_Paint(object sender, PaintEventArgs e) {
 
         }
@@ -865,7 +862,7 @@ namespace FlowSERVER1 {
             HomePage.instance.lblGreetingText.Text = greeting;
 
         }
-        private void SetupUILanguage(String _custLang) {
+        private void InitializeUILanguage(String _custLang) {
 
             var Form_1 = HomePage.instance;
 
@@ -1437,14 +1434,12 @@ namespace FlowSERVER1 {
 
         private void LanguageChanger(String _custLang) {
 
-            ///////////////////////////////////////////////
-
             if (_custLang == "US") {
                 btnSetLangUS.Text = "Default";
                 btnSetLangUS.ForeColor = Color.Gainsboro;
                 btnSetLangUS.Enabled = false;
                 UpdateLanguage("US");
-                SetupUILanguage("US");
+                InitializeUILanguage("US");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1488,7 +1483,7 @@ namespace FlowSERVER1 {
                 btnSetLangMY.ForeColor = Color.Gainsboro;
                 btnSetLangMY.Enabled = false;
                 UpdateLanguage("MY");
-                SetupUILanguage("MY");
+                InitializeUILanguage("MY");
 
                 btnSetLangUS.Text = "Set as default";
                 btnSetLangUS.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1532,7 +1527,7 @@ namespace FlowSERVER1 {
                 btnSetLangJAP.ForeColor = Color.Gainsboro;
                 btnSetLangJAP.Enabled = false;
                 UpdateLanguage("JAP");
-                SetupUILanguage("JAP");
+                InitializeUILanguage("JAP");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1576,7 +1571,7 @@ namespace FlowSERVER1 {
                 guna2Button15.ForeColor = Color.Gainsboro;
                 guna2Button15.Enabled = false;
                 UpdateLanguage("GER");
-                SetupUILanguage("GER");
+                InitializeUILanguage("GER");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1621,7 +1616,7 @@ namespace FlowSERVER1 {
                 guna2Button16.ForeColor = Color.Gainsboro;
                 guna2Button16.Enabled = false;
                 UpdateLanguage("ESP");
-                SetupUILanguage("ESP");
+                InitializeUILanguage("ESP");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1665,7 +1660,7 @@ namespace FlowSERVER1 {
                 guna2Button20.ForeColor = Color.Gainsboro;
                 guna2Button20.Enabled = false;
                 UpdateLanguage("FRE");
-                SetupUILanguage("FRE");
+                InitializeUILanguage("FRE");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1709,7 +1704,7 @@ namespace FlowSERVER1 {
                 guna2Button21.ForeColor = Color.Gainsboro;
                 guna2Button21.Enabled = false;
                 UpdateLanguage("POR");
-                SetupUILanguage("POR");
+                InitializeUILanguage("POR");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1753,7 +1748,7 @@ namespace FlowSERVER1 {
                 guna2Button22.ForeColor = Color.Gainsboro;
                 guna2Button22.Enabled = false;
                 UpdateLanguage("CHI");
-                SetupUILanguage("CHI");
+                InitializeUILanguage("CHI");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1797,7 +1792,7 @@ namespace FlowSERVER1 {
                 guna2Button31.ForeColor = Color.Gainsboro;
                 guna2Button31.Enabled = false;
                 UpdateLanguage("RUS");
-                SetupUILanguage("RUS");
+                InitializeUILanguage("RUS");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
@@ -1841,7 +1836,7 @@ namespace FlowSERVER1 {
                 guna2Button30.ForeColor = Color.Gainsboro;
                 guna2Button30.Enabled = false;
                 UpdateLanguage("DUT");
-                SetupUILanguage("DUT");
+                InitializeUILanguage("DUT");
 
                 btnSetLangMY.Text = "Set as default";
                 btnSetLangMY.ForeColor = Color.FromArgb(55, 0, 179);
