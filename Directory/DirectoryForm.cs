@@ -329,7 +329,7 @@ namespace FlowSERVER1 {
                     imageValues.Add(Globals.PTXImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new ptxFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
+                        new PtxForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
@@ -660,7 +660,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        PtxForm displayPtx = new PtxForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
                         displayPtx.ShowDialog();
                     };
                 }
