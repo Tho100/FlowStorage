@@ -94,7 +94,7 @@ namespace FlowSERVER1 {
         /// <param name=""></param>
         private void GenerateSpreadsheet(byte[] _getByte) {
 
-            lblFileSize.Text = $"{FileSize.fileSize(_getByte):F2}Mb";
+            lblFileSize.Text = $"{GetFileSize.fileSize(_getByte):F2}Mb";
 
             try {
 

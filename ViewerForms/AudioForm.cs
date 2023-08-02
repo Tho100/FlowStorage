@@ -128,7 +128,7 @@ namespace FlowSERVER1 {
         /// <param name="_getByteAud"></param>
         private async Task StartPlayAudio(string audioType, byte[] audioBytes) {
 
-            lblFileSize.Text = $"{FileSize.fileSize(audioBytes):F2}Mb";
+            lblFileSize.Text = $"{GetFileSize.fileSize(audioBytes):F2}Mb";
 
             btnPauseAudio.Visible = true;
             btnPlayAudio.Visible = false;

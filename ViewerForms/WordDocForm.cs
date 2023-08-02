@@ -73,7 +73,7 @@ namespace FlowSERVER1 {
 
             if (docBytes != null) {
 
-                lblFileSize.Text = $"{FileSize.fileSize(docBytes):F2}Mb";
+                lblFileSize.Text = $"{GetFileSize.fileSize(docBytes):F2}Mb";
                 MemoryStream docStream = new MemoryStream(docBytes);
                 documentViewer1.LoadFromStream(docStream);
             }

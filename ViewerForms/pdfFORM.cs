@@ -81,7 +81,7 @@ namespace FlowSERVER1 {
         /// <param name="pdfBytes"></param>
         private void InitializePDF(byte[] pdfBytes) {
             if (pdfBytes != null) {
-                lblFileSize.Text = $"{FileSize.fileSize(pdfBytes):F2}Mb";
+                lblFileSize.Text = $"{GetFileSize.fileSize(pdfBytes):F2}Mb";
                 MemoryStream convertToStream = new MemoryStream(pdfBytes);
                 pdfDocumentViewer1.LoadFromStream(convertToStream);
             }

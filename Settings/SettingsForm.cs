@@ -62,9 +62,8 @@ namespace FlowSERVER1 {
 
                 await GetCurrentLanguage();
                 SetupUILanguage(_currentUserLanguage);
-                UpdateUIOnAccountType(lblAccountType.Text);
-                await GetAccountType();
-                await CountTotalUploadDirectory();
+                InitiailizeUIOnAccountType(lblAccountType.Text);
+                InitializeUploadLimitLabel();
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
@@ -77,6 +76,7 @@ namespace FlowSERVER1 {
                     await TotalUploadFile("file_" + tableName.ToLower());
                 }
 
+                await TotalUploadDirectoryCount();
                 await TotalUploadDirectoryTodayCount();
 
                 int _totalUploadTodayCount = _totalUploadToday.Sum(x => Convert.ToInt32(x));
@@ -293,106 +293,7 @@ namespace FlowSERVER1 {
             lblCountDirlUploadToday.Text = distinctDirCount.ToString();
         }
 
-        private async Task GetAccountType() {
-
-            string accountType = "";
-            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
-            using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                accountType = Convert.ToString(await command.ExecuteScalarAsync());
-                lblAccountType.Text = accountType;
-            }
-
-            if (accountType == "Basic") {
-                if (this._currentUserLanguage == "US") {
-                    label37.Text = "Limited to 20";
-                }
-                else if (_currentUserLanguage == "MY") {
-                    label37.Text = "Terhad Kepada 20";
-                }
-                else if (_currentUserLanguage == "GER") {
-                    label37.Text = "Begrenzt Auf 20";
-                }
-                else if (_currentUserLanguage == "JAP") {
-                    label37.Text = "20 個限定";
-                }
-                else if (_currentUserLanguage == "ESP") {
-                    label37.Text = "Limitado a 20";
-                }
-                else if (_currentUserLanguage == "POR") {
-                    label37.Text = "Limitado a 20";
-                }
-
-            }
-            else if (accountType == "Max") {
-                if (_currentUserLanguage == "US") {
-                    label37.Text = "Limited to 500";
-                }
-                else if (_currentUserLanguage == "MY") {
-                    label37.Text = "Terhad Kepada 500";
-                }
-                else if (_currentUserLanguage == "GER") {
-                    label37.Text = "Begrenzt Auf 500";
-                }
-                else if (_currentUserLanguage == "JAP") {
-                    label37.Text = "500 個限定";
-                }
-                else if (_currentUserLanguage == "ESP") {
-                    label37.Text = "Limitado a 500";
-                }
-                else if (_currentUserLanguage == "POR") {
-                    label37.Text = "Limitado a 500";
-                }
-                btnOpenMaxPayment.Enabled = false;
-            }
-            else if (accountType == "Express") {
-                if (_currentUserLanguage == "US") {
-                    label37.Text = "Limited to 1000";
-                }
-                else if (_currentUserLanguage == "MY") {
-                    label37.Text = "Terhad Kepada 1000";
-                }
-                else if (_currentUserLanguage == "GER") {
-                    label37.Text = "Begrenzt Auf 1000";
-                }
-                else if (_currentUserLanguage == "JAP") {
-                    label37.Text = "1000 個限定";
-                }
-                else if (_currentUserLanguage == "ESP") {
-                    label37.Text = "Limitado a 1000";
-                }
-                else if (_currentUserLanguage == "POR") {
-                    label37.Text = "Limitado a 450";
-                }
-                btnOpenMaxPayment.Enabled = false;
-                btnOpenExpressPayment.Enabled = false;
-            }
-            else if (accountType == "Supreme") {
-                if (_currentUserLanguage == "US") {
-                    label37.Text = "Limited to 2000";
-                }
-                else if (_currentUserLanguage == "MY") {
-                    label37.Text = "Terhad Kepada 2000";
-                }
-                else if (_currentUserLanguage == "GER") {
-                    label37.Text = "Begrenzt Auf 2000";
-                }
-                else if (_currentUserLanguage == "JAP") {
-                    label37.Text = "2000 個限定";
-                }
-                else if (_currentUserLanguage == "ESP") {
-                    label37.Text = "Limitado a 2000";
-                }
-                else if (_currentUserLanguage == "POR") {
-                    label37.Text = "Limitado a 2000";
-                }
-                btnOpenMaxPayment.Enabled = false;
-                btnOpenExpressPayment.Enabled = false;
-                btnOpenSupremePayment.Enabled = false;
-            }
-        }
-        private async Task CountTotalUploadDirectory() {
+        private async Task TotalUploadDirectoryCount() {
 
             const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
@@ -525,26 +426,123 @@ namespace FlowSERVER1 {
 
         }
 
-        private void UpdateUIOnAccountType(String selectedAcc) {
+        private void InitiailizeUIOnAccountType(String selectedAcc) {
             if (selectedAcc == "Supreme") {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenSupremePayment.Enabled = false;
                 btnOpenMaxPayment.Enabled = false;
                 btnUseSupreme.Visible = false;
-                label37.Text = "Limited to 2000";
+                lblLimitedUpload.Text = "Limited to 2000";
             }
             else if (selectedAcc == "Express") {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenMaxPayment.Enabled = false;
                 btnUseExpress.Visible = false;
-                label37.Text = "Limited to 1000";
+                lblLimitedUpload.Text = "Limited to 1000";
             }
             else if (selectedAcc == "Max") {
                 btnOpenMaxPayment.Enabled = false;
                 btnUseMax.Visible = false;
-                label37.Text = "Limited to 500";
+                lblLimitedUpload.Text = "Limited to 500";
             }
         }
+
+        private void InitializeUploadLimitLabel() {
+
+            string accountType = Globals.accountType;
+
+            lblAccountType.Text = accountType;
+
+            if (accountType == "Basic") {
+                if (this._currentUserLanguage == "US") {
+                    lblLimitedUpload.Text = "Limited to 20";
+                }
+                else if (_currentUserLanguage == "MY") {
+                    lblLimitedUpload.Text = "Terhad Kepada 20";
+                }
+                else if (_currentUserLanguage == "GER") {
+                    lblLimitedUpload.Text = "Begrenzt Auf 20";
+                }
+                else if (_currentUserLanguage == "JAP") {
+                    lblLimitedUpload.Text = "20 個限定";
+                }
+                else if (_currentUserLanguage == "ESP") {
+                    lblLimitedUpload.Text = "Limitado a 20";
+                }
+                else if (_currentUserLanguage == "POR") {
+                    lblLimitedUpload.Text = "Limitado a 20";
+                }
+
+            }
+            else if (accountType == "Max") {
+                if (_currentUserLanguage == "US") {
+                    lblLimitedUpload.Text = "Limited to 500";
+                }
+                else if (_currentUserLanguage == "MY") {
+                    lblLimitedUpload.Text = "Terhad Kepada 500";
+                }
+                else if (_currentUserLanguage == "GER") {
+                    lblLimitedUpload.Text = "Begrenzt Auf 500";
+                }
+                else if (_currentUserLanguage == "JAP") {
+                    lblLimitedUpload.Text = "500 個限定";
+                }
+                else if (_currentUserLanguage == "ESP") {
+                    lblLimitedUpload.Text = "Limitado a 500";
+                }
+                else if (_currentUserLanguage == "POR") {
+                    lblLimitedUpload.Text = "Limitado a 500";
+                }
+                btnOpenMaxPayment.Enabled = false;
+            }
+            else if (accountType == "Express") {
+                if (_currentUserLanguage == "US") {
+                    lblLimitedUpload.Text = "Limited to 1000";
+                }
+                else if (_currentUserLanguage == "MY") {
+                    lblLimitedUpload.Text = "Terhad Kepada 1000";
+                }
+                else if (_currentUserLanguage == "GER") {
+                    lblLimitedUpload.Text = "Begrenzt Auf 1000";
+                }
+                else if (_currentUserLanguage == "JAP") {
+                    lblLimitedUpload.Text = "1000 個限定";
+                }
+                else if (_currentUserLanguage == "ESP") {
+                    lblLimitedUpload.Text = "Limitado a 1000";
+                }
+                else if (_currentUserLanguage == "POR") {
+                    lblLimitedUpload.Text = "Limitado a 450";
+                }
+                btnOpenMaxPayment.Enabled = false;
+                btnOpenExpressPayment.Enabled = false;
+            }
+            else if (accountType == "Supreme") {
+                if (_currentUserLanguage == "US") {
+                    lblLimitedUpload.Text = "Limited to 2000";
+                }
+                else if (_currentUserLanguage == "MY") {
+                    lblLimitedUpload.Text = "Terhad Kepada 2000";
+                }
+                else if (_currentUserLanguage == "GER") {
+                    lblLimitedUpload.Text = "Begrenzt Auf 2000";
+                }
+                else if (_currentUserLanguage == "JAP") {
+                    lblLimitedUpload.Text = "2000 個限定";
+                }
+                else if (_currentUserLanguage == "ESP") {
+                    lblLimitedUpload.Text = "Limitado a 2000";
+                }
+                else if (_currentUserLanguage == "POR") {
+                    lblLimitedUpload.Text = "Limitado a 2000";
+                }
+                btnOpenMaxPayment.Enabled = false;
+                btnOpenExpressPayment.Enabled = false;
+                btnOpenSupremePayment.Enabled = false;
+            }
+
+        }
+
         private static string DecryptApi(string key, string cipherText) {
             byte[] iv = new byte[16];
             byte[] buffer = Convert.FromBase64String(cipherText);
@@ -621,7 +619,7 @@ namespace FlowSERVER1 {
 
                     new PaymentSuceededAlert(_selectedAccountType).Show();
 
-                    UpdateUIOnAccountType(_selectedAccountType);
+                    InitiailizeUIOnAccountType(_selectedAccountType);
 
                 }
                 else {
@@ -1417,6 +1415,7 @@ namespace FlowSERVER1 {
                     using (MySqlDataReader _readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         if (await _readLang.ReadAsync()) {
                             _currentUserLanguage = _readLang.GetString(0);
+                            Globals.currentLanguage = _readLang.GetString(0);
                         }
                     }
                 }
@@ -1885,60 +1884,70 @@ namespace FlowSERVER1 {
 
         private void guna2Button18_Click(object sender, EventArgs e) {
             LanguageChanger("MY");
+            Globals.currentLanguage = "MY";
             _newSelectedUserLanguage = "MY";
             SetupUIGreeting();
         }
 
         private void guna2Button17_Click(object sender, EventArgs e) {
             LanguageChanger("JAP");
+            Globals.currentLanguage = "JAP";
             _newSelectedUserLanguage = "JAP";
             SetupUIGreeting();
         }
 
         private void guna2Button19_Click(object sender, EventArgs e) {
             LanguageChanger("US");
+            Globals.currentLanguage = "US";
             _newSelectedUserLanguage = "US";
             SetupUIGreeting();
         }
 
         private void guna2Button31_Click(object sender, EventArgs e) {
             LanguageChanger("RUS");
+            Globals.currentLanguage = "RUS";
             _newSelectedUserLanguage = "RUS";
             SetupUIGreeting();
         }
 
         private void guna2Button30_Click(object sender, EventArgs e) {
             LanguageChanger("DUT");
+            Globals.currentLanguage = "DUT";
             _newSelectedUserLanguage = "DUT";
             SetupUIGreeting();
         }
 
         private void guna2Button16_Click(object sender, EventArgs e) {
             LanguageChanger("ESP");
+            Globals.currentLanguage = "ESP";
             _newSelectedUserLanguage = "ESP";
             SetupUIGreeting();
         }
 
         private void guna2Button20_Click(object sender, EventArgs e) {
             LanguageChanger("FRE");
+            Globals.currentLanguage = "FRE";
             _newSelectedUserLanguage = "FRE";
             SetupUIGreeting();
         }
 
         private void guna2Button21_Click(object sender, EventArgs e) {
             LanguageChanger("POR");
+            Globals.currentLanguage = "POR";
             _newSelectedUserLanguage = "POR";
             SetupUIGreeting();
         }
 
         private void guna2Button22_Click(object sender, EventArgs e) {
             LanguageChanger("CHI");
+            Globals.currentLanguage = "CHI";
             _newSelectedUserLanguage = "CHI";
             SetupUIGreeting();
         }
 
         private void guna2Button15_Click(object sender, EventArgs e) {
             LanguageChanger("GER");
+            Globals.currentLanguage = "GER";
             _newSelectedUserLanguage = "GER";
             SetupUIGreeting();
         }
@@ -2227,7 +2236,7 @@ namespace FlowSERVER1 {
                 lblAccountType.Text = "Basic";
                 Globals.accountType = "Basic";
 
-                UpdateUIOnAccountType("Basic");
+                InitiailizeUIOnAccountType("Basic");
 
             }
             catch (Exception) {

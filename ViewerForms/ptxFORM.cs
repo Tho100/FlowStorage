@@ -79,7 +79,7 @@ namespace FlowSERVER1 {
 
         private void InitializePTX(Byte[] ptxByte) {
             if (ptxByte != null) {
-                lblFileSize.Text = $"{FileSize.fileSize(ptxByte):F2}Mb";
+                lblFileSize.Text = $"{GetFileSize.fileSize(ptxByte):F2}Mb";
                 MemoryStream convertToStream = new MemoryStream(ptxByte);
                 officeViewer1.LoadFromStream(convertToStream);
             }

@@ -116,7 +116,7 @@ namespace FlowSERVER1 {
         /// <param name="_retrieveBytesValue"></param>
         private void StartPlayVideo(byte[] _retrieveBytesValue) {
 
-            lblFileSize.Text = $"{FileSize.fileSize(_retrieveBytesValue):F2}Mb";
+            lblFileSize.Text = $"{GetFileSize.fileSize(_retrieveBytesValue):F2}Mb";
 
             var _toStream = new MemoryStream(_retrieveBytesValue);
 

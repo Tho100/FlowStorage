@@ -80,7 +80,7 @@ namespace FlowSERVER1 {
 
                 _fileBytes = File.ReadAllBytes(_fileFullPath);
 
-                lblFileSize.Text = $"File Size: {FileSize.fileSize(_fileBytes):F2}Mb";
+                lblFileSize.Text = $"File Size: {GetFileSize.fileSize(_fileBytes):F2}Mb";
                 lblFileSize.Visible = true;
             }
         }

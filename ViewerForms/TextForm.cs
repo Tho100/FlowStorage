@@ -94,7 +94,7 @@ namespace FlowSERVER1 {
                             if (reader.Read()) {
                                 byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
 
-                                lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
+                                lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
 
                                 string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
                                 richTextBox1.Text = toBase64Decoded;
@@ -116,7 +116,7 @@ namespace FlowSERVER1 {
                         using (MySqlDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
                                 byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
-                                lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
+                                lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
 
                                 string toBase64Decoded = System.Text.Encoding.UTF8.GetString(toBytes);
                                 richTextBox1.Text = toBase64Decoded;
@@ -180,7 +180,7 @@ namespace FlowSERVER1 {
                     if (await reader.ReadAsync()) {
                         Byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
 
-                        lblFileSize.Text = $"{FileSize.fileSize(toBytes):F2}Mb";
+                        lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
 
                         String toDecodedBase64 = Encoding.UTF8.GetString(toBytes);
                         richTextBox1.Text = toDecodedBase64;

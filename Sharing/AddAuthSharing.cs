@@ -34,8 +34,8 @@ namespace FlowSERVER1 {
             if (txtFieldAuth.Text != String.Empty) {
                 if (MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
-                    SettingsForm.instance.guna2Button23.Visible = false;
-                    SettingsForm.instance.guna2Button23.Enabled = false;
+                    SettingsForm.instance.btnAddSharingAuth.Visible = false;
+                    SettingsForm.instance.btnAddSharingAuth.Enabled = false;
 
                     SettingsForm.instance.btnRmvSharingAuth.Visible = true;
                     SettingsForm.instance.btnRmvSharingAuth.Enabled = true;
