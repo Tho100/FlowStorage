@@ -12,7 +12,7 @@ namespace FlowSERVER1 {
     /// <summary>
     /// Presentation viewer form
     /// </summary>
-    public partial class ptxFORM : Form {
+    public partial class PtxForm : Form {
 
         private string _tableName { get; set; }
         private string _directoryName { get; set; }
@@ -29,7 +29,7 @@ namespace FlowSERVER1 {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public ptxFORM(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public PtxForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 

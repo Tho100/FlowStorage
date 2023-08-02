@@ -14,9 +14,9 @@ using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
-    public partial class ShareFileForm : Form {
+    public partial class MainShareFileForm : Form {
 
-        public ShareFileForm instance;
+        public MainShareFileForm instance;
 
         readonly private ImageCompressor compressor = new ImageCompressor();
         private string _fileName{ get; set; }
@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
 
         public string _verifySetPas = "";
 
-        public ShareFileForm() {
+        public MainShareFileForm() {
             InitializeComponent();
             instance = this;
         }

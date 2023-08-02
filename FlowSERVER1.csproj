@@ -537,11 +537,11 @@
     <Compile Include="AlertForms\LimitedDirAlert.Designer.cs">
       <DependentUpon>LimitedDirAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Recovery\ValidateRecoveryEmail.cs">
+    <Compile Include="Recovery\AccountRecoveryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Recovery\ValidateRecoveryEmail.Designer.cs">
-      <DependentUpon>ValidateRecoveryEmail.cs</DependentUpon>
+    <Compile Include="Recovery\AccountRecoveryForm.Designer.cs">
+      <DependentUpon>AccountRecoveryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\EncryptionModel.cs" />
     <Compile Include="AlertForms\ErrorLoadAlert.cs">
@@ -644,17 +644,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\ptxFORM.cs">
+    <Compile Include="ViewerForms\PtxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\ptxFORM.Designer.cs">
-      <DependentUpon>ptxFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\PtxForm.Designer.cs">
+      <DependentUpon>PtxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Recovery\RecoveryForm.cs">
+    <Compile Include="Recovery\BackupRecoveryKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Recovery\RecoveryForm.Designer.cs">
-      <DependentUpon>RecoveryForm.cs</DependentUpon>
+    <Compile Include="Recovery\BackupRecoveryKeyForm.Designer.cs">
+      <DependentUpon>BackupRecoveryKeyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\SettingsForm.cs">
       <SubType>Form</SubType>
@@ -674,11 +674,11 @@
     <Compile Include="Rename\RenameFileForm.Designer.cs">
       <DependentUpon>RenameFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings\ResetAuthForm.cs">
+    <Compile Include="Settings\ChangeAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Settings\ResetAuthForm.Designer.cs">
-      <DependentUpon>ResetAuthForm.cs</DependentUpon>
+    <Compile Include="Settings\ChangeAuthForm.Designer.cs">
+      <DependentUpon>ChangeAuthForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AlertForms\RetrievalAlert.cs">
       <SubType>Form</SubType>
@@ -693,17 +693,17 @@
     <Compile Include="AlertForms\SettingsLoadingAlert.Designer.cs">
       <DependentUpon>SettingsLoadingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\ShareFileForm.cs">
+    <Compile Include="Sharing\ShareSelectedFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\shareFileFORM.Designer.cs">
-      <DependentUpon>ShareFileForm.cs</DependentUpon>
+    <Compile Include="Sharing\ShareSelectedFileForm.Designer.cs">
+      <DependentUpon>ShareSelectedFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\MainSharingForm.cs">
+    <Compile Include="Sharing\MainShareFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\MainSharingForm.Designer.cs">
-      <DependentUpon>MainSharingForm.cs</DependentUpon>
+    <Compile Include="Sharing\MainShareFileForm.Designer.cs">
+      <DependentUpon>MainShareFileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtraForms\SplashForm.cs">
       <SubType>Form</SubType>
@@ -823,8 +823,8 @@
     <EmbeddedResource Include="AlertForms\LimitedDirAlert.resx">
       <DependentUpon>LimitedDirAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Recovery\ValidateRecoveryEmail.resx">
-      <DependentUpon>ValidateRecoveryEmail.cs</DependentUpon>
+    <EmbeddedResource Include="Recovery\AccountRecoveryForm.resx">
+      <DependentUpon>AccountRecoveryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\ErrorLoadAlert.resx">
       <DependentUpon>ErrorLoadAlert.cs</DependentUpon>
@@ -878,11 +878,11 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\ptxFORM.resx">
-      <DependentUpon>ptxFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\PtxForm.resx">
+      <DependentUpon>PtxForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Recovery\RecoveryForm.resx">
-      <DependentUpon>RecoveryForm.cs</DependentUpon>
+    <EmbeddedResource Include="Recovery\BackupRecoveryKeyForm.resx">
+      <DependentUpon>BackupRecoveryKeyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
@@ -893,8 +893,8 @@
     <EmbeddedResource Include="Rename\RenameFileForm.resx">
       <DependentUpon>RenameFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Settings\ResetAuthForm.resx">
-      <DependentUpon>ResetAuthForm.cs</DependentUpon>
+    <EmbeddedResource Include="Settings\ChangeAuthForm.resx">
+      <DependentUpon>ChangeAuthForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\RetrievalAlert.resx">
       <DependentUpon>RetrievalAlert.cs</DependentUpon>
@@ -902,11 +902,11 @@
     <EmbeddedResource Include="AlertForms\SettingsLoadingAlert.resx">
       <DependentUpon>SettingsLoadingAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\shareFileFORM.resx">
-      <DependentUpon>ShareFileForm.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\ShareSelectedFileForm.resx">
+      <DependentUpon>ShareSelectedFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\MainSharingForm.resx">
-      <DependentUpon>MainSharingForm.cs</DependentUpon>
+    <EmbeddedResource Include="Sharing\MainShareFileForm.resx">
+      <DependentUpon>MainShareFileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>

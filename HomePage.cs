@@ -78,7 +78,7 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
         private void guna2CircleButton1_Click(object sender, EventArgs e) => new ApiPageForm().Show();
         private void guna2CircleButton2_Click(object sender, EventArgs e) => new FeedbackForm().Show();
-        private void guna2Button7_Click(object sender, EventArgs e) => new MainSharingForm().Show();
+        private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
         private void guna2Button3_Click_1(object sender, EventArgs e)
             => new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem)).Show();
         private void BuildShowAlert(String title, String subheader)
@@ -575,7 +575,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            ptxFORM displayPtx = new ptxFORM(filesInfo[accessIndex].Item1, GlobalsTable.homePtxTable, "null", Globals.custUsername);
+                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.homePtxTable, "null", Globals.custUsername);
                             displayPtx.Show();
                         }
 
@@ -831,7 +831,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, GlobalsTable.homePtxTable, "null", Globals.custUsername);
+                        PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, "null", Globals.custUsername);
                         displayPtx.ShowDialog();
                     };
                 }
@@ -1358,7 +1358,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            ptxFORM displayPtx = new ptxFORM(filesInfo[accessIndex].Item1, "ps_info_ptx", "null", uploaderName);
+                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, "ps_info_ptx", "null", uploaderName);
                             displayPtx.Show();
                         }
 
@@ -1608,7 +1608,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        ptxFORM displayPtx = new ptxFORM(titleLab.Text, "ps_info_ptx", "null", Globals.custUsername);
+                        PtxForm displayPtx = new PtxForm(titleLab.Text, "ps_info_ptx", "null", Globals.custUsername);
                         displayPtx.ShowDialog();
                     };
                 }
@@ -2097,7 +2097,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            ptxFORM displayPtx = new ptxFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                            PtxForm displayPtx = new PtxForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
                             displayPtx.Show();
                         }
 
@@ -2397,7 +2397,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            ptxFORM displayPtx = new ptxFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            PtxForm displayPtx = new PtxForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
                             displayPtx.Show();
                         }
 
@@ -3149,7 +3149,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            ptxFORM displayPic = new ptxFORM(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
+                            PtxForm displayPic = new PtxForm(titleLab.Text, GlobalsTable.folderUploadTable, _selectedFolder, Globals.custUsername);
                             displayPic.ShowDialog();
                         };
                     }

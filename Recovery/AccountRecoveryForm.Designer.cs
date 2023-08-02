@@ -155,7 +155,7 @@
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Location = new System.Drawing.Point(47, 385);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(331, 48);
+            this.guna2Button2.Size = new System.Drawing.Size(331, 51);
             this.guna2Button2.TabIndex = 15;
             this.guna2Button2.Text = "Next";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);

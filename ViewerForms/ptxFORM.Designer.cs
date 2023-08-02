@@ -1,5 +1,5 @@
 ﻿namespace FlowSERVER1 {
-    partial class ptxFORM {
+    partial class PtxForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ptxFORM));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PtxForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblUploaderName = new System.Windows.Forms.Label();
             this.lblFileName = new System.Windows.Forms.Label();

@@ -516,15 +516,11 @@ namespace FlowSERVER1 {
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-
-            ValidateRecoveryEmail _showPasswordRecovery = new ValidateRecoveryEmail();
-            _showPasswordRecovery.Show();
-
-            this.Close();
-
-        }
-        private void guna2Button4_Click(object sender, EventArgs e) {
+            new ValidateRecoveryEmail().Show();
             this.Close();
         }
+
+        private void guna2Button4_Click(object sender, EventArgs e) => this.Close();
+        
     }
 }

@@ -7,12 +7,12 @@ using System.Linq;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
-    public partial class RecoveryForm : Form {
+    public partial class BackupRecoveryKeyForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private Crud crud = new Crud();
 
-        public RecoveryForm() {
+        public BackupRecoveryKeyForm() {
             InitializeComponent();
         }
 

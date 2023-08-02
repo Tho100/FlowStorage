@@ -345,9 +345,9 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) => new RemoveAccountForm().Show();
 
         private void guna2Button23_Click(object sender, EventArgs e) => new AddAuthSharing().Show();
-        private void guna2Button12_Click(object sender, EventArgs e) => new ResetAuthForm().Show();
+        private void guna2Button12_Click(object sender, EventArgs e) => new ChangeAuthForm().Show();
         private void guna2Button13_Click(object sender, EventArgs e) => new ChangeUsernameForm().Show();
-        private void guna2Button1_Click_2(object sender, EventArgs e) => new RecoveryForm().Show();
+        private void guna2Button1_Click_2(object sender, EventArgs e) => new BackupRecoveryKeyForm().Show();
         private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custUsername);
         private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custEmail);
 

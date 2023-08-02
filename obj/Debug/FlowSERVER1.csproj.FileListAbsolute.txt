@@ -194,15 +194,12 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.PicForm
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.SignInForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.Properties.Resources.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ptxFORM.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.RecoveryForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.SettingsForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.RenameFolderFileForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.RenameFileForm.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ResetAuthForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.RetrievalAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.SettingsLoadingAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.shareFileFORM.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.MainSharingForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.SplashForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.PaymentSuceededAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.SuccessResetAuthAlert.resources
@@ -1358,3 +1355,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\AxInterop.WMPLib.dl
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.exe.licenses
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.csproj.CopyComplete
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.AddAuthSharing.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.BackupRecoveryKeyForm.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.ChangeAuthForm.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowSERVER1.MainShareFileForm.resources

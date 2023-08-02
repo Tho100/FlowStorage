@@ -1,5 +1,5 @@
 ﻿namespace FlowSERVER1 {
-    partial class RecoveryForm {
+    partial class BackupRecoveryKeyForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecoveryForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BackupRecoveryKeyForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.txtFieldPIN = new Guna.UI2.WinForms.Guna2TextBox();
             this.txtFieldAuth = new Guna.UI2.WinForms.Guna2TextBox();
