@@ -28,6 +28,7 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblFileSize = new System.Windows.Forms.Label();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.txtFieldFileName = new Guna.UI2.WinForms.Guna2TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,14 +41,13 @@
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.lblFileSize = new System.Windows.Forms.Label();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
             // 
-            this.guna2BorderlessForm1.BorderRadius = 12;
+            this.guna2BorderlessForm1.BorderRadius = 25;
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
@@ -84,6 +84,19 @@
             this.guna2Panel1.Size = new System.Drawing.Size(452, 411);
             this.guna2Panel1.TabIndex = 29;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
+            // 
+            // lblFileSize
+            // 
+            this.lblFileSize.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblFileSize.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileSize.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblFileSize.ForeColor = System.Drawing.Color.DarkGray;
+            this.lblFileSize.Location = new System.Drawing.Point(43, 190);
+            this.lblFileSize.Name = "lblFileSize";
+            this.lblFileSize.Size = new System.Drawing.Size(130, 20);
+            this.lblFileSize.TabIndex = 35;
+            this.lblFileSize.Text = "File Size: 12Mb";
+            this.lblFileSize.Visible = false;
             // 
             // guna2Button1
             // 
@@ -309,20 +322,7 @@
             this.guna2Separator1.Size = new System.Drawing.Size(977, 10);
             this.guna2Separator1.TabIndex = 36;
             // 
-            // lblFileSize
-            // 
-            this.lblFileSize.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblFileSize.BackColor = System.Drawing.Color.Transparent;
-            this.lblFileSize.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.lblFileSize.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblFileSize.Location = new System.Drawing.Point(43, 190);
-            this.lblFileSize.Name = "lblFileSize";
-            this.lblFileSize.Size = new System.Drawing.Size(130, 20);
-            this.lblFileSize.TabIndex = 35;
-            this.lblFileSize.Text = "File Size: 12Mb";
-            this.lblFileSize.Visible = false;
-            // 
-            // MainSharingForm
+            // MainShareFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -334,7 +334,7 @@
             this.Controls.Add(this.guna2Panel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MainSharingForm";
+            this.Name = "MainShareFileForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Sharing";
             this.Load += new System.EventHandler(this.sharingFORM_Load);

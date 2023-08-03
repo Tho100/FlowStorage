@@ -1,5 +1,5 @@
 ﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Model;
+using FlowSERVER1.Settings;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -427,7 +427,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void InitiailizeUIOnAccountType(String selectedAcc) {
+        public void InitiailizeUIOnAccountType(String selectedAcc) {
             if (selectedAcc == "Supreme") {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenSupremePayment.Enabled = false;
@@ -439,12 +439,15 @@ namespace FlowSERVER1 {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenMaxPayment.Enabled = false;
                 btnUseExpress.Visible = false;
-                lblLimitedUpload.Text = "Limited to 1000";
+                lblLimitedUpload.Text = "Limited to 800";
             }
             else if (selectedAcc == "Max") {
                 btnOpenMaxPayment.Enabled = false;
                 btnUseMax.Visible = false;
-                lblLimitedUpload.Text = "Limited to 500";
+                lblLimitedUpload.Text = "Limited to 150";
+            } 
+            else if (selectedAcc == "Basic") {
+                lblLimitedUpload.Text = "Limited to 25";
             }
         }
 
@@ -477,43 +480,43 @@ namespace FlowSERVER1 {
             }
             else if (accountType == "Max") {
                 if (_currentUserLanguage == "US") {
-                    lblLimitedUpload.Text = "Limited to 500";
+                    lblLimitedUpload.Text = "Limited to 150";
                 }
                 else if (_currentUserLanguage == "MY") {
-                    lblLimitedUpload.Text = "Terhad Kepada 500";
+                    lblLimitedUpload.Text = "Terhad Kepada 150";
                 }
                 else if (_currentUserLanguage == "GER") {
-                    lblLimitedUpload.Text = "Begrenzt Auf 500";
+                    lblLimitedUpload.Text = "Begrenzt Auf 150";
                 }
                 else if (_currentUserLanguage == "JAP") {
-                    lblLimitedUpload.Text = "500 個限定";
+                    lblLimitedUpload.Text = "150 個限定";
                 }
                 else if (_currentUserLanguage == "ESP") {
-                    lblLimitedUpload.Text = "Limitado a 500";
+                    lblLimitedUpload.Text = "Limitado a 150";
                 }
                 else if (_currentUserLanguage == "POR") {
-                    lblLimitedUpload.Text = "Limitado a 500";
+                    lblLimitedUpload.Text = "Limitado a 150";
                 }
                 btnOpenMaxPayment.Enabled = false;
             }
             else if (accountType == "Express") {
                 if (_currentUserLanguage == "US") {
-                    lblLimitedUpload.Text = "Limited to 1000";
+                    lblLimitedUpload.Text = "Limited to 800";
                 }
                 else if (_currentUserLanguage == "MY") {
-                    lblLimitedUpload.Text = "Terhad Kepada 1000";
+                    lblLimitedUpload.Text = "Terhad Kepada 800";
                 }
                 else if (_currentUserLanguage == "GER") {
-                    lblLimitedUpload.Text = "Begrenzt Auf 1000";
+                    lblLimitedUpload.Text = "Begrenzt Auf 800";
                 }
                 else if (_currentUserLanguage == "JAP") {
                     lblLimitedUpload.Text = "1000 個限定";
                 }
                 else if (_currentUserLanguage == "ESP") {
-                    lblLimitedUpload.Text = "Limitado a 1000";
+                    lblLimitedUpload.Text = "Limitado a 800";
                 }
                 else if (_currentUserLanguage == "POR") {
-                    lblLimitedUpload.Text = "Limitado a 450";
+                    lblLimitedUpload.Text = "Limitado a 800";
                 }
                 btnOpenMaxPayment.Enabled = false;
                 btnOpenExpressPayment.Enabled = false;
@@ -2205,40 +2208,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void guna2Button2_Click_2(object sender, EventArgs e) {
-
-            try {
-
-                StripeModel.CancelCustomerSubscription(Globals.custEmail);
-                StripeModel.DeleteCustomer(Globals.custEmail);
-
-                const string updateUserAccountQuery = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@email", Globals.custEmail);
-                    command.Parameters.AddWithValue("@type", "Basic");
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                const string insertBuyerQuery = "DELETE FROM cust_buyer WHERE CUST_USERNAME = @username";
-                using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
-                    commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
-                    await commandSecond.ExecuteNonQueryAsync();
-                }
-
-                new CustomAlert(title: "Subscription plan cancelled successfully", subheader: $"You downgraded your account from {Globals.accountType} to Basic and you'll no longer be charged.").Show();
-
-                lblAccountType.Text = "Basic";
-                Globals.accountType = "Basic";
-
-                InitiailizeUIOnAccountType("Basic");
-
-            }
-            catch (Exception) {
-                new CustomAlert(title: "Failed to cancel subscription", subheader: "Something went wrong while trying to cancel your subscription plan please try again later.");
-            }
-
-        }
+        private async void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
 
         private void label18_Click(object sender, EventArgs e) {
 
@@ -2249,6 +2219,10 @@ namespace FlowSERVER1 {
         }
 
         private void label8_Click(object sender, EventArgs e) {
+
+        }
+
+        private void label42_Click(object sender, EventArgs e) {
 
         }
     }
