@@ -223,15 +223,28 @@ namespace FlowSERVER1 {
 
         private async Task ValidateAndCreateDirectory(int currentTotalFiles, string directoryName) {
 
-            var countSameDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE DIR_NAME = @dirname", con);
-            countSameDirCommand.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-            int countSameDir = Convert.ToInt32(await countSameDirCommand.ExecuteScalarAsync());
+            HashSet<string> directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+                .OfType<Guna2Panel>()
+                .SelectMany(panel => panel.Controls.OfType<Label>())
+                .Where(label => label.Text.All(c => Char.IsLetterOrDigit(c) || Char.IsWhiteSpace(c)))
+                .Where(label => !string.Equals(label.Text, "directory", StringComparison.OrdinalIgnoreCase))
+                .Select(label => label.Text.ToLower()));
 
-            if (countSameDir < 1) {
+            int countTotalDir = directoriesName.Count();
 
-                var countTotalDirCommand = new MySqlCommand("SELECT COUNT(DIR_NAME) FROM file_info_directory WHERE CUST_USERNAME = @username", con);
-                countTotalDirCommand.Parameters.AddWithValue("@username", Globals.custUsername);
-                int countTotalDir = Convert.ToInt32(await countTotalDirCommand.ExecuteScalarAsync());
+            if(directoryName.ToLower().Contains("directory")) {
+                MessageBox.Show("Can't name directory `directory`.", "Flowstorage", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (directoryName.Contains(".")) {
+                MessageBox.Show("Can't name directory with end punctuation symbol.", "Flowstorage",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (!(directoriesName.Contains(directoryName))) {
 
                 int maxFilesCount = Globals.uploadFileLimit[Globals.accountType];
                 int maxDirCount = Globals.uploadDirectoryLimit[Globals.accountType];

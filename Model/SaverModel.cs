@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
+using Guna.UI2.WinForms;
+using Xamarin.Forms.Internals;
 
 namespace FlowSERVER1 {
 
@@ -53,6 +55,23 @@ namespace FlowSERVER1 {
             try {
 
                 new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
+
+                HashSet<string> filesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+                    .OfType<Guna2Panel>()
+                    .SelectMany(panel => panel.Controls.OfType<Label>())
+                    .Select(label => label.Text.ToLower())
+                    .Where(text => text.Contains(".")));
+
+                int indexOfImage = filesName.IndexOf(fileName.ToLower());
+
+                if (Globals.imageTypesFolder.Contains(fileExtension) 
+                    && (GlobalsTable.publicTables.Contains(tableName) 
+                    || GlobalsTable.publicTablesPs.Contains(tableName))
+                ) {
+                    string imageBase64Encoded = GlobalsData.base64EncodedImageHome[indexOfImage];
+                    var imageBytes = Convert.FromBase64String(imageBase64Encoded);
+                    OpenSaveFileDialog(fileName, imageBytes);
+                }
 
                 if (tableName == GlobalsTable.directoryUploadTable) {
 

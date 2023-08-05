@@ -142,7 +142,7 @@ namespace FlowSERVER1.Authentication {
 
             string accountType = "";
 
-            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username LIMIT 1";
+            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
