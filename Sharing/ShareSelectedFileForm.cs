@@ -64,13 +64,13 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
-        private int CountReceiverTotalShared(String _receiverUsername) {
+        private int CountReceiverTotalShared(String username) {
 
-            const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
+            const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @receiver";
             int fileCount = 0;
 
             using (MySqlCommand command = new MySqlCommand(countFileSharedQuery, con)) {
-                command.Parameters.AddWithValue("@username", _receiverUsername);
+                command.Parameters.AddWithValue("@receiver", username);
 
                 object result = command.ExecuteScalar();
                 if (result != null && result != DBNull.Value) {
@@ -86,13 +86,13 @@ namespace FlowSERVER1 {
         /// This function will retrieve user current 
         /// file sharing status (enabeled or disabled)
         /// </summary>
-        private string RetrieveIsSharingDisabled(String _custUsername) {
+        private string RetrieveIsSharingDisabled(String username) {
 
             string isEnabled = "0";
-            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @receiver";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
+                command.Parameters.AddWithValue("@receiver", username);
                 using (MySqlDataReader reader = command.ExecuteReader()) {
                     if (reader.Read()) {
                         isEnabled = reader.GetString(0);
@@ -128,15 +128,15 @@ namespace FlowSERVER1 {
         /// <param name="_custUsername">Username of receiver</param>
         /// <param name="_fileName">File name to be send</param>
         /// <returns></returns>
-        private int FileIsUploadedVerification(String _custUsername, String _fileName) {
+        private int FileIsUploadedVerification(String username, String fileName) {
 
             int count = 0;
 
-            const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+            const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @sender AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
             using(MySqlCommand command = new MySqlCommand(queryRetrieveCount,con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@receiver", _custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                command.Parameters.AddWithValue("@sender", Globals.custUsername);
+                command.Parameters.AddWithValue("@receiver", username);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 count = Convert.ToInt32(command.ExecuteScalar());
             }
             
@@ -144,14 +144,14 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task<string> getFileMetadata(String _fileName,String _TableName) {
+        private async Task<string> getFileMetadata(String fileName,String tableName) {
 
             string GetBase64String = "";
-            string queryGetFileByte = $"SELECT CUST_FILE FROM {_TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
+            string queryGetFileByte = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using(MySqlCommand command = new MySqlCommand(queryGetFileByte,con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", _fileName);
+                command.Parameters.AddWithValue("@filename", fileName);
                 using(MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
@@ -162,14 +162,14 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private async Task<string> getFileMetadataSharedToMe(String _custUsername, String _fileName) {
+        private async Task<string> getFileMetadataSharedToMe(String fileName) {
 
             string GetBase64String = "";
             const string queryGetFileData = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using (MySqlCommand command = new MySqlCommand(queryGetFileData, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
@@ -180,14 +180,14 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private async Task<string> getFileMetadataSharedToOthers(String _custUsername, String _fileName) {
+        private async Task<string> getFileMetadataSharedToOthers(String fileName) {
 
             string GetBase64String = "";
             const string queryGetFileData = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using (MySqlCommand command = new MySqlCommand(queryGetFileData, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
@@ -198,15 +198,15 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private async Task<string> getFileMetadataExtra(String _tableName,String _columnName, String _dirName, String _custUsername,String _fileName) {
+        private async Task<string> getFileMetadataExtra(String tableName, String columnName, String directoryName, String fileName) {
 
             string base64String = "";
 
-            string queryGetFileByte = $"SELECT CUST_FILE FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {_columnName} = @dirname LIMIT 1;";
+            string queryGetFileByte = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {columnName} = @dirname LIMIT 1;";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.Parameters.AddWithValue("@filename",EncryptionModel.Encrypt(_fileName)); 
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_dirName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename",EncryptionModel.Encrypt(fileName)); 
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         base64String = readData.GetString(0);
@@ -217,13 +217,14 @@ namespace FlowSERVER1 {
             return base64String;
         }
 
-        private async Task<string> retrieveThumbnails(String _tableName, String _custUsername, String _fileName) {
+        private async Task<string> retrieveThumbnails(String tableName, String fileName) {
 
-            String GetBase64String = "";
-            String queryGetFileByte = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            string GetBase64String = "";
+
+            string queryGetFileByte = $"SELECT CUST_THUMB FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
@@ -233,14 +234,16 @@ namespace FlowSERVER1 {
 
             return GetBase64String;
         }
-        private async Task<string> retrieveThumbnailsExtra(String _tableName, String _columnName, String _dirName, String _custUsername, String _fileName) {
 
-            String GetBase64String = "";
-            String queryGetFileByte = $"SELECT CUST_THUMB FROM {_tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {_columnName} = @dirname";
+        private async Task<string> retrieveThumbnailsExtra(String tableName, String columnName, String directoryName, String fileName) {
+
+            string GetBase64String = "";
+
+            string queryGetFileByte = $"SELECT CUST_THUMB FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {columnName} = @dirname";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_dirName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         GetBase64String = readData.GetString(0);
@@ -280,7 +283,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
                 command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
                 command.Parameters.AddWithValue("@CUST_FILE", setValue);
-                command.Parameters.AddWithValue("@FILE_EXT", _fileExtension);
+                command.Parameters.AddWithValue("@FILE_EXT", "." + _fileExtension);
                 command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(txtFieldComment.Text));
                 command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
 
@@ -300,74 +303,88 @@ namespace FlowSERVER1 {
                 new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
                 if (_isFromShared == false && _tableName == "cust_sharing") {
-                    string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_TO");
-                    await startSending(getFileMetadataSharedToMe(Globals.custUsername, _fileName), getThumbnails);
-                } else if (_tableName != "upload_info_directory" && _tableName != GlobalsTable.folderUploadTable) {
 
-                    if (Globals.imageTypes.Contains(_fileExtension)) {
+                    string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_TO");
+                    await startSending(getFileMetadataSharedToMe(_fileName), getThumbnails);
+
+                } else if (_tableName != GlobalsTable.directoryUploadTable && _tableName != GlobalsTable.folderUploadTable) {
+
+                    if (Globals.imageTypesFolder.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_image" ? "ps_info_image" : GlobalsTable.homeImageTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));  
-                    } 
-                    
-                    else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
+                    }
+
+                    else if (Globals.videoTypesFolder.Contains(_fileExtension)) {
+
+                        string finalTable = _tableName == "ps_info_video" ? "ps_info_video" : GlobalsTable.homeVideoTable;
+
+                        string getThumbnails = await retrieveThumbnails(finalTable, _fileName);
+
+                        await startSending(await getFileMetadata(
+                            EncryptionModel.Encrypt(_fileName), finalTable), getThumbnails);
+                    }
+
+                    else if (Globals.textTypesFolder.Contains(_fileExtension)) {
+                        string finalTable = _tableName == "ps_info_text" ? "ps_info_text" : GlobalsTable.homeTextTable;
+                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                    }
+
+                    else if (_fileExtension == "xlsx" || _fileExtension == "xls") {
                         string finalTable = _tableName == "ps_info_excel" ? "ps_info_excel" : GlobalsTable.homeExcelTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
                     
-                    else if (Globals.textTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_text" ? "ps_info_text" : GlobalsTable.homeTextTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    } 
-                    
-                    else if (_fileExtension == ".pdf") {
+                    else if (_fileExtension == "pdf") {
                         string finalTable = _tableName == "ps_info_pdf" ? "ps_info_pdf" : GlobalsTable.homePdfTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
+                    else if (_fileExtension == "pptx" || _fileExtension == "ppt") {
                         string finalTable = _tableName == "ps_info_ptx" ? "ps_info_ptx" : GlobalsTable.homePtxTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_fileExtension == ".docx" || _fileExtension == ".doc") {
+                    else if (_fileExtension == "docx" || _fileExtension == "doc") {
                         string finalTable = _tableName == "ps_info_word" ? "ps_info_word" : GlobalsTable.homeWordTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (_fileExtension == ".wav" || _fileExtension == ".mp3") {
+                    else if (_fileExtension == "wav" || _fileExtension == "mp3") {
                         string finalTable = _tableName == "ps_info_audio" ? "ps_info_audio" : GlobalsTable.homeAudioTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     } 
                     
-                    else if (Globals.videoTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_video" ? "ps_info_video" : GlobalsTable.homeVideoTable;
-                        string getThumbnails = await retrieveThumbnails(finalTable,Globals.custUsername, _fileName);
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable),getThumbnails);
-                    }
-                    
-                    else if (_fileExtension == ".exe") {
+                    else if (_fileExtension == "exe") {
                         string finalTable = _tableName == "ps_info_exe" ? "ps_info_exe" : GlobalsTable.homeExeTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
                     
-                    else if (_fileExtension == ".apk") {
+                    else if (_fileExtension == "apk") {
                         string finalTable = _tableName == "ps_info_apk" ? "ps_info_apk" : GlobalsTable.homeApkTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
 
                 } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
                     string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_FROM");
-                    await startSending(getFileMetadataSharedToOthers(Globals.custUsername, _fileName), getThumbnails);
+                    await startSending(getFileMetadataSharedToOthers(_fileName), getThumbnails);
                 } 
                 
                 else if (_tableName == GlobalsTable.directoryUploadTable) {
-                    string getThumbnails = await retrieveThumbnailsExtra("upload_info_directory", "DIR_NAME", _directoryName, Globals.custUsername, _fileName);
-                    await startSending(await getFileMetadataExtra("upload_info_directory","DIR_NAME",_directoryName,Globals.custUsername, _fileName));
+
+                    string getThumbnails = await retrieveThumbnailsExtra(
+                        GlobalsTable.directoryUploadTable, "DIR_NAME", _directoryName, _fileName);
+
+                    await startSending(await getFileMetadataExtra(
+                        GlobalsTable.directoryUploadTable,"DIR_NAME",_directoryName, _fileName), getThumbnails);
                 } 
                 
                 else if (_tableName == GlobalsTable.folderUploadTable) {
-                    string getThumbnails = await retrieveThumbnailsExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, Globals.custUsername, _fileName);
-                    await startSending(await getFileMetadataExtra(GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, Globals.custUsername, _fileName));
+
+                    string getThumbnails = await retrieveThumbnailsExtra(
+                        GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName);
+
+                    await startSending(await getFileMetadataExtra(
+                        GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName), getThumbnails);
                 }
 
                 CloseForm.closeForm("SharingAlert");

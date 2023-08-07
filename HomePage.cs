@@ -4180,11 +4180,12 @@ namespace FlowSERVER1 {
                 await DownloadUserFolder(folderTitleGet);
             }
             else {
-                LimitedFolderAlert upgradeAccountFolderFORM = new LimitedFolderAlert(Globals.accountType, "Please upgrade your account \r\nplan to download folder.", false);
-                upgradeAccountFolderFORM.Show();
+                new LimitedFolderAlert(
+                    Globals.accountType, 
+                    "Please upgrade your account \r\nplan to download folder.", false)
+                    .Show();
             }
         }
-
 
         private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
 
@@ -4326,7 +4327,7 @@ namespace FlowSERVER1 {
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblSelectedDirName.Text;
 
-            string fileExtensions = titleFile.Substring(titleFile.Length - 4);
+            string fileExtensions = titleFile.Split('.').Last();
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
