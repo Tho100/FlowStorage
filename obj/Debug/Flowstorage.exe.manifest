@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rVsQWBRuyqTgLZojEJdn2OjYuetmChhKZdlwKFV9DWo=</dsig:DigestValue>
+        <dsig:DigestValue>bMQYHWUaOdpBb90zDSUtQaWzoO9MQHEExOcvCR7Y6vM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -242,7 +242,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DTh8tks9+Vz+Xz+JhtzW4w3vdWPvr9p55LXHAgxXeyw=</dsig:DigestValue>
+        <dsig:DigestValue>ZDyRDFkSgs5UfSER49DPHVJSj/bIlEFM5pIwCsXeC0s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1104,7 +1104,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AJWIfS+/3pelUm1NJpbZC/H0pPf3yXJAZlhS75eA140=</dsig:DigestValue>
+      <dsig:DigestValue>Zs3DQzCzj3CGJucNaEd/466x6fQbdLAi7SonSf46UlU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="libvlc\win-x64\hrtfs\dodeca_and_7channel_3DSL_HRTF.sofa" size="92388">

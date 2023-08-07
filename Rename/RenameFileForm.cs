@@ -2,14 +2,11 @@
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace FlowSERVER1 {
     public partial class RenameFileForm : Form {
@@ -33,7 +30,8 @@ namespace FlowSERVER1 {
 
             this.lblFileName.Text = fileName;
 
-            txtFieldNewFileName.Text = fileName.Substring(0, fileName.Length-4);
+            string fileNameWithoutType = Path.GetFileNameWithoutExtension(fileName);
+            txtFieldNewFileName.Text = fileNameWithoutType;
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {

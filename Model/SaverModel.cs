@@ -54,8 +54,6 @@ namespace FlowSERVER1 {
 
             try {
 
-                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver").ShowDialog()).Start();
-
                 HashSet<string> filesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
@@ -65,13 +63,24 @@ namespace FlowSERVER1 {
                 int indexOfImage = filesName.IndexOf(fileName.ToLower());
 
                 if (Globals.imageTypesFolder.Contains(fileExtension) 
-                    && (GlobalsTable.publicTables.Contains(tableName) 
-                    || GlobalsTable.publicTablesPs.Contains(tableName))
-                ) {
-                    string imageBase64Encoded = GlobalsData.base64EncodedImageHome[indexOfImage];
+                && (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName))) {
+
+                    string imageBase64Encoded = null;
+
+                    if(GlobalsTable.publicTables.Contains(tableName)) {
+                        imageBase64Encoded = GlobalsData.base64EncodedImageHome[indexOfImage];
+                    } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                        imageBase64Encoded = GlobalsData.base64EncodedImagePs[indexOfImage];
+                    }
+
                     var imageBytes = Convert.FromBase64String(imageBase64Encoded);
+
                     OpenSaveFileDialog(fileName, imageBytes);
+                    return;
                 }
+
+                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver")
+                    .ShowDialog()).Start();
 
                 if (tableName == GlobalsTable.directoryUploadTable) {
 
