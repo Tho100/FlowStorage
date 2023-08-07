@@ -271,9 +271,6 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        /// <summary>
-        /// Main function for sharing file 
-        /// </summary>
 
         private async Task startSending(Object setValue, Object thumbnailValue = null) {
 

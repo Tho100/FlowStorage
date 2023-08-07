@@ -86,7 +86,6 @@ namespace FlowSERVER1 {
             var itsEmptyHereLabel = accessHomePage.lblEmptyHere;
 
             const string selectUserQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
-            const string selectEmailQuery = "SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username";
 
             using (var command = new MySqlCommand(selectUserQuery, con)) {
                 command.Parameters.AddWithValue("@email", _inputGetEmail);
@@ -96,22 +95,12 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-
-            using (var emailCommand = new MySqlCommand(selectEmailQuery, con)) {
-                emailCommand.Parameters.AddWithValue("@username", _custUsername);
-                using (MySqlDataReader reader = (MySqlDataReader)await emailCommand.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        if (reader.GetString(0) != null) {
-                            _custEmail = reader.GetString(0);
-                        }
-                    }
-                }
-            }
-
+ 
             flowLayout.Controls.Clear();
             accessHomePage.lstFoldersPage.Items.Clear();
+
             Globals.custUsername = _custUsername;
-            Globals.custEmail = _custEmail;
+            Globals.custEmail = _inputGetEmail;
 
             garbageButton.Visible = itsEmptyHereLabel.Visible = lblAlert.Visible = false;
 

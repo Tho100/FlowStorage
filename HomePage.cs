@@ -3897,18 +3897,23 @@ namespace FlowSERVER1 {
             HomePage.instance.btnFileSharing.Size = new Size(125, 47);
             HomePage.instance.lblEssentials.Text = "Essentials";
 
-            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            String _getAuth = _getPath + "\\CUST_DATAS.txt";
+            string directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
 
-            if (File.Exists(_getAuth)) {
-                if (Directory.Exists(_getPath)) {
-                    Directory.Delete(_getPath, true);
-                }
+            if(Directory.Exists(directoryPath)) {
+                Directory.Delete(directoryPath, true);
             }
 
             GlobalsData.base64EncodedImageHome.Clear();
             GlobalsData.base64EncodedThumbnailHome.Clear();
+
+            GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
             GlobalsData.base64EncodedImageSharedOthers.Clear();
+
+            GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
+            GlobalsData.base64EncodedImageSharedToMe.Clear();
+
+            GlobalsData.base64EncodedImagePs.Clear();
+            GlobalsData.base64EncodedThumbnailPs.Clear();
 
             HomePage.instance.lstFoldersPage.Items.Clear();
 

@@ -1,5 +1,4 @@
-﻿
-using FlowSERVER1.AlertForms;
+﻿using FlowSERVER1.AlertForms;
 
 using MySql.Data.MySqlClient;
 using System;
@@ -321,10 +320,10 @@ namespace FlowSERVER1.Authentication {
 
                 Control flowlayout = accessHomePage.flwLayoutHome;
 
-                string _getUser = txtBoxUsernameField.Text;
-                string _getEmail = txtBoxEmailField.Text;
-                string _getPass = txtBoxAuth0Field.Text;
-                string _getPin = txtBoxAuth1Field.Text;
+                string usernameInput = txtBoxUsernameField.Text;
+                string emailInput = txtBoxEmailField.Text;
+                string passwordInput = txtBoxAuth0Field.Text;
+                string pinInput = txtBoxAuth1Field.Text;
 
                 List<string> existsInfosMail = new List<string>();
                 List<string> existsInfosUser = new List<string>();
@@ -332,7 +331,7 @@ namespace FlowSERVER1.Authentication {
                 using (MySqlCommand command = con.CreateCommand()) {
                     const string verifyQueryUser = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
                     command.CommandText = verifyQueryUser;
-                    command.Parameters.AddWithValue("@username", _getUser);
+                    command.Parameters.AddWithValue("@username", usernameInput);
 
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
@@ -342,7 +341,7 @@ namespace FlowSERVER1.Authentication {
 
                     const string verifyQueryMail = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
                     command.CommandText = verifyQueryMail;
-                    command.Parameters.AddWithValue("@email", _getEmail);
+                    command.Parameters.AddWithValue("@email", emailInput);
 
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
@@ -368,61 +367,61 @@ namespace FlowSERVER1.Authentication {
                     lblAlertPassword.Visible = false;
                     lblAlertUsername.Visible = false;
 
-                    if (_getUser.Contains("&") || _getUser.Contains(";") || _getUser.Contains("?") || _getUser.Contains("%")) {
+                    if (usernameInput.Contains("&") || usernameInput.Contains(";") || usernameInput.Contains("?") || usernameInput.Contains("%")) {
                         lblAlertUsername.Visible = true;
                         lblAlertUsername.Text = "Special characters is not allowed.";
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(_getPin)) {
+                    if (String.IsNullOrEmpty(pinInput)) {
                         lblAlertPin.Visible = true;
                         lblAlertPin.Text = "Please add a PIN number.";
                         return;
                     }
 
-                    if (!(_getPin.All(char.IsDigit))) {
+                    if (!(pinInput.All(char.IsDigit))) {
                         lblAlertPin.Visible = true;
                         lblAlertPin.Text = "PIN must be a number.";
                         return;
                     }
 
-                    if (_getPin.Length != 3) {
+                    if (pinInput.Length != 3) {
                         lblAlertPin.Visible = true;
                         lblAlertPin.Text = "PIN Number must have 3 digits.";
                         return;
                     }
 
-                    if (!ValidateEmailInput(_getEmail) == true) {
+                    if (!ValidateEmailInput(emailInput) == true) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Entered email is not valid.";
                         return;
                     }
 
-                    if (_getUser.Length > 20) {
+                    if (usernameInput.Length > 20) {
                         lblAlertUsername.Visible = true;
                         lblAlertUsername.Text = "Username character length limit is 20.";
                         return;
                     }
 
-                    if (_getPass.Length < 5) {
+                    if (passwordInput.Length < 5) {
                         lblAlertPassword.Visible = true;
                         lblAlertPassword.Text = "Password must be longer than 5 characters.";
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(_getEmail)) {
+                    if (String.IsNullOrEmpty(emailInput)) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Please add your email";
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(_getPass)) {
+                    if (String.IsNullOrEmpty(passwordInput)) {
                         lblAlertPassword.Visible = true;
                         return;
 
                     }
 
-                    if (String.IsNullOrEmpty(_getUser)) {
+                    if (String.IsNullOrEmpty(usernameInput)) {
                         lblAlertUsername.Visible = true;
                         return;
                     }
@@ -434,15 +433,15 @@ namespace FlowSERVER1.Authentication {
                         HomePage.instance.btnGarbageImage.Visible = true;
                     }
 
-                    Globals.custUsername = _getUser;
-                    Globals.custEmail = _getEmail;
+                    Globals.custUsername = usernameInput;
+                    Globals.custEmail = emailInput;
                     Globals.accountType = "Basic";
 
-                    InsertUserRegistrationData(_getUser, _getEmail, _getPass, _getPin);
+                    InsertUserRegistrationData(usernameInput, emailInput, passwordInput, pinInput);
 
                     await GetUserLanguage();
                     ClearRegistrationFields();
-                    StupAutoLogin(_getUser);
+                    StupAutoLogin(usernameInput);
                     BuildGreetingLabel();
 
                     accessHomePage.lblUsagePercentage.Text = "0%";
