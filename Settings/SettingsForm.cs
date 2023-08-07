@@ -350,7 +350,7 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click_2(object sender, EventArgs e) => new BackupRecoveryKeyForm().Show();
         private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custUsername);
         private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custEmail);
-
+        private void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
         private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
 
         }
@@ -2136,30 +2136,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        /// <summary>
-        /// This button will show user access token
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void guna2Button28_Click(object sender, EventArgs e) {
-            if (tokenCheckCurr == 0) {
-                AccessTokenVerifyForm _showVerForm = new AccessTokenVerifyForm();
-                _showVerForm.Show();
-            }
-            else {
-                guna2TextBox2.Enabled = true;
-                guna2Button28.Visible = false;
-                guna2Button29.Visible = true;
-                guna2TextBox2.PasswordChar = '\0';
-            }
-        }
-
-        private void guna2Button29_Click(object sender, EventArgs e) {
-            guna2Button29.Visible = false;
-            guna2Button28.Visible = true;
-            guna2TextBox2.PasswordChar = '*';
-        }
-
         private void guna2Panel14_Paint(object sender, PaintEventArgs e) {
 
         }
@@ -2207,8 +2183,6 @@ namespace FlowSERVER1 {
         private void lblSetPassword_Click(object sender, EventArgs e) {
 
         }
-
-        private async void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
 
         private void label18_Click(object sender, EventArgs e) {
 

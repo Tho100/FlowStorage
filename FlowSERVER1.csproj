@@ -753,12 +753,6 @@
     <Compile Include="AlertForms\UploadingAlert.Designer.cs">
       <DependentUpon>UploadingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtraForms\AccessTokenVerifyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExtraForms\AccessTokenVerifyForm.Designer.cs">
-      <DependentUpon>AccessTokenVerifyForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewerForms\VideoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -925,9 +919,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\UploadingAlert.resx">
       <DependentUpon>UploadingAlert.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExtraForms\AccessTokenVerifyForm.resx">
-      <DependentUpon>AccessTokenVerifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\VideoForm.resx">
       <DependentUpon>VideoForm.cs</DependentUpon>

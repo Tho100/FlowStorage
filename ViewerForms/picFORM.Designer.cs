@@ -483,7 +483,7 @@
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
             this.guna2Button6.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
             this.guna2Button6.ImageSize = new System.Drawing.Size(21, 21);
-            this.guna2Button6.Location = new System.Drawing.Point(906, 18);
+            this.guna2Button6.Location = new System.Drawing.Point(910, 18);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(38, 31);
             this.guna2Button6.TabIndex = 67;
@@ -515,7 +515,7 @@
             this.btnShareFile.ForeColor = System.Drawing.Color.White;
             this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
             this.btnShareFile.ImageSize = new System.Drawing.Size(17, 17);
-            this.btnShareFile.Location = new System.Drawing.Point(861, 18);
+            this.btnShareFile.Location = new System.Drawing.Point(865, 18);
             this.btnShareFile.Name = "btnShareFile";
             this.btnShareFile.Size = new System.Drawing.Size(38, 31);
             this.btnShareFile.TabIndex = 30;
@@ -537,7 +537,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(950, 18);
+            this.guna2Button4.Location = new System.Drawing.Point(954, 18);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 20;
@@ -720,7 +720,7 @@
             this.guna2Button11.TabIndex = 98;
             this.guna2Button11.Click += new System.EventHandler(this.guna2Button11_Click_1);
             // 
-            // picFORM
+            // PicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -752,7 +752,7 @@
             this.Controls.Add(this.guna2PictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "picFORM";
+            this.Name = "PicForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image Viewer";
             this.TopMost = true;
