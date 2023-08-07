@@ -82,7 +82,7 @@
             this.lblAccountCreatedDate = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblSettings2 = new System.Windows.Forms.Label();
             this.guna2Panel6 = new Guna.UI2.WinForms.Guna2Panel();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -109,7 +109,7 @@
             this.btnAddSharingAuth = new Guna.UI2.WinForms.Guna2Button();
             this.lblDescSetAuthSharing = new System.Windows.Forms.Label();
             this.lblSetPassword = new System.Windows.Forms.Label();
-            this.label70 = new System.Windows.Forms.Label();
+            this.lblSettings3 = new System.Windows.Forms.Label();
             this.btnCloseTab3 = new Guna.UI2.WinForms.Guna2Button();
             this.tabLangPage = new System.Windows.Forms.TabPage();
             this.guna2Panel21 = new Guna.UI2.WinForms.Guna2Panel();
@@ -152,7 +152,7 @@
             this.btnSetLangJAP = new Guna.UI2.WinForms.Guna2Button();
             this.label57 = new System.Windows.Forms.Label();
             this.guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.label21 = new System.Windows.Forms.Label();
+            this.lblSettings4 = new System.Windows.Forms.Label();
             this.btnCloseTab4 = new Guna.UI2.WinForms.Guna2Button();
             this.tabUpgradePage = new System.Windows.Forms.TabPage();
             this.label17 = new System.Windows.Forms.Label();
@@ -745,7 +745,7 @@
             this.tabStatsPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.tabStatsPage.Controls.Add(this.guna2Panel3);
             this.tabStatsPage.Controls.Add(this.guna2Panel4);
-            this.tabStatsPage.Controls.Add(this.label1);
+            this.tabStatsPage.Controls.Add(this.lblSettings2);
             this.tabStatsPage.Controls.Add(this.guna2Panel6);
             this.tabStatsPage.Controls.Add(this.guna2Panel5);
             this.tabStatsPage.Controls.Add(this.btnCloseTab2);
@@ -913,16 +913,16 @@
             this.label14.TabIndex = 30;
             this.label14.Text = "Statistics";
             // 
-            // label1
+            // lblSettings2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(56, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 30);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "Settings";
+            this.lblSettings2.AutoSize = true;
+            this.lblSettings2.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSettings2.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblSettings2.Location = new System.Drawing.Point(56, 13);
+            this.lblSettings2.Name = "lblSettings2";
+            this.lblSettings2.Size = new System.Drawing.Size(90, 30);
+            this.lblSettings2.TabIndex = 22;
+            this.lblSettings2.Text = "Settings";
             // 
             // guna2Panel6
             // 
@@ -1212,7 +1212,7 @@
             this.tabSharingPage.Controls.Add(this.btnAddSharingAuth);
             this.tabSharingPage.Controls.Add(this.lblDescSetAuthSharing);
             this.tabSharingPage.Controls.Add(this.lblSetPassword);
-            this.tabSharingPage.Controls.Add(this.label70);
+            this.tabSharingPage.Controls.Add(this.lblSettings3);
             this.tabSharingPage.Controls.Add(this.btnCloseTab3);
             this.tabSharingPage.Location = new System.Drawing.Point(4, 44);
             this.tabSharingPage.Name = "tabSharingPage";
@@ -1388,16 +1388,16 @@
             this.lblSetPassword.Text = "Set Password";
             this.lblSetPassword.Click += new System.EventHandler(this.lblSetPassword_Click);
             // 
-            // label70
+            // lblSettings3
             // 
-            this.label70.AutoSize = true;
-            this.label70.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label70.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label70.Location = new System.Drawing.Point(56, 13);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(90, 30);
-            this.label70.TabIndex = 33;
-            this.label70.Text = "Settings";
+            this.lblSettings3.AutoSize = true;
+            this.lblSettings3.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSettings3.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblSettings3.Location = new System.Drawing.Point(56, 13);
+            this.lblSettings3.Name = "lblSettings3";
+            this.lblSettings3.Size = new System.Drawing.Size(90, 30);
+            this.lblSettings3.TabIndex = 33;
+            this.lblSettings3.Text = "Settings";
             // 
             // btnCloseTab3
             // 
@@ -1432,7 +1432,7 @@
             this.tabLangPage.Controls.Add(this.guna2Panel14);
             this.tabLangPage.Controls.Add(this.guna2Panel16);
             this.tabLangPage.Controls.Add(this.guna2Panel15);
-            this.tabLangPage.Controls.Add(this.label21);
+            this.tabLangPage.Controls.Add(this.lblSettings4);
             this.tabLangPage.Controls.Add(this.btnCloseTab4);
             this.tabLangPage.Location = new System.Drawing.Point(4, 44);
             this.tabLangPage.Name = "tabLangPage";
@@ -2011,16 +2011,16 @@
             this.guna2PictureBox2.TabIndex = 31;
             this.guna2PictureBox2.TabStop = false;
             // 
-            // label21
+            // lblSettings4
             // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label21.Location = new System.Drawing.Point(56, 13);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(90, 30);
-            this.label21.TabIndex = 34;
-            this.label21.Text = "Settings";
+            this.lblSettings4.AutoSize = true;
+            this.lblSettings4.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSettings4.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblSettings4.Location = new System.Drawing.Point(56, 13);
+            this.lblSettings4.Name = "lblSettings4";
+            this.lblSettings4.Size = new System.Drawing.Size(90, 30);
+            this.lblSettings4.TabIndex = 34;
+            this.lblSettings4.Text = "Settings";
             // 
             // btnCloseTab4
             // 
@@ -2650,7 +2650,7 @@
         public System.Windows.Forms.Label label9;
         public System.Windows.Forms.Label label10;
         private Guna.UI2.WinForms.Guna2Button btnCloseTab2;
-        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label lblSettings2;
         private Guna.UI2.WinForms.Guna2Button btnCloseTab1;
         public System.Windows.Forms.Label lblSettings;
         public System.Windows.Forms.Label label23;
@@ -2698,7 +2698,7 @@
         private Guna.UI2.WinForms.Guna2Button btnUseMax;
         private Guna.UI2.WinForms.Guna2Button btnUseExpress;
         private Guna.UI2.WinForms.Guna2Button btnUseSupreme;
-        public System.Windows.Forms.Label label21;
+        public System.Windows.Forms.Label lblSettings4;
         private Guna.UI2.WinForms.Guna2Button btnCloseTab4;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel15;
         private Guna.UI2.WinForms.Guna2Button btnSetLangJAP;
@@ -2750,7 +2750,7 @@
         public Guna.UI2.WinForms.Guna2Button btnDisableSharing;
         public System.Windows.Forms.Label lblDescDisableSharing;
         public System.Windows.Forms.Label lblDisableFileSharing;
-        public System.Windows.Forms.Label label70;
+        public System.Windows.Forms.Label lblSettings3;
         private Guna.UI2.WinForms.Guna2Button btnCloseTab3;
         public Guna.UI2.WinForms.Guna2Button btnEnableSharing;
         public Guna.UI2.WinForms.Guna2Button btnRmvSharingAuth;

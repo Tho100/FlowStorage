@@ -870,9 +870,9 @@ namespace FlowSERVER1 {
             var Form_1 = HomePage.instance;
 
             if (_custLang == "MY") {
-                label21.Text = "Tetapan";
+                lblSettings4.Text = "Tetapan";
                 label75.Text = "Alamat Email";
-                tabSharingPage.Text = "Perkongsian Fail & API";
+                tabSharingPage.Text = "Perkongsian Fail";
                 tabLangPage.Text = "Bahasa";
                 tabUpgradePage.Text = "Naik Taraf";
                 tabStatsPage.Text = "Perangkaan";
@@ -881,7 +881,7 @@ namespace FlowSERVER1 {
                 label7.Text = "Jenis Akaun";
                 label38.Text = "Muat Naik Item";
 
-                label70.Text = "Tetapan";
+                lblSettings3.Text = "Tetapan";
 
                 lblSetPassword.Text = "Perlukan Kata-Laluan";
                 lblDescSetAuthSharing.Text = "Minta kata-laluan sebelum orang dibenarkan berkongsi fail kepada anda";
@@ -899,7 +899,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Akaun Flowstorage anda akan dipadam bersama-sama dengan data anda";
 
                 lblSettings.Text = "Tetapan";
-                label1.Text = "Tetapan";
+                lblSettings2.Text = "Tetapan";
 
                 label13.Text = "Kiraan Fail";
                 label9.Text = "Kiraan Direktori";
@@ -924,7 +924,7 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "US") {
-                label21.Text = "Settings";
+                lblSettings4.Text = "Settings";
                 label75.Text = "Email Address";
                 tabSharingPage.Text = "File Sharing";
                 tabLangPage.Text = "Languages";
@@ -934,7 +934,7 @@ namespace FlowSERVER1 {
                 label4.Text = "Username";
                 label7.Text = "Account Type";
                 label38.Text = "Item Upload";
-                label70.Text = "Settings";
+                lblSettings3.Text = "Settings";
 
                 lblSetPassword.Text = "Required Password";
                 lblDescSetAuthSharing.Text = "Ask for password before people can share a file to you";
@@ -952,7 +952,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Your Flowstorage account along with your data will be deleted";
 
                 lblSettings.Text = "Settings";
-                label1.Text = "Settings";
+                lblSettings2.Text = "Settings";
 
                 label13.Text = "Files Count";
                 label9.Text = "Directory Count";
@@ -977,9 +977,9 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "DUT") {
-                label21.Text = "Instellingen";
+                lblSettings4.Text = "Instellingen";
                 label75.Text = "E-mailadres";
-                tabSharingPage.Text = "Bestanden delen & API";
+                tabSharingPage.Text = "Bestanden delen";
                 tabLangPage.Text = "Talen";
                 tabUpgradePage.Text = "Opwaarderen";
                 tabStatsPage.Text = "Statistieken";
@@ -987,7 +987,7 @@ namespace FlowSERVER1 {
                 label4.Text = "Gebruikersnaam";
                 label7.Text = "Accounttype";
                 label38.Text = "Item uploaden";
-                label70.Text = "Instellingen";
+                lblSettings3.Text = "Instellingen";
 
                 lblSetPassword.Text = "Vereist wachtwoord";
                 lblDescSetAuthSharing.Text = "Vraag om wachtwoord voordat mensen een bestand met je kunnen delen";
@@ -1005,7 +1005,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Uw Flowstorage-account wordt samen met uw gegevens verwijderd";
 
                 lblSettings.Text = "Instellingen";
-                label1.Text = "Instellingen";
+                lblSettings2.Text = "Instellingen";
 
                 label13.Text = "Aantal bestanden";
                 label9.Text = "Aantal mappen";
@@ -1030,9 +1030,9 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "RUS") {
-                label21.Text = "Настройки";
+                lblSettings4.Text = "Настройки";
                 label75.Text = "электронная почта";
-                tabSharingPage.Text = "Общий доступ к файлам и API";
+                tabSharingPage.Text = "Общий доступ к файлам и";
                 tabLangPage.Text = "Языки";
                 tabUpgradePage.Text = "Обновить";
                 tabStatsPage.Text = "Статистика";
@@ -1040,7 +1040,7 @@ namespace FlowSERVER1 {
                 label4.Text = "Имя пользователя";
                 label7.Text = "Тип учетной записи";
                 label38.Text = "Загрузка элемента";
-                label70.Text = "Настройки";
+                lblSettings3.Text = "Настройки";
 
                 lblSetPassword.Text = "Требуемый пароль";
                 lblDescSetAuthSharing.Text = "Запрашивайте пароль, прежде чем люди смогут поделиться с вами файлом";
@@ -1058,7 +1058,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Ваша учетная запись Flowstorage вместе с вашими данными будет удалена";
 
                 lblSettings.Text = "Настройки";
-                label1.Text = "Настройки";
+                lblSettings2.Text = "Настройки";
 
                 label13.Text = "Счетчик файлов";
                 label9.Text = "Счетчик каталогов";
@@ -1083,9 +1083,9 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "GER") {
-                label21.Text = "Einstellungen";
+                lblSettings4.Text = "Einstellungen";
                 label75.Text = "E-Mail-Addresse";
-                tabSharingPage.Text = "Datenaustausch & API";
+                tabSharingPage.Text = "Datenaustausch";
                 tabLangPage.Text = "Sprachen";
                 tabUpgradePage.Text = "Aktualisierung";
                 tabStatsPage.Text = "Statistiken";
@@ -1094,7 +1094,7 @@ namespace FlowSERVER1 {
                 label7.Text = "Konto Typ";
                 label38.Text = "Artikel hochladen";
 
-                label70.Text = "Einstellungen";
+                lblSettings3.Text = "Einstellungen";
 
                 lblSetPassword.Text = "Erforderliches Passwort";
                 lblDescSetAuthSharing.Text = "Nach dem Passwort fragen, bevor andere eine Datei für Sie freigeben können";
@@ -1112,7 +1112,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Ihr Flowstorage-Konto wird zusammen mit Ihren Daten gelöscht";
 
                 lblSettings.Text = "Einstellungen";
-                label1.Text = "Einstellungen";
+                lblSettings2.Text = "Einstellungen";
 
                 label13.Text = "Files Count";
                 label9.Text = "Directory Count";
@@ -1137,7 +1137,7 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "JAP") {
-                label21.Text = "設定";
+                lblSettings4.Text = "設定";
                 tabSharingPage.Text = "ファイル共有";
                 tabLangPage.Text = "言語";
                 tabUpgradePage.Text = "アップグレード";
@@ -1147,7 +1147,7 @@ namespace FlowSERVER1 {
                 label7.Text = "口座の種類";
                 label38.Text = "アイテムのアップロード";
 
-                label70.Text = "設定";
+                lblSettings3.Text = "設定";
 
                 lblSetPassword.Text = "必要なパスワード";
                 lblDescSetAuthSharing.Text = "ファイルを共有する前にパスワードを要求する";
@@ -1165,7 +1165,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Flowstorage アカウントとデータが削除されます";
 
                 lblSettings.Text = "設定";
-                label1.Text = "設定";
+                lblSettings2.Text = "設定";
 
                 label13.Text = "ファイル数";
                 label9.Text = "ディレクトリ数";
@@ -1190,9 +1190,9 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "ESP") {
-                label21.Text = "Ajustes";
+                lblSettings4.Text = "Ajustes";
                 label75.Text = "Correo electrónico";
-                tabSharingPage.Text = "Compartición de archivos & API";
+                tabSharingPage.Text = "Compartición de archivos";
                 tabLangPage.Text = "Idiomas";
                 tabUpgradePage.Text = "Mejora";
                 tabStatsPage.Text = "Estadísticas";
@@ -1201,7 +1201,7 @@ namespace FlowSERVER1 {
                 label7.Text = "Tipo de cuenta";
                 label38.Text = "Carga de artículo";
 
-                label70.Text = "Configuración";
+                lblSettings3.Text = "Configuración";
 
                 lblSetPassword.Text = "Contraseña requerida";
                 lblDescSetAuthSharing.Text = "Solicite la contraseña antes de que la gente pueda compartir un archivo con usted";
@@ -1219,7 +1219,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Se eliminará su cuenta de Flowstorage junto con sus datos";
 
                 lblSettings.Text = "Ajustes";
-                label1.Text = "Ajustes";
+                lblSettings2.Text = "Ajustes";
 
                 label13.Text = "Recuento de archivos";
                 label9.Text = "Recuento de directorios";
@@ -1244,8 +1244,8 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "FRE") {
-                label21.Text = "Paramètres";
-                tabSharingPage.Text = "Partage de fichiers & API";
+                lblSettings4.Text = "Paramètres";
+                tabSharingPage.Text = "Partage de fichiers";
                 tabLangPage.Text = "Langages";
                 tabUpgradePage.Text = "Améliorer";
                 tabStatsPage.Text = "Statistiques";
@@ -1254,7 +1254,7 @@ namespace FlowSERVER1 {
                 label7.Text = "Type de compte";
                 label38.Text = "Téléchargement de l'article";
 
-                label70.Text = "Paramètres";
+                lblSettings3.Text = "Paramètres";
 
                 lblSetPassword.Text = "Mot de passe requis";
                 lblDescSetAuthSharing.Text = "Demandez un mot de passe avant que les gens puissent partager un fichier avec vous";
@@ -1272,7 +1272,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Votre compte Flowstorage ainsi que vos données seront supprimés";
 
                 lblSettings.Text = "Paramètres";
-                label1.Text = "Paramètres";
+                lblSettings2.Text = "Paramètres";
 
                 label13.Text = "Nombre de fichiers";
                 label9.Text = "Nombre de répertoires";
@@ -1297,8 +1297,8 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "POR") {
-                label21.Text = "Configurações";
-                tabSharingPage.Text = "Compartilhamento de arquivos & API";
+                lblSettings4.Text = "Configurações";
+                tabSharingPage.Text = "Compartilhamento de arquivos";
                 tabLangPage.Text = "línguas";
                 tabUpgradePage.Text = "Atualizar";
                 tabStatsPage.Text = "Estatisticas";
@@ -1307,7 +1307,7 @@ namespace FlowSERVER1 {
                 label7.Text = "tipo de conta";
                 label38.Text = "Carregamento de item";
 
-                label70.Text = "Configurações";
+                lblSettings3.Text = "Configurações";
 
                 lblSetPassword.Text = "Senha Necessária";
                 lblDescSetAuthSharing.Text = "Pedir senha antes que as pessoas possam compartilhar um arquivo com você";
@@ -1325,7 +1325,7 @@ namespace FlowSERVER1 {
                 label3.Text = "Sua conta Flowstorage junto com seus dados serão excluídos";
 
                 lblSettings.Text = "Configurações";
-                label1.Text = "Configurações";
+                lblSettings2.Text = "Configurações";
 
                 label13.Text = "Contagem de arquivos";
                 label9.Text = "Contagem de diretório";
@@ -1350,7 +1350,7 @@ namespace FlowSERVER1 {
             }
 
             if (_custLang == "CHI") {
-                label21.Text = "设置";
+                lblSettings4.Text = "设置";
                 tabSharingPage.Text = "文件共享";
                 tabLangPage.Text = "语言";
                 tabUpgradePage.Text = "升级";
@@ -1360,7 +1360,7 @@ namespace FlowSERVER1 {
                 label7.Text = "帐户类型";
                 label38.Text = "项目上传";
 
-                label70.Text = "设置";
+                lblSettings3.Text = "设置";
 
                 lblSetPassword.Text = "需要密码";
                 lblDescSetAuthSharing.Text = "在别人分享文件给你之前要求输入密码";
@@ -1378,7 +1378,7 @@ namespace FlowSERVER1 {
                 label3.Text = "您的 Flowstorage 帐户以及您的数据将被删除";
 
                 lblSettings.Text = "设置";
-                label1.Text = "设置";
+                lblSettings2.Text = "设置";
 
                 label13.Text = "文件数";
                 label9.Text = "目录计数";
@@ -1387,7 +1387,7 @@ namespace FlowSERVER1 {
                 lblFile.Text = "文件";
                 label29.Text = "目录";
                 label15.Text = "帐户创建日期";
-                label70.Text = "设置";
+                lblSettings3.Text = "设置";
 
                 btnUpdatePassword.Text = "改变";
                 btnUpdateUsername.Text = "改变";
@@ -1968,29 +1968,6 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
-        /// This function will retrieve user access token
-        /// </summary>
-        /// <param name="custUsername"></param>
-        /// <returns></returns>
-        private string getAccessToken(String custUsername) {
-
-            string _localTok = "";
-            const string getAccessTokQuery = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
-
-            using (MySqlCommand command = new MySqlCommand(getAccessTokQuery, con)) {
-                command.Parameters.AddWithValue("@username", custUsername);
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read()) {
-                        _localTok = EncryptionModel.Decrypt(reader.GetString(0));
-                    }
-                    reader.Close();
-                }
-            }
-
-            return _localTok.ToLower();
-        }
-
-        /// <summary>
         /// If user selected File Sharing tab page
         /// then retrieve their current file sharing information
         /// </summary>
@@ -2152,19 +2129,6 @@ namespace FlowSERVER1 {
 
         }
 
-        private void label78_Click(object sender, EventArgs e) {
-
-        }
-
-        /// <summary>
-        /// Open API web page on browser
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Process.Start("https://flowstorage.netlify.app/api_web/index.html");
-        }
-
         private void label22_Click(object sender, EventArgs e) {
 
         }
@@ -2196,8 +2160,5 @@ namespace FlowSERVER1 {
 
         }
 
-        private void label42_Click(object sender, EventArgs e) {
-
-        }
     }
 }
