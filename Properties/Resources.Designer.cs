@@ -403,16 +403,6 @@ namespace FlowSERVER1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_iphone_se_24 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-iphone-se-24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icons8_japan_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-japan-48", resourceCulture);

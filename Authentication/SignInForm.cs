@@ -85,13 +85,13 @@ namespace FlowSERVER1 {
             var garbageButton = accessHomePage.btnGarbageImage;
             var itsEmptyHereLabel = accessHomePage.lblEmptyHere;
 
-            const string selectUserQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
+            const string selectUsernameQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
 
-            using (var command = new MySqlCommand(selectUserQuery, con)) {
+            using (var command = new MySqlCommand(selectUsernameQuery, con)) {
                 command.Parameters.AddWithValue("@email", _inputGetEmail);
-                using (MySqlDataReader readerUsername = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await readerUsername.ReadAsync()) {
-                        _custUsername = readerUsername.GetString(0);
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        _custUsername = reader.GetString(0);
                     }
                 }
             }

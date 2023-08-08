@@ -194,7 +194,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>zF886LNh63nfPMPahpTEsazsLtoarqexSomPBj2a2c0=</dsig:DigestValue>
+        <dsig:DigestValue>BuCYZLQF6g89EZdhJzHnSbkpul8fDAZzeNw+17k3tG0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -242,7 +242,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5OIOttdZNPxG0F4jrRp9EoKRs51gUdyjf6/i8WTmz0o=</dsig:DigestValue>
+        <dsig:DigestValue>LMC9E4eLevaZu00kb1j1O24xQW3vma5KISNPKu2AlEA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1104,7 +1104,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>RIBuwRMM1IGyZv5Hch2WNGyo7hWQJ4xm8jhQZX1UzcI=</dsig:DigestValue>
+      <dsig:DigestValue>yBT1VXW2lHFunfLuKR56WZX9a6Pd/sjWKh+1GEGDZeE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="libvlc\win-x64\hrtfs\dodeca_and_7channel_3DSL_HRTF.sofa" size="92388">
@@ -11230,6 +11230,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>YPSM/eDUcE5iNdZFAjqcSB6J6gaUrPZFm+lVvWXiD50=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\DirIcon.png" size="318">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>2MBUXO0G0E7kbe+i8W0ZPcHR1YaGgBnVddzxXUjOhkg=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

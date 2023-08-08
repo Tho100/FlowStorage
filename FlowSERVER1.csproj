@@ -944,6 +944,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MainIco.ico" />
+    <Content Include="Resources\DirIcon.png" />
     <None Include="Resources\icons8-documents-folder-48 %282%29.png" />
     <None Include="Resources\icons8-feedback-48.png" />
     <None Include="Resources\icons8-open-parcel-24.png" />
@@ -953,7 +954,6 @@
     <None Include="Resources\Group 15 %282%29.png" />
     <None Include="Resources\fs_logo.png" />
     <None Include="Resources\icons8-api-64.png" />
-    <None Include="Resources\icons8-iphone-se-24.png" />
     <None Include="Resources\icons8-api-32 %281%29.png" />
     <None Include="Resources\icons8-sort-down-50.png" />
     <None Include="Resources\download_ico.png" />
@@ -962,7 +962,6 @@
     <None Include="Resources\Group 1.png" />
     <None Include="Resources\icons8-edit-48.png" />
     <None Include="Resources\icons8-edit-48 %281%29.png" />
-    <None Include="Resources\DirIcon.png" />
     <None Include="Resources\icons8-folder-48.png" />
     <None Include="Resources\icons8-home-page-32.png" />
     <None Include="Resources\icons8-exe-48.png" />

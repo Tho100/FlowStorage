@@ -98,6 +98,10 @@ namespace FlowSERVER1.Authentication {
                 BuildUILanguage(accessHomePage.CurrentLang);
                 ShowHomePage();
 
+            } catch (Exception) {
+                new CustomAlert(title: "Something went wrong", subheader: "Are you connected to the internet?")
+                    .Show();
+
             } finally {
 
                 string infosPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
@@ -107,7 +111,7 @@ namespace FlowSERVER1.Authentication {
                     Application.OpenForms.OfType<Form>().Where(form => form.Name == "LoadAlertFORM").ToList().ForEach(form => form.Close());
                 } 
                
-            }
+            } 
         }
 
         /// <summary>
