@@ -79,7 +79,6 @@ namespace FlowSERVER1 {
                 }
 
                 await TotalUploadDirectoryCount();
-                await TotalUploadDirectoryTodayCount();
 
                 int _totalUploadTodayCount = _totalUploadToday.Sum(x => Convert.ToInt32(x));
                 lblCountFileUploadToday.Text = _totalUploadTodayCount.ToString();
@@ -329,30 +328,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        /// <summary>
-        /// This function will tells user the number
-        /// of directory they have created a day
-        /// </summary>
-        private async Task TotalUploadDirectoryTodayCount() {
-
-            string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-
-            const string querySelectName = "SELECT DIR_NAME FROM upload_info_directory WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
-            using (MySqlCommand command = new MySqlCommand(querySelectName, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@date", currentDate);
-
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        _totalUploadDirectoryToday.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-            int distinctDirCount = _totalUploadDirectoryToday.Distinct().Count();
-            lblCountDirlUploadToday.Text = distinctDirCount.ToString();
-        }
-
         private async Task TotalUploadDirectoryCount() {
 
             string origin = HomePage.instance.lblCurrentPageText.Text;
@@ -392,8 +367,9 @@ namespace FlowSERVER1 {
         /// <param name="_serName"></param>
         /// <param name="_tableName"></param>
 
-        private async Task GenerateUploadChart(String _serName, String _tableName) {
-            string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {_tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
+        private async Task GenerateUploadChart(String seriesName, String tableName) {
+
+            string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -402,7 +378,7 @@ namespace FlowSERVER1 {
                     while (await reader.ReadAsync()) {
                         string date = reader.GetString(0);
                         int count = reader.GetInt32(1);
-                        chart1.Series[_serName].Points.AddXY(date, count);
+                        chart1.Series[seriesName].Points.AddXY(date, count);
                     }
                 }
             }
@@ -981,8 +957,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Kiraan Direktori";
                 label11.Text = "Kiraan Folder";
                 label31.Text = "Jumlah Upload Hari-ini";
-                lblFile.Text = "Fail";
-                label29.Text = "Direktori";
+                lblFile.Text = "Kiraan Fail";
                 label15.Text = "Tarikh Penciptaan Akaun";
 
                 btnUpdatePassword.Text = "Ubah";
@@ -1034,8 +1009,7 @@ namespace FlowSERVER1 {
                 label9.Text = "Directory Count";
                 label11.Text = "Folders Count";
                 label31.Text = "Total Upload Today";
-                lblFile.Text = "File";
-                label29.Text = "Directory";
+                lblFile.Text = "File Count";
                 label15.Text = "Account Creation Date";
 
                 btnUpdatePassword.Text = "Change";
@@ -1088,7 +1062,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Aantal mappen";
                 label31.Text = "Totale upload vandaag";
                 lblFile.Text = "Bestand";
-                label29.Text = "Map";
                 label15.Text = "Aanmaakdatum account";
 
                 btnUpdatePassword.Text = "Wijzigen";
@@ -1141,7 +1114,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Счетчик папок";
                 label31.Text = "Всего сегодня загружено";
                 lblFile.Text = "Файл";
-                label29.Text = "Каталог";
                 label15.Text = "Дата создания учетной записи";
 
                 btnUpdatePassword.Text = "Изменить";
@@ -1195,7 +1167,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Folders Count";
                 label31.Text = "Total Upload Today";
                 lblFile.Text = "File";
-                label29.Text = "Directory";
                 label15.Text = "Erstellungsdatum des Kontos";
 
                 btnUpdatePassword.Text = "Ändern";
@@ -1248,7 +1219,6 @@ namespace FlowSERVER1 {
                 label11.Text = "フォルダ数";
                 label31.Text = "今日の合計アップロード";
                 lblFile.Text = "ファイル";
-                label29.Text = "ディレクトリ";
                 label15.Text = "アカウント作成日";
 
                 btnUpdatePassword.Text = "変化";
@@ -1302,7 +1272,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Número de carpetas";
                 label31.Text = "Subida total hoy";
                 lblFile.Text = "Archivo";
-                label29.Text = "Directorio";
                 label15.Text = "Fecha de creación de la cuenta";
 
                 btnUpdatePassword.Text = "Cambiar";
@@ -1355,7 +1324,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Nombre de dossiers";
                 label31.Text = "Téléchargement total aujourd'hui";
                 lblFile.Text = "Déposer";
-                label29.Text = "Annuaire";
                 label15.Text = "Date de création du compte";
 
                 btnUpdatePassword.Text = "Changement";
@@ -1408,7 +1376,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Contagem de Pastas";
                 label31.Text = "Carregamento total hoje";
                 lblFile.Text = "Arquivo";
-                label29.Text = "Diretório";
                 label15.Text = "Data de criação da conta";
 
                 btnUpdatePassword.Text = "Mudar";
@@ -1461,7 +1428,6 @@ namespace FlowSERVER1 {
                 label11.Text = "文件夹数";
                 label31.Text = "今日上传总量";
                 lblFile.Text = "文件";
-                label29.Text = "目录";
                 label15.Text = "帐户创建日期";
                 lblSettings3.Text = "设置";
 
