@@ -219,8 +219,6 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
 
-        private int value_Dir = 0;
-
         private async Task ValidateAndCreateDirectory(int currentTotalFiles, string directoryName) {
 
             HashSet<string> directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
@@ -251,14 +249,12 @@ namespace FlowSERVER1 {
 
                 if (currentTotalFiles != maxFilesCount && countTotalDir != maxDirCount) {
 
-                    value_Dir++;
-
                     if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
                         MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else {
 
-                        GenerateDirectory(value_Dir, directoryName);
+                        GenerateDirectory(countTotalDir++, directoryName);
                         HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
 
                         var crud = new Crud();

@@ -1571,7 +1571,6 @@
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label lblGreetingText;
         public System.Windows.Forms.Label lblItemCountText;
-        private System.Windows.Forms.Label lblCurrentPageText;
         public Guna.UI2.WinForms.Guna2Button btnDeleteFolder;
         public System.Windows.Forms.ListBox lstFoldersPage;
         public System.Windows.Forms.Label lblUpload;
@@ -1645,6 +1644,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         public Guna.UI2.WinForms.Guna2Button btnMyPsFiles;
+        public System.Windows.Forms.Label lblCurrentPageText;
     }
 }
 

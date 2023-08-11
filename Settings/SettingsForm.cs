@@ -1,5 +1,6 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Settings;
+using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -240,14 +241,72 @@ namespace FlowSERVER1 {
         /// they have uploaded (in total)
         /// </summary>
         /// <param name="_tableName"></param>
-        private async Task TotalUploadFile(String _tableName) {
+        private async Task TotalUploadFile(String tableName) {
 
-            string countQuery = $"SELECT COUNT(*) FROM {_tableName} WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(countQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+            string origin = HomePage.instance.lblCurrentPageText.Text;
 
-                int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                _totalUploadAllTime.Add(totalCount);
+            if(origin == "Home") {
+
+                HashSet<string> existingLabels = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+                    .OfType<Guna2Panel>()
+                    .SelectMany(panel => panel.Controls.OfType<Label>())
+                    .Select(label => label.Text.ToLower()));
+
+                Dictionary<string, string> fileTypeToTableName = new Dictionary<string, string>
+                {
+                    { "png", "file_info" },
+                    { "jpeg", "file_info" },
+                    { "jpg", "file_info" },
+                    
+                    { "mp4", "file_info_vid" },
+                    { "wmv", "file_info_vid" },
+                    { "mov", "file_info_vid" },
+
+                    { "apk", "file_info_apk" },
+                    { "exe", "file_info_exe" },
+
+                    { "txt", "file_info_expand" },
+                    { "csv", "file_info_expand" },
+                    { "md", "file_info_expand" },
+
+                    { "xlsx", "file_info_excel" },
+                    { "xls", "file_info_excel" },
+
+                    { "doc", "file_info_word" },
+                    { "docx", "file_info_word" },
+
+                    { "ptx", "file_info_ptx" },
+                    { "pptx", "file_info_ptx" },
+
+                    { "pdf", "file_info_pdf" },
+
+                    { "mp3", "file_info_audio" },
+                    { "wav", "file_info_audio" },
+
+                };
+
+                int uploadCount = 0;
+
+                foreach (string fileName in existingLabels) {
+
+                    string fileType = fileName.Split('.').Last();
+
+                    if (fileTypeToTableName.ContainsKey(fileType) && fileTypeToTableName[fileType] == tableName) {
+                        uploadCount++;
+                    }
+                }
+
+                _totalUploadAllTime.Add(uploadCount);
+
+            } else {
+
+                string queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {tableName} WHERE CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    _totalUploadAllTime.Add(totalCount);
+                }
+
             }
         }
 
@@ -296,11 +355,28 @@ namespace FlowSERVER1 {
 
         private async Task TotalUploadDirectoryCount() {
 
-            const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
-                lblTotalDirUploadCount.Text = totalDir.ToString();
+            string origin = HomePage.instance.lblCurrentPageText.Text;
+
+            if (origin == "Home") {
+
+                HashSet<string> directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+                    .OfType<Guna2Panel>()
+                    .SelectMany(panel => panel.Controls.OfType<Label>())
+                    .Where(label => label.Text.All(c => Char.IsLetterOrDigit(c) || Char.IsWhiteSpace(c)))
+                    .Where(label => !string.Equals(label.Text, "directory", StringComparison.OrdinalIgnoreCase))
+                    .Select(label => label.Text.ToLower()));
+
+                int countTotalDir = directoriesName.Count();
+                lblTotalDirUploadCount.Text = countTotalDir.ToString();
+
+            } else {
+
+                const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
+                using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    lblTotalDirUploadCount.Text = totalDir.ToString();
+                }
             }
 
             int countTotalFolders = HomePage.instance.lstFoldersPage.Items.Count - 3;

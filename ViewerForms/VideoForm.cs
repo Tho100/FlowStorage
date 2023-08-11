@@ -181,8 +181,9 @@ namespace FlowSERVER1 {
                 btnPauseVideo.Visible = true;
 
             }
-            catch (Exception) {
-                new CustomAlert(title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
+            catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                //new CustomAlert(title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
             }
         }
 
