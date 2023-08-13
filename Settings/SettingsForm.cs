@@ -25,8 +25,6 @@ namespace FlowSERVER1 {
 
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
-        private List<string> _totalUploadDirectoryToday { get; set; } = new List<string>();
-
         private string _currentUserLanguage { get; set; } = "US";
         private string _newSelectedUserLanguage { get; set; } = null;
 
@@ -958,7 +956,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Kiraan Folder";
                 label31.Text = "Jumlah Upload Hari-ini";
                 lblFile.Text = "Kiraan Fail";
-                label15.Text = "Tarikh Penciptaan Akaun";
 
                 btnUpdatePassword.Text = "Ubah";
                 btnUpdateUsername.Text = "Ubah";
@@ -1010,7 +1007,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Folders Count";
                 label31.Text = "Total Upload Today";
                 lblFile.Text = "File Count";
-                label15.Text = "Account Creation Date";
 
                 btnUpdatePassword.Text = "Change";
                 btnUpdateUsername.Text = "Change";
@@ -1062,7 +1058,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Aantal mappen";
                 label31.Text = "Totale upload vandaag";
                 lblFile.Text = "Bestand";
-                label15.Text = "Aanmaakdatum account";
 
                 btnUpdatePassword.Text = "Wijzigen";
                 btnUpdateUsername.Text = "Wijzigen";
@@ -1114,7 +1109,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Счетчик папок";
                 label31.Text = "Всего сегодня загружено";
                 lblFile.Text = "Файл";
-                label15.Text = "Дата создания учетной записи";
 
                 btnUpdatePassword.Text = "Изменить";
                 btnUpdateUsername.Text = "Изменить";
@@ -1167,7 +1161,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Folders Count";
                 label31.Text = "Total Upload Today";
                 lblFile.Text = "File";
-                label15.Text = "Erstellungsdatum des Kontos";
 
                 btnUpdatePassword.Text = "Ändern";
                 btnUpdateUsername.Text = "Ändern";
@@ -1219,7 +1212,6 @@ namespace FlowSERVER1 {
                 label11.Text = "フォルダ数";
                 label31.Text = "今日の合計アップロード";
                 lblFile.Text = "ファイル";
-                label15.Text = "アカウント作成日";
 
                 btnUpdatePassword.Text = "変化";
                 btnUpdateUsername.Text = "変化";
@@ -1272,7 +1264,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Número de carpetas";
                 label31.Text = "Subida total hoy";
                 lblFile.Text = "Archivo";
-                label15.Text = "Fecha de creación de la cuenta";
 
                 btnUpdatePassword.Text = "Cambiar";
                 btnUpdateUsername.Text = "Cambiar";
@@ -1324,7 +1315,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Nombre de dossiers";
                 label31.Text = "Téléchargement total aujourd'hui";
                 lblFile.Text = "Déposer";
-                label15.Text = "Date de création du compte";
 
                 btnUpdatePassword.Text = "Changement";
                 btnUpdateUsername.Text = "Changement";
@@ -1376,7 +1366,6 @@ namespace FlowSERVER1 {
                 label11.Text = "Contagem de Pastas";
                 label31.Text = "Carregamento total hoje";
                 lblFile.Text = "Arquivo";
-                label15.Text = "Data de criação da conta";
 
                 btnUpdatePassword.Text = "Mudar";
                 btnUpdateUsername.Text = "Mudar";
@@ -1428,7 +1417,6 @@ namespace FlowSERVER1 {
                 label11.Text = "文件夹数";
                 label31.Text = "今日上传总量";
                 lblFile.Text = "文件";
-                label15.Text = "帐户创建日期";
                 lblSettings3.Text = "设置";
 
                 btnUpdatePassword.Text = "改变";
@@ -2018,26 +2006,6 @@ namespace FlowSERVER1 {
         private void guna2TabControl1_Click(object sender, EventArgs e) {
 
             try {
-
-                if (tabControlSettings.SelectedIndex == 1) {
-
-                    if (_getAccountDateQueryExecuted == false) {
-
-                        const string getJoinDateQuery = "SELECT CREATED_DATE FROM information WHERE CUST_USERNAME = @username";
-
-                        using (MySqlCommand command = new MySqlCommand(getJoinDateQuery)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
-                            _userCreatedAccountDate = command.ExecuteScalar()?.ToString();
-                        }
-
-                        _getAccountDateQueryExecuted = true;
-
-                    }
-                    else {
-                        lblAccountCreatedDate.Text = _userCreatedAccountDate;
-                    }
-
-                }
 
                 if (tabControlSettings.SelectedIndex == 3) {
                     if (_currentUserLanguage == "US") {
