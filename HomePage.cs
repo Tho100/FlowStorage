@@ -40,7 +40,7 @@ namespace FlowSERVER1 {
         private string _fileName { get; set; }
         private string _fileExtension { get; set; }
         private long _fileSizeInMB { get; set; }
-
+        private bool _isMyPublicStorageSelected { get; set; }
         private string _todayDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
 
         private string previousSelectedItem = null;
@@ -1852,6 +1852,7 @@ namespace FlowSERVER1 {
 
             lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
+            _isMyPublicStorageSelected = true;
             BuildRedundaneVisibility();
 
         }
@@ -3031,13 +3032,13 @@ namespace FlowSERVER1 {
 
                     if (Globals.imageTypes.Contains(_extTypes)) {
 
-                        var _imgContent = new Bitmap(filesFullPath);
+                        var image = new Bitmap(filesFullPath);
 
                         string compressImage = compressor.compresImageToBase64(filesFullPath);
                         string compressedImageToBase64 = EncryptionModel.Encrypt(compressImage);
                         await InsertFileDataFolder(filesFullPath, getFolderName, compressedImageToBase64);
 
-                        textboxExl.Image = _imgContent;
+                        textboxExl.Image = image;
                         textboxExl.Click += (sender_f, e_f) => {
                             var getImgName = (Guna2PictureBox)sender_f;
                             var getWidth = getImgName.Image.Width;
@@ -4322,7 +4323,7 @@ namespace FlowSERVER1 {
 
             }
             else if (tableName != GlobalsTable.sharingTable && tableName != GlobalsTable.folderUploadTable && tableName != GlobalsTable.directoryUploadTable) {
-                SaverModel.SaveSelectedFile(titleFile, tableName, dirName);
+                SaverModel.SaveSelectedFile(titleFile, tableName, dirName, isFromMyPs: _isMyPublicStorageSelected);
             }
 
         }
@@ -4381,6 +4382,8 @@ namespace FlowSERVER1 {
 
             flwLayoutHome.Controls.Clear();
             BuildRedundaneVisibility();
+
+            _isMyPublicStorageSelected = false;
 
             BuildPublicStorageFiles();
 

@@ -25,7 +25,6 @@ namespace FlowSERVER1 {
 
         private string _returnedAuth0 { get; set; }
         private string _returnedAuth1 { get; set; }
-        private string _custEmail { get; set; }
         private string _custUsername { get; set; }
         private string _inputGetEmail { get; set; }
         private int _attemptCurr { get; set; } = 0;
@@ -40,7 +39,7 @@ namespace FlowSERVER1 {
             instance = this;
         }
 
-        private void SetupAutoLogin(String _custUsername) {
+        private void SetupAutoLogin(String username) {
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
 
@@ -48,7 +47,7 @@ namespace FlowSERVER1 {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(username));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
@@ -56,7 +55,7 @@ namespace FlowSERVER1 {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(_custUsername));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(username));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }

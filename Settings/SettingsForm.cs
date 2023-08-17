@@ -21,17 +21,12 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public int tokenCheckCurr { get; set; } = 0;
-
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
         private string _currentUserLanguage { get; set; } = "US";
         private string _newSelectedUserLanguage { get; set; } = null;
 
         private string _selectedAccountType { get; set; }
-        private bool _getAccountDateQueryExecuted { get; set; } = false;
-        private string _userCreatedAccountDate { get; set; } = "0/0/0";
-
         public SettingsForm() {
 
             InitializeComponent();
@@ -297,7 +292,7 @@ namespace FlowSERVER1 {
 
             } else {
 
-                string queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {tableName} WHERE CUST_USERNAME = @username";
+                string queryCount = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
@@ -316,7 +311,7 @@ namespace FlowSERVER1 {
 
             string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-            string queryCount = $"SELECT COUNT(CUST_USERNAME) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+            string queryCount = $"SELECT COUNT(*) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
             using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@date", currentDate);

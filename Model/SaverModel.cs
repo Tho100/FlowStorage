@@ -48,7 +48,7 @@ namespace FlowSERVER1 {
 
         }
 
-        public static async void SaveSelectedFile(String fileName, String tableName, String directoryName, bool isFromShared = false) {
+        public static async void SaveSelectedFile(String fileName, String tableName, String directoryName, bool isFromShared = false, bool isFromMyPs = false) {
 
             fileExtension = fileName.Split('.').Last();
 
@@ -63,7 +63,7 @@ namespace FlowSERVER1 {
                 int indexOfImage = filesName.IndexOf(fileName.ToLower());
 
                 if (Globals.imageTypesFolder.Contains(fileExtension) 
-                && (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName))) {
+                && (GlobalsTable.publicTables.Contains(tableName) || (GlobalsTable.publicTablesPs.Contains(tableName) && isFromMyPs == true))) {
 
                     string imageBase64Encoded = null;
 
