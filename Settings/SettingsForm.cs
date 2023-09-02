@@ -934,9 +934,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Melumpuhkan Perkongsian Fail";
                 lblDescDisableSharing.Text = "Melumpuhkan Perkongsian Fail akan tidak benarkan orang berkongsi fail kepada anda. Anda masih boleh berkongsi fail kepada orang lain";
 
-                lblChangeMyUsername.Text = "Ubah nama-pengguna";
-                lblDescChangeUsername.Text = "Nama pengguna akaun Flowstorage anda akan ditukar, data anda akan kekal";
-
                 lblChangeMyPassword.Text = "Ubah kata-laluan";
                 lblDescChangeAuth.Text = "Ubah kata-laluan akaun Flowstorage anda";
 
@@ -953,7 +950,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "Kiraan Fail";
 
                 btnUpdatePassword.Text = "Ubah";
-                btnUpdateUsername.Text = "Ubah";
                 btnDltAccount.Text = "Padam Akaun";
 
                 Form_1.lblUpload.Text = "Muat-Naik";
@@ -985,9 +981,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Disable File Sharing";
                 lblDescDisableSharing.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
 
-                lblChangeMyUsername.Text = "Change my username";
-                lblDescChangeUsername.Text = "Your Flowstorage account username will be changes but your data is remains";
-
                 lblChangeMyPassword.Text = "Change my password";
                 lblDescChangeAuth.Text = "Change your Flowstorage account password";
 
@@ -1004,7 +997,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "File Count";
 
                 btnUpdatePassword.Text = "Change";
-                btnUpdateUsername.Text = "Change";
                 btnDltAccount.Text = "Delete Account";
 
                 Form_1.lblUpload.Text = "Upload";
@@ -1036,9 +1028,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Bestandsdeling uitschakelen";
                 lblDescDisableSharing.Text = "Als u bestanden delen uitschakelt, kunnen mensen geen bestand met u delen. U kunt echter nog steeds met mensen delen.";
 
-                lblChangeMyUsername.Text = "Wijzig mijn gebruikersnaam";
-                lblDescChangeUsername.Text = "De gebruikersnaam van uw Flowstorage-account wordt gewijzigd, maar uw gegevens blijven behouden";
-
                 lblChangeMyPassword.Text = "Mijn wachtwoord wijzigen";
                 lblDescChangeAuth.Text = "Wijzig het wachtwoord van uw Flowstorage-account";
 
@@ -1055,7 +1044,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "Bestand";
 
                 btnUpdatePassword.Text = "Wijzigen";
-                btnUpdateUsername.Text = "Wijzigen";
                 btnDltAccount.Text = "Aanmelden";
 
                 Form_1.lblUpload.Text = "Uploaden";
@@ -1087,9 +1075,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Отключить общий доступ к файлам";
                 lblDescDisableSharing.Text = "Отключение общего доступа к файлам не позволит людям делиться файлами с вами. Однако вы все равно можете делиться с другими людьми.";
 
-                lblChangeMyUsername.Text = "Изменить мое имя пользователя";
-                lblDescChangeUsername.Text = "Имя пользователя вашей учетной записи Flowstorage будет изменено, но ваши данные останутся";
-
                 lblChangeMyPassword.Text = "Изменить мой пароль";
                 lblDescChangeAuth.Text = "Измените пароль своей учетной записи Flowstorage";
 
@@ -1106,7 +1091,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "Файл";
 
                 btnUpdatePassword.Text = "Изменить";
-                btnUpdateUsername.Text = "Изменить";
                 btnDltAccount.Text = "Удалить аккаунт";
 
                 Form_1.lblUpload.Text = "Загрузить";
@@ -1139,9 +1123,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Dateifreigabe deaktivieren";
                 lblDescDisableSharing.Text = "Das Deaktivieren der Dateifreigabe erlaubt anderen nicht, eine Datei mit Ihnen zu teilen. Sie können sie jedoch immer noch mit anderen teilen.";
 
-                lblChangeMyUsername.Text = "Ändere meinen Benutzernamen";
-                lblDescChangeUsername.Text = "Der Benutzername Ihres Flowstorage-Kontos wird geändert, Ihre Daten bleiben jedoch erhalten";
-
                 lblChangeMyPassword.Text = "Ändere mein Passwort";
                 lblDescChangeAuth.Text = "Ändern Sie das Passwort Ihres Flowstorage-Kontos";
 
@@ -1158,7 +1139,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "File";
 
                 btnUpdatePassword.Text = "Ändern";
-                btnUpdateUsername.Text = "Ändern";
                 btnDltAccount.Text = "Konto Löschen";
 
                 Form_1.lblUpload.Text = "Hochladen";
@@ -1190,9 +1170,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "ファイル共有を無効にする";
                 lblDescDisableSharing.Text = "ファイル共有を無効にすると、他のユーザーがファイルを共有することはできなくなります。ただし、他のユーザーと共有することはできます。";
 
-                lblChangeMyUsername.Text = "ユーザー名を変更する";
-                lblDescChangeUsername.Text = "Flowstorage アカウントのユーザー名は変更されますが、データはそのまま残ります";
-
                 lblChangeMyPassword.Text = "パスワードを変更する";
                 lblDescChangeAuth.Text = "Flowstorage アカウントのパスワードを変更する";
 
@@ -1209,7 +1186,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "ファイル";
 
                 btnUpdatePassword.Text = "変化";
-                btnUpdateUsername.Text = "変化";
                 btnDltAccount.Text = "アカウントを削除する";
 
                 Form_1.lblUpload.Text = "アップロード";
@@ -1242,9 +1218,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Desactivar uso compartido de archivos";
                 lblDescDisableSharing.Text = "Deshabilitar el uso compartido de archivos no permitirá que las personas compartan un archivo contigo. Sin embargo, aún puedes compartirlo con otras personas.";
 
-                lblChangeMyUsername.Text = "cambiar mi nombre de usuario";
-                lblDescChangeUsername.Text = "El nombre de usuario de su cuenta de Flowstorage cambiará, pero sus datos permanecerán";
-
                 lblChangeMyPassword.Text = "cambiar mi contraseña";
                 lblDescChangeAuth.Text = "Cambiar la contraseña de su cuenta Flowstorage";
 
@@ -1261,7 +1234,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "Archivo";
 
                 btnUpdatePassword.Text = "Cambiar";
-                btnUpdateUsername.Text = "Cambiar";
                 btnDltAccount.Text = "Borrar cuenta";
 
                 Form_1.lblUpload.Text = "Subir";
@@ -1293,9 +1265,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Désactiver le partage de fichiers";
                 lblDescDisableSharing.Text = "La désactivation du partage de fichiers ne permettra pas aux autres de partager un fichier avec vous. Cependant, vous pouvez toujours partager avec d'autres personnes.";
 
-                lblChangeMyUsername.Text = "Changer mon nom d'utilisateur";
-                lblDescChangeUsername.Text = "Le nom d'utilisateur de votre compte Flowstorage sera modifié, mais vos données resteront";
-
                 lblChangeMyPassword.Text = "Changer mon mot de passe";
                 lblDescChangeAuth.Text = "Modifier le mot de passe de votre compte Flowstorage";
 
@@ -1312,7 +1281,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "Déposer";
 
                 btnUpdatePassword.Text = "Changement";
-                btnUpdateUsername.Text = "Changement";
                 btnDltAccount.Text = "Supprimer le compte";
 
                 Form_1.lblUpload.Text = "Télécharger";
@@ -1344,9 +1312,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Desativar Compartilhamento de Arquivos";
                 lblDescDisableSharing.Text = "Desativar o compartilhamento de arquivos não permitirá que as pessoas compartilhem um arquivo com você. No entanto, você ainda pode compartilhar com outras pessoas.";
 
-                lblChangeMyUsername.Text = "Alterar meu nome de usuário";
-                lblDescChangeUsername.Text = "O nome de usuário da sua conta Flowstorage será alterado, mas seus dados permanecerão";
-
                 lblChangeMyPassword.Text = "Mudar minha senha";
                 lblDescChangeAuth.Text = "Altere a senha da sua conta Flowstorage";
 
@@ -1363,7 +1328,6 @@ namespace FlowSERVER1 {
                 lblFile.Text = "Arquivo";
 
                 btnUpdatePassword.Text = "Mudar";
-                btnUpdateUsername.Text = "Mudar";
                 btnDltAccount.Text = "Deletar conta";
 
                 Form_1.lblUpload.Text = "Carregar";
@@ -1395,9 +1359,6 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "禁用文件共享";
                 lblDescDisableSharing.Text = "禁用文件共享将不允许其他人与您共享文件。但是您仍然可以与其他人共享。";
 
-                lblChangeMyUsername.Text = "更改我的用户名";
-                lblDescChangeUsername.Text = "您的 Flowstorage 帐户用户名将更改，但您的数据将保留";
-
                 lblChangeMyPassword.Text = "修改我的密码";
                 lblDescChangeAuth.Text = "更改您的流存账户密码";
 
@@ -1415,7 +1376,6 @@ namespace FlowSERVER1 {
                 lblSettings3.Text = "设置";
 
                 btnUpdatePassword.Text = "改变";
-                btnUpdateUsername.Text = "改变";
                 btnDltAccount.Text = "删除帐户";
 
                 Form_1.lblUpload.Text = "上传";
