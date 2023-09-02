@@ -39,7 +39,7 @@ namespace FlowSERVER1 {
             instance = this;
         }
 
-        private void SetupAutoLogin(String username) {
+        private void SetupAutoLogin(String username, String email) {
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
 
@@ -48,6 +48,7 @@ namespace FlowSERVER1 {
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(username));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(email));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
@@ -56,6 +57,7 @@ namespace FlowSERVER1 {
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(username));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(email));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
@@ -199,7 +201,7 @@ namespace FlowSERVER1 {
                     retrievalAlertForm?.Close();
 
                     if (guna2CheckBox2.Checked) {
-                        SetupAutoLogin(Globals.custUsername);
+                        SetupAutoLogin(Globals.custUsername, Globals.custEmail);
                     }
 
                 }

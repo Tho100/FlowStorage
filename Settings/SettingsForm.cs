@@ -2165,5 +2165,8 @@ namespace FlowSERVER1 {
 
         }
 
+        private void label39_Click(object sender, EventArgs e) {
+
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace FlowSERVER1.Authentication {
                 }
 
                 string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
+                string email = EncryptionModel.Decrypt(File.ReadLines(authFile).Skip(1).First());
 
                 if (AccountStartupValidation(username) == String.Empty) {
                     pnlRegistration.Visible = true;
@@ -54,16 +55,7 @@ namespace FlowSERVER1.Authentication {
                 }
 
                 Globals.custUsername = username;
-
-                using (var command = new MySqlCommand("SELECT CUST_EMAIL FROM information WHERE CUST_USERNAME = @username", con)) {
-                    command.Parameters.AddWithValue("@username", username);
-
-                    using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        if (await reader.ReadAsync()) {
-                            Globals.custEmail = reader.GetString(0);
-                        }
-                    }
-                }
+                Globals.custEmail = email;
 
                 var itemsFolder = new[] { "Home", "Shared To Me", "Shared Files" };
                 var updatesTitle = new List<string>();
@@ -445,7 +437,7 @@ namespace FlowSERVER1.Authentication {
 
                     await GetUserLanguage();
                     ClearRegistrationFields();
-                    StupAutoLogin(usernameInput);
+                    StupAutoLogin(usernameInput, emailInput);
                     BuildGreetingLabel();
 
                     accessHomePage.lblUsagePercentage.Text = "0%";
@@ -561,7 +553,7 @@ namespace FlowSERVER1.Authentication {
         /// called FlowStorageInfos located in %appdata%
         /// </summary>
         /// <param name="_custUsername">Username of user</param>
-        private void StupAutoLogin(String custUsername) {
+        private void StupAutoLogin(String custUsername, String custEmail) {
 
             String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             if (!Directory.Exists(appDataPath)) {
@@ -569,6 +561,7 @@ namespace FlowSERVER1.Authentication {
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
@@ -578,6 +571,7 @@ namespace FlowSERVER1.Authentication {
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
+                    _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }

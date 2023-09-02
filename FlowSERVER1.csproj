@@ -464,6 +464,11 @@
     </Compile>
     <Compile Include="Helper\GetComment.cs" />
     <Compile Include="Model\StripeModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings\CancelPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -629,11 +634,6 @@
     </Compile>
     <Compile Include="Authentication\SignInForm.Designer.cs">
       <DependentUpon>SignInForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewerForms\PtxForm.cs">
       <SubType>Form</SubType>
