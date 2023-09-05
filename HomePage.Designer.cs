@@ -58,7 +58,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.flwLayoutHome = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblGreetingText = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.lblCurrentPageText = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -109,6 +108,7 @@
             this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2CircleButton2 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
+            this.lblGreetingText = new System.Windows.Forms.Label();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.pnlFolders.SuspendLayout();
@@ -554,20 +554,6 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(1047, 0);
             this.flowLayoutPanel2.TabIndex = 17;
             this.flowLayoutPanel2.Visible = false;
-            // 
-            // lblGreetingText
-            // 
-            this.lblGreetingText.AutoEllipsis = true;
-            this.lblGreetingText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.lblGreetingText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblGreetingText.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGreetingText.ForeColor = System.Drawing.Color.LightGray;
-            this.lblGreetingText.Location = new System.Drawing.Point(285, 25);
-            this.lblGreetingText.Name = "lblGreetingText";
-            this.lblGreetingText.Size = new System.Drawing.Size(351, 30);
-            this.lblGreetingText.TabIndex = 18;
-            this.lblGreetingText.Text = "Good morning Aqweqweshy :)";
-            this.lblGreetingText.Click += new System.EventHandler(this.label1_Click);
             // 
             // richTextBox1
             // 
@@ -1507,6 +1493,20 @@
             this.btnDownloadFolder.Visible = false;
             this.btnDownloadFolder.Click += new System.EventHandler(this.guna2Button27_Click);
             // 
+            // lblGreetingText
+            // 
+            this.lblGreetingText.AutoEllipsis = true;
+            this.lblGreetingText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.lblGreetingText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblGreetingText.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGreetingText.ForeColor = System.Drawing.Color.LightGray;
+            this.lblGreetingText.Location = new System.Drawing.Point(285, 25);
+            this.lblGreetingText.Name = "lblGreetingText";
+            this.lblGreetingText.Size = new System.Drawing.Size(351, 30);
+            this.lblGreetingText.TabIndex = 18;
+            this.lblGreetingText.Text = "Good morning Aqweqweshy :)";
+            this.lblGreetingText.Click += new System.EventHandler(this.label1_Click);
+            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1569,7 +1569,6 @@
         private Guna.UI2.WinForms.Guna2Panel pnlSubPanelDetails;
         public System.Windows.Forms.FlowLayoutPanel flwLayoutHome;
         public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label lblGreetingText;
         public System.Windows.Forms.Label lblItemCountText;
         public Guna.UI2.WinForms.Guna2Button btnDeleteFolder;
         public System.Windows.Forms.ListBox lstFoldersPage;
@@ -1645,6 +1644,7 @@
         private System.Windows.Forms.Label label4;
         public Guna.UI2.WinForms.Guna2Button btnMyPsFiles;
         public System.Windows.Forms.Label lblCurrentPageText;
+        public System.Windows.Forms.Label lblGreetingText;
     }
 }
 

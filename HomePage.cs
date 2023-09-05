@@ -1392,7 +1392,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
+                panelGenerator.GeneratePublicStoragePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
 
                 BuildRedundaneVisibility();
 
@@ -1411,8 +1411,8 @@ namespace FlowSERVER1 {
 
                 var panelTxt = new Guna2Panel() {
                     Name = parameterName + itemCurr,
-                    Width = 200,
-                    Height = 222,
+                    Width = 280,
+                    Height = 268,
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
@@ -1428,8 +1428,8 @@ namespace FlowSERVER1 {
                 mainPanelTxt.Controls.Add(textboxPic);
                 textboxPic.Name = "TxtBox" + itemCurr;
                 textboxPic.BorderRadius = 8;
-                textboxPic.Width = 190;
-                textboxPic.Height = 145;
+                textboxPic.Width = 270;
+                textboxPic.Height = 165;
                 textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
                 textboxPic.Enabled = true;
                 textboxPic.Visible = true;
@@ -1439,33 +1439,41 @@ namespace FlowSERVER1 {
                 int textboxPic_x = (mainPanelTxt.Width - textboxPic.Width) / 2;
                 textboxPic.Location = new Point(textboxPic_x, 10);
 
-                Label dateLabTxt = new Label();
-                mainPanelTxt.Controls.Add(dateLabTxt);
-                dateLabTxt.Name = "LabTxtUp" + itemCurr;
-                dateLabTxt.Font = GlobalStyle.DateLabelFont;
-                dateLabTxt.ForeColor = GlobalStyle.DarkGrayColor;
-                dateLabTxt.Visible = true;
-                dateLabTxt.Enabled = true;
-                dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-                dateLabTxt.Text = _todayDate;
+                Label dateLab = new Label();
+                mainPanelTxt.Controls.Add(dateLab);
+                dateLab.Name = "LabTxtUp" + itemCurr;
+                dateLab.BackColor = GlobalStyle.TransparentColor;
+                dateLab.Font = GlobalStyle.DateLabelFont;
+                dateLab.ForeColor = GlobalStyle.DarkGrayColor;
+                dateLab.Visible = true;
+                dateLab.Enabled = true;
+                dateLab.Location = new Point(12, 241);
+                dateLab.Text = _todayDate;
 
-                Guna2CircleButton seperatorButton = new Guna2CircleButton();
-                mainPanelTxt.Controls.Add(seperatorButton);
-                seperatorButton.Location = GlobalStyle.PsSeperatorBut;
-                seperatorButton.Size = GlobalStyle.PsSeperatorButSize;
-                seperatorButton.FillColor = GlobalStyle.DarkGrayColor;
-                seperatorButton.BringToFront();
+                Guna2Panel tagBackground = new Guna2Panel();
+                mainPanelTxt.Controls.Add(tagBackground);
+                tagBackground.BorderRadius = 11;
+                tagBackground.Location = new Point(12, 188);
+                tagBackground.Size = new Size(108, 24);
+                tagBackground.FillColor = GlobalStyle.psBackgroundColorTag[PublicStorageUserTag];
+                tagBackground.BringToFront();
 
-                Label psButtonTag = new Label();
-                mainPanelTxt.Controls.Add(psButtonTag);
-                psButtonTag.Name = $"ButTag{itemCurr}";
-                psButtonTag.Font = GlobalStyle.PsLabelTagFont;
-                psButtonTag.BackColor = GlobalStyle.TransparentColor;
-                psButtonTag.ForeColor = GlobalStyle.psBackgroundColorTag[PublicStorageUserTag];
-                psButtonTag.Visible = true;
-                psButtonTag.Location = GlobalStyle.PsLabelTagLoc;
-                psButtonTag.Text = PublicStorageUserTag;
-                psButtonTag.BringToFront();
+                Label tagLabel = new Label();
+                mainPanelTxt.Controls.Add(tagLabel);
+                tagLabel.Name = $"ButTag{itemCurr}";
+                tagLabel.Font = GlobalStyle.PsLabelTagFont;
+                tagLabel.Height = 15;
+                tagLabel.Width = 85;
+                tagLabel.BackColor = GlobalStyle.psBackgroundColorTag[PublicStorageUserTag];
+                tagLabel.ForeColor = GlobalStyle.GainsboroColor;
+                tagLabel.Visible = true;
+                tagLabel.TextAlign = ContentAlignment.MiddleCenter;
+
+                int centerX = (tagBackground.Width - tagLabel.Width) / 2;
+                tagLabel.Location = new Point(centerX + 15, GlobalStyle.PsLabelTagLoc.Y+1);
+
+                tagLabel.Text = PublicStorageUserTag;
+                tagLabel.BringToFront();
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
@@ -1474,8 +1482,8 @@ namespace FlowSERVER1 {
                 titleLab.ForeColor = GlobalStyle.GainsboroColor;
                 titleLab.Visible = true;
                 titleLab.Enabled = true;
-                titleLab.Location = GlobalStyle.TitleLabelLoc;
-                titleLab.Width = 160;
+                titleLab.Location = new Point(12, 218);
+                titleLab.Width = 200;
                 titleLab.Height = 20;
                 titleLab.AutoEllipsis = true;
                 titleLab.Text = _fileName;
