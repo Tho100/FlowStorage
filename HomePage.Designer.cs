@@ -99,19 +99,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnUploadPs = new Guna.UI2.WinForms.Guna2Button();
             this.lblPsCount = new System.Windows.Forms.Label();
-            this.btnRefreshFiles = new Guna.UI2.WinForms.Guna2Button();
-            this.btnGarbageImage = new Guna.UI2.WinForms.Guna2Button();
-            this.btnOpenFilterType = new Guna.UI2.WinForms.Guna2Button();
-            this.txtBoxSearchFile = new Guna.UI2.WinForms.Guna2TextBox();
-            this.btnDeleteFolder = new Guna.UI2.WinForms.Guna2Button();
-            this.btnOpenRenameFolderPage = new Guna.UI2.WinForms.Guna2Button();
-            this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
             this.lblGreetingText = new System.Windows.Forms.Label();
             this.pnlExceedStorage = new Guna.UI2.WinForms.Guna2Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnRefreshFiles = new Guna.UI2.WinForms.Guna2Button();
+            this.btnGarbageImage = new Guna.UI2.WinForms.Guna2Button();
+            this.btnDeleteFolder = new Guna.UI2.WinForms.Guna2Button();
+            this.btnOpenRenameFolderPage = new Guna.UI2.WinForms.Guna2Button();
+            this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
+            this.txtBoxSearchFile = new Guna.UI2.WinForms.Guna2TextBox();
+            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.pnlFolders.SuspendLayout();
@@ -561,7 +561,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(730, 0);
+            this.richTextBox1.Location = new System.Drawing.Point(827, -14);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(227, 15);
             this.richTextBox1.TabIndex = 50;
@@ -575,7 +575,7 @@
             this.lblCurrentPageText.BackColor = System.Drawing.Color.Transparent;
             this.lblCurrentPageText.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentPageText.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblCurrentPageText.Location = new System.Drawing.Point(294, 73);
+            this.lblCurrentPageText.Location = new System.Drawing.Point(293, 72);
             this.lblCurrentPageText.Name = "lblCurrentPageText";
             this.lblCurrentPageText.Size = new System.Drawing.Size(439, 31);
             this.lblCurrentPageText.TabIndex = 21;
@@ -760,22 +760,22 @@
             // 
             // guna2Panel1
             // 
-            this.guna2Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.guna2Panel1.BorderRadius = 12;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.guna2Button25);
-            this.guna2Panel1.Controls.Add(this.guna2Button24);
-            this.guna2Panel1.Controls.Add(this.guna2Button23);
             this.guna2Panel1.Controls.Add(this.guna2Button22);
-            this.guna2Panel1.Controls.Add(this.guna2Button21);
+            this.guna2Panel1.Controls.Add(this.guna2Button24);
             this.guna2Panel1.Controls.Add(this.guna2Button20);
-            this.guna2Panel1.Controls.Add(this.guna2Button17);
+            this.guna2Panel1.Controls.Add(this.guna2Button21);
             this.guna2Panel1.Controls.Add(this.guna2Button18);
+            this.guna2Panel1.Controls.Add(this.guna2Button17);
+            this.guna2Panel1.Controls.Add(this.guna2Button23);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(875, 64);
+            this.guna2Panel1.Location = new System.Drawing.Point(823, 68);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(426, 102);
+            this.guna2Panel1.Size = new System.Drawing.Size(302, 249);
             this.guna2Panel1.TabIndex = 39;
             this.guna2Panel1.Visible = false;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
@@ -792,14 +792,14 @@
             this.guna2Button25.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button25.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button25.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button25.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button25.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button25.ForeColor = System.Drawing.Color.White;
             this.guna2Button25.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.guna2Button25.ImageOffset = new System.Drawing.Point(0, -1);
             this.guna2Button25.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button25.Location = new System.Drawing.Point(307, 53);
+            this.guna2Button25.Location = new System.Drawing.Point(152, 187);
             this.guna2Button25.Name = "guna2Button25";
-            this.guna2Button25.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button25.Size = new System.Drawing.Size(135, 53);
             this.guna2Button25.TabIndex = 46;
             this.guna2Button25.Text = "Clear Filter";
             this.guna2Button25.TextOffset = new System.Drawing.Point(0, -1);
@@ -817,17 +817,17 @@
             this.guna2Button24.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button24.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button24.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button24.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button24.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button24.ForeColor = System.Drawing.Color.White;
             this.guna2Button24.Image = global::FlowSERVER1.Properties.Resources.icons8_pdf_60__1_;
             this.guna2Button24.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button24.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button24.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button24.Location = new System.Drawing.Point(307, 14);
+            this.guna2Button24.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button24.ImageSize = new System.Drawing.Size(32, 32);
+            this.guna2Button24.Location = new System.Drawing.Point(152, 128);
             this.guna2Button24.Name = "guna2Button24";
-            this.guna2Button24.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button24.Size = new System.Drawing.Size(135, 53);
             this.guna2Button24.TabIndex = 45;
-            this.guna2Button24.Text = "PDF";
+            this.guna2Button24.Text = "PDFs";
             this.guna2Button24.TextOffset = new System.Drawing.Point(10, -1);
             this.guna2Button24.Click += new System.EventHandler(this.guna2Button24_Click);
             // 
@@ -843,17 +843,18 @@
             this.guna2Button23.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button23.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button23.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button23.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button23.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button23.ForeColor = System.Drawing.Color.White;
             this.guna2Button23.Image = global::FlowSERVER1.Properties.Resources.video_image;
             this.guna2Button23.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button23.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button23.Location = new System.Drawing.Point(209, 53);
+            this.guna2Button23.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button23.ImageSize = new System.Drawing.Size(36, 36);
+            this.guna2Button23.Location = new System.Drawing.Point(11, 69);
             this.guna2Button23.Name = "guna2Button23";
-            this.guna2Button23.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button23.Size = new System.Drawing.Size(135, 53);
             this.guna2Button23.TabIndex = 44;
-            this.guna2Button23.Text = "Video";
-            this.guna2Button23.TextOffset = new System.Drawing.Point(10, -1);
+            this.guna2Button23.Text = "Videos";
+            this.guna2Button23.TextOffset = new System.Drawing.Point(16, -1);
             this.guna2Button23.Click += new System.EventHandler(this.guna2Button23_Click);
             // 
             // guna2Button22
@@ -868,15 +869,15 @@
             this.guna2Button22.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button22.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button22.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button22.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button22.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button22.ForeColor = System.Drawing.Color.White;
             this.guna2Button22.Image = global::FlowSERVER1.Properties.Resources.icons8_microsoft_word_60;
             this.guna2Button22.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button22.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button22.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button22.Location = new System.Drawing.Point(209, 14);
+            this.guna2Button22.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button22.ImageSize = new System.Drawing.Size(36, 36);
+            this.guna2Button22.Location = new System.Drawing.Point(11, 187);
             this.guna2Button22.Name = "guna2Button22";
-            this.guna2Button22.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button22.Size = new System.Drawing.Size(135, 53);
             this.guna2Button22.TabIndex = 43;
             this.guna2Button22.Text = "Docs";
             this.guna2Button22.TextOffset = new System.Drawing.Point(10, -1);
@@ -894,15 +895,15 @@
             this.guna2Button21.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button21.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button21.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button21.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button21.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button21.ForeColor = System.Drawing.Color.White;
             this.guna2Button21.Image = global::FlowSERVER1.Properties.Resources.excelIcon;
             this.guna2Button21.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button21.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button21.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button21.Location = new System.Drawing.Point(111, 53);
+            this.guna2Button21.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button21.ImageSize = new System.Drawing.Size(36, 32);
+            this.guna2Button21.Location = new System.Drawing.Point(11, 128);
             this.guna2Button21.Name = "guna2Button21";
-            this.guna2Button21.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button21.Size = new System.Drawing.Size(135, 53);
             this.guna2Button21.TabIndex = 42;
             this.guna2Button21.Text = "Excel";
             this.guna2Button21.TextOffset = new System.Drawing.Point(10, -1);
@@ -920,18 +921,18 @@
             this.guna2Button20.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button20.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button20.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button20.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button20.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button20.ForeColor = System.Drawing.Color.White;
             this.guna2Button20.Image = global::FlowSERVER1.Properties.Resources.icons8_audio_file_60;
             this.guna2Button20.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button20.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button20.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button20.Location = new System.Drawing.Point(13, 53);
+            this.guna2Button20.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button20.ImageSize = new System.Drawing.Size(36, 36);
+            this.guna2Button20.Location = new System.Drawing.Point(152, 10);
             this.guna2Button20.Name = "guna2Button20";
-            this.guna2Button20.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button20.Size = new System.Drawing.Size(135, 53);
             this.guna2Button20.TabIndex = 41;
             this.guna2Button20.Text = "Audio";
-            this.guna2Button20.TextOffset = new System.Drawing.Point(10, -1);
+            this.guna2Button20.TextOffset = new System.Drawing.Point(16, -1);
             this.guna2Button20.Click += new System.EventHandler(this.guna2Button20_Click);
             // 
             // guna2Button17
@@ -946,14 +947,15 @@
             this.guna2Button17.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button17.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button17.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button17.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button17.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button17.ForeColor = System.Drawing.Color.White;
             this.guna2Button17.Image = global::FlowSERVER1.Properties.Resources.icons8_txt_48;
             this.guna2Button17.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button17.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button17.Location = new System.Drawing.Point(111, 14);
+            this.guna2Button17.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button17.ImageSize = new System.Drawing.Size(32, 32);
+            this.guna2Button17.Location = new System.Drawing.Point(152, 69);
             this.guna2Button17.Name = "guna2Button17";
-            this.guna2Button17.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button17.Size = new System.Drawing.Size(135, 53);
             this.guna2Button17.TabIndex = 40;
             this.guna2Button17.Text = "Text";
             this.guna2Button17.TextOffset = new System.Drawing.Point(10, -1);
@@ -971,18 +973,18 @@
             this.guna2Button18.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button18.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button18.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Button18.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button18.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button18.ForeColor = System.Drawing.Color.White;
             this.guna2Button18.Image = global::FlowSERVER1.Properties.Resources.image_icon;
             this.guna2Button18.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button18.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button18.ImageSize = new System.Drawing.Size(19, 19);
-            this.guna2Button18.Location = new System.Drawing.Point(13, 14);
+            this.guna2Button18.ImageOffset = new System.Drawing.Point(2, -1);
+            this.guna2Button18.ImageSize = new System.Drawing.Size(36, 36);
+            this.guna2Button18.Location = new System.Drawing.Point(11, 9);
             this.guna2Button18.Name = "guna2Button18";
-            this.guna2Button18.Size = new System.Drawing.Size(92, 33);
+            this.guna2Button18.Size = new System.Drawing.Size(135, 53);
             this.guna2Button18.TabIndex = 39;
-            this.guna2Button18.Text = "Image";
-            this.guna2Button18.TextOffset = new System.Drawing.Point(10, -1);
+            this.guna2Button18.Text = "Images";
+            this.guna2Button18.TextOffset = new System.Drawing.Point(16, -1);
             this.guna2Button18.Click += new System.EventHandler(this.guna2Button18_Click);
             // 
             // pnlFileOptions
@@ -1196,6 +1198,7 @@
             this.pnlPublicStorage.Controls.Add(this.label1);
             this.pnlPublicStorage.Controls.Add(this.btnUploadPs);
             this.pnlPublicStorage.Controls.Add(this.lblPsCount);
+            this.pnlPublicStorage.Controls.Add(this.lblGreetingText);
             this.pnlPublicStorage.Location = new System.Drawing.Point(55, 0);
             this.pnlPublicStorage.Name = "pnlPublicStorage";
             this.pnlPublicStorage.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1286,175 +1289,6 @@
             this.lblPsCount.TabIndex = 36;
             this.lblPsCount.Text = "1,44 Files";
             // 
-            // btnRefreshFiles
-            // 
-            this.btnRefreshFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshFiles.Animated = true;
-            this.btnRefreshFiles.BackColor = System.Drawing.Color.Transparent;
-            this.btnRefreshFiles.BorderColor = System.Drawing.Color.Empty;
-            this.btnRefreshFiles.BorderRadius = 12;
-            this.btnRefreshFiles.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefreshFiles.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefreshFiles.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnRefreshFiles.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnRefreshFiles.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnRefreshFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefreshFiles.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshFiles.Image = global::FlowSERVER1.Properties.Resources.icons8_update_left_rotation_24;
-            this.btnRefreshFiles.ImageOffset = new System.Drawing.Point(1, -1);
-            this.btnRefreshFiles.Location = new System.Drawing.Point(1271, 68);
-            this.btnRefreshFiles.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnRefreshFiles.Name = "btnRefreshFiles";
-            this.btnRefreshFiles.Size = new System.Drawing.Size(33, 31);
-            this.btnRefreshFiles.TabIndex = 36;
-            this.btnRefreshFiles.Click += new System.EventHandler(this.guna2Button4_Click);
-            // 
-            // btnGarbageImage
-            // 
-            this.btnGarbageImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnGarbageImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnGarbageImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnGarbageImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnGarbageImage.FillColor = System.Drawing.Color.Empty;
-            this.btnGarbageImage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnGarbageImage.ForeColor = System.Drawing.Color.White;
-            this.btnGarbageImage.Image = ((System.Drawing.Image)(resources.GetObject("btnGarbageImage.Image")));
-            this.btnGarbageImage.ImageSize = new System.Drawing.Size(65, 65);
-            this.btnGarbageImage.Location = new System.Drawing.Point(739, 322);
-            this.btnGarbageImage.Name = "btnGarbageImage";
-            this.btnGarbageImage.Size = new System.Drawing.Size(91, 76);
-            this.btnGarbageImage.TabIndex = 17;
-            this.btnGarbageImage.Click += new System.EventHandler(this.guna2Button6_Click);
-            // 
-            // btnOpenFilterType
-            // 
-            this.btnOpenFilterType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenFilterType.Animated = true;
-            this.btnOpenFilterType.BackColor = System.Drawing.Color.Transparent;
-            this.btnOpenFilterType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnOpenFilterType.BorderRadius = 16;
-            this.btnOpenFilterType.BorderThickness = 1;
-            this.btnOpenFilterType.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnOpenFilterType.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnOpenFilterType.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnOpenFilterType.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnOpenFilterType.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnOpenFilterType.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenFilterType.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnOpenFilterType.Image = global::FlowSERVER1.Properties.Resources.icons8_sort_down_50;
-            this.btnOpenFilterType.ImageAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.btnOpenFilterType.ImageOffset = new System.Drawing.Point(0, -1);
-            this.btnOpenFilterType.ImageSize = new System.Drawing.Size(19, 19);
-            this.btnOpenFilterType.Location = new System.Drawing.Point(1172, 14);
-            this.btnOpenFilterType.Name = "btnOpenFilterType";
-            this.btnOpenFilterType.Size = new System.Drawing.Size(129, 43);
-            this.btnOpenFilterType.TabIndex = 37;
-            this.btnOpenFilterType.Text = "Filter Type";
-            this.btnOpenFilterType.TextOffset = new System.Drawing.Point(-8, -1);
-            this.btnOpenFilterType.Click += new System.EventHandler(this.guna2Button16_Click);
-            // 
-            // txtBoxSearchFile
-            // 
-            this.txtBoxSearchFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBoxSearchFile.BackColor = System.Drawing.Color.Transparent;
-            this.txtBoxSearchFile.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.txtBoxSearchFile.BorderRadius = 16;
-            this.txtBoxSearchFile.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtBoxSearchFile.DefaultText = "";
-            this.txtBoxSearchFile.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.txtBoxSearchFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.txtBoxSearchFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtBoxSearchFile.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtBoxSearchFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.txtBoxSearchFile.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.txtBoxSearchFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtBoxSearchFile.ForeColor = System.Drawing.Color.Silver;
-            this.txtBoxSearchFile.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.txtBoxSearchFile.IconLeft = global::FlowSERVER1.Properties.Resources.icons8_search_30__1_;
-            this.txtBoxSearchFile.IconLeftOffset = new System.Drawing.Point(4, 0);
-            this.txtBoxSearchFile.IconLeftSize = new System.Drawing.Size(18, 18);
-            this.txtBoxSearchFile.Location = new System.Drawing.Point(813, 14);
-            this.txtBoxSearchFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtBoxSearchFile.Name = "txtBoxSearchFile";
-            this.txtBoxSearchFile.PasswordChar = '\0';
-            this.txtBoxSearchFile.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtBoxSearchFile.PlaceholderText = "Search in Flowstorage";
-            this.txtBoxSearchFile.SelectedText = "";
-            this.txtBoxSearchFile.Size = new System.Drawing.Size(352, 43);
-            this.txtBoxSearchFile.TabIndex = 29;
-            this.txtBoxSearchFile.TextOffset = new System.Drawing.Point(1, 0);
-            this.txtBoxSearchFile.TextChanged += new System.EventHandler(this.guna2TextBox5_TextChanged);
-            // 
-            // btnDeleteFolder
-            // 
-            this.btnDeleteFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteFolder.Animated = true;
-            this.btnDeleteFolder.BackColor = System.Drawing.Color.Transparent;
-            this.btnDeleteFolder.BorderColor = System.Drawing.Color.Empty;
-            this.btnDeleteFolder.BorderRadius = 12;
-            this.btnDeleteFolder.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnDeleteFolder.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnDeleteFolder.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnDeleteFolder.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnDeleteFolder.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnDeleteFolder.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnDeleteFolder.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteFolder.Image")));
-            this.btnDeleteFolder.ImageOffset = new System.Drawing.Point(1, -1);
-            this.btnDeleteFolder.Location = new System.Drawing.Point(1269, 68);
-            this.btnDeleteFolder.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnDeleteFolder.Name = "btnDeleteFolder";
-            this.btnDeleteFolder.Size = new System.Drawing.Size(33, 31);
-            this.btnDeleteFolder.TabIndex = 35;
-            this.btnDeleteFolder.Visible = false;
-            this.btnDeleteFolder.Click += new System.EventHandler(this.guna2Button19_Click);
-            // 
-            // btnOpenRenameFolderPage
-            // 
-            this.btnOpenRenameFolderPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenRenameFolderPage.Animated = true;
-            this.btnOpenRenameFolderPage.BackColor = System.Drawing.Color.Transparent;
-            this.btnOpenRenameFolderPage.BorderColor = System.Drawing.Color.Transparent;
-            this.btnOpenRenameFolderPage.BorderRadius = 12;
-            this.btnOpenRenameFolderPage.DisabledState.BorderColor = System.Drawing.Color.Transparent;
-            this.btnOpenRenameFolderPage.DisabledState.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.btnOpenRenameFolderPage.DisabledState.FillColor = System.Drawing.Color.Transparent;
-            this.btnOpenRenameFolderPage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnOpenRenameFolderPage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnOpenRenameFolderPage.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnOpenRenameFolderPage.ForeColor = System.Drawing.Color.White;
-            this.btnOpenRenameFolderPage.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
-            this.btnOpenRenameFolderPage.ImageSize = new System.Drawing.Size(19, 19);
-            this.btnOpenRenameFolderPage.Location = new System.Drawing.Point(1228, 68);
-            this.btnOpenRenameFolderPage.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnOpenRenameFolderPage.Name = "btnOpenRenameFolderPage";
-            this.btnOpenRenameFolderPage.Size = new System.Drawing.Size(33, 31);
-            this.btnOpenRenameFolderPage.TabIndex = 38;
-            this.btnOpenRenameFolderPage.Click += new System.EventHandler(this.guna2Button3_Click_1);
-            // 
-            // btnDownloadFolder
-            // 
-            this.btnDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDownloadFolder.Animated = true;
-            this.btnDownloadFolder.BackColor = System.Drawing.Color.Transparent;
-            this.btnDownloadFolder.BorderColor = System.Drawing.Color.Transparent;
-            this.btnDownloadFolder.BorderRadius = 12;
-            this.btnDownloadFolder.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnDownloadFolder.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnDownloadFolder.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnDownloadFolder.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnDownloadFolder.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnDownloadFolder.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnDownloadFolder.ForeColor = System.Drawing.Color.White;
-            this.btnDownloadFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnDownloadFolder.Image")));
-            this.btnDownloadFolder.ImageSize = new System.Drawing.Size(19, 19);
-            this.btnDownloadFolder.Location = new System.Drawing.Point(1187, 68);
-            this.btnDownloadFolder.Name = "btnDownloadFolder";
-            this.btnDownloadFolder.Size = new System.Drawing.Size(33, 31);
-            this.btnDownloadFolder.TabIndex = 47;
-            this.btnDownloadFolder.Visible = false;
-            this.btnDownloadFolder.Click += new System.EventHandler(this.guna2Button27_Click);
-            // 
             // lblGreetingText
             // 
             this.lblGreetingText.AutoEllipsis = true;
@@ -1462,7 +1296,7 @@
             this.lblGreetingText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblGreetingText.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGreetingText.ForeColor = System.Drawing.Color.LightGray;
-            this.lblGreetingText.Location = new System.Drawing.Point(285, 25);
+            this.lblGreetingText.Location = new System.Drawing.Point(-73, 332);
             this.lblGreetingText.Name = "lblGreetingText";
             this.lblGreetingText.Size = new System.Drawing.Size(351, 30);
             this.lblGreetingText.TabIndex = 18;
@@ -1550,12 +1384,179 @@
             this.label5.TabIndex = 56;
             this.label5.Text = "Warning: Your storage usage has exceed 70%";
             // 
+            // btnRefreshFiles
+            // 
+            this.btnRefreshFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefreshFiles.Animated = true;
+            this.btnRefreshFiles.BackColor = System.Drawing.Color.Transparent;
+            this.btnRefreshFiles.BorderColor = System.Drawing.Color.Empty;
+            this.btnRefreshFiles.BorderRadius = 12;
+            this.btnRefreshFiles.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshFiles.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshFiles.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRefreshFiles.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRefreshFiles.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.btnRefreshFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefreshFiles.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshFiles.Image = global::FlowSERVER1.Properties.Resources.icons8_update_left_rotation_24;
+            this.btnRefreshFiles.Location = new System.Drawing.Point(1263, 16);
+            this.btnRefreshFiles.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnRefreshFiles.Name = "btnRefreshFiles";
+            this.btnRefreshFiles.Size = new System.Drawing.Size(43, 41);
+            this.btnRefreshFiles.TabIndex = 36;
+            this.btnRefreshFiles.Click += new System.EventHandler(this.guna2Button4_Click);
+            // 
+            // btnGarbageImage
+            // 
+            this.btnGarbageImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnGarbageImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnGarbageImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnGarbageImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnGarbageImage.FillColor = System.Drawing.Color.Empty;
+            this.btnGarbageImage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnGarbageImage.ForeColor = System.Drawing.Color.White;
+            this.btnGarbageImage.Image = ((System.Drawing.Image)(resources.GetObject("btnGarbageImage.Image")));
+            this.btnGarbageImage.ImageSize = new System.Drawing.Size(65, 65);
+            this.btnGarbageImage.Location = new System.Drawing.Point(739, 322);
+            this.btnGarbageImage.Name = "btnGarbageImage";
+            this.btnGarbageImage.Size = new System.Drawing.Size(91, 76);
+            this.btnGarbageImage.TabIndex = 17;
+            this.btnGarbageImage.Click += new System.EventHandler(this.guna2Button6_Click);
+            // 
+            // btnDeleteFolder
+            // 
+            this.btnDeleteFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteFolder.Animated = true;
+            this.btnDeleteFolder.BackColor = System.Drawing.Color.Transparent;
+            this.btnDeleteFolder.BorderColor = System.Drawing.Color.Empty;
+            this.btnDeleteFolder.BorderRadius = 12;
+            this.btnDeleteFolder.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnDeleteFolder.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnDeleteFolder.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnDeleteFolder.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnDeleteFolder.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.btnDeleteFolder.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnDeleteFolder.ForeColor = System.Drawing.Color.White;
+            this.btnDeleteFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteFolder.Image")));
+            this.btnDeleteFolder.Location = new System.Drawing.Point(1263, 16);
+            this.btnDeleteFolder.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnDeleteFolder.Name = "btnDeleteFolder";
+            this.btnDeleteFolder.Size = new System.Drawing.Size(43, 41);
+            this.btnDeleteFolder.TabIndex = 35;
+            this.btnDeleteFolder.Visible = false;
+            this.btnDeleteFolder.Click += new System.EventHandler(this.guna2Button19_Click);
+            // 
+            // btnOpenRenameFolderPage
+            // 
+            this.btnOpenRenameFolderPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenRenameFolderPage.Animated = true;
+            this.btnOpenRenameFolderPage.BackColor = System.Drawing.Color.Transparent;
+            this.btnOpenRenameFolderPage.BorderColor = System.Drawing.Color.Transparent;
+            this.btnOpenRenameFolderPage.BorderRadius = 12;
+            this.btnOpenRenameFolderPage.DisabledState.BorderColor = System.Drawing.Color.Transparent;
+            this.btnOpenRenameFolderPage.DisabledState.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.btnOpenRenameFolderPage.DisabledState.FillColor = System.Drawing.Color.Transparent;
+            this.btnOpenRenameFolderPage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnOpenRenameFolderPage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.btnOpenRenameFolderPage.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnOpenRenameFolderPage.ForeColor = System.Drawing.Color.White;
+            this.btnOpenRenameFolderPage.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
+            this.btnOpenRenameFolderPage.ImageSize = new System.Drawing.Size(19, 19);
+            this.btnOpenRenameFolderPage.Location = new System.Drawing.Point(1215, 16);
+            this.btnOpenRenameFolderPage.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnOpenRenameFolderPage.Name = "btnOpenRenameFolderPage";
+            this.btnOpenRenameFolderPage.Size = new System.Drawing.Size(43, 41);
+            this.btnOpenRenameFolderPage.TabIndex = 38;
+            this.btnOpenRenameFolderPage.Click += new System.EventHandler(this.guna2Button3_Click_1);
+            // 
+            // btnDownloadFolder
+            // 
+            this.btnDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDownloadFolder.Animated = true;
+            this.btnDownloadFolder.BackColor = System.Drawing.Color.Transparent;
+            this.btnDownloadFolder.BorderColor = System.Drawing.Color.Transparent;
+            this.btnDownloadFolder.BorderRadius = 12;
+            this.btnDownloadFolder.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnDownloadFolder.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnDownloadFolder.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnDownloadFolder.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnDownloadFolder.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.btnDownloadFolder.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnDownloadFolder.ForeColor = System.Drawing.Color.White;
+            this.btnDownloadFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnDownloadFolder.Image")));
+            this.btnDownloadFolder.ImageSize = new System.Drawing.Size(19, 19);
+            this.btnDownloadFolder.Location = new System.Drawing.Point(1167, 16);
+            this.btnDownloadFolder.Name = "btnDownloadFolder";
+            this.btnDownloadFolder.Size = new System.Drawing.Size(43, 41);
+            this.btnDownloadFolder.TabIndex = 47;
+            this.btnDownloadFolder.Visible = false;
+            this.btnDownloadFolder.Click += new System.EventHandler(this.guna2Button27_Click);
+            // 
+            // txtBoxSearchFile
+            // 
+            this.txtBoxSearchFile.BackColor = System.Drawing.Color.Transparent;
+            this.txtBoxSearchFile.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.txtBoxSearchFile.BorderRadius = 16;
+            this.txtBoxSearchFile.BorderThickness = 2;
+            this.txtBoxSearchFile.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtBoxSearchFile.DefaultText = "";
+            this.txtBoxSearchFile.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtBoxSearchFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtBoxSearchFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxSearchFile.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtBoxSearchFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.txtBoxSearchFile.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.txtBoxSearchFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtBoxSearchFile.ForeColor = System.Drawing.Color.Silver;
+            this.txtBoxSearchFile.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.txtBoxSearchFile.IconLeft = global::FlowSERVER1.Properties.Resources.icons8_search_30__1_;
+            this.txtBoxSearchFile.IconLeftOffset = new System.Drawing.Point(4, 0);
+            this.txtBoxSearchFile.IconLeftSize = new System.Drawing.Size(18, 18);
+            this.txtBoxSearchFile.Location = new System.Drawing.Point(284, 12);
+            this.txtBoxSearchFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtBoxSearchFile.MaxLength = 70;
+            this.txtBoxSearchFile.Name = "txtBoxSearchFile";
+            this.txtBoxSearchFile.PasswordChar = '\0';
+            this.txtBoxSearchFile.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtBoxSearchFile.PlaceholderText = "Search in Flowstorage";
+            this.txtBoxSearchFile.SelectedText = "";
+            this.txtBoxSearchFile.Size = new System.Drawing.Size(699, 49);
+            this.txtBoxSearchFile.TabIndex = 54;
+            this.txtBoxSearchFile.TextOffset = new System.Drawing.Point(1, 0);
+            this.txtBoxSearchFile.TextChanged += new System.EventHandler(this.txtBoxSearchFile_TextChanged);
+            // 
+            // guna2Button4
+            // 
+            this.guna2Button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.guna2Button4.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button4.BorderRadius = 6;
+            this.guna2Button4.BorderThickness = 1;
+            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button4.ForeColor = System.Drawing.Color.White;
+            this.guna2Button4.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
+            this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_tune_24;
+            this.guna2Button4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.guna2Button4.Location = new System.Drawing.Point(935, 21);
+            this.guna2Button4.Name = "guna2Button4";
+            this.guna2Button4.Size = new System.Drawing.Size(37, 32);
+            this.guna2Button4.TabIndex = 54;
+            this.guna2Button4.TextOffset = new System.Drawing.Point(1, 0);
+            this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click_2);
+            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.ClientSize = new System.Drawing.Size(1325, 661);
+            this.Controls.Add(this.guna2Button4);
+            this.Controls.Add(this.btnDeleteFolder);
+            this.Controls.Add(this.txtBoxSearchFile);
             this.Controls.Add(this.pnlExceedStorage);
             this.Controls.Add(this.pnlPublicStorage);
             this.Controls.Add(this.guna2Panel1);
@@ -1568,12 +1569,8 @@
             this.Controls.Add(this.btnGarbageImage);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.flwLayoutHome);
-            this.Controls.Add(this.lblGreetingText);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlMain);
-            this.Controls.Add(this.btnOpenFilterType);
-            this.Controls.Add(this.txtBoxSearchFile);
-            this.Controls.Add(this.btnDeleteFolder);
             this.Controls.Add(this.btnOpenRenameFolderPage);
             this.Controls.Add(this.guna2VSeparator1);
             this.Controls.Add(this.btnDownloadFolder);
@@ -1618,7 +1615,6 @@
         public System.Windows.Forms.Label lblUpload;
         public System.Windows.Forms.Label lblEssentials;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        private Guna.UI2.WinForms.Guna2TextBox txtBoxSearchFile;
         public Guna.UI2.WinForms.Guna2Button btnUploadFile;
         public Guna.UI2.WinForms.Guna2Button btnUploadFolder;
         public Guna.UI2.WinForms.Guna2Button btnCreateDirectory;
@@ -1648,7 +1644,6 @@
         public Guna.UI2.WinForms.Guna2Button btnLogout;
         public System.Windows.Forms.Panel pnlMain;
         public Guna.UI2.WinForms.Guna2Button btnOpenRenameFolderPage;
-        public Guna.UI2.WinForms.Guna2Button btnOpenFilterType;
         public System.Windows.Forms.Label lblEmptyHere;
         public Guna.UI2.WinForms.Guna2Button btnGarbageImage;
         private Guna.UI2.WinForms.Guna2Panel pnlDragAndDropUpload;
@@ -1684,13 +1679,15 @@
         private System.Windows.Forms.Label label4;
         public Guna.UI2.WinForms.Guna2Button btnMyPsFiles;
         public System.Windows.Forms.Label lblCurrentPageText;
-        public System.Windows.Forms.Label lblGreetingText;
         private Guna.UI2.WinForms.Guna2Panel pnlExceedStorage;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private System.Windows.Forms.Label label5;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         public Guna.UI2.WinForms.Guna2Button guna2Button3;
         private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Label lblGreetingText;
+        private Guna.UI2.WinForms.Guna2TextBox txtBoxSearchFile;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
     }
 }
 

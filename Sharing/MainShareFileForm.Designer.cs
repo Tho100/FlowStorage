@@ -91,7 +91,7 @@
             this.lblFileSize.BackColor = System.Drawing.Color.Transparent;
             this.lblFileSize.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lblFileSize.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblFileSize.Location = new System.Drawing.Point(43, 190);
+            this.lblFileSize.Location = new System.Drawing.Point(43, 194);
             this.lblFileSize.Name = "lblFileSize";
             this.lblFileSize.Size = new System.Drawing.Size(130, 20);
             this.lblFileSize.TabIndex = 35;
@@ -111,9 +111,9 @@
             this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(311, 133);
+            this.guna2Button1.Location = new System.Drawing.Point(311, 138);
             this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(108, 44);
+            this.guna2Button1.Size = new System.Drawing.Size(108, 49);
             this.guna2Button1.TabIndex = 34;
             this.guna2Button1.Text = "Select File";
             this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
@@ -135,14 +135,14 @@
             this.txtFieldFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldFileName.ForeColor = System.Drawing.Color.White;
             this.txtFieldFileName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldFileName.Location = new System.Drawing.Point(39, 133);
+            this.txtFieldFileName.Location = new System.Drawing.Point(39, 138);
             this.txtFieldFileName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldFileName.Name = "txtFieldFileName";
             this.txtFieldFileName.PasswordChar = '\0';
             this.txtFieldFileName.PlaceholderText = "";
             this.txtFieldFileName.ReadOnly = true;
             this.txtFieldFileName.SelectedText = "";
-            this.txtFieldFileName.Size = new System.Drawing.Size(260, 44);
+            this.txtFieldFileName.Size = new System.Drawing.Size(260, 49);
             this.txtFieldFileName.TabIndex = 33;
             this.txtFieldFileName.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
@@ -152,7 +152,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(43, 108);
+            this.label1.Location = new System.Drawing.Point(43, 113);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 20);
             this.label1.TabIndex = 32;
@@ -173,9 +173,9 @@
             this.guna2Button6.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Location = new System.Drawing.Point(39, 288);
+            this.guna2Button6.Location = new System.Drawing.Point(39, 292);
             this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(380, 48);
+            this.guna2Button6.Size = new System.Drawing.Size(380, 54);
             this.guna2Button6.TabIndex = 31;
             this.guna2Button6.Text = "Close";
             this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
@@ -193,9 +193,9 @@
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(39, 227);
+            this.guna2Button2.Location = new System.Drawing.Point(39, 231);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(380, 51);
+            this.guna2Button2.Size = new System.Drawing.Size(380, 54);
             this.guna2Button2.TabIndex = 17;
             this.guna2Button2.Text = "Share";
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
@@ -217,14 +217,14 @@
             this.txtFieldShareToName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldShareToName.ForeColor = System.Drawing.Color.White;
             this.txtFieldShareToName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldShareToName.Location = new System.Drawing.Point(39, 50);
+            this.txtFieldShareToName.Location = new System.Drawing.Point(39, 45);
             this.txtFieldShareToName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldShareToName.Name = "txtFieldShareToName";
             this.txtFieldShareToName.PasswordChar = '\0';
             this.txtFieldShareToName.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldShareToName.PlaceholderText = "Enter receiver username";
             this.txtFieldShareToName.SelectedText = "";
-            this.txtFieldShareToName.Size = new System.Drawing.Size(380, 44);
+            this.txtFieldShareToName.Size = new System.Drawing.Size(380, 49);
             this.txtFieldShareToName.TabIndex = 16;
             // 
             // label4
@@ -233,7 +233,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(43, 22);
+            this.label4.Location = new System.Drawing.Point(43, 20);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(130, 20);
             this.label4.TabIndex = 5;

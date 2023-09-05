@@ -3760,7 +3760,7 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void guna2TextBox5_TextChanged(object sender, EventArgs e) {
+        private async void txtBoxSearchFile_TextChanged(object sender, EventArgs e) {
 
             string searchText = txtBoxSearchFile.Text.Trim().ToLower();
 
@@ -4424,5 +4424,11 @@ namespace FlowSERVER1 {
             new SettingsForm().Show();
             SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePage"];
         }
+
+        private void guna2Button4_Click_2(object sender, EventArgs e) {
+            filterTypePanelVisible = !filterTypePanelVisible;
+            guna2Panel1.Visible = filterTypePanelVisible;
+        }
+
     }
 }

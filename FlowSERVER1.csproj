@@ -450,11 +450,11 @@
     <Compile Include="Helper\CallDialogResultSave.cs" />
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
-    <Compile Include="Helper\UpdateLanguage.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
     <Compile Include="Helper\ImageCompressor.cs" />
     <Compile Include="Helper\UpdateChanges.cs" />
     <Compile Include="Helper\UpdateComment.cs" />
+    <Compile Include="Helper\UpdateLanguage.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
@@ -942,6 +942,7 @@
   <ItemGroup>
     <Content Include="MainIco.ico" />
     <Content Include="Resources\DirIcon.png" />
+    <None Include="Resources\icons8-tune-24.png" />
     <None Include="Resources\icons8-documents-folder-48 %282%29.png" />
     <None Include="Resources\icons8-feedback-48.png" />
     <None Include="Resources\icons8-open-parcel-24.png" />

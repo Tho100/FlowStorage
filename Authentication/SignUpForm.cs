@@ -202,6 +202,34 @@ namespace FlowSERVER1.Authentication {
         }
 
 
+        private void BuildGreetingLabel() {
+
+            DateTime now = DateTime.Now;
+
+            var hours = now.Hour;
+            string greeting = $"Good Night {Globals.custUsername}";
+
+            if (hours >= 1 && hours <= 12) {
+                greeting = "Good Morning, " + Globals.custUsername;
+            }
+            else if (hours >= 12 && hours <= 16) {
+                greeting = "Good Afternoon, " + Globals.custUsername;
+            }
+            else if (hours >= 16 && hours <= 21) {
+
+                if (hours == 20 || hours == 21) {
+                    greeting = "Good Late Evening, " + Globals.custUsername;
+                }
+
+            }
+            else if (hours >= 21 && hours <= 24) {
+                greeting = "Good Night, " + Globals.custUsername;
+            }
+
+            accessHomePage.lblGreetingText.Text = greeting;
+
+        }
+
         /// <summary>
         /// Start genertating UI labels based on user language
         /// </summary>
@@ -512,40 +540,6 @@ namespace FlowSERVER1.Authentication {
                     transaction.Rollback();
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// Setup greeting label based on current time and translate 
-        /// them into user default language (English on registration).
-        /// 
-        /// </summary>
-        private void BuildGreetingLabel() {
-
-            DateTime now = DateTime.Now;
-
-            var hours = now.Hour;
-            string greeting = $"Good Night {Globals.custUsername}";
-
-            if (hours >= 1 && hours <= 12) {
-                greeting = "Good Morning, " + Globals.custUsername;
-            }
-            else if (hours >= 12 && hours <= 16) {
-                greeting = "Good Afternoon, " + Globals.custUsername;
-            }
-            else if (hours >= 16 && hours <= 21) {
-
-                if (hours == 20 || hours == 21) {
-                    greeting = "Good Late Evening, " + Globals.custUsername;
-                }
-
-            }
-            else if (hours >= 21 && hours <= 24) {
-                greeting = "Good Night, " + Globals.custUsername;
-            }
-
-            accessHomePage.lblGreetingText.Text = greeting;
-
         }
 
         /// <summary>

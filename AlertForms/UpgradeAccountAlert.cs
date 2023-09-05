@@ -17,7 +17,7 @@ namespace FlowSERVER1 {
         private void guna2Button1_Click(object sender, EventArgs e) {
             var remAccShow = new SettingsForm();
             remAccShow.Show();
-            SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabPage3"];
+            SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePlan"];
             this.Close();
         }
     }
