@@ -82,6 +82,7 @@
             this.guna2Button17 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button18 = new Guna.UI2.WinForms.Guna2Button();
             this.pnlFileOptions = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.lblSharedToName = new System.Windows.Forms.Label();
             this.lblSelectedDirName = new System.Windows.Forms.Label();
             this.lblFileTableName = new System.Windows.Forms.Label();
@@ -104,16 +105,13 @@
             this.txtBoxSearchFile = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnDeleteFolder = new Guna.UI2.WinForms.Guna2Button();
             this.btnOpenRenameFolderPage = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2CircleButton2 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
             this.lblGreetingText = new System.Windows.Forms.Label();
             this.pnlExceedStorage = new Guna.UI2.WinForms.Guna2Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.pnlFolders.SuspendLayout();
@@ -775,7 +773,7 @@
             this.guna2Panel1.Controls.Add(this.guna2Button17);
             this.guna2Panel1.Controls.Add(this.guna2Button18);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(754, 67);
+            this.guna2Panel1.Location = new System.Drawing.Point(875, 64);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(426, 102);
             this.guna2Panel1.TabIndex = 39;
@@ -1011,6 +1009,30 @@
             this.pnlFileOptions.TabIndex = 47;
             this.pnlFileOptions.Visible = false;
             this.pnlFileOptions.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_1);
+            // 
+            // guna2Button1
+            // 
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.BorderColor = System.Drawing.Color.Empty;
+            this.guna2Button1.BorderRadius = 5;
+            this.guna2Button1.BorderThickness = 1;
+            this.guna2Button1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.Empty;
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.guna2Button1.ForeColor = System.Drawing.Color.LightGray;
+            this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_garbage_66;
+            this.guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button1.ImageSize = new System.Drawing.Size(26, 26);
+            this.guna2Button1.Location = new System.Drawing.Point(93, 102);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(129, 29);
+            this.guna2Button1.TabIndex = 56;
+            this.guna2Button1.Text = "Delete";
+            this.guna2Button1.TextOffset = new System.Drawing.Point(1, 0);
             // 
             // lblSharedToName
             // 
@@ -1323,9 +1345,9 @@
             this.btnOpenFilterType.ImageAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.btnOpenFilterType.ImageOffset = new System.Drawing.Point(0, -1);
             this.btnOpenFilterType.ImageSize = new System.Drawing.Size(19, 19);
-            this.btnOpenFilterType.Location = new System.Drawing.Point(1061, 19);
+            this.btnOpenFilterType.Location = new System.Drawing.Point(1172, 14);
             this.btnOpenFilterType.Name = "btnOpenFilterType";
-            this.btnOpenFilterType.Size = new System.Drawing.Size(125, 41);
+            this.btnOpenFilterType.Size = new System.Drawing.Size(129, 43);
             this.btnOpenFilterType.TabIndex = 37;
             this.btnOpenFilterType.Text = "Filter Type";
             this.btnOpenFilterType.TextOffset = new System.Drawing.Point(-8, -1);
@@ -1351,14 +1373,14 @@
             this.txtBoxSearchFile.IconLeft = global::FlowSERVER1.Properties.Resources.icons8_search_30__1_;
             this.txtBoxSearchFile.IconLeftOffset = new System.Drawing.Point(4, 0);
             this.txtBoxSearchFile.IconLeftSize = new System.Drawing.Size(18, 18);
-            this.txtBoxSearchFile.Location = new System.Drawing.Point(673, 19);
+            this.txtBoxSearchFile.Location = new System.Drawing.Point(813, 14);
             this.txtBoxSearchFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBoxSearchFile.Name = "txtBoxSearchFile";
             this.txtBoxSearchFile.PasswordChar = '\0';
             this.txtBoxSearchFile.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtBoxSearchFile.PlaceholderText = "Search in Flowstorage";
             this.txtBoxSearchFile.SelectedText = "";
-            this.txtBoxSearchFile.Size = new System.Drawing.Size(379, 41);
+            this.txtBoxSearchFile.Size = new System.Drawing.Size(352, 43);
             this.txtBoxSearchFile.TabIndex = 29;
             this.txtBoxSearchFile.TextOffset = new System.Drawing.Point(1, 0);
             this.txtBoxSearchFile.TextChanged += new System.EventHandler(this.guna2TextBox5_TextChanged);
@@ -1409,47 +1431,6 @@
             this.btnOpenRenameFolderPage.Size = new System.Drawing.Size(33, 31);
             this.btnOpenRenameFolderPage.TabIndex = 38;
             this.btnOpenRenameFolderPage.Click += new System.EventHandler(this.guna2Button3_Click_1);
-            // 
-            // guna2CircleButton1
-            // 
-            this.guna2CircleButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2CircleButton1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Image = global::FlowSERVER1.Properties.Resources.icons8_api_32__1_;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(1210, 17);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(42, 42);
-            this.guna2CircleButton1.TabIndex = 45;
-            this.guna2CircleButton1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
-            // 
-            // guna2CircleButton2
-            // 
-            this.guna2CircleButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2CircleButton2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2CircleButton2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2CircleButton2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2CircleButton2.ForeColor = System.Drawing.Color.Gray;
-            this.guna2CircleButton2.Image = global::FlowSERVER1.Properties.Resources.icons8_feedback_48;
-            this.guna2CircleButton2.ImageSize = new System.Drawing.Size(24, 24);
-            this.guna2CircleButton2.Location = new System.Drawing.Point(1262, 17);
-            this.guna2CircleButton2.Name = "guna2CircleButton2";
-            this.guna2CircleButton2.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton2.Size = new System.Drawing.Size(42, 42);
-            this.guna2CircleButton2.TabIndex = 44;
-            this.guna2CircleButton2.TextOffset = new System.Drawing.Point(1, -1);
-            this.guna2CircleButton2.Click += new System.EventHandler(this.guna2CircleButton2_Click);
             // 
             // btnDownloadFolder
             // 
@@ -1503,62 +1484,17 @@
             this.pnlExceedStorage.TabIndex = 53;
             this.pnlExceedStorage.Visible = false;
             // 
-            // label5
+            // label6
             // 
-            this.label5.AutoEllipsis = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(10, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(408, 27);
-            this.label5.TabIndex = 56;
-            this.label5.Text = "Warning: Your storage usage has exceed 70%";
-            // 
-            // guna2Button1
-            // 
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button1.BorderRadius = 5;
-            this.guna2Button1.BorderThickness = 1;
-            this.guna2Button1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button1.ForeColor = System.Drawing.Color.LightGray;
-            this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_garbage_66;
-            this.guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button1.ImageSize = new System.Drawing.Size(26, 26);
-            this.guna2Button1.Location = new System.Drawing.Point(93, 102);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(129, 29);
-            this.guna2Button1.TabIndex = 56;
-            this.guna2Button1.Text = "Delete";
-            this.guna2Button1.TextOffset = new System.Drawing.Point(1, 0);
-            // 
-            // guna2Button2
-            // 
-            this.guna2Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button2.Animated = true;
-            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button2.BorderRadius = 12;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(368, 85);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(128, 39);
-            this.guna2Button2.TabIndex = 57;
-            this.guna2Button2.Text = "Upgrade Plan";
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.label6.AutoEllipsis = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label6.Location = new System.Drawing.Point(12, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(353, 27);
+            this.label6.TabIndex = 59;
+            this.label6.Text = "Upgrade your plan to get more storage.";
             // 
             // guna2Button3
             // 
@@ -1581,17 +1517,38 @@
             this.guna2Button3.TabIndex = 58;
             this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
             // 
-            // label6
+            // guna2Button2
             // 
-            this.label6.AutoEllipsis = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(12, 45);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(353, 27);
-            this.label6.TabIndex = 59;
-            this.label6.Text = "Upgrade your plan to get more storage.";
+            this.guna2Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button2.Animated = true;
+            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.guna2Button2.BorderRadius = 12;
+            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button2.ForeColor = System.Drawing.Color.White;
+            this.guna2Button2.Location = new System.Drawing.Point(368, 85);
+            this.guna2Button2.Name = "guna2Button2";
+            this.guna2Button2.Size = new System.Drawing.Size(128, 39);
+            this.guna2Button2.TabIndex = 57;
+            this.guna2Button2.Text = "Upgrade Plan";
+            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoEllipsis = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(10, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(408, 27);
+            this.label5.TabIndex = 56;
+            this.label5.Text = "Warning: Your storage usage has exceed 70%";
             // 
             // HomePage
             // 
@@ -1618,8 +1575,6 @@
             this.Controls.Add(this.txtBoxSearchFile);
             this.Controls.Add(this.btnDeleteFolder);
             this.Controls.Add(this.btnOpenRenameFolderPage);
-            this.Controls.Add(this.guna2CircleButton1);
-            this.Controls.Add(this.guna2CircleButton2);
             this.Controls.Add(this.guna2VSeparator1);
             this.Controls.Add(this.btnDownloadFolder);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1699,8 +1654,6 @@
         private Guna.UI2.WinForms.Guna2Panel pnlDragAndDropUpload;
         public System.Windows.Forms.Label label25;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton2;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         public Guna.UI2.WinForms.Guna2Button guna2Button25;
         public Guna.UI2.WinForms.Guna2Button guna2Button24;
