@@ -113,7 +113,7 @@
             this.guna2Button1.Animated = true;
             this.guna2Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.guna2Button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button1.BorderRadius = 6;
+            this.guna2Button1.BorderRadius = 12;
             this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -123,7 +123,7 @@
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Location = new System.Drawing.Point(139, 155);
             this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(128, 35);
+            this.guna2Button1.Size = new System.Drawing.Size(128, 39);
             this.guna2Button1.TabIndex = 34;
             this.guna2Button1.Text = "Upgrade Plan";
             this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);

@@ -46,7 +46,7 @@
             this.btnCreateDirectory.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCreateDirectory.Animated = true;
             this.btnCreateDirectory.BackColor = System.Drawing.Color.Transparent;
-            this.btnCreateDirectory.BorderRadius = 10;
+            this.btnCreateDirectory.BorderRadius = 12;
             this.btnCreateDirectory.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnCreateDirectory.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnCreateDirectory.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -54,9 +54,9 @@
             this.btnCreateDirectory.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.btnCreateDirectory.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnCreateDirectory.ForeColor = System.Drawing.Color.White;
-            this.btnCreateDirectory.Location = new System.Drawing.Point(45, 136);
+            this.btnCreateDirectory.Location = new System.Drawing.Point(45, 142);
             this.btnCreateDirectory.Name = "btnCreateDirectory";
-            this.btnCreateDirectory.Size = new System.Drawing.Size(297, 51);
+            this.btnCreateDirectory.Size = new System.Drawing.Size(297, 54);
             this.btnCreateDirectory.TabIndex = 17;
             this.btnCreateDirectory.Text = "Create";
             this.btnCreateDirectory.Click += new System.EventHandler(this.btnCreateDirectory_Click);
@@ -89,7 +89,7 @@
             this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.Location = new System.Drawing.Point(89, 90);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(368, 272);
+            this.guna2Panel1.Size = new System.Drawing.Size(368, 284);
             this.guna2Panel1.TabIndex = 17;
             // 
             // btnCancel
@@ -98,7 +98,7 @@
             this.btnCancel.Animated = true;
             this.btnCancel.BackColor = System.Drawing.Color.Transparent;
             this.btnCancel.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.btnCancel.BorderRadius = 10;
+            this.btnCancel.BorderRadius = 12;
             this.btnCancel.BorderThickness = 2;
             this.btnCancel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnCancel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -107,9 +107,9 @@
             this.btnCancel.FillColor = System.Drawing.Color.Transparent;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(45, 194);
+            this.btnCancel.Location = new System.Drawing.Point(45, 203);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(297, 51);
+            this.btnCancel.Size = new System.Drawing.Size(297, 54);
             this.btnCancel.TabIndex = 18;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.guna2Button1_Click);
@@ -131,14 +131,14 @@
             this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.guna2TextBox1.ForeColor = System.Drawing.Color.White;
             this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox1.Location = new System.Drawing.Point(45, 62);
+            this.guna2TextBox1.Location = new System.Drawing.Point(45, 68);
             this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.guna2TextBox1.MaxLength = 75;
             this.guna2TextBox1.Name = "guna2TextBox1";
             this.guna2TextBox1.PasswordChar = '\0';
             this.guna2TextBox1.PlaceholderText = "";
             this.guna2TextBox1.SelectedText = "";
-            this.guna2TextBox1.Size = new System.Drawing.Size(297, 44);
+            this.guna2TextBox1.Size = new System.Drawing.Size(297, 49);
             this.guna2TextBox1.TabIndex = 16;
             this.guna2TextBox1.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
@@ -148,7 +148,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(47, 37);
+            this.label4.Location = new System.Drawing.Point(47, 42);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(130, 20);
             this.label4.TabIndex = 5;

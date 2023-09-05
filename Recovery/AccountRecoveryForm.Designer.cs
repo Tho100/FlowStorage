@@ -27,8 +27,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ValidateRecoveryEmail));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtFieldPin = new Guna.UI2.WinForms.Guna2TextBox();
             this.lblAlert = new System.Windows.Forms.Label();
             this.txtFieldEmail = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
@@ -58,53 +56,13 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Password Recovery";
             // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label3.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label3.Location = new System.Drawing.Point(53, 166);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 20);
-            this.label3.TabIndex = 48;
-            this.label3.Text = "PIN";
-            // 
-            // txtFieldPin
-            // 
-            this.txtFieldPin.BackColor = System.Drawing.Color.Transparent;
-            this.txtFieldPin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFieldPin.BorderRadius = 8;
-            this.txtFieldPin.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtFieldPin.DefaultText = "";
-            this.txtFieldPin.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.txtFieldPin.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.txtFieldPin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldPin.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldPin.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFieldPin.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldPin.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFieldPin.ForeColor = System.Drawing.Color.White;
-            this.txtFieldPin.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldPin.Location = new System.Drawing.Point(47, 189);
-            this.txtFieldPin.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtFieldPin.MaxLength = 3;
-            this.txtFieldPin.Name = "txtFieldPin";
-            this.txtFieldPin.PasswordChar = '*';
-            this.txtFieldPin.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldPin.PlaceholderText = "Enter your PIN key";
-            this.txtFieldPin.SelectedText = "";
-            this.txtFieldPin.Size = new System.Drawing.Size(162, 44);
-            this.txtFieldPin.TabIndex = 47;
-            this.txtFieldPin.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
-            // 
             // lblAlert
             // 
             this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblAlert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlert.Location = new System.Drawing.Point(149, 342);
+            this.lblAlert.Location = new System.Drawing.Point(149, 267);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.Size = new System.Drawing.Size(136, 20);
             this.lblAlert.TabIndex = 19;
@@ -135,7 +93,7 @@
             this.txtFieldEmail.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldEmail.PlaceholderText = "Enter your email address";
             this.txtFieldEmail.SelectedText = "";
-            this.txtFieldEmail.Size = new System.Drawing.Size(273, 44);
+            this.txtFieldEmail.Size = new System.Drawing.Size(331, 49);
             this.txtFieldEmail.TabIndex = 16;
             this.txtFieldEmail.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
@@ -145,7 +103,7 @@
             this.guna2Button2.Animated = true;
             this.guna2Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button2.BorderRadius = 10;
+            this.guna2Button2.BorderRadius = 12;
             this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -153,9 +111,9 @@
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(47, 385);
+            this.guna2Button2.Location = new System.Drawing.Point(47, 305);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(331, 51);
+            this.guna2Button2.Size = new System.Drawing.Size(331, 54);
             this.guna2Button2.TabIndex = 15;
             this.guna2Button2.Text = "Next";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);
@@ -190,14 +148,14 @@
             this.txtFieldRecoveryKey.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.txtFieldRecoveryKey.ForeColor = System.Drawing.Color.White;
             this.txtFieldRecoveryKey.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldRecoveryKey.Location = new System.Drawing.Point(47, 269);
+            this.txtFieldRecoveryKey.Location = new System.Drawing.Point(47, 200);
             this.txtFieldRecoveryKey.Margin = new System.Windows.Forms.Padding(4);
             this.txtFieldRecoveryKey.Name = "txtFieldRecoveryKey";
             this.txtFieldRecoveryKey.PasswordChar = '\0';
             this.txtFieldRecoveryKey.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldRecoveryKey.PlaceholderText = "Enter your backup recovery key";
             this.txtFieldRecoveryKey.SelectedText = "";
-            this.txtFieldRecoveryKey.Size = new System.Drawing.Size(331, 44);
+            this.txtFieldRecoveryKey.Size = new System.Drawing.Size(331, 49);
             this.txtFieldRecoveryKey.TabIndex = 50;
             // 
             // label1
@@ -206,7 +164,7 @@
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(52, 245);
+            this.label1.Location = new System.Drawing.Point(52, 176);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 20);
             this.label1.TabIndex = 49;
@@ -265,8 +223,6 @@
             this.Controls.Add(this.txtFieldRecoveryKey);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtFieldPin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.guna2Button2);
             this.Controls.Add(this.lblAlert);
@@ -286,12 +242,10 @@
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblAlert;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldEmail;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label label2;
-        private Guna.UI2.WinForms.Guna2TextBox txtFieldPin;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldRecoveryKey;
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;

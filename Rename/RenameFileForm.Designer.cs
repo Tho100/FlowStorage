@@ -77,7 +77,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(94, 113);
+            this.label1.Location = new System.Drawing.Point(94, 106);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 17);
             this.label1.TabIndex = 52;
@@ -111,7 +111,7 @@
             this.guna2Button6.Animated = true;
             this.guna2Button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button6.BorderRadius = 10;
+            this.guna2Button6.BorderRadius = 12;
             this.guna2Button6.BorderThickness = 2;
             this.guna2Button6.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button6.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -120,9 +120,9 @@
             this.guna2Button6.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Location = new System.Drawing.Point(90, 283);
+            this.guna2Button6.Location = new System.Drawing.Point(90, 284);
             this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(380, 51);
+            this.guna2Button6.Size = new System.Drawing.Size(380, 54);
             this.guna2Button6.TabIndex = 50;
             this.guna2Button6.Text = "Close";
             this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
@@ -132,7 +132,7 @@
             this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.guna2Button2.Animated = true;
             this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.BorderRadius = 10;
+            this.guna2Button2.BorderRadius = 12;
             this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -140,9 +140,9 @@
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(90, 222);
+            this.guna2Button2.Location = new System.Drawing.Point(90, 223);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(380, 51);
+            this.guna2Button2.Size = new System.Drawing.Size(380, 54);
             this.guna2Button2.TabIndex = 49;
             this.guna2Button2.Text = "Confirm";
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
@@ -164,14 +164,14 @@
             this.txtFieldNewFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldNewFileName.ForeColor = System.Drawing.Color.White;
             this.txtFieldNewFileName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldNewFileName.Location = new System.Drawing.Point(90, 138);
+            this.txtFieldNewFileName.Location = new System.Drawing.Point(90, 131);
             this.txtFieldNewFileName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldNewFileName.Name = "txtFieldNewFileName";
             this.txtFieldNewFileName.PasswordChar = '\0';
             this.txtFieldNewFileName.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldNewFileName.PlaceholderText = "Enter new name for this file";
             this.txtFieldNewFileName.SelectedText = "";
-            this.txtFieldNewFileName.Size = new System.Drawing.Size(380, 44);
+            this.txtFieldNewFileName.Size = new System.Drawing.Size(380, 49);
             this.txtFieldNewFileName.TabIndex = 48;
             // 
             // RenameFileForm

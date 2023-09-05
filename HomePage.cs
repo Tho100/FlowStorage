@@ -611,6 +611,12 @@ namespace FlowSERVER1 {
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.GeneratePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
+                if(int.Parse(lblUsagePercentage.Text.Replace("%", "")) >= 70 && int.Parse(lblUsagePercentage.Text.Replace("%", "")) < 75) {
+                    pnlExceedStorage.Visible = true;
+                } else {
+                    pnlExceedStorage.Visible = false;
+                }
+
                 BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
@@ -4408,6 +4414,15 @@ namespace FlowSERVER1 {
 
         private void HomePage_FormClosing(object sender, FormClosingEventArgs e) {
 
+        }
+
+        private void guna2Button3_Click(object sender, EventArgs e) {
+            this.Close();
+        }
+
+        private void guna2Button2_Click(object sender, EventArgs e) {
+            new SettingsForm().Show();
+            SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePage"];
         }
     }
 }

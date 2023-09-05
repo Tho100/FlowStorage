@@ -51,7 +51,7 @@
             this.guna2Button2.Animated = true;
             this.guna2Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button2.BorderRadius = 10;
+            this.guna2Button2.BorderRadius = 12;
             this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -59,9 +59,9 @@
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(69, 321);
+            this.guna2Button2.Location = new System.Drawing.Point(50, 321);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(273, 51);
+            this.guna2Button2.Size = new System.Drawing.Size(304, 54);
             this.guna2Button2.TabIndex = 15;
             this.guna2Button2.Text = "Sign In";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);
@@ -73,7 +73,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(74, 207);
+            this.label1.Location = new System.Drawing.Point(55, 207);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 20);
             this.label1.TabIndex = 7;
@@ -86,7 +86,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(74, 126);
+            this.label2.Location = new System.Drawing.Point(55, 113);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(99, 20);
             this.label2.TabIndex = 5;
@@ -131,7 +131,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label3.Location = new System.Drawing.Point(246, 207);
+            this.label3.Location = new System.Drawing.Point(269, 207);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 20);
             this.label3.TabIndex = 48;
@@ -154,7 +154,7 @@
             this.txtFieldPIN.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldPIN.ForeColor = System.Drawing.Color.White;
             this.txtFieldPIN.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldPIN.Location = new System.Drawing.Point(240, 232);
+            this.txtFieldPIN.Location = new System.Drawing.Point(268, 230);
             this.txtFieldPIN.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFieldPIN.MaxLength = 3;
             this.txtFieldPIN.Name = "txtFieldPIN";
@@ -162,7 +162,7 @@
             this.txtFieldPIN.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldPIN.PlaceholderText = "";
             this.txtFieldPIN.SelectedText = "";
-            this.txtFieldPIN.Size = new System.Drawing.Size(86, 40);
+            this.txtFieldPIN.Size = new System.Drawing.Size(86, 49);
             this.txtFieldPIN.TabIndex = 47;
             this.txtFieldPIN.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
@@ -181,7 +181,7 @@
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
-            this.guna2Button1.Location = new System.Drawing.Point(31, 235);
+            this.guna2Button1.Location = new System.Drawing.Point(12, 235);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(31, 26);
             this.guna2Button1.TabIndex = 20;
@@ -202,7 +202,7 @@
             this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
-            this.guna2Button3.Location = new System.Drawing.Point(31, 235);
+            this.guna2Button3.Location = new System.Drawing.Point(12, 235);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(31, 26);
             this.guna2Button3.TabIndex = 21;
@@ -240,7 +240,7 @@
             this.lblAlert.BackColor = System.Drawing.Color.Transparent;
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlert.Location = new System.Drawing.Point(57, 291);
+            this.lblAlert.Location = new System.Drawing.Point(49, 291);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAlert.Size = new System.Drawing.Size(266, 20);
@@ -266,14 +266,14 @@
             this.txtFieldAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldAuth.Location = new System.Drawing.Point(72, 232);
+            this.txtFieldAuth.Location = new System.Drawing.Point(53, 232);
             this.txtFieldAuth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFieldAuth.Name = "txtFieldAuth";
             this.txtFieldAuth.PasswordChar = '*';
             this.txtFieldAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldAuth.PlaceholderText = "Enter your password";
             this.txtFieldAuth.SelectedText = "";
-            this.txtFieldAuth.Size = new System.Drawing.Size(160, 41);
+            this.txtFieldAuth.Size = new System.Drawing.Size(207, 49);
             this.txtFieldAuth.TabIndex = 17;
             this.txtFieldAuth.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
@@ -294,14 +294,14 @@
             this.txtFieldEmail.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldEmail.ForeColor = System.Drawing.Color.White;
             this.txtFieldEmail.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldEmail.Location = new System.Drawing.Point(69, 149);
+            this.txtFieldEmail.Location = new System.Drawing.Point(50, 139);
             this.txtFieldEmail.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFieldEmail.Name = "txtFieldEmail";
             this.txtFieldEmail.PasswordChar = '\0';
             this.txtFieldEmail.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldEmail.PlaceholderText = "Enter your email address";
             this.txtFieldEmail.SelectedText = "";
-            this.txtFieldEmail.Size = new System.Drawing.Size(257, 42);
+            this.txtFieldEmail.Size = new System.Drawing.Size(304, 49);
             this.txtFieldEmail.TabIndex = 16;
             this.txtFieldEmail.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
@@ -339,7 +339,7 @@
             this.guna2Button4.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
-            this.guna2Button4.Location = new System.Drawing.Point(597, 16);
+            this.guna2Button4.Location = new System.Drawing.Point(613, 16);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 54;
@@ -362,7 +362,7 @@
             this.guna2Separator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Separator1.Location = new System.Drawing.Point(-18, 66);
             this.guna2Separator1.Name = "guna2Separator1";
-            this.guna2Separator1.Size = new System.Drawing.Size(684, 10);
+            this.guna2Separator1.Size = new System.Drawing.Size(700, 10);
             this.guna2Separator1.TabIndex = 55;
             // 
             // SignInForm
@@ -370,7 +370,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(647, 498);
+            this.ClientSize = new System.Drawing.Size(663, 498);
             this.Controls.Add(this.guna2VSeparator1);
             this.Controls.Add(this.guna2Separator1);
             this.Controls.Add(this.linkLabel1);

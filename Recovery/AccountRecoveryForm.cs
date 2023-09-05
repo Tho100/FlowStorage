@@ -102,18 +102,6 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                if(SelectValueCustomColumn("CUST_PIN") == null) {
-                    lblAlert.Text = "Account not found.";
-                    lblAlert.Visible = true;
-                    return;
-                }
-
-                if(EncryptionModel.computeAuthCase(txtFieldPin.Text) != SelectValueCustomColumn("CUST_PIN")) {
-                    lblAlert.Text = "PIN key is incorrect.";
-                    lblAlert.Visible = true;
-                    return;
-                }
-
                 if(txtFieldRecoveryKey.Text != ReturnRecoveryValue()) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Invalid recovery key.";
@@ -139,10 +127,5 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPin.Text, "[^0-9]")) {
-                txtFieldPin.Text = txtFieldPin.Text.Remove(txtFieldPin.Text.Length - 1);
-            }
-        }
     }
 }

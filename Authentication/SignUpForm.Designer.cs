@@ -357,7 +357,7 @@
             this.guna2Button11.Animated = true;
             this.guna2Button11.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button11.BorderRadius = 10;
+            this.guna2Button11.BorderRadius = 12;
             this.guna2Button11.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button11.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button11.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -366,8 +366,8 @@
             this.guna2Button11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button11.ForeColor = System.Drawing.Color.White;
             this.guna2Button11.Location = new System.Drawing.Point(631, 500);
-            this.guna2Button11.Name = "btnSignUp";
-            this.guna2Button11.Size = new System.Drawing.Size(504, 55);
+            this.guna2Button11.Name = "guna2Button11";
+            this.guna2Button11.Size = new System.Drawing.Size(504, 60);
             this.guna2Button11.TabIndex = 15;
             this.guna2Button11.Text = "Sign Up";
             this.guna2Button11.Click += new System.EventHandler(this.btnSignUp_Click);
