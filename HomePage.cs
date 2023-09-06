@@ -3422,6 +3422,10 @@ namespace FlowSERVER1 {
 
             pnlFileOptions.Visible = false;
 
+            imgDiscover.Visible = false;
+            lblDiscover.Visible = false;
+            dotDiscover.Visible = false;
+
             try {
 
                 int _selectedIndex = lstFoldersPage.SelectedIndex;
@@ -3801,6 +3805,8 @@ namespace FlowSERVER1 {
 
                 flwLayoutHome.Controls.Clear();
 
+                MessageBox.Show(lblCurrentPageText.Text);
+
                 if (_selectedFolderSearch == "Home") {
                     BuildHomeFiles();
                 }
@@ -3815,7 +3821,8 @@ namespace FlowSERVER1 {
                 else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
                     await RefreshFolder();
                 }
-                else if (lblCurrentPageText.Text == "Public Storage") {
+
+                if (lblCurrentPageText.Text == "Public Storage") {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
                     BuildPublicStorageFiles();
@@ -3849,6 +3856,10 @@ namespace FlowSERVER1 {
             btnLogout.Visible = true;
             pnlMain.Visible = true;
             pnlPublicStorage.Visible = false;
+
+            imgDiscover.Visible = false;
+            lblDiscover.Visible = false;
+            dotDiscover.Visible = false;
 
             lblMyFolders.Visible = false;
             lstFoldersPage.Visible = false;
@@ -4394,6 +4405,10 @@ namespace FlowSERVER1 {
             pnlFolders.SendToBack();
             pnlMain.SendToBack();
 
+            imgDiscover.Visible = true;
+            lblDiscover.Visible = true;
+            dotDiscover.Visible = true;
+
             flwLayoutHome.Controls.Clear();
             BuildRedundaneVisibility();
 
@@ -4430,5 +4445,8 @@ namespace FlowSERVER1 {
             guna2Panel1.Visible = filterTypePanelVisible;
         }
 
+        private void label8_Click_1(object sender, EventArgs e) {
+
+        }
     }
 }
