@@ -337,7 +337,7 @@
             this.btnUpload.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnUpload.Animated = true;
             this.btnUpload.BackColor = System.Drawing.Color.Transparent;
-            this.btnUpload.BorderRadius = 10;
+            this.btnUpload.BorderRadius = 12;
             this.btnUpload.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnUpload.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnUpload.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -345,9 +345,9 @@
             this.btnUpload.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.btnUpload.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.Location = new System.Drawing.Point(21, 453);
+            this.btnUpload.Location = new System.Drawing.Point(21, 451);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(475, 51);
+            this.btnUpload.Size = new System.Drawing.Size(475, 54);
             this.btnUpload.TabIndex = 17;
             this.btnUpload.Text = "Upload";
             this.btnUpload.Click += new System.EventHandler(this.guna2Button2_Click);

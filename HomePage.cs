@@ -1398,7 +1398,7 @@ namespace FlowSERVER1 {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePublicStoragePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromPs: true, moreButtonVisible: isFromMyPs);
+                panelGenerator.GeneratePublicStoragePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, usernameList, moreButtonVisible: isFromMyPs);
 
                 BuildRedundaneVisibility();
 
@@ -4220,7 +4220,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button26_Click_1(object sender, EventArgs e) {
+        private void btnDeleteFile_Click_1(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;

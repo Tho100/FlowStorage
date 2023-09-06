@@ -105,7 +105,7 @@ namespace FlowSERVER1.Helper {
             };
         }
 
-        public void GeneratePublicStoragePanel(string parameterName, int length, List<(string, string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false, bool moreButtonVisible = true, bool isFromDirectory = false) {
+        public void GeneratePublicStoragePanel(string parameterName, int length, List<(string, string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, List<String> usernameList, bool moreButtonVisible = true) {
 
             for (int i = 0; i < length; i++) {
 
@@ -134,8 +134,9 @@ namespace FlowSERVER1.Helper {
                 dateLab.ForeColor = GlobalStyle.DarkGrayColor;
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
+                dateLab.Width = 200;
                 dateLab.Location = new Point(12, 241);
-                dateLab.Text = filesInfo[i].Item2;
+                dateLab.Text = $"{usernameList[i]} · {filesInfo[i].Item2}";
 
                 Guna2Panel tagBackground = new Guna2Panel();
                 panelF.Controls.Add(tagBackground);
