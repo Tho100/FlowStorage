@@ -25,19 +25,19 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series34 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series35 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series36 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series37 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series38 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series39 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series40 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series41 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series42 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series43 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series44 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControlSettings = new Guna.UI2.WinForms.Guna2TabControl();
             this.tabAccountPage = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
@@ -825,78 +825,78 @@
             // 
             this.chart1.BackColor = System.Drawing.Color.Empty;
             this.chart1.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(4, 16);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             this.chart1.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))))};
-            series12.ChartArea = "ChartArea1";
-            series12.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            series12.Legend = "Legend1";
-            series12.Name = "Image";
-            series12.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series13.ChartArea = "ChartArea1";
-            series13.Color = System.Drawing.Color.MediumPurple;
-            series13.Legend = "Legend1";
-            series13.Name = "Text";
-            series13.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series14.ChartArea = "ChartArea1";
-            series14.Legend = "Legend1";
-            series14.Name = "Video";
-            series14.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series15.ChartArea = "ChartArea1";
-            series15.Legend = "Legend1";
-            series15.Name = "Exe";
-            series15.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series16.ChartArea = "ChartArea1";
-            series16.Color = System.Drawing.Color.Crimson;
-            series16.Legend = "Legend1";
-            series16.Name = "PDF";
-            series16.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series17.ChartArea = "ChartArea1";
-            series17.Color = System.Drawing.Color.YellowGreen;
-            series17.Legend = "Legend1";
-            series17.Name = "APK";
-            series17.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series18.ChartArea = "ChartArea1";
-            series18.Color = System.Drawing.Color.Gray;
-            series18.Legend = "Legend1";
-            series18.Name = "GIF";
-            series18.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series19.ChartArea = "ChartArea1";
-            series19.Color = System.Drawing.SystemColors.HotTrack;
-            series19.Legend = "Legend1";
-            series19.Name = "Document";
-            series19.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series20.ChartArea = "ChartArea1";
-            series20.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series20.Legend = "Legend1";
-            series20.Name = "Presentation";
-            series20.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series21.ChartArea = "ChartArea1";
-            series21.Color = System.Drawing.Color.Gold;
-            series21.Legend = "Legend1";
-            series21.Name = "Audio";
-            series22.ChartArea = "ChartArea1";
-            series22.Color = System.Drawing.Color.ForestGreen;
-            series22.Legend = "Legend1";
-            series22.Name = "Excel";
-            series22.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series12);
-            this.chart1.Series.Add(series13);
-            this.chart1.Series.Add(series14);
-            this.chart1.Series.Add(series15);
-            this.chart1.Series.Add(series16);
-            this.chart1.Series.Add(series17);
-            this.chart1.Series.Add(series18);
-            this.chart1.Series.Add(series19);
-            this.chart1.Series.Add(series20);
-            this.chart1.Series.Add(series21);
-            this.chart1.Series.Add(series22);
+            series34.ChartArea = "ChartArea1";
+            series34.Color = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            series34.Legend = "Legend1";
+            series34.Name = "Image";
+            series34.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series35.ChartArea = "ChartArea1";
+            series35.Color = System.Drawing.Color.MediumPurple;
+            series35.Legend = "Legend1";
+            series35.Name = "Text";
+            series35.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series36.ChartArea = "ChartArea1";
+            series36.Legend = "Legend1";
+            series36.Name = "Video";
+            series36.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series37.ChartArea = "ChartArea1";
+            series37.Legend = "Legend1";
+            series37.Name = "Exe";
+            series37.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series38.ChartArea = "ChartArea1";
+            series38.Color = System.Drawing.Color.Crimson;
+            series38.Legend = "Legend1";
+            series38.Name = "PDF";
+            series38.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series39.ChartArea = "ChartArea1";
+            series39.Color = System.Drawing.Color.YellowGreen;
+            series39.Legend = "Legend1";
+            series39.Name = "APK";
+            series39.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series40.ChartArea = "ChartArea1";
+            series40.Color = System.Drawing.Color.Gray;
+            series40.Legend = "Legend1";
+            series40.Name = "GIF";
+            series40.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series41.ChartArea = "ChartArea1";
+            series41.Color = System.Drawing.SystemColors.HotTrack;
+            series41.Legend = "Legend1";
+            series41.Name = "Document";
+            series41.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series42.ChartArea = "ChartArea1";
+            series42.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series42.Legend = "Legend1";
+            series42.Name = "Presentation";
+            series42.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series43.ChartArea = "ChartArea1";
+            series43.Color = System.Drawing.Color.Gold;
+            series43.Legend = "Legend1";
+            series43.Name = "Audio";
+            series44.ChartArea = "ChartArea1";
+            series44.Color = System.Drawing.Color.ForestGreen;
+            series44.Legend = "Legend1";
+            series44.Name = "Excel";
+            series44.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series34);
+            this.chart1.Series.Add(series35);
+            this.chart1.Series.Add(series36);
+            this.chart1.Series.Add(series37);
+            this.chart1.Series.Add(series38);
+            this.chart1.Series.Add(series39);
+            this.chart1.Series.Add(series40);
+            this.chart1.Series.Add(series41);
+            this.chart1.Series.Add(series42);
+            this.chart1.Series.Add(series43);
+            this.chart1.Series.Add(series44);
             this.chart1.Size = new System.Drawing.Size(602, 404);
             this.chart1.TabIndex = 31;
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -1333,6 +1333,7 @@
             // guna2PictureBox9
             // 
             this.guna2PictureBox9.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox9.Image = global::FlowSERVER1.Properties.Resources.icons8_netherlands_961;
             this.guna2PictureBox9.ImageRotate = 0F;
             this.guna2PictureBox9.Location = new System.Drawing.Point(61, 13);
             this.guna2PictureBox9.Name = "guna2PictureBox9";
@@ -1389,6 +1390,7 @@
             // guna2PictureBox10
             // 
             this.guna2PictureBox10.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox10.Image = global::FlowSERVER1.Properties.Resources.icons8_russian_federation_96;
             this.guna2PictureBox10.ImageRotate = 0F;
             this.guna2PictureBox10.Location = new System.Drawing.Point(60, 13);
             this.guna2PictureBox10.Name = "guna2PictureBox10";
@@ -1445,6 +1447,7 @@
             // guna2PictureBox8
             // 
             this.guna2PictureBox8.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox8.Image = global::FlowSERVER1.Properties.Resources.icons8_japan_48;
             this.guna2PictureBox8.ImageRotate = 0F;
             this.guna2PictureBox8.Location = new System.Drawing.Point(61, 13);
             this.guna2PictureBox8.Name = "guna2PictureBox8";
@@ -1501,6 +1504,7 @@
             // guna2PictureBox6
             // 
             this.guna2PictureBox6.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox6.Image = global::FlowSERVER1.Properties.Resources.icons8_france_48;
             this.guna2PictureBox6.ImageRotate = 0F;
             this.guna2PictureBox6.Location = new System.Drawing.Point(61, 13);
             this.guna2PictureBox6.Name = "guna2PictureBox6";
@@ -1559,6 +1563,7 @@
             // guna2PictureBox1
             // 
             this.guna2PictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_germany_48;
             this.guna2PictureBox1.ImageRotate = 0F;
             this.guna2PictureBox1.Location = new System.Drawing.Point(60, 13);
             this.guna2PictureBox1.Name = "guna2PictureBox1";
@@ -1614,6 +1619,7 @@
             // guna2PictureBox7
             // 
             this.guna2PictureBox7.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox7.Image = global::FlowSERVER1.Properties.Resources.icons8_portugal_48;
             this.guna2PictureBox7.ImageRotate = 0F;
             this.guna2PictureBox7.Location = new System.Drawing.Point(63, 13);
             this.guna2PictureBox7.Name = "guna2PictureBox7";
@@ -1670,6 +1676,7 @@
             // guna2PictureBox5
             // 
             this.guna2PictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox5.Image = global::FlowSERVER1.Properties.Resources.icons8_usa_48;
             this.guna2PictureBox5.ImageRotate = 0F;
             this.guna2PictureBox5.Location = new System.Drawing.Point(60, 13);
             this.guna2PictureBox5.Name = "guna2PictureBox5";
@@ -1727,6 +1734,7 @@
             // guna2PictureBox3
             // 
             this.guna2PictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox3.Image = global::FlowSERVER1.Properties.Resources.icons8_spain_flag_48;
             this.guna2PictureBox3.ImageRotate = 0F;
             this.guna2PictureBox3.Location = new System.Drawing.Point(61, 13);
             this.guna2PictureBox3.Name = "guna2PictureBox3";
@@ -1782,6 +1790,7 @@
             // guna2PictureBox4
             // 
             this.guna2PictureBox4.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox4.Image = global::FlowSERVER1.Properties.Resources.icons8_malaysia_48;
             this.guna2PictureBox4.ImageRotate = 0F;
             this.guna2PictureBox4.Location = new System.Drawing.Point(61, 13);
             this.guna2PictureBox4.Name = "guna2PictureBox4";
@@ -1838,6 +1847,7 @@
             // guna2PictureBox2
             // 
             this.guna2PictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox2.Image = global::FlowSERVER1.Properties.Resources.icons8_china_48;
             this.guna2PictureBox2.ImageRotate = 0F;
             this.guna2PictureBox2.Location = new System.Drawing.Point(60, 13);
             this.guna2PictureBox2.Name = "guna2PictureBox2";
