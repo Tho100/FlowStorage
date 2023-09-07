@@ -67,8 +67,8 @@
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnNext = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPrevious = new Guna.UI2.WinForms.Guna2Button();
             this.filterPanel.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
@@ -722,48 +722,50 @@
             this.guna2Button11.TabIndex = 98;
             this.guna2Button11.Click += new System.EventHandler(this.guna2Button11_Click_1);
             // 
-            // guna2Button9
+            // btnNext
             // 
-            this.guna2Button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button9.Animated = true;
-            this.guna2Button9.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button9.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button9.BorderRadius = 6;
-            this.guna2Button9.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button9.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button9.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button9.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button9.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button9.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button9.ForeColor = System.Drawing.Color.White;
-            this.guna2Button9.ImageSize = new System.Drawing.Size(0, 0);
-            this.guna2Button9.Location = new System.Drawing.Point(1193, 271);
-            this.guna2Button9.Name = "guna2Button9";
-            this.guna2Button9.Size = new System.Drawing.Size(39, 139);
-            this.guna2Button9.TabIndex = 100;
-            this.guna2Button9.Text = ">";
-            this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click_1);
+            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNext.Animated = true;
+            this.btnNext.BackColor = System.Drawing.Color.Transparent;
+            this.btnNext.BorderColor = System.Drawing.Color.Transparent;
+            this.btnNext.BorderRadius = 6;
+            this.btnNext.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNext.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNext.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNext.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNext.FillColor = System.Drawing.Color.Transparent;
+            this.btnNext.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.ForeColor = System.Drawing.Color.White;
+            this.btnNext.ImageSize = new System.Drawing.Size(0, 0);
+            this.btnNext.Location = new System.Drawing.Point(1193, 271);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(39, 139);
+            this.btnNext.TabIndex = 100;
+            this.btnNext.Text = ">";
+            this.btnNext.Visible = false;
+            this.btnNext.Click += new System.EventHandler(this.guna2Button9_Click_1);
             // 
-            // guna2Button12
+            // btnPrevious
             // 
-            this.guna2Button12.Animated = true;
-            this.guna2Button12.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button12.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button12.BorderRadius = 6;
-            this.guna2Button12.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button12.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button12.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button12.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button12.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button12.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button12.ForeColor = System.Drawing.Color.White;
-            this.guna2Button12.ImageSize = new System.Drawing.Size(0, 0);
-            this.guna2Button12.Location = new System.Drawing.Point(348, 271);
-            this.guna2Button12.Name = "guna2Button12";
-            this.guna2Button12.Size = new System.Drawing.Size(39, 139);
-            this.guna2Button12.TabIndex = 101;
-            this.guna2Button12.Text = "<";
-            this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
+            this.btnPrevious.Animated = true;
+            this.btnPrevious.BackColor = System.Drawing.Color.Transparent;
+            this.btnPrevious.BorderColor = System.Drawing.Color.Transparent;
+            this.btnPrevious.BorderRadius = 6;
+            this.btnPrevious.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPrevious.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPrevious.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPrevious.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPrevious.FillColor = System.Drawing.Color.Transparent;
+            this.btnPrevious.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrevious.ForeColor = System.Drawing.Color.White;
+            this.btnPrevious.ImageSize = new System.Drawing.Size(0, 0);
+            this.btnPrevious.Location = new System.Drawing.Point(348, 271);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(39, 139);
+            this.btnPrevious.TabIndex = 101;
+            this.btnPrevious.Text = "<";
+            this.btnPrevious.Visible = false;
+            this.btnPrevious.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
             // PicForm
             // 
@@ -771,8 +773,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1233, 617);
-            this.Controls.Add(this.guna2Button12);
-            this.Controls.Add(this.guna2Button9);
+            this.Controls.Add(this.btnPrevious);
+            this.Controls.Add(this.btnNext);
             this.Controls.Add(this.guna2Button11);
             this.Controls.Add(this.filterPanel);
             this.Controls.Add(this.txtFieldComment);
@@ -864,7 +866,7 @@
         private Guna.UI2.WinForms.Guna2Button btnEditComment;
         private Guna.UI2.WinForms.Guna2Button guna2Button10;
         private Guna.UI2.WinForms.Guna2Button guna2Button11;
-        private Guna.UI2.WinForms.Guna2Button guna2Button9;
-        private Guna.UI2.WinForms.Guna2Button guna2Button12;
+        private Guna.UI2.WinForms.Guna2Button btnNext;
+        private Guna.UI2.WinForms.Guna2Button btnPrevious;
     }
 }

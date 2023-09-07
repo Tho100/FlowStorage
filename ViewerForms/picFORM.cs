@@ -10,7 +10,6 @@ using FlowSERVER1.Helper;
 using System.Collections.Generic;
 using Guna.UI2.WinForms;
 using System.Linq;
-using Xamarin.Forms.Internals;
 using System.IO;
 
 namespace FlowSERVER1 {
@@ -87,6 +86,14 @@ namespace FlowSERVER1 {
             }
 
             lblUploaderName.Text = uploaderName;
+
+            if(_tableName == "folder_upload_info" || _tableName == "file_info") {
+                btnPrevious.Visible = true;
+                btnNext.Visible = true;
+            } else {
+                btnPrevious.Visible = false;
+                btnNext.Visible = false;
+            }
 
         }
 
@@ -401,27 +408,21 @@ namespace FlowSERVER1 {
         private void guna2Button11_Click(object sender, EventArgs e) {
             rotateValue += 90;
 
-            // Reset the rotation angle to 0 after it reaches 360 degrees
             if (rotateValue >= 360) {
                 rotateValue = 0;
-                guna2PictureBox1.Image = filteredImage; // reset image
+                guna2PictureBox1.Image = filteredImage; 
             }
             else {
-                // Create a new Bitmap object with the rotated dimensions
                 if (rotatedImage == null) {
                     rotatedImage = new Bitmap(filteredImage.Height, filteredImage.Width);
                 }
 
-                // Create a Graphics object from the rotated image
                 using (Graphics g = Graphics.FromImage(rotatedImage)) {
-                    // Rotate the image by the current rotation angle
                     g.Clear(Color.Transparent);
                     g.RotateTransform(rotateValue);
 
-                    // Draw the original image onto the rotated image, adjusting for the new dimensions
                     g.DrawImage(filteredImage, new Rectangle(0, -filteredImage.Height, filteredImage.Width, filteredImage.Height));
 
-                    // Set the PictureBox control's Image property to the rotated image
                     guna2PictureBox1.Image = rotatedImage;
                 }
             }
@@ -436,9 +437,30 @@ namespace FlowSERVER1 {
 
         }
 
-        private void switchPageImplementation(int direction) {
+        private List<string> getImageBase64Encoded() {
+
+            List<string> imageBase64Encoded = new List<string>();
+
+            if(_tableName == "file_info") {
+                imageBase64Encoded = GlobalsData.base64EncodedImageHome;
+            } else if (_tableName == "folder_upload_info") {
+                imageBase64Encoded = GlobalsData.base64EncodedImageFolder;
+            } 
+
+            return imageBase64Encoded;
+        }
+
+        private void switchImageImplementation(int direction) {
 
             try {
+
+                string currentPage = HomePage.instance.lblCurrentPageText.Text;
+
+                if (currentPage == "Home") {
+                    _tableName = "file_info";
+                } else if (currentPage != "Public Storage" || currentPage != "Home" || currentPage != "Shared To Me" || currentPage != "Shared Files") {
+                    _tableName = "folder_upload_info";
+                } 
 
                 List<string> fileNames = new List<string>(HomePage.instance.flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
@@ -450,40 +472,39 @@ namespace FlowSERVER1 {
 
                 int currentFileIndex = fileNames.IndexOf(lblFileName.Text);
 
-                if (currentFileIndex != -1 && currentFileIndex < fileNames.Count - 1) {
+                int nextFileIndex = direction == -1 ? currentFileIndex - 1 : currentFileIndex + 1;
+                string fileName = fileNames[nextFileIndex];
+                string imageBase64Encoded = getImageBase64Encoded().ElementAt(nextFileIndex);
 
-                    int nextFileIndex = direction == -1 ? currentFileIndex - 1 : currentFileIndex + 1;
-                    string fileName = fileNames[nextFileIndex];
-                    string imageBase64Encoded = GlobalsData.base64EncodedImageHome.ElementAt(nextFileIndex);
+                byte[] imageBytes = Convert.FromBase64String(imageBase64Encoded);
+                using (MemoryStream stream = new MemoryStream(imageBytes)) {
 
-                    byte[] imageBytes = Convert.FromBase64String(imageBase64Encoded);
-                    using (MemoryStream stream = new MemoryStream(imageBytes)) {
+                    Bitmap defaultImage = new Bitmap(stream);
 
-                        Bitmap defaultImage = new Bitmap(stream);
+                    int width = defaultImage.Width;
+                    int height = defaultImage.Height;
 
-                        int width = defaultImage.Width;
-                        int height = defaultImage.Height;
-
+                    if(_tableName == "file_info") {
                         PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
                         displayPic.Show();
-
-                        this.Close();
-
+                    } else if (_tableName == "folder_upload_info") {
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
+                        displayPic.Show();
                     }
-                }
-                else {
-                    MessageBox.Show("There's nothing left.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
 
+                    this.Close();
+
+                }
+    
             } catch (ArgumentOutOfRangeException) {};
         }
 
         private void guna2Button9_Click_1(object sender, EventArgs e) {
-            switchPageImplementation(1);
+            switchImageImplementation(1);
         }
 
         private void guna2Button12_Click(object sender, EventArgs e) {
-            switchPageImplementation(-1);
+            switchImageImplementation(-1);
         }
     }
 }
