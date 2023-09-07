@@ -76,8 +76,6 @@ namespace FlowSERVER1 {
 
         private void Form1_Load(object sender, EventArgs e) => UpdateLanguage.BuildGreetingLabel(CurrentLang);
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
-        private void guna2CircleButton1_Click(object sender, EventArgs e) => new ApiPageForm().Show();
-        private void guna2CircleButton2_Click(object sender, EventArgs e) => new FeedbackForm().Show();
         private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
         private void guna2Button3_Click_1(object sender, EventArgs e)
             => new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem)).Show();
@@ -3804,8 +3802,6 @@ namespace FlowSERVER1 {
                 string _selectedFolderSearch = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
                 flwLayoutHome.Controls.Clear();
-
-                MessageBox.Show(lblCurrentPageText.Text);
 
                 if (_selectedFolderSearch == "Home") {
                     BuildHomeFiles();

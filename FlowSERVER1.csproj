@@ -475,12 +475,6 @@
     <Compile Include="Settings\CancelPlanForm.Designer.cs">
       <DependentUpon>CancelPlanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings\FeedbackForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Settings\FeedbackForm.Designer.cs">
-      <DependentUpon>FeedbackForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Sharing\SharingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -777,9 +771,6 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Settings\CancelPlanForm.resx">
       <DependentUpon>CancelPlanForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Settings\FeedbackForm.resx">
-      <DependentUpon>FeedbackForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sharing\SharingAlert.resx">
       <DependentUpon>SharingAlert.cs</DependentUpon>

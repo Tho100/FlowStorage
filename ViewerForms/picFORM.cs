@@ -7,6 +7,11 @@ using System.Windows.Forms;
 
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
+using System.Collections.Generic;
+using Guna.UI2.WinForms;
+using System.Linq;
+using Xamarin.Forms.Internals;
+using System.IO;
 
 namespace FlowSERVER1 {
     public partial class PicForm : Form {
@@ -429,6 +434,56 @@ namespace FlowSERVER1 {
 
         private void guna2PictureBox1_Click(object sender, EventArgs e) {
 
+        }
+
+        private void switchPageImplementation(int direction) {
+
+            try {
+
+                List<string> fileNames = new List<string>(HomePage.instance.flwLayoutHome.Controls
+                    .OfType<Guna2Panel>()
+                    .SelectMany(panel => panel.Controls.OfType<Label>())
+                    .Where(label => Globals.imageTypesFolder.Any(ext => label.Text.ToLower().EndsWith(ext)))
+                    .Where(label => label.Text.IndexOf('.') >= 0)
+                    .Where(label => label.Text.Contains('.'))
+                    .Select(label => label.Text.ToLower()));
+
+                int currentFileIndex = fileNames.IndexOf(lblFileName.Text);
+
+                if (currentFileIndex != -1 && currentFileIndex < fileNames.Count - 1) {
+
+                    int nextFileIndex = direction == -1 ? currentFileIndex - 1 : currentFileIndex + 1;
+                    string fileName = fileNames[nextFileIndex];
+                    string imageBase64Encoded = GlobalsData.base64EncodedImageHome.ElementAt(nextFileIndex);
+
+                    byte[] imageBytes = Convert.FromBase64String(imageBase64Encoded);
+                    using (MemoryStream stream = new MemoryStream(imageBytes)) {
+
+                        Bitmap defaultImage = new Bitmap(stream);
+
+                        int width = defaultImage.Width;
+                        int height = defaultImage.Height;
+
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
+                        displayPic.Show();
+
+                        this.Close();
+
+                    }
+                }
+                else {
+                    MessageBox.Show("There's nothing left.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            } catch (ArgumentOutOfRangeException) {};
+        }
+
+        private void guna2Button9_Click_1(object sender, EventArgs e) {
+            switchPageImplementation(1);
+        }
+
+        private void guna2Button12_Click(object sender, EventArgs e) {
+            switchPageImplementation(-1);
         }
     }
 }
