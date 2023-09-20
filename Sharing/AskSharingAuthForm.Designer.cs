@@ -75,7 +75,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Location = new System.Drawing.Point(60, 219);
             this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.Size = new System.Drawing.Size(273, 48);
+            this.guna2Button4.Size = new System.Drawing.Size(273, 51);
             this.guna2Button4.TabIndex = 24;
             this.guna2Button4.Text = "Close";
             this.guna2Button4.TextOffset = new System.Drawing.Point(0, -2);
@@ -105,7 +105,7 @@
             this.txtFieldReceiverAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldReceiverAuth.PlaceholderText = "Receiver Password";
             this.txtFieldReceiverAuth.SelectedText = "";
-            this.txtFieldReceiverAuth.Size = new System.Drawing.Size(254, 44);
+            this.txtFieldReceiverAuth.Size = new System.Drawing.Size(254, 49);
             this.txtFieldReceiverAuth.TabIndex = 17;
             // 
             // lblAlert
@@ -127,7 +127,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(61, 33);
+            this.label1.Location = new System.Drawing.Point(60, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(237, 20);
             this.label1.TabIndex = 7;
@@ -214,7 +214,7 @@
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Location = new System.Drawing.Point(60, 163);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(273, 48);
+            this.guna2Button2.Size = new System.Drawing.Size(273, 51);
             this.guna2Button2.TabIndex = 15;
             this.guna2Button2.Text = "Confirm";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);

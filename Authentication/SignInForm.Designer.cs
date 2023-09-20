@@ -118,10 +118,10 @@
             this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(181, 403);
+            this.guna2CircleButton1.Location = new System.Drawing.Point(180, 403);
             this.guna2CircleButton1.Name = "guna2CircleButton1";
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(6, 6);
+            this.guna2CircleButton1.Size = new System.Drawing.Size(5, 5);
             this.guna2CircleButton1.TabIndex = 50;
             this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
             // 
@@ -154,7 +154,7 @@
             this.txtFieldPIN.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldPIN.ForeColor = System.Drawing.Color.White;
             this.txtFieldPIN.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldPIN.Location = new System.Drawing.Point(268, 230);
+            this.txtFieldPIN.Location = new System.Drawing.Point(268, 232);
             this.txtFieldPIN.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFieldPIN.MaxLength = 3;
             this.txtFieldPIN.Name = "txtFieldPIN";
@@ -212,7 +212,7 @@
             // guna2CheckBox2
             // 
             this.guna2CheckBox2.AutoSize = true;
-            this.guna2CheckBox2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2CheckBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.guna2CheckBox2.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.guna2CheckBox2.CheckedState.BorderRadius = 3;
             this.guna2CheckBox2.CheckedState.BorderThickness = 1;

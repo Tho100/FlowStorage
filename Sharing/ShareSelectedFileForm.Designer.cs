@@ -84,7 +84,7 @@
             this.lblCountCharComment.BackColor = System.Drawing.Color.Transparent;
             this.lblCountCharComment.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCountCharComment.ForeColor = System.Drawing.Color.Silver;
-            this.lblCountCharComment.Location = new System.Drawing.Point(452, 273);
+            this.lblCountCharComment.Location = new System.Drawing.Point(452, 275);
             this.lblCountCharComment.Name = "lblCountCharComment";
             this.lblCountCharComment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblCountCharComment.Size = new System.Drawing.Size(41, 17);
@@ -108,14 +108,14 @@
             this.txtFieldComment.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldComment.ForeColor = System.Drawing.Color.White;
             this.txtFieldComment.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldComment.Location = new System.Drawing.Point(22, 130);
+            this.txtFieldComment.Location = new System.Drawing.Point(22, 132);
             this.txtFieldComment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldComment.MaxLength = 295;
             this.txtFieldComment.Multiline = true;
             this.txtFieldComment.Name = "txtFieldComment";
             this.txtFieldComment.PasswordChar = '\0';
             this.txtFieldComment.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldComment.PlaceholderText = "Add a comment for receiver to see";
+            this.txtFieldComment.PlaceholderText = "Add a comment";
             this.txtFieldComment.SelectedText = "";
             this.txtFieldComment.Size = new System.Drawing.Size(475, 136);
             this.txtFieldComment.TabIndex = 33;
@@ -128,7 +128,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(25, 103);
+            this.label6.Location = new System.Drawing.Point(25, 105);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(136, 17);
             this.label6.TabIndex = 32;
@@ -178,7 +178,7 @@
             this.txtFieldShareToName.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldShareToName.PlaceholderText = "Enter receiver username";
             this.txtFieldShareToName.SelectedText = "";
-            this.txtFieldShareToName.Size = new System.Drawing.Size(423, 44);
+            this.txtFieldShareToName.Size = new System.Drawing.Size(423, 49);
             this.txtFieldShareToName.TabIndex = 16;
             this.txtFieldShareToName.TextChanged += new System.EventHandler(this.btnShareToName_TextChanged);
             // 

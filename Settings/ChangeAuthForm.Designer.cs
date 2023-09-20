@@ -66,7 +66,7 @@
             this.btnConfirm.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnConfirm.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnConfirm.ForeColor = System.Drawing.Color.White;
-            this.btnConfirm.Location = new System.Drawing.Point(80, 308);
+            this.btnConfirm.Location = new System.Drawing.Point(80, 314);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(294, 51);
             this.btnConfirm.TabIndex = 15;
@@ -99,7 +99,7 @@
             this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.Location = new System.Drawing.Point(69, 80);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(454, 438);
+            this.guna2Panel1.Size = new System.Drawing.Size(454, 450);
             this.guna2Panel1.TabIndex = 31;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
@@ -118,7 +118,7 @@
             this.guna2Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button5.ForeColor = System.Drawing.Color.White;
             this.guna2Button5.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
-            this.guna2Button5.Location = new System.Drawing.Point(385, 232);
+            this.guna2Button5.Location = new System.Drawing.Point(385, 229);
             this.guna2Button5.Name = "guna2Button5";
             this.guna2Button5.Size = new System.Drawing.Size(31, 26);
             this.guna2Button5.TabIndex = 27;
@@ -139,7 +139,7 @@
             this.guna2Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
             this.guna2Button6.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
-            this.guna2Button6.Location = new System.Drawing.Point(385, 232);
+            this.guna2Button6.Location = new System.Drawing.Point(385, 229);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(31, 26);
             this.guna2Button6.TabIndex = 28;
@@ -161,7 +161,7 @@
             this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
-            this.guna2Button3.Location = new System.Drawing.Point(385, 57);
+            this.guna2Button3.Location = new System.Drawing.Point(385, 54);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(31, 26);
             this.guna2Button3.TabIndex = 25;
@@ -182,7 +182,7 @@
             this.guna2Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
-            this.guna2Button4.Location = new System.Drawing.Point(385, 57);
+            this.guna2Button4.Location = new System.Drawing.Point(385, 54);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(31, 26);
             this.guna2Button4.TabIndex = 26;
@@ -206,14 +206,14 @@
             this.txtFieldVerifyNewAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldVerifyNewAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldVerifyNewAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldVerifyNewAuth.Location = new System.Drawing.Point(80, 135);
+            this.txtFieldVerifyNewAuth.Location = new System.Drawing.Point(80, 132);
             this.txtFieldVerifyNewAuth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldVerifyNewAuth.Name = "txtFieldVerifyNewAuth";
             this.txtFieldVerifyNewAuth.PasswordChar = '*';
             this.txtFieldVerifyNewAuth.PlaceholderForeColor = System.Drawing.Color.DimGray;
             this.txtFieldVerifyNewAuth.PlaceholderText = "Retype your new password";
             this.txtFieldVerifyNewAuth.SelectedText = "";
-            this.txtFieldVerifyNewAuth.Size = new System.Drawing.Size(294, 44);
+            this.txtFieldVerifyNewAuth.Size = new System.Drawing.Size(294, 49);
             this.txtFieldVerifyNewAuth.TabIndex = 24;
             // 
             // label3
@@ -222,7 +222,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label3.Location = new System.Drawing.Point(85, 111);
+            this.label3.Location = new System.Drawing.Point(82, 106);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 20);
             this.label3.TabIndex = 23;
@@ -243,7 +243,7 @@
             this.guna2Button2.FillColor = System.Drawing.Color.Empty;
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(80, 366);
+            this.guna2Button2.Location = new System.Drawing.Point(80, 372);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(294, 51);
             this.guna2Button2.TabIndex = 22;
@@ -282,14 +282,14 @@
             this.txtFieldCurrentAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldCurrentAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldCurrentAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldCurrentAuth.Location = new System.Drawing.Point(80, 224);
+            this.txtFieldCurrentAuth.Location = new System.Drawing.Point(80, 221);
             this.txtFieldCurrentAuth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldCurrentAuth.Name = "txtFieldCurrentAuth";
             this.txtFieldCurrentAuth.PasswordChar = '*';
             this.txtFieldCurrentAuth.PlaceholderForeColor = System.Drawing.Color.DimGray;
             this.txtFieldCurrentAuth.PlaceholderText = "Enter your password to proceed";
             this.txtFieldCurrentAuth.SelectedText = "";
-            this.txtFieldCurrentAuth.Size = new System.Drawing.Size(294, 44);
+            this.txtFieldCurrentAuth.Size = new System.Drawing.Size(294, 49);
             this.txtFieldCurrentAuth.TabIndex = 17;
             // 
             // txtFieldNewAuth
@@ -309,14 +309,14 @@
             this.txtFieldNewAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldNewAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldNewAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldNewAuth.Location = new System.Drawing.Point(80, 48);
+            this.txtFieldNewAuth.Location = new System.Drawing.Point(80, 45);
             this.txtFieldNewAuth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldNewAuth.Name = "txtFieldNewAuth";
             this.txtFieldNewAuth.PasswordChar = '*';
             this.txtFieldNewAuth.PlaceholderForeColor = System.Drawing.Color.DimGray;
             this.txtFieldNewAuth.PlaceholderText = "Enter a new password";
             this.txtFieldNewAuth.SelectedText = "";
-            this.txtFieldNewAuth.Size = new System.Drawing.Size(294, 44);
+            this.txtFieldNewAuth.Size = new System.Drawing.Size(294, 49);
             this.txtFieldNewAuth.TabIndex = 16;
             // 
             // label1
@@ -325,7 +325,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(85, 200);
+            this.label1.Location = new System.Drawing.Point(82, 195);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 20);
             this.label1.TabIndex = 7;
@@ -337,7 +337,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(85, 24);
+            this.label2.Location = new System.Drawing.Point(82, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(106, 20);
             this.label2.TabIndex = 5;
@@ -366,18 +366,18 @@
             this.guna2Separator1.Size = new System.Drawing.Size(948, 10);
             this.guna2Separator1.TabIndex = 39;
             // 
-            // ResetAuthForm
+            // ChangeAuthForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(614, 535);
+            this.ClientSize = new System.Drawing.Size(614, 547);
             this.Controls.Add(this.guna2Separator1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ResetAuthForm";
+            this.Name = "ChangeAuthForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Change Password";
             this.TopMost = true;

@@ -73,9 +73,9 @@
             this.guna2Button4.FillColor = System.Drawing.Color.Empty;
             this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
-            this.guna2Button4.Location = new System.Drawing.Point(60, 210);
+            this.guna2Button4.Location = new System.Drawing.Point(60, 211);
             this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.Size = new System.Drawing.Size(273, 48);
+            this.guna2Button4.Size = new System.Drawing.Size(273, 51);
             this.guna2Button4.TabIndex = 24;
             this.guna2Button4.Text = "Close";
             this.guna2Button4.TextOffset = new System.Drawing.Point(0, -2);
@@ -118,7 +118,7 @@
             this.txtFieldAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldAuth.PlaceholderText = "Set Password";
             this.txtFieldAuth.SelectedText = "";
-            this.txtFieldAuth.Size = new System.Drawing.Size(254, 44);
+            this.txtFieldAuth.Size = new System.Drawing.Size(254, 49);
             this.txtFieldAuth.TabIndex = 17;
             // 
             // label1
@@ -127,7 +127,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(72, 29);
+            this.label1.Location = new System.Drawing.Point(70, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 20);
             this.label1.TabIndex = 7;
@@ -170,7 +170,7 @@
             this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
             this.guna2Button3.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
-            this.guna2Button3.Location = new System.Drawing.Point(327, 65);
+            this.guna2Button3.Location = new System.Drawing.Point(327, 66);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(31, 26);
             this.guna2Button3.TabIndex = 21;
@@ -214,7 +214,7 @@
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Location = new System.Drawing.Point(60, 154);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(273, 48);
+            this.guna2Button2.Size = new System.Drawing.Size(273, 51);
             this.guna2Button2.TabIndex = 15;
             this.guna2Button2.Text = "Confirm";
             this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);

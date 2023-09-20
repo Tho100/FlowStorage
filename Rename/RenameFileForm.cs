@@ -101,11 +101,21 @@ namespace FlowSERVER1 {
 
             }
 
+            updateFileLabelUI(newFileName);
+
+            lblAlert.Visible = true;
+            lblAlert.ForeColor = ColorTranslator.FromHtml("#50a832");
+            lblAlert.Text = $"File has been renamed to {newFileName}.";
+        }
+
+        private void updateFileLabelUI(String newFileName) {
+
             Control[] matches = new Control[0];
 
-            if (_tableName != GlobalsTable.sharingTable && _tableName != GlobalsTable.folderUploadTable && _tableName != "upload_info_directory") {
+            if (_tableName != GlobalsTable.sharingTable && _tableName != GlobalsTable.folderUploadTable && _tableName != GlobalsTable.directoryUploadTable) {
                 matches = HomePage.instance.Controls.Find(_panelName, true);
-            } else if (_tableName == "upload_info_directory") {
+            }
+            else if (_tableName == GlobalsTable.directoryUploadTable) {
                 matches = DirectoryForm.instance.Controls.Find(_panelName, true);
             }
 
@@ -116,10 +126,6 @@ namespace FlowSERVER1 {
                 Label titleLabel = myPanel.Controls.OfType<Label>().LastOrDefault();
                 titleLabel.Text = newFileName;
             }
-
-            lblAlert.Visible = true;
-            lblAlert.ForeColor = ColorTranslator.FromHtml("#50a832");
-            lblAlert.Text = $"File has been renamed to {newFileName}.";
         }
 
         private async void guna2Button2_Click(object sender, EventArgs e) {

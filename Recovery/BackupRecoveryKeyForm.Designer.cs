@@ -66,7 +66,7 @@
             this.txtFieldPIN.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldPIN.ForeColor = System.Drawing.Color.White;
             this.txtFieldPIN.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldPIN.Location = new System.Drawing.Point(37, 125);
+            this.txtFieldPIN.Location = new System.Drawing.Point(37, 129);
             this.txtFieldPIN.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFieldPIN.MaxLength = 3;
             this.txtFieldPIN.Name = "txtFieldPIN";
@@ -74,7 +74,7 @@
             this.txtFieldPIN.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldPIN.PlaceholderText = "Enter your PIN key";
             this.txtFieldPIN.SelectedText = "";
-            this.txtFieldPIN.Size = new System.Drawing.Size(155, 41);
+            this.txtFieldPIN.Size = new System.Drawing.Size(155, 49);
             this.txtFieldPIN.TabIndex = 25;
             this.txtFieldPIN.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
@@ -95,14 +95,14 @@
             this.txtFieldAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldAuth.Location = new System.Drawing.Point(37, 49);
+            this.txtFieldAuth.Location = new System.Drawing.Point(37, 45);
             this.txtFieldAuth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFieldAuth.Name = "txtFieldAuth";
             this.txtFieldAuth.PasswordChar = '*';
             this.txtFieldAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldAuth.PlaceholderText = "Enter your password";
             this.txtFieldAuth.SelectedText = "";
-            this.txtFieldAuth.Size = new System.Drawing.Size(243, 41);
+            this.txtFieldAuth.Size = new System.Drawing.Size(243, 49);
             this.txtFieldAuth.TabIndex = 24;
             // 
             // guna2Separator1
@@ -139,9 +139,9 @@
             this.guna2Panel1.Controls.Add(this.label1);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(19, 145);
+            this.guna2Panel1.Location = new System.Drawing.Point(19, 139);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(353, 274);
+            this.guna2Panel1.Size = new System.Drawing.Size(353, 280);
             this.guna2Panel1.TabIndex = 38;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
@@ -158,9 +158,9 @@
             this.btnExport.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.btnExport.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExport.ForeColor = System.Drawing.Color.White;
-            this.btnExport.Location = new System.Drawing.Point(37, 191);
+            this.btnExport.Location = new System.Drawing.Point(37, 195);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(177, 44);
+            this.btnExport.Size = new System.Drawing.Size(177, 51);
             this.btnExport.TabIndex = 34;
             this.btnExport.Text = "Export Recovery Key";
             this.btnExport.Click += new System.EventHandler(this.guna2Button1_Click);
@@ -172,7 +172,7 @@
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(39, 23);
+            this.label1.Location = new System.Drawing.Point(39, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 17);
             this.label1.TabIndex = 32;
@@ -185,7 +185,7 @@
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(39, 102);
+            this.label4.Location = new System.Drawing.Point(39, 106);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 17);
             this.label4.TabIndex = 5;
@@ -262,7 +262,7 @@
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 336);
             this.guna2VSeparator1.TabIndex = 45;
             // 
-            // RecoveryForm
+            // BackupRecoveryKeyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -278,7 +278,7 @@
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RecoveryForm";
+            this.Name = "BackupRecoveryKeyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backup Recovery Key";
             this.Load += new System.EventHandler(this.RecovFORM_Load);

@@ -293,7 +293,7 @@
             this.txtFieldComment.Name = "txtFieldComment";
             this.txtFieldComment.PasswordChar = '\0';
             this.txtFieldComment.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldComment.PlaceholderText = "Add a comment for receiver to see";
+            this.txtFieldComment.PlaceholderText = "Add a comment";
             this.txtFieldComment.SelectedText = "";
             this.txtFieldComment.Size = new System.Drawing.Size(401, 302);
             this.txtFieldComment.TabIndex = 16;

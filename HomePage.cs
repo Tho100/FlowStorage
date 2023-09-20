@@ -3,7 +3,6 @@ using FlowSERVER1.Authentication;
 using FlowSERVER1.ExtraForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-using FlowSERVER1.Settings;
 
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -97,10 +96,11 @@ namespace FlowSERVER1 {
 
             try {
 
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value)";
+                string encryptedFileName = EncryptionModel.Encrypt(getNamePath);
 
+                string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                    command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
+                    command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
@@ -139,11 +139,13 @@ namespace FlowSERVER1 {
 
             try {
 
+                string encryptedFileName = EncryptionModel.Encrypt(_fileName);
+
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE) VALUES (@username, @file_name, @date, @file_value)";
                 var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername},
-                    { "@file_name", EncryptionModel.Encrypt(_fileName)},
+                    { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
                     { "@file_value", setValue}
                 };
@@ -159,17 +161,20 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task InsertFileVideoDataPublic(string selectedItems, string getNamePath, object keyValMain) {
+        private async Task InsertFileVideoDataPublic(string selectedItems, string fileName, object keyValMain) {
 
             try {
 
+                string encryptedFileName = EncryptionModel.Encrypt(fileName);
+                string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
+
                 string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB,CUST_COMMENT,CUST_TAG) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value,@comment, @tag)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                    command.Parameters.AddWithValue("@file_name", EncryptionModel.Encrypt(getNamePath));
+                    command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
-                    command.Parameters.AddWithValue("@comment", EncryptionModel.Encrypt(PublicStorageUserComment));
+                    command.Parameters.AddWithValue("@comment", encryptedComment);
                     command.Parameters.AddWithValue("@tag", PublicStorageUserTag);
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {

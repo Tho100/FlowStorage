@@ -144,7 +144,7 @@
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(380, 54);
             this.guna2Button2.TabIndex = 49;
-            this.guna2Button2.Text = "Confirm";
+            this.guna2Button2.Text = "Rename";
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
             // txtFieldNewFileName

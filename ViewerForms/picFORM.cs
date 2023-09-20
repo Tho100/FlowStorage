@@ -490,7 +490,7 @@ namespace FlowSERVER1 {
                     } else if (_tableName == "folder_upload_info") {
                         PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
                         displayPic.Show();
-                    }
+                    } 
 
                     this.Close();
 

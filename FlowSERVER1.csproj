@@ -520,12 +520,6 @@
     <Compile Include="AlertForms\CancellingAlert.Designer.cs">
       <DependentUpon>CancellingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings\ChangeUsernameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Settings\ChangeUsernameForm.Designer.cs">
-      <DependentUpon>ChangeUsernameForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Settings\RemoveAccountForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -792,9 +786,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\CancellingAlert.resx">
       <DependentUpon>CancellingAlert.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Settings\ChangeUsernameForm.resx">
-      <DependentUpon>ChangeUsernameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\RemoveAccountForm.resx">
       <DependentUpon>RemoveAccountForm.cs</DependentUpon>
