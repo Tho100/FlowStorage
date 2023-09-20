@@ -133,7 +133,6 @@ namespace FlowSERVER1 {
                 BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
 
-
         }
 
         private async Task InsertFileData(string setValue, string nameTable) {
@@ -204,14 +203,17 @@ namespace FlowSERVER1 {
 
             try {
 
+                string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
+                string encryptedFileName = EncryptionModel.Encrypt(_fileName);
+
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_COMMENT, CUST_TAG) VALUES (@username, @file_name, @date, @file_value,@comment, @tag)";
                 var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername},
-                    { "@file_name", EncryptionModel.Encrypt(_fileName)},
+                    { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
                     { "@file_value", fileBase64Value},
-                    { "@comment", EncryptionModel.Encrypt(PublicStorageUserComment)},
+                    { "@comment", encryptedComment},
                     { "@tag", PublicStorageUserTag},
                 };
 
@@ -883,7 +885,7 @@ namespace FlowSERVER1 {
                 }
                 else {
 
-                    HashSet<string> existingLabels = new HashSet<string>(flwLayoutHome.Controls
+                    HashSet<string> fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Select(label => label.Text.ToLower()));
@@ -893,7 +895,7 @@ namespace FlowSERVER1 {
                     foreach (var selectedItems in open.FileNames) {
 
                         string selectedFileName = Path.GetFileName(selectedItems);
-                        if (existingLabels.Contains(selectedFileName.ToLower().Trim())) {
+                        if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                             continue;
                         }
 
@@ -1667,7 +1669,7 @@ namespace FlowSERVER1 {
                 }
                 else {
 
-                    HashSet<string> existingLabels = new HashSet<string>(flwLayoutHome.Controls
+                    HashSet<string> fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Select(label => label.Text.ToLower()));
@@ -1675,7 +1677,7 @@ namespace FlowSERVER1 {
                     string selectedItems = open.FileName;
                     string selectedFileName = Path.GetFileName(selectedItems);
 
-                    if (existingLabels.Contains(selectedFileName.ToLower().Trim())) {
+                    if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                         BuildShowAlert(title: "Upload Failed", $"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}");
                         return;
                     }

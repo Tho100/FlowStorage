@@ -239,86 +239,62 @@ namespace FlowSERVER1 {
 
             if(origin == "Home") {
 
-                HashSet<string> existingLabels = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
-                    .OfType<Guna2Panel>()
-                    .SelectMany(panel => panel.Controls.OfType<Label>())
-                    .Select(label => label.Text.ToLower()));
+                if (tableName == "file_info") {
 
-                Dictionary<string, string> fileTypeToTableName = new Dictionary<string, string>
-                {
-                    { "png", "file_info" },
-                    { "jpeg", "file_info" },
-                    { "jpg", "file_info" },
-                    
-                    { "mp4", "file_info_vid" },
-                    { "wmv", "file_info_vid" },
-                    { "mov", "file_info_vid" },
+                    List<string> dateLabels = new List<string>(HomePage.instance.flwLayoutHome.Controls
+                        .OfType<Guna2Panel>()
+                        .SelectMany(panel => panel.Controls.OfType<Label>())
+                        .Where(label=> label.Text.Contains("/") && label.Text.Any(char.IsDigit))
+                        .Select(label => label.Text));
 
-                    { "apk", "file_info_apk" },
-                    { "exe", "file_info_exe" },
-
-                    { "txt", "file_info_expand" },
-                    { "csv", "file_info_expand" },
-                    { "md", "file_info_expand" },
-
-                    { "xlsx", "file_info_excel" },
-                    { "xls", "file_info_excel" },
-
-                    { "doc", "file_info_word" },
-                    { "docx", "file_info_word" },
-
-                    { "ptx", "file_info_ptx" },
-                    { "pptx", "file_info_ptx" },
-
-                    { "pdf", "file_info_pdf" },
-
-                    { "mp3", "file_info_audio" },
-                    { "wav", "file_info_audio" },
-
-                };
-
-                int uploadCount = 0;
-
-                foreach (string fileName in existingLabels) {
-
-                    string fileType = fileName.Split('.').Last();
-
-                    if (fileTypeToTableName.ContainsKey(fileType) && fileTypeToTableName[fileType] == tableName) {
-                        uploadCount++;
-                    }
+                    int totalUploadCount = dateLabels.Count();
+                    _totalUploadAllTime.Add(totalUploadCount);
                 }
-
-                _totalUploadAllTime.Add(uploadCount);
 
             } else {
 
                 string queryCount = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                    _totalUploadAllTime.Add(totalCount);
+                    int totalUploadCount = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    _totalUploadAllTime.Add(totalUploadCount);
                 }
 
             }
         }
 
-        /// <summary>
-        /// This function will tells user the number of 
-        /// files they've uploaded a day
-        /// </summary>
-        /// <param name="_TableName"></param>
-        private async Task TotalUploadFileTodayCount(String _TableName) {
+        private async Task TotalUploadFileTodayCount(String tableName) {
 
             string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-            string queryCount = $"SELECT COUNT(*) FROM {_TableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
-            using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@date", currentDate);
+            string origin = HomePage.instance.lblCurrentPageText.Text;
 
-                int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
-                _totalUploadToday.Add(totalCount);
+            if (origin == "Home") {
+                    
+                if(tableName == "file_info") {
+
+                    List<string> todayDateLabels = new List<string>(HomePage.instance.flwLayoutHome.Controls
+                        .OfType<Guna2Panel>()
+                        .SelectMany(panel => panel.Controls.OfType<Label>())
+                        .Where(label => label.Text == currentDate)
+                        .Select(label => label.Text));
+
+                    int totalCount = todayDateLabels.Count();
+                    _totalUploadToday.Add(totalCount);
+                }
+
+            } else {
+
+                string queryCount = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
+                using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@date", currentDate);
+
+                    int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    _totalUploadToday.Add(totalCount);
+                }
             }
+
         }
 
         private async Task TotalUploadDirectoryCount() {
@@ -362,7 +338,7 @@ namespace FlowSERVER1 {
 
         private async Task GenerateUploadChart(String seriesName, String tableName) {
 
-            string querySelectDate = $"SELECT UPLOAD_DATE,COUNT(UPLOAD_DATE) FROM {tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
+            string querySelectDate = $"SELECT UPLOAD_DATE, COUNT(UPLOAD_DATE) FROM {tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -376,7 +352,7 @@ namespace FlowSERVER1 {
                 }
             }
         }
-
+      
         #endregion END - User statistics section
 
         private void guna2Button14_Click(object sender, EventArgs e) => this.Close();
