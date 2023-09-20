@@ -893,26 +893,11 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task<int> CountDirectoryTotalFiles(String directoryName) {
-
-            int count = 0;
-
-            const string query = "SELECT COUNT(*) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
-            using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-                object results = await command.ExecuteScalarAsync();
-                count = Convert.ToInt32(results);
-            }
-
-            return count;
-        }
-
-        private async void btnUploadFile_Click(object sender, EventArgs e) {
+        private void btnUploadFile_Click(object sender, EventArgs e) {
 
             try {
 
-                int currentUploadCount = await CountDirectoryTotalFiles(lblDirectoryName.Text);
+                int currentUploadCount = flwLayoutDirectory.Controls.Count;
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
                     OpenDialogUpload();
