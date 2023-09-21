@@ -111,7 +111,7 @@ namespace FlowSERVER1.Helper {
 
                 var panelPic_Q = new Guna2Panel() {
                     Name = $"{parameterName + i}",
-                    Width = 280,
+                    Width = 250,
                     Height = 268,
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
@@ -181,7 +181,7 @@ namespace FlowSERVER1.Helper {
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                 picMain_Q.BorderRadius = 8;
-                picMain_Q.Width = 270;
+                picMain_Q.Width = 238;
                 picMain_Q.Height = 165;
                 picMain_Q.Visible = true;
                 picMain_Q.Click += onPressed[i];

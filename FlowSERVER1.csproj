@@ -924,6 +924,7 @@
   <ItemGroup>
     <Content Include="MainIco.ico" />
     <Content Include="Resources\DirIcon.png" />
+    <None Include="Resources\icons8-tune-48.png" />
     <None Include="Resources\icons8-compass-48.png" />
     <None Include="Resources\icons8-tune-24.png" />
     <None Include="Resources\icons8-documents-folder-48 %282%29.png" />

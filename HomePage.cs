@@ -3806,18 +3806,19 @@ namespace FlowSERVER1 {
 
             if (string.IsNullOrEmpty(searchText)) {
 
+                string origin = lblCurrentPageText.Text;
                 string _selectedFolderSearch = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
                 flwLayoutHome.Controls.Clear();
 
-                if (_selectedFolderSearch == "Home") {
+                if (origin == "Home") {
                     BuildHomeFiles();
                 }
-                else if (_selectedFolderSearch == "Shared To Me") {
+                else if (origin == "Shared To Me") {
                     GlobalsData.fileTypeValuesSharedToMe.Clear();
                     await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
                 }
-                else if (_selectedFolderSearch == "Shared Files") {
+                else if (origin == "Shared Files") {
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
                     await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
                 }
@@ -3825,7 +3826,7 @@ namespace FlowSERVER1 {
                     await RefreshFolder();
                 }
 
-                if (lblCurrentPageText.Text == "Public Storage") {
+                if (origin == "Public Storage") {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
                     BuildPublicStorageFiles();
@@ -4142,7 +4143,7 @@ namespace FlowSERVER1 {
         bool filterTypePanelVisible = false;
         private void guna2Button16_Click(object sender, EventArgs e) {
             filterTypePanelVisible = !filterTypePanelVisible;
-            guna2Panel1.Visible = filterTypePanelVisible;
+            pnlFilterType.Visible = filterTypePanelVisible;
         }
 
         private void guna2Button18_Click(object sender, EventArgs e) {
@@ -4443,13 +4444,8 @@ namespace FlowSERVER1 {
             SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePage"];
         }
 
-        private void guna2Button4_Click_2(object sender, EventArgs e) {
-            filterTypePanelVisible = !filterTypePanelVisible;
-            guna2Panel1.Visible = filterTypePanelVisible;
-        }
-
-        private void label8_Click_1(object sender, EventArgs e) {
-
+        private void guna2Button1_Click_1(object sender, EventArgs e) {
+            pnlFilterType.Visible = !pnlFilterType.Visible;
         }
     }
 }

@@ -60,7 +60,7 @@
             this.lblEmptyHere = new System.Windows.Forms.Label();
             this.pnlDragAndDropUpload = new Guna.UI2.WinForms.Guna2Panel();
             this.label25 = new System.Windows.Forms.Label();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnlFilterType = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button25 = new Guna.UI2.WinForms.Guna2Button();
             this.pnlFileOptions = new Guna.UI2.WinForms.Guna2Panel();
             this.lblSharedToName = new System.Windows.Forms.Label();
@@ -78,7 +78,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
+            this.lblDiscover = new System.Windows.Forms.Label();
+            this.dotDiscover = new System.Windows.Forms.Label();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.imgDiscover = new System.Windows.Forms.PictureBox();
             this.btnDeleteFolder = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.btnMyPsFiles = new Guna.UI2.WinForms.Guna2Button();
@@ -111,9 +114,6 @@
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.btnOpenRenameFolderPage = new Guna.UI2.WinForms.Guna2Button();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
-            this.lblDiscover = new System.Windows.Forms.Label();
-            this.imgDiscover = new System.Windows.Forms.PictureBox();
-            this.dotDiscover = new System.Windows.Forms.Label();
             this.txtBoxSearchFile = new Guna.UI2.WinForms.Guna2TextBox();
             this.pnlMain.SuspendLayout();
             this.pnlFolders.SuspendLayout();
@@ -121,14 +121,14 @@
             this.flwLayoutHome.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnlDragAndDropUpload.SuspendLayout();
-            this.guna2Panel1.SuspendLayout();
+            this.pnlFilterType.SuspendLayout();
             this.pnlFileOptions.SuspendLayout();
             this.pnlPublicStorage.SuspendLayout();
             this.pnlExceedStorage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlMain
@@ -527,27 +527,27 @@
             this.label25.Text = "Drag and Drop \r\n  upload here";
             this.label25.Click += new System.EventHandler(this.label25_Click);
             // 
-            // guna2Panel1
+            // pnlFilterType
             // 
-            this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.guna2Panel1.BorderRadius = 12;
-            this.guna2Panel1.BorderThickness = 1;
-            this.guna2Panel1.Controls.Add(this.guna2Button25);
-            this.guna2Panel1.Controls.Add(this.guna2Button22);
-            this.guna2Panel1.Controls.Add(this.guna2Button24);
-            this.guna2Panel1.Controls.Add(this.guna2Button20);
-            this.guna2Panel1.Controls.Add(this.guna2Button21);
-            this.guna2Panel1.Controls.Add(this.guna2Button18);
-            this.guna2Panel1.Controls.Add(this.guna2Button17);
-            this.guna2Panel1.Controls.Add(this.guna2Button23);
-            this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(823, 68);
-            this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(302, 249);
-            this.guna2Panel1.TabIndex = 39;
-            this.guna2Panel1.Visible = false;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
+            this.pnlFilterType.BackColor = System.Drawing.Color.Transparent;
+            this.pnlFilterType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.pnlFilterType.BorderRadius = 12;
+            this.pnlFilterType.BorderThickness = 1;
+            this.pnlFilterType.Controls.Add(this.guna2Button25);
+            this.pnlFilterType.Controls.Add(this.guna2Button22);
+            this.pnlFilterType.Controls.Add(this.guna2Button24);
+            this.pnlFilterType.Controls.Add(this.guna2Button20);
+            this.pnlFilterType.Controls.Add(this.guna2Button21);
+            this.pnlFilterType.Controls.Add(this.guna2Button18);
+            this.pnlFilterType.Controls.Add(this.guna2Button17);
+            this.pnlFilterType.Controls.Add(this.guna2Button23);
+            this.pnlFilterType.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.pnlFilterType.Location = new System.Drawing.Point(1004, 66);
+            this.pnlFilterType.Name = "pnlFilterType";
+            this.pnlFilterType.Size = new System.Drawing.Size(302, 249);
+            this.pnlFilterType.TabIndex = 39;
+            this.pnlFilterType.Visible = false;
+            this.pnlFilterType.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // guna2Button25
             // 
@@ -712,7 +712,7 @@
             this.lblPsCount.AutoSize = true;
             this.lblPsCount.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblPsCount.ForeColor = System.Drawing.Color.LightGray;
-            this.lblPsCount.Location = new System.Drawing.Point(16, 614);
+            this.lblPsCount.Location = new System.Drawing.Point(14, 613);
             this.lblPsCount.Name = "lblPsCount";
             this.lblPsCount.Size = new System.Drawing.Size(71, 20);
             this.lblPsCount.TabIndex = 36;
@@ -794,28 +794,64 @@
             this.label5.TabIndex = 56;
             this.label5.Text = "Warning: Your storage usage has exceeded 70%";
             // 
-            // guna2Button4
+            // lblDiscover
             // 
-            this.guna2Button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2Button4.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button4.BorderRadius = 6;
-            this.guna2Button4.BorderThickness = 1;
-            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button4.ForeColor = System.Drawing.Color.White;
-            this.guna2Button4.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_tune_24;
-            this.guna2Button4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.guna2Button4.Location = new System.Drawing.Point(935, 21);
-            this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.Size = new System.Drawing.Size(37, 32);
-            this.guna2Button4.TabIndex = 54;
-            this.guna2Button4.TextOffset = new System.Drawing.Point(1, 0);
-            this.guna2Button4.Click += new System.EventHandler(this.guna2Button4_Click_2);
+            this.lblDiscover.AutoEllipsis = true;
+            this.lblDiscover.BackColor = System.Drawing.Color.Transparent;
+            this.lblDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDiscover.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblDiscover.Location = new System.Drawing.Point(480, 72);
+            this.lblDiscover.Name = "lblDiscover";
+            this.lblDiscover.Size = new System.Drawing.Size(110, 31);
+            this.lblDiscover.TabIndex = 55;
+            this.lblDiscover.Text = "Discover";
+            this.lblDiscover.Visible = false;
+            // 
+            // dotDiscover
+            // 
+            this.dotDiscover.AutoEllipsis = true;
+            this.dotDiscover.BackColor = System.Drawing.Color.Transparent;
+            this.dotDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dotDiscover.ForeColor = System.Drawing.Color.Gainsboro;
+            this.dotDiscover.Location = new System.Drawing.Point(438, 72);
+            this.dotDiscover.Name = "dotDiscover";
+            this.dotDiscover.Size = new System.Drawing.Size(19, 21);
+            this.dotDiscover.TabIndex = 57;
+            this.dotDiscover.Text = "·";
+            this.dotDiscover.Visible = false;
+            // 
+            // guna2Button1
+            // 
+            this.guna2Button1.Animated = true;
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.BorderColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.BorderRadius = 12;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.guna2Button1.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.guna2Button1.ForeColor = System.Drawing.Color.White;
+            this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_tune_48;
+            this.guna2Button1.ImageSize = new System.Drawing.Size(19, 19);
+            this.guna2Button1.Location = new System.Drawing.Point(993, 16);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(43, 41);
+            this.guna2Button1.TabIndex = 59;
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click_1);
+            // 
+            // imgDiscover
+            // 
+            this.imgDiscover.BackColor = System.Drawing.Color.Transparent;
+            this.imgDiscover.Image = global::FlowSERVER1.Properties.Resources.icons8_compass_48;
+            this.imgDiscover.Location = new System.Drawing.Point(457, 78);
+            this.imgDiscover.Name = "imgDiscover";
+            this.imgDiscover.Size = new System.Drawing.Size(22, 22);
+            this.imgDiscover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgDiscover.TabIndex = 56;
+            this.imgDiscover.TabStop = false;
+            this.imgDiscover.Visible = false;
             // 
             // btnDeleteFolder
             // 
@@ -1522,44 +1558,6 @@
             this.btnDownloadFolder.Visible = false;
             this.btnDownloadFolder.Click += new System.EventHandler(this.guna2Button27_Click);
             // 
-            // lblDiscover
-            // 
-            this.lblDiscover.AutoEllipsis = true;
-            this.lblDiscover.BackColor = System.Drawing.Color.Transparent;
-            this.lblDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiscover.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblDiscover.Location = new System.Drawing.Point(480, 72);
-            this.lblDiscover.Name = "lblDiscover";
-            this.lblDiscover.Size = new System.Drawing.Size(110, 31);
-            this.lblDiscover.TabIndex = 55;
-            this.lblDiscover.Text = "Discover";
-            this.lblDiscover.Visible = false;
-            // 
-            // imgDiscover
-            // 
-            this.imgDiscover.BackColor = System.Drawing.Color.Transparent;
-            this.imgDiscover.Image = global::FlowSERVER1.Properties.Resources.icons8_compass_48;
-            this.imgDiscover.Location = new System.Drawing.Point(457, 78);
-            this.imgDiscover.Name = "imgDiscover";
-            this.imgDiscover.Size = new System.Drawing.Size(22, 22);
-            this.imgDiscover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imgDiscover.TabIndex = 56;
-            this.imgDiscover.TabStop = false;
-            this.imgDiscover.Visible = false;
-            // 
-            // dotDiscover
-            // 
-            this.dotDiscover.AutoEllipsis = true;
-            this.dotDiscover.BackColor = System.Drawing.Color.Transparent;
-            this.dotDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dotDiscover.ForeColor = System.Drawing.Color.Gainsboro;
-            this.dotDiscover.Location = new System.Drawing.Point(438, 72);
-            this.dotDiscover.Name = "dotDiscover";
-            this.dotDiscover.Size = new System.Drawing.Size(19, 21);
-            this.dotDiscover.TabIndex = 57;
-            this.dotDiscover.Text = "·";
-            this.dotDiscover.Visible = false;
-            // 
             // txtBoxSearchFile
             // 
             this.txtBoxSearchFile.BackColor = System.Drawing.Color.Transparent;
@@ -1580,7 +1578,7 @@
             this.txtBoxSearchFile.IconLeft = global::FlowSERVER1.Properties.Resources.icons8_search_30__1_;
             this.txtBoxSearchFile.IconLeftOffset = new System.Drawing.Point(4, 0);
             this.txtBoxSearchFile.IconLeftSize = new System.Drawing.Size(18, 18);
-            this.txtBoxSearchFile.Location = new System.Drawing.Point(288, 11);
+            this.txtBoxSearchFile.Location = new System.Drawing.Point(287, 12);
             this.txtBoxSearchFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBoxSearchFile.MaxLength = 70;
             this.txtBoxSearchFile.Name = "txtBoxSearchFile";
@@ -1588,8 +1586,8 @@
             this.txtBoxSearchFile.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtBoxSearchFile.PlaceholderText = "Search in Flowstorage";
             this.txtBoxSearchFile.SelectedText = "";
-            this.txtBoxSearchFile.Size = new System.Drawing.Size(699, 49);
-            this.txtBoxSearchFile.TabIndex = 58;
+            this.txtBoxSearchFile.Size = new System.Drawing.Size(700, 49);
+            this.txtBoxSearchFile.TabIndex = 60;
             this.txtBoxSearchFile.TextOffset = new System.Drawing.Point(1, 0);
             this.txtBoxSearchFile.TextChanged += new System.EventHandler(this.txtBoxSearchFile_TextChanged);
             // 
@@ -1600,14 +1598,14 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.ClientSize = new System.Drawing.Size(1325, 661);
             this.Controls.Add(this.txtBoxSearchFile);
+            this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.dotDiscover);
             this.Controls.Add(this.imgDiscover);
             this.Controls.Add(this.lblDiscover);
-            this.Controls.Add(this.guna2Button4);
             this.Controls.Add(this.btnDeleteFolder);
             this.Controls.Add(this.pnlExceedStorage);
             this.Controls.Add(this.pnlPublicStorage);
-            this.Controls.Add(this.guna2Panel1);
+            this.Controls.Add(this.pnlFilterType);
             this.Controls.Add(this.pnlFileOptions);
             this.Controls.Add(this.pnlDragAndDropUpload);
             this.Controls.Add(this.btnRefreshFiles);
@@ -1639,16 +1637,16 @@
             this.panel2.ResumeLayout(false);
             this.pnlDragAndDropUpload.ResumeLayout(false);
             this.pnlDragAndDropUpload.PerformLayout();
-            this.guna2Panel1.ResumeLayout(false);
+            this.pnlFilterType.ResumeLayout(false);
             this.pnlFileOptions.ResumeLayout(false);
             this.pnlFileOptions.PerformLayout();
             this.pnlPublicStorage.ResumeLayout(false);
             this.pnlPublicStorage.PerformLayout();
             this.pnlExceedStorage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1698,7 +1696,7 @@
         private Guna.UI2.WinForms.Guna2Panel pnlDragAndDropUpload;
         public System.Windows.Forms.Label label25;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Guna.UI2.WinForms.Guna2Panel pnlFilterType;
         public Guna.UI2.WinForms.Guna2Button guna2Button25;
         public Guna.UI2.WinForms.Guna2Button guna2Button24;
         public Guna.UI2.WinForms.Guna2Button guna2Button23;
@@ -1735,10 +1733,10 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button3;
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.Label lblGreetingText;
-        private Guna.UI2.WinForms.Guna2Button guna2Button4;
         public System.Windows.Forms.Label lblDiscover;
         private System.Windows.Forms.PictureBox imgDiscover;
         public System.Windows.Forms.Label dotDiscover;
+        public Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2TextBox txtBoxSearchFile;
     }
 }

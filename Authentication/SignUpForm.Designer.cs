@@ -93,7 +93,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(668, 128);
+            this.button1.Location = new System.Drawing.Point(658, 37);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 51;
@@ -103,9 +103,9 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(549, 0);
+            this.richTextBox1.Location = new System.Drawing.Point(778, -62);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(407, 213);
+            this.richTextBox1.Size = new System.Drawing.Size(407, 122);
             this.richTextBox1.TabIndex = 50;
             this.richTextBox1.Text = "";
             this.richTextBox1.Visible = false;
@@ -115,7 +115,7 @@
             this.lblAlertPin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.lblAlertPin.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlertPin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlertPin.Location = new System.Drawing.Point(990, 471);
+            this.lblAlertPin.Location = new System.Drawing.Point(990, 472);
             this.lblAlertPin.Name = "lblAlertPin";
             this.lblAlertPin.Size = new System.Drawing.Size(214, 20);
             this.lblAlertPin.TabIndex = 48;
@@ -157,7 +157,7 @@
             this.txtBoxAuth1Field.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtBoxAuth1Field.PlaceholderText = "Set a PIN number";
             this.txtBoxAuth1Field.SelectedText = "";
-            this.txtBoxAuth1Field.Size = new System.Drawing.Size(147, 47);
+            this.txtBoxAuth1Field.Size = new System.Drawing.Size(147, 49);
             this.txtBoxAuth1Field.TabIndex = 46;
             this.txtBoxAuth1Field.TextChanged += new System.EventHandler(this.txtBoxAuth1Field_TextChanged);
             // 
@@ -166,7 +166,7 @@
             this.label21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label21.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label21.Location = new System.Drawing.Point(634, 279);
+            this.label21.Location = new System.Drawing.Point(634, 277);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(99, 20);
             this.label21.TabIndex = 41;
@@ -200,14 +200,14 @@
             this.txtBoxEmailField.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxEmailField.ForeColor = System.Drawing.Color.White;
             this.txtBoxEmailField.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtBoxEmailField.Location = new System.Drawing.Point(629, 303);
+            this.txtBoxEmailField.Location = new System.Drawing.Point(629, 301);
             this.txtBoxEmailField.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBoxEmailField.Name = "txtBoxEmailField";
             this.txtBoxEmailField.PasswordChar = '\0';
             this.txtBoxEmailField.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtBoxEmailField.PlaceholderText = "Enter your email address";
             this.txtBoxEmailField.SelectedText = "";
-            this.txtBoxEmailField.Size = new System.Drawing.Size(504, 47);
+            this.txtBoxEmailField.Size = new System.Drawing.Size(504, 49);
             this.txtBoxEmailField.TabIndex = 42;
             // 
             // label14
@@ -215,7 +215,7 @@
             this.label14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label14.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label14.Location = new System.Drawing.Point(636, 173);
+            this.label14.Location = new System.Drawing.Point(636, 167);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(99, 20);
             this.label14.TabIndex = 5;
@@ -237,7 +237,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.label16.Location = new System.Drawing.Point(622, 104);
+            this.label16.Location = new System.Drawing.Point(624, 104);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(334, 40);
             this.label16.TabIndex = 0;
@@ -281,7 +281,7 @@
             this.lblAlertUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.lblAlertUsername.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlertUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlertUsername.Location = new System.Drawing.Point(636, 251);
+            this.lblAlertUsername.Location = new System.Drawing.Point(636, 248);
             this.lblAlertUsername.Name = "lblAlertUsername";
             this.lblAlertUsername.Size = new System.Drawing.Size(415, 20);
             this.lblAlertUsername.TabIndex = 20;
@@ -293,7 +293,7 @@
             this.lblAlertPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.lblAlertPassword.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlertPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlertPassword.Location = new System.Drawing.Point(636, 471);
+            this.lblAlertPassword.Location = new System.Drawing.Point(636, 472);
             this.lblAlertPassword.Name = "lblAlertPassword";
             this.lblAlertPassword.Size = new System.Drawing.Size(336, 20);
             this.lblAlertPassword.TabIndex = 19;
@@ -323,7 +323,7 @@
             this.txtBoxAuth0Field.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtBoxAuth0Field.PlaceholderText = "Must contain +5 characters";
             this.txtBoxAuth0Field.SelectedText = "";
-            this.txtBoxAuth0Field.Size = new System.Drawing.Size(350, 47);
+            this.txtBoxAuth0Field.Size = new System.Drawing.Size(350, 49);
             this.txtBoxAuth0Field.TabIndex = 17;
             // 
             // txtBoxUsernameField
@@ -342,14 +342,14 @@
             this.txtBoxUsernameField.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtBoxUsernameField.ForeColor = System.Drawing.Color.White;
             this.txtBoxUsernameField.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtBoxUsernameField.Location = new System.Drawing.Point(631, 197);
+            this.txtBoxUsernameField.Location = new System.Drawing.Point(631, 191);
             this.txtBoxUsernameField.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBoxUsernameField.Name = "txtBoxUsernameField";
             this.txtBoxUsernameField.PasswordChar = '\0';
             this.txtBoxUsernameField.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtBoxUsernameField.PlaceholderText = "Enter a username";
             this.txtBoxUsernameField.SelectedText = "";
-            this.txtBoxUsernameField.Size = new System.Drawing.Size(504, 47);
+            this.txtBoxUsernameField.Size = new System.Drawing.Size(504, 49);
             this.txtBoxUsernameField.TabIndex = 16;
             // 
             // guna2Button11
@@ -365,7 +365,7 @@
             this.guna2Button11.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button11.ForeColor = System.Drawing.Color.White;
-            this.guna2Button11.Location = new System.Drawing.Point(631, 500);
+            this.guna2Button11.Location = new System.Drawing.Point(631, 501);
             this.guna2Button11.Name = "guna2Button11";
             this.guna2Button11.Size = new System.Drawing.Size(504, 60);
             this.guna2Button11.TabIndex = 15;
