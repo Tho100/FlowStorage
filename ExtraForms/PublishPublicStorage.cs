@@ -14,6 +14,7 @@ namespace FlowSERVER1.ExtraForms {
 
             HomePage.instance.PublicStorageUserComment = null;
             HomePage.instance.PublicStorageUserTag = null;
+            HomePage.instance.PublicStorageUserTitle = null;
             HomePage.instance.PublicStorageClosed = true;
             this.Hide();
 
@@ -23,6 +24,8 @@ namespace FlowSERVER1.ExtraForms {
         private void guna2Button2_Click(object sender, EventArgs e) {
 
             HomePage.instance.PublicStorageUserComment = txtFieldComment.Text;
+            HomePage.instance.PublicStorageUserTitle = txtFieldTitle.Text;
+
             if(HomePage.instance.PublicStorageUserTag == null) {
                 new CustomAlert(title: "Upload Failed","Please select a tag.").Show();
                 return;

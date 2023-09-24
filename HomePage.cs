@@ -33,6 +33,7 @@ namespace FlowSERVER1 {
 
         public static HomePage instance { get; set; } = new HomePage();
         public string PublicStorageUserComment { get; set; } = null;
+        public string PublicStorageUserTitle { get; set; } = null;
         public string PublicStorageUserTag { get; set; } = null;
         public bool PublicStorageClosed { get; set; } = false;
         public string CurrentLang { get; set; }
@@ -166,15 +167,16 @@ namespace FlowSERVER1 {
             try {
 
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
+                string encryptedTitle = EncryptionModel.Encrypt(PublicStorageUserTitle);
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
 
-                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB,CUST_COMMENT,CUST_TAG) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value,@comment, @tag)";
+                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, CUST_TITLE, CUST_TAG) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value, @title, @tag)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
-                    command.Parameters.AddWithValue("@comment", encryptedComment);
+                    command.Parameters.AddWithValue("@title", encryptedTitle);
                     command.Parameters.AddWithValue("@tag", PublicStorageUserTag);
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
@@ -191,6 +193,15 @@ namespace FlowSERVER1 {
 
                     await command.ExecuteNonQueryAsync();
                 }
+
+                string insertQueryComment = $"INSERT INTO ps_info_comment (CUST_FILE_NAME, CUST_COMMENT) VALUES (@file_name, @comment)";
+                var paramComment = new Dictionary<string, string>
+                {
+                    { "@file_name", encryptedFileName},
+                    { "@comment", encryptedComment},
+                };
+
+                await crud.Insert(insertQueryComment, paramComment);
 
                 CloseUploadAlert();
                 UpdateProgressBarValue();
@@ -209,20 +220,30 @@ namespace FlowSERVER1 {
             try {
 
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
+                string encryptedTitle = EncryptionModel.Encrypt(PublicStorageUserTitle);
                 string encryptedFileName = EncryptionModel.Encrypt(_fileName);
 
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_COMMENT, CUST_TAG) VALUES (@username, @file_name, @date, @file_value,@comment, @tag)";
+                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE, CUST_TITLE, CUST_TAG) VALUES (@username, @file_name, @date, @file_value, @title, @tag)";
                 var param = new Dictionary<string, string>
                 {
                     { "@username", Globals.custUsername},
                     { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
                     { "@file_value", fileBase64Value},
-                    { "@comment", encryptedComment},
+                    { "@title", encryptedTitle},
                     { "@tag", PublicStorageUserTag},
                 };
 
                 await crud.Insert(insertQuery, param);
+
+                string insertQueryComment = $"INSERT INTO ps_info_comment (CUST_FILE_NAME, CUST_COMMENT) VALUES (@file_name, @comment)";
+                var paramComment = new Dictionary<string, string>
+                {
+                    { "@file_name", encryptedFileName},
+                    { "@comment", encryptedComment},
+                };
+
+                await crud.Insert(insertQueryComment, paramComment);
 
                 CloseUploadAlert();
                 UpdateProgressBarValue();
@@ -1659,7 +1680,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void openDialogPublicStorage() {
+        private void OpenDialogPublicStorage() {
 
             var open = new OpenFileDialog {
                 Filter = Globals.filterFileType,
@@ -3321,7 +3342,7 @@ namespace FlowSERVER1 {
                 int currentUploadCount = returnedCountValue.Sum();
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
-                    openDialogPublicStorage();
+                    OpenDialogPublicStorage();
                 }
                 else {
                     DisplayUpgradeAccountDialog();

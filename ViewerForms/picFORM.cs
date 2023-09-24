@@ -80,14 +80,14 @@ namespace FlowSERVER1 {
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
                 label4.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: title, uploaderName: uploaderName);
+                string comment = GetComment.getCommentPublicStorage(fileName: title);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
             }
 
             lblUploaderName.Text = uploaderName;
 
-            if(_tableName == "folder_upload_info" || _tableName == "file_info") {
+            if(_tableName == GlobalsTable.folderUploadTable || _tableName == GlobalsTable.homeImageTable) {
                 btnPrevious.Visible = true;
                 btnNext.Visible = true;
             } else {

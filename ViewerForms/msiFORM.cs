@@ -33,7 +33,7 @@ namespace FlowSERVER1 {
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
                 label6.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(tableName: tableName, fileName: fileName, uploaderName: uploaderUsername);
+                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
             }
