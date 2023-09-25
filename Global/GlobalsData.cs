@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FlowSERVER1.Global {
     public class GlobalsData {
@@ -23,7 +19,7 @@ namespace FlowSERVER1.Global {
         static public List<string> base64EncodedImageHome = new List<string>();
         static public List<string> base64EncodedThumbnailHome = new List<string>();
 
-        static public Dictionary<string, List<(string, string, string)>> filesMetadataCachePs = new Dictionary<string, List<(string, string, string)>>();
+        static public Dictionary<string, List<(string, string, string, string)>> filesMetadataCachePs = new Dictionary<string, List<(string, string, string, string)>>();
         static public List<string> base64EncodedImagePs = new List<string>();
         static public List<string> base64EncodedThumbnailPs = new List<string>();
 

@@ -28,6 +28,11 @@ namespace FlowSERVER1 {
         static public readonly Point PsLabelTagLoc = new Point(29, 191);
         static public readonly Font PsLabelTagFont = new Font(PsLabelTagFontName, PsLabelTagFontSize, FontStyle.Bold);
 
+        // Ps title label
+        static private readonly string PsTitleLabelFontName = "Segoe UI Semibold";
+        static private readonly float PsTitleLabelFontSize = 9f;
+        static public readonly Font PsTitleLabelFont = new Font(PsTitleLabelFontName, PsTitleLabelFontSize, FontStyle.Bold);
+
         // Seperator button
         static public readonly Point PsSeperatorBut = new Point(84, 199);
         static public readonly Size PsSeperatorButSize = new Size(4, 4);

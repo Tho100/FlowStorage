@@ -1088,22 +1088,23 @@ namespace FlowSERVER1 {
         #endregion END - Home section
 
         #region Public Storage section
-        private async Task<List<(string, string, string)>> GetFileMetadataPublicStorage(string tableName) {
+        private async Task<List<(string, string, string, string)>> GetFileMetadataPublicStorage(string tableName) {
 
             if (GlobalsData.filesMetadataCachePs.ContainsKey(tableName)) {
                 return GlobalsData.filesMetadataCachePs[tableName];
             }
             else {
 
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {tableName}";
+                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName}";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+                        List<(string, string, string, string)> filesInfo = new List<(string, string, string, string)>();
                         while (await reader.ReadAsync()) {
                             string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                             string uploadDate = reader.GetString(1);
                             string tagValue = reader.GetString(2);
-                            filesInfo.Add((fileName, uploadDate, tagValue));
+                            string titleValue = EncryptionModel.Decrypt(reader.GetString(3));
+                            filesInfo.Add((fileName, uploadDate, tagValue, titleValue));
                         }
 
                         GlobalsData.filesMetadataCachePs[tableName] = filesInfo;
@@ -1121,13 +1122,13 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<(string, string, string)> filesInfo;
+                List<(string, string, string, string)> filesInfo;
 
                 if (isFromMyPs == false) {
                     filesInfo = await GetFileMetadataPublicStorage(_tableName);
                 }
                 else {
-                    filesInfo = new List<(string, string, string)>();
+                    filesInfo = new List<(string, string, string, string)>();
                 }
 
                 if (isFromMyPs == true) {
@@ -1141,12 +1142,13 @@ namespace FlowSERVER1 {
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            List<(string, string, string)> tuplesList = new List<(string, string, string)>();
+                            List<(string, string, string, string)> tuplesList = new List<(string, string, string, string)>();
                             while (await reader.ReadAsync()) {
                                 string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                                 string uploadDate = reader.GetString(1);
                                 string tagValue = reader.GetString(2);
-                                tuplesList.Add((fileName, uploadDate, tagValue));
+                                string titleValue = EncryptionModel.Decrypt(reader.GetString(3));
+                                tuplesList.Add((fileName, uploadDate, tagValue, titleValue));
                             }
                             filesInfo.AddRange(tuplesList);
                         }

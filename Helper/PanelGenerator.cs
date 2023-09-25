@@ -105,14 +105,14 @@ namespace FlowSERVER1.Helper {
             };
         }
 
-        public void GeneratePublicStoragePanel(string parameterName, int length, List<(string, string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, List<String> usernameList, bool moreButtonVisible = true) {
+        public void GeneratePublicStoragePanel(string parameterName, int length, List<(string, string, string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, List<String> usernameList, bool moreButtonVisible = true) {
 
             for (int i = 0; i < length; i++) {
 
                 var panelPic_Q = new Guna2Panel() {
                     Name = $"{parameterName + i}",
                     Width = 250,
-                    Height = 268,
+                    Height = 288,
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
                     BorderRadius = 8,
@@ -135,7 +135,7 @@ namespace FlowSERVER1.Helper {
                 dateLab.Visible = true;
                 dateLab.Enabled = true;
                 dateLab.Width = 200;
-                dateLab.Location = new Point(12, 241);
+                dateLab.Location = new Point(12, 261);
                 dateLab.Text = $"{usernameList[i]} · {filesInfo[i].Item2}";
 
                 Guna2Panel tagBackground = new Guna2Panel();
@@ -174,7 +174,20 @@ namespace FlowSERVER1.Helper {
                 titleLab.AutoEllipsis = true;
                 titleLab.Width = 200;
                 titleLab.Height = 20;
-                titleLab.Text = filesInfo[i].Item1;
+                titleLab.Text = filesInfo[i].Item4;
+
+                Label fileNameLabel = new Label();
+                panelF.Controls.Add(fileNameLabel);
+                fileNameLabel.Name = $"fileNameLabelL{i}";
+                fileNameLabel.Font = GlobalStyle.PsTitleLabelFont;
+                fileNameLabel.ForeColor = GlobalStyle.DarkGrayColor;
+                fileNameLabel.Visible = true;
+                fileNameLabel.Enabled = true;
+                fileNameLabel.Location = new Point(12, 240);
+                fileNameLabel.AutoEllipsis = true;
+                fileNameLabel.Width = 200;
+                fileNameLabel.Height = 20;
+                fileNameLabel.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 panelF.Controls.Add(picMain_Q);
