@@ -451,7 +451,7 @@
     <Compile Include="Helper\CloseForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
-    <Compile Include="Helper\ImageCompressor.cs" />
+    <Compile Include="Helper\GeneralCompressor.cs" />
     <Compile Include="Helper\UpdateChanges.cs" />
     <Compile Include="Helper\UpdateComment.cs" />
     <Compile Include="Helper\UpdateLanguage.cs" />

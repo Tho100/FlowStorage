@@ -29,7 +29,7 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
 
         readonly private Crud crud = new Crud();
-        readonly private ImageCompressor compressor = new ImageCompressor();
+        readonly private GeneralCompressor compressor = new GeneralCompressor();
 
         public static HomePage instance { get; set; } = new HomePage();
         public string PublicStorageUserComment { get; set; } = null;
@@ -136,7 +136,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task InsertFileData(string setValue, string nameTable) {
+        private async Task InsertFileData(string fileDataBase64Encoded, string nameTable) {
 
             try {
 
@@ -148,7 +148,7 @@ namespace FlowSERVER1 {
                     { "@username", Globals.custUsername},
                     { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
-                    { "@file_value", setValue}
+                    { "@file_value", fileDataBase64Encoded}
                 };
 
                 await crud.Insert(insertQuery, param);
@@ -931,11 +931,13 @@ namespace FlowSERVER1 {
 
                         try {
 
-                            byte[] retrieveBytes = File.ReadAllBytes(selectedItems);
-                            string convertToBase64 = Convert.ToBase64String(retrieveBytes);
+                            byte[] originalRetrieveBytes = File.ReadAllBytes(selectedItems);
+                            byte[] compressedBytes = new GeneralCompressor().compressFileData(originalRetrieveBytes);
+
+                            string convertToBase64 = Convert.ToBase64String(compressedBytes);
                             string encryptText = EncryptionModel.Encrypt(convertToBase64);
 
-                            _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
+                            _fileSizeInMB = (originalRetrieveBytes.Length / 1024) / 1024;
 
                             if (Globals.imageTypes.Contains(_fileExtension)) {
 
@@ -968,9 +970,12 @@ namespace FlowSERVER1 {
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
+
                                 byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
-                                String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
+                                byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
+                                string getEncoded = Convert.ToBase64String(compressedTextBytes);
+                                string encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
+
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
                             }
 
@@ -1723,7 +1728,9 @@ namespace FlowSERVER1 {
                         if (PublicStorageClosed == false) {
 
                             byte[] retrieveBytes = File.ReadAllBytes(selectedItems);
-                            string toBase64String = Convert.ToBase64String(retrieveBytes);
+                            byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
+
+                            string toBase64String = Convert.ToBase64String(compressedBytes);
                             string encryptText = EncryptionModel.Encrypt(toBase64String);
 
                             _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
@@ -3067,7 +3074,9 @@ namespace FlowSERVER1 {
                 try {
 
                     byte[] retrieveBytes = File.ReadAllBytes(filesFullPath);
-                    string toBase64String = Convert.ToBase64String(retrieveBytes);
+                    byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
+
+                    string toBase64String = Convert.ToBase64String(compressedBytes);
                     string encryptValues = EncryptionModel.Encrypt(toBase64String);
 
                     _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;

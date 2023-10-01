@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
 
@@ -74,8 +75,12 @@ namespace FlowSERVER1 {
 
                         var base64Encoded = reader.GetString(0);
                         var decryptValues = EncryptionModel.Decrypt(base64Encoded);
-                        var bytes = Convert.FromBase64String(decryptValues);
-                        universalBytes = bytes;
+
+                        byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
+                        byte[] decompressedBytesData = new GeneralCompressor()
+                                                    .decompressFileData(compressedBytesData);
+
+                        universalBytes = decompressedBytesData;
                     }
                 }
             }
@@ -104,8 +109,12 @@ namespace FlowSERVER1 {
 
                         var base64Encoded = reader.GetString(0);
                         var decryptValues = EncryptionModel.Decrypt(base64Encoded);
-                        var bytes = Convert.FromBase64String(decryptValues);
-                        universalBytes = bytes;
+
+                        byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
+                        byte[] decompressedBytesData = new GeneralCompressor()
+                                                    .decompressFileData(compressedBytesData);
+
+                        universalBytes = decompressedBytesData;
                     }
                 }
             }
@@ -134,8 +143,12 @@ namespace FlowSERVER1 {
 
                         var base64Encoded = reader.GetString(0);
                         var decryptValues = EncryptionModel.Decrypt(base64Encoded);
-                        var bytes = Convert.FromBase64String(decryptValues);
-                        universalBytes = bytes;
+
+                        byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
+                        byte[] decompressedBytesData = new GeneralCompressor()
+                                                    .decompressFileData(compressedBytesData);
+
+                        universalBytes = decompressedBytesData;
                     }
                 }
             }
@@ -163,8 +176,12 @@ namespace FlowSERVER1 {
 
                         var base64Encoded = reader.GetString(0);
                         var decryptValues = EncryptionModel.Decrypt(base64Encoded);
-                        var bytes = Convert.FromBase64String(decryptValues);
-                        universalBytes = bytes;
+
+                        byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
+                        byte[] decompressedBytesData = new GeneralCompressor()
+                                                    .decompressFileData(compressedBytesData);
+
+                        universalBytes = decompressedBytesData;
                     }
                 }
             }
@@ -191,8 +208,12 @@ namespace FlowSERVER1 {
 
                         var base64Encoded = reader.GetString(0);
                         var decryptedValues = EncryptionModel.Decrypt(base64Encoded);
-                        var fileBytes = Convert.FromBase64String(decryptedValues);
-                        universalBytes = fileBytes;
+
+                        byte[] compressedBytesData = Convert.FromBase64String(decryptedValues);
+                        byte[] decompressedBytesData = new GeneralCompressor()
+                                                    .decompressFileData(compressedBytesData);
+
+                        universalBytes = decompressedBytesData;
                     }
                 }
             }
@@ -216,8 +237,12 @@ namespace FlowSERVER1 {
 
                         string base64Encoded = reader.GetString(0);
                         string decryptedValues = EncryptionModel.Decrypt(base64Encoded);
-                        byte[] bytes = Convert.FromBase64String(decryptedValues);
-                        universalBytes = bytes;
+
+                        byte[] compressedBytesData = Convert.FromBase64String(decryptedValues);
+                        byte[] decompressedBytesData = new GeneralCompressor()
+                                                    .decompressFileData(compressedBytesData);
+
+                        universalBytes = decompressedBytesData;
                     }
                 }
             }

@@ -18,7 +18,7 @@ namespace FlowSERVER1 {
 
         public MainShareFileForm instance;
 
-        readonly private ImageCompressor compressor = new ImageCompressor();
+        readonly private GeneralCompressor compressor = new GeneralCompressor();
         private string _fileName{ get; set; }
         private string _fileFullPath { get; set; }
         private string _fileExtension { get; set; }
@@ -136,7 +136,8 @@ namespace FlowSERVER1 {
 
                     new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
-                    string _toBase64 = Convert.ToBase64String(_fileBytes);
+                    byte[] _compressedBytes = new GeneralCompressor().compressFileData(_fileBytes);
+                    string _toBase64 = Convert.ToBase64String(_compressedBytes);
 
                     if (Globals.imageTypes.Contains(_fileExtension)) {
                         string compressedImageBase64 = compressor.compresImageToBase64(_fileFullPath);
@@ -184,7 +185,9 @@ namespace FlowSERVER1 {
                         }
 
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                        string getEncoded = Convert.ToBase64String(getBytes);
+                        byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
+
+                        string getEncoded = Convert.ToBase64String(compressedTextBytes);
                         string encryptText = EncryptionModel.Encrypt(getEncoded);
                         
                         await startSending(encryptText);

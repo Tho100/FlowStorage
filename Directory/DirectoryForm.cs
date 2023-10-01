@@ -22,7 +22,7 @@ namespace FlowSERVER1 {
         public static DirectoryForm instance;
 
         readonly private Crud crud = new Crud();
-        readonly private ImageCompressor compressor = new ImageCompressor();
+        readonly private GeneralCompressor compressor = new GeneralCompressor();
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
@@ -709,7 +709,7 @@ namespace FlowSERVER1 {
             var form1 = HomePage.instance;
 
             var open = new OpenFileDialog {
-                Filter = "All Files|*.*|Images Files|*.jpg;*.jpeg;*.png;.bmp;|Video Files|*.mp4;*.webm;.mov;.wmv|Text Files|*.txt;*.md|Excel Files|*.xlsx;*.xls|Powerpoint Files|*.pptx;*.ppt|Word Documents|*.docx|Exe Files|*.exe|Audio Files|*.mp3;*.mpeg;*.wav|Programming/Scripting|*.py;*.cs;*.cpp;*.java;*.php;*.js;|Markup Languages|*.html;*.css;*.xml|Acrobat Files|*.pdf|Comma Separated Values|*.csv",
+                Filter = Globals.filterFileType,
                 Multiselect = true
             };
 
@@ -748,9 +748,9 @@ namespace FlowSERVER1 {
                 else {
 
                     HashSet<string> existingLabels = new HashSet<string>(flwLayoutDirectory.Controls
-                    .OfType<Guna2Panel>()
-                    .SelectMany(panel => panel.Controls.OfType<Label>())
-                    .Select(label => label.Text.ToLower()));
+                        .OfType<Guna2Panel>()
+                        .SelectMany(panel => panel.Controls.OfType<Label>())
+                        .Select(label => label.Text.ToLower()));
 
                     foreach (var selectedItems in open.FileNames) {
 
@@ -767,7 +767,9 @@ namespace FlowSERVER1 {
                         try {
 
                             byte[] getBytesSelectedFiles = File.ReadAllBytes(selectedItems);
-                            string toBase64String = Convert.ToBase64String(getBytesSelectedFiles);
+                            byte[] compressedBytes = new GeneralCompressor().compressFileData(getBytesSelectedFiles);
+
+                            string toBase64String = Convert.ToBase64String(compressedBytes);
                             string encryptBase64String = EncryptionModel.Encrypt(toBase64String);
 
                             _fileSizeInMB = (getBytesSelectedFiles.Length / 1024) / 1024;
