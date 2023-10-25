@@ -527,12 +527,13 @@ namespace FlowSERVER1.Authentication {
                     command.Parameters.AddWithValue("@CUST_LANG", "US");
                     command.ExecuteNonQuery();
 
-                    command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS)
-                            VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS)";
+                    command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS,PASSWORD_DISABLED)
+                            VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS,@PASSWORD_DISABLED)";
                     command.Parameters.Clear();
                     command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
                     command.Parameters.AddWithValue("@DISABLED", "0");
                     command.Parameters.AddWithValue("@SET_PASS", "DEF");
+                    command.Parameters.AddWithValue("@PASSWORD_DISABLED", "1");
                     command.ExecuteNonQuery();
 
                     transaction.Commit();
