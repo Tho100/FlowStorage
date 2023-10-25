@@ -1,5 +1,4 @@
-﻿
-using FlowSERVER1.AlertForms;
+﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 
@@ -51,13 +50,13 @@ namespace FlowSERVER1 {
                 { ".jpg", ("imgFileJpg", "file_info_image") },
                 { ".jpeg", ("imgFilePeg", "file_info_image") },
                 { ".bmp", ("imgFileBmp", "file_info_image") },
-                { ".txt", ("txtFile", "file_info_expand") },
-                { ".js", ("txtFile", "file_info_expand") },
-                { ".sql", ("txtFile", "file_info_expand") },
-                { ".py", ("txtFile", "file_info_expand") },
-                { ".html", ("txtFile", "file_info_expand") },
-                { ".csv", ("txtFile", "file_info_expand") },
-                { ".css", ("txtFile", "file_info_expand") },
+                { ".txt", ("txtFile", "file_info_text") },
+                { ".js", ("txtFile", "file_info_text") },
+                { ".sql", ("txtFile", "file_info_text") },
+                { ".py", ("txtFile", "file_info_text") },
+                { ".html", ("txtFile", "file_info_text") },
+                { ".csv", ("txtFile", "file_info_text") },
+                { ".css", ("txtFile", "file_info_text") },
                 { ".exe", ("exeFile", "file_info_exe") },
                 { ".mp4", ("vidFile", "file_info_video") },
                 { ".wav", ("vidFile", "file_info_video") },

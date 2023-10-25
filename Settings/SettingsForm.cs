@@ -62,7 +62,7 @@ namespace FlowSERVER1 {
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
-                string[] _halfTablesName = { "info", "info_expand", "info_vid", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audi", "info_excel" };
+                string[] _halfTablesName = { "info_image", "info_text", "info_video", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audio", "info_excel" };
                 string[] _chartXAxisValues = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
 
                 foreach ((string tableName, string chartName) in _halfTablesName.Zip(_chartXAxisValues, (a, b) => (a, b))) {
