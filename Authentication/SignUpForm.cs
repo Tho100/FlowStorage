@@ -33,15 +33,16 @@ namespace FlowSERVER1.Authentication {
 
             try {
 
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
+                string startupPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
 
-                if (!Directory.Exists(path)) {
+                if (!Directory.Exists(startupPath)) {
                     return;
                 }
 
-                new DirectoryInfo(path).Attributes &= ~FileAttributes.Hidden;
+                new DirectoryInfo(startupPath).Attributes &= ~FileAttributes.Hidden;
 
-                string authFile = Path.Combine(path, "CUST_DATAS.txt");
+                string authFile = Path.Combine(startupPath, "CUST_DATAS.txt");
                 if (!File.Exists(authFile) || new FileInfo(authFile).Length == 0) {
                     return;
                 }

@@ -429,7 +429,7 @@ namespace FlowSERVER1 {
 
                     if (GlobalsData.base64EncodedImageHome.Count == 0) {
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info WHERE CUST_USERNAME = @username";
+                        const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info_image WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -446,7 +446,7 @@ namespace FlowSERVER1 {
 
                     if (GlobalsData.base64EncodedThumbnailHome.Count == 0) {
 
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_vid WHERE CUST_USERNAME = @username";
+                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_video WHERE CUST_USERNAME = @username";
                         using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", Globals.custUsername);
 
@@ -1752,8 +1752,8 @@ namespace FlowSERVER1 {
                                     using (MemoryStream msIco = new MemoryStream()) {
                                         retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
                                         dataIco = msIco.ToArray();
-                                        String _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                        String _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
+                                        string _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
+                                        string _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
                                         createFilePanelPublicStorage(selectedItems, "ps_info_image", "PanImg", curr, _encryptedValue);
                                     }
                                 }
@@ -1761,13 +1761,13 @@ namespace FlowSERVER1 {
 
                             else if (Globals.textTypes.Contains(_fileExtension)) {
                                 txtCurr++;
-                                String nonLine = "";
+                                string nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
                                 byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                                String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptTextValues = EncryptionModel.Encrypt(getEncoded);
+                                string getEncoded = Convert.ToBase64String(getBytes);
+                                string encryptTextValues = EncryptionModel.Encrypt(getEncoded);
                                 createFilePanelPublicStorage(selectedItems, "ps_info_text", "PanTxt", txtCurr, encryptTextValues);
                             }
 

@@ -348,7 +348,7 @@ namespace FlowSERVER1 {
                     await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
                 }
                 else {
-                    await executeChanges("UPDATE file_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
+                    await executeChanges("UPDATE file_info_image SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
                 }
 
             }
@@ -441,7 +441,7 @@ namespace FlowSERVER1 {
 
             List<string> imageBase64Encoded = new List<string>();
 
-            if(_tableName == "file_info") {
+            if(_tableName == "file_info_image") {
                 imageBase64Encoded = GlobalsData.base64EncodedImageHome;
             } else if (_tableName == "folder_upload_info") {
                 imageBase64Encoded = GlobalsData.base64EncodedImageFolder;
@@ -457,7 +457,7 @@ namespace FlowSERVER1 {
                 string currentPage = HomePage.instance.lblCurrentPageText.Text;
 
                 if (currentPage == "Home") {
-                    _tableName = "file_info";
+                    _tableName = "file_info_image";
                 } else if (currentPage != "Public Storage" || currentPage != "Home" || currentPage != "Shared To Me" || currentPage != "Shared Files") {
                     _tableName = "folder_upload_info";
                 } 
@@ -484,7 +484,7 @@ namespace FlowSERVER1 {
                     int width = defaultImage.Width;
                     int height = defaultImage.Height;
 
-                    if(_tableName == "file_info") {
+                    if(_tableName == "file_info_image") {
                         PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
                         displayPic.Show();
                     } else if (_tableName == "folder_upload_info") {

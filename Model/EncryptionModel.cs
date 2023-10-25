@@ -1,63 +1,57 @@
 ﻿using System;
 using System.Text;
 using System.Security.Cryptography;
+using System.Windows;
 
 namespace FlowSERVER1 {
     public static class EncryptionModel {
+
+        static private readonly byte[] _iv = new byte[16];
+        static private readonly byte[] _keyBytes = Encoding.UTF8.GetBytes("9h3GKpL_vXeQsZ6F");
+
         public static string Encrypt(String _value) {
-            String toBase64 = "";
 
             try {
 
-                byte[] iv = new byte[16]; 
-                byte[] keyBytes = Encoding.UTF8.GetBytes("0123456789085746");
                 byte[] plainBytes = Encoding.UTF8.GetBytes(_value); 
 
                 using (Aes aes = Aes.Create()) {
-                    aes.Key = keyBytes;
-                    aes.IV = iv;
+                    aes.Key = _keyBytes;
+                    aes.IV = _iv;
                     aes.Mode = CipherMode.CBC;
                     aes.Padding = PaddingMode.PKCS7;
 
                     using (ICryptoTransform encryptor = aes.CreateEncryptor()) {
                         byte[] encryptedBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
-                        toBase64 = Convert.ToBase64String(encryptedBytes);
+                        return Convert.ToBase64String(encryptedBytes);
                     }
                 }
 
-            } catch (Exception) {
-                // TODO: Ignore exception since it's unecesary
-            }
+            } catch (Exception) { }
 
-            return toBase64;
+            return String.Empty;
         }
 
         public static string Decrypt(String _value) {
 
-            String toBase64 = "";
-
             try {
                 
-                byte[] iv = new byte[16]; 
-                byte[] keyBytes = Encoding.UTF8.GetBytes("0123456789085746"); 
                 byte[] encryptedBytes = Convert.FromBase64String(_value); 
 
                 using (Aes aes = Aes.Create()) {
-                    aes.Key = keyBytes;
-                    aes.IV = iv;
+                    aes.Key = _keyBytes;
+                    aes.IV = _iv;
                     aes.Mode = CipherMode.CBC;
                     aes.Padding = PaddingMode.PKCS7;
 
                     using (ICryptoTransform decryptor = aes.CreateDecryptor()) {
                         byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
-                        toBase64 = Encoding.UTF8.GetString(decryptedBytes);
+                        return Encoding.UTF8.GetString(decryptedBytes);
                     }
                 }
-            } catch (Exception) {
-                // TODO: Ignore exception since it's unecesary
-            }
+            } catch (Exception) { }
 
-            return toBase64;
+            return String.Empty;
 
         }
 

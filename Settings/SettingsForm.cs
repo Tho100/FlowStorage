@@ -239,7 +239,7 @@ namespace FlowSERVER1 {
 
             if(origin == "Home") {
 
-                if (tableName == "file_info") {
+                if (tableName == "file_info_image") {
 
                     List<string> dateLabels = new List<string>(HomePage.instance.flwLayoutHome.Controls
                         .OfType<Guna2Panel>()
@@ -271,7 +271,7 @@ namespace FlowSERVER1 {
 
             if (origin == "Home") {
                     
-                if(tableName == "file_info") {
+                if(tableName == "file_info_image") {
 
                     List<string> todayDateLabels = new List<string>(HomePage.instance.flwLayoutHome.Controls
                         .OfType<Guna2Panel>()

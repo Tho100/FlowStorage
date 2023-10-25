@@ -3,14 +3,14 @@
 namespace FlowSERVER1.Global {
     public class GlobalsTable {
 
-        static public readonly string homeImageTable = "file_info";
-        static public readonly string homeVideoTable = "file_info_vid";
-        static public readonly string homeTextTable = "file_info_expand";
+        static public readonly string homeImageTable = "file_info_image";
+        static public readonly string homeVideoTable = "file_info_video";
+        static public readonly string homeTextTable = "file_info_text";
         static public readonly string homePdfTable = "file_info_pdf";
         static public readonly string homeExcelTable = "file_info_excel";
         static public readonly string homePtxTable = "file_info_ptx";
         static public readonly string homeMsiTable = "file_info_msi";
-        static public readonly string homeAudioTable = "file_info_audi";
+        static public readonly string homeAudioTable = "file_info_audio";
         static public readonly string homeWordTable = "file_info_word";
         static public readonly string homeApkTable = "file_info_apk";
         static public readonly string homeExeTable = "file_info_exe";
@@ -23,17 +23,17 @@ namespace FlowSERVER1.Global {
 
         static public readonly Dictionary<string, string> tableToFileType = new Dictionary<string, string>
         {
-            { "file_info", "imgFile" },
-            { "file_info_audi", "audFile" },
-            { "file_info_expand", "txtFile" },
-            { "file_info_exe", "exeFile" },
-            { "file_info_vid", "vidFile" },
-            { "file_info_excel", "exlFile" },
-            { "file_info_msi", "msiFile" },
-            { "file_info_pdf", "pdfFile" },
-            { "file_info_apk", "apkFile" },
-            { "file_info_word", "wordFile" },
-            { "file_info_ptx", "ptxFile" },
+            { homeImageTable, "imgFile" },
+            { homeAudioTable, "audFile" },
+            { homeTextTable, "txtFile" },
+            { homeExeTable, "exeFile" },
+            { homeVideoTable, "vidFile" },
+            { homeExcelTable, "exlFile" },
+            { homeMsiTable, "msiFile" },
+            { homePdfTable, "pdfFile" },
+            { homeApkTable, "apkFile" },
+            { homeWordTable, "wordFile" },
+            { homePtxTable, "ptxFile" },            
             { "file_info_directory", null }
         };
 

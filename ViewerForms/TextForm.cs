@@ -132,7 +132,7 @@ namespace FlowSERVER1 {
 
                 }
                 else if (tableName == GlobalsTable.homeTextTable) {
-                    const string getTxtQuery = "SELECT CUST_FILE FROM file_info_expand WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                    const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
                 }
                 else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
