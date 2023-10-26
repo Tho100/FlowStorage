@@ -1,5 +1,7 @@
 ﻿using FlowSERVER1.Global;
 using MySql.Data.MySqlClient;
+using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -10,12 +12,18 @@ namespace FlowSERVER1.Helper {
 
         public async Task SaveChangesUpdate(string fileName, string updatedValues, string tableName, bool isFromSharing, string directoryOrFolderName) {
 
+            string encryptedFileName = EncryptionModel.Encrypt(fileName);
+
+            byte[] toBytes = Convert.FromBase64String(updatedValues);
+            string compressedUpdatedValues = Convert.ToBase64String(new GeneralCompressor().compressFileData(toBytes));
+            string encryptUpdatedValues = EncryptionModel.Encrypt(compressedUpdatedValues);
+            
             if (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName)) {
                 string updateQue = $"UPDATE {tableName} SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                    command.Parameters.Add("@update", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(updatedValues);
-                    command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                    command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(fileName);
+                    command.Parameters.AddWithValue("@update", encryptUpdatedValues);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@filename", encryptedFileName);
                     await command.ExecuteNonQueryAsync();
                 }
 
@@ -24,9 +32,9 @@ namespace FlowSERVER1.Helper {
 
                 const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                    command.Parameters.Add("@update", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(updatedValues); ;
-                    command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                    command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(fileName);
+                    command.Parameters.AddWithValue("@update", encryptUpdatedValues);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@filename", encryptedFileName);
                     await command.ExecuteNonQueryAsync();
                 }
 
@@ -35,9 +43,9 @@ namespace FlowSERVER1.Helper {
 
                 const string updateQue = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                    command.Parameters.Add("@update", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(updatedValues); ;
-                    command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                    command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(fileName);
+                    command.Parameters.AddWithValue("@update", encryptUpdatedValues);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@filename", encryptedFileName);
                     await command.ExecuteNonQueryAsync();
                 }
 
@@ -46,11 +54,11 @@ namespace FlowSERVER1.Helper {
 
                 const string updateQue = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                 using (MySqlCommand command = new MySqlCommand(updateQue, con)) {
-                    command.Parameters.Add("@update", MySqlDbType.LongBlob).Value = EncryptionModel.Encrypt(updatedValues); ;
-                    command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                    command.Parameters.Add("@dirname", MySqlDbType.Text).Value = EncryptionModel.Encrypt(directoryOrFolderName);
-                    command.Parameters.Add("@filename", MySqlDbType.LongText).Value = EncryptionModel.Encrypt(fileName);
-                    command.ExecuteNonQuery();
+                    command.Parameters.AddWithValue("@update", encryptUpdatedValues);
+                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@filename", encryptedFileName);
+                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryOrFolderName));
+                    await command.ExecuteNonQueryAsync();
                 }
             }
 

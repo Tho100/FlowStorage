@@ -1,4 +1,5 @@
-﻿using FlowSERVER1.Global;
+﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 using MySql.Data.MySqlClient;
 using System;
@@ -442,16 +443,26 @@ namespace FlowSERVER1 {
 
         private async void btnSaveChanges_Click(object sender, EventArgs e) {
 
-            if (CallDialogResultSave.CallDialogResult(_isFromSharing) == DialogResult.Yes) {
+            try {
 
-                string getStrings = richTextBox1.Text;
-                byte[] getBytesText = Encoding.UTF8.GetBytes(getStrings);
-                string base64Strings = Convert.ToBase64String(getBytesText);
+                if (CallDialogResultSave.CallDialogResult(_isFromSharing) == DialogResult.Yes) {
 
-                string fileName = lblFileName.Text;
+                    string getStrings = richTextBox1.Text;
+                    byte[] getBytesText = Encoding.UTF8.GetBytes(getStrings);
+                    string base64Strings = Convert.ToBase64String(getBytesText);
 
-                await saveChanges.SaveChangesUpdate(fileName, base64Strings, _tableName, _isFromSharing, _directoryName);
-                MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string fileName = lblFileName.Text;
+
+                    await saveChanges.SaveChangesUpdate(fileName, base64Strings, _tableName, _isFromSharing, _directoryName);
+
+                    new CustomAlert(
+                        title: "Changes saved", 
+                        "Changes has been saved successfully.").Show();
+                }
+
+            } catch (Exception) {
+                new CustomAlert(title: "Something went wrong", "Failed to save changes.").Show();
+
             }
 
         }
