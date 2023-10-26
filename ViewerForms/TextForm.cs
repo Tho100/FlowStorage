@@ -98,7 +98,7 @@ namespace FlowSERVER1 {
 
                                 lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
 
-                                string toBase64Decoded = System.Text.Encoding.UTF8.GetString(decompressedBytes);
+                                string toBase64Decoded = Encoding.UTF8.GetString(decompressedBytes);
                                 richTextBox1.Text = toBase64Decoded;
                             }
                         }
@@ -123,7 +123,7 @@ namespace FlowSERVER1 {
 
                                 lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
 
-                                string toBase64Decoded = System.Text.Encoding.UTF8.GetString(decompressedBytes);
+                                string toBase64Decoded = Encoding.UTF8.GetString(decompressedBytes);
                                 richTextBox1.Text = toBase64Decoded;
                             }
                         }

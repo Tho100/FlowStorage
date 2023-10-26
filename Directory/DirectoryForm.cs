@@ -769,52 +769,34 @@ namespace FlowSERVER1 {
                             byte[] compressedBytes = new GeneralCompressor().compressFileData(getBytesSelectedFiles);
 
                             string toBase64String = Convert.ToBase64String(compressedBytes);
-                            string encryptBase64String = EncryptionModel.Encrypt(toBase64String);
+                            string encryptBase64String = UniqueFile.IgnoreEncryptionFolder(_uploadedExtensionType) 
+                                            ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                             _fileSizeInMB = (getBytesSelectedFiles.Length / 1024) / 1024;
 
                             if (Globals.imageTypes.Contains(_uploadedExtensionType)) {
-
                                 curr++;
 
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                if (_uploadedExtensionType != ".ico") {
-
-                                    string _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
-                                    string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
-                                    CreateFilePanel(selectedItems, "file_info_image", "PanImg", curr, _encryptedValue);
-
-                                }
-                                else {
-
-                                    Image retrieveIcon = Image.FromFile(selectedItems);
-                                    byte[] dataIco;
-                                    using (MemoryStream msIco = new MemoryStream()) {
-
-                                        retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-
-                                        dataIco = msIco.ToArray();
-                                        string _tempToBase64 = Convert.ToBase64String(dataIco);
-                                        string _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
-
-                                        CreateFilePanel(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
-                                    }
-                                }
+                                string _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
+                                string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
+                                CreateFilePanel(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                                
                             }
-
                             else if (Globals.textTypes.Contains(_uploadedExtensionType)) {
                                 txtCurr++;
-                                String nonLine = "";
+
+                                string nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
 
                                 byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                                String getEncoded = Convert.ToBase64String(getBytes);
-                                String encryptText = EncryptionModel.Encrypt(getEncoded);
+                                string getEncoded = Convert.ToBase64String(getBytes);
+                                string encryptText = EncryptionModel.Encrypt(getEncoded);
 
                                 CreateFilePanel(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptText);
                             }

@@ -40,7 +40,7 @@ namespace FlowSERVER1 {
         static private readonly Image PYImage = FlowSERVER1.Properties.Resources.icons8_python_file_48;
 
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
-        {".png",".jpg",".jpeg",".bmp",".ico"};
+        {".png",".jpg",".jpeg"};
 
         static public readonly HashSet<string> textTypes = new HashSet<string>
         {".txt",".csv",".sql",".html",".css",".py",".xml",".js",".md"};
@@ -48,14 +48,20 @@ namespace FlowSERVER1 {
         static public readonly HashSet<string> videoTypes = new HashSet<string> 
         {".mp4",".mov",".webm",".avi",".wmv"};
 
+        static public readonly HashSet<string> audioTypes = new HashSet<string>
+        {"mp3","wav"};
+
         static public readonly HashSet<string> imageTypesFolder = new HashSet<string>
-        {"png","jpg","jpeg","bmp","ico"};
+        {"png","jpg","jpeg"};
 
         static public readonly HashSet<string> textTypesFolder = new HashSet<string>
         {"txt","csv","sql","html","css","py","xml","js","md"};
 
         static public readonly HashSet<string> videoTypesFolder = new HashSet<string>
         {"mp4","mov","webm","avi","wmv"};
+
+        static public readonly HashSet<string> audioTypesFolder = new HashSet<string>
+        {"mp3","wav"};
 
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
         {

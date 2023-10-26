@@ -9,38 +9,28 @@ namespace FlowSERVER1.Helper {
 
         public byte[] compressFileData(byte[] data) {
             using (MemoryStream compressedStream = new MemoryStream()) {
-                using (ZipArchive archive = new ZipArchive(compressedStream, ZipArchiveMode.Create, true)) {
-                    ZipArchiveEntry entry = archive.CreateEntry("data");
-                    using (Stream entryStream = entry.Open()) {
-                        entryStream.Write(data, 0, data.Length);
-                    }
+                using (GZipStream gzipStream = new GZipStream(compressedStream, CompressionMode.Compress)) {
+                    gzipStream.Write(data, 0, data.Length);
                 }
-
                 return compressedStream.ToArray();
             }
         }
 
         public byte[] decompressFileData(byte[] compressedData) {
-            using (MemoryStream compressedStream = new MemoryStream(compressedData)) {
-                using (ZipArchive archive = new ZipArchive(compressedStream)) {
-                    if (archive.Entries.Count > 0) {
-                        ZipArchiveEntry entry = archive.Entries[0]; 
-                        using (Stream entryStream = entry.Open()) {
-                            using (MemoryStream decompressedStream = new MemoryStream()) {
-                                entryStream.CopyTo(decompressedStream);
-                                return decompressedStream.ToArray();
-                            }
-                        }
+            using (MemoryStream decompressedStream = new MemoryStream()) {
+                using (MemoryStream compressedStream = new MemoryStream(compressedData)) {
+                    using (GZipStream gzipStream = new GZipStream(compressedStream, CompressionMode.Decompress)) {
+                        gzipStream.CopyTo(decompressedStream);
                     }
                 }
+                return decompressedStream.ToArray();
             }
-            return null;
         }
 
         public string compresImageToBase64(string sourceImagePath) {
             using (Image sourceImage = Image.FromFile(sourceImagePath)) {
                 EncoderParameters encoderParameters = new EncoderParameters(1);
-                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 88L);
+                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 80L);
 
                 ImageCodecInfo jpegEncoder = GetEncoderInfo(ImageFormat.Jpeg);
 

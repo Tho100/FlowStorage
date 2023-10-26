@@ -14,12 +14,14 @@ namespace FlowSERVER1 {
         public static byte[] universalBytes { get; set; }
         public static bool stopFileRetrievalLoad { get; set; } = false;
         private static string fileName { get; set; }
+        private static string fileType { get; set; }
 
         public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName, bool _isFromSharedTo = false) {
 
             try {
 
                 fileName = _FileName;
+                fileType = _FileName.Split('.').Last();
 
                 if (GlobalsTable.publicTables.Contains(_TableName)) {
                     RetrieveHomeDataAsync(_TableName);
@@ -49,8 +51,11 @@ namespace FlowSERVER1 {
 
             } catch (Exception) {
                 new CustomAlert(title: "An error occurred","Failed to load this file. Are you connected to the internet?").Show();
+
             }
+
             return universalBytes;
+
         }
 
         private static async void RetrievePublicStorageData(String table) {
@@ -74,7 +79,8 @@ namespace FlowSERVER1 {
 
 
                         var base64Encoded = reader.GetString(0);
-                        var decryptValues = EncryptionModel.Decrypt(base64Encoded);
+                        var decryptValues = UniqueFile.IgnoreEncryption(fileType) 
+                                          ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
 
                         byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
                         byte[] decompressedBytesData = new GeneralCompressor()
@@ -108,7 +114,8 @@ namespace FlowSERVER1 {
 
 
                         var base64Encoded = reader.GetString(0);
-                        var decryptValues = EncryptionModel.Decrypt(base64Encoded);
+                        var decryptValues = UniqueFile.IgnoreEncryption(fileType) 
+                                          ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
 
                         byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
                         byte[] decompressedBytesData = new GeneralCompressor()
@@ -142,7 +149,8 @@ namespace FlowSERVER1 {
                         }
 
                         var base64Encoded = reader.GetString(0);
-                        var decryptValues = EncryptionModel.Decrypt(base64Encoded);
+                        var decryptValues = UniqueFile.IgnoreEncryption(fileType) 
+                                          ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
 
                         byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
                         byte[] decompressedBytesData = new GeneralCompressor()
@@ -175,7 +183,8 @@ namespace FlowSERVER1 {
                         }
 
                         var base64Encoded = reader.GetString(0);
-                        var decryptValues = EncryptionModel.Decrypt(base64Encoded);
+                        var decryptValues = UniqueFile.IgnoreEncryption(fileType) 
+                                          ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
 
                         byte[] compressedBytesData = Convert.FromBase64String(decryptValues);
                         byte[] decompressedBytesData = new GeneralCompressor()
@@ -207,7 +216,8 @@ namespace FlowSERVER1 {
                         }
 
                         var base64Encoded = reader.GetString(0);
-                        var decryptedValues = EncryptionModel.Decrypt(base64Encoded);
+                        var decryptedValues = UniqueFile.IgnoreEncryption(fileType) 
+                                            ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
 
                         byte[] compressedBytesData = Convert.FromBase64String(decryptedValues);
                         byte[] decompressedBytesData = new GeneralCompressor()
@@ -236,7 +246,8 @@ namespace FlowSERVER1 {
                         }
 
                         string base64Encoded = reader.GetString(0);
-                        string decryptedValues = EncryptionModel.Decrypt(base64Encoded);
+                        string decryptedValues = UniqueFile.IgnoreEncryption(fileType) 
+                                                ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
 
                         byte[] compressedBytesData = Convert.FromBase64String(decryptedValues);
                         byte[] decompressedBytesData = new GeneralCompressor()

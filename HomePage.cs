@@ -921,6 +921,8 @@ namespace FlowSERVER1 {
                     foreach (var selectedItems in open.FileNames) {
 
                         string selectedFileName = Path.GetFileName(selectedItems);
+                        string fileType = selectedFileName.Split('.').Last();
+
                         if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                             continue;
                         }
@@ -935,33 +937,21 @@ namespace FlowSERVER1 {
                             byte[] compressedBytes = new GeneralCompressor().compressFileData(originalRetrieveBytes);
 
                             string convertToBase64 = Convert.ToBase64String(compressedBytes);
-                            string encryptText = EncryptionModel.Encrypt(convertToBase64);
+                            string encryptText = UniqueFile.IgnoreEncryption(fileType) ? convertToBase64 : EncryptionModel.Encrypt(convertToBase64);
 
                             _fileSizeInMB = (originalRetrieveBytes.Length / 1024) / 1024;
 
                             if (Globals.imageTypes.Contains(_fileExtension)) {
-
                                 curr++;
                                 var getImg = new Bitmap(selectedItems);
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                if (_fileExtension != ".ico") {
-                                    String compressedImage = compressor.compresImageToBase64(selectedItems);
-                                    String encryptedValue = EncryptionModel.Encrypt(compressedImage);
-                                    CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
-                                }
-                                else {
-                                    Image retrieveIcon = Image.FromFile(selectedItems);
-                                    byte[] dataIco;
-                                    using (MemoryStream msIco = new MemoryStream()) {
-                                        retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                        dataIco = msIco.ToArray();
-                                        String tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                        String encryptedValue = EncryptionModel.Encrypt(tempToBase64);
-                                        CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
-                                    }
-                                }
+                                String compressedImage = compressor.compresImageToBase64(selectedItems);
+                                String encryptedValue = EncryptionModel.Encrypt(compressedImage);
+
+                                CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
+                                
                             }
 
                             else if (Globals.textTypes.Contains(_fileExtension)) {
@@ -1709,6 +1699,7 @@ namespace FlowSERVER1 {
 
                     string selectedItems = open.FileName;
                     string selectedFileName = Path.GetFileName(selectedItems);
+                    string fileType = selectedFileName.Split('.').Last();
 
                     if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                         BuildShowAlert(title: "Upload Failed", $"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}");
@@ -1731,7 +1722,7 @@ namespace FlowSERVER1 {
                             byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
 
                             string toBase64String = Convert.ToBase64String(compressedBytes);
-                            string encryptText = EncryptionModel.Encrypt(toBase64String);
+                            string encryptText = UniqueFile.IgnoreEncryption(fileType) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                             _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
 
@@ -1741,22 +1732,10 @@ namespace FlowSERVER1 {
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                if (_fileExtension != ".ico") {
-                                    String _compressedImage = compressor.compresImageToBase64(selectedItems);
-                                    String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
-                                    createFilePanelPublicStorage(selectedItems, "ps_info_image", "PanImg", curr, _encryptedValue);
-                                }
-                                else {
-                                    Image retrieveIcon = Image.FromFile(selectedItems);
-                                    byte[] dataIco;
-                                    using (MemoryStream msIco = new MemoryStream()) {
-                                        retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                        dataIco = msIco.ToArray();
-                                        string _tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                        string _encryptedValue = EncryptionModel.Encrypt(_tempToBase64);
-                                        createFilePanelPublicStorage(selectedItems, "ps_info_image", "PanImg", curr, _encryptedValue);
-                                    }
-                                }
+                                String _compressedImage = compressor.compresImageToBase64(selectedItems);
+                                String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
+                                createFilePanelPublicStorage(selectedItems, "ps_info_image", "PanImg", curr, _encryptedValue);
+       
                             }
 
                             else if (Globals.textTypes.Contains(_fileExtension)) {
@@ -3077,7 +3056,7 @@ namespace FlowSERVER1 {
                     byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
 
                     string toBase64String = Convert.ToBase64String(compressedBytes);
-                    string encryptValues = EncryptionModel.Encrypt(toBase64String);
+                    string encryptValues = UniqueFile.IgnoreEncryptionFolder(_extTypes) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                     _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
 
@@ -3106,14 +3085,14 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.textTypeToImageFolder[_extTypes];
 
-                        String nonLine = "";
+                        string nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(filesFullPath)) {
                             nonLine = ReadFileTxt.ReadToEnd();
                         }
 
-                        byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                        String getEncoded = Convert.ToBase64String(getBytes);
-                        String encryptEncoded = EncryptionModel.Encrypt(getEncoded);
+                        byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
+                        string getEncoded = Convert.ToBase64String(getBytes);
+                        string encryptEncoded = EncryptionModel.Encrypt(getEncoded);
 
                         await InsertFileDataFolder(filesFullPath, getFolderName, encryptEncoded);
 

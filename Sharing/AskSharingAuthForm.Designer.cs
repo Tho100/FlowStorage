@@ -73,7 +73,7 @@
             this.guna2Button4.FillColor = System.Drawing.Color.Empty;
             this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
-            this.guna2Button4.Location = new System.Drawing.Point(60, 219);
+            this.guna2Button4.Location = new System.Drawing.Point(43, 219);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(273, 51);
             this.guna2Button4.TabIndex = 24;
@@ -98,14 +98,14 @@
             this.txtFieldReceiverAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldReceiverAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldReceiverAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldReceiverAuth.Location = new System.Drawing.Point(60, 59);
+            this.txtFieldReceiverAuth.Location = new System.Drawing.Point(41, 59);
             this.txtFieldReceiverAuth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldReceiverAuth.Name = "txtFieldReceiverAuth";
             this.txtFieldReceiverAuth.PasswordChar = '*';
             this.txtFieldReceiverAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldReceiverAuth.PlaceholderText = "Receiver Password";
             this.txtFieldReceiverAuth.SelectedText = "";
-            this.txtFieldReceiverAuth.Size = new System.Drawing.Size(254, 49);
+            this.txtFieldReceiverAuth.Size = new System.Drawing.Size(273, 49);
             this.txtFieldReceiverAuth.TabIndex = 17;
             // 
             // lblAlert
@@ -114,7 +114,7 @@
             this.lblAlert.BackColor = System.Drawing.Color.Transparent;
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlert.Location = new System.Drawing.Point(119, 125);
+            this.lblAlert.Location = new System.Drawing.Point(102, 125);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.Size = new System.Drawing.Size(163, 20);
             this.lblAlert.TabIndex = 19;
@@ -127,7 +127,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(60, 33);
+            this.label1.Location = new System.Drawing.Point(40, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(237, 20);
             this.label1.TabIndex = 7;
@@ -154,6 +154,7 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(372, 305);
             this.guna2Panel1.TabIndex = 22;
+            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // guna2Button3
             // 
@@ -181,7 +182,7 @@
             // 
             this.guna2Button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.guna2Button1.Animated = true;
-            this.guna2Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
             this.guna2Button1.BorderRadius = 10;
             this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -212,7 +213,7 @@
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(60, 163);
+            this.guna2Button2.Location = new System.Drawing.Point(43, 163);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(273, 51);
             this.guna2Button2.TabIndex = 15;
