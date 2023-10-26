@@ -258,7 +258,7 @@ namespace FlowSERVER1 {
                     imageValues.Add(Globals.textTypeToImage[textTypes]);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        TextForm displayPic = new TextForm("", GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, Globals.custUsername);
+                        TextForm displayPic = new TextForm(GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     }
 
@@ -578,7 +578,7 @@ namespace FlowSERVER1 {
                     var filePath = _fileName;
 
                     textboxPic.Click += (sender_t, e_t) => {
-                        TextForm txtFormShow = new TextForm("", "upload_info_directory", titleLab.Text, lblDirectoryName.Text, Globals.custUsername);
+                        TextForm txtFormShow = new TextForm(GlobalsTable.directoryUploadTable, titleLab.Text, lblDirectoryName.Text, Globals.custUsername);
                         txtFormShow.Show();
                     };
                 }
@@ -589,7 +589,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.EXEImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
-                        new exeFORM(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername).Show();
+                        new exeFORM(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername).Show();
                     };
                 }
 

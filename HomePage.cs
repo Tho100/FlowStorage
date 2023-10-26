@@ -507,7 +507,7 @@ namespace FlowSERVER1 {
 
                         void textOnPressed(object sender, EventArgs e) {
 
-                            TextForm displayPic = new TextForm("NOT_NULL", GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, "null", Globals.custUsername);
+                            TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, "null", Globals.custUsername);
                             displayPic.Show();
                         }
 
@@ -777,7 +777,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Click += (sender_t, e_t) => {
 
-                        TextForm txtFormShow = new TextForm("NOT_NULL", GlobalsTable.homeTextTable, filePath, "null", Globals.custUsername);
+                        TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, filePath, "null", Globals.custUsername);
                         txtFormShow.Show();
                     };
                 }
@@ -1293,7 +1293,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm("NOT_NULL", "ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
+                            TextForm displayPic = new TextForm("ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
                             displayPic.Show();
                         }
 
@@ -1560,7 +1560,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Click += (sender_t, e_t) => {
 
-                        TextForm txtFormShow = new TextForm("NOT_NULL", "ps_info_text", filePath, "null", Globals.custUsername);
+                        TextForm txtFormShow = new TextForm("ps_info_text", filePath, "null", Globals.custUsername);
                         txtFormShow.Show();
                     };
                 }
@@ -2014,7 +2014,7 @@ namespace FlowSERVER1 {
 
                         void textOnPressed(object sender, EventArgs e) {
 
-                            TextForm displayTxt = new TextForm("", GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true);
+                            TextForm displayTxt = new TextForm(GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true);
                             displayTxt.Show();
 
                         }
@@ -2317,7 +2317,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm("", GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
+                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
                             displayPic.Show();
                         }
 
@@ -2779,7 +2779,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm("", GlobalsTable.folderUploadTable, fileName, "null", Globals.custUsername);
+                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, "null", Globals.custUsername);
                             displayPic.Show();
                         }
 
@@ -3098,7 +3098,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Click += (sender_t, e_t) => {
 
-                            TextForm displayPic = new TextForm("", GlobalsTable.folderUploadTable, titleLab.Text, "null", Globals.custUsername);
+                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, "null", Globals.custUsername);
                             displayPic.Show();
                         };
 

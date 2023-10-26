@@ -39,7 +39,7 @@ namespace FlowSERVER1 {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public TextForm(String getText, String tableName, String fileName, String directoryName, String uploaderName, bool isFromSharing = false) {
+        public TextForm(String tableName, String fileName, String directoryName, String uploaderName, bool isFromSharing = false) {
 
             InitializeComponent();
 
