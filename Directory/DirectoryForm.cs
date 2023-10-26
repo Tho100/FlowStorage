@@ -11,6 +11,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -794,11 +795,13 @@ namespace FlowSERVER1 {
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
 
-                                byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                                string getEncoded = Convert.ToBase64String(getBytes);
-                                string encryptText = EncryptionModel.Encrypt(getEncoded);
+                                byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
+                                byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
+                                string getEncoded = Convert.ToBase64String(compressedTextBytes);
+                                string encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
 
-                                CreateFilePanel(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptText);
+                                CreateFilePanel(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
+
                             }
                             else if (_uploadedExtensionType == ".exe") {
                                 exeCurr++;

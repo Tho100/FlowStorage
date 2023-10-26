@@ -52,7 +52,7 @@ namespace FlowSERVER1 {
                 this._directoryName = directoryName;
                 this._isFromSharing = isFromSharing;
 
-                var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
+                var fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
 
                 if (isFromSharing == true) {
 
@@ -81,88 +81,54 @@ namespace FlowSERVER1 {
 
                 lblUploaderName.Text = uploaderName;
 
-                if (tableName == GlobalsTable.directoryUploadTable && getText == "") {
-
-                    const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-
-                    using (var command = new MySqlCommand(getTxtQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text));
-
-                        using (MySqlDataReader reader = command.ExecuteReader()) {
-                            if (reader.Read()) {
-
-                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
-                                byte[] decompressedBytes = new GeneralCompressor().decompressFileData(toBytes);
-
-                                lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
-
-                                string toBase64Decoded = Encoding.UTF8.GetString(decompressedBytes);
-                                richTextBox1.Text = toBase64Decoded;
-                            }
-                        }
-
-                    }
+                if (tableName == GlobalsTable.directoryUploadTable) {
+                    RetrieveDirectoryData(fileName);
 
                 }
-                else if (getText == "" && tableName == GlobalsTable.folderUploadTable) {
-
-                    const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
-
-                    using (var command = new MySqlCommand(getTxtQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem)));
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-
-                        using (MySqlDataReader reader = command.ExecuteReader()) {
-                            if (reader.Read()) {
-
-                                byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
-                                byte[] decompressedBytes = new GeneralCompressor().decompressFileData(toBytes);
-
-                                lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
-
-                                string toBase64Decoded = Encoding.UTF8.GetString(decompressedBytes);
-                                richTextBox1.Text = toBase64Decoded;
-                            }
-                        }
-
-                    }
+                else if (tableName == GlobalsTable.folderUploadTable) {
+                    RetrieveFolderData(fileName);
 
                 }
                 else if (tableName == GlobalsTable.homeTextTable) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, fileType, Globals.custUsername);
+
                 }
                 else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, fileType, Globals.custUsername);
+
                 }
                 else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, FileExt_, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, fileType, Globals.custUsername);
+
                 }
                 else if (tableName == "ps_info_text") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, FileExt_, uploaderName);
+                    RetrieveTextData(getTxtQuery, fileType, uploaderName);
+
                 }
 
-                if (FileExt_ == ".py") {
-                    PythonSyntax();
-                }
-                if (FileExt_ == ".html") {
-                    HTMLSyntax();
-                }
-                if (FileExt_ == ".css") {
-                    CSSSyntax();
-                }
-                if (FileExt_ == ".js") {
-                    JSSyntax();
+                switch(fileType) {
+                    case ".py":
+                        PythonSyntax();
+                        break;
+
+                    case ".html":
+                        HTMLSyntax();
+                        break;
+
+                    case ".css":
+                        CSSSyntax();
+                        break;
+                    
+                    case ".js":
+                        JSSyntax();
+                        break;
                 }
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
 
                 Application.OpenForms
                 .OfType<Form>()
@@ -174,6 +140,56 @@ namespace FlowSERVER1 {
             }
         }
 
+        private async void RetrieveDirectoryData(String fileName) {
+
+            const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
+
+            using (var command = new MySqlCommand(getTxtQuery, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text));
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+
+                        byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
+                        byte[] decompressedBytes = new GeneralCompressor().decompressFileData(toBytes);
+
+                        lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
+
+                        string toBase64Decoded = Encoding.UTF8.GetString(decompressedBytes);
+                        richTextBox1.Text = toBase64Decoded;
+                    }
+                }
+            }
+
+        }
+
+        private async void RetrieveFolderData(String fileName) {
+
+            const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+
+            using (var command = new MySqlCommand(getTxtQuery, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem)));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+
+                        byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
+                        byte[] decompressedBytes = new GeneralCompressor().decompressFileData(toBytes);
+
+                        lblFileSize.Text = $"{GetFileSize.fileSize(toBytes):F2}Mb";
+
+                        string toBase64Decoded = Encoding.UTF8.GetString(decompressedBytes);
+                        richTextBox1.Text = toBase64Decoded;
+                    }
+                }
+            }
+
+        }
+
         private async void RetrieveTextData(String PerformQue, String FileExtension, String uploaderName) {
 
             string getTxtQuery = PerformQue;
@@ -181,7 +197,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", uploaderName);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
 
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
 
                         byte[] toBytes = Convert.FromBase64String(EncryptionModel.Decrypt(reader.GetString(0)));
@@ -193,19 +209,6 @@ namespace FlowSERVER1 {
                         richTextBox1.Text = toDecodedBase64;
                     }
                 }
-            }
-
-            if (FileExtension == ".py") {
-                PythonSyntax();
-            }
-            if (FileExtension == ".html") {
-                HTMLSyntax();
-            }
-            if (FileExtension == ".css") {
-                CSSSyntax();
-            }
-            if (FileExtension == ".js") {
-                JSSyntax();
             }
 
         }

@@ -187,14 +187,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="7763456">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="7764992">
       <assemblyIdentity name="Flowstorage" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>LH0z0eU2J7PknxCm3ZrlJ5g3uP8+0Dtd7tFpZoPVifA=</dsig:DigestValue>
+        <dsig:DigestValue>kw+vB5qBULKqcquevQVyJl0XjcNYjA1hHSMaBw38vHU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
