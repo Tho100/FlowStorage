@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Text;
 using System.Security.Cryptography;
-using System.Windows;
 
 namespace FlowSERVER1 {
     public static class EncryptionModel {
 
-        static private readonly byte[] _iv = new byte[16];
-        static private readonly byte[] _keyBytes = Encoding.UTF8.GetBytes("9h3GKpL_vXeQsZ6F");
+        private static readonly byte[] keyByte = Encoding.UTF8.GetBytes("Rw2345_789qTz345");
 
-        public static string Encrypt(String _value) {
+        public static string Encrypt(String value) {
 
             try {
 
-                byte[] plainBytes = Encoding.UTF8.GetBytes(_value); 
+                byte[] plainBytes = Encoding.UTF8.GetBytes(value); 
 
                 using (Aes aes = Aes.Create()) {
-                    aes.Key = _keyBytes;
-                    aes.IV = _iv;
+                    aes.Key = keyByte;
+                    aes.IV = keyByte;
                     aes.Mode = CipherMode.CBC;
                     aes.Padding = PaddingMode.PKCS7;
 
@@ -32,15 +30,18 @@ namespace FlowSERVER1 {
             return String.Empty;
         }
 
-        public static string Decrypt(String _value) {
+        public static string Decrypt(String encryptedValue) {
 
             try {
-                
-                byte[] encryptedBytes = Convert.FromBase64String(_value); 
+
+                byte[] iv = Encoding.UTF8.GetBytes("Rw2345_789qTz345");
+                byte[] keyBytes = Encoding.UTF8.GetBytes("Rw2345_789qTz345");
+
+                byte[] encryptedBytes = Convert.FromBase64String(encryptedValue); 
 
                 using (Aes aes = Aes.Create()) {
-                    aes.Key = _keyBytes;
-                    aes.IV = _iv;
+                    aes.Key = keyByte;
+                    aes.IV = keyByte;
                     aes.Mode = CipherMode.CBC;
                     aes.Padding = PaddingMode.PKCS7;
 
@@ -49,6 +50,7 @@ namespace FlowSERVER1 {
                         return Encoding.UTF8.GetString(decryptedBytes);
                     }
                 }
+
             } catch (Exception) { }
 
             return String.Empty;
