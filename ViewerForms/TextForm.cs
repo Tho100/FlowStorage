@@ -457,7 +457,7 @@ namespace FlowSERVER1 {
 
                     new CustomAlert(
                         title: "Changes saved", 
-                        "Changes has been saved successfully.").Show();
+                        subheader: "Changes has been saved successfully.").Show();
                 }
 
             } catch (Exception) {

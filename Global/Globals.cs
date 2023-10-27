@@ -49,7 +49,7 @@ namespace FlowSERVER1 {
         {".mp4",".mov",".webm",".avi",".wmv"};
 
         static public readonly HashSet<string> audioTypes = new HashSet<string>
-        {"mp3","wav"};
+        {".mp3",".wav"};
 
         static public readonly HashSet<string> imageTypesFolder = new HashSet<string>
         {"png","jpg","jpeg"};

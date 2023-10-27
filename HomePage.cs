@@ -1916,7 +1916,7 @@ namespace FlowSERVER1 {
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
@@ -1954,7 +1954,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
@@ -2040,8 +2040,8 @@ namespace FlowSERVER1 {
 
                             const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                                command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
-                                command.Parameters.Add("@ext", MySqlDbType.Text).Value = typeValues[i];
+                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@ext", typeValues[i]);
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
@@ -2262,7 +2262,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.Add("@username", MySqlDbType.Text).Value = Globals.custUsername;
+                            command.Parameters.AddWithValue("@username", Globals.custUsername);
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     GlobalsData.base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));

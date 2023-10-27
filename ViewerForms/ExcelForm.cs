@@ -211,19 +211,31 @@ namespace FlowSERVER1 {
 
         private async void btnSaveChanges_Click(object sender, EventArgs e) {
 
-            if(CallDialogResultSave.CallDialogResult(_isFromSharing) == DialogResult.Yes) {
+            try {
 
-                byte[] updatedBytes = UpdatedChangesBytes();
+                if(CallDialogResultSave.CallDialogResult(_isFromSharing) == DialogResult.Yes) {
 
-                if (updatedBytes != null) {
-                    string toBase64String = Convert.ToBase64String(updatedBytes);
-                    string fileName = lblFileName.Text;
-                    await saveChanges.SaveChangesUpdate(fileName, toBase64String, _tableName, _isFromSharing, _directoryName);
-                    MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    byte[] updatedBytes = UpdatedChangesBytes();
+
+                    if (updatedBytes != null) {
+
+                        string toBase64String = Convert.ToBase64String(updatedBytes);
+                        string fileName = lblFileName.Text;
+                        await saveChanges.SaveChangesUpdate(fileName, toBase64String, _tableName, _isFromSharing, _directoryName);
+
+                        new CustomAlert(
+                            title: "Changes saved",
+                            subheader: "Changes has been saved successfully.").Show();
+
+                    } else {
+                        new CustomAlert(
+                            title: "Something went wrong",
+                            subheader: "Failed to save changes.").Show();
+                    }
                 }
-                else {
-                    MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                }
+
+            } catch (Exception) {
+                new CustomAlert(title: "Something went wrong", "Failed to save changes.").Show();
 
             }
         }
