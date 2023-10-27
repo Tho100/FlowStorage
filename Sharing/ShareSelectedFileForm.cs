@@ -24,7 +24,7 @@ namespace FlowSERVER1 {
             InitializeComponent();
 
             this._fileName = fileName;
-            this._fileExtension = fileExtension;
+            this._fileExtension = $".{fileExtension}";
             this._isFromShared = isFromShared;
             this._tableName = tableName;
             this._directoryName = directoryName;
@@ -306,57 +306,46 @@ namespace FlowSERVER1 {
 
                 } else if (_tableName != GlobalsTable.directoryUploadTable && _tableName != GlobalsTable.folderUploadTable) {
 
-                    if (Globals.imageTypesFolder.Contains(_fileExtension)) {
+                    if (Globals.imageTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_image" ? "ps_info_image" : GlobalsTable.homeImageTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));  
-                    }
 
-                    else if (Globals.videoTypesFolder.Contains(_fileExtension)) {
-
+                    } else if (Globals.videoTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_video" ? "ps_info_video" : GlobalsTable.homeVideoTable;
-
                         string getThumbnails = await retrieveThumbnails(finalTable, _fileName);
 
                         await startSending(await getFileMetadata(
                             EncryptionModel.Encrypt(_fileName), finalTable), getThumbnails);
-                    }
 
-                    else if (Globals.textTypesFolder.Contains(_fileExtension)) {
+                    } else if (Globals.textTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_text" ? "ps_info_text" : GlobalsTable.homeTextTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    }
 
-                    else if (_fileExtension == "xlsx" || _fileExtension == "xls") {
+                    } else if (Globals.excelTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_excel" ? "ps_info_excel" : GlobalsTable.homeExcelTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    }
-                    
-                    else if (_fileExtension == "pdf") {
+
+                    } else if (_fileExtension == "pdf") {
                         string finalTable = _tableName == "ps_info_pdf" ? "ps_info_pdf" : GlobalsTable.homePdfTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    } 
-                    
-                    else if (_fileExtension == "pptx" || _fileExtension == "ppt") {
+
+                    } else if (Globals.ptxTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_ptx" ? "ps_info_ptx" : GlobalsTable.homePtxTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    } 
-                    
-                    else if (_fileExtension == "docx" || _fileExtension == "doc") {
+
+                    } else if (Globals.wordTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_word" ? "ps_info_word" : GlobalsTable.homeWordTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    } 
-                    
-                    else if (_fileExtension == "wav" || _fileExtension == "mp3") {
+
+                    } else if (Globals.audioTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == "ps_info_audio" ? "ps_info_audio" : GlobalsTable.homeAudioTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    } 
-                    
-                    else if (_fileExtension == "exe") {
+
+                    } else if (_fileExtension == "exe") {
                         string finalTable = _tableName == "ps_info_exe" ? "ps_info_exe" : GlobalsTable.homeExeTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
-                    }
-                    
-                    else if (_fileExtension == "apk") {
+
+                    } else if (_fileExtension == "apk") {
                         string finalTable = _tableName == "ps_info_apk" ? "ps_info_apk" : GlobalsTable.homeApkTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
                     }
@@ -364,19 +353,15 @@ namespace FlowSERVER1 {
                 } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
                     string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_FROM");
                     await startSending(getFileMetadataSharedToOthers(_fileName), getThumbnails);
-                } 
-                
-                else if (_tableName == GlobalsTable.directoryUploadTable) {
 
+                } else if (_tableName == GlobalsTable.directoryUploadTable) {
                     string getThumbnails = await retrieveThumbnailsExtra(
                         GlobalsTable.directoryUploadTable, "DIR_NAME", _directoryName, _fileName);
 
                     await startSending(await getFileMetadataExtra(
                         GlobalsTable.directoryUploadTable,"DIR_NAME",_directoryName, _fileName), getThumbnails);
-                } 
-                
-                else if (_tableName == GlobalsTable.folderUploadTable) {
 
+                } else if (_tableName == GlobalsTable.folderUploadTable) {
                     string getThumbnails = await retrieveThumbnailsExtra(
                         GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName);
 

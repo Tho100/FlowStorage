@@ -21,7 +21,7 @@ namespace FlowSERVER1 {
             try {
 
                 fileName = _FileName;
-                fileType = _FileName.Split('.').Last();
+                fileType = $".{_FileName.Split('.').Last()}";
 
                 if (GlobalsTable.publicTables.Contains(_TableName)) {
                     RetrieveHomeDataAsync(_TableName);

@@ -979,12 +979,12 @@ namespace FlowSERVER1 {
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
                             }
 
-                            else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
+                            else if (Globals.excelTypes.Contains(_fileExtension)) {
                                 exlCurr++;
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
                             }
 
-                            else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
+                            else if (Globals.audioTypes.Contains(_fileExtension)) {
                                 audCurr++;
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
@@ -1000,7 +1000,7 @@ namespace FlowSERVER1 {
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
                             }
 
-                            else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
+                            else if (Globals.ptxTypes.Contains(_fileExtension)) {
                                 ptxCurr++;
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
                             }
@@ -1008,7 +1008,7 @@ namespace FlowSERVER1 {
                                 msiCurr++;
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
                             }
-                            else if (_fileExtension == ".docx") {
+                            else if (Globals.wordTypes.Contains(_fileExtension)) {
                                 docxCurr++;
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
                             }
@@ -1760,12 +1760,12 @@ namespace FlowSERVER1 {
                                 createFilePanelPublicStorage(selectedItems, "ps_info_video", "PanVid", vidCurr, encryptText);
                             }
 
-                            else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
+                            else if (Globals.excelTypes.Contains(_fileExtension)) {
                                 exlCurr++;
                                 createFilePanelPublicStorage(selectedItems, "ps_info_excel", "PanExl", exlCurr, encryptText);
                             }
 
-                            else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
+                            else if (Globals.audioTypes.Contains(_fileExtension)) {
                                 audCurr++;
                                 createFilePanelPublicStorage(selectedItems, "ps_info_audio", "PanAud", audCurr, encryptText);
 
@@ -1781,7 +1781,7 @@ namespace FlowSERVER1 {
                                 createFilePanelPublicStorage(selectedItems, "ps_info_pdf", "PanPdf", pdfCurr, encryptText);
                             }
 
-                            else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
+                            else if (Globals.ptxTypes.Contains(_fileExtension)) {
                                 ptxCurr++;
                                 createFilePanelPublicStorage(selectedItems, "ps_info_ptx", "PanPtx", ptxCurr, encryptText);
                             }
@@ -1789,7 +1789,7 @@ namespace FlowSERVER1 {
                                 msiCurr++;
                                 createFilePanelPublicStorage(selectedItems, "ps_info_msi", "PanMsi", msiCurr, encryptText);
                             }
-                            else if (_fileExtension == ".docx") {
+                            else if (Globals.wordTypes.Contains(_fileExtension)) {
                                 docxCurr++;
                                 createFilePanelPublicStorage(selectedItems, "ps_info_word", "PanDoc", docxCurr, encryptText);
 
@@ -2669,7 +2669,8 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<string> typeValues = new List<string>(fileType);
+                List<string> originalTypeData = new List<string>(fileType);
+                List<string> typeValues = originalTypeData.Select(f => "." + f).ToList();
 
                 List<Image> imageValues = new List<Image>();
                 List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -2682,7 +2683,7 @@ namespace FlowSERVER1 {
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(foldTitle));
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
 
                             string filePath = EncryptionModel.Decrypt(reader.GetString(0));
@@ -2699,7 +2700,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if (typeValues.Any(tv => Globals.imageTypesFolder.Contains(tv))) {
+                if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
                     if (lstFoldersPage.SelectedItems.Count > 0) {
 
@@ -2745,7 +2746,7 @@ namespace FlowSERVER1 {
 
                     onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                    if (Globals.imageTypesFolder.Contains(typeValues[i])) {
+                    if (Globals.imageTypes.Contains(typeValues[i])) {
 
                         if (GlobalsData.base64EncodedImageFolder.Count > i) {
                             byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageFolder[i]);
@@ -2772,7 +2773,7 @@ namespace FlowSERVER1 {
                     }
 
 
-                    if (Globals.textTypesFolder.Contains(typeValues[i])) {
+                    if (Globals.textTypes.Contains(typeValues[i])) {
 
                         var getExtension = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
                         var textTypeToImage = Globals.textTypeToImageFolder[getExtension];
@@ -2798,7 +2799,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(exeOnPressed);
                     }
 
-                    if (Globals.videoTypesFolder.Contains(typeValues[i])) {
+                    if (Globals.videoTypes.Contains(typeValues[i])) {
 
                         if (GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
 
@@ -2806,7 +2807,7 @@ namespace FlowSERVER1 {
                             using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
                                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldTitle));
-                                command.Parameters.AddWithValue("@ext", typeValues[i]);
+                                command.Parameters.AddWithValue("@ext", originalTypeData[i]);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
@@ -2838,7 +2839,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (typeValues[i] == "xlsx" || typeValues[i] == "xls") {
+                    if (Globals.excelTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.EXCELImage);
 
@@ -2848,7 +2849,7 @@ namespace FlowSERVER1 {
 
                         onPressedEvent.Add(excelOnPressed);
                     }
-                    if (typeValues[i] == "mp3" || typeValues[i] == "wav") {
+                    if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
 
@@ -2881,7 +2882,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (typeValues[i] == "pptx" || typeValues[i] == "ppt") {
+                    if (Globals.ptxTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.PTXImage);
 
@@ -2904,7 +2905,7 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (typeValues[i] == "docx" || typeValues[i] == "doc") {
+                    if (Globals.wordTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.DOCImage);
 
@@ -3056,7 +3057,7 @@ namespace FlowSERVER1 {
                     byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
 
                     string toBase64String = Convert.ToBase64String(compressedBytes);
-                    string encryptValues = UniqueFile.IgnoreEncryptionFolder(_extTypes) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
+                    string encryptValues = UniqueFile.IgnoreEncryption(_extTypes) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                     _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
 
@@ -3117,12 +3118,13 @@ namespace FlowSERVER1 {
                     if (Globals.videoTypes.Contains(_extTypes)) {
 
                         ShellFile shellFile = ShellFile.FromFilePath(filesFullPath);
+
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                        String toBase64BitmapThumbnail;
+                        string toBase64BitmapThumbnail;
+
                         using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            var toBase64 = Convert.ToBase64String(stream.ToArray());
-                            toBase64BitmapThumbnail = toBase64;
+                            shellFile.Thumbnail.Bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            toBase64BitmapThumbnail = Convert.ToBase64String(stream.ToArray());
                         }
 
                         await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues, toBase64BitmapThumbnail);
@@ -3151,7 +3153,7 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    if (_extTypes == ".docx" || _extTypes == ".doc") {
+                    if (Globals.wordTypes.Contains(_fileExtension)) {
 
                         await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
@@ -3162,7 +3164,7 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    if (_extTypes == ".xlsx" || _extTypes == ".xls") {
+                    if (Globals.excelTypes.Contains(_fileExtension)) {
 
                         await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
@@ -3174,7 +3176,7 @@ namespace FlowSERVER1 {
                     }
 
 
-                    if (_extTypes == ".pptx" || _extTypes == ".ppt") {
+                    if (Globals.ptxTypes.Contains(_fileExtension)) {
 
                         await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
@@ -3185,7 +3187,7 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                    if (_extTypes == ".mp3" || _extTypes == ".wav") {
+                    if (Globals.audioTypes.Contains(_fileExtension)) {
 
                         await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
 
@@ -3196,10 +3198,7 @@ namespace FlowSERVER1 {
                         };
                     }
 
-                }
-                catch (Exception) {
-
-                }
+                } catch (Exception) { }
 
             }
 

@@ -770,7 +770,7 @@ namespace FlowSERVER1 {
                             byte[] compressedBytes = new GeneralCompressor().compressFileData(getBytesSelectedFiles);
 
                             string toBase64String = Convert.ToBase64String(compressedBytes);
-                            string encryptBase64String = UniqueFile.IgnoreEncryptionFolder(_uploadedExtensionType) 
+                            string encryptBase64String = UniqueFile.IgnoreEncryption(_uploadedExtensionType) 
                                             ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                             _fileSizeInMB = (getBytesSelectedFiles.Length / 1024) / 1024;
@@ -786,8 +786,7 @@ namespace FlowSERVER1 {
                                 string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
                                 CreateFilePanel(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
                                 
-                            }
-                            else if (Globals.textTypes.Contains(_uploadedExtensionType)) {
+                            } else if (Globals.textTypes.Contains(_uploadedExtensionType)) {
                                 txtCurr++;
 
                                 string nonLine = "";
@@ -802,43 +801,42 @@ namespace FlowSERVER1 {
 
                                 CreateFilePanel(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
 
-                            }
-                            else if (_uploadedExtensionType == ".exe") {
+                            } else if (_uploadedExtensionType == ".exe") {
                                 exeCurr++;
-                                CreateFilePanel(selectedItems, "file_info_exe", "PanExe", exeCurr, encryptBase64String);
+                                CreateFilePanel(selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptBase64String);
 
-                            }
-                            else if (Globals.videoTypes.Contains(_uploadedExtensionType)) {
+                            } else if (Globals.videoTypes.Contains(_uploadedExtensionType)) {
                                 vidCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".xlsx" || _uploadedExtensionType == ".xls") {
+
+                            } else if (Globals.excelTypes.Contains(_uploadedExtensionType)) {
                                 exlCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".mp3" || _uploadedExtensionType == ".wav") {
+
+                            } else if (Globals.audioTypes.Contains(_uploadedExtensionType)) {
                                 audCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".apk") {
+
+                            } else if (_uploadedExtensionType == ".apk") {
                                 apkCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".pdf") {
+
+                            } else if (_uploadedExtensionType == ".pdf") {
                                 pdfCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".pptx" || _uploadedExtensionType == ".ppt") {
+
+                            } else if (Globals.ptxTypes.Contains(_uploadedExtensionType)) {
                                 ptxCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".msi") {
+
+                            } else if (_uploadedExtensionType == ".msi") {
                                 msiCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptBase64String);
-                            }
-                            else if (_uploadedExtensionType == ".docx") {
+
+                            } else if (Globals.wordTypes.Contains(_uploadedExtensionType)) {
                                 docxCurr++;
                                 CreateFilePanel(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptBase64String);
+
                             }
 
                             CloseForm.closeForm("UploadingAlert");

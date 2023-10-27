@@ -457,15 +457,17 @@ namespace FlowSERVER1 {
                 string currentPage = HomePage.instance.lblCurrentPageText.Text;
 
                 if (currentPage == "Home") {
-                    _tableName = "file_info_image";
+                    _tableName = GlobalsTable.homeImageTable;
+
                 } else if (currentPage != "Public Storage" || currentPage != "Home" || currentPage != "Shared To Me" || currentPage != "Shared Files") {
-                    _tableName = "folder_upload_info";
+                    _tableName = GlobalsTable.folderUploadTable;
+
                 } 
 
                 List<string> fileNames = new List<string>(HomePage.instance.flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
-                    .Where(label => Globals.imageTypesFolder.Any(ext => label.Text.ToLower().EndsWith(ext)))
+                    .Where(label => Globals.imageTypes.Any(ext => label.Text.ToLower().EndsWith(ext)))
                     .Where(label => label.Text.IndexOf('.') >= 0)
                     .Where(label => label.Text.Contains('.'))
                     .Select(label => label.Text.ToLower()));
@@ -484,12 +486,14 @@ namespace FlowSERVER1 {
                     int width = defaultImage.Width;
                     int height = defaultImage.Height;
 
-                    if(_tableName == "file_info_image") {
+                    if(_tableName == GlobalsTable.homeImageTable) {
                         PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
                         displayPic.Show();
-                    } else if (_tableName == "folder_upload_info") {
+
+                    } else if (_tableName == GlobalsTable.folderUploadTable) {
                         PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
                         displayPic.Show();
+
                     } 
 
                     this.Close();

@@ -46,22 +46,22 @@ namespace FlowSERVER1 {
         {".txt",".csv",".sql",".html",".css",".py",".xml",".js",".md"};
 
         static public readonly HashSet<string> videoTypes = new HashSet<string> 
-        {".mp4",".mov",".webm",".avi",".wmv"};
+        {".mp4",".mov",".avi",".wmv"};
 
         static public readonly HashSet<string> audioTypes = new HashSet<string>
         {".mp3",".wav"};
 
-        static public readonly HashSet<string> imageTypesFolder = new HashSet<string>
-        {"png","jpg","jpeg"};
+        static public readonly HashSet<string> wordTypes = new HashSet<string>
+        {".doc",".docx"};
 
-        static public readonly HashSet<string> textTypesFolder = new HashSet<string>
-        {"txt","csv","sql","html","css","py","xml","js","md"};
+        static public readonly HashSet<string> excelTypes = new HashSet<string>
+        {".xls",".xlsx"};
 
-        static public readonly HashSet<string> videoTypesFolder = new HashSet<string>
-        {"mp4","mov","webm","avi","wmv"};
+        static public readonly HashSet<string> ptxTypes = new HashSet<string>
+        {".ppt",".pptx"};
+        //    --------- FILE TYPE WITHOUT END DOT
 
-        static public readonly HashSet<string> audioTypesFolder = new HashSet<string>
-        {"mp3","wav"};
+
 
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
         {

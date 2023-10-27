@@ -62,7 +62,7 @@ namespace FlowSERVER1 {
 
                 int indexOfImage = filesName.IndexOf(fileName.ToLower());
 
-                if (Globals.imageTypesFolder.Contains(fileExtension) 
+                if (Globals.imageTypes.Contains($".{fileExtension}") 
                 && (GlobalsTable.publicTables.Contains(tableName) || (GlobalsTable.publicTablesPs.Contains(tableName) && isFromMyPs == true))) {
 
                     string imageBase64Encoded = null;
