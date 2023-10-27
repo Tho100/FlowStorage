@@ -937,7 +937,7 @@ namespace FlowSERVER1 {
                             byte[] compressedBytes = new GeneralCompressor().compressFileData(originalRetrieveBytes);
 
                             string convertToBase64 = Convert.ToBase64String(compressedBytes);
-                            string encryptText = UniqueFile.IgnoreEncryption(fileType) ? convertToBase64 : EncryptionModel.Encrypt(convertToBase64);
+                            string encryptText = UniqueFile.IgnoreEncryption(_fileExtension) ? convertToBase64 : EncryptionModel.Encrypt(convertToBase64);
 
                             _fileSizeInMB = (originalRetrieveBytes.Length / 1024) / 1024;
 
@@ -1699,7 +1699,6 @@ namespace FlowSERVER1 {
 
                     string selectedItems = open.FileName;
                     string selectedFileName = Path.GetFileName(selectedItems);
-                    string fileType = selectedFileName.Split('.').Last();
 
                     if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                         BuildShowAlert(title: "Upload Failed", $"A file with the same name is already uploaded to Public Storage. File name: {selectedFileName}");
@@ -1722,7 +1721,7 @@ namespace FlowSERVER1 {
                             byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
 
                             string toBase64String = Convert.ToBase64String(compressedBytes);
-                            string encryptText = UniqueFile.IgnoreEncryption(fileType) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
+                            string encryptText = UniqueFile.IgnoreEncryption(_fileExtension) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                             _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
 
