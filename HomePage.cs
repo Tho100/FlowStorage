@@ -947,7 +947,7 @@ namespace FlowSERVER1 {
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                String compressedImage = compressor.compresImageToBase64(selectedItems);
+                                String compressedImage = compressor.compressImageToBase64(selectedItems);
                                 String encryptedValue = EncryptionModel.Encrypt(compressedImage);
 
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
@@ -1731,7 +1731,7 @@ namespace FlowSERVER1 {
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                String _compressedImage = compressor.compresImageToBase64(selectedItems);
+                                String _compressedImage = compressor.compressImageToBase64(selectedItems);
                                 String _encryptedValue = EncryptionModel.Encrypt(_compressedImage);
                                 createFilePanelPublicStorage(selectedItems, "ps_info_image", "PanImg", curr, _encryptedValue);
        
@@ -2073,7 +2073,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls") {
+                    if (Globals.excelTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.EXCELImage);
 
@@ -2084,7 +2084,7 @@ namespace FlowSERVER1 {
 
                         onPressedEvent.Add(excelOnPressed);
                     }
-                    if (typeValues[i] == ".mp3" || typeValues[i] == ".wav") {
+                    if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
 
@@ -2120,7 +2120,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (typeValues[i] == ".pptx" || typeValues[i] == ".ptx") {
+                    if (Globals.ptxTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.PTXImage);
 
@@ -2145,7 +2145,7 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
+                    if (Globals.wordTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.DOCImage);
 
@@ -2373,7 +2373,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (typeValues[i] == ".xlsx" || typeValues[i] == ".xls") {
+                    if (Globals.excelTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.EXCELImage);
 
@@ -2384,7 +2384,7 @@ namespace FlowSERVER1 {
 
                         onPressedEvent.Add(excelOnPressed);
                     }
-                    if (typeValues[i] == ".mp3" || typeValues[i] == ".wav") {
+                    if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
 
@@ -2420,7 +2420,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (typeValues[i] == ".pptx" || typeValues[i] == ".ptx") {
+                    if (Globals.ptxTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.PTXImage);
 
@@ -2445,7 +2445,7 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (typeValues[i] == ".docx" || typeValues[i] == ".doc") {
+                    if (Globals.wordTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.DOCImage);
 
@@ -3064,7 +3064,7 @@ namespace FlowSERVER1 {
 
                         var image = new Bitmap(filesFullPath);
 
-                        string compressImage = compressor.compresImageToBase64(filesFullPath);
+                        string compressImage = compressor.compressImageToBase64(filesFullPath);
                         string compressedImageToBase64 = EncryptionModel.Encrypt(compressImage);
                         await InsertFileDataFolder(filesFullPath, getFolderName, compressedImageToBase64);
 
@@ -4058,33 +4058,24 @@ namespace FlowSERVER1 {
                         var imgWidth = getImg.Width;
                         var imgHeight = getImg.Height;
 
-                        if (_fileExtension != ".ico") {
-                            String tempToBase64 = Convert.ToBase64String(readFileBytes);
-                            String encryptedValue = EncryptionModel.Encrypt(tempToBase64);
-                            CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
-                        }
-                        else {
-                            Image retrieveIcon = Image.FromFile(selectedItems);
-                            byte[] dataIco;
-                            using (MemoryStream msIco = new MemoryStream()) {
-                                retrieveIcon.Save(msIco, System.Drawing.Imaging.ImageFormat.Png);
-                                dataIco = msIco.ToArray();
-                                String tempToBase64 = EncryptionModel.Encrypt(Convert.ToBase64String(dataIco));
-                                String encryptedValue = EncryptionModel.Encrypt(tempToBase64);
-                                CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
-                            }
-                        }
+                        string tempToBase64 = Convert.ToBase64String(readFileBytes);
+                        string encryptedValue = EncryptionModel.Encrypt(tempToBase64);
+                        CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
+                        
                     }
 
                     else if (Globals.textTypes.Contains(_fileExtension)) {
                         txtCurr++;
-                        String nonLine = "";
+
+                        string nonLine = "";
+
                         using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
                             nonLine = ReadFileTxt.ReadToEnd();
                         }
-                        byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
-                        String getEncoded = Convert.ToBase64String(getBytes);
-                        String encryptTextValue = EncryptionModel.Encrypt(getEncoded);
+
+                        byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
+                        string getEncoded = Convert.ToBase64String(getBytes);
+                        string encryptTextValue = EncryptionModel.Encrypt(getEncoded);
                         CreateFilePanelHome(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptTextValue);
                     }
 
@@ -4098,12 +4089,12 @@ namespace FlowSERVER1 {
                         CreateFilePanelHome(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
                     }
 
-                    else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
+                    else if (Globals.excelTypes.Contains(_fileExtension)) {
                         exlCurr++;
                         CreateFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
                     }
 
-                    else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
+                    else if (Globals.audioTypes.Contains(_fileExtension)) {
                         audCurr++;
                         CreateFilePanelHome(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
@@ -4119,7 +4110,7 @@ namespace FlowSERVER1 {
                         CreateFilePanelHome(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
                     }
 
-                    else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
+                    else if (Globals.ptxTypes.Contains(_fileExtension)) {
                         ptxCurr++;
                         CreateFilePanelHome(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
                     }
@@ -4127,7 +4118,7 @@ namespace FlowSERVER1 {
                         msiCurr++;
                         CreateFilePanelHome(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
                     }
-                    else if (_fileExtension == ".docx") {
+                    else if (Globals.wordTypes.Contains(_fileExtension)) {
                         docxCurr++;
                         CreateFilePanelHome(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
                     }

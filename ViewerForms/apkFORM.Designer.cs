@@ -36,15 +36,12 @@
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
-            this.label7 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -158,27 +155,6 @@
             this.guna2VSeparator1.Name = "guna2VSeparator1";
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 617);
             this.guna2VSeparator1.TabIndex = 66;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.Silver;
-            this.label7.Location = new System.Drawing.Point(404, 24);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 23);
-            this.label7.TabIndex = 70;
-            this.label7.Text = "APK File";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_android_os_50;
-            this.pictureBox1.Location = new System.Drawing.Point(360, 15);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(38, 38);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 71;
-            this.pictureBox1.TabStop = false;
             // 
             // btnShareFile
             // 
@@ -321,7 +297,7 @@
             this.guna2Button7.Visible = false;
             this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click);
             // 
-            // apkFORM
+            // ApkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -330,8 +306,6 @@
             this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.guna2Button7);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.guna2VSeparator2);
             this.Controls.Add(this.guna2Separator2);
             this.Controls.Add(this.guna2Separator1);
@@ -347,12 +321,11 @@
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "apkFORM";
+            this.Name = "ApkForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "APK Viewer";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.apkFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -373,8 +346,6 @@
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label7;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private Guna.UI2.WinForms.Guna2Button btnEditComment;
         private Guna.UI2.WinForms.Guna2Button guna2Button7;

@@ -38,13 +38,10 @@
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -204,27 +201,6 @@
             this.label6.TabIndex = 70;
             this.label6.Text = "Uploaded By";
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::FlowSERVER1.Properties.Resources.icons8_exe_48;
-            this.pictureBox2.Location = new System.Drawing.Point(360, 13);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(44, 40);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 79;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.Silver;
-            this.label7.Location = new System.Drawing.Point(406, 23);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 23);
-            this.label7.TabIndex = 78;
-            this.label7.Text = "EXE File";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
             // guna2Button4
             // 
             this.guna2Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -330,8 +306,6 @@
             this.ClientSize = new System.Drawing.Size(1136, 617);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.txtFieldComment);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.guna2VSeparator2);
@@ -353,7 +327,6 @@
             this.Text = "Viewer";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.exeFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -373,8 +346,6 @@
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label7;
         private Guna.UI2.WinForms.Guna2Button guna2Button4;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private Guna.UI2.WinForms.Guna2Button btnEditComment;

@@ -50,15 +50,16 @@ namespace FlowSERVER1 {
         /// This function will determine if the 
         /// user is exists or not 
         /// </summary>
-        /// <param name="_receiverUsername"></param>
+        /// <param name="receiverUsername"></param>
         /// <returns></returns>
-        private int userIsExists(String _receiverUsername) {
+        private async Task<int> userIsExists(String receiverUsername) {
 
             const string countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
             using(MySqlCommand command = new MySqlCommand(countUser,con)) {
-                command.Parameters.AddWithValue("@username",_receiverUsername);
-                return Convert.ToInt32(command.ExecuteScalar());
+                command.Parameters.AddWithValue("@username", receiverUsername);
+                return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -93,7 +94,7 @@ namespace FlowSERVER1 {
         /// <param name="setValue"></param>
         /// <param name="thumbnailValue"></param>
         /// <returns></returns>
-        private async Task startSending(Object setValue, Object thumbnailValue = null) {
+        private async Task startSending(String fileDataBase64, String thumbnailBase64 = null) {
 
             const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
 
@@ -104,10 +105,10 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
                     command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
-                    command.Parameters.AddWithValue("@CUST_FILE", setValue);
+                    command.Parameters.AddWithValue("@CUST_FILE", fileDataBase64);
                     command.Parameters.AddWithValue("@FILE_EXT", _fileExtension);
                     command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(txtFieldComment.Text));
-                    command.Parameters.AddWithValue("@CUST_THUMB", thumbnailValue);
+                    command.Parameters.AddWithValue("@CUST_THUMB", thumbnailBase64);
                     command.Prepare();
 
                     await command.ExecuteNonQueryAsync();
@@ -125,7 +126,7 @@ namespace FlowSERVER1 {
 
             string shareToName = txtFieldShareToName.Text;
 
-            int _accType = accountType(shareToName);
+            int _accType = await accountType(shareToName);
             int _countReceiverFile = countReceiverShared(shareToName);
 
             if (_accType != _countReceiverFile) {
@@ -140,44 +141,43 @@ namespace FlowSERVER1 {
                     string _toBase64 = Convert.ToBase64String(_compressedBytes);
 
                     if (Globals.imageTypes.Contains(_fileExtension)) {
-                        string compressedImageBase64 = compressor.compresImageToBase64(_fileFullPath);
+                        string compressedImageBase64 = compressor.compressImageToBase64(_fileFullPath);
                         string encryptText = EncryptionModel.Encrypt(compressedImageBase64);
                         await startSending(encryptText);
-                    }
-                    else if (_fileExtension == ".docx" || _fileExtension == ".doc") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);                    
-                    }
-                    else if (_fileExtension == ".pptx" || _fileExtension == ".ppt") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
-                    }
-                    else if (_fileExtension == ".exe") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
-                    }
-                    else if (_fileExtension == ".msi") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
-                    }
-                    else if (_fileExtension == ".mp3" || _fileExtension == ".wav") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
-                    }
 
-                    else if (_fileExtension == ".pdf") {
+                    } else if (Globals.wordTypes.Contains(_fileExtension)) {
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        await startSending(encryptText);      
+                        
+                    } else if (Globals.ptxTypes.Contains(_fileExtension)) {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
-                    }
-                    else if (_fileExtension == ".apk") {
+
+                    } else if (_fileExtension == ".exe") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
-                    }
-                    else if (_fileExtension == ".xlsx" || _fileExtension == ".xls") {
+
+                    } else if (_fileExtension == ".msi") {
                         string encryptText = EncryptionModel.Encrypt(_toBase64);
                         await startSending(encryptText);
-                    }
-                    else if (Globals.textTypes.Contains(_fileExtension)) {
+
+                    } else if (Globals.audioTypes.Contains(_fileExtension)) {
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        await startSending(encryptText);
+
+                    } else if (_fileExtension == ".pdf") {
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        await startSending(encryptText);
+
+                    } else if (_fileExtension == ".apk") {
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        await startSending(encryptText);
+
+                    } else if (Globals.excelTypes.Contains(_fileExtension)) {
+                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        await startSending(encryptText);
+
+                    } else if (Globals.textTypes.Contains(_fileExtension)) {
 
                         var nonLine = "";
                         using (StreamReader ReadFileTxt = new StreamReader(_fileFullPath)) { 
@@ -227,21 +227,19 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_receiverUsername">Receiver username who will received the file</param>
         /// <returns></returns>
-        private int accountType(String _receiverUsername) {
-
-            string _accType = "";
+        private async Task<int> accountType(String receiverUsername) {
 
             const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
             using(MySqlCommand command = new MySqlCommand(_getAccountTypeQue,con)) {
-                command.Parameters.AddWithValue("@username",_receiverUsername);
-                using(MySqlDataReader read = command.ExecuteReader()) {
-                    if(read.Read()) {
-                        _accType = read.GetString(0);
+                command.Parameters.AddWithValue("@username", receiverUsername);
+                using(MySqlDataReader read = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if(await read.ReadAsync()) {
+                        return Globals.uploadFileLimit[read.GetString(0)];
                     }
                 }
             }
 
-            return Globals.uploadFileLimit[_accType];
+            return 25;
 
         }
 
@@ -249,23 +247,32 @@ namespace FlowSERVER1 {
         /// This function will do check if the 
         /// receiver has password enabled for their file sharing
         /// </summary>
-        private static string _hasPas = "DEF";
-        private string hasPassword(String _custUsername) {
+        private async Task<string> hasPassword(String username) {
 
-            string storeVal = "";
+            string sharingPassword = "";
+            string sharingIsDisabled = "";
+
             const string queryGetAuth = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
             using(MySqlCommand command = new MySqlCommand(queryGetAuth,con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                storeVal = command.ExecuteScalar().ToString();
+                command.Parameters.AddWithValue("@username", username);
+                sharingPassword = command.ExecuteScalarAsync().ToString();
             }
 
-            if(storeVal == "DEF") {
-                storeVal = "";
+            const string queryGetStatus = "SELECT PASSWORD_DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(queryGetStatus, con)) {
+                command.Parameters.AddWithValue("@username", username);
+                sharingIsDisabled = command.ExecuteScalarAsync().ToString();
+            }
+
+            if (sharingPassword == "DEF" || sharingIsDisabled == "1") {
+                sharingPassword = "";
+
             } else {
-                return storeVal;
+                return sharingPassword;
+
             }
 
-            return storeVal;
+            return sharingPassword;
 
         }
 
@@ -297,21 +304,20 @@ namespace FlowSERVER1 {
         /// This function will retrieve user current 
         /// file sharing status (enabeled or disabled)
         /// </summary>
-        private string retrieveDisabled(String _custUsername) {
+        private async Task<string> retrieveDisabled(String receiverUsername) {
 
-            string isEnabled = "0";
             const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read()) {
-                        isEnabled = reader.GetString(0);
+                command.Parameters.AddWithValue("@username", receiverUsername);
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+                        return reader.GetString(0);
                     }
                 }
             }
 
-            return isEnabled;
+            return "0";
         }
         
         /// <summary>
@@ -320,14 +326,14 @@ namespace FlowSERVER1 {
         /// <param name="_custUsername">Username of receiver</param>
         /// <param name="_fileName">File name to be send</param>
         /// <returns></returns>
-        private int fileIsUploaded(String _custUsername,String _fileName) {
+        private int fileIsUploaded(String receiverUsername, String fileName) {
 
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
 
             using(MySqlCommand command = new MySqlCommand(queryRetrieveCount,con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@receiver", _custUsername);
-                command.Parameters.AddWithValue("@filename", _fileName);
+                command.Parameters.AddWithValue("@receiver", receiverUsername);
+                command.Parameters.AddWithValue("@filename", fileName);
                 return Convert.ToInt32(command.ExecuteScalar());
             }
 
@@ -357,7 +363,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                int userExists = userIsExists(textBox1);
+                int userExists = await userIsExists(textBox1);
 
                 if (userExists == 0) {
                     MessageBox.Show($"User '{textBox1}' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -369,13 +375,13 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                string disabled = retrieveDisabled(textBox1);
+                string disabled = await retrieveDisabled(textBox1);
                 if (disabled != "0") {
                     MessageBox.Show($"The user {textBox1} disabled their file sharing.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                string password = hasPassword(textBox1);
+                string password = await hasPassword(textBox1);
                 if (!string.IsNullOrEmpty(password)) {
                     AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _fileExtension);
                     _askPassForm.Show();

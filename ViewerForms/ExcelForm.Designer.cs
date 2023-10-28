@@ -40,11 +40,9 @@
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.btnSaveChanges = new Guna.UI2.WinForms.Guna2Button();
             this.lblFileSize = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
@@ -55,7 +53,6 @@
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.btnSaveComment = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridExcelSpreadsheet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFileName
@@ -229,24 +226,13 @@
             this.label5.TabIndex = 75;
             this.label5.Text = "Comment";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label6.ForeColor = System.Drawing.Color.Silver;
-            this.label6.Location = new System.Drawing.Point(398, 22);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(93, 20);
-            this.label6.TabIndex = 76;
-            this.label6.Text = "Spreadsheet";
-            // 
             // btnSaveChanges
             // 
             this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveChanges.Animated = true;
             this.btnSaveChanges.BackColor = System.Drawing.Color.Transparent;
             this.btnSaveChanges.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSaveChanges.BorderRadius = 6;
+            this.btnSaveChanges.BorderRadius = 8;
             this.btnSaveChanges.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnSaveChanges.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnSaveChanges.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -255,9 +241,9 @@
             this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveChanges.ForeColor = System.Drawing.Color.White;
             this.btnSaveChanges.ImageSize = new System.Drawing.Size(17, 17);
-            this.btnSaveChanges.Location = new System.Drawing.Point(631, 16);
+            this.btnSaveChanges.Location = new System.Drawing.Point(354, 13);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(123, 35);
+            this.btnSaveChanges.Size = new System.Drawing.Size(123, 39);
             this.btnSaveChanges.TabIndex = 78;
             this.btnSaveChanges.Text = "Save Changes";
             this.btnSaveChanges.Visible = false;
@@ -286,16 +272,6 @@
             this.label8.Size = new System.Drawing.Size(55, 17);
             this.label8.TabIndex = 80;
             this.label8.Text = "File Size";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.excelIcon;
-            this.pictureBox1.Location = new System.Drawing.Point(354, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(44, 40);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 77;
-            this.pictureBox1.TabStop = false;
             // 
             // btnShareFile
             // 
@@ -516,8 +492,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblFileSize);
             this.Controls.Add(this.btnSaveChanges);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.guna2VSeparator2);
@@ -542,7 +516,6 @@
             this.Text = "Spreadsheet Viewer";
             this.Load += new System.EventHandler(this.Form5_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridExcelSpreadsheet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -567,8 +540,6 @@
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2Button btnSaveChanges;
         private System.Windows.Forms.Label lblFileSize;
         private System.Windows.Forms.Label label8;

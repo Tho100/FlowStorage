@@ -36,7 +36,6 @@
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.guna2TrackBar1 = new Guna.UI2.WinForms.Guna2TrackBar();
             this.guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
             this.label15 = new System.Windows.Forms.Label();
@@ -47,7 +46,6 @@
             this.btnReplayVideo = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button9 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnPauseVideo = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -58,7 +56,6 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.videoViewer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -177,17 +174,6 @@
             this.label6.Size = new System.Drawing.Size(78, 17);
             this.label6.TabIndex = 75;
             this.label6.Text = "Comment";
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.Silver;
-            this.label7.Location = new System.Drawing.Point(408, 24);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 23);
-            this.label7.TabIndex = 76;
-            this.label7.Text = "Video File";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // guna2TrackBar1
             // 
@@ -377,16 +363,6 @@
             this.guna2Button8.Size = new System.Drawing.Size(38, 0);
             this.guna2Button8.TabIndex = 78;
             this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::FlowSERVER1.Properties.Resources.video_image;
-            this.pictureBox2.Location = new System.Drawing.Point(362, 14);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(42, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 77;
-            this.pictureBox2.TabStop = false;
             // 
             // btnShareFile
             // 
@@ -583,8 +559,6 @@
             this.Controls.Add(this.guna2TrackBar1);
             this.Controls.Add(this.guna2Button9);
             this.Controls.Add(this.guna2Button8);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.guna2VSeparator2);
@@ -612,7 +586,6 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.vidFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.videoViewer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -642,8 +615,6 @@
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label7;
         private Guna.UI2.WinForms.Guna2Button guna2Button8;
         private Guna.UI2.WinForms.Guna2Button guna2Button9;
         private Guna.UI2.WinForms.Guna2TrackBar guna2TrackBar1;

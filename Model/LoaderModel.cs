@@ -94,8 +94,6 @@ namespace FlowSERVER1 {
 
         private static async void RetrieveSharedTootherData() {
 
-            MessageBox.Show(fileName, fileType);
-
             const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);

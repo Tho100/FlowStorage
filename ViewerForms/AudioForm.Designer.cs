@@ -35,7 +35,6 @@
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.guna2VSeparator2 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.lblDurationLeft = new System.Windows.Forms.Label();
             this.lblDuration = new System.Windows.Forms.Label();
@@ -45,7 +44,6 @@
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnPauseAudio = new Guna.UI2.WinForms.Guna2Button();
             this.btnPlayAudio = new Guna.UI2.WinForms.Guna2Button();
@@ -54,7 +52,6 @@
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.btnReplayAudio = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
@@ -157,17 +154,6 @@
             this.label6.Size = new System.Drawing.Size(78, 17);
             this.label6.TabIndex = 78;
             this.label6.Text = "Comment";
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.Silver;
-            this.label7.Location = new System.Drawing.Point(403, 23);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 23);
-            this.label7.TabIndex = 80;
-            this.label7.Text = "Audio File";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // guna2VSeparator2
             // 
@@ -316,16 +302,6 @@
             this.btnEditComment.TabIndex = 89;
             this.btnEditComment.Visible = false;
             this.btnEditComment.Click += new System.EventHandler(this.guna2Button3_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-            this.pictureBox2.Location = new System.Drawing.Point(357, 13);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(42, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 81;
-            this.pictureBox2.TabStop = false;
             // 
             // btnShareFile
             // 
@@ -511,8 +487,6 @@
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.lblDuration);
             this.Controls.Add(this.lblDurationLeft);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.guna2VSeparator2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -538,7 +512,6 @@
             this.Text = "Audio Player";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.audFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -561,8 +534,6 @@
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label7;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator2;
         private System.Windows.Forms.Label lblDurationLeft;
         private System.Windows.Forms.Label lblDuration;

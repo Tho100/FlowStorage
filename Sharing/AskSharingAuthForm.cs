@@ -121,22 +121,27 @@ namespace FlowSERVER1 {
                 if (Globals.imageTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
-                else if (_retrieved == ".docx" || _retrieved == ".doc") {
+                else if (Globals.wordTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
-                else if (_retrieved == ".pptx" || _retrieved == ".ppt") {
+                else if (Globals.ptxTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
                 else if (_retrieved == ".exe") {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
-                else if (_retrieved == ".mp3" || _retrieved == ".wav") {
+                else if (Globals.audioTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
                 else if (_retrieved == ".pdf") {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
@@ -145,10 +150,12 @@ namespace FlowSERVER1 {
                 else if (_retrieved == ".apk") {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
-                else if (_retrieved == ".xlsx" || _retrieved == ".xls") {
+                else if (Globals.excelTypes.Contains(_retrieved)) {
                     var _toBase64 = Convert.ToBase64String(_getBytes);
                     await startSending(_toBase64);
+
                 }
                 else if (Globals.textTypes.Contains(_retrieved)) {
 

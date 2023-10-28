@@ -782,7 +782,7 @@ namespace FlowSERVER1 {
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                string _compressedImageBase64 = compressor.compresImageToBase64(selectedItems);
+                                string _compressedImageBase64 = compressor.compressImageToBase64(selectedItems);
                                 string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
                                 CreateFilePanel(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
                                 

@@ -204,7 +204,7 @@
             this.btnSaveChanges.Animated = true;
             this.btnSaveChanges.BackColor = System.Drawing.Color.Transparent;
             this.btnSaveChanges.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSaveChanges.BorderRadius = 6;
+            this.btnSaveChanges.BorderRadius = 8;
             this.btnSaveChanges.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnSaveChanges.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnSaveChanges.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -213,9 +213,9 @@
             this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveChanges.ForeColor = System.Drawing.Color.White;
             this.btnSaveChanges.ImageSize = new System.Drawing.Size(17, 17);
-            this.btnSaveChanges.Location = new System.Drawing.Point(357, 17);
+            this.btnSaveChanges.Location = new System.Drawing.Point(357, 12);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(123, 35);
+            this.btnSaveChanges.Size = new System.Drawing.Size(123, 39);
             this.btnSaveChanges.TabIndex = 75;
             this.btnSaveChanges.Text = "Save Changes";
             this.btnSaveChanges.Visible = false;
@@ -261,7 +261,7 @@
             this.btnShareFile.ForeColor = System.Drawing.Color.White;
             this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
             this.btnShareFile.ImageSize = new System.Drawing.Size(17, 17);
-            this.btnShareFile.Location = new System.Drawing.Point(911, 17);
+            this.btnShareFile.Location = new System.Drawing.Point(914, 17);
             this.btnShareFile.Name = "btnShareFile";
             this.btnShareFile.Size = new System.Drawing.Size(38, 31);
             this.btnShareFile.TabIndex = 53;
@@ -306,7 +306,7 @@
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
             this.guna2Button4.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button4.Image")));
             this.guna2Button4.ImageSize = new System.Drawing.Size(22, 22);
-            this.guna2Button4.Location = new System.Drawing.Point(955, 17);
+            this.guna2Button4.Location = new System.Drawing.Point(958, 17);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(38, 31);
             this.guna2Button4.TabIndex = 29;
@@ -452,7 +452,7 @@
             this.guna2Button12.Visible = false;
             this.guna2Button12.Click += new System.EventHandler(this.guna2Button12_Click);
             // 
-            // txtFORM
+            // TextForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -483,7 +483,7 @@
             this.Controls.Add(this.guna2textbox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "txtFORM";
+            this.Name = "TextForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Text Viewer";
             this.TopMost = true;
