@@ -110,16 +110,18 @@ namespace FlowSERVER1 {
                         var toBitMap = shellFile.Thumbnail.Bitmap;
                         using (var stream = new MemoryStream()) {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            var toBase64 = Convert.ToBase64String(stream.ToArray());
 
+                            string toBase64 = Convert.ToBase64String(stream.ToArray());
+                            string compressedThumbnail = compressor.compressBase64Image(toBase64);
+                            
                             if (lblCurrentPageText.Text == "Home") {
-                                GlobalsData.base64EncodedThumbnailHome.Add(toBase64);
+                                GlobalsData.base64EncodedThumbnailHome.Add(compressedThumbnail);
                             }
                             else if (lblCurrentPageText.Text == "Public Storage") {
-                                GlobalsData.base64EncodedThumbnailPs.Add(toBase64);
+                                GlobalsData.base64EncodedThumbnailPs.Add(compressedThumbnail);
                             }
 
-                            command.Parameters.AddWithValue("@thumbnail_value", toBase64);
+                            command.Parameters.AddWithValue("@thumbnail_value", compressedThumbnail);
                         }
                     }
 
@@ -947,8 +949,8 @@ namespace FlowSERVER1 {
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                String compressedImage = compressor.compressImageToBase64(selectedItems);
-                                String encryptedValue = EncryptionModel.Encrypt(compressedImage);
+                                string compressedImage = compressor.compressImageToBase64(selectedItems);
+                                string encryptedValue = EncryptionModel.Encrypt(compressedImage);
 
                                 CreateFilePanelHome(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                                 
@@ -956,13 +958,14 @@ namespace FlowSERVER1 {
 
                             else if (Globals.textTypes.Contains(_fileExtension)) {
                                 txtCurr++;
-                                String nonLine = "";
+
+                                string nonLine = "";
                                 using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
                                     nonLine = ReadFileTxt.ReadToEnd();
                                 }
 
                                 byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
-                                byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
+                                byte[] compressedTextBytes = compressor.compressFileData(getBytes);
                                 string getEncoded = Convert.ToBase64String(compressedTextBytes);
                                 string encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
 
@@ -3119,14 +3122,15 @@ namespace FlowSERVER1 {
                         ShellFile shellFile = ShellFile.FromFilePath(filesFullPath);
 
                         Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                        string toBase64BitmapThumbnail;
+                        string compressedThumbnail;
 
                         using (var stream = new MemoryStream()) {
                             shellFile.Thumbnail.Bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            toBase64BitmapThumbnail = Convert.ToBase64String(stream.ToArray());
+                            string toBase64BitmapThumbnail = Convert.ToBase64String(stream.ToArray());
+                            compressedThumbnail = compressor.compressBase64Image(toBase64BitmapThumbnail);
                         }
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues, toBase64BitmapThumbnail);
+                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues, compressedThumbnail);
 
                         textboxExl.Image = toBitMap;
                         textboxExl.Click += (sender_vid, e_vid) => {

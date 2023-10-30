@@ -5,6 +5,7 @@ using FlowSERVER1.Helper;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -440,20 +441,25 @@ namespace FlowSERVER1 {
 
         private async Task containThumbUpload(string filePath, object keyValMain) {
 
+            string encryptedFileName = EncryptionModel.Encrypt(_fileName);
+            string encryptedDirectoryName = EncryptionModel.Encrypt(lblDirectoryName.Text);
+
             const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@CUST_FILE_PATH, @CUST_USERNAME, @UPLOAD_DATE, @CUST_FILE, @CUST_THUMB, @FILE_EXT, @DIR_NAME)";
             using (var command = new MySqlCommand(insertQuery, con)) {
-                command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
+                command.Parameters.AddWithValue("@CUST_FILE_PATH", encryptedFileName);
                 command.Parameters.AddWithValue("@CUST_USERNAME", Globals.custUsername);
                 command.Parameters.AddWithValue("@FILE_EXT", _uploadedExtensionType);
                 command.Parameters.AddWithValue("@UPLOAD_DATE", _todayDate);
-                command.Parameters.AddWithValue("@DIR_NAME", EncryptionModel.Encrypt(lblDirectoryName.Text));
+                command.Parameters.AddWithValue("@DIR_NAME", encryptedDirectoryName);
                 command.Parameters.AddWithValue("@CUST_FILE", keyValMain);
 
                 using (var shellFile = ShellFile.FromFilePath(filePath))
                 using (var stream = new MemoryStream()) {
                     shellFile.Thumbnail.Bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    string base64Thumb = Convert.ToBase64String(stream.ToArray());
-                    command.Parameters.AddWithValue("@CUST_THUMB", base64Thumb);
+                    string base64Thumbnail = Convert.ToBase64String(stream.ToArray());
+                    string compressedThumbnail = compressor.compressBase64Image(base64Thumbnail);
+
+                    command.Parameters.AddWithValue("@CUST_THUMB", compressedThumbnail);
                 }
 
                 await command.ExecuteNonQueryAsync();
@@ -795,7 +801,7 @@ namespace FlowSERVER1 {
                                 }
 
                                 byte[] getBytes = Encoding.UTF8.GetBytes(nonLine);
-                                byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
+                                byte[] compressedTextBytes = compressor.compressFileData(getBytes);
                                 string getEncoded = Convert.ToBase64String(compressedTextBytes);
                                 string encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
 
