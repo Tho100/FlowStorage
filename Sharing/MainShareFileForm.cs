@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -115,7 +113,7 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                MessageBox.Show("Failed to share this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(title: "Sharing failed", subheader: "Something went wrong.").Show();
             }
         }
 

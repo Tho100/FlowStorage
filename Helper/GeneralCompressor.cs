@@ -51,7 +51,7 @@ namespace FlowSERVER1.Helper {
             using (MemoryStream memoryStream = new MemoryStream(imageBytes)) {
                 using (Image sourceImage = Image.FromStream(memoryStream)) {
                     EncoderParameters encoderParameters = new EncoderParameters(1);
-                    encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 70L);
+                    encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 69L);
 
                     ImageCodecInfo jpegEncoder = GetEncoderInfo(ImageFormat.Jpeg);
 

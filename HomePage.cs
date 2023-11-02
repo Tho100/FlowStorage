@@ -1837,7 +1837,22 @@ namespace FlowSERVER1 {
                 }
             }
 
-            lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
+            lblIPsILimitedText.Text = Globals.uploadFileLimit[Globals.accountType].ToString();
+
+            List<string> username = new List<string>(flwLayoutHome.Controls
+                .OfType<Guna2Panel>()
+                .SelectMany(panel => panel.Controls.OfType<Label>())
+                .Where(label => label.Text.Contains(Globals.custUsername))
+                .Select(label => label.Text.Split('·')[0].Trim().ToLower()));
+
+            lblIPsItemCountText.Text = username.Count.ToString();
+
+            int getCurrentCount = int.Parse(lblIPsItemCountText.Text);
+            int getLimitedValue = int.Parse(lblIPsILimitedText.Text);
+            int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
+            lblUsagePercentagePs.Text = calculatePercentageUsage.ToString() + "%";
+
+            progressBarPs.Value = calculatePercentageUsage;
 
             BuildRedundaneVisibility();
 
@@ -1859,8 +1874,6 @@ namespace FlowSERVER1 {
                 }
             }
 
-            lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
-
             BuildRedundaneVisibility();
 
         }
@@ -1879,8 +1892,6 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-
-            lblPsCount.Text = $"{flwLayoutHome.Controls.Count} Files";
 
             _isMyPublicStorageSelected = true;
             BuildRedundaneVisibility();
@@ -4450,6 +4461,14 @@ namespace FlowSERVER1 {
 
         private void guna2Button1_Click_1(object sender, EventArgs e) {
             pnlFilterType.Visible = !pnlFilterType.Visible;
+        }
+
+        private void lblItemCountText_Click(object sender, EventArgs e) {
+
+        }
+
+        private void pnlPsSubDetails_Paint(object sender, PaintEventArgs e) {
+
         }
     }
 }
