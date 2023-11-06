@@ -18,14 +18,14 @@ namespace FlowSERVER1 {
 
         private async Task RemoveUserData(String tableName) {
 
-            if (tableName != "cust_sharing") {
+            if (tableName != GlobalsTable.sharingTable) {
                 string query = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     await command.ExecuteNonQueryAsync();
                 }
-            }
-            else {
+
+            } else {
 
                 const string query = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
@@ -80,20 +80,21 @@ namespace FlowSERVER1 {
                             Application.OpenForms["remAccFORM"].Close();
                             HomePage.instance.lstFoldersPage.Items.Clear();
                         }
-                    }
-                    else {
+
+                    } else {
                         lblAlert.Visible = true;
                         lblAlert.Text = "Password is incorrect.";
                     }
-                }
-                else {
+
+                } else {
                     lblAlert.Visible = true;
                     lblAlert.Text = "PIN is incorrect.";
                 }
-            }
-            catch (Exception) {
+
+            } catch (Exception) {
                 MessageBox.Show("Failed to delete account.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private void guna2Button3_Click(object sender, EventArgs e) {

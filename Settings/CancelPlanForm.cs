@@ -46,8 +46,7 @@ namespace FlowSERVER1.Settings {
 
                 this.Close();
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert(title: "Failed to cancel subscription", subheader: "Something went wrong while trying to cancel your subscription plan please try again later.");
             }
         }

@@ -168,9 +168,7 @@ namespace FlowSERVER1 {
                         }
                     }
 
-                }
-
-                else if (tableName == "cust_sharing" && isFromShared == true) {
+                } else if (tableName == GlobalsTable.sharingTable && isFromShared == true) {
 
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
 
@@ -197,9 +195,8 @@ namespace FlowSERVER1 {
                             }
                         }
                     }
-                }
-                
-                else if (tableName == "cust_sharing" && isFromShared == false) {
+
+                } else if (tableName == GlobalsTable.sharingTable && isFromShared == false) {
 
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
 
@@ -259,9 +256,8 @@ namespace FlowSERVER1 {
                 }
 
                 CloseRetrievalAlert();
-            }
 
-            catch (Exception) {
+            } catch (Exception) {
                 CloseRetrievalAlert();
                 new CustomAlert(title: "An error occurred","Failed to download this file.");
             }

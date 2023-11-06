@@ -22,7 +22,6 @@ namespace FlowSERVER1 {
             this._isFromShared = isFromShared;
 
             if (_isFromShared == true) {
-
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
@@ -30,11 +29,12 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 label6.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -42,17 +42,15 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderName;
+
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
             this.Close();
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
         }
 
         private void apkFORM_Load(object sender, EventArgs e) {
@@ -71,8 +69,7 @@ namespace FlowSERVER1 {
 
                 SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to download this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
         }

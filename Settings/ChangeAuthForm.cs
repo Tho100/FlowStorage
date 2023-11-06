@@ -90,10 +90,10 @@ namespace FlowSERVER1 {
                     }
                 }
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert(title: "An error occurred", subheader: "Failed to change your password due to unknown error, are you connected to the internet?").Show();
             }
+
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {

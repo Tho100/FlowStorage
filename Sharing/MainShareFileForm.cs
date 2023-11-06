@@ -209,14 +209,14 @@ namespace FlowSERVER1 {
                     CloseForm.closeForm("SharingAlert");
                     new SucessSharedAlert(_currentFileName, shareToName).Show();
 
-                }
-                else {
+                } else {
                     new CustomAlert(title: "Sharing failed", subheader: "This file is already sent.").Show();
                 }
-            }
-            else {
+
+            } else {
                 new CustomAlert(title: "Sharing failed", subheader: "The receiver has reached the limit amount of files they can received.").Show();
             }
+
         }
 
         /// <summary>
@@ -380,26 +380,19 @@ namespace FlowSERVER1 {
                 }
 
                 string password = await hasPassword(textBox1);
+
                 if (!string.IsNullOrEmpty(password)) {
                     AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _fileExtension);
                     _askPassForm.Show();
-                }
-                else {
+
+                } else {
 
                     await startSharing();
                 }
-            }
-            catch (Exception) {
+
+            } catch (Exception) {
                 MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e) {
 
         }
 

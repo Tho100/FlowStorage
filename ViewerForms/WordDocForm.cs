@@ -39,11 +39,12 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -51,6 +52,7 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderName;
@@ -62,10 +64,11 @@ namespace FlowSERVER1 {
                 InitializeDoc(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
                 CloseForm.closeForm("RetrievalAlert");
-            }
-            catch (Exception) {
+
+            } catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private void InitializeDoc(byte[] docBytes) {

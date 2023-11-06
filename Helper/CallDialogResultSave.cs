@@ -8,9 +8,10 @@ namespace FlowSERVER1.Helper {
 
             if (isFromSharing) {
                 verifySaveText = "Save Changes? \nThe changes will also affect the user you've shared this file to.";
-            }
-            else {
+
+            } else {
                 verifySaveText = "Save Changes?";
+
             }
 
             DialogResult verifySave = MessageBox.Show(verifySaveText, "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);

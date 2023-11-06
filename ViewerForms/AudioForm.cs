@@ -38,7 +38,6 @@ namespace FlowSERVER1 {
             this._isFromSharing = isFromSharing;
 
             if (isFromShared == true) {
-
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
@@ -46,10 +45,12 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
+
             } else {
                 label5.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -57,6 +58,7 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderUsername.Text = uploaderName;
@@ -138,10 +140,12 @@ namespace FlowSERVER1 {
 
             if (audioType == "wav") {
                 await Task.Run(() => PlayAudioWave(audioBytes));
-            }
-            else if (audioType == "mp3") {
+
+            } else if (audioType == "mp3") {
                 await Task.Run(() => PlayAudioMp3(audioBytes));
+
             }
+
         }
 
         /// <summary>
@@ -305,8 +309,8 @@ namespace FlowSERVER1 {
                     .ForEach(form => form.Hide());
 
                 this.TopMost = false;
-            }
-            else {
+
+            } else {
 
                 Application.OpenForms
                     .OfType<Form>()
@@ -314,6 +318,7 @@ namespace FlowSERVER1 {
                     .ToList()
                     .ForEach(form => form.Hide());
             }
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {

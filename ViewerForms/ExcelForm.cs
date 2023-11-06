@@ -2,12 +2,10 @@
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
@@ -50,7 +48,6 @@ namespace FlowSERVER1 {
             this._tableName = tableName;
 
             if (_isFromSharing == true) {
-
                 btnEditComment.Visible = true;
                 btnSaveComment.Visible = true;
 
@@ -59,12 +56,11 @@ namespace FlowSERVER1 {
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
-            }
-            else {
-
+            } else {
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -123,19 +119,23 @@ namespace FlowSERVER1 {
                                         dt.Columns.Add(cell.Value.ToString());
                                     }
                                     firstRow = false;
-                                }
-                                else {
+
+                                } else {
                                     dt.Rows.Add(row.Cells().Select(c => c.Value.ToString()).ToArray());
+
                                 }
                             }
+
                             gridExcelSpreadsheet.DataSource = dt;
+
                         }
                     }
                 }
-            }
-            catch (Exception) {
+
+            } catch (Exception) {
                 new CustomAlert(title: "Failed to load this workbook", subheader: "It may be broken or unsupported format.").Show();
             }
+
         }
 
         private void Form5_Load(object sender, EventArgs e) {

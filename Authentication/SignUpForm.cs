@@ -75,7 +75,6 @@ namespace FlowSERVER1.Authentication {
                 accessHomePage.lstFoldersPage.SelectedIndex = 0;
                 accessHomePage.lblItemCountText.Text = accessHomePage.flwLayoutHome.Controls.Count.ToString();
 
-                BuildGreetingLabel();
                 await GetUserAccountType();
                 await GetUserLanguage();
 
@@ -200,34 +199,6 @@ namespace FlowSERVER1.Authentication {
                 string concludeUsername = (string)command.ExecuteScalar();
                 return concludeUsername ?? String.Empty;
             }
-        }
-
-
-        private void BuildGreetingLabel() {
-
-            DateTime now = DateTime.Now;
-
-            var hours = now.Hour;
-            string greeting = $"Good Night {Globals.custUsername}";
-
-            if (hours >= 1 && hours <= 12) {
-                greeting = "Good Morning, " + Globals.custUsername;
-            }
-            else if (hours >= 12 && hours <= 16) {
-                greeting = "Good Afternoon, " + Globals.custUsername;
-            }
-            else if (hours >= 16 && hours <= 21) {
-
-                if (hours == 20 || hours == 21) {
-                    greeting = "Good Late Evening, " + Globals.custUsername;
-                }
-
-            }
-            else if (hours >= 21 && hours <= 24) {
-                greeting = "Good Night, " + Globals.custUsername;
-            }
-
-            accessHomePage.lblGreetingText.Text = greeting;
 
         }
 
@@ -377,16 +348,18 @@ namespace FlowSERVER1.Authentication {
                 }
 
                 if (existsInfosUser.Count >= 1 || existsInfosMail.Count >= 1) {
+
                     if (existsInfosUser.Count >= 1) {
                         lblAlertUsername.Visible = true;
                         lblAlertUsername.Text = "Username is taken.";
                     }
+
                     if (existsInfosMail.Count >= 1) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Email already exists.";
                     }
-                }
-                else {
+
+                } else {
 
                     lblAlertEmail.Visible = false;
                     lblAlertPassword.Visible = false;
@@ -467,7 +440,6 @@ namespace FlowSERVER1.Authentication {
                     await GetUserLanguage();
                     ClearRegistrationFields();
                     StupAutoLogin(usernameInput, emailInput);
-                    BuildGreetingLabel();
 
                     accessHomePage.lblUsagePercentage.Text = "0%";
                     accessHomePage.progressBarUsageStorage.Value = 0;
@@ -478,8 +450,8 @@ namespace FlowSERVER1.Authentication {
 
                     ShowHomePage();
                 }
-            }
-            catch (Exception) {
+
+            } catch (Exception) {
                 new CustomAlert(title: "Failed to register your account", subheader: "Are you connected to the internet?").Show();
             }
         }
@@ -537,8 +509,8 @@ namespace FlowSERVER1.Authentication {
                     command.ExecuteNonQuery();
 
                     transaction.Commit();
-                }
-                catch (Exception) {
+
+                } catch (Exception) {
                     transaction.Rollback();
                 }
             }
@@ -561,8 +533,7 @@ namespace FlowSERVER1.Authentication {
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
-            }
-            else {
+            } else {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {

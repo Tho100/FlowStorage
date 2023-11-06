@@ -181,80 +181,87 @@ namespace FlowSERVER1 {
 
                         var FileExt = FileName.Substring(FileName.Length-4);
                         var getName = FileName;
+
                         if(TableName == "null") {
+
                             if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
-                            }
-                            else if (FileExt == ".msi") {
+
+                            } else if (FileExt == ".msi") {
                                 FileDeletionNormal(FileName, GlobalsTable.homeMsiTable);
-                            }
-                            else if (FileExt == ".mp3" || FileExt == ".wav") {
+
+                            } else if (Globals.audioTypes.Contains(FileExt)) {
                                 FileDeletionNormal(getName, GlobalsTable.homeAudioTable);
-                            }
-                            else if (FileExt == ".docx" || FileExt == ".doc") {
+
+                            } else if (Globals.wordTypes.Contains(FileExt)) {
                                 FileDeletionNormal(getName, GlobalsTable.homeWordTable);
-                            }
-                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
+
+                            } else if (Globals.ptxTypes.Contains(FileExt)) {
                                 FileDeletionNormal(getName, GlobalsTable.homePtxTable);
-                            }
-                            else if (FileExt == ".pdf") {
+
+                            } else if (FileExt == ".pdf") {
                                 FileDeletionNormal(getName, GlobalsTable.homePdfTable);
-                            }
-                            else if (Globals.textTypes.Contains(FileExt)) {
+
+                            } else if (Globals.textTypes.Contains(FileExt)) {
                                 FileDeletionNormal(getName, GlobalsTable.homeTextTable);
-                            }
-                            else if (FileExt == ".exe") {
+
+                            } else if (FileExt == ".exe") {
                                 FileDeletionNormal(getName, GlobalsTable.homeExeTable);
+
                             }
+
                         } else if (TableName == GlobalsTable.directoryUploadTable) {
+
                             if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".msi") {
+
+                            } else if (FileExt == ".msi") {
+                                FileDeletionDirectory(getName);
+
+                            } else if (Globals.audioTypes.Contains(FileExt)) {
+                                FileDeletionDirectory(getName);
+
+                            } else if (Globals.wordTypes.Contains(FileExt)) {
+                                FileDeletionDirectory(getName);
+
+                            } else if (Globals.ptxTypes.Contains(FileExt)) {
+                                FileDeletionDirectory(getName);
+
+                            } else if (FileExt == ".pdf") {
+                                FileDeletionDirectory(getName);
+
+                            } else if (Globals.textTypes.Contains(FileExt)) {
+                                FileDeletionDirectory(getName);
+
+                            } else if (FileExt == ".exe") {
                                 FileDeletionDirectory(getName);
                             }
-                            else if (FileExt == ".mp3" || FileExt == ".wav") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".docx" || FileExt == ".doc") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".pdf") {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (Globals.textTypes.Contains(FileExt)) {
-                                FileDeletionDirectory(getName);
-                            }
-                            else if (FileExt == ".exe") {
-                                FileDeletionDirectory(getName);
-                            }
+
                         } else if (TableName == GlobalsTable.folderUploadTable) {
                             if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionFolder(getName, GlobalsTable.homeImageTable);
-                            }
-                            else if (FileExt == ".msi") {
+
+                            } else if (FileExt == ".msi") {
                                 FileDeletionFolder(getName, GlobalsTable.homeMsiTable);
-                            }
-                            else if (FileExt == ".mp3" || FileExt == ".wav") {
+
+                            } else if (Globals.audioTypes.Contains(FileExt)) {
                                 FileDeletionFolder(getName, GlobalsTable.homeAudioTable);
-                            }
-                            else if (FileExt == ".docx" || FileExt == ".doc") {
+
+                            } else if (Globals.wordTypes.Contains(FileExt)) {
                                 FileDeletionFolder(getName, GlobalsTable.homeWordTable);
-                            }
-                            else if (FileExt == ".pptx" || FileExt == ".ppt") {
+
+                            } else if (Globals.ptxTypes.Contains(FileExt)) {
                                 FileDeletionFolder(getName, GlobalsTable.homePtxTable);
-                            }
-                            else if (FileExt == ".pdf") {
+
+                            } else if (FileExt == ".pdf") {
                                 FileDeletionFolder(getName, GlobalsTable.homePdfTable);
-                            }
-                            else if (FileExt == ".txt" || FileExt == ".py" || FileExt == ".html" || FileExt == ".js" || FileExt == ".css" || FileExt == ".sql") {
+
+                            } else if (Globals.textTypes.Contains(FileExt)) {
                                 FileDeletionFolder(getName, GlobalsTable.homeTextTable);
-                            }
-                            else if (FileExt == ".exe") {
+
+                            } else if (FileExt == ".exe") {
                                 FileDeletionFolder(getName, GlobalsTable.homeExeTable);
+
                             }
                         } else if (TableName == GlobalsTable.sharingTable) {
                             FileDeletionSharing(getName);
@@ -323,6 +330,7 @@ namespace FlowSERVER1 {
             }
 
             this.Close();
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {

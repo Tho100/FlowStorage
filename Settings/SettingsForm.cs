@@ -79,8 +79,7 @@ namespace FlowSERVER1 {
                 int _totalUploadOvertime = _totalUploadAllTime.Sum(x => Convert.ToInt32(x));
                 lblTotalUploadFileCount.Text = _totalUploadOvertime.ToString();
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert(title: "An error occurred", "Something went wrong while trying to open Settings.");
             }
         }
@@ -448,27 +447,30 @@ namespace FlowSERVER1 {
         }
 
         public void InitiailizeUIOnAccountType(String selectedAcc) {
+
             if (selectedAcc == "Supreme") {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenSupremePayment.Enabled = false;
                 btnOpenMaxPayment.Enabled = false;
                 btnUseSupreme.Visible = false;
                 lblLimitedUpload.Text = "Limited to 2000";
-            }
-            else if (selectedAcc == "Express") {
+
+            } else if (selectedAcc == "Express") {
                 btnOpenExpressPayment.Enabled = false;
                 btnOpenMaxPayment.Enabled = false;
                 btnUseExpress.Visible = false;
                 lblLimitedUpload.Text = "Limited to 800";
-            }
-            else if (selectedAcc == "Max") {
+
+            } else if (selectedAcc == "Max") {
                 btnOpenMaxPayment.Enabled = false;
                 btnUseMax.Visible = false;
                 lblLimitedUpload.Text = "Limited to 150";
-            } 
-            else if (selectedAcc == "Basic") {
+
+            }  else if (selectedAcc == "Basic") {
                 lblLimitedUpload.Text = "Limited to 25";
+
             }
+
         }
 
         private void InitializeUploadLimitLabel() {
@@ -645,15 +647,13 @@ namespace FlowSERVER1 {
 
                     InitiailizeUIOnAccountType(_selectedAccountType);
 
-                }
-                else {
+                } else {
                     new CustomAlert(
                         title: "Cannot proceed",
                         subheader: "You have to make a payment on the web first to use this plan.").Show();
                 }
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert(title: "Cannot proceed", subheader: "Failed to make a payment.").Show();
             }
         }
@@ -814,8 +814,7 @@ namespace FlowSERVER1 {
                         greeting = "Goedeavond " + Globals.custUsername + " :)";
                     }
 
-                }
-                else {
+                } else {
                     if (_newSelectedUserLanguage == "US") {
                         greeting = "Good Evening, " + Globals.custUsername;
                     }
@@ -2014,8 +2013,8 @@ namespace FlowSERVER1 {
 
                         btnAddSharingAuth.Visible = false;
                         btnAddSharingAuth.Enabled = false;
-                    }
-                    else {
+
+                    } else {
 
                         btnRmvSharingAuth.Visible = false;
                         btnRmvSharingAuth.Enabled = false;
@@ -2034,8 +2033,7 @@ namespace FlowSERVER1 {
                         lblDisableFileSharing.Text = "Enable File Sharing";
                         lblDescDisableSharing.Text = "Enabling file sharing will allows people to share a file to you";
 
-                    }
-                    else {
+                    } else {
                         btnDisableSharing.Enabled = true;
                         btnDisableSharing.Visible = true;
 
@@ -2047,8 +2045,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 Debug.WriteLine(ex.Message);
             }
         }

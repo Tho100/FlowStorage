@@ -185,10 +185,10 @@ namespace FlowSERVER1 {
 
                 this.Close();
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert(title: "Failed to create directory", subheader: "Are you connected to the internet?").Show();
             }
+
         }
 
         private void DisplayErrorUpgrade() {
@@ -251,8 +251,8 @@ namespace FlowSERVER1 {
 
                     if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
                         MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else {
+
+                    } else {
 
                         GenerateDirectory(countTotalDir++, directoryName);
                         HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
@@ -270,14 +270,17 @@ namespace FlowSERVER1 {
                         await crud.Insert(addDirQuery, param);
 
                     }
-                }
-                else {
+
+                } else {
                     DisplayErrorUpgrade();
+
                 }
-            }
-            else {
+
+            } else {
                 MessageBox.Show("Directory with this name already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
+
         }
 
         private async void btnCreateDirectory_Click(object sender, EventArgs e) {

@@ -36,7 +36,6 @@ namespace FlowSERVER1 {
             this._isFromSharing = isFromSharing;
 
             if (isFromShared == true) {
-
                 btnEditComment.Visible = true;
 
                 label4.Text = "Shared To";
@@ -44,11 +43,11 @@ namespace FlowSERVER1 {
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
-            }
-            else {
+            } else {
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -56,6 +55,7 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderName;
@@ -67,10 +67,10 @@ namespace FlowSERVER1 {
 
                 InitializePDF(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text, isFromShared));
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         /// <summary>

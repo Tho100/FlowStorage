@@ -16,7 +16,6 @@ namespace FlowSERVER1 {
             this._isFromShared = isFromShared;
 
             if (isFromShared == true) {
-
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 
@@ -24,11 +23,12 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 label6.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -36,9 +36,11 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderUsername;
+
         }
 
         private void msiFORM_Load(object sender, EventArgs e) {

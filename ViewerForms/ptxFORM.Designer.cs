@@ -35,8 +35,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.guna2VSeparator2 = new Guna.UI2.WinForms.Guna2VSeparator();
-            this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
@@ -49,7 +47,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.lblFileSize = new System.Windows.Forms.Label();
             this.officeViewer1 = new Spire.OfficeViewer.Forms.OfficeViewer();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -152,26 +149,6 @@
             this.guna2VSeparator2.Name = "guna2VSeparator2";
             this.guna2VSeparator2.Size = new System.Drawing.Size(10, 66);
             this.guna2VSeparator2.TabIndex = 69;
-            // 
-            // label6
-            // 
-            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label6.ForeColor = System.Drawing.Color.Silver;
-            this.label6.Location = new System.Drawing.Point(408, 25);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(105, 23);
-            this.label6.TabIndex = 70;
-            this.label6.Text = "Presentation";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_microsoft_powerpoint_60;
-            this.pictureBox1.Location = new System.Drawing.Point(364, 14);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(40, 40);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 71;
-            this.pictureBox1.TabStop = false;
             // 
             // btnShareFile
             // 
@@ -417,7 +394,7 @@
             this.officeViewer1.Text = "officeViewer1";
             this.officeViewer1.Click += new System.EventHandler(this.officeViewer1_Click_1);
             // 
-            // ptxFORM
+            // PtxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -429,8 +406,6 @@
             this.Controls.Add(this.txtFieldComment);
             this.Controls.Add(this.btnEditComment);
             this.Controls.Add(this.guna2Button7);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.guna2VSeparator2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -448,12 +423,11 @@
             this.Controls.Add(this.guna2Button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ptxFORM";
+            this.Name = "PtxForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Presentation Viewer";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ptxFORM_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -476,8 +450,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator2;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label6;
         protected Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
         private Guna.UI2.WinForms.Guna2Button btnEditComment;
         private Guna.UI2.WinForms.Guna2Button guna2Button7;

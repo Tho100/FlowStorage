@@ -66,11 +66,12 @@ namespace FlowSERVER1 {
                     btnShareFile.Visible = false;
                     lblUserComment.Visible = true;
                     lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-                }
-                else {
+
+                } else {
                     label4.Text = "Uploaded By";
                     lblUserComment.Visible = true;
                     lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
                 }
 
                 if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -78,6 +79,7 @@ namespace FlowSERVER1 {
                     string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                     lblUserComment.Visible = true;
                     lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
                 }
 
                 lblUploaderName.Text = uploaderName;
@@ -134,6 +136,7 @@ namespace FlowSERVER1 {
 
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private async void RetrieveDirectoryData(String fileName) {
@@ -393,20 +396,27 @@ namespace FlowSERVER1 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
-            var FileExt_ = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
-            SaveFileDialog _OpenDialog = new SaveFileDialog();
-            _OpenDialog.FileName = lblFileName.Text;
-            _OpenDialog.Filter = "Files|*" + FileExt_;
+
+            string fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+
+            saveDialog.FileName = lblFileName.Text;
+            saveDialog.Filter = "Files|*" + fileType;
+
             try {
-                if (_OpenDialog.ShowDialog() == DialogResult.OK) {
-                    File.WriteAllText(_OpenDialog.FileName, guna2textbox1.Text);
+
+                if (saveDialog.ShowDialog() == DialogResult.OK) {
+                    File.WriteAllText(saveDialog.FileName, guna2textbox1.Text);
                 }
-            }
-            catch (Exception) {
+
+            } catch (Exception) {
                 MessageBox.Show("An error occurred while attempting to save file.", "Flowstorage",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
+
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
             if (this._tableName != "ps_info_text") {
                 btnSaveChanges.Visible = true;

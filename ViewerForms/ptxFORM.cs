@@ -40,7 +40,6 @@ namespace FlowSERVER1 {
             this._isFromSharing = isFromSharing;
 
             if (_isFromShared == true) {
-
                 btnEditComment.Visible = true;
                 guna2Button7.Visible = true;
 
@@ -48,8 +47,8 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
@@ -60,6 +59,7 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderName;
@@ -71,10 +71,10 @@ namespace FlowSERVER1 {
 
                 InitializePTX(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private void InitializePTX(Byte[] ptxByte) {
@@ -121,10 +121,6 @@ namespace FlowSERVER1 {
         }
 
         private void ptxFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void officeViewer1_Click(object sender, EventArgs e) {
 
         }
 

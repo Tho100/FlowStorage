@@ -51,8 +51,8 @@ namespace FlowSERVER1 {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(email));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-            }
-            else {
+
+            } else {
                 Directory.Delete(appDataPath, true);
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
@@ -60,7 +60,9 @@ namespace FlowSERVER1 {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(email));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+
             }
+
         }
 
         private string ReturnCustomColumn(string whichColumn) {
@@ -167,8 +169,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 lblAlert.Visible = true;
             }
 
@@ -204,16 +205,15 @@ namespace FlowSERVER1 {
                         SetupAutoLogin(Globals.custUsername, Globals.custEmail);
                     }
 
-                }
-                catch (Exception) {
+                } catch (Exception) {
                     MessageBox.Show(
                         "An error occurred. Check your internet connection and try again.",
                         "Flowstorage",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
-            }
-            else {
+
+            } else {
                 CloseFormOnLimitSignInAttempt();
             }
 
@@ -280,21 +280,23 @@ namespace FlowSERVER1 {
                     if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(await GetUserAccountType(), out int getLimitedValue)) {
                         if (getLimitedValue == 0) {
                             HomePage.instance.lblUsagePercentage.Text = "0%";
-                        }
-                        else {
+
+                        } else {
                             calculatePercentageUsage = (getCurrentCount * 100) / getLimitedValue;
                             HomePage.instance.lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
+
                         }
+
                         HomePage.instance.lblLimitUploadText.Text = await GetUserAccountType();
                         HomePage.instance.progressBarUsageStorage.Value = calculatePercentageUsage;
+
                     }
 
                     ShowHomePageOnSuceededSignIn();
 
                 }
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert(title: "Failed to sign-in to your account", subheader: "Are you connected to the internet?").Show();
             }
 

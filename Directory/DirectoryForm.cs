@@ -111,9 +111,10 @@ namespace FlowSERVER1 {
         private void BuildRedundaneVisibility() {
             if (flwLayoutDirectory.Controls.Count == 0) {
                 ShowRedundane();
-            }
-            else {
+
+            } else {
                 ClearRedundane();
+
             }
         }
 
@@ -440,8 +441,7 @@ namespace FlowSERVER1 {
 
                 Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadingAlert")).ToList().ForEach(form => form.Close());
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 new CustomAlert("Something went wrong", "Failed to upload this file.").Show();
             }
         }
@@ -706,8 +706,7 @@ namespace FlowSERVER1 {
                     lblFilePanelName.Text = panelTxt.Name;
                 };
 
-            }
-            else {
+            } else {
                 MessageBox.Show("File is too large, max file size is 8GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
@@ -757,8 +756,7 @@ namespace FlowSERVER1 {
 
                     _filValues.Clear();
 
-                }
-                else {
+                } else {
 
                     HashSet<string> existingLabels = new HashSet<string>(flwLayoutDirectory.Controls
                         .OfType<Guna2Panel>()
@@ -795,10 +793,10 @@ namespace FlowSERVER1 {
                                 var imgWidth = getImg.Width;
                                 var imgHeight = getImg.Height;
 
-                                string _compressedImageBase64 = compressor.compressImageToBase64(selectedItems);
-                                string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
+                                string compressedImageBase64 = compressor.compressImageToBase64(selectedItems);
+                                string encryptedImage = EncryptionModel.Encrypt(compressedImageBase64);
                                 await CreateFilePanel
-                                    (selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                                    (selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedImage);
                                 
                             } else if (Globals.textTypes.Contains(_uploadedExtensionType)) {
                                 txtCurr++;
@@ -865,8 +863,7 @@ namespace FlowSERVER1 {
 
                             CloseForm.closeForm("UploadingAlert");
 
-                        }
-                        catch (Exception) {
+                        } catch (Exception) {
                             CloseForm.closeForm("UploadingAlert");
                             new CustomAlert(title: "Some went wrong", subheader: "Failed to upload this file.").Show();
                         }

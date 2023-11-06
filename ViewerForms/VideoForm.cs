@@ -35,7 +35,6 @@ namespace FlowSERVER1 {
             this._isFromSharing = isFromSharing;
 
             if (_isFromShared == true) {
-
                 btnEditComment.Visible = true;
                 guna2Button12.Visible = true;
 
@@ -43,11 +42,12 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 label5.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -55,9 +55,11 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: fileName);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderName;
+
         }
 
         public static Image ResizeImage(Image userImg, Size size) {
@@ -165,8 +167,7 @@ namespace FlowSERVER1 {
 
                     _videoMediaPlayer.Play();
 
-                }
-                else {
+                } else {
 
                     new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..", "Loader").ShowDialog()).Start();
 
@@ -180,14 +181,9 @@ namespace FlowSERVER1 {
                 btnPlayVideo.Visible = false;
                 btnPauseVideo.Visible = true;
 
+            } catch (Exception) {
+                new CustomAlert(title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
             }
-            catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //new CustomAlert(title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
-            }
-        }
-
-        private void pictureBox1_Click_2(object sender, EventArgs e) {
 
         }
 
@@ -202,17 +198,6 @@ namespace FlowSERVER1 {
             SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
         }
 
-        private void videoView1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void vlcControl1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void videoView1_Click_1(object sender, EventArgs e) {
-
-        }
 
         /// <summary>
         /// 
@@ -229,10 +214,6 @@ namespace FlowSERVER1 {
                 btnPlayVideo.Visible = true;
                 btnPauseVideo.Visible = false;
             }
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e) {
-
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
@@ -333,8 +314,9 @@ namespace FlowSERVER1 {
             lblUserComment.Refresh();
         }
 
-        private void label7_Click(object sender, EventArgs e) {
+        private void pictureBox1_Click(object sender, EventArgs e) {
 
         }
+
     }
 }

@@ -71,11 +71,12 @@ namespace FlowSERVER1 {
                 btnShareFile.Visible = false;
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: title) != "" ? GetComment.getCommentSharedToOthers(fileName: title) : "(No Comment)";
-            }
-            else {
+
+            } else {
                 label4.Text = "Uploaded By";
                 lblUserComment.Visible = true;
                 lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
+
             }
 
             if (GlobalsTable.publicTablesPs.Contains(tableName)) {
@@ -83,6 +84,7 @@ namespace FlowSERVER1 {
                 string comment = GetComment.getCommentPublicStorage(fileName: title);
                 lblUserComment.Visible = true;
                 lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
             }
 
             lblUploaderName.Text = uploaderName;
@@ -90,9 +92,11 @@ namespace FlowSERVER1 {
             if(_tableName == GlobalsTable.folderUploadTable || _tableName == GlobalsTable.homeImageTable) {
                 btnPrevious.Visible = true;
                 btnNext.Visible = true;
+
             } else {
                 btnPrevious.Visible = false;
                 btnNext.Visible = false;
+
             }
 
         }
@@ -281,10 +285,10 @@ namespace FlowSERVER1 {
 
                 guna2PictureBox1.Image = filteredImage;
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
 
         bool gaussianDialogShown = false;
@@ -343,18 +347,18 @@ namespace FlowSERVER1 {
 
                 if (_isFromShared == true) {
                     await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
-                }
-                else if (_isFromShared == true) {
+
+                } else if (_isFromShared == true) {
                     await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
-                }
-                else {
+
+                } else {
                     await executeChanges("UPDATE file_info_image SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
                 }
 
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("Failed to save changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private async Task executeChanges(string query, string values) {

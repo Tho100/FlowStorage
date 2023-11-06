@@ -116,9 +116,10 @@ namespace FlowSERVER1 {
                             
                             if (lblCurrentPageText.Text == "Home") {
                                 GlobalsData.base64EncodedThumbnailHome.Add(compressedThumbnail);
-                            }
-                            else if (lblCurrentPageText.Text == "Public Storage") {
+
+                            } else if (lblCurrentPageText.Text == "Public Storage") {
                                 GlobalsData.base64EncodedThumbnailPs.Add(compressedThumbnail);
+
                             }
 
                             command.Parameters.AddWithValue("@thumbnail_value", compressedThumbnail);
@@ -160,6 +161,7 @@ namespace FlowSERVER1 {
             } catch (Exception) {
                 BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
+
         }
 
         private async Task InsertFileVideoDataPublic(string selectedItems, string fileName, object keyValMain) {
@@ -252,8 +254,8 @@ namespace FlowSERVER1 {
             } catch (Exception) {
                 BuildShowAlert(title: "Upload failed", subheader: $"Failed to upload {_fileName}");
             }
-        }
 
+        }
 
         private void BuildButtonsOnHomePageSelected() {
             btnDownloadFolder.Visible = false;
@@ -302,8 +304,7 @@ namespace FlowSERVER1 {
             if (flwLayoutHome.Controls.Count == 0) {
                 ShowRedundane();
 
-            }
-            else {
+            } else {
                 ClearRedundane();
 
             }
@@ -385,8 +386,8 @@ namespace FlowSERVER1 {
 
             if (GlobalsData.filesMetadataCacheHome.ContainsKey(tableName)) {
                 return GlobalsData.filesMetadataCacheHome[tableName];
-            }
-            else {
+
+            } else {
                 string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -403,6 +404,7 @@ namespace FlowSERVER1 {
                     }
                 }
             }
+
         }
 
         /// <summary>
@@ -907,8 +909,8 @@ namespace FlowSERVER1 {
 
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     DisplayUpgradeAccountDialog();
-                }
-                else {
+
+                } else {
 
                     HashSet<string> fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
@@ -952,9 +954,7 @@ namespace FlowSERVER1 {
                                 await CreateFilePanelHome(
                                     selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                                 
-                            }
-
-                            else if (Globals.textTypes.Contains(_fileExtension)) {
+                            } else if (Globals.textTypes.Contains(_fileExtension)) {
                                 txtCurr++;
 
                                 string nonLine = "";
@@ -970,26 +970,22 @@ namespace FlowSERVER1 {
                                 await CreateFilePanelHome(
                                     selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
 
-                            }
-
-                            else if (_fileExtension == ".exe") {
+                            } else if (_fileExtension == ".exe") {
                                 exeCurr++;
                                 await CreateFilePanelHome(
                                     selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
 
-                            }
-                            else if (Globals.videoTypes.Contains(_fileExtension)) {
+                            } else if (Globals.videoTypes.Contains(_fileExtension)) {
                                 vidCurr++;
                                 await CreateFilePanelHome(
                                     selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptText);
-                            }
 
-                            else if (Globals.excelTypes.Contains(_fileExtension)) {
+                            } else if (Globals.excelTypes.Contains(_fileExtension)) {
                                 exlCurr++;
-                                await CreateFilePanelHome(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
-                            }
+                                await CreateFilePanelHome(
+                                    selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptText);
 
-                            else if (Globals.audioTypes.Contains(_fileExtension)) {
+                            } else if (Globals.audioTypes.Contains(_fileExtension)) {
                                 audCurr++;
                                 await CreateFilePanelHome(
                                     selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
@@ -1039,6 +1035,7 @@ namespace FlowSERVER1 {
 
             BuildRedundaneVisibility();
             CloseUploadAlert();
+
         }
 
         private async Task BuildHomeFiles() {
@@ -1049,9 +1046,10 @@ namespace FlowSERVER1 {
                     if (fileType != null) {
                         ClearRedundane();
                         await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
-                    }
-                    else {
+
+                    } else {
                         await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
+
                     }
                 }
             }
@@ -1070,13 +1068,12 @@ namespace FlowSERVER1 {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
                     if (fileType != null) {
-
                         ClearRedundane();
-
                         await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
-                    }
-                    else {
+
+                    } else {
                         await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
+
                     }
                 }
             }
@@ -1092,8 +1089,8 @@ namespace FlowSERVER1 {
 
             if (GlobalsData.filesMetadataCachePs.ContainsKey(tableName)) {
                 return GlobalsData.filesMetadataCachePs[tableName];
-            }
-            else {
+
+            } else {
 
                 string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName}";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
@@ -1112,6 +1109,7 @@ namespace FlowSERVER1 {
                     }
                 }
             }
+
         }
 
         private async Task BuildFilePanelPublicStorage(String tableName, String parameterName, int currItem, bool isFromMyPs = false) {
@@ -1690,8 +1688,8 @@ namespace FlowSERVER1 {
 
                 if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     DisplayUpgradeAccountDialog();
-                }
-                else {
+
+                } else {
 
                     HashSet<string> fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
@@ -1819,6 +1817,7 @@ namespace FlowSERVER1 {
 
             BuildRedundaneVisibility();
             CloseUploadAlert();
+
         }
 
         private async Task BuildPublicStorageFiles() {
@@ -2602,14 +2601,12 @@ namespace FlowSERVER1 {
 
                         lstFoldersPage.SelectedIndex = folderListboxPosition;
 
-                    }
-                    else {
+                    } else {
                         DisplayErrorFolder(Globals.accountType);
                         lstFoldersPage.SelectedItem = "Home";
                     }
 
-                }
-                else {
+                } else {
                     MessageBox.Show("Folder already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -3348,9 +3345,10 @@ namespace FlowSERVER1 {
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
                     OpenDialogPublicStorage();
-                }
-                else {
+
+                } else {
                     DisplayUpgradeAccountDialog();
+
                 }
 
                 returnedCountValue.Clear();
@@ -3806,22 +3804,24 @@ namespace FlowSERVER1 {
                             break;
                         }
                     }
+
                     if (matchesSearchTerms) {
                         panel.BackColor = Color.Transparent;
                         if (disposedPanels.Contains(panel)) {
                             disposedPanels.Remove(panel);
                         }
-                    }
-                    else {
+
+                    } else {
                         if (!disposedPanels.Contains(panel)) {
                             disposedPanels.Add(panel);
                         }
+
                         flwLayoutHome.Controls.RemoveAt(i);
                         panel.Dispose();
+
                     }
                 }
             }
-
 
             if (string.IsNullOrEmpty(searchText)) {
 
@@ -4082,9 +4082,7 @@ namespace FlowSERVER1 {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedValue);
                         
-                    }
-
-                    else if (Globals.textTypes.Contains(_fileExtension)) {
+                    } else if (Globals.textTypes.Contains(_fileExtension)) {
                         txtCurr++;
 
                         string nonLine = "";
