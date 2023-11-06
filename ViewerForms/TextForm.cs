@@ -85,29 +85,24 @@ namespace FlowSERVER1 {
                 if (tableName == GlobalsTable.directoryUploadTable) {
                     RetrieveDirectoryData(fileName);
 
-                }
-                else if (tableName == GlobalsTable.folderUploadTable) {
+                } else if (tableName == GlobalsTable.folderUploadTable) {
                     RetrieveFolderData(fileName);
 
-                }
-                else if (tableName == GlobalsTable.homeTextTable) {
+                } else if (tableName == GlobalsTable.homeTextTable) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, fileType, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, Globals.custUsername);
 
-                }
-                else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
+                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, fileType, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, Globals.custUsername);
 
-                }
-                else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
+                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, fileType, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, Globals.custUsername);
 
-                }
-                else if (tableName == "ps_info_text") {
+                } else if (tableName == "ps_info_text") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, fileType, uploaderName);
+                    RetrieveTextData(getTxtQuery, uploaderName);
 
                 }
 
@@ -191,7 +186,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void RetrieveTextData(String PerformQue, String FileExtension, String uploaderName) {
+        private async void RetrieveTextData(String PerformQue, String uploaderName) {
 
             string getTxtQuery = PerformQue;
             using (var command = new MySqlCommand(getTxtQuery, con)) {
