@@ -1114,7 +1114,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async Task BuildFilePanelPublicStorage(String _tableName, String parameterName, int currItem, bool isFromMyPs = false) {
+        private async Task BuildFilePanelPublicStorage(String tableName, String parameterName, int currItem, bool isFromMyPs = false) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -1125,9 +1125,9 @@ namespace FlowSERVER1 {
                 List<(string, string, string, string)> filesInfo;
 
                 if (isFromMyPs == false) {
-                    filesInfo = await GetFileMetadataPublicStorage(_tableName);
-                }
-                else {
+                    filesInfo = await GetFileMetadataPublicStorage(tableName);
+
+                } else {
                     filesInfo = new List<(string, string, string, string)>();
                 }
 
@@ -1139,7 +1139,7 @@ namespace FlowSERVER1 {
 
                 if (isFromMyPs) {
 
-                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -1162,7 +1162,7 @@ namespace FlowSERVER1 {
 
                 if (isFromMyPs == false) {
 
-                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {_tableName}";
+                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName}";
                     using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await reader.ReadAsync()) {
@@ -1173,7 +1173,7 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {_tableName} WHERE CUST_USERNAME = @username";
+                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -1184,7 +1184,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if (_tableName == "ps_info_image") {
+                if (tableName == GlobalsTable.psImage) {
 
                     if (GlobalsData.base64EncodedImagePs.Count == 0) {
 
@@ -1217,7 +1217,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if (_tableName == "ps_info_video") {
+                if (tableName == GlobalsTable.psVideo) {
 
                     if (GlobalsData.base64EncodedThumbnailPs.Count == 0) {
 
@@ -1254,14 +1254,14 @@ namespace FlowSERVER1 {
 
                     void moreOptionOnPressedEvent(object sender, EventArgs e) {
                         lblFileNameOnPanel.Text = filesInfo[accessIndex].Item1;
-                        lblFileTableName.Text = _tableName;
+                        lblFileTableName.Text = tableName;
                         lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
                     }
 
                     onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                    if (_tableName == "ps_info_image") {
+                    if (tableName == GlobalsTable.psImage) {
 
                         if (GlobalsData.base64EncodedImagePs.Count > i) {
                             byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImagePs[i]);
@@ -1278,7 +1278,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "ps_info_image", "null", uploaderName);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, "null", uploaderName);
                             displayPic.Show();
                         }
 
@@ -1288,33 +1288,33 @@ namespace FlowSERVER1 {
                     }
 
 
-                    if (_tableName == "ps_info_text") {
+                    if (tableName == GlobalsTable.psText) {
 
                         var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
                         var textTypeToImage = Globals.textTypeToImage[getExtension];
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm("ps_info_text", filesInfo[accessIndex].Item1, "null", uploaderName);
+                            TextForm displayPic = new TextForm(GlobalsTable.psText, filesInfo[accessIndex].Item1, "null", uploaderName);
                             displayPic.Show();
                         }
 
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (_tableName == "ps_info_exe") {
+                    if (tableName == GlobalsTable.psExe) {
 
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, "ps_info_exe", "null", uploaderName);
+                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.psExe, "null", uploaderName);
                             displayExe.Show();
                         }
 
                         onPressedEvent.Add(exeOnPressed);
                     }
 
-                    if (_tableName == "ps_info_video") {
+                    if (tableName == GlobalsTable.psVideo) {
 
                         if (GlobalsData.base64EncodedThumbnailPs.Count > i) {
                             byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailPs[i]);
@@ -1330,78 +1330,78 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, "ps_info_video", "null", uploaderName);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, "null", uploaderName);
                             vidFormShow.Show();
                         }
 
                         onPressedEvent.Add(videoOnPressed);
                     }
 
-                    if (_tableName == "ps_info_excel") {
+                    if (tableName == GlobalsTable.psExcel) {
 
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, "ps_info_excel", "null", uploaderName);
+                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.psExcel, "null", uploaderName);
                             exlForm.Show();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
                     }
-                    if (_tableName == "ps_info_audio") {
+                    if (tableName == GlobalsTable.psAudio) {
 
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, "ps_info_audio", "null", uploaderName);
+                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.psAudio, "null", uploaderName);
                             displayPic.Show();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (_tableName == "ps_info_apk") {
+                    if (tableName == GlobalsTable.psApk) {
 
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, "ps_info_apk", "null");
+                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, "null");
                             displayPic.Show();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (_tableName == "ps_info_pdf") {
+                    if (tableName == GlobalsTable.psPdf) {
 
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, "ps_info_pdf", "null", uploaderName);
+                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.psPdf, "null", uploaderName);
                             displayPdf.Show();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
                     }
 
-                    if (_tableName == "ps_info_ptx") {
+                    if (tableName == GlobalsTable.psPtx) {
 
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, "ps_info_ptx", "null", uploaderName);
+                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.psPtx, "null", uploaderName);
                             displayPtx.Show();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (_tableName == "ps_info_msi") {
+                    if (tableName == GlobalsTable.psMsi) {
 
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, "ps_info_msi", "null", uploaderName);
+                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.psMsi, "null", uploaderName);
                             displayMsi.Show();
                         }
 
@@ -1409,12 +1409,12 @@ namespace FlowSERVER1 {
 
                     }
 
-                    if (_tableName == "ps_info_word") {
+                    if (tableName == GlobalsTable.psWord) {
 
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, "ps_info_word", "null", uploaderName);
+                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.psWord, "null", uploaderName);
                             displayMsi.Show();
                         }
 
@@ -1530,7 +1530,7 @@ namespace FlowSERVER1 {
                 new Thread(() => new UploadingAlert(_fileName, "null", parameterName + itemCurr, "null", fileSize: _fileSizeInMB).ShowDialog())
                 .Start();
 
-                if (tableName == "ps_info_image") {
+                if (tableName == GlobalsTable.psImage) {
 
                     GlobalsData.base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
                     await InsertFileDataPublic(keyVal, tableName);
@@ -1544,13 +1544,13 @@ namespace FlowSERVER1 {
 
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, "ps_info_image", "null", Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, GlobalsTable.psImage, "null", Globals.custUsername);
                         displayPic.Show();
                     };
 
                 }
 
-                if (tableName == "ps_info_text") {
+                if (tableName == GlobalsTable.psText) {
 
                     string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                     textboxPic.Image = Globals.textTypeToImage[textType];
@@ -1561,23 +1561,23 @@ namespace FlowSERVER1 {
 
                     textboxPic.Click += (sender_t, e_t) => {
 
-                        TextForm txtFormShow = new TextForm("ps_info_text", filePath, "null", Globals.custUsername);
+                        TextForm txtFormShow = new TextForm(GlobalsTable.psText, filePath, "null", Globals.custUsername);
                         txtFormShow.Show();
                     };
                 }
 
-                if (tableName == "ps_info_exe") {
+                if (tableName == GlobalsTable.psExe) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.EXEImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
-                        exeFORM displayExe = new exeFORM(titleLab.Text, "ps_info_exe", "null", Globals.custUsername);
+                        exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, "null", Globals.custUsername);
                         displayExe.Show();
                     };
                 }
 
-                if (tableName == "ps_info_video") {
+                if (tableName == GlobalsTable.psVideo) {
 
                     await InsertFileVideoDataPublic(fileFullPath, _fileName, keyVal);
 
@@ -1591,83 +1591,83 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                        VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, "ps_info_video", "null", Globals.custUsername);
+                        VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, "null", Globals.custUsername);
                         vidShow.Show();
                     };
                 }
 
-                if (tableName == "ps_info_audio") {
+                if (tableName == GlobalsTable.psAudio) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.AudioImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
-                        AudioForm displayPic = new AudioForm(titleLab.Text, "ps_info_audio", "null", Globals.custUsername);
+                        AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, "null", Globals.custUsername);
                         displayPic.Show();
                     };
                 }
 
-                if (tableName == "ps_info_excel") {
+                if (tableName == GlobalsTable.psExcel) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.EXCELImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
-                        ExcelForm displayPic = new ExcelForm(titleLab.Text, "ps_info_excel", "null", Globals.custUsername);
+                        ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, "null", Globals.custUsername);
                         displayPic.Show();
                     };
                 }
 
-                if (tableName == "ps_info_apk") {
+                if (tableName == GlobalsTable.psApk) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.APKImage;
                     textboxPic.Click += (sender_gi, e_gi) => {
-                        ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, "ps_info_apk", "null");
+                        ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.psApk, "null");
                         displayPic.Show();
                     };
                 }
 
-                if (tableName == "ps_info_pdf") {
+                if (tableName == GlobalsTable.psPdf) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.PDFImage;
                     textboxPic.Click += (sender_pd, e_pd) => {
-                        PdfForm displayPdf = new PdfForm(titleLab.Text, "ps_info_pdf", "null", Globals.custUsername);
+                        PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, "null", Globals.custUsername);
                         displayPdf.ShowDialog();
                     };
                 }
 
-                if (tableName == "ps_info_ptx") {
+                if (tableName == GlobalsTable.psPtx) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        PtxForm displayPtx = new PtxForm(titleLab.Text, "ps_info_ptx", "null", Globals.custUsername);
+                        PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, "null", Globals.custUsername);
                         displayPtx.ShowDialog();
                     };
                 }
-                if (tableName == "ps_info_msi") {
+                if (tableName == GlobalsTable.psMsi) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        MsiForm displayMsi = new MsiForm(titleLab.Text, "ps_info_msi", "null", Globals.custUsername);
+                        MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, "null", Globals.custUsername);
                         displayMsi.Show();
                     };
                 }
 
-                if (tableName == "ps_info_word") {
+                if (tableName == GlobalsTable.psWord) {
 
                     await InsertFileDataPublic(keyVal, tableName);
 
                     textboxPic.Image = Globals.DOCImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        WordDocForm displayWord = new WordDocForm(titleLab.Text, "ps_info_word", "null", Globals.custUsername);
+                        WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, "null", Globals.custUsername);
                         displayWord.ShowDialog();
                     };
                 }
@@ -1735,7 +1735,7 @@ namespace FlowSERVER1 {
                                 string compressedImage = compressor.compressImageToBase64(selectedItems);
                                 string encryptedImage = EncryptionModel.Encrypt(compressedImage);
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_image", "PanImg", curr, encryptedImage);
+                                    selectedItems, GlobalsTable.psImage, "PanImg", curr, encryptedImage);
        
                             } else if (Globals.textTypes.Contains(_fileExtension)) {
                                 txtCurr++;
@@ -1749,56 +1749,57 @@ namespace FlowSERVER1 {
                                 string getEncoded = Convert.ToBase64String(getBytes);
                                 string encryptTextValues = EncryptionModel.Encrypt(getEncoded);
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_text", "PanTxt", txtCurr, encryptTextValues);
+                                    selectedItems, GlobalsTable.psText, "PanTxt", txtCurr, encryptTextValues);
 
                             } else if (_fileExtension == ".exe") {
                                 exeCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_exe", "PanExe", exeCurr, encryptText);
+                                    selectedItems, GlobalsTable.psExe, "PanExe", exeCurr, encryptText);
 
                             } else if (Globals.videoTypes.Contains(_fileExtension)) {
                                 vidCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_video", "PanVid", vidCurr, encryptText);
+                                    selectedItems, GlobalsTable.psVideo, "PanVid", vidCurr, encryptText);
 
                             } else if (Globals.excelTypes.Contains(_fileExtension)) {
                                 exlCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_excel", "PanExl", exlCurr, encryptText);
+                                    selectedItems, GlobalsTable.psExcel, "PanExl", exlCurr, encryptText);
 
                             } else if (Globals.audioTypes.Contains(_fileExtension)) {
                                 audCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_audio", "PanAud", audCurr, encryptText);
+                                    selectedItems, GlobalsTable.psAudio, "PanAud", audCurr, encryptText);
 
                             } else if (_fileExtension == ".apk") {
                                 apkCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_apk", "PanApk", apkCurr, encryptText);
+                                    selectedItems, GlobalsTable.psApk, "PanApk", apkCurr, encryptText);
 
                             } else if (_fileExtension == ".pdf") {
                                 pdfCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_pdf", "PanPdf", pdfCurr, encryptText);
+                                    selectedItems, GlobalsTable.psPdf, "PanPdf", pdfCurr, encryptText);
 
                             } else if (Globals.ptxTypes.Contains(_fileExtension)) {
                                 ptxCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_ptx", "PanPtx", ptxCurr, encryptText);
+                                    selectedItems, GlobalsTable.psPtx, "PanPtx", ptxCurr, encryptText);
 
                             } else if (_fileExtension == ".msi") {
                                 msiCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_msi", "PanMsi", msiCurr, encryptText);
+                                    selectedItems, GlobalsTable.psMsi, "PanMsi", msiCurr, encryptText);
 
                             } else if (Globals.wordTypes.Contains(_fileExtension)) {
                                 docxCurr++;
                                 await CreateFilePanelPublicStorage(
-                                    selectedItems, "ps_info_word", "PanDoc", docxCurr, encryptText);
+                                    selectedItems, GlobalsTable.psWord, "PanDoc", docxCurr, encryptText);
 
                             } else {
                                 UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(_fileName);
                                 unsupportedFileFormartForm.Show();
+
                             }
 
                             CloseUploadAlert();

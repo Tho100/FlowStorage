@@ -315,46 +315,56 @@ namespace FlowSERVER1 {
                 } else if (_tableName != GlobalsTable.directoryUploadTable && _tableName != GlobalsTable.folderUploadTable) {
 
                     if (Globals.imageTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_image" ? "ps_info_image" : GlobalsTable.homeImageTable;
+                        string finalTable = _tableName == GlobalsTable.psImage 
+                            ? GlobalsTable.psImage : GlobalsTable.homeImageTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));  
 
                     } else if (Globals.videoTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_video" ? "ps_info_video" : GlobalsTable.homeVideoTable;
+                        string finalTable = _tableName == GlobalsTable.psVideo 
+                            ? GlobalsTable.psVideo : GlobalsTable.homeVideoTable;
                         string getThumbnails = await retrieveThumbnails(finalTable, _fileName);
 
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable), getThumbnails);
 
                     } else if (Globals.textTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_text" ? "ps_info_text" : GlobalsTable.homeTextTable;
+                        string finalTable = _tableName == GlobalsTable.psText 
+                            ? GlobalsTable.psText : GlobalsTable.homeTextTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (Globals.excelTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_excel" ? "ps_info_excel" : GlobalsTable.homeExcelTable;
+                        string finalTable = _tableName == GlobalsTable.psExcel 
+                            ? GlobalsTable.psExcel : GlobalsTable.homeExcelTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (_fileExtension == "pdf") {
-                        string finalTable = _tableName == "ps_info_pdf" ? "ps_info_pdf" : GlobalsTable.homePdfTable;
+                        string finalTable = _tableName == GlobalsTable.psPdf 
+                            ? GlobalsTable.psPdf : GlobalsTable.homePdfTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (Globals.ptxTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_ptx" ? "ps_info_ptx" : GlobalsTable.homePtxTable;
+                        string finalTable = _tableName == GlobalsTable.psPtx 
+                            ? GlobalsTable.psPtx : GlobalsTable.homePtxTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (Globals.wordTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_word" ? "ps_info_word" : GlobalsTable.homeWordTable;
+                        string finalTable = _tableName == GlobalsTable.psWord ? GlobalsTable.psWord : GlobalsTable.homeWordTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (Globals.audioTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == "ps_info_audio" ? "ps_info_audio" : GlobalsTable.homeAudioTable;
+                        string finalTable = _tableName == GlobalsTable.psAudio 
+                            ? GlobalsTable.psAudio : GlobalsTable.homeAudioTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (_fileExtension == "exe") {
-                        string finalTable = _tableName == "ps_info_exe" ? "ps_info_exe" : GlobalsTable.homeExeTable;
+                        string finalTable = _tableName == GlobalsTable.psExe 
+                            ? GlobalsTable.psExe : GlobalsTable.homeExeTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
 
                     } else if (_fileExtension == "apk") {
-                        string finalTable = _tableName == "ps_info_apk" ? "ps_info_apk" : GlobalsTable.homeApkTable;
+                        string finalTable = _tableName == GlobalsTable.psApk 
+                            ? GlobalsTable.psApk : GlobalsTable.homeApkTable;
                         await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+
                     }
 
                 } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {

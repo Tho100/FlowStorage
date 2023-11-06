@@ -15,6 +15,18 @@ namespace FlowSERVER1.Global {
         static public readonly string homeApkTable = "file_info_apk";
         static public readonly string homeExeTable = "file_info_exe";
 
+        static public readonly string psImage = "ps_info_image";
+        static public readonly string psVideo = "ps_info_video";
+        static public readonly string psText = "ps_info_text";
+        static public readonly string psPdf = "ps_info_pdf";
+        static public readonly string psExcel = "ps_info_excel";
+        static public readonly string psPtx = "ps_info_ptx";
+        static public readonly string psMsi = "ps_info_msi";
+        static public readonly string psAudio = "ps_info_audio";
+        static public readonly string psWord = "ps_info_word";
+        static public readonly string psApk = "ps_info_apk";
+        static public readonly string psExe = "ps_info_exe";
+
         static public readonly string folderUploadTable = "folder_upload_info";
         static public readonly string sharingTable = "cust_sharing";
         static public readonly string directoryInfoTable = "file_info_directory";
@@ -34,13 +46,13 @@ namespace FlowSERVER1.Global {
             { homeApkTable, "apkFile" },
             { homeWordTable, "wordFile" },
             { homePtxTable, "ptxFile" },            
-            { "file_info_directory", null }
+            { directoryInfoTable, null }
         };
 
         static public readonly HashSet<string> publicTablesPs = new HashSet<string>
-        { "ps_info_image", "ps_info_text", "ps_info_exe", "ps_info_video",
-          "ps_info_excel", "ps_info_msi", "ps_info_audio", "ps_info_apk",
-          "ps_info_pdf", "ps_info_word", "ps_info_ptx"
+        { psImage, psText, psExe, psVideo,
+          psExcel, psMsi, psAudio, psApk,
+          psPdf, psWord, psPtx
         };
 
         static public readonly HashSet<string> publicTables = new HashSet<string>
@@ -51,16 +63,16 @@ namespace FlowSERVER1.Global {
 
         static public readonly Dictionary<string, string> tableToFileTypePs = new Dictionary<string, string>
         {
-            { "ps_info_image", "imgFile" },
-            { "ps_info_text", "txtFile" },
-            { "ps_info_exe", "exeFile" },
-            { "ps_info_video", "vidFile" },
-            { "ps_info_excel", "exlFile" },
-            { "ps_info_pdf", "pdfFile" },
-            { "ps_info_apk", "apkFile" },
-            { "ps_info_word", "wordFile" },
-            { "ps_info_ptx", "ptxFile" },
-            { "ps_info_audio", "audFile" },
+            { psImage, "imgFile" },
+            { psText, "txtFile" },
+            { psExe, "exeFile" },
+            { psVideo, "vidFile" },
+            { psExcel, "exlFile" },
+            { psPdf, "pdfFile" },
+            { psApk, "apkFile" },
+            { psWord, "wordFile" },
+            { psPtx, "ptxFile" },
+            { psAudio, "audFile" },
 
         };
     }
