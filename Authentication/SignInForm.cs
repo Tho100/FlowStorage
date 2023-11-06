@@ -80,7 +80,7 @@ namespace FlowSERVER1 {
             return concludeValue.FirstOrDefault() ?? string.Empty;
         }
 
-        private async void SetupRedundane() {
+        private async Task SetupUserInformation() {
 
             var flowLayout = accessHomePage.flwLayoutHome;
             var garbageButton = accessHomePage.btnGarbageImage;
@@ -177,7 +177,7 @@ namespace FlowSERVER1 {
 
                 authenticationSuccessful = true;
 
-                SetupRedundane();
+                await SetupUserInformation();
 
                 this.Close();
 

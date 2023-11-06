@@ -297,7 +297,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void StartSharingFile() {
+        private async Task StartSharingFile() {
 
             int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
             int receiverCurrentTotalUploaded = CountReceiverTotalShared(txtFieldShareToName.Text);
@@ -382,7 +382,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private async void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
 
@@ -390,13 +390,16 @@ namespace FlowSERVER1 {
                     new CustomAlert(title: "Sharing failed", subheader: "You can't share to yourself.").Show();
                     return;
                 }
+
                 if (txtFieldShareToName.Text == String.Empty) {
                     return;
                 }
+
                 if (UserExistVerification(txtFieldShareToName.Text) == 0) {
                     new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} does not exist.").Show();
                     return;
                 }
+
                 if (FileIsUploadedVerification(txtFieldShareToName.Text, _fileName) > 0) {
                     new CustomAlert(title: "Sharing failed", subheader: "This file is already shared.").Show();
                     return;
@@ -412,10 +415,9 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                StartSharingFile();
+                await StartSharingFile();
                                
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

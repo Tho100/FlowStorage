@@ -5,7 +5,6 @@ using FlowSERVER1.Helper;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -47,42 +46,50 @@ namespace FlowSERVER1 {
             this.Text = $"{directoryName} (Directory)";
             this.lblDirectoryName.Text = directoryName;
 
+            InitializeFiles(directoryName);
+
+        }
+
+        private async void InitializeFiles(String directoryName) {
+
             Dictionary<string, (string, string)> fileExtensions = new Dictionary<string, (string, string)> {
-                { ".png", ("imgFilePng", "file_info_image") },
-                { ".jpg", ("imgFileJpg", "file_info_image") },
-                { ".jpeg", ("imgFilePeg", "file_info_image") },
-                { ".bmp", ("imgFileBmp", "file_info_image") },
-                { ".txt", ("txtFile", "file_info_text") },
-                { ".js", ("txtFile", "file_info_text") },
-                { ".sql", ("txtFile", "file_info_text") },
-                { ".py", ("txtFile", "file_info_text") },
-                { ".html", ("txtFile", "file_info_text") },
-                { ".csv", ("txtFile", "file_info_text") },
-                { ".css", ("txtFile", "file_info_text") },
-                { ".exe", ("exeFile", "file_info_exe") },
-                { ".mp4", ("vidFile", "file_info_video") },
-                { ".wav", ("vidFile", "file_info_video") },
-                { ".xlsx", ("exlFile", "file_info_excel") },
-                { ".mp3", ("audiFile", "file_info_audio") },
-                { ".apk", ("apkFile", "file_info_apk") },
-                { ".pdf", ("pdfFile", "file_info_pdf") },
-                { ".pptx", ("ptxFile", "file_info_ptx") },
-                { ".msi", ("msiFile", "file_info_msi") },
-                { ".docx", ("docFile", "file_info_word") },
+                { ".png", ("imgFilePng", GlobalsTable.homeImageTable) },
+                { ".jpg", ("imgFileJpg", GlobalsTable.homeImageTable) },
+                { ".jpeg", ("imgFilePeg", GlobalsTable.homeImageTable) },
+                { ".txt", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".js", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".sql", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".py", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".html", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".csv", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".css", ("txtFile", GlobalsTable.homeTextTable) },
+                { ".exe", ("exeFile", GlobalsTable.homeExeTable) },
+                { ".mp4", ("vidFile", GlobalsTable.homeVideoTable) },
+                { ".wav", ("vidFile", GlobalsTable.homeVideoTable) },
+                { ".xlsx", ("exlFile", GlobalsTable.homeExcelTable) },
+                { ".mp3", ("audiFile", GlobalsTable.homeAudioTable) },
+                { ".apk", ("apkFile", GlobalsTable.homeApkTable) },
+                { ".pdf", ("pdfFile", GlobalsTable.homePdfTable) },
+                { ".pptx", ("ptxFile", GlobalsTable.homePtxTable) },
+                { ".msi", ("msiFile", GlobalsTable.homeMsiTable) },
+                { ".docx", ("docFile", GlobalsTable.homeWordTable) },
             };
 
             foreach (string ext in fileExtensions.Keys) {
+
                 int count = CountFilesInDirectory(ext);
+
                 if (count > 0) {
                     _loadedExtensionType = ext;
                     string controlName = fileExtensions[ext].Item1;
                     string tableName = fileExtensions[ext].Item2;
-                    BuildFilePanelOnLoad(tableName, controlName, count);
+                    await BuildFilePanelOnLoad(tableName, controlName, count);
+
                 }
+
             }
 
             BuildRedundaneVisibility();
-
             lblFilesCount.Text = $"{flwLayoutDirectory.Controls.Count} File(s)";
 
         }
@@ -129,7 +136,7 @@ namespace FlowSERVER1 {
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
 
-        private async void BuildFilePanelOnLoad(String tableName, String parameterName, int currItem) {
+        private async Task BuildFilePanelOnLoad(String tableName, String parameterName, int currItem) {
 
             List<Image> imageValues = new List<Image>();
             List<EventHandler> onPressedEvent = new List<EventHandler>();
@@ -469,7 +476,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void CreateFilePanel(string fileFullPath, string tableName, string panName, int itemCurr, string keyVal) {
+        private async Task CreateFilePanel(string fileFullPath, string tableName, string panName, int itemCurr, string keyVal) {
 
             if (_fileSizeInMB < 8000) {
 
@@ -710,7 +717,7 @@ namespace FlowSERVER1 {
         }
 
 
-        private void OpenDialogUpload() {
+        private async void OpenDialogUpload() {
 
             var form1 = HomePage.instance;
 
@@ -790,7 +797,8 @@ namespace FlowSERVER1 {
 
                                 string _compressedImageBase64 = compressor.compressImageToBase64(selectedItems);
                                 string _encryptedValue = EncryptionModel.Encrypt(_compressedImageBase64);
-                                CreateFilePanel(selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
+                                await CreateFilePanel
+                                    (selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, _encryptedValue);
                                 
                             } else if (Globals.textTypes.Contains(_uploadedExtensionType)) {
                                 txtCurr++;
@@ -805,43 +813,53 @@ namespace FlowSERVER1 {
                                 string getEncoded = Convert.ToBase64String(compressedTextBytes);
                                 string encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
 
-                                CreateFilePanel(selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
 
                             } else if (_uploadedExtensionType == ".exe") {
                                 exeCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptBase64String);
 
                             } else if (Globals.videoTypes.Contains(_uploadedExtensionType)) {
                                 vidCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptBase64String);
 
                             } else if (Globals.excelTypes.Contains(_uploadedExtensionType)) {
                                 exlCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptBase64String);
 
                             } else if (Globals.audioTypes.Contains(_uploadedExtensionType)) {
                                 audCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptBase64String);
 
                             } else if (_uploadedExtensionType == ".apk") {
                                 apkCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptBase64String);
 
                             } else if (_uploadedExtensionType == ".pdf") {
                                 pdfCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptBase64String);
 
                             } else if (Globals.ptxTypes.Contains(_uploadedExtensionType)) {
                                 ptxCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptBase64String);
 
                             } else if (_uploadedExtensionType == ".msi") {
                                 msiCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptBase64String);
 
                             } else if (Globals.wordTypes.Contains(_uploadedExtensionType)) {
                                 docxCurr++;
-                                CreateFilePanel(selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptBase64String);
+                                await CreateFilePanel(
+                                    selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptBase64String);
 
                             }
 
@@ -891,18 +909,16 @@ namespace FlowSERVER1 {
 
                 if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
                     OpenDialogUpload();
-                }
-                else {
+
+                } else {
                     DisplayError();
+
                 }
 
-            }
-            catch (Exception) {
-
+            } catch (Exception) {
                 CloseForm.closeForm("UploadingAlert");
-
-                new CustomAlert(title: "An error occurred", "Something went wrong while trying to upload files.").Show();
-
+                new CustomAlert(
+                    title: "An error occurred", "Something went wrong while trying to upload files.").Show();
             }
         }
 

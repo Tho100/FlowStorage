@@ -25,26 +25,20 @@ namespace FlowSERVER1 {
 
                 if (GlobalsTable.publicTables.Contains(_TableName)) {
                     RetrieveHomeDataAsync(_TableName);
-                }
 
-                else if (_TableName == GlobalsTable.directoryUploadTable) {
+                } else if (_TableName == GlobalsTable.directoryUploadTable) {
                     RetrieveDirectoryDataAsync(_DirectoryName);
                  
-                }
-
-                else if (_TableName == GlobalsTable.folderUploadTable) {
+                } else if (_TableName == GlobalsTable.folderUploadTable) {
                     RetrieveFolderDataAsync(_DirectoryName);
                     
-
                 } else if (_TableName == GlobalsTable.sharingTable && _isFromSharedTo == true) {
-                    RetrieveSharedTootherData();
-                }
+                    RetrieveSharedToOtherData();
 
-                else if (_TableName == GlobalsTable.sharingTable) {
+                } else if (_TableName == GlobalsTable.sharingTable) {
                     RetrieveSharedToMeData();
 
-                }
-                else if (GlobalsTable.publicTablesPs.Contains(_TableName)) {
+                } else if (GlobalsTable.publicTablesPs.Contains(_TableName)) {
                     RetrievePublicStorageData(_TableName);
 
                 }
@@ -92,7 +86,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private static async void RetrieveSharedTootherData() {
+        private static async void RetrieveSharedToOtherData() {
 
             const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
