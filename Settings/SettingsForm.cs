@@ -709,181 +709,6 @@ namespace FlowSERVER1 {
 
         #region UI section
 
-        private void SetupUIGreeting() {
-
-            DateTime now = DateTime.Now;
-
-            var hours = now.Hour;
-            string greeting = null;
-
-            if (hours >= 1 && hours <= 12) {
-                if (_newSelectedUserLanguage == "US") {
-                    greeting = "Good Morning, " + Globals.custUsername;
-                }
-                else if (_newSelectedUserLanguage == "MY") {
-                    greeting = "Selemat Pagi, " + Globals.custUsername;
-                }
-                else if (_newSelectedUserLanguage == "GER") {
-                    greeting = "Guten Morgen, " + Globals.custUsername;
-                }
-                else if (_newSelectedUserLanguage == "JAP") {
-                    greeting = "おはよう " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "ESP") {
-                    greeting = "Buen día " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "FRE") {
-                    greeting = "Bonjour " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "POR") {
-                    greeting = "Bom dia " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "CHI") {
-                    greeting = "早上好 " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "RUS") {
-                    greeting = "Доброе утро " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "DUT") {
-                    greeting = "Goedemorgen " + Globals.custUsername + " :)";
-                }
-            }
-
-            else if (hours >= 12 && hours <= 16) {
-                if (_newSelectedUserLanguage == "US") {
-                    greeting = "Good Afternoon " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "MY") {
-                    greeting = "Selamat Petang " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "GER") {
-                    greeting = "Guten Tag " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "JAP") {
-                    greeting = "こんにちは " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "ESP") {
-                    greeting = "Buenas tardes " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "FRE") {
-                    greeting = "Bon après-midi " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "POR") {
-                    greeting = "Boa tarde " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "CHI") {
-                    greeting = "下午好 " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "RUS") {
-                    greeting = "Добрый день " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "DUT") {
-                    greeting = "Goedemiddag " + Globals.custUsername + " :)";
-                }
-            }
-            else if (hours >= 16 && hours <= 21) {
-                if (hours == 20 || hours == 21) {
-                    if (_newSelectedUserLanguage == "US") {
-                        greeting = "Good Late Evening, " + Globals.custUsername;
-                    }
-                    else if (_newSelectedUserLanguage == "MY") {
-                        greeting = "Selamat Lewat-Petang, " + Globals.custUsername;
-                    }
-                    else if (_newSelectedUserLanguage == "GER") {
-                        greeting = "Guten späten Abend, " + Globals.custUsername;
-                    }
-                    else if (_newSelectedUserLanguage == "JAP") {
-                        greeting = "こんばんは " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "ESP") {
-                        greeting = "buenas tardes " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "FRE") {
-                        greeting = "bonne soirée " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "POR") {
-                        greeting = "Boa noite " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "CHI") {
-                        greeting = "晚上好 " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "RUS") {
-                        greeting = "Добрый день " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "DUT") {
-                        greeting = "Goedeavond " + Globals.custUsername + " :)";
-                    }
-
-                } else {
-                    if (_newSelectedUserLanguage == "US") {
-                        greeting = "Good Evening, " + Globals.custUsername;
-                    }
-                    else if (_newSelectedUserLanguage == "MY") {
-                        greeting = "Selamat Petang, " + Globals.custUsername;
-                    }
-                    else if (_newSelectedUserLanguage == "GER") {
-                        greeting = "Guten Abend, " + Globals.custUsername;
-                    }
-                    else if (_newSelectedUserLanguage == "JAP") {
-                        greeting = "こんばんは " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "ESP") {
-                        greeting = "Buenas terdes " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "FRE") {
-                        greeting = "bonne soirée " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "POR") {
-                        greeting = "Boa noite " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "CHI") {
-                        greeting = "晚上好 " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "RUS") {
-                        greeting = "Добрый вечер " + Globals.custUsername + " :)";
-                    }
-                    else if (_newSelectedUserLanguage == "DUT") {
-                        greeting = "Goedeavond " + Globals.custUsername + " :)";
-                    }
-                }
-
-            }
-            else if (hours >= 21 && hours <= 24) {
-                if (_newSelectedUserLanguage == "US") {
-                    greeting = "Good Night, " + Globals.custUsername;
-                }
-                else if (_newSelectedUserLanguage == "MY") {
-                    greeting = "Selamat Malam, " + Globals.custUsername;
-                }
-                else if (_newSelectedUserLanguage == "GER") {
-                    greeting = "Guten Nacth, " + Globals.custUsername;
-                }
-                else if (_newSelectedUserLanguage == "JAP") {
-                    greeting = "おやすみ " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "ESP") {
-                    greeting = "Buenas noches " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "FRE") {
-                    greeting = "bonne nuit " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "POR") {
-                    greeting = "Boa noite " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "CHI") {
-                    greeting = "晚安 " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "RUS") {
-                    greeting = "Спокойной ночи " + Globals.custUsername + " :)";
-                }
-                else if (_newSelectedUserLanguage == "DUT") {
-                    greeting = "Welterusten " + Globals.custUsername + " :)";
-                }
-            }
-
-            HomePage.instance.lblGreetingText.Text = greeting;
-
-        }
         private void InitializeUILanguage(String _custLang) {
 
             var Form_1 = HomePage.instance;
@@ -1843,70 +1668,60 @@ namespace FlowSERVER1 {
             LanguageChanger("MY");
             Globals.currentLanguage = "MY";
             _newSelectedUserLanguage = "MY";
-            SetupUIGreeting();
         }
 
         private void guna2Button17_Click(object sender, EventArgs e) {
             LanguageChanger("JAP");
             Globals.currentLanguage = "JAP";
             _newSelectedUserLanguage = "JAP";
-            SetupUIGreeting();
         }
 
         private void guna2Button19_Click(object sender, EventArgs e) {
             LanguageChanger("US");
             Globals.currentLanguage = "US";
             _newSelectedUserLanguage = "US";
-            SetupUIGreeting();
         }
 
         private void guna2Button31_Click(object sender, EventArgs e) {
             LanguageChanger("RUS");
             Globals.currentLanguage = "RUS";
             _newSelectedUserLanguage = "RUS";
-            SetupUIGreeting();
         }
 
         private void guna2Button30_Click(object sender, EventArgs e) {
             LanguageChanger("DUT");
             Globals.currentLanguage = "DUT";
             _newSelectedUserLanguage = "DUT";
-            SetupUIGreeting();
         }
 
         private void guna2Button16_Click(object sender, EventArgs e) {
             LanguageChanger("ESP");
             Globals.currentLanguage = "ESP";
             _newSelectedUserLanguage = "ESP";
-            SetupUIGreeting();
         }
 
         private void guna2Button20_Click(object sender, EventArgs e) {
             LanguageChanger("FRE");
             Globals.currentLanguage = "FRE";
             _newSelectedUserLanguage = "FRE";
-            SetupUIGreeting();
         }
 
         private void guna2Button21_Click(object sender, EventArgs e) {
             LanguageChanger("POR");
             Globals.currentLanguage = "POR";
             _newSelectedUserLanguage = "POR";
-            SetupUIGreeting();
         }
 
         private void guna2Button22_Click(object sender, EventArgs e) {
             LanguageChanger("CHI");
             Globals.currentLanguage = "CHI";
             _newSelectedUserLanguage = "CHI";
-            SetupUIGreeting();
         }
 
         private void guna2Button15_Click(object sender, EventArgs e) {
             LanguageChanger("GER");
             Globals.currentLanguage = "GER";
             _newSelectedUserLanguage = "GER";
-            SetupUIGreeting();
         }
 
         #endregion END - UI section

@@ -72,9 +72,11 @@ namespace FlowSERVER1 {
             this.flwLayoutHome.VerticalScroll.Visible = false;
 
             this.TopMost = false;
+
         }
 
-        private void Form1_Load(object sender, EventArgs e) => UpdateLanguage.BuildGreetingLabel(CurrentLang);
+        private void Form1_Load(object sender, EventArgs e) { }
+
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
         private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
         private void guna2Button3_Click_1(object sender, EventArgs e)
@@ -98,6 +100,7 @@ namespace FlowSERVER1 {
             try {
 
                 string encryptedFileName = EncryptionModel.Encrypt(getNamePath);
+                string thumbnailCompressedBase64 = "";
 
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
@@ -112,21 +115,21 @@ namespace FlowSERVER1 {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
 
                             string toBase64 = Convert.ToBase64String(stream.ToArray());
-                            string compressedThumbnail = compressor.compressBase64Image(toBase64);
-                            
-                            if (lblCurrentPageText.Text == "Home") {
-                                GlobalsData.base64EncodedThumbnailHome.Add(compressedThumbnail);
-
-                            } else if (lblCurrentPageText.Text == "Public Storage") {
-                                GlobalsData.base64EncodedThumbnailPs.Add(compressedThumbnail);
-
-                            }
-
-                            command.Parameters.AddWithValue("@thumbnail_value", compressedThumbnail);
+                            thumbnailCompressedBase64 = compressor.compressBase64Image(toBase64);
+                            command.Parameters.AddWithValue("@thumbnail_value", thumbnailCompressedBase64);
                         }
                     }
 
                     await command.ExecuteNonQueryAsync();
+                }
+
+                if (lblCurrentPageText.Text == "Home") {
+                    GlobalsData.base64EncodedThumbnailHome.Add(thumbnailCompressedBase64);
+
+                }
+                else if (lblCurrentPageText.Text == "Public Storage") {
+                    GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
+
                 }
 
                 CloseUploadAlert();
@@ -172,6 +175,8 @@ namespace FlowSERVER1 {
                 string encryptedTitle = EncryptionModel.Encrypt(PublicStorageUserTitle);
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
 
+                string thumbnailCompressedBase64 = "";
+
                 string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, CUST_TITLE, CUST_TAG) VALUES (@file_name, @username, @date, @file_value, @thumbnail_value, @title, @tag)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
@@ -186,10 +191,9 @@ namespace FlowSERVER1 {
                         using (var stream = new MemoryStream()) {
                             toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                            var toBase64 = Convert.ToBase64String(stream.ToArray());
-                            GlobalsData.base64EncodedThumbnailPs.Add(toBase64);
+                            thumbnailCompressedBase64 = Convert.ToBase64String(stream.ToArray());
 
-                            command.Parameters.AddWithValue("@thumbnail_value", toBase64);
+                            command.Parameters.AddWithValue("@thumbnail_value", thumbnailCompressedBase64);
                         }
                     }
 
@@ -204,6 +208,8 @@ namespace FlowSERVER1 {
                 };
 
                 await crud.Insert(insertQueryComment, paramComment);
+
+                GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
 
                 CloseUploadAlert();
                 UpdateProgressBarValue();
@@ -749,9 +755,9 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.homeImageTable) {
 
-                    GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
-
                     await InsertFileData(keyVal, tableName);
+
+                    GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
 
                     textboxPic.Image = new Bitmap(fileFullPath);
                     textboxPic.Click += (sender_f, e_f) => {
@@ -1080,6 +1086,7 @@ namespace FlowSERVER1 {
 
             BuildRedundaneVisibility();
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
+
         }
 
         #endregion END - Home section
@@ -1530,8 +1537,9 @@ namespace FlowSERVER1 {
 
                 if (tableName == GlobalsTable.psImage) {
 
-                    GlobalsData.base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
                     await InsertFileDataPublic(keyVal, tableName);
+
+                    GlobalsData.base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
 
                     textboxPic.Image = new Bitmap(fileFullPath);
                     textboxPic.Click += (sender_f, e_f) => {

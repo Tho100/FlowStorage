@@ -455,7 +455,6 @@
     <Compile Include="Helper\UniqueFile.cs" />
     <Compile Include="Helper\UpdateChanges.cs" />
     <Compile Include="Helper\UpdateComment.cs" />
-    <Compile Include="Helper\UpdateLanguage.cs" />
     <Compile Include="Model\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
