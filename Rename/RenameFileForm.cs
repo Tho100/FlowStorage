@@ -52,8 +52,7 @@ namespace FlowSERVER1 {
 
                 GlobalsData.filesMetadataCacheHome.Clear();
 
-            }
-            else if (_tableName == "folder_upload_info") {
+            } else if (_tableName == GlobalsTable.folderUploadTable) {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -63,8 +62,7 @@ namespace FlowSERVER1 {
                     await command.ExecuteNonQueryAsync();
                 }
 
-            }
-            else if (_tableName == "cust_sharing" && _sharedToName != "sharedToName") {
+            } else if (_tableName == GlobalsTable.sharingTable && _sharedToName != "sharedToName") {
 
                 const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
@@ -76,8 +74,7 @@ namespace FlowSERVER1 {
                     await cmd.ExecuteNonQueryAsync();
                 }
 
-            }
-            else if (_tableName == "cust_sharing" && _sharedToName == "sharedToName") {
+            } else if (_tableName == GlobalsTable.sharingTable && _sharedToName == "sharedToName") {
 
                 const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
@@ -88,8 +85,8 @@ namespace FlowSERVER1 {
 
                     await cmd.ExecuteNonQueryAsync();
                 }
-            }
-            else if (_tableName == GlobalsTable.directoryUploadTable) {
+
+            } else if (_tableName == GlobalsTable.directoryUploadTable) {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE upload_info_directory SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -101,14 +98,14 @@ namespace FlowSERVER1 {
 
             }
 
-            updateFileLabelUI(newFileName);
+            UpdateFileLabelUI(newFileName);
 
             lblAlert.Visible = true;
             lblAlert.ForeColor = ColorTranslator.FromHtml("#50a832");
             lblAlert.Text = $"File has been renamed to {newFileName}.";
         }
 
-        private void updateFileLabelUI(String newFileName) {
+        private void UpdateFileLabelUI(String newFileName) {
 
             Control[] matches = new Control[0];
 

@@ -307,7 +307,7 @@ namespace FlowSERVER1 {
 
                 new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
-                if (_isFromShared == false && _tableName == "cust_sharing") {
+                if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
 
                     string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_TO");
                     await startSending(await getFileMetadataSharedToMe(_fileName), getThumbnails);

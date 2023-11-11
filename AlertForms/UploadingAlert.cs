@@ -310,7 +310,7 @@ namespace FlowSERVER1 {
                         DirectoryForm.instance.label8.Visible = true;
                     }
 
-                } else if (TableName == "folder_upload_info") {
+                } else if (TableName == GlobalsTable.folderUploadTable) {
                     Control foundControl = null;
                     foreach (Control _getControls in HomePage.instance.flwLayoutHome.Controls) {
                         if (_getControls.Name == ControlName) {

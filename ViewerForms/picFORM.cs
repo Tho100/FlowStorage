@@ -353,6 +353,7 @@ namespace FlowSERVER1 {
 
                 } else {
                     await executeChanges("UPDATE file_info_image SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
+
                 }
 
             } catch (Exception) {
@@ -445,13 +446,16 @@ namespace FlowSERVER1 {
 
             List<string> imageBase64Encoded = new List<string>();
 
-            if(_tableName == "file_info_image") {
+            if(_tableName == GlobalsTable.homeImageTable) {
                 imageBase64Encoded = GlobalsData.base64EncodedImageHome;
-            } else if (_tableName == "folder_upload_info") {
+
+            } else if (_tableName == GlobalsTable.folderUploadTable) {
                 imageBase64Encoded = GlobalsData.base64EncodedImageFolder;
+
             } 
 
             return imageBase64Encoded;
+
         }
 
         private void switchImageImplementation(int direction) {

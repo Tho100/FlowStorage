@@ -99,7 +99,7 @@ namespace FlowSERVER1 {
         };
 
         static public readonly Dictionary<string, Image> textTypeToImageFolder = new Dictionary<string, Image>
-       {
+        {
             { "txt", TextImage},
             { "md", TextImage},
             { "csv", CSVImage},
