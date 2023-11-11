@@ -94,6 +94,15 @@
             this.lblFileNameOnPanel = new System.Windows.Forms.Label();
             this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
             this.pnlPublicStorage = new System.Windows.Forms.Panel();
+            this.pnlPsSubDetails = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblUsagePercentagePs = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.progressBarPs = new Guna.UI2.WinForms.Guna2ProgressBar();
+            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
+            this.lblIPsILimitedText = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblIPsItemCountText = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.btnMyPsFiles = new Guna.UI2.WinForms.Guna2Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnUploadPs = new Guna.UI2.WinForms.Guna2Button();
@@ -113,15 +122,6 @@
             this.btnOpenRenameFolderPage = new Guna.UI2.WinForms.Guna2Button();
             this.btnDownloadFolder = new Guna.UI2.WinForms.Guna2Button();
             this.txtBoxSearchFile = new Guna.UI2.WinForms.Guna2TextBox();
-            this.pnlPsSubDetails = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblUsagePercentagePs = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.progressBarPs = new Guna.UI2.WinForms.Guna2ProgressBar();
-            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
-            this.lblIPsILimitedText = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.lblIPsItemCountText = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.pnlFolders.SuspendLayout();
@@ -134,9 +134,9 @@
             this.pnlFilterType.SuspendLayout();
             this.pnlFileOptions.SuspendLayout();
             this.pnlPublicStorage.SuspendLayout();
+            this.pnlPsSubDetails.SuspendLayout();
             this.pnlExceedStorage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).BeginInit();
-            this.pnlPsSubDetails.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMain
@@ -1218,6 +1218,134 @@
             this.pnlPublicStorage.Size = new System.Drawing.Size(207, 668);
             this.pnlPublicStorage.TabIndex = 52;
             this.pnlPublicStorage.Visible = false;
+            this.pnlPublicStorage.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPublicStorage_Paint);
+            // 
+            // pnlPsSubDetails
+            // 
+            this.pnlPsSubDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlPsSubDetails.BackColor = System.Drawing.Color.Transparent;
+            this.pnlPsSubDetails.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.pnlPsSubDetails.BorderRadius = 8;
+            this.pnlPsSubDetails.BorderThickness = 1;
+            this.pnlPsSubDetails.Controls.Add(this.lblUsagePercentagePs);
+            this.pnlPsSubDetails.Controls.Add(this.label9);
+            this.pnlPsSubDetails.Controls.Add(this.progressBarPs);
+            this.pnlPsSubDetails.Controls.Add(this.guna2Button4);
+            this.pnlPsSubDetails.Controls.Add(this.lblIPsILimitedText);
+            this.pnlPsSubDetails.Controls.Add(this.label11);
+            this.pnlPsSubDetails.Controls.Add(this.lblIPsItemCountText);
+            this.pnlPsSubDetails.Controls.Add(this.label13);
+            this.pnlPsSubDetails.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.pnlPsSubDetails.Location = new System.Drawing.Point(15, 440);
+            this.pnlPsSubDetails.Name = "pnlPsSubDetails";
+            this.pnlPsSubDetails.Size = new System.Drawing.Size(178, 205);
+            this.pnlPsSubDetails.TabIndex = 38;
+            this.pnlPsSubDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPsSubDetails_Paint);
+            // 
+            // lblUsagePercentagePs
+            // 
+            this.lblUsagePercentagePs.AutoSize = true;
+            this.lblUsagePercentagePs.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsagePercentagePs.ForeColor = System.Drawing.Color.DarkGray;
+            this.lblUsagePercentagePs.Location = new System.Drawing.Point(134, 88);
+            this.lblUsagePercentagePs.Name = "lblUsagePercentagePs";
+            this.lblUsagePercentagePs.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblUsagePercentagePs.Size = new System.Drawing.Size(26, 17);
+            this.lblUsagePercentagePs.TabIndex = 37;
+            this.lblUsagePercentagePs.Text = "0%";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.DarkGray;
+            this.label9.Location = new System.Drawing.Point(11, 87);
+            this.label9.Name = "label9";
+            this.label9.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label9.Size = new System.Drawing.Size(45, 17);
+            this.label9.TabIndex = 36;
+            this.label9.Text = "Usage";
+            // 
+            // progressBarPs
+            // 
+            this.progressBarPs.BorderColor = System.Drawing.Color.Transparent;
+            this.progressBarPs.BorderRadius = 3;
+            this.progressBarPs.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.progressBarPs.Location = new System.Drawing.Point(13, 113);
+            this.progressBarPs.Name = "progressBarPs";
+            this.progressBarPs.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.progressBarPs.ProgressColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.progressBarPs.Size = new System.Drawing.Size(150, 8);
+            this.progressBarPs.TabIndex = 35;
+            this.progressBarPs.Text = "guna2ProgressBar1";
+            this.progressBarPs.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // guna2Button4
+            // 
+            this.guna2Button4.Animated = true;
+            this.guna2Button4.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.guna2Button4.BorderRadius = 10;
+            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2Button4.ForeColor = System.Drawing.Color.White;
+            this.guna2Button4.Location = new System.Drawing.Point(19, 144);
+            this.guna2Button4.Name = "guna2Button4";
+            this.guna2Button4.Size = new System.Drawing.Size(139, 42);
+            this.guna2Button4.TabIndex = 34;
+            this.guna2Button4.Text = "Upgrade Plan";
+            // 
+            // lblIPsILimitedText
+            // 
+            this.lblIPsILimitedText.AutoSize = true;
+            this.lblIPsILimitedText.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIPsILimitedText.ForeColor = System.Drawing.Color.DarkGray;
+            this.lblIPsILimitedText.Location = new System.Drawing.Point(139, 44);
+            this.lblIPsILimitedText.Name = "lblIPsILimitedText";
+            this.lblIPsILimitedText.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblIPsILimitedText.Size = new System.Drawing.Size(19, 21);
+            this.lblIPsILimitedText.TabIndex = 23;
+            this.lblIPsILimitedText.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.label11.Font = new System.Drawing.Font("Ebrima", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label11.ForeColor = System.Drawing.Color.LightGray;
+            this.label11.Location = new System.Drawing.Point(10, 50);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(75, 17);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "Limited To";
+            // 
+            // lblIPsItemCountText
+            // 
+            this.lblIPsItemCountText.AutoSize = true;
+            this.lblIPsItemCountText.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIPsItemCountText.ForeColor = System.Drawing.Color.DarkGray;
+            this.lblIPsItemCountText.Location = new System.Drawing.Point(139, 15);
+            this.lblIPsItemCountText.Name = "lblIPsItemCountText";
+            this.lblIPsItemCountText.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblIPsItemCountText.Size = new System.Drawing.Size(19, 21);
+            this.lblIPsItemCountText.TabIndex = 21;
+            this.lblIPsItemCountText.Text = "0";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.label13.Font = new System.Drawing.Font("Ebrima", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label13.ForeColor = System.Drawing.Color.LightGray;
+            this.label13.Location = new System.Drawing.Point(11, 17);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(93, 17);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Upload Count";
             // 
             // btnMyPsFiles
             // 
@@ -1574,133 +1702,6 @@
             this.txtBoxSearchFile.TextOffset = new System.Drawing.Point(1, 0);
             this.txtBoxSearchFile.TextChanged += new System.EventHandler(this.txtBoxSearchFile_TextChanged);
             // 
-            // pnlPsSubDetails
-            // 
-            this.pnlPsSubDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlPsSubDetails.BackColor = System.Drawing.Color.Transparent;
-            this.pnlPsSubDetails.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.pnlPsSubDetails.BorderRadius = 8;
-            this.pnlPsSubDetails.BorderThickness = 1;
-            this.pnlPsSubDetails.Controls.Add(this.lblUsagePercentagePs);
-            this.pnlPsSubDetails.Controls.Add(this.label9);
-            this.pnlPsSubDetails.Controls.Add(this.progressBarPs);
-            this.pnlPsSubDetails.Controls.Add(this.guna2Button4);
-            this.pnlPsSubDetails.Controls.Add(this.lblIPsILimitedText);
-            this.pnlPsSubDetails.Controls.Add(this.label11);
-            this.pnlPsSubDetails.Controls.Add(this.lblIPsItemCountText);
-            this.pnlPsSubDetails.Controls.Add(this.label13);
-            this.pnlPsSubDetails.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.pnlPsSubDetails.Location = new System.Drawing.Point(15, 440);
-            this.pnlPsSubDetails.Name = "pnlPsSubDetails";
-            this.pnlPsSubDetails.Size = new System.Drawing.Size(178, 205);
-            this.pnlPsSubDetails.TabIndex = 38;
-            this.pnlPsSubDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPsSubDetails_Paint);
-            // 
-            // lblUsagePercentagePs
-            // 
-            this.lblUsagePercentagePs.AutoSize = true;
-            this.lblUsagePercentagePs.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsagePercentagePs.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblUsagePercentagePs.Location = new System.Drawing.Point(134, 88);
-            this.lblUsagePercentagePs.Name = "lblUsagePercentagePs";
-            this.lblUsagePercentagePs.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblUsagePercentagePs.Size = new System.Drawing.Size(26, 17);
-            this.lblUsagePercentagePs.TabIndex = 37;
-            this.lblUsagePercentagePs.Text = "0%";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.DarkGray;
-            this.label9.Location = new System.Drawing.Point(11, 87);
-            this.label9.Name = "label9";
-            this.label9.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label9.Size = new System.Drawing.Size(45, 17);
-            this.label9.TabIndex = 36;
-            this.label9.Text = "Usage";
-            // 
-            // progressBarPs
-            // 
-            this.progressBarPs.BorderColor = System.Drawing.Color.Transparent;
-            this.progressBarPs.BorderRadius = 3;
-            this.progressBarPs.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.progressBarPs.Location = new System.Drawing.Point(13, 113);
-            this.progressBarPs.Name = "progressBarPs";
-            this.progressBarPs.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.progressBarPs.ProgressColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.progressBarPs.Size = new System.Drawing.Size(150, 8);
-            this.progressBarPs.TabIndex = 35;
-            this.progressBarPs.Text = "guna2ProgressBar1";
-            this.progressBarPs.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            // 
-            // guna2Button4
-            // 
-            this.guna2Button4.Animated = true;
-            this.guna2Button4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button4.BorderRadius = 10;
-            this.guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button4.ForeColor = System.Drawing.Color.White;
-            this.guna2Button4.Location = new System.Drawing.Point(19, 144);
-            this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.Size = new System.Drawing.Size(139, 42);
-            this.guna2Button4.TabIndex = 34;
-            this.guna2Button4.Text = "Upgrade Plan";
-            // 
-            // lblIPsILimitedText
-            // 
-            this.lblIPsILimitedText.AutoSize = true;
-            this.lblIPsILimitedText.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIPsILimitedText.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblIPsILimitedText.Location = new System.Drawing.Point(139, 44);
-            this.lblIPsILimitedText.Name = "lblIPsILimitedText";
-            this.lblIPsILimitedText.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblIPsILimitedText.Size = new System.Drawing.Size(19, 21);
-            this.lblIPsILimitedText.TabIndex = 23;
-            this.lblIPsILimitedText.Text = "0";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.label11.Font = new System.Drawing.Font("Ebrima", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label11.ForeColor = System.Drawing.Color.LightGray;
-            this.label11.Location = new System.Drawing.Point(10, 50);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(75, 17);
-            this.label11.TabIndex = 22;
-            this.label11.Text = "Limited To";
-            // 
-            // lblIPsItemCountText
-            // 
-            this.lblIPsItemCountText.AutoSize = true;
-            this.lblIPsItemCountText.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIPsItemCountText.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblIPsItemCountText.Location = new System.Drawing.Point(139, 15);
-            this.lblIPsItemCountText.Name = "lblIPsItemCountText";
-            this.lblIPsItemCountText.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblIPsItemCountText.Size = new System.Drawing.Size(19, 21);
-            this.lblIPsItemCountText.TabIndex = 21;
-            this.lblIPsItemCountText.Text = "0";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.label13.Font = new System.Drawing.Font("Ebrima", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label13.ForeColor = System.Drawing.Color.LightGray;
-            this.label13.Location = new System.Drawing.Point(11, 17);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(93, 17);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "Upload Count";
-            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1755,10 +1756,10 @@
             this.pnlFileOptions.PerformLayout();
             this.pnlPublicStorage.ResumeLayout(false);
             this.pnlPublicStorage.PerformLayout();
-            this.pnlExceedStorage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).EndInit();
             this.pnlPsSubDetails.ResumeLayout(false);
             this.pnlPsSubDetails.PerformLayout();
+            this.pnlExceedStorage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

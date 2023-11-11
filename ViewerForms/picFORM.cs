@@ -17,9 +17,7 @@ namespace FlowSERVER1 {
 
         public readonly PicForm instance;
 
-        private bool IsDragging { get; set; } = false;
         private bool IsVisibleFilterPanel { get; set; } = false;
-        private Point dragStartPosition { get; set; }
         private Image defaultImage { get; set; }
         private Bitmap filteredImage { get; set; }
         private bool isGrayed { get; set; }
@@ -39,7 +37,6 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            filterPanel.MouseDown += filterPanel_MouseDown;
             InitializePicture(
                 userImage, width, height, title, tableName, directoryName,
                 uploaderName, isFromShared, isFromSharing);
@@ -63,7 +60,7 @@ namespace FlowSERVER1 {
             this.defaultImage = setupImage;
             this.filteredImage = new Bitmap(defaultImage);
 
-            guna2PictureBox1.Image = setupImage;
+            pbImage.Image = setupImage;
 
             if (isFromShared == true) {
                 label4.Text = "Shared To";
@@ -155,49 +152,10 @@ namespace FlowSERVER1 {
 
         private void filterPanel_Paint(object sender, PaintEventArgs e) {
 
-            filterPanel.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(filterPanel, true, null);
-
-        }
-
-        private void filterPanel_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Left) {
-                IsDragging = true;
-                filterPanel.BringToFront();
-                filterPanel.MouseMove += filterPanel_MouseMove;
-                filterPanel.MouseDown += filterPanel_MouseDown;
-                dragStartPosition = e.Location;
-                filterPanel.BringToFront();
-            }
-        }
-
-        private void filterPanel_MouseMove(object sender, MouseEventArgs e) {
-            if (IsDragging && e.Button == MouseButtons.Left) {
-                int x = filterPanel.Left + e.X - dragStartPosition.X;
-                int y = filterPanel.Top + e.Y - dragStartPosition.Y;
-                Rectangle panelRect = new Rectangle(x, y, filterPanel.Width, filterPanel.Height);
-                if (filterPanel.Parent.ClientRectangle.Contains(panelRect)) {
-                    filterPanel.Location = new Point(x, y);
-                    filterPanel.Invalidate();
-                }
-            }
-        }
-
-        private void filterPanel_MouseUp(object sender, MouseEventArgs e) {
-            IsDragging = false;
-            filterPanel.MouseMove -= filterPanel_MouseMove;
-            filterPanel.MouseDown -= filterPanel_MouseDown;
-            filterPanel.MouseUp -= filterPanel_MouseUp;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
 
-        }
-
-        private void filterSaturation(float value) {
-
-            SaturationCorrection filterSet = new SaturationCorrection(value);
-            filterSet.ApplyInPlace(filteredImage);
-            guna2PictureBox1.Image = filteredImage;
         }
 
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
@@ -211,7 +169,18 @@ namespace FlowSERVER1 {
 
         }
 
-        private void label6_Click(object sender, EventArgs e) {
+        /// <summary>
+        /// 
+        /// Apply saturation filter to image
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        private void FilterSaturation(float value) {
+
+            SaturationCorrection filterSet = new SaturationCorrection(value);
+
+            filterSet.ApplyInPlace(filteredImage);
+            pbImage.Image = filteredImage;
 
         }
 
@@ -221,7 +190,7 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <param name="value"></param>
-        private void filterGaussianBlur(int value) {
+        private void FilterGaussianBlur(int value) {
 
             int reduceValue = value * 50 / 100;
 
@@ -238,7 +207,7 @@ namespace FlowSERVER1 {
         /// Apply grayscale to the image
         /// 
         /// </summary>
-        private void filterGrayscale() {
+        private void FilterGrayscale() {
             Grayscale filter = Grayscale.CommonAlgorithms.BT709;
             filteredImage = filter.Apply(filteredImage);
         }
@@ -249,14 +218,11 @@ namespace FlowSERVER1 {
         /// 
         /// </summary>
         /// <param name="value"></param>
-        private void filterBrightness(int value) {
+        private void FilterBrightness(int value) {
             BrightnessCorrection filter = new BrightnessCorrection(value);
             filter.ApplyInPlace(filteredImage);
         }
 
-
-        int rotateValue = 0;
-        Bitmap rotatedImage;
         private void applyFilters() {
 
             guna2Button7.Visible = true;
@@ -267,23 +233,22 @@ namespace FlowSERVER1 {
                 filteredImage = new Bitmap(defaultImage);
 
                 if (isGrayed) {
-                    filterGrayscale();
+                    FilterGrayscale();
                 }
 
                 if (gaussianBlurValue > 0) {
-                    filterGaussianBlur(gaussianBlurValue);
+                    FilterGaussianBlur(gaussianBlurValue);
                 }
 
                 if (brightnessValue != 0) {
-                    filterBrightness(brightnessValue);
+                    FilterBrightness(brightnessValue);
                 }
 
                 if (saturationValue != 0) {
-                    filterSaturation(saturationValue);
+                    FilterSaturation(saturationValue);
                 }
 
-
-                guna2PictureBox1.Image = filteredImage;
+                pbImage.Image = filteredImage;
 
             } catch (Exception) {
                 MessageBox.Show("Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -293,6 +258,7 @@ namespace FlowSERVER1 {
 
         bool gaussianDialogShown = false;
         private void guna2TrackBar3_Scroll(object sender, ScrollEventArgs e) {
+
             label13.Text = guna2TrackBar3.Value.ToString() + "%";
             gaussianBlurValue = guna2TrackBar3.Value;
 
@@ -305,6 +271,7 @@ namespace FlowSERVER1 {
             }
 
             applyFilters();
+
         }
 
         private void guna2ToggleSwitch1_CheckedChanged(object sender, EventArgs e) {
@@ -335,24 +302,39 @@ namespace FlowSERVER1 {
         private async void guna2Button7_Click(object sender, EventArgs e) {
 
             ImageConverter convertByte = new ImageConverter();
+
             byte[] byteVals = (byte[])convertByte.ConvertTo(filteredImage, typeof(byte[]));
+
             string toBase64String = Convert.ToBase64String(byteVals);
             string encryptVals = EncryptionModel.Encrypt(toBase64String);
-            await saveChanges(encryptVals);
+
+            await SaveChanges(encryptVals);
+
         }
 
-        private async Task saveChanges(string values) {
+        private async Task SaveChanges(string values) {
 
             try {
 
-                if (_isFromShared == true) {
-                    await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
+                MessageBox.Show(_tableName, _directoryName);
 
-                } else if (_isFromShared == true) {
-                    await executeChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
+                if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
+                    await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
+
+                } else if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
+                    await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
+
+                } else if (_tableName == GlobalsTable.homeImageTable){
+                    await ExecuteChanges("UPDATE file_info_image SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
+
+                } else if (_tableName == GlobalsTable.directoryUploadTable){
+                    await ExecuteChangesDirectory("UPDATE upload_info_directory SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", values);
+
+                } else if (_tableName == GlobalsTable.folderUploadTable) {
+                    await ExecuteChangesFolder("UPDATE folder_upload_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldname", values);
 
                 } else {
-                    await executeChanges("UPDATE file_info_image SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename", values);
+                    MessageBox.Show("Can't apply filter for this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
 
@@ -362,17 +344,47 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task executeChanges(string query, string values) {
+        private async Task ExecuteChanges(string query, string values) {
 
-            string que = query;
-            using (MySqlCommand command = new MySqlCommand(que, con)) {
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@newval", values);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 if (await command.ExecuteNonQueryAsync() == 1) {
-                    MessageBox.Show("Changes saved successfully. Please hit the refresh button on the top of folder tab to see changes.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+
+        }
+
+        private async Task ExecuteChangesDirectory(string query, string values) {
+
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@newval", values);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_directoryName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                if (await command.ExecuteNonQueryAsync() == 1) {
+                    MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+        }
+
+        private async Task ExecuteChangesFolder(string query, string values) {
+
+            string folderName = HomePage.instance.lblCurrentPageText.Text;
+
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@newval", values);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
+                command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(folderName));
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                if (await command.ExecuteNonQueryAsync() == 1) {
+                    MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
         }
 
         private void guna2Button8_Click(object sender, EventArgs e) {
@@ -398,6 +410,7 @@ namespace FlowSERVER1 {
         }
 
         private async void guna2Button10_Click(object sender, EventArgs e) {
+
             if (lblUserComment.Text != txtFieldComment.Text) {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
@@ -408,30 +421,7 @@ namespace FlowSERVER1 {
             txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
-        }
 
-        private void guna2Button11_Click(object sender, EventArgs e) {
-            rotateValue += 90;
-
-            if (rotateValue >= 360) {
-                rotateValue = 0;
-                guna2PictureBox1.Image = filteredImage; 
-            }
-            else {
-                if (rotatedImage == null) {
-                    rotatedImage = new Bitmap(filteredImage.Height, filteredImage.Width);
-                }
-
-                using (Graphics g = Graphics.FromImage(rotatedImage)) {
-                    g.Clear(Color.Transparent);
-                    g.RotateTransform(rotateValue);
-
-                    g.DrawImage(filteredImage, new Rectangle(0, -filteredImage.Height, filteredImage.Width, filteredImage.Height));
-
-                    guna2PictureBox1.Image = rotatedImage;
-                }
-            }
-            applyFilters();
         }
 
         private void guna2Button11_Click_1(object sender, EventArgs e) {
@@ -442,7 +432,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private List<string> getImageBase64Encoded() {
+        private List<string> GetImageBase64Encoded() {
 
             List<string> imageBase64Encoded = new List<string>();
 
@@ -458,7 +448,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private void switchImageImplementation(int direction) {
+        private void SwitchImageImplementation(int direction) {
 
             try {
 
@@ -484,7 +474,7 @@ namespace FlowSERVER1 {
 
                 int nextFileIndex = direction == -1 ? currentFileIndex - 1 : currentFileIndex + 1;
                 string fileName = fileNames[nextFileIndex];
-                string imageBase64Encoded = getImageBase64Encoded().ElementAt(nextFileIndex);
+                string imageBase64Encoded = GetImageBase64Encoded().ElementAt(nextFileIndex);
 
                 byte[] imageBytes = Convert.FromBase64String(imageBase64Encoded);
                 using (MemoryStream stream = new MemoryStream(imageBytes)) {
@@ -512,11 +502,11 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button9_Click_1(object sender, EventArgs e) {
-            switchImageImplementation(1);
+            SwitchImageImplementation(1);
         }
 
         private void guna2Button12_Click(object sender, EventArgs e) {
-            switchImageImplementation(-1);
+            SwitchImageImplementation(-1);
         }
     }
 }

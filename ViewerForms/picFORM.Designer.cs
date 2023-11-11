@@ -60,7 +60,7 @@
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbImage = new Guna.UI2.WinForms.Guna2PictureBox();
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnEditComment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button10 = new Guna.UI2.WinForms.Guna2Button();
@@ -72,7 +72,7 @@
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -220,7 +220,7 @@
             this.guna2Button7.Animated = true;
             this.guna2Button7.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button7.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button7.BorderRadius = 6;
+            this.guna2Button7.BorderRadius = 8;
             this.guna2Button7.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button7.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button7.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -229,9 +229,9 @@
             this.guna2Button7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button7.ForeColor = System.Drawing.Color.White;
             this.guna2Button7.ImageSize = new System.Drawing.Size(17, 17);
-            this.guna2Button7.Location = new System.Drawing.Point(137, 391);
+            this.guna2Button7.Location = new System.Drawing.Point(135, 383);
             this.guna2Button7.Name = "guna2Button7";
-            this.guna2Button7.Size = new System.Drawing.Size(110, 35);
+            this.guna2Button7.Size = new System.Drawing.Size(110, 38);
             this.guna2Button7.TabIndex = 76;
             this.guna2Button7.Text = "Save";
             this.guna2Button7.Visible = false;
@@ -243,7 +243,7 @@
             this.guna2Button8.Animated = true;
             this.guna2Button8.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button8.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button8.BorderRadius = 6;
+            this.guna2Button8.BorderRadius = 8;
             this.guna2Button8.BorderThickness = 2;
             this.guna2Button8.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.guna2Button8.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -253,9 +253,9 @@
             this.guna2Button8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button8.ForeColor = System.Drawing.Color.White;
             this.guna2Button8.ImageSize = new System.Drawing.Size(17, 17);
-            this.guna2Button8.Location = new System.Drawing.Point(17, 391);
+            this.guna2Button8.Location = new System.Drawing.Point(17, 383);
             this.guna2Button8.Name = "guna2Button8";
-            this.guna2Button8.Size = new System.Drawing.Size(114, 35);
+            this.guna2Button8.Size = new System.Drawing.Size(110, 38);
             this.guna2Button8.TabIndex = 77;
             this.guna2Button8.Text = "Discard";
             this.guna2Button8.Visible = false;
@@ -270,7 +270,7 @@
             this.guna2Panel4.Controls.Add(this.guna2ToggleSwitch1);
             this.guna2Panel4.Controls.Add(this.label14);
             this.guna2Panel4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.guna2Panel4.Location = new System.Drawing.Point(17, 298);
+            this.guna2Panel4.Location = new System.Drawing.Point(17, 283);
             this.guna2Panel4.Name = "guna2Panel4";
             this.guna2Panel4.Size = new System.Drawing.Size(230, 83);
             this.guna2Panel4.TabIndex = 73;
@@ -312,7 +312,7 @@
             this.guna2Panel3.Controls.Add(this.guna2TrackBar3);
             this.guna2Panel3.Controls.Add(this.label13);
             this.guna2Panel3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.guna2Panel3.Location = new System.Drawing.Point(17, 209);
+            this.guna2Panel3.Location = new System.Drawing.Point(17, 193);
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(230, 83);
             this.guna2Panel3.TabIndex = 72;
@@ -362,7 +362,7 @@
             this.guna2Panel2.Controls.Add(this.guna2TrackBar2);
             this.guna2Panel2.Controls.Add(this.label11);
             this.guna2Panel2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.guna2Panel2.Location = new System.Drawing.Point(17, 120);
+            this.guna2Panel2.Location = new System.Drawing.Point(17, 104);
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(230, 83);
             this.guna2Panel2.TabIndex = 71;
@@ -413,7 +413,7 @@
             this.guna2Panel1.Controls.Add(this.guna2TrackBar1);
             this.guna2Panel1.Controls.Add(this.label8);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(17, 31);
+            this.guna2Panel1.Location = new System.Drawing.Point(17, 15);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(230, 83);
             this.guna2Panel1.TabIndex = 70;
@@ -587,19 +587,19 @@
             this.guna2Button2.TabIndex = 16;
             this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
-            // guna2PictureBox1
+            // pbImage
             // 
-            this.guna2PictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pbImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2PictureBox1.ImageRotate = 0F;
-            this.guna2PictureBox1.Location = new System.Drawing.Point(390, 76);
-            this.guna2PictureBox1.Name = "guna2PictureBox1";
-            this.guna2PictureBox1.Size = new System.Drawing.Size(801, 531);
-            this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.guna2PictureBox1.TabIndex = 0;
-            this.guna2PictureBox1.TabStop = false;
-            this.guna2PictureBox1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
+            this.pbImage.ImageRotate = 0F;
+            this.pbImage.Location = new System.Drawing.Point(390, 76);
+            this.pbImage.Name = "pbImage";
+            this.pbImage.Size = new System.Drawing.Size(801, 531);
+            this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbImage.TabIndex = 0;
+            this.pbImage.TabStop = false;
+            this.pbImage.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
             // txtFieldComment
             // 
@@ -772,7 +772,7 @@
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.guna2Button2);
-            this.Controls.Add(this.guna2PictureBox1);
+            this.Controls.Add(this.pbImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PicForm";
@@ -789,7 +789,7 @@
             this.guna2Panel2.PerformLayout();
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -797,7 +797,7 @@
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
+        private Guna.UI2.WinForms.Guna2PictureBox pbImage;
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label lblFileName;

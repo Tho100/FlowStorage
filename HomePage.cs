@@ -2676,6 +2676,7 @@ namespace FlowSERVER1 {
 
             var currMainLength = typesValues.Count;
             await BuildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
+
         }
 
         private async Task BuildFilePanelFolder(List<String> fileType, String foldTitle, int currItem) {
@@ -4477,6 +4478,10 @@ namespace FlowSERVER1 {
         }
 
         private void pnlPsSubDetails_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void pnlPublicStorage_Paint(object sender, PaintEventArgs e) {
 
         }
     }
