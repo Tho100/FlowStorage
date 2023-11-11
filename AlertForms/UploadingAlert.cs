@@ -182,7 +182,7 @@ namespace FlowSERVER1 {
                         var FileExt = FileName.Substring(FileName.Length-4);
                         var getName = FileName;
 
-                        if(TableName == "null") {
+                        if(TableName == String.Empty) {
 
                             if (Globals.imageTypes.Contains(FileExt)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
@@ -269,7 +269,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                if (TableName == "null") {
+                if (TableName == String.Empty) {
 
                     Control foundControl = null;
                     foreach(Control _getControls in HomePage.instance.flwLayoutHome.Controls) {

@@ -316,8 +316,6 @@ namespace FlowSERVER1 {
 
             try {
 
-                MessageBox.Show(_tableName, _directoryName);
-
                 if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
                     await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
 
@@ -485,11 +483,11 @@ namespace FlowSERVER1 {
                     int height = defaultImage.Height;
 
                     if(_tableName == GlobalsTable.homeImageTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, "null", Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, String.Empty, Globals.custUsername);
                         displayPic.Show();
 
                     } else if (_tableName == GlobalsTable.folderUploadTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, "null", Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, String.Empty, Globals.custUsername);
                         displayPic.Show();
 
                     } 

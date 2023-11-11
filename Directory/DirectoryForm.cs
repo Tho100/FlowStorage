@@ -560,7 +560,7 @@ namespace FlowSERVER1 {
                     panelTxt.ShadowDecoration.Enabled = false;
                 };
 
-                new Thread(() => new UploadingAlert(_fileName, "null", panName + itemCurr, "null", fileSize: _fileSizeInMB).ShowDialog())
+                new Thread(() => new UploadingAlert(_fileName, String.Empty, panName + itemCurr, String.Empty, fileSize: _fileSizeInMB).ShowDialog())
                 .Start();
 
                 if (tableName == GlobalsTable.homeImageTable) {
