@@ -4413,8 +4413,6 @@ namespace FlowSERVER1 {
 
         private async void guna2Button4_Click_1(object sender, EventArgs e) {
 
-            lblCurrentPageText.Text = "Public Storage";
-
             btnShowPs.FillColor = GlobalStyle.DarkPurpleColor;
 
             btnShowFolderPage.FillColor = GlobalStyle.TransparentColor;
@@ -4436,10 +4434,17 @@ namespace FlowSERVER1 {
             lblDiscover.Visible = true;
             dotDiscover.Visible = true;
 
-            flwLayoutHome.Controls.Clear();
-            BuildRedundaneVisibility();
-
             _isMyPublicStorageSelected = false;
+
+            if (lblCurrentPageText.Text == "Public Storage") {
+                return;
+            }
+
+            lblCurrentPageText.Text = "Public Storage";
+
+            flwLayoutHome.Controls.Clear();
+
+            BuildRedundaneVisibility();
 
             await BuildPublicStorageFiles();
 
