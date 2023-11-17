@@ -1142,16 +1142,16 @@ namespace FlowSERVER1 {
 
                 if (isFromMyPs) {
 
-                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG FROM {tableName} WHERE CUST_USERNAME = @username";
+                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                        using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             List<(string, string, string, string)> tuplesList = new List<(string, string, string, string)>();
                             while (await reader.ReadAsync()) {
                                 string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                                 string uploadDate = reader.GetString(1);
                                 string tagValue = reader.GetString(2);
-                                string titleValue = EncryptionModel.Decrypt(reader.GetString(3));
+                                string titleValue = reader.GetString(3);
                                 tuplesList.Add((fileName, uploadDate, tagValue, titleValue));
                             }
                             filesInfo.AddRange(tuplesList);
@@ -1434,7 +1434,7 @@ namespace FlowSERVER1 {
 
             } catch (Exception) {
                 BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
-            }
+            }            
 
         }
 
@@ -4444,9 +4444,9 @@ namespace FlowSERVER1 {
 
             flwLayoutHome.Controls.Clear();
 
-            BuildRedundaneVisibility();
-
             await BuildPublicStorageFiles();
+
+            BuildRedundaneVisibility();
 
         }
 
