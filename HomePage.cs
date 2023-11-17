@@ -172,7 +172,6 @@ namespace FlowSERVER1 {
             try {
 
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
-                string encryptedTitle = EncryptionModel.Encrypt(PublicStorageUserTitle);
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
 
                 string thumbnailCompressedBase64 = "";
@@ -183,7 +182,7 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_value", keyValMain);
-                    command.Parameters.AddWithValue("@title", encryptedTitle);
+                    command.Parameters.AddWithValue("@title", PublicStorageUserTitle);
                     command.Parameters.AddWithValue("@tag", PublicStorageUserTag);
 
                     using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
@@ -227,7 +226,6 @@ namespace FlowSERVER1 {
             try {
 
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
-                string encryptedTitle = EncryptionModel.Encrypt(PublicStorageUserTitle);
                 string encryptedFileName = EncryptionModel.Encrypt(_fileName);
 
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE, CUST_TITLE, CUST_TAG) VALUES (@username, @file_name, @date, @file_value, @title, @tag)";
@@ -237,7 +235,7 @@ namespace FlowSERVER1 {
                     { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
                     { "@file_value", fileBase64Value},
-                    { "@title", encryptedTitle},
+                    { "@title", PublicStorageUserTitle},
                     { "@tag", PublicStorageUserTag},
                 };
 
@@ -1107,7 +1105,7 @@ namespace FlowSERVER1 {
                             string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                             string uploadDate = reader.GetString(1);
                             string tagValue = reader.GetString(2);
-                            string titleValue = EncryptionModel.Decrypt(reader.GetString(3));
+                            string titleValue = reader.GetString(3);
                             filesInfo.Add((fileName, uploadDate, tagValue, titleValue));
                         }
 
