@@ -245,7 +245,7 @@ namespace FlowSERVER1 {
         /// This function will do check if the 
         /// receiver has password enabled for their file sharing
         /// </summary>
-        private async Task<string> hasPassword(String username) {
+        private string hasPassword(String username) {
 
             string sharingPassword = "";
             string sharingIsDisabled = "";
@@ -379,7 +379,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                string password = await hasPassword(textBox1);
+                string password = hasPassword(textBox1);
 
                 if (!string.IsNullOrEmpty(password)) {
                     AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _fileExtension);

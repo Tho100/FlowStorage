@@ -76,7 +76,6 @@ namespace FlowSERVER1.Authentication {
                 accessHomePage.lblItemCountText.Text = accessHomePage.flwLayoutHome.Controls.Count.ToString();
 
                 await GetUserAccountType();
-                await GetUserLanguage();
 
                 int getCurrentCount = int.Parse(accessHomePage.lblItemCountText.Text);
                 int getLimitedValue = int.Parse(accessHomePage.lblLimitUploadText.Text);
@@ -437,7 +436,6 @@ namespace FlowSERVER1.Authentication {
 
                     InsertUserRegistrationData(usernameInput, emailInput, passwordInput, pinInput);
 
-                    await GetUserLanguage();
                     ClearRegistrationFields();
                     StupAutoLogin(usernameInput, emailInput);
 
@@ -461,9 +459,6 @@ namespace FlowSERVER1.Authentication {
             var _setupRecov = RandomString(16) + getUser;
             var _removeSpacesRecov = new string(_setupRecov.Where(c => !Char.IsWhiteSpace(c)).ToArray());
 
-            var _setupTok = (RandomString(12) + getUser).ToLower();
-            var _removeSpacesTok = new string(_setupTok.Where(c => !Char.IsWhiteSpace(c)).ToArray());
-
             string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
 
             using (var transaction = con.BeginTransaction()) {
@@ -473,14 +468,13 @@ namespace FlowSERVER1.Authentication {
                     MySqlCommand command = con.CreateCommand();
 
                     command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK,ACCESS_TOK)
-                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK,@ACCESS_TOK)";
+                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK)";
                     command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
                     command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(getAuth));
                     command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
                     command.Parameters.AddWithValue("@CUST_EMAIL", getEmail);
                     command.Parameters.AddWithValue("@CUST_PIN", EncryptionModel.computeAuthCase(getPin));
                     command.Parameters.AddWithValue("@RECOV_TOK", EncryptionModel.Encrypt(_removeSpacesRecov));
-                    command.Parameters.AddWithValue("@ACCESS_TOK", EncryptionModel.computeAuthCase(_removeSpacesTok));
 
                     command.ExecuteNonQuery();
 
@@ -490,13 +484,6 @@ namespace FlowSERVER1.Authentication {
                     command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
                     command.Parameters.AddWithValue("@CUST_EMAIL", getEmail);
                     command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                    command.ExecuteNonQuery();
-
-                    command.CommandText = @"INSERT INTO lang_info(CUST_USERNAME,CUST_LANG)
-                            VALUES(@CUST_USERNAME,@CUST_LANG)";
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
-                    command.Parameters.AddWithValue("@CUST_LANG", "US");
                     command.ExecuteNonQuery();
 
                     command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS,PASSWORD_DISABLED)
@@ -541,18 +528,6 @@ namespace FlowSERVER1.Authentication {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-            }
-        }
-
-        private async Task GetUserLanguage() {
-            const string _selectLang = "SELECT CUST_LANG FROM lang_info WHERE CUST_USERNAME = @username";
-            using (var command = new MySqlCommand(_selectLang, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                using (MySqlDataReader readLang = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    if (await readLang.ReadAsync()) {
-                        accessHomePage.CurrentLang = readLang.GetString(0);
-                    }
-                }
             }
         }
 

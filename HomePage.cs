@@ -2562,6 +2562,8 @@ namespace FlowSERVER1 {
 
         private async Task InsertFileDataFolder(String filesFullPath, String folderName, String fileDataBase64, String thumbnailValue = null) {
 
+            MessageBox.Show(filesFullPath, fileDataBase64.Length.ToString());
+
             const string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
             using (var command = new MySqlCommand(insertFoldQue, con)) {
                 command.Parameters.AddWithValue("@FOLDER_TITLE", EncryptionModel.Encrypt(folderName));
@@ -2657,14 +2659,14 @@ namespace FlowSERVER1 {
 
             GlobalsData.base64EncodedImageFolder.Clear();
 
-            string _selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             var typesValues = new List<string>();
 
             const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
             using (var command = new MySqlCommand(getFileType, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_selectedFolder));
+                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(selectedFolder));
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         typesValues.Add(reader.GetString(0));
@@ -2673,7 +2675,7 @@ namespace FlowSERVER1 {
             }
 
             var currMainLength = typesValues.Count;
-            await BuildFilePanelFolder(typesValues, _selectedFolder, currMainLength);
+            await BuildFilePanelFolder(typesValues, selectedFolder, currMainLength);
 
         }
 
@@ -2705,15 +2707,15 @@ namespace FlowSERVER1 {
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
 
-                            string filePath = EncryptionModel.Decrypt(reader.GetString(0));
+                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                             string uploadDate = reader.GetString(1);
-
-                            if (filePaths.Contains(filePath)) {
+                            
+                            if (filePaths.Contains(fileName)) {
                                 continue;
                             }
 
-                            filePaths.Add(filePath);
-                            filesInfo.Add((filePath, uploadDate, String.Empty));
+                            filePaths.Add(fileName);
+                            filesInfo.Add((fileName, uploadDate, String.Empty));
                         }
                         reader.Close();
                     }
@@ -2806,7 +2808,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[i] == "exe") {
+                    if (typeValues[i] == ".exe") {
 
                         imageValues.Add(Globals.EXEImage);
 
@@ -2879,7 +2881,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (typeValues[i] == "apk") {
+                    if (typeValues[i] == ".apk") {
 
                         imageValues.Add(Globals.APKImage);
 
@@ -2890,7 +2892,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (typeValues[i] == "pdf") {
+                    if (typeValues[i] == ".pdf") {
 
                         imageValues.Add(Globals.PDFImage);
 
@@ -2912,7 +2914,7 @@ namespace FlowSERVER1 {
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (typeValues[i] == "msi") {
+                    if (typeValues[i] == ".msi") {
 
                         imageValues.Add(Globals.MSIImage);
 
@@ -3078,6 +3080,8 @@ namespace FlowSERVER1 {
                     string encryptValues = UniqueFile.IgnoreEncryption(_extTypes) ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                     _fileSizeInMB = (retrieveBytes.Length / 1024) / 1024;
+
+                    _fileExtension = _extTypes;
 
                     if (Globals.imageTypes.Contains(_extTypes)) {
 
