@@ -221,7 +221,7 @@ namespace FlowSERVER1 {
 
         private async Task ValidateAndCreateDirectory(int currentTotalFiles, string directoryName) {
 
-            HashSet<string> directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+            var directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
                 .OfType<Guna2Panel>()
                 .SelectMany(panel => panel.Controls.OfType<Label>())
                 .Where(label => label.Text.All(c => Char.IsLetterOrDigit(c) || Char.IsWhiteSpace(c)))

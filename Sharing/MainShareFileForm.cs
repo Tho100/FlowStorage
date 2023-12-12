@@ -62,17 +62,18 @@ namespace FlowSERVER1 {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
 
-            OpenFileDialog _OpenDialog = new OpenFileDialog();
-            _OpenDialog.Filter = Globals.filterFileType;
+            var selectFilesDialog = new OpenFileDialog();
 
-            if (_OpenDialog.ShowDialog() == DialogResult.OK) {
+            selectFilesDialog.Filter = Globals.filterFileType;
 
-                string fileExtension = _OpenDialog.FileName;
-                string fileName = _OpenDialog.SafeFileName;
+            if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
+
+                string fileExtension = selectFilesDialog.FileName;
+                string fileName = selectFilesDialog.SafeFileName;
                 string retrieved = Path.GetExtension(fileExtension);
 
                 _fileName = fileName;
-                _fileFullPath = _OpenDialog.FileName;
+                _fileFullPath = selectFilesDialog.FileName;
                 _fileExtension = retrieved;
 
                 txtFieldFileName.Text = fileName;
@@ -124,10 +125,10 @@ namespace FlowSERVER1 {
 
             string shareToName = txtFieldShareToName.Text;
 
-            int _accType = await accountType(shareToName);
-            int _countReceiverFile = countReceiverShared(shareToName);
+            int receiverUploadLimit = await accountType(shareToName);
+            int receiverFilesCount = countReceiverShared(shareToName);
 
-            if (_accType != _countReceiverFile) {
+            if (receiverUploadLimit != receiverFilesCount) {
 
                 if (_currentFileName != txtFieldFileName.Text) {
 
@@ -207,14 +208,19 @@ namespace FlowSERVER1 {
                     }
 
                     CloseForm.closeForm("SharingAlert");
+
                     new SucessSharedAlert(_currentFileName, shareToName).Show();
 
                 } else {
-                    new CustomAlert(title: "Sharing failed", subheader: "This file is already sent.").Show();
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "This file is already sent.").Show();
+
                 }
 
             } else {
-                new CustomAlert(title: "Sharing failed", subheader: "The receiver has reached the limit amount of files they can received.").Show();
+                new CustomAlert(
+                    title: "Sharing failed", subheader: "The receiver has reached the limit amount of files they can received.").Show();
+
             }
 
         }
@@ -386,8 +392,8 @@ namespace FlowSERVER1 {
                     _askPassForm.Show();
 
                 } else {
-
                     await startSharing();
+
                 }
 
             } catch (Exception) {

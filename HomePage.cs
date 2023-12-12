@@ -126,8 +126,7 @@ namespace FlowSERVER1 {
                 if (lblCurrentPageText.Text == "Home") {
                     GlobalsData.base64EncodedThumbnailHome.Add(thumbnailCompressedBase64);
 
-                }
-                else if (lblCurrentPageText.Text == "Public Storage") {
+                } else if (lblCurrentPageText.Text == "Public Storage") {
                     GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
 
                 }
@@ -422,9 +421,9 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task BuildFilePanelHome(String tableName, String parameterName, int currItem) {
 
-            List<Image> imageValues = new List<Image>();
-            List<EventHandler> onPressedEvent = new List<EventHandler>();
-            List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+            var imageValues = new List<Image>();
+            var onPressedEvent = new List<EventHandler>();
+            var onMoreOptionButtonPressed = new List<EventHandler>();
 
             try {
 
@@ -760,13 +759,13 @@ namespace FlowSERVER1 {
                     textboxPic.Image = new Bitmap(fileFullPath);
                     textboxPic.Click += (sender_f, e_f) => {
 
-                        var getImgName = (Guna2PictureBox)sender_f;
-                        var getWidth = getImgName.Image.Width;
-                        var getHeight = getImgName.Image.Height;
+                        var imageName = (Guna2PictureBox)sender_f;
+                        var imageWidth = imageName.Image.Width;
+                        var imageHeight = imageName.Image.Height;
 
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        Bitmap defaultImage = new Bitmap(imageName.Image);
 
-                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, GlobalsTable.homeImageTable, String.Empty, Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, _fileName, GlobalsTable.homeImageTable, String.Empty, Globals.custUsername);
                         displayPic.Show();
                     };
 
@@ -821,13 +820,12 @@ namespace FlowSERVER1 {
 
                     await InsertFileData(keyVal, tableName);
 
-                    var _getWidth = this.Width;
-                    var _getHeight = this.Height;
                     textboxPic.Image = Globals.AudioImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
                         AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, String.Empty, Globals.custUsername);
                         displayPic.Show();
                     };
+
                 }
 
                 if (tableName == GlobalsTable.homeExcelTable) {
@@ -873,6 +871,7 @@ namespace FlowSERVER1 {
                         displayPtx.ShowDialog();
                     };
                 }
+
                 if (tableName == GlobalsTable.homeMsiTable) {
 
                     await InsertFileData(keyVal, tableName);
@@ -896,34 +895,37 @@ namespace FlowSERVER1 {
                 }
 
             } else {
-                MessageBox.Show("File is too large, max file size is 1.5GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "File is too large, max file size is 1.5GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
 
         }
 
         private async void OpenDialogHomeFile() {
 
-            var open = new OpenFileDialog {
+            var selectFilesDialog = new OpenFileDialog {
                 Filter = Globals.filterFileType,
                 Multiselect = true
             };
 
-            int curFilesCount = flwLayoutHome.Controls.Count;
-            if (open.ShowDialog() == DialogResult.OK) {
+            int currentFilesCount = flwLayoutHome.Controls.Count;
 
-                if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
+            if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
+
+                if (selectFilesDialog.FileNames.Length + currentFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     DisplayUpgradeAccountDialog();
 
                 } else {
 
-                    HashSet<string> fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
-                    .OfType<Guna2Panel>()
-                    .SelectMany(panel => panel.Controls.OfType<Label>())
-                    .Select(label => label.Text.ToLower()));
+                    var fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
+                        .OfType<Guna2Panel>()
+                        .SelectMany(panel => panel.Controls.OfType<Label>())
+                        .Select(label => label.Text.ToLower()));
 
                     GlobalsData.filesMetadataCacheHome.Clear();
 
-                    foreach (var selectedItems in open.FileNames) {
+                    foreach (var selectedItems in selectFilesDialog.FileNames) {
 
                         string selectedFileName = Path.GetFileName(selectedItems);
                         string fileType = selectedFileName.Split('.').Last();
@@ -1119,9 +1121,9 @@ namespace FlowSERVER1 {
 
         private async Task BuildFilePanelPublicStorage(String tableName, String parameterName, int currItem, bool isFromMyPs = false) {
 
-            List<Image> imageValues = new List<Image>();
-            List<EventHandler> onPressedEvent = new List<EventHandler>();
-            List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+            var imageValues = new List<Image>();
+            var onPressedEvent = new List<EventHandler>();
+            var onMoreOptionButtonPressed = new List<EventHandler>();
 
             try {
 
@@ -1677,32 +1679,35 @@ namespace FlowSERVER1 {
                 }
 
             } else {
-                MessageBox.Show("File is too large, max file size is 1.5GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "File is too large, max file size is 1.5GB.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
 
         }
 
         private async void OpenDialogPublicStorage() {
 
-            var open = new OpenFileDialog {
+            var selectFilesDialog = new OpenFileDialog {
                 Filter = Globals.filterFileType,
                 Multiselect = false
             };
 
-            int curFilesCount = flwLayoutHome.Controls.Count;
-            if (open.ShowDialog() == DialogResult.OK) {
+            int currentFilesCount = flwLayoutHome.Controls.Count;
 
-                if (open.FileNames.Length + curFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
+            if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
+
+                if (selectFilesDialog.FileNames.Length + currentFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
                     DisplayUpgradeAccountDialog();
 
                 } else {
 
-                    HashSet<string> fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
-                    .OfType<Guna2Panel>()
-                    .SelectMany(panel => panel.Controls.OfType<Label>())
-                    .Select(label => label.Text.ToLower()));
+                    var fileNameLabels = new HashSet<string>(flwLayoutHome.Controls
+                        .OfType<Guna2Panel>()
+                        .SelectMany(panel => panel.Controls.OfType<Label>())
+                        .Select(label => label.Text.ToLower()));
 
-                    string selectedItems = open.FileName;
+                    string selectedItems = selectFilesDialog.FileName;
                     string selectedFileName = Path.GetFileName(selectedItems);
 
                     if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
@@ -1812,6 +1817,7 @@ namespace FlowSERVER1 {
 
                     } catch (Exception) {
                         CloseUploadAlert();
+
                     }
 
                     lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
@@ -1842,7 +1848,7 @@ namespace FlowSERVER1 {
 
             lblIPsILimitedText.Text = Globals.uploadFileLimit[Globals.accountType].ToString();
 
-            List<string> username = new List<string>(flwLayoutHome.Controls
+            var username = new List<string>(flwLayoutHome.Controls
                 .OfType<Guna2Panel>()
                 .SelectMany(panel => panel.Controls.OfType<Label>())
                 .Where(label => label.Text.Contains(Globals.custUsername))
@@ -1860,6 +1866,7 @@ namespace FlowSERVER1 {
             BuildRedundaneVisibility();
 
         }
+
         private async Task BuildMyPublicStorageFiles() {
 
             GlobalsData.base64EncodedImagePs.Clear();
@@ -1910,13 +1917,13 @@ namespace FlowSERVER1 {
         /// Retrieve username of file that has been shared to
         /// </summary>
         /// <returns></returns>
-        private string UploaderName() {
+        private async Task<string> SharingUploaderName() {
 
             const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
                         return reader.GetString(0);
                     }
                 }
@@ -1948,12 +1955,12 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<Image> imageValues = new List<Image>();
-                List<EventHandler> onPressedEvent = new List<EventHandler>();
-                List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+                var imageValues = new List<Image>();
+                var onPressedEvent = new List<EventHandler>();
+                var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                List<string> typeValues = new List<string>(fileTypes);
-                List<string> uploadToNameList = new List<string>();
+                var typeValues = new List<string>(fileTypes);
+                var uploadToNameList = new List<string>();
 
                 const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
                 using (MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
@@ -2184,7 +2191,9 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(
+                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+
             }
 
         }
@@ -2264,17 +2273,17 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task BuildFilePanelSharedToMe(List<String> extTypes, String parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToMe(List<String> fileTypes, String parameterName, int itemCurr) {
 
             try {
 
-                List<Image> imageValues = new List<Image>();
-                List<EventHandler> onPressedEvent = new List<EventHandler>();
-                List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+                var imageValues = new List<Image>();
+                var onPressedEvent = new List<EventHandler>();
+                var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                var UploaderUsername = UploaderName();
+                string uploaderUsername = await SharingUploaderName();
 
-                List<string> typeValues = new List<string>(extTypes);
+                var typeValues = new List<string>(fileTypes);
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
@@ -2323,7 +2332,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPic.Show();
                         }
 
@@ -2337,7 +2346,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, UploaderUsername, false);
+                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false);
                             displayPic.Show();
                         }
 
@@ -2349,7 +2358,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            exeFORM displayExe = new exeFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayExe.Show();
                         }
 
@@ -2387,7 +2396,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             vidFormShow.Show();
                         }
 
@@ -2399,7 +2408,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            ExcelForm exlForm = new ExcelForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             exlForm.Show();
                         }
 
@@ -2410,7 +2419,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            AudioForm displayPic = new AudioForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPic.Show();
                         }
 
@@ -2422,7 +2431,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfoShared[accessIndex].Item1, UploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false);
+                            ApkForm displayPic = new ApkForm(filesInfoShared[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false);
                             displayPic.Show();
                         }
 
@@ -2434,7 +2443,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            PdfForm displayPdf = new PdfForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPdf.Show();
                         }
 
@@ -2446,7 +2455,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            PtxForm displayPtx = new PtxForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPtx.Show();
                         }
 
@@ -2458,7 +2467,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            MsiForm displayMsi = new MsiForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayMsi.Show();
                         }
 
@@ -2471,7 +2480,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, UploaderUsername, false);
+                            WordDocForm displayMsi = new WordDocForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayMsi.Show();
                         }
                         onPressedEvent.Add(wordOnPressed);
@@ -2502,6 +2511,7 @@ namespace FlowSERVER1 {
                         }
                     }
                 }
+
                 await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
 
             } else {
@@ -2562,8 +2572,6 @@ namespace FlowSERVER1 {
 
         private async Task InsertFileDataFolder(String filesFullPath, String folderName, String fileDataBase64, String thumbnailValue = null) {
 
-            MessageBox.Show(filesFullPath, fileDataBase64.Length.ToString());
-
             const string insertFoldQue = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@FOLDER_TITLE,@CUST_USERNAME,@CUST_FILE,@FILE_TYPE,@UPLOAD_DATE,@CUST_FILE_PATH,@CUST_THUMB)";
             using (var command = new MySqlCommand(insertFoldQue, con)) {
                 command.Parameters.AddWithValue("@FOLDER_TITLE", EncryptionModel.Encrypt(folderName));
@@ -2596,7 +2604,9 @@ namespace FlowSERVER1 {
 
                 if (!lstFoldersPage.Items.Contains(getFolderName)) {
 
-                    string[] folderFilesName = Directory.GetFiles(getFolderPath, "*").Select(Path.GetFileName).ToArray();
+                    string[] folderFilesName = Directory.GetFiles(getFolderPath, "*")
+                                                    .Select(Path.GetFileName).ToArray();
+
                     int numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
 
                     if (numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
@@ -2612,10 +2622,13 @@ namespace FlowSERVER1 {
                     } else {
                         DisplayErrorFolder(Globals.accountType);
                         lstFoldersPage.SelectedItem = "Home";
+
                     }
 
                 } else {
-                    MessageBox.Show("Folder already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "Folder already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
             }
         }
@@ -2637,7 +2650,7 @@ namespace FlowSERVER1 {
 
         private async Task DownloadUserFolder(string folderTitle) {
 
-            var files = new List<(string fileName, byte[] fileBytes)>();
+            var filesData = new List<(string fileName, byte[] fileBytes)>();
 
             using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
@@ -2647,12 +2660,12 @@ namespace FlowSERVER1 {
                         var fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
                         var fileBytes = Convert.FromBase64String(base64Encoded);
-                        files.Add((fileName, fileBytes));
+                        filesData.Add((fileName, fileBytes));
                     }
                 }
             }
 
-            OpenFolderDownloadDialog(folderTitle, files);
+            OpenFolderDownloadDialog(folderTitle, filesData);
         }
 
         private async Task RefreshFolder() {
@@ -2661,7 +2674,7 @@ namespace FlowSERVER1 {
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-            var typesValues = new List<string>();
+            var fileTypesList = new List<string>();
 
             const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
             using (var command = new MySqlCommand(getFileType, con)) {
@@ -2669,13 +2682,14 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(selectedFolder));
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        typesValues.Add(reader.GetString(0));
+                        fileTypesList.Add(reader.GetString(0));
                     }
                 }
             }
+            
+            var fileTypesLength = fileTypesList.Count;
 
-            var currMainLength = typesValues.Count;
-            await BuildFilePanelFolder(typesValues, selectedFolder, currMainLength);
+            await BuildFilePanelFolder(fileTypesList, selectedFolder, fileTypesLength);
 
         }
 
@@ -2690,15 +2704,15 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<string> originalTypeData = new List<string>(fileType);
-                List<string> typeValues = originalTypeData.Select(f => "." + f).ToList();
+                var originalTypeData = new List<string>(fileType);
+                var typeValues = originalTypeData.Select(f => "." + f).ToList();
 
-                List<Image> imageValues = new List<Image>();
-                List<EventHandler> onPressedEvent = new List<EventHandler>();
-                List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+                var imageValues = new List<Image>();
+                var onPressedEvent = new List<EventHandler>();
+                var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                List<(string, string, string)> filesInfo = new List<(string, string, string)>();
-                HashSet<string> filePaths = new HashSet<string>();
+                var filesInfo = new List<(string, string, string)>();
+                var filePaths = new HashSet<string>();
 
                 const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
@@ -2949,7 +2963,9 @@ namespace FlowSERVER1 {
 
             } catch (Exception) {
                 CloseForm.closeForm("RetrievalAlert");
-                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(
+                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+
             }
         }
 
@@ -3246,7 +3262,9 @@ namespace FlowSERVER1 {
         /// <param name="foldName"></param>
         private async void RemoveAndDeleteFolder(String foldName) {
 
-            DialogResult verifyDeletion = MessageBox.Show($"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult verifyDeletion = MessageBox.Show(
+                $"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
             if (verifyDeletion == DialogResult.Yes) {
 
                 const string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
@@ -3331,12 +3349,15 @@ namespace FlowSERVER1 {
                     }
 
                 } else {
-                    MessageBox.Show("You can only upload a file on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "You can only upload a file on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
 
             } catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+                BuildShowAlert(
+                    title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+
             }
 
         }
@@ -3345,7 +3366,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                List<int> returnedCountValue = new List<int>();
+                var returnedCountValue = new List<int>();
 
                 foreach (string tableName in GlobalsTable.publicTablesPs) {
                     int count = await crud.CountUserTableRow(tableName);
@@ -3365,7 +3386,9 @@ namespace FlowSERVER1 {
                 returnedCountValue.Clear();
 
             } catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+                BuildShowAlert(
+                    title: "Something went wrong", subheader: "Something went wrong while trying to upload files.");
+
             }
 
         }
@@ -3388,8 +3411,8 @@ namespace FlowSERVER1 {
 
                 LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
 
-                List<string> foldersItems = lstFoldersPage.Items.Cast<string>().ToList();
-                List<string> execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
+                var foldersItems = lstFoldersPage.Items.Cast<string>().ToList();
+                var execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
                 int countTotalFolders = foldersItems.Count(item => !execludedStringsItem.Contains(item));
 
                 if (Globals.uploadFolderLimit[Globals.accountType] == countTotalFolders) {
@@ -3652,7 +3675,8 @@ namespace FlowSERVER1 {
 
                     var titleFile = titleLab.Text;
 
-                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show(
+                        $"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (verifyDialog == DialogResult.Yes) {
 
@@ -3992,15 +4016,18 @@ namespace FlowSERVER1 {
 
             try {
 
-                DialogResult _confirmation = MessageBox.Show("Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult confirmation = MessageBox.Show(
+                    "Logout your account?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                if (_confirmation == DialogResult.Yes) {
+                if (confirmation== DialogResult.Yes) {
                     RefreshAllOnLogut();
 
                 }
 
             } catch (Exception) {
-                MessageBox.Show("There's a problem while attempting to logout your account. Please try again.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "There's a problem while attempting to logout your account. Please try again.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
 
         }
@@ -4273,7 +4300,9 @@ namespace FlowSERVER1 {
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
-            DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult verifyDialog = MessageBox.Show(
+                $"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
             if (verifyDialog == DialogResult.Yes) {
 
                 using (MySqlCommand command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {

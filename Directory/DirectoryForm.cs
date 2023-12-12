@@ -139,11 +139,11 @@ namespace FlowSERVER1 {
 
         private async Task BuildFilePanelOnLoad(String tableName, String parameterName, int currItem) {
 
-            List<Image> imageValues = new List<Image>();
-            List<EventHandler> onPressedEvent = new List<EventHandler>();
-            List<EventHandler> onMoreOptionButtonPressed = new List<EventHandler>();
+            var imageValues = new List<Image>();
+            var onPressedEvent = new List<EventHandler>();
+            var onMoreOptionButtonPressed = new List<EventHandler>();
 
-            List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+            var filesInfo = new List<(string, string, string)>();
 
             const string selectFileDataDir = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
             using (MySqlCommand command = new MySqlCommand(selectFileDataDir, con)) {
@@ -159,7 +159,8 @@ namespace FlowSERVER1 {
                 }
             }
 
-            List<string> base64EncodedImage = new List<string>();
+            var base64EncodedImage = new List<string>();
+            var base64EncodedThumbnail = new List<string>();
 
             if (Globals.imageTypes.Contains(_loadedExtensionType)) {
 
@@ -179,8 +180,6 @@ namespace FlowSERVER1 {
                     }
                 }
             }
-
-            List<string> base64EncodedThumbnail = new List<string>();
 
             if (Globals.videoTypes.Contains(_loadedExtensionType)) {
 
@@ -575,7 +574,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, _fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     };
 
@@ -620,7 +619,7 @@ namespace FlowSERVER1 {
                         var getHeight = getImgName.Image.Height;
                         Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                        VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         vidShow.Show();
                     };
 
@@ -631,7 +630,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.AudioImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
-                        AudioForm displayPic = new AudioForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     };
                 }
@@ -642,7 +641,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.EXCELImage;
                     textboxPic.Click += (sender_ex, e_ex) => {
-                        ExcelForm displayPic = new ExcelForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayPic.Show();
                     };
                 }
@@ -653,7 +652,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.APKImage;
                     textboxPic.Click += (sender_gi, e_gi) => {
-                        ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, "upload_info_directory", lblDirectoryName.Text);
+                        ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.directoryUploadTable, lblDirectoryName.Text);
                         displayPic.Show();
                     };
                 }
@@ -663,7 +662,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.PDFImage;
                     textboxPic.Click += (sender_pd, e_pd) => {
-                        PdfForm displayPdf = new PdfForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayPdf.ShowDialog();
                     };
                 }
@@ -673,7 +672,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.PTXImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        PtxForm displayPtx = new PtxForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayPtx.ShowDialog();
                     };
                 }
@@ -683,7 +682,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.MSIImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        MsiForm displayMsi = new MsiForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayMsi.Show();
                     };
                 }
@@ -694,7 +693,7 @@ namespace FlowSERVER1 {
 
                     textboxPic.Image = Globals.DOCImage;
                     textboxPic.Click += (sender_ptx, e_ptx) => {
-                        WordDocForm displayWord = new WordDocForm(titleLab.Text, "upload_info_directory", lblDirectoryName.Text, Globals.custUsername);
+                        WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, Globals.custUsername);
                         displayWord.ShowDialog();
                     };
                 }
@@ -717,8 +716,6 @@ namespace FlowSERVER1 {
 
 
         private async void OpenDialogUpload() {
-
-            var form1 = HomePage.instance;
 
             var open = new OpenFileDialog {
                 Filter = Globals.filterFileType,
@@ -758,14 +755,14 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    HashSet<string> existingLabels = new HashSet<string>(flwLayoutDirectory.Controls
+                    var filesName = new HashSet<string>(flwLayoutDirectory.Controls
                         .OfType<Guna2Panel>()
                         .SelectMany(panel => panel.Controls.OfType<Label>())
                         .Select(label => label.Text.ToLower()));
 
                     foreach (var selectedItems in open.FileNames) {
 
-                        if (existingLabels.Contains(Path.GetFileName(selectedItems).ToLower().Trim())) {
+                        if (filesName.Contains(Path.GetFileName(selectedItems).ToLower().Trim())) {
                             continue;
                         }
 
@@ -928,7 +925,9 @@ namespace FlowSERVER1 {
             string fileName = lblFileNameOnPanel.Text;
             string panelname = lblFilePanelName.Text;
 
-            DialogResult verifyDialog = MessageBox.Show($"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult verifyDialog = MessageBox.Show($"Delete '{fileName}'?", "Flowstorage", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
             if (verifyDialog == DialogResult.Yes) {
                 using (var command = con.CreateCommand()) {
                     const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
@@ -946,13 +945,16 @@ namespace FlowSERVER1 {
                 }
 
                 Control[] matches = this.Controls.Find(panelname, true);
+
                 if (matches.Length > 0 && matches[0] is Guna2Panel) {
                     Guna2Panel myPanel = (Guna2Panel)matches[0];
                     myPanel.Dispose();
                 }
 
                 BuildRedundaneVisibility();
+
                 pnlFileOptions.Visible = false;
+                lblFilesCount.Text = $"{flwLayoutDirectory.Controls.Count} File(s)";
 
             }
         }
@@ -964,7 +966,7 @@ namespace FlowSERVER1 {
         private void guna2Button30_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
-            string tableName = "upload_info_directory";
+            string tableName = GlobalsTable.directoryUploadTable;
             string panelName = lblFilePanelName.Text;
             string dirName = lblDirectoryName.Text;
 
@@ -977,7 +979,7 @@ namespace FlowSERVER1 {
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
 
-            SaverModel.SaveSelectedFile(titleFile, "upload_info_directory", dirName);
+            SaverModel.SaveSelectedFile(titleFile, GlobalsTable.directoryUploadTable, dirName);
 
         }
 
