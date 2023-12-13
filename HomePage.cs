@@ -32,11 +32,11 @@ namespace FlowSERVER1 {
         readonly private GeneralCompressor compressor = new GeneralCompressor();
 
         public static HomePage instance { get; set; } = new HomePage();
+        public bool CallInitialStartupData { get; set; } = false;
         public string PublicStorageUserComment { get; set; } = null;
         public string PublicStorageUserTitle { get; set; } = null;
         public string PublicStorageUserTag { get; set; } = null;
         public bool PublicStorageClosed { get; set; } = false;
-        public string CurrentLang { get; set; }
         private string _fileName { get; set; }
         private string _fileExtension { get; set; }
         private long _fileSizeInMB { get; set; }
@@ -75,7 +75,9 @@ namespace FlowSERVER1 {
 
         }
 
-        private void Form1_Load(object sender, EventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e) {
+            InitializeHomeFiles();
+        }
 
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
         private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
@@ -86,12 +88,25 @@ namespace FlowSERVER1 {
 
         private void UpdateProgressBarValue() {
 
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
+
             int getCurrentCount = int.Parse(lblItemCountText.Text);
             int getLimitedValue = int.Parse(lblLimitUploadText.Text);
             int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
             lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
 
             progressBarUsageStorage.Value = calculatePercentageUsage;
+
+        }
+
+        private async void InitializeHomeFiles() {
+
+            BuildButtonsOnHomePageSelected();
+
+            if(CallInitialStartupData) {
+                await BuildHomeFiles();
+                UpdateProgressBarValue();
+            }
 
         }
 
@@ -1031,9 +1046,11 @@ namespace FlowSERVER1 {
 
                         } catch (Exception) {
                             CloseUploadAlert();
+
                         }
 
                         lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
+
                     }
                 }
 
@@ -3276,8 +3293,11 @@ namespace FlowSERVER1 {
 
                 lstFoldersPage.Items.Remove(foldName);
 
-                int indexSelected = lstFoldersPage.Items.IndexOf("Home");
-                lstFoldersPage.SelectedIndex = indexSelected;
+                BuildButtonsOnHomePageSelected();
+                await BuildHomeFiles();
+
+                lblCurrentPageText.Text = "Home";
+                lstFoldersPage.SelectedIndex = -1;
 
                 CloseRetrievalAlert();
 
@@ -3334,9 +3354,9 @@ namespace FlowSERVER1 {
 
             try {
 
-                string selectedPageTab = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+                string origin = lblCurrentPageText.Text;
 
-                if (selectedPageTab == "Home") {
+                if (origin == "Home") {
 
                     int currentUploadCount = Convert.ToInt32(lblItemCountText.Text);
 
@@ -3350,7 +3370,7 @@ namespace FlowSERVER1 {
 
                 } else {
                     MessageBox.Show(
-                        "You can only upload a file on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        "You can only upload files on Home.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
 
@@ -3409,11 +3429,10 @@ namespace FlowSERVER1 {
 
             try {
 
-                LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
+                LimitedFolderAlert folderUploadFailed = new LimitedFolderAlert(
+                    Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
 
-                var foldersItems = lstFoldersPage.Items.Cast<string>().ToList();
-                var execludedStringsItem = new List<string> { "Home", "Shared To Me", "Shared Files" };
-                int countTotalFolders = foldersItems.Count(item => !execludedStringsItem.Contains(item));
+                var countTotalFolders = lstFoldersPage.Items.Cast<string>().ToList().Count();
 
                 if (Globals.uploadFolderLimit[Globals.accountType] == countTotalFolders) {
                     folderUploadFailed.Show();
@@ -3424,6 +3443,7 @@ namespace FlowSERVER1 {
 
             } catch (Exception) {
                 BuildShowAlert(title: "Something went wrong", subheader: "Something went wrong while trying to upload this folder.");
+
             }
         }
 
@@ -3523,28 +3543,7 @@ namespace FlowSERVER1 {
 
                 flwLayoutHome.Controls.Clear();
 
-                if (selectedFolderTab == "Home") {
-                    BuildButtonsOnHomePageSelected();
-                    await BuildHomeFiles();
-
-                } else if (selectedFolderTab != "Home" && selectedFolderTab != "Shared To Me" && selectedFolderTab != "Shared Files") {
-                    await FolderOnSelected(selectedFolderTab);
-
-                } else if (selectedTabIndex == 1) {
-                    BuildButtonOnSharedFilesSelected();
-                    ClearRedundane();
-
-                    await CallFilesInformationShared();
-                    await BuildSharedToMe();
-
-                } else if (selectedTabIndex == 2) {
-                    BuildButtonsOnSharedToMeSelected();
-                    ClearRedundane();
-
-                    await CallFilesInformationOthers();
-                    await BuildSharedToOthers();
-
-                }
+                await FolderOnSelected(selectedFolderTab);
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
@@ -3561,8 +3560,8 @@ namespace FlowSERVER1 {
 
             CloseRetrievalAlert();
 
-            string _currentFold = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
-            RemoveAndDeleteFolder(_currentFold);
+            string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            RemoveAndDeleteFolder(selectedFolder);
 
         }
 
@@ -3698,10 +3697,9 @@ namespace FlowSERVER1 {
 
                         panelPic_Q.Dispose();
 
-                        lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
-
                         BuildRedundaneVisibility();
                         UpdateProgressBarValue();
+
                     }
                 };
 
@@ -3778,19 +3776,17 @@ namespace FlowSERVER1 {
 
         private async void guna2Button4_Click(object sender, EventArgs e) {
 
-            int selectedIndex = lstFoldersPage.SelectedIndex;
-
             flwLayoutHome.Controls.Clear();
 
-            if (selectedIndex == 1 && lblCurrentPageText.Text == "Shared To Me") {
+            if (lblCurrentPageText.Text == "Shared To Me") {
                 GlobalsData.fileTypeValuesSharedToMe.Clear();
                 await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
 
-            } else if (selectedIndex == 2 && lblCurrentPageText.Text == "Shared Files") {
+            } else if (lblCurrentPageText.Text == "Shared Files") {
                 GlobalsData.fileTypeValuesSharedToOthers.Clear();
                 await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
 
-            } else if (selectedIndex == 0 && lblCurrentPageText.Text == "Home") {
+            } else if (lblCurrentPageText.Text == "Home") {
                 GlobalsData.base64EncodedImageHome.Clear();
                 GlobalsData.base64EncodedThumbnailHome.Clear();
                 await RefreshHomePanels();
@@ -3861,7 +3857,6 @@ namespace FlowSERVER1 {
             if (string.IsNullOrEmpty(searchText)) {
 
                 string origin = lblCurrentPageText.Text;
-                string _selectedFolderSearch = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
                 flwLayoutHome.Controls.Clear();
 
@@ -3876,7 +3871,7 @@ namespace FlowSERVER1 {
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
                     await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
 
-                } else if (_selectedFolderSearch != "Shared Files" || _selectedFolderSearch != "Shared To Me" || _selectedFolderSearch != "Home") {
+                } else {
                     await RefreshFolder();
 
                 }
@@ -3906,18 +3901,16 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private async void guna2Button9_Click_1(object sender, EventArgs e) {
 
-            if (lblCurrentPageText.Text == "Public Storage") {
-                flwLayoutHome.Controls.Clear();
-                await BuildHomeFiles();
-            }
-
-            lblCurrentPageText.Text = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            BuildButtonsOnHomePageSelected();
 
             btnRefreshFiles.Visible = true;
             pnlSubPanelDetails.Visible = true;
             btnLogout.Visible = true;
             pnlMain.Visible = true;
             pnlPublicStorage.Visible = false;
+
+            pnlShared.Visible = false;
+            pnlFilterType.Visible = false;
 
             imgDiscover.Visible = false;
             lblDiscover.Visible = false;
@@ -3934,6 +3927,16 @@ namespace FlowSERVER1 {
             pnlMain.BringToFront();
             pnlFolders.SendToBack();
             pnlPublicStorage.SendToBack();
+
+            if (lblCurrentPageText.Text == "Home") {
+                return;
+            }
+
+            lblCurrentPageText.Text = "Home";
+
+            flwLayoutHome.Controls.Clear();
+
+            await BuildHomeFiles();
 
         }
 
@@ -3977,15 +3980,6 @@ namespace FlowSERVER1 {
 
             pnlMain.SendToBack();
 
-            HomePage.instance.label2.Text = "Item Count";
-            HomePage.instance.lblUpload.Text = "Upload";
-            HomePage.instance.btnUploadFile.Text = "Upload File";
-            HomePage.instance.btnUploadFolder.Text = "Upload Folder";
-            HomePage.instance.btnCreateDirectory.Text = "Create Directory";
-            HomePage.instance.btnFileSharing.Text = "File Sharing";
-            HomePage.instance.btnFileSharing.Size = new Size(125, 47);
-            HomePage.instance.lblEssentials.Text = "Essentials";
-
             string directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
 
             if(Directory.Exists(directoryPath)) {
@@ -4008,8 +4002,8 @@ namespace FlowSERVER1 {
 
             Hide();
 
-            SignUpForm signUpForm = new SignUpForm();
-            signUpForm.ShowDialog();
+            new SignUpForm().ShowDialog();
+
         }
 
         private void btnLogout_Click(object sender, EventArgs e) {
@@ -4506,6 +4500,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click_1(object sender, EventArgs e) {
+            pnlShared.Visible = false;
             pnlFilterType.Visible = !pnlFilterType.Visible;
         }
 
@@ -4520,5 +4515,51 @@ namespace FlowSERVER1 {
         private void pnlPublicStorage_Paint(object sender, PaintEventArgs e) {
 
         }
+
+        private void guna2Button5_Click(object sender, EventArgs e) {
+            pnlFilterType.Visible = false;
+            pnlShared.Visible = !pnlShared.Visible;
+        }
+
+        private async void guna2Button7_Click_1(object sender, EventArgs e) {
+
+            flwLayoutHome.Controls.Clear();
+
+            BuildButtonsOnSharedToMeSelected();
+            ClearRedundane();
+
+            await CallFilesInformationOthers();
+            await BuildSharedToOthers();
+
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
+
+            lblCurrentPageText.Text = "Shared Files";
+            lblCurrentPageText.Visible = true;
+            btnDeleteFolder.Visible = false;
+
+            btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
+
+        }
+
+        private async void guna2Button6_Click_1(object sender, EventArgs e) {
+
+            flwLayoutHome.Controls.Clear();
+
+            BuildButtonOnSharedFilesSelected();
+            ClearRedundane();
+
+            await CallFilesInformationShared();
+            await BuildSharedToMe();
+
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
+
+            lblCurrentPageText.Text = "Shared To Me";
+            lblCurrentPageText.Visible = true;
+            btnDeleteFolder.Visible = false;
+
+            btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
+
+        }
+
     }
 }

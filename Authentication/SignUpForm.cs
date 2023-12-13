@@ -4,7 +4,6 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -58,35 +57,27 @@ namespace FlowSERVER1.Authentication {
                 Globals.custUsername = username;
                 Globals.custEmail = email;
 
-                var itemsFolder = new[] { "Home", "Shared To Me", "Shared Files" };
-                var updatesTitle = new List<string>();
+                var foldersName = new List<string>();
 
                 using (var command = new MySqlCommand("SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username", ConnectionModel.con)) {
                     command.Parameters.AddWithValue("@username", username);
 
                     using (var reader = await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
-                            updatesTitle.Add(EncryptionModel.Decrypt(reader.GetString(0)));
+                            foldersName.Add(EncryptionModel.Decrypt(reader.GetString(0)));
                         }
                     }
                 }
 
-                accessHomePage.lstFoldersPage.Items.AddRange(itemsFolder.Concat(updatesTitle).ToArray());
-                accessHomePage.lstFoldersPage.SelectedIndex = 0;
-                accessHomePage.lblItemCountText.Text = accessHomePage.flwLayoutHome.Controls.Count.ToString();
+                accessHomePage.CallInitialStartupData = true;
+
+                accessHomePage.lstFoldersPage.Items.AddRange(foldersName.ToArray());
+                accessHomePage.lblCurrentPageText.Text = "Home";
 
                 await GetUserAccountType();
 
-                int getCurrentCount = int.Parse(accessHomePage.lblItemCountText.Text);
-                int getLimitedValue = int.Parse(accessHomePage.lblLimitUploadText.Text);
-                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-                accessHomePage.lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-                accessHomePage.progressBarUsageStorage.Value = calculatePercentageUsage;
-
                 pnlRegistration.Visible = false;
 
-                BuildUILanguage(accessHomePage.CurrentLang);
                 ShowHomePage();
 
             } catch (Exception) {
@@ -143,6 +134,7 @@ namespace FlowSERVER1.Authentication {
                 accessHomePage.lblLimitUploadText.Text = accountType;
             }
 
+
             Globals.accountType = accountType;
             accessHomePage.lblLimitUploadText.Text = Globals.uploadFileLimit[Globals.accountType].ToString();
 
@@ -195,108 +187,10 @@ namespace FlowSERVER1.Authentication {
             const string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
                 command.Parameters.AddWithValue("@username", username);
-                string concludeUsername = (string)command.ExecuteScalar();
+                string concludeUsername = (string) command.ExecuteScalar();
                 return concludeUsername ?? String.Empty;
             }
 
-        }
-
-        /// <summary>
-        /// Start genertating UI labels based on user language
-        /// </summary>
-        /// <param name="_custLang"></param>
-        private void BuildUILanguage(string userLanguage) {
-
-            var homePage = HomePage.instance;
-
-            if(userLanguage == "US") {
-                homePage.label2.Text = "Item Count";
-                homePage.lblUpload.Text = "Upload";
-                homePage.btnUploadFile.Text = "Upload File";
-                homePage.btnUploadFolder.Text = "Upload Folder";
-                homePage.btnCreateDirectory.Text = "Create Directory";
-                homePage.btnFileSharing.Text = "File Sharing";
-                homePage.btnFileSharing.Size = new Size(125, 47);
-                homePage.lblEssentials.Text = "Essentials";
-            }
-
-            if (userLanguage == "GER") {
-                homePage.label2.Text = "Stückzahl";
-                homePage.lblUpload.Text = "Hochladen";
-                homePage.btnUploadFile.Text = "Datei hochladen";
-                homePage.btnUploadFolder.Text = "Ordner hochladen";
-                homePage.btnCreateDirectory.Text = "Verzeichnis erstellen";
-                homePage.btnFileSharing.Text = "Datenaustausch";
-                homePage.btnFileSharing.Size = new Size(159, 47);
-                homePage.lblEssentials.Text = "Essentials";
-            }
-
-            if (userLanguage == "JAP") {
-                homePage.label2.Text = "アイテム数";
-                homePage.lblUpload.Text = "アップロード";
-                homePage.btnUploadFile.Text = "ファイルをアップロードする";
-                homePage.btnUploadFolder.Text = "フォルダのアップロード";
-                homePage.btnCreateDirectory.Text = "ディレクトリの作成";
-                homePage.btnFileSharing.Text = "ファイル共有";
-                homePage.btnFileSharing.Size = new Size(125, 47);
-                homePage.lblEssentials.Text = "必需品";
-            }
-
-            if (userLanguage == "ESP") {
-                homePage.label2.Text = "Recuento de elementos";
-                homePage.lblUpload.Text = "Subir";
-                homePage.btnUploadFile.Text = "Subir archivo";
-                homePage.btnUploadFolder.Text = "Cargar carpeta";
-                homePage.btnCreateDirectory.Text = "Crear directorio";
-                homePage.btnFileSharing.Text = "Compartición de archivos";
-                homePage.btnFileSharing.Size = new Size(125, 47);
-                homePage.lblEssentials.Text = "Esenciales";
-            }
-
-            if (userLanguage == "FRE") {
-                homePage.label2.Text = "Nombre d'éléments";
-                homePage.lblUpload.Text = "Télécharger";
-                homePage.btnUploadFile.Text = "Téléverser un fichier";
-                homePage.btnUploadFolder.Text = "Télécharger le dossier";
-                homePage.btnCreateDirectory.Text = "Créer le répertoire";
-                homePage.btnFileSharing.Text = "Partage de fichiers";
-                homePage.btnFileSharing.Size = new Size(125, 47);
-                homePage.lblEssentials.Text = "Essentiel";
-            }
-
-            if (userLanguage == "POR") {
-                homePage.label2.Text = "Contagem de itens";
-                homePage.lblUpload.Text = "Carregar";
-                homePage.btnUploadFile.Text = "Subir arquivo";
-                homePage.btnUploadFolder.Text = "Carregar Pasta";
-                homePage.btnCreateDirectory.Text = "Criar diretório";
-                homePage.btnFileSharing.Text = "Compartilhamento de arquivos";
-                homePage.btnFileSharing.Size = new Size(125, 47);
-                homePage.lblEssentials.Text = "Essenciais";
-            }
-
-            if (userLanguage == "MY") {
-
-                homePage.label2.Text = "Kiraan Item";
-                homePage.lblUpload.Text = "Muat-Naik";
-                homePage.btnUploadFile.Text = "Muat-Naik Fail";
-                homePage.btnUploadFolder.Text = "Muat-Naik Folder";
-                homePage.btnCreateDirectory.Text = "Buat Direktori";
-                homePage.btnFileSharing.Text = "Perkongsian Fail";
-                homePage.btnFileSharing.Size = new Size(159, 47);
-                homePage.lblEssentials.Text = "Kepentingan";
-            }
-
-            if (userLanguage == "CHI") {
-                homePage.label2.Text = "物品数量";
-                homePage.lblUpload.Text = "上传";
-                homePage.btnUploadFile.Text = "上传文件";
-                homePage.btnUploadFolder.Text = "上传文件夹";
-                homePage.btnCreateDirectory.Text = "创建目录";
-                homePage.btnFileSharing.Text = "文件共享";
-                homePage.btnFileSharing.Size = new Size(125, 47);
-                homePage.lblEssentials.Text = "要点";
-            }
         }
 
         /// <summary>
@@ -430,6 +324,8 @@ namespace FlowSERVER1.Authentication {
                         HomePage.instance.btnGarbageImage.Visible = true;
                     }
 
+                    accessHomePage.CallInitialStartupData = false;
+
                     Globals.custUsername = usernameInput;
                     Globals.custEmail = emailInput;
                     Globals.accountType = "Basic";
@@ -439,18 +335,17 @@ namespace FlowSERVER1.Authentication {
                     ClearRegistrationFields();
                     StupAutoLogin(usernameInput, emailInput);
 
+                    accessHomePage.lblCurrentPageText.Text = "Home";
                     accessHomePage.lblUsagePercentage.Text = "0%";
                     accessHomePage.progressBarUsageStorage.Value = 0;
-
-                    string[] itemsFolder = { "Home", "Shared To Me", "Shared Files" };
-                    accessHomePage.lstFoldersPage.Items.AddRange(itemsFolder);
-                    accessHomePage.lstFoldersPage.SelectedIndex = 0;
 
                     ShowHomePage();
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Failed to register your account", subheader: "Are you connected to the internet?").Show();
+                new CustomAlert(
+                    title: "Failed to register your account", subheader: "Are you connected to the internet?").Show();
+
             }
         }
 
@@ -467,7 +362,7 @@ namespace FlowSERVER1.Authentication {
 
                     MySqlCommand command = con.CreateCommand();
 
-                    command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK,ACCESS_TOK)
+                    command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK)
                             VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK)";
                     command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
                     command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(getAuth));
@@ -499,7 +394,9 @@ namespace FlowSERVER1.Authentication {
 
                 } catch (Exception) {
                     transaction.Rollback();
+
                 }
+
             }
         }
 
@@ -514,10 +411,12 @@ namespace FlowSERVER1.Authentication {
             if (!Directory.Exists(appDataPath)) {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
+
                 using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
                     _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
                 }
+
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
             } else {
@@ -528,6 +427,7 @@ namespace FlowSERVER1.Authentication {
                     _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
                 }
                 setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+
             }
         }
 

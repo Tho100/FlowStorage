@@ -1,11 +1,9 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Authentication;
 using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -28,7 +26,6 @@ namespace FlowSERVER1 {
         private string _custUsername { get; set; }
         private string _inputGetEmail { get; set; }
         private int _attemptCurr { get; set; } = 0;
-        private string _currentLang { get; set; } = "US";
         private HomePage _homePage { get; set; } = HomePage.instance;
 
         public SignInForm(SignUpForm mainForm) {
@@ -120,25 +117,20 @@ namespace FlowSERVER1 {
 
         private async Task GenerateUserFolders(String userName) {
 
-            string[] itemFolder = { "Home", "Shared To Me", "Shared Files" };
-            _homePage.lstFoldersPage.Items.AddRange(itemFolder);
-            _homePage.lstFoldersPage.SelectedIndex = 0;
-
-            List<string> updatesTitle = new List<string>();
+            var foldersName = new List<string>();
 
             const string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
                 command.Parameters.AddWithValue("@username", userName);
-                using (MySqlDataReader fold_Reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader fold_Reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await fold_Reader.ReadAsync()) {
-                        updatesTitle.Add(EncryptionModel.Decrypt(fold_Reader.GetString(0)));
+                        foldersName.Add(EncryptionModel.Decrypt(fold_Reader.GetString(0)));
                     }
                 }
             }
 
-            foreach (string titleEach in updatesTitle) {
-                _homePage.lstFoldersPage.Items.Add(titleEach);
-            }
+            _homePage.lstFoldersPage.Items.AddRange(foldersName.ToArray());
+            
         }
 
         /// <summary>
@@ -235,6 +227,8 @@ namespace FlowSERVER1 {
         private async Task GenerateUserData() {
 
             await GenerateUserFolders(_custUsername);
+            _homePage.CallInitialStartupData = true;
+
         }
 
         private void HomePage_HomePageClosed(object sender, FormClosedEventArgs e) {

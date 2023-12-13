@@ -150,7 +150,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
                 command.Parameters.AddWithValue("@ext", _loadedExtensionType);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
