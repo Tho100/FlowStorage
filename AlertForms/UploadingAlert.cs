@@ -6,6 +6,7 @@ using System.Linq;
 using System.Drawing;
 
 using FlowSERVER1.Global;
+using System.IO;
 
 namespace FlowSERVER1 {
 
@@ -29,7 +30,6 @@ namespace FlowSERVER1 {
 
         private readonly MySqlConnection con = ConnectionModel.con;
 
-        private string ControlName { get; set; }
         private string TableName { get; set; }
         private string FileName { get; set; }
         private string DirectoryName { get; set; }
@@ -37,23 +37,24 @@ namespace FlowSERVER1 {
         private System.Windows.Forms.Timer timer;
         private int progressValue = 0;
 
-        public UploadingAlert(String fileName, String tableName,String controlName,String directoryName, long fileSize = 0) {
+        public UploadingAlert(String fileName, String tableName, String directoryName, long fileSize = 0) {
 
             InitializeComponent();
 
             instance = this;
 
             this.lblFileName.Text = fileName;
-            this.ControlName = controlName;
             this.TableName = tableName;
             this.FileName = fileName;
             this.DirectoryName = directoryName;
 
-            if(fileSize != 101) {
+            if(tableName == GlobalsTable.folderUploadTable) {
+                lblFileSize.Visible = false;
+
+            } else {
                 lblFileSize.Text = fileSize.ToString() + "MB";
                 lblFileSize.Visible = true;
-            } else {
-                lblFileSize.Visible = false;
+
             }
 
             timer = new System.Windows.Forms.Timer();
@@ -179,97 +180,96 @@ namespace FlowSERVER1 {
                          .ToList()
                          .ForEach(form => form.Close());
 
-                        var FileExt = FileName.Substring(FileName.Length-4);
-                        var getName = FileName;
+                        string fileType = Path.GetExtension(FileName);
 
                         if(TableName == String.Empty) {
 
-                            if (Globals.imageTypes.Contains(FileExt)) {
+                            if (Globals.imageTypes.Contains(fileType)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
 
-                            } else if (FileExt == ".msi") {
+                            } else if (fileType == ".msi") {
                                 FileDeletionNormal(FileName, GlobalsTable.homeMsiTable);
 
-                            } else if (Globals.audioTypes.Contains(FileExt)) {
-                                FileDeletionNormal(getName, GlobalsTable.homeAudioTable);
+                            } else if (Globals.audioTypes.Contains(fileType)) {
+                                FileDeletionNormal(FileName, GlobalsTable.homeAudioTable);
 
-                            } else if (Globals.wordTypes.Contains(FileExt)) {
-                                FileDeletionNormal(getName, GlobalsTable.homeWordTable);
+                            } else if (Globals.wordTypes.Contains(fileType)) {
+                                FileDeletionNormal(FileName, GlobalsTable.homeWordTable);
 
-                            } else if (Globals.ptxTypes.Contains(FileExt)) {
-                                FileDeletionNormal(getName, GlobalsTable.homePtxTable);
+                            } else if (Globals.ptxTypes.Contains(fileType)) {
+                                FileDeletionNormal(FileName, GlobalsTable.homePtxTable);
 
-                            } else if (FileExt == ".pdf") {
-                                FileDeletionNormal(getName, GlobalsTable.homePdfTable);
+                            } else if (fileType == ".pdf") {
+                                FileDeletionNormal(FileName, GlobalsTable.homePdfTable);
 
-                            } else if (Globals.textTypes.Contains(FileExt)) {
-                                FileDeletionNormal(getName, GlobalsTable.homeTextTable);
+                            } else if (Globals.textTypes.Contains(fileType)) {
+                                FileDeletionNormal(FileName, GlobalsTable.homeTextTable);
 
-                            } else if (FileExt == ".exe") {
-                                FileDeletionNormal(getName, GlobalsTable.homeExeTable);
+                            } else if (fileType == ".exe") {
+                                FileDeletionNormal(FileName, GlobalsTable.homeExeTable);
 
                             }
 
                         } else if (TableName == GlobalsTable.directoryUploadTable) {
 
-                            if (Globals.imageTypes.Contains(FileExt)) {
-                                FileDeletionDirectory(getName);
+                            if (Globals.imageTypes.Contains(fileType)) {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (FileExt == ".msi") {
-                                FileDeletionDirectory(getName);
+                            } else if (fileType == ".msi") {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (Globals.audioTypes.Contains(FileExt)) {
-                                FileDeletionDirectory(getName);
+                            } else if (Globals.audioTypes.Contains(fileType)) {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (Globals.wordTypes.Contains(FileExt)) {
-                                FileDeletionDirectory(getName);
+                            } else if (Globals.wordTypes.Contains(fileType)) {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (Globals.ptxTypes.Contains(FileExt)) {
-                                FileDeletionDirectory(getName);
+                            } else if (Globals.ptxTypes.Contains(fileType)) {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (FileExt == ".pdf") {
-                                FileDeletionDirectory(getName);
+                            } else if (fileType == ".pdf") {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (Globals.textTypes.Contains(FileExt)) {
-                                FileDeletionDirectory(getName);
+                            } else if (Globals.textTypes.Contains(fileType)) {
+                                FileDeletionDirectory(FileName);
 
-                            } else if (FileExt == ".exe") {
-                                FileDeletionDirectory(getName);
+                            } else if (fileType == ".exe") {
+                                FileDeletionDirectory(FileName);
                             }
 
                         } else if (TableName == GlobalsTable.folderUploadTable) {
-                            if (Globals.imageTypes.Contains(FileExt)) {
-                                FileDeletionFolder(getName, GlobalsTable.homeImageTable);
+                            if (Globals.imageTypes.Contains(fileType)) {
+                                FileDeletionFolder(FileName, GlobalsTable.homeImageTable);
 
-                            } else if (FileExt == ".msi") {
-                                FileDeletionFolder(getName, GlobalsTable.homeMsiTable);
+                            } else if (fileType == ".msi") {
+                                FileDeletionFolder(FileName, GlobalsTable.homeMsiTable);
 
-                            } else if (Globals.audioTypes.Contains(FileExt)) {
-                                FileDeletionFolder(getName, GlobalsTable.homeAudioTable);
+                            } else if (Globals.audioTypes.Contains(fileType)) {
+                                FileDeletionFolder(FileName, GlobalsTable.homeAudioTable);
 
-                            } else if (Globals.wordTypes.Contains(FileExt)) {
-                                FileDeletionFolder(getName, GlobalsTable.homeWordTable);
+                            } else if (Globals.wordTypes.Contains(fileType)) {
+                                FileDeletionFolder(FileName, GlobalsTable.homeWordTable);
 
-                            } else if (Globals.ptxTypes.Contains(FileExt)) {
-                                FileDeletionFolder(getName, GlobalsTable.homePtxTable);
+                            } else if (Globals.ptxTypes.Contains(fileType)) {
+                                FileDeletionFolder(FileName, GlobalsTable.homePtxTable);
 
-                            } else if (FileExt == ".pdf") {
-                                FileDeletionFolder(getName, GlobalsTable.homePdfTable);
+                            } else if (fileType == ".pdf") {
+                                FileDeletionFolder(FileName, GlobalsTable.homePdfTable);
 
-                            } else if (Globals.textTypes.Contains(FileExt)) {
-                                FileDeletionFolder(getName, GlobalsTable.homeTextTable);
+                            } else if (Globals.textTypes.Contains(fileType)) {
+                                FileDeletionFolder(FileName, GlobalsTable.homeTextTable);
 
-                            } else if (FileExt == ".exe") {
-                                FileDeletionFolder(getName, GlobalsTable.homeExeTable);
+                            } else if (fileType == ".exe") {
+                                FileDeletionFolder(FileName, GlobalsTable.homeExeTable);
 
                             }
                         } else if (TableName == GlobalsTable.sharingTable) {
-                            FileDeletionSharing(getName);
+                            FileDeletionSharing(FileName);
                         }
                     }
                 }
 
-                if (TableName == String.Empty) {
+                /*if (TableName == String.Empty) {
 
                     Control foundControl = null;
                     foreach(Control _getControls in HomePage.instance.flwLayoutHome.Controls) {
@@ -323,10 +323,12 @@ namespace FlowSERVER1 {
                         HomePage.instance.flwLayoutHome.Controls.Remove(foundControl);
                         foundControl.Dispose();
                     }
-                }
+                }*/
 
             } catch (Exception) {
-                MessageBox.Show("Cancellation failed, file is already uploaded.","Flowstorage",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Cancellation failed, file is already uploaded.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
 
             this.Close();
