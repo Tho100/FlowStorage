@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
@@ -13,6 +14,7 @@ namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         readonly private Crud crud = new Crud();
         readonly private GeneralCompressor compressor = new GeneralCompressor();
 
@@ -22,35 +24,40 @@ namespace FlowSERVER1 {
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
 
-        public shareFileFORM(String fileName,String fileExtension,bool isFromShared, String tableName,String directoryName) {
+        public shareFileFORM(String fileName, bool isFromShared, String tableName,String directoryName) {
+
             InitializeComponent();
 
             this._fileName = fileName;
-            this._fileExtension = $".{fileExtension}";
+            this._fileExtension = Path.GetExtension(fileName);
             this._isFromShared = isFromShared;
             this._tableName = tableName;
             this._directoryName = directoryName;
 
             lblFileName.Text = fileName;
+
         }
 
         /// <summary>
         /// This function will do check if the 
         /// receiver has password enabled for their file sharing
         /// </summary>
-        private string ReceiverHasAuthVerificaiton(String _custUsername) {
+        private string ReceiverHasAuthVerificaiton(String username) {
 
             string storeVal = "";
+
             const string queryGetSharingAuth = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
 
             using(MySqlCommand command = new MySqlCommand(queryGetSharingAuth,con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
+                command.Parameters.AddWithValue("@username", username);
                 using(MySqlDataReader read = command.ExecuteReader()) {
                     if(read.Read()) {
                         if(read.GetString(0) == "DEF") {
                             storeVal = "";
+
                         } else {
                             storeVal = read.GetString(0);
+
                         }
                     }
                 }
@@ -146,13 +153,13 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task<string> getFileMetadata(String fileName, String tableName) {
+        private async Task<string> GetFileMetadata(String fileName, String tableName) {
 
             string queryGetFileByte = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using(MySqlCommand command = new MySqlCommand(queryGetFileByte,con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@filename", fileName);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using(MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         return readData.GetString(0);
@@ -164,7 +171,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task<string> getFileMetadataSharedToMe(String fileName) {
+        private async Task<string> GetFileMetadataSharedToMe(String fileName) {
 
             const string queryGetFileData = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
@@ -182,7 +189,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task<string> getFileMetadataSharedToOthers(String fileName) {
+        private async Task<string> GetFileMetadataSharedToOthers(String fileName) {
 
             const string queryGetFileData = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
@@ -200,7 +207,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task<string> getFileMetadataExtra(String tableName, String columnName, String directoryName, String fileName) {
+        private async Task<string> GetFileMetadataExtra(String tableName, String columnName, String directoryName, String fileName) {
 
             string base64String = "";
 
@@ -219,7 +226,7 @@ namespace FlowSERVER1 {
             return base64String;
         }
 
-        private async Task<string> retrieveThumbnails(String tableName, String fileName) {
+        private async Task<string> RetrieveThumbnails(String tableName, String fileName) {
 
             string GetBase64String = "";
 
@@ -237,7 +244,7 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private async Task<string> retrieveThumbnailsExtra(String tableName, String columnName, String directoryName, String fileName) {
+        private async Task<string> RetrieveThumbnailsExtra(String tableName, String columnName, String directoryName, String fileName) {
 
             string GetBase64String = "";
 
@@ -256,7 +263,7 @@ namespace FlowSERVER1 {
             return GetBase64String;
         }
 
-        private async Task<string> retrieveThumbnailShared(String fileName,String columnName) {
+        private async Task<string> RetrieveThumbnailShared(String fileName, String columnName) {
 
             string queryGetFileByte = $"SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = {columnName} AND CUST_FILE_PATH = @filename LIMIT 1;";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
@@ -273,24 +280,38 @@ namespace FlowSERVER1 {
         }
 
 
-        private async Task startSending(String fileDataBase64, String thumbnailBase64 = null) {
+        private async Task InsertFileData(String fileDataBase64, String thumbnailBase64 = null) {
+
+            string receiverUsername = txtFieldShareToName.Text;
+            string comment = txtFieldComment.Text;
+
+            string fileType = Path.GetExtension(_fileName);
 
             string encryptedFileName = EncryptionModel.Encrypt(_fileName);
-            string encryptedComment = EncryptionModel.Encrypt(txtFieldComment.Text);
+            string encryptedComment = string.IsNullOrEmpty(comment) 
+                ? String.Empty : EncryptionModel.Encrypt(comment);
+
+            string thumbnail = thumbnailBase64 ?? String.Empty;
+
             string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
 
             byte[] toBytes = Convert.FromBase64String(fileDataBase64);
-            string compressedUpdatedData = Convert.ToBase64String(new GeneralCompressor().compressFileData(toBytes));
 
-            using (MySqlCommand command = new MySqlCommand("INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)", con)) {
-                command.Parameters.AddWithValue("@CUST_TO", txtFieldShareToName.Text);
-                command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
-                command.Parameters.AddWithValue("@CUST_FILE_PATH", encryptedFileName);
-                command.Parameters.AddWithValue("@UPLOAD_DATE", todayDate);
-                command.Parameters.AddWithValue("@CUST_FILE", compressedUpdatedData);
-                command.Parameters.AddWithValue("@FILE_EXT", _fileExtension);
-                command.Parameters.AddWithValue("@CUST_COMMENT", encryptedComment);
-                command.Parameters.AddWithValue("@CUST_THUMB", thumbnailBase64);
+            string compressedUpdatedData = Globals.imageTypes.Contains(fileType) 
+                ? fileDataBase64 
+                : Convert.ToBase64String(compressor.compressFileData(toBytes));
+
+            const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@receiver, @from, @file_name, @date, @file_data, @file_type, @thumbnail, @comment)";
+
+            using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
+                command.Parameters.AddWithValue("@from", Globals.custUsername);
+                command.Parameters.AddWithValue("@receiver", receiverUsername);
+                command.Parameters.AddWithValue("@file_name", encryptedFileName);
+                command.Parameters.AddWithValue("@date", todayDate);
+                command.Parameters.AddWithValue("@file_data", compressedUpdatedData);
+                command.Parameters.AddWithValue("@file_type", fileType);
+                command.Parameters.AddWithValue("@comment", encryptedComment);
+                command.Parameters.AddWithValue("@thumbnail", thumbnail);
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -301,6 +322,7 @@ namespace FlowSERVER1 {
 
             int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
             int receiverCurrentTotalUploaded = CountReceiverTotalShared(txtFieldShareToName.Text);
+
             string shareToName = txtFieldShareToName.Text;
 
             if (receiverUploadLimit != receiverCurrentTotalUploaded) {
@@ -308,85 +330,87 @@ namespace FlowSERVER1 {
                 new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
 
                 if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
-
-                    string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_TO");
-                    await startSending(await getFileMetadataSharedToMe(_fileName), getThumbnails);
+                    string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_TO");
+                    await InsertFileData(await GetFileMetadataSharedToMe(_fileName), getThumbnails);
 
                 } else if (_tableName != GlobalsTable.directoryUploadTable && _tableName != GlobalsTable.folderUploadTable) {
 
                     if (Globals.imageTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == GlobalsTable.psImage 
                             ? GlobalsTable.psImage : GlobalsTable.homeImageTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));  
+
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));  
 
                     } else if (Globals.videoTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == GlobalsTable.psVideo 
                             ? GlobalsTable.psVideo : GlobalsTable.homeVideoTable;
-                        string getThumbnails = await retrieveThumbnails(finalTable, _fileName);
+                        string getThumbnails = await RetrieveThumbnails(finalTable, _fileName);
 
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable), getThumbnails);
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable), getThumbnails);
 
                     } else if (Globals.textTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == GlobalsTable.psText 
                             ? GlobalsTable.psText : GlobalsTable.homeTextTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (Globals.excelTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == GlobalsTable.psExcel 
                             ? GlobalsTable.psExcel : GlobalsTable.homeExcelTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (_fileExtension == "pdf") {
                         string finalTable = _tableName == GlobalsTable.psPdf 
                             ? GlobalsTable.psPdf : GlobalsTable.homePdfTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (Globals.ptxTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == GlobalsTable.psPtx 
                             ? GlobalsTable.psPtx : GlobalsTable.homePtxTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (Globals.wordTypes.Contains(_fileExtension)) {
-                        string finalTable = _tableName == GlobalsTable.psWord ? GlobalsTable.psWord : GlobalsTable.homeWordTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        string finalTable = _tableName == GlobalsTable.psWord 
+                            ? GlobalsTable.psWord : GlobalsTable.homeWordTable;
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (Globals.audioTypes.Contains(_fileExtension)) {
                         string finalTable = _tableName == GlobalsTable.psAudio 
                             ? GlobalsTable.psAudio : GlobalsTable.homeAudioTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (_fileExtension == "exe") {
                         string finalTable = _tableName == GlobalsTable.psExe 
                             ? GlobalsTable.psExe : GlobalsTable.homeExeTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     } else if (_fileExtension == "apk") {
                         string finalTable = _tableName == GlobalsTable.psApk 
                             ? GlobalsTable.psApk : GlobalsTable.homeApkTable;
-                        await startSending(await getFileMetadata(EncryptionModel.Encrypt(_fileName), finalTable));
+                        await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                     }
 
                 } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
-                    string getThumbnails = await retrieveThumbnailShared(_fileName, "CUST_FROM");
-                    await startSending(await getFileMetadataSharedToOthers(_fileName), getThumbnails);
+                    string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_FROM");
+                    await InsertFileData(await GetFileMetadataSharedToOthers(_fileName), getThumbnails);
 
                 } else if (_tableName == GlobalsTable.directoryUploadTable) {
-                    string getThumbnails = await retrieveThumbnailsExtra(
+                    string getThumbnails = await RetrieveThumbnailsExtra(
                         GlobalsTable.directoryUploadTable, "DIR_NAME", _directoryName, _fileName);
 
-                    await startSending(await getFileMetadataExtra(
+                    await InsertFileData(await GetFileMetadataExtra(
                         GlobalsTable.directoryUploadTable,"DIR_NAME",_directoryName, _fileName), getThumbnails);
 
                 } else if (_tableName == GlobalsTable.folderUploadTable) {
-                    string getThumbnails = await retrieveThumbnailsExtra(
+                    string getThumbnails = await RetrieveThumbnailsExtra(
                         GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName);
 
-                    await startSending(await getFileMetadataExtra(
+                    await InsertFileData(await GetFileMetadataExtra(
                         GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName), getThumbnails);
                 }
 
                 CloseForm.closeForm("SharingAlert");
+
                 new SucessSharedAlert(_fileName, txtFieldShareToName.Text).Show();
 
             }
@@ -397,7 +421,8 @@ namespace FlowSERVER1 {
             try {
 
                 if (txtFieldShareToName.Text == Globals.custUsername) {
-                    new CustomAlert(title: "Sharing failed", subheader: "You can't share to yourself.").Show();
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "You can't share to yourself.").Show();
                     return;
                 }
 
@@ -406,29 +431,35 @@ namespace FlowSERVER1 {
                 }
 
                 if (UserExistVerification(txtFieldShareToName.Text) == 0) {
-                    new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} does not exist.").Show();
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} does not exist.").Show();
                     return;
                 }
 
                 if (FileIsUploadedVerification(txtFieldShareToName.Text, _fileName) > 0) {
-                    new CustomAlert(title: "Sharing failed", subheader: "This file is already shared.").Show();
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "This file is already shared.").Show();
                     return;
                 }
 
                 if (!(RetrieveIsSharingDisabled(txtFieldShareToName.Text) == "0")) {
-                    new CustomAlert(title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} disabled their file sharing.").Show();
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: $"The user {txtFieldShareToName.Text} disabled their file sharing.").Show();
                     return;
                 }
 
                 if (ReceiverHasAuthVerificaiton(txtFieldShareToName.Text) != "") {
-                    new AskSharingAuthForm(txtFieldShareToName.Text, _fileName, _fileName.Substring(_fileName.Length-4)).Show();
+                    new AskSharingAuthForm(
+                        txtFieldShareToName.Text, txtFieldComment.Text, _fileName).Show();
                     return;
                 }
 
                 await StartSharingFile();
                                
             } catch (Exception) {
-                MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
 

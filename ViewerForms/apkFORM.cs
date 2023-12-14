@@ -1,6 +1,7 @@
 ﻿using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
@@ -70,14 +71,15 @@ namespace FlowSERVER1 {
                 SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
 
             } catch (Exception) {
-                MessageBox.Show("Failed to download this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                MessageBox.Show(
+                    "Failed to download this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Question);
+
             }
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            new shareFileFORM(lblFileName.Text, getExtension,
-                _isFromSharing, _tableName, _directoryName).Show();
+            new shareFileFORM(
+                lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private async void guna2Button7_Click(object sender, EventArgs e) {

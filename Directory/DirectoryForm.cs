@@ -982,10 +982,9 @@ namespace FlowSERVER1 {
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
 
-            string fileExtensions = titleFile.Split('.').Last();
+            new shareFileFORM(
+                titleFile, false, GlobalsTable.directoryUploadTable, dirName).Show();
 
-            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, false, GlobalsTable.directoryUploadTable, dirName);
-            sharingFileFORM.Show();
         }
     }
 }

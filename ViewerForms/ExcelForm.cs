@@ -177,12 +177,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-
-            string[] parts = lblFileName.Text.Split('.');
-            string getExtension = "." + parts[1];
-
-            new shareFileFORM(lblFileName.Text, getExtension,
-                _isFromSharing, _tableName, _directoryName).Show();
+            new shareFileFORM(
+                lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private byte[] UpdatedChangesBytes() {

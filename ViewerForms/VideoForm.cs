@@ -217,9 +217,8 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
-            string getExtension = lblFileName.Text.Substring(lblFileName.Text.Length - 4);
-            new shareFileFORM(lblFileName.Text, getExtension,
-                _isFromSharing, _tableName, _directoryName).Show();
+            new shareFileFORM(
+                lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
         private void label1_Click(object sender, EventArgs e) {

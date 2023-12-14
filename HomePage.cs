@@ -2001,7 +2001,7 @@ namespace FlowSERVER1 {
 
         private async Task BuildFilePanelSharedToOthers(List<String> fileTypes, String parameterName, int itemCurr) {
 
-            try {
+            //try {
 
                 var imageValues = new List<Image>();
                 var onPressedEvent = new List<EventHandler>();
@@ -2238,11 +2238,12 @@ namespace FlowSERVER1 {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-            } catch (Exception) {
-                BuildShowAlert(
-                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+            /*} catch (Exception eq) {
+                MessageBox.Show(eq.Message);
+                //BuildShowAlert(
+                    //title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
-            }
+            }*/
 
         }
 
@@ -4425,8 +4426,8 @@ namespace FlowSERVER1 {
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
 
-            shareFileFORM sharingFileFORM = new shareFileFORM(titleFile, fileExtensions, fromSharedFiles, Globals.custUsername, dirName);
-            sharingFileFORM.Show();
+            new shareFileFORM(
+                titleFile, fromSharedFiles, Globals.custUsername, dirName).Show();
 
         }
 

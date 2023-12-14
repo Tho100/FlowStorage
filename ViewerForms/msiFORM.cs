@@ -64,10 +64,8 @@ namespace FlowSERVER1 {
         }
 
         private void btnShareFile_Click(object sender, EventArgs e) {
-            string[] parts = lblFileName.Text.Split('.');
-            string getExtension = "." + parts[1];
-            new shareFileFORM(lblFileName.Text, getExtension,
-                _isFromShared, _tableName, _directoryName).Show();
+            new shareFileFORM(
+                lblFileName.Text, _isFromShared, _tableName, _directoryName).Show();
         }
     }
 }
