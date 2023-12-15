@@ -4549,6 +4549,8 @@ namespace FlowSERVER1 {
 
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
 
+            pnlShared.Visible = false;
+
         }
 
         private async void guna2Button6_Click_1(object sender, EventArgs e) {
@@ -4568,6 +4570,8 @@ namespace FlowSERVER1 {
             btnDeleteFolder.Visible = false;
 
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
+
+            pnlShared.Visible = false;
 
         }
 

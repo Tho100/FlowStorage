@@ -1,5 +1,6 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Settings;
+using FlowSERVER1.SharingQuery;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
@@ -19,6 +20,7 @@ namespace FlowSERVER1 {
         static public SettingsForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
 
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
@@ -73,33 +75,19 @@ namespace FlowSERVER1 {
                 lblTotalUploadFileCount.Text = _totalUploadOvertime.ToString();
 
             } catch (Exception) {
-                new CustomAlert(title: "An error occurred", "Something went wrong while trying to open Settings.");
+                new CustomAlert(
+                    title: "An error occurred", "Something went wrong while trying to open Settings.");
+
             }
         }
 
         #region Sharing section
 
-        /// <summary>
-        /// This function will delete user file sharing password 
-        /// if they have one setup
-        /// </summary>
-        /// <param name="_custUsername"></param>
-        private void RemoveSharingAuth() {
-
-            const string setPassSharingQuery = "UPDATE sharing_info SET SET_PASS = @setPass WHERE CUST_USERNAME = @username";
-
-            using (MySqlCommand command = new MySqlCommand(setPassSharingQuery, con)) {
-                command.Parameters.AddWithValue("@setPass", "DEF");
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.ExecuteNonQuery();
-            }
-
-        }
-        private void guna2Button27_Click(object sender, EventArgs e) {
+        private async void guna2Button27_Click(object sender, EventArgs e) {
 
             if (MessageBox.Show("Remove File Sharing password?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
-                RemoveSharingAuth();
+                await sharingOptions.RemoveSharingAuth();
 
                 btnAddSharingAuth.Visible = true;
                 btnAddSharingAuth.Enabled = true;
@@ -112,53 +100,11 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
-        /// This function will retrieve the 
-        /// current status of user file sharing (disabled, or enabled)
-        /// </summary>
-        private string RetrieveIsSharingDisabled() {
-
-            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                string isEnabled = Convert.ToString(command.ExecuteScalar());
-                string concludeOutput = isEnabled == "1" ? "1" : "0";
-                return concludeOutput;
-            }
-        }
-
-        /// <summary>
-        /// Function to start disabling file sharing
-        /// </summary>
-        /// <param name="_custUsername"></param>
-        private void DisableSharing(String _custUsername) {
-
-            const string disableSharingQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(disableSharingQuery, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Function to enable file sharing
-        /// </summary>
-        /// <param name="_custUsername"></param>
-        private void EnableSharing(String _custUsername) {
-
-            const string enabelSharingQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(enabelSharingQuery, con)) {
-                command.Parameters.AddWithValue("@username", _custUsername);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
         /// Disable file sharing button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button24_Click(object sender, EventArgs e) {
+        private async void guna2Button24_Click(object sender, EventArgs e) {
 
             if (MessageBox.Show("Disable file sharing? You can always enable this option again later.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
@@ -173,7 +119,7 @@ namespace FlowSERVER1 {
 
                 Globals.sharingDisabledStatus = "1";
 
-                DisableSharing(Globals.custUsername);
+                 await sharingOptions.DisableSharing();
 
             }
         }
@@ -183,7 +129,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button26_Click(object sender, EventArgs e) {
+        private async void guna2Button26_Click(object sender, EventArgs e) {
 
             btnDisableSharing.Enabled = true;
             btnDisableSharing.Visible = true;
@@ -196,24 +142,8 @@ namespace FlowSERVER1 {
 
             Globals.sharingDisabledStatus = "0";
 
-            EnableSharing(Globals.custUsername);
+            await sharingOptions.EnableSharing();
 
-        }
-
-        private string RetrieveFileSharingAuth() {
-
-            string hasPass = "";
-            const string selectQuery = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(selectQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-
-                object result = command.ExecuteScalar();
-                if (result != null) {
-                    hasPass = result.ToString();
-                }
-            }
-
-            return hasPass;
         }
 
         #endregion END - Sharing section
@@ -347,7 +277,6 @@ namespace FlowSERVER1 {
       
         #endregion END - User statistics section
 
-        private void guna2Button14_Click(object sender, EventArgs e) => this.Close();
 
         private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
@@ -635,7 +564,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2TabControl1_Click(object sender, EventArgs e) {
+        private async void guna2TabControl1_Click(object sender, EventArgs e) {
 
             try {
 
@@ -643,8 +572,11 @@ namespace FlowSERVER1 {
 
                     if(Globals.sharingDisabledStatus == String.Empty 
                     && Globals.sharingAuthStatus == String.Empty) {
-                        Globals.sharingDisabledStatus = RetrieveIsSharingDisabled();
-                        Globals.sharingAuthStatus = RetrieveFileSharingAuth();
+                        Globals.sharingDisabledStatus = await sharingOptions
+                            .RetrieveIsSharingDisabled(Globals.custUsername);
+
+                        Globals.sharingAuthStatus = await sharingOptions
+                            .ReceiverHasAuthVerification(Globals.custUsername);
                     }
 
                     if (Globals.sharingAuthStatus != "DEF") {
@@ -691,22 +623,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        private void guna2Panel14_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label34_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void label27_Click_2(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel13_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void label22_Click(object sender, EventArgs e) {
 
         }
@@ -735,10 +651,6 @@ namespace FlowSERVER1 {
         }
 
         private void label8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label39_Click(object sender, EventArgs e) {
 
         }
 

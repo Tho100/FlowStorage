@@ -433,6 +433,9 @@
     <Compile Include="AlertForms\CustomAlert.Designer.cs">
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="AuthenticationQuery\SignInQuery.cs" />
+    <Compile Include="AuthenticationQuery\SignUpQuery.cs" />
+    <Compile Include="AuthenticationQuery\UserAuthenticationQuery.cs" />
     <Compile Include="Authentication\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,22 +478,24 @@
     <Compile Include="Settings\CancelPlanForm.Designer.cs">
       <DependentUpon>CancelPlanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\SharingAlert.cs">
+    <Compile Include="SharingForms\SharingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\SharingAlert.Designer.cs">
+    <Compile Include="SharingForms\SharingAlert.Designer.cs">
       <DependentUpon>SharingAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="SharingQuery\ShareFileQuery.cs" />
+    <Compile Include="SharingQuery\SharingOptionsQuery.cs" />
     <Compile Include="ViewerForms\ApkForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ViewerForms\ApkForm.Designer.cs">
       <DependentUpon>ApkForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\AskSharingAuthForm.cs">
+    <Compile Include="SharingForms\AskSharingAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\AskSharingAuthForm.Designer.cs">
+    <Compile Include="SharingForms\AskSharingAuthForm.Designer.cs">
       <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewerForms\AudioForm.cs">
@@ -597,10 +602,10 @@
     <Compile Include="ViewerForms\MsiForm.Designer.cs">
       <DependentUpon>MsiForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\AddAuthSharing.cs">
+    <Compile Include="SharingForms\AddAuthSharing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\AddAuthSharing.Designer.cs">
+    <Compile Include="SharingForms\AddAuthSharing.Designer.cs">
       <DependentUpon>AddAuthSharing.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewerForms\PdfForm.cs">
@@ -672,16 +677,16 @@
     <Compile Include="AlertForms\SettingsLoadingAlert.Designer.cs">
       <DependentUpon>SettingsLoadingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\ShareSelectedFileForm.cs">
+    <Compile Include="SharingForms\ShareSelectedFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\ShareSelectedFileForm.Designer.cs">
+    <Compile Include="SharingForms\ShareSelectedFileForm.Designer.cs">
       <DependentUpon>ShareSelectedFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\MainShareFileForm.cs">
+    <Compile Include="SharingForms\MainShareFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\MainShareFileForm.Designer.cs">
+    <Compile Include="SharingForms\MainShareFileForm.Designer.cs">
       <DependentUpon>MainShareFileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtraForms\SplashForm.cs">
@@ -702,10 +707,10 @@
     <Compile Include="AlertForms\SuccessResetAuthAlert.Designer.cs">
       <DependentUpon>SuccessResetAuthAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sharing\SucessSharedAlert.cs">
+    <Compile Include="SharingForms\SucessSharedAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sharing\SucessSharedAlert.Designer.cs">
+    <Compile Include="SharingForms\SucessSharedAlert.Designer.cs">
       <DependentUpon>SucessSharedAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewerForms\TextForm.cs">
@@ -766,13 +771,13 @@
     <EmbeddedResource Include="Settings\CancelPlanForm.resx">
       <DependentUpon>CancelPlanForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\SharingAlert.resx">
+    <EmbeddedResource Include="SharingForms\SharingAlert.resx">
       <DependentUpon>SharingAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\ApkForm.resx">
       <DependentUpon>ApkForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\AskSharingAuthForm.resx">
+    <EmbeddedResource Include="SharingForms\AskSharingAuthForm.resx">
       <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\AudioForm.resx">
@@ -825,7 +830,7 @@
     <EmbeddedResource Include="ViewerForms\MsiForm.resx">
       <DependentUpon>MsiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\AddAuthSharing.resx">
+    <EmbeddedResource Include="SharingForms\AddAuthSharing.resx">
       <DependentUpon>AddAuthSharing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\PdfForm.resx">
@@ -866,10 +871,10 @@
     <EmbeddedResource Include="AlertForms\SettingsLoadingAlert.resx">
       <DependentUpon>SettingsLoadingAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\ShareSelectedFileForm.resx">
+    <EmbeddedResource Include="SharingForms\ShareSelectedFileForm.resx">
       <DependentUpon>ShareSelectedFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\MainShareFileForm.resx">
+    <EmbeddedResource Include="SharingForms\MainShareFileForm.resx">
       <DependentUpon>MainShareFileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraForms\SplashForm.resx">
@@ -881,7 +886,7 @@
     <EmbeddedResource Include="AlertForms\SuccessResetAuthAlert.resx">
       <DependentUpon>SuccessResetAuthAlert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sharing\SucessSharedAlert.resx">
+    <EmbeddedResource Include="SharingForms\SucessSharedAlert.resx">
       <DependentUpon>SucessSharedAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\TextForm.resx">
