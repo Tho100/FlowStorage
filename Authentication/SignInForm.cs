@@ -1,5 +1,6 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Authentication;
+using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.Global;
 using MySql.Data.MySqlClient;
 using System;
@@ -20,6 +21,7 @@ namespace FlowSERVER1 {
         private readonly HomePage accessHomePage = HomePage.instance;
 
         private readonly MySqlConnection con = ConnectionModel.con;
+        private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
 
         private string _returnedAuth0 { get; set; }
         private string _returnedAuth1 { get; set; }
@@ -60,23 +62,6 @@ namespace FlowSERVER1 {
 
             }
 
-        }
-
-        private string ReturnCustomColumn(string whichColumn) {
-
-            var concludeValue = new List<string>();
-
-            string checkPasswordQuery = $"SELECT {whichColumn} FROM information WHERE CUST_EMAIL = @email";
-            using (var command = new MySqlCommand(checkPasswordQuery, con)) {
-                command.Parameters.AddWithValue("@email", _inputGetEmail);
-                using (var readerPass = command.ExecuteReader()) {
-                    while (readerPass.Read()) {
-                        concludeValue.Add(readerPass.GetString(0));
-                    }
-                }
-            }
-
-            return concludeValue.FirstOrDefault() ?? string.Empty;
         }
 
         private async Task SetupUserInformation() {
@@ -152,15 +137,20 @@ namespace FlowSERVER1 {
 
             try {
 
-                if (!string.IsNullOrEmpty(ReturnCustomColumn("CUST_PASSWORD"))) {
-                    _returnedAuth0 = ReturnCustomColumn("CUST_PASSWORD");
-                    if (!string.IsNullOrEmpty(ReturnCustomColumn("CUST_PIN"))) {
-                        _returnedAuth1 = ReturnCustomColumn("CUST_PIN");
+                var authenticationInformation = await userAuthQuery.GetAccountAuthentication(_inputGetEmail);
+
+                if (!string.IsNullOrEmpty(authenticationInformation["password"])) {
+                    _returnedAuth0 = authenticationInformation["password"];
+
+                    if (!string.IsNullOrEmpty(authenticationInformation["pin"])) {
+                        _returnedAuth1 = authenticationInformation["pin"];
+
                     }
                 }
 
             } catch (Exception) {
                 lblAlert.Visible = true;
+
             }
 
             if (EncryptionModel.computeAuthCase(inputAuth0) == _returnedAuth0 &&
@@ -192,15 +182,14 @@ namespace FlowSERVER1 {
                     }
 
                 } catch (Exception) {
-                    MessageBox.Show(
-                        "An error occurred. Check your internet connection and try again.",
-                        "Flowstorage",
+                    MessageBox.Show("An error occurred. Check your internet connection and try again.", "Flowstorage",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
 
             } else {
                 CloseFormOnLimitSignInAttempt();
+
             }
 
             return authenticationSuccessful;
@@ -261,11 +250,14 @@ namespace FlowSERVER1 {
 
                 _attemptCurr++;
 
-                var verifyAuthenticaton = await VerifyUserAuthentication();
-                if (verifyAuthenticaton) {
+                bool userCanSignIn = await VerifyUserAuthentication();
+
+                if (userCanSignIn) {
 
                     int calculatePercentageUsage = 0;
-                    if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(await GetUserAccountType(), out int getLimitedValue)) {
+                    string accountType = await userAuthQuery.GetUploadLimit();
+
+                    if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(accountType, out int getLimitedValue)) {
                         if (getLimitedValue == 0) {
                             HomePage.instance.lblUsagePercentage.Text = "0%";
 
@@ -275,7 +267,7 @@ namespace FlowSERVER1 {
 
                         }
 
-                        HomePage.instance.lblLimitUploadText.Text = await GetUserAccountType();
+                        HomePage.instance.lblLimitUploadText.Text = accountType;
                         HomePage.instance.progressBarUsageStorage.Value = calculatePercentageUsage;
 
                     }
@@ -285,23 +277,10 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Failed to sign-in to your account", subheader: "Are you connected to the internet?").Show();
+                new CustomAlert(
+                    title: "Failed to sign-in to your account", subheader: "Are you connected to the internet?").Show();
             }
 
-        }
-
-        private async Task<string> GetUserAccountType() {
-
-            string accountType = "";
-
-            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                accountType = Convert.ToString(await command.ExecuteScalarAsync());
-            }
-
-            Globals.accountType = accountType;
-            return Globals.uploadFileLimit[accountType].ToString();
         }
 
         private void LogIN_Load(object sender, EventArgs e) {

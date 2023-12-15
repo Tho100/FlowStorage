@@ -1,21 +1,24 @@
 ﻿using FlowSERVER1.AlertForms;
-
+using FlowSERVER1.AuthenticationQuery;
 using MySql.Data.MySqlClient;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1.Authentication {
     public partial class SignUpForm : Form {
 
         private readonly MySqlConnection con = ConnectionModel.con;
+
+        private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
+
         private readonly HomePage accessHomePage = new HomePage();
+        private readonly SignUpQuery signUpQuery = new SignUpQuery();
 
         public SignUpForm() {
             InitializeComponent();
@@ -73,8 +76,7 @@ namespace FlowSERVER1.Authentication {
 
                 accessHomePage.lstFoldersPage.Items.AddRange(foldersName.ToArray());
                 accessHomePage.lblCurrentPageText.Text = "Home";
-
-                await GetUserAccountType();
+                accessHomePage.lblLimitUploadText.Text = await userAuthQuery.GetUploadLimit();
 
                 pnlRegistration.Visible = false;
 
@@ -123,24 +125,6 @@ namespace FlowSERVER1.Authentication {
             }
         }
 
-        private async Task<string> GetUserAccountType() {
-
-            string accountType = "";
-
-            const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                accountType = Convert.ToString(await command.ExecuteScalarAsync());
-                accessHomePage.lblLimitUploadText.Text = accountType;
-            }
-
-
-            Globals.accountType = accountType;
-            accessHomePage.lblLimitUploadText.Text = Globals.uploadFileLimit[Globals.accountType].ToString();
-
-            return accountType;
-        }
-
         /// <summary>
         /// Validate user entered email address format
         /// </summary>
@@ -150,26 +134,7 @@ namespace FlowSERVER1.Authentication {
             const string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(emailInput);
-        }
-
-        /// <summary>
-        /// Generate random string within range
-        /// </summary>
-        private string RandomString(int size, bool lowerCase = true) {
-
-            Random _setRandom = new Random();
-
-            var builder = new StringBuilder(size);
-            char offset = lowerCase ? 'a' : 'A';
-            const int lettersOffset = 26;
-
-            for (var i = 0; i < size; i++) {
-                var @char = (char)_setRandom.Next(offset, offset + lettersOffset);
-                builder.Append(@char);
-            }
-
-            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
-        }
+        } 
 
         /// <summary>
         /// 
@@ -214,40 +179,19 @@ namespace FlowSERVER1.Authentication {
                 string passwordInput = txtBoxAuth0Field.Text;
                 string pinInput = txtBoxAuth1Field.Text;
 
-                List<string> existsInfosMail = new List<string>();
-                List<string> existsInfosUser = new List<string>();
+                var accountsInfo = await signUpQuery.VerifyUsernameAndEmail(usernameInput, emailInput);
 
-                using (MySqlCommand command = con.CreateCommand()) {
-                    const string verifyQueryUser = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
-                    command.CommandText = verifyQueryUser;
-                    command.Parameters.AddWithValue("@username", usernameInput);
+                int usernamesCount = accountsInfo["username"];
+                int emailsCount = accountsInfo["email"];
 
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            existsInfosUser.Add(reader.GetString(0));
-                        }
-                    }
+                if (usernamesCount >= 1 || emailsCount >= 1) {
 
-                    const string verifyQueryMail = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
-                    command.CommandText = verifyQueryMail;
-                    command.Parameters.AddWithValue("@email", emailInput);
-
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            existsInfosMail.Add(reader.GetString(0));
-                        }
-                    }
-
-                }
-
-                if (existsInfosUser.Count >= 1 || existsInfosMail.Count >= 1) {
-
-                    if (existsInfosUser.Count >= 1) {
+                    if (usernamesCount >= 1) {
                         lblAlertUsername.Visible = true;
                         lblAlertUsername.Text = "Username is taken.";
                     }
 
-                    if (existsInfosMail.Count >= 1) {
+                    if (emailsCount >= 1) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Email already exists.";
                     }
@@ -330,7 +274,8 @@ namespace FlowSERVER1.Authentication {
                     Globals.custEmail = emailInput;
                     Globals.accountType = "Basic";
 
-                    InsertUserRegistrationData(usernameInput, emailInput, passwordInput, pinInput);
+                    await signUpQuery.InsertUserRegistrationData(
+                        usernameInput, emailInput, passwordInput, pinInput);
 
                     ClearRegistrationFields();
                     StupAutoLogin(usernameInput, emailInput);
@@ -345,57 +290,6 @@ namespace FlowSERVER1.Authentication {
             } catch (Exception) {
                 new CustomAlert(
                     title: "Failed to register your account", subheader: "Are you connected to the internet?").Show();
-
-            }
-        }
-
-        private void InsertUserRegistrationData(string getUser, string getEmail, string getAuth, string getPin) {
-
-            var _setupRecov = RandomString(16) + getUser;
-            var _removeSpacesRecov = new string(_setupRecov.Where(c => !Char.IsWhiteSpace(c)).ToArray());
-
-            string _getDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-            using (var transaction = con.BeginTransaction()) {
-
-                try {
-
-                    MySqlCommand command = con.CreateCommand();
-
-                    command.CommandText = @"INSERT INTO information(CUST_USERNAME,CUST_PASSWORD,CREATED_DATE,CUST_EMAIL,CUST_PIN,RECOV_TOK)
-                            VALUES(@CUST_USERNAME,@CUST_PASSWORD,@CREATED_DATE,@CUST_EMAIL,@CUST_PIN,@RECOV_TOK)";
-                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
-                    command.Parameters.AddWithValue("@CUST_PASSWORD", EncryptionModel.computeAuthCase(getAuth));
-                    command.Parameters.AddWithValue("@CREATED_DATE", _getDate);
-                    command.Parameters.AddWithValue("@CUST_EMAIL", getEmail);
-                    command.Parameters.AddWithValue("@CUST_PIN", EncryptionModel.computeAuthCase(getPin));
-                    command.Parameters.AddWithValue("@RECOV_TOK", EncryptionModel.Encrypt(_removeSpacesRecov));
-
-                    command.ExecuteNonQuery();
-
-                    command.CommandText = @"INSERT INTO cust_type(CUST_USERNAME,CUST_EMAIL,ACC_TYPE)
-                            VALUES(@CUST_USERNAME,@CUST_EMAIL,@ACC_TYPE)";
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
-                    command.Parameters.AddWithValue("@CUST_EMAIL", getEmail);
-                    command.Parameters.AddWithValue("@ACC_TYPE", "Basic");
-                    command.ExecuteNonQuery();
-
-                    command.CommandText = @"INSERT INTO sharing_info(CUST_USERNAME,DISABLED,SET_PASS,PASSWORD_DISABLED)
-                            VALUES(@CUST_USERNAME,@DISABLED,@SET_PASS,@PASSWORD_DISABLED)";
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@CUST_USERNAME", getUser);
-                    command.Parameters.AddWithValue("@DISABLED", "0");
-                    command.Parameters.AddWithValue("@SET_PASS", "DEF");
-                    command.Parameters.AddWithValue("@PASSWORD_DISABLED", "1");
-                    command.ExecuteNonQuery();
-
-                    transaction.Commit();
-
-                } catch (Exception) {
-                    transaction.Rollback();
-
-                }
 
             }
         }
@@ -453,7 +347,9 @@ namespace FlowSERVER1.Authentication {
         }
 
         private void txtBoxAuth1Field_TextChanged(object sender, EventArgs e) {
-
+            if (Regex.IsMatch(txtBoxAuth1Field.Text, "[^0-9]")) {
+                txtBoxAuth1Field.Text = txtBoxAuth1Field.Text.Remove(txtBoxAuth1Field.Text.Length - 1);
+            }
         }
 
         private void SignUpForm_Load(object sender, EventArgs e) {
