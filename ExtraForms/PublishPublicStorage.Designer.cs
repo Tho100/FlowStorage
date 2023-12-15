@@ -28,6 +28,8 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblFileName = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.txtFieldTitle = new Guna.UI2.WinForms.Guna2TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnData = new Guna.UI2.WinForms.Guna2Button();
@@ -46,8 +48,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtFieldTitle = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
@@ -94,6 +94,47 @@
             this.guna2Panel1.TabIndex = 40;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
+            // txtFieldTitle
+            // 
+            this.txtFieldTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldTitle.BackColor = System.Drawing.Color.Transparent;
+            this.txtFieldTitle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldTitle.BorderRadius = 8;
+            this.txtFieldTitle.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFieldTitle.DefaultText = "";
+            this.txtFieldTitle.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtFieldTitle.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtFieldTitle.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldTitle.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldTitle.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldTitle.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.txtFieldTitle.ForeColor = System.Drawing.Color.White;
+            this.txtFieldTitle.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtFieldTitle.Location = new System.Drawing.Point(37, 257);
+            this.txtFieldTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFieldTitle.MaxLength = 21;
+            this.txtFieldTitle.Name = "txtFieldTitle";
+            this.txtFieldTitle.PasswordChar = '\0';
+            this.txtFieldTitle.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldTitle.PlaceholderText = "Enter a title";
+            this.txtFieldTitle.SelectedText = "";
+            this.txtFieldTitle.Size = new System.Drawing.Size(510, 49);
+            this.txtFieldTitle.TabIndex = 39;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label2.Location = new System.Drawing.Point(39, 316);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(136, 17);
+            this.label2.TabIndex = 38;
+            this.label2.Text = "Comment (Optional)";
+            // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -130,7 +171,7 @@
             // btnData
             // 
             this.btnData.BorderColor = System.Drawing.Color.Transparent;
-            this.btnData.BorderRadius = 16;
+            this.btnData.BorderRadius = 14;
             this.btnData.BorderThickness = 1;
             this.btnData.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnData.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -141,7 +182,7 @@
             this.btnData.ForeColor = System.Drawing.Color.White;
             this.btnData.Location = new System.Drawing.Point(374, 11);
             this.btnData.Name = "btnData";
-            this.btnData.Size = new System.Drawing.Size(115, 30);
+            this.btnData.Size = new System.Drawing.Size(115, 32);
             this.btnData.TabIndex = 44;
             this.btnData.Text = "Data";
             this.btnData.Click += new System.EventHandler(this.btnData_Click);
@@ -149,7 +190,7 @@
             // btnCreativity
             // 
             this.btnCreativity.BorderColor = System.Drawing.Color.Transparent;
-            this.btnCreativity.BorderRadius = 16;
+            this.btnCreativity.BorderRadius = 14;
             this.btnCreativity.BorderThickness = 1;
             this.btnCreativity.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnCreativity.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -158,9 +199,9 @@
             this.btnCreativity.FillColor = System.Drawing.Color.BlueViolet;
             this.btnCreativity.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreativity.ForeColor = System.Drawing.Color.White;
-            this.btnCreativity.Location = new System.Drawing.Point(253, 47);
+            this.btnCreativity.Location = new System.Drawing.Point(253, 49);
             this.btnCreativity.Name = "btnCreativity";
-            this.btnCreativity.Size = new System.Drawing.Size(115, 30);
+            this.btnCreativity.Size = new System.Drawing.Size(115, 32);
             this.btnCreativity.TabIndex = 43;
             this.btnCreativity.Text = "Creativity";
             this.btnCreativity.Click += new System.EventHandler(this.btnCreativity_Click);
@@ -168,7 +209,7 @@
             // btnMusic
             // 
             this.btnMusic.BorderColor = System.Drawing.Color.Transparent;
-            this.btnMusic.BorderRadius = 16;
+            this.btnMusic.BorderRadius = 14;
             this.btnMusic.BorderThickness = 1;
             this.btnMusic.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnMusic.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -177,9 +218,9 @@
             this.btnMusic.FillColor = System.Drawing.Color.Tomato;
             this.btnMusic.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMusic.ForeColor = System.Drawing.Color.White;
-            this.btnMusic.Location = new System.Drawing.Point(132, 47);
+            this.btnMusic.Location = new System.Drawing.Point(132, 49);
             this.btnMusic.Name = "btnMusic";
-            this.btnMusic.Size = new System.Drawing.Size(115, 30);
+            this.btnMusic.Size = new System.Drawing.Size(115, 32);
             this.btnMusic.TabIndex = 42;
             this.btnMusic.Text = "Music";
             this.btnMusic.Click += new System.EventHandler(this.guna2Button2_Click_1);
@@ -187,7 +228,7 @@
             // btnRandom
             // 
             this.btnRandom.BorderColor = System.Drawing.Color.Transparent;
-            this.btnRandom.BorderRadius = 16;
+            this.btnRandom.BorderRadius = 14;
             this.btnRandom.BorderThickness = 1;
             this.btnRandom.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnRandom.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -196,9 +237,9 @@
             this.btnRandom.FillColor = System.Drawing.Color.DimGray;
             this.btnRandom.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRandom.ForeColor = System.Drawing.Color.White;
-            this.btnRandom.Location = new System.Drawing.Point(374, 47);
+            this.btnRandom.Location = new System.Drawing.Point(374, 49);
             this.btnRandom.Name = "btnRandom";
-            this.btnRandom.Size = new System.Drawing.Size(115, 30);
+            this.btnRandom.Size = new System.Drawing.Size(115, 32);
             this.btnRandom.TabIndex = 41;
             this.btnRandom.Text = "Random";
             this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
@@ -206,7 +247,7 @@
             // btnEducation
             // 
             this.btnEducation.BorderColor = System.Drawing.Color.Transparent;
-            this.btnEducation.BorderRadius = 16;
+            this.btnEducation.BorderRadius = 14;
             this.btnEducation.BorderThickness = 1;
             this.btnEducation.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnEducation.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -215,9 +256,9 @@
             this.btnEducation.FillColor = System.Drawing.Color.Firebrick;
             this.btnEducation.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEducation.ForeColor = System.Drawing.Color.White;
-            this.btnEducation.Location = new System.Drawing.Point(10, 47);
+            this.btnEducation.Location = new System.Drawing.Point(10, 49);
             this.btnEducation.Name = "btnEducation";
-            this.btnEducation.Size = new System.Drawing.Size(115, 30);
+            this.btnEducation.Size = new System.Drawing.Size(115, 32);
             this.btnEducation.TabIndex = 40;
             this.btnEducation.Text = "Education";
             this.btnEducation.Click += new System.EventHandler(this.btnPolitics_Click);
@@ -225,7 +266,7 @@
             // btnSoftware
             // 
             this.btnSoftware.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSoftware.BorderRadius = 16;
+            this.btnSoftware.BorderRadius = 14;
             this.btnSoftware.BorderThickness = 1;
             this.btnSoftware.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnSoftware.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -236,7 +277,7 @@
             this.btnSoftware.ForeColor = System.Drawing.Color.White;
             this.btnSoftware.Location = new System.Drawing.Point(253, 11);
             this.btnSoftware.Name = "btnSoftware";
-            this.btnSoftware.Size = new System.Drawing.Size(115, 30);
+            this.btnSoftware.Size = new System.Drawing.Size(115, 32);
             this.btnSoftware.TabIndex = 39;
             this.btnSoftware.Text = "Software";
             this.btnSoftware.Click += new System.EventHandler(this.btnSoftware_Click);
@@ -244,7 +285,7 @@
             // btnGaming
             // 
             this.btnGaming.BorderColor = System.Drawing.Color.Transparent;
-            this.btnGaming.BorderRadius = 16;
+            this.btnGaming.BorderRadius = 14;
             this.btnGaming.BorderThickness = 1;
             this.btnGaming.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnGaming.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -255,7 +296,7 @@
             this.btnGaming.ForeColor = System.Drawing.Color.White;
             this.btnGaming.Location = new System.Drawing.Point(132, 11);
             this.btnGaming.Name = "btnGaming";
-            this.btnGaming.Size = new System.Drawing.Size(115, 30);
+            this.btnGaming.Size = new System.Drawing.Size(115, 32);
             this.btnGaming.TabIndex = 38;
             this.btnGaming.Text = "Gaming";
             this.btnGaming.Click += new System.EventHandler(this.btnGaming_Click);
@@ -263,7 +304,7 @@
             // btnEnter
             // 
             this.btnEnter.BorderColor = System.Drawing.Color.Transparent;
-            this.btnEnter.BorderRadius = 16;
+            this.btnEnter.BorderRadius = 14;
             this.btnEnter.BorderThickness = 1;
             this.btnEnter.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnEnter.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -274,7 +315,7 @@
             this.btnEnter.ForeColor = System.Drawing.Color.White;
             this.btnEnter.Location = new System.Drawing.Point(10, 11);
             this.btnEnter.Name = "btnEnter";
-            this.btnEnter.Size = new System.Drawing.Size(115, 30);
+            this.btnEnter.Size = new System.Drawing.Size(115, 32);
             this.btnEnter.TabIndex = 37;
             this.btnEnter.Text = "Entertainment";
             this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
@@ -364,10 +405,11 @@
             this.txtFieldFileName.BorderRadius = 8;
             this.txtFieldFileName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtFieldFileName.DefaultText = "";
-            this.txtFieldFileName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.txtFieldFileName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.txtFieldFileName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldFileName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtFieldFileName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldFileName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFieldFileName.DisabledState.ForeColor = System.Drawing.Color.White;
+            this.txtFieldFileName.DisabledState.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.txtFieldFileName.Enabled = false;
             this.txtFieldFileName.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldFileName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtFieldFileName.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
@@ -427,47 +469,6 @@
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(899, 10);
             this.guna2Separator1.TabIndex = 41;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(39, 316);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(136, 17);
-            this.label2.TabIndex = 38;
-            this.label2.Text = "Comment (Optional)";
-            // 
-            // txtFieldTitle
-            // 
-            this.txtFieldTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtFieldTitle.BackColor = System.Drawing.Color.Transparent;
-            this.txtFieldTitle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFieldTitle.BorderRadius = 8;
-            this.txtFieldTitle.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtFieldTitle.DefaultText = "";
-            this.txtFieldTitle.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.txtFieldTitle.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.txtFieldTitle.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldTitle.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtFieldTitle.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFieldTitle.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.txtFieldTitle.ForeColor = System.Drawing.Color.White;
-            this.txtFieldTitle.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldTitle.Location = new System.Drawing.Point(37, 257);
-            this.txtFieldTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtFieldTitle.MaxLength = 21;
-            this.txtFieldTitle.Name = "txtFieldTitle";
-            this.txtFieldTitle.PasswordChar = '\0';
-            this.txtFieldTitle.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldTitle.PlaceholderText = "Enter a title";
-            this.txtFieldTitle.SelectedText = "";
-            this.txtFieldTitle.Size = new System.Drawing.Size(510, 49);
-            this.txtFieldTitle.TabIndex = 39;
             // 
             // PublishPublicStorage
             // 
