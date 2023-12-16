@@ -148,7 +148,8 @@ namespace FlowSERVER1 {
 
                 }
 
-                CloseUploadAlert();
+                CloseForm.CloseUploadingPopup();
+
                 UpdateProgressBarValue();
 
             } catch (Exception) {
@@ -181,7 +182,8 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                CloseUploadAlert();
+                CloseForm.CloseUploadingPopup();
+
                 UpdateProgressBarValue();
 
             } catch (Exception) {
@@ -240,7 +242,8 @@ namespace FlowSERVER1 {
 
                 GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
 
-                CloseUploadAlert();
+                CloseForm.CloseUploadingPopup();
+
                 UpdateProgressBarValue();
 
                 PublicStorageUserComment = null;
@@ -287,7 +290,8 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQueryComment, paramComment);
 
-                CloseUploadAlert();
+                CloseForm.CloseUploadingPopup();
+
                 UpdateProgressBarValue();
 
                 PublicStorageUserComment = null;
@@ -324,7 +328,7 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                CloseUploadAlert();
+                CloseForm.CloseUploadingPopup();
 
             } catch (Exception) {
                 BuildShowAlert(
@@ -360,21 +364,6 @@ namespace FlowSERVER1 {
             btnOpenRenameFolderPage.Visible = true;
             pnlSubPanelDetails.Visible = false;
             btnDownloadFolder.Visible = true;
-        }
-
-        private void CloseRetrievalAlert() {
-            var retrievalAlertForm = Application.OpenForms
-            .OfType<Form>()
-            .FirstOrDefault(form => form.Name == "RetrievalAlert");
-            retrievalAlertForm?.Close();
-        }
-
-        private void CloseUploadAlert() {
-            Application.OpenForms
-            .OfType<Form>()
-            .Where(form => String.Equals(form.Name, "UploadingAlert"))
-            .ToList()
-            .ForEach(form => form.Close());
         }
 
         private void BuildRedundaneVisibility() {
@@ -1088,10 +1077,10 @@ namespace FlowSERVER1 {
 
                         }
 
-                        CloseUploadAlert();
+                        CloseForm.CloseUploadingPopup();
 
                     } catch (Exception) {
-                        CloseUploadAlert();
+                        CloseForm.CloseUploadingPopup();
 
                     }
 
@@ -1101,7 +1090,7 @@ namespace FlowSERVER1 {
             }
 
             BuildRedundaneVisibility();
-            CloseUploadAlert();
+            CloseForm.CloseUploadingPopup();
 
         }
 
@@ -1860,12 +1849,12 @@ namespace FlowSERVER1 {
 
                         }
 
-                        CloseUploadAlert();
+                        CloseForm.CloseUploadingPopup();
 
                     }
 
                 } catch (Exception) {
-                    CloseUploadAlert();
+                    CloseForm.CloseUploadingPopup();
 
                 }
 
@@ -1876,7 +1865,7 @@ namespace FlowSERVER1 {
             PublicStorageClosed = false;
 
             BuildRedundaneVisibility();
-            CloseUploadAlert();
+            CloseForm.CloseUploadingPopup();
 
         }
 
@@ -2663,7 +2652,7 @@ namespace FlowSERVER1 {
 
         private void OpenFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
 
-            CloseRetrievalAlert();
+            CloseForm.CloseRetrievalPopup();
 
             var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), EncryptionModel.Decrypt(folderTitle));
             Directory.CreateDirectory(folderPath);
@@ -2724,7 +2713,7 @@ namespace FlowSERVER1 {
         private async Task BuildFilePanelFolder(List<String> fileType, String foldTitle, int currItem) {
 
             ClearRedundane();
-            CloseUploadAlert();
+            CloseForm.CloseUploadingPopup();
 
             new Thread(() => new RetrievalAlert(
                 "Flowstorage is retrieving your folder files.", "Loader").ShowDialog()).Start();
@@ -2988,10 +2977,10 @@ namespace FlowSERVER1 {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-                CloseForm.closeForm("RetrievalAlert");
+                CloseForm.CloseRetrievalPopup();
 
             } catch (Exception) {
-                CloseForm.closeForm("RetrievalAlert");
+                CloseForm.CloseRetrievalPopup();
                 BuildShowAlert(
                     title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
@@ -3310,7 +3299,7 @@ namespace FlowSERVER1 {
                 lblCurrentPageText.Text = "Home";
                 lstFoldersPage.SelectedIndex = -1;
 
-                CloseRetrievalAlert();
+                CloseForm.CloseRetrievalPopup();
 
             }
         }
@@ -3571,7 +3560,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button19_Click(object sender, EventArgs e) {
 
-            CloseRetrievalAlert();
+            CloseForm.CloseRetrievalPopup();
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             RemoveAndDeleteFolder(selectedFolder);
@@ -3725,7 +3714,8 @@ namespace FlowSERVER1 {
                     DirectoryForm displayDirectory = new DirectoryForm(titleLab.Text);
                     displayDirectory.Show();
 
-                    CloseRetrievalAlert();
+                    CloseForm.CloseRetrievalPopup();
+
                 };
             }
 
@@ -4186,10 +4176,10 @@ namespace FlowSERVER1 {
 
                     }
 
-                    CloseUploadAlert();
+                    CloseForm.CloseUploadingPopup();
 
                 } catch (Exception) {
-                    CloseUploadAlert();
+                    CloseForm.CloseUploadingPopup();
 
                 }
 

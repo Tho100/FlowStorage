@@ -29,7 +29,7 @@ namespace FlowSERVER1 {
 
             InitializeComponent();
 
-            CloseForm.closeForm("SettingsLoadingAlert");
+            CloseForm.CloseCustomPopup("SettingsLoadingAlert");
 
             instance = this;
 

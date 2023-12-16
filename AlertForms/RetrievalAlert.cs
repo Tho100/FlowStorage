@@ -1,38 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using System.Diagnostics;
-using System.Linq.Expressions;
 
 namespace FlowSERVER1 {
     public partial class RetrievalAlert : Form {
 
         public static RetrievalAlert instance;
 
-        private string originFrom {get; set; }
-
         readonly private MySqlConnection con = ConnectionModel.con;
+        private string originFrom { get; set; }
 
-        public RetrievalAlert(String alertMessage,String _orignFrom) {
+        public RetrievalAlert(String alertMessage, String origin) {
 
             InitializeComponent();
 
-            this.label8.Text = alertMessage;
-            this.originFrom = _orignFrom;
+            this.lblMessage.Text = alertMessage;
+            this.originFrom = origin;
 
             instance = this;
 
-            if(_orignFrom == "login") {
-                guna2Button10.Visible = false;
+            if(origin == "login") {
+                btnCancelRetrieval.Visible = false;
+
             } else {
-                guna2Button10.Visible = true;
+                btnCancelRetrieval.Visible = true;
+
             }
             
         }
@@ -41,21 +33,24 @@ namespace FlowSERVER1 {
 
         }
 
-        private void guna2Button10_Click(object sender, EventArgs e) {
+        private void btnCancelRetrieval_Click(object sender, EventArgs e) {
 
             try {
 
-                label8.Text = "Cancelling operation...";
+                lblMessage.Text = "Cancelling operation...";
+
                 if(originFrom == "Saver") {
                     SaverModel.stopFileRetrieval = true;
+
                 } else if (originFrom == "Loader") {
-                    if(label8.Text == "Flowstorage is retrieving your directory files." || label8.Text == "Flowstorage is retrieving your folder files." || label8.Text == "Flowstorage is retrieving your shared files...") {
-                        label8.Text = "Failed to cancel the operation.";
+                    if(lblMessage.Text == "Flowstorage is retrieving your directory files." || lblMessage.Text == "Flowstorage is retrieving your folder files." || lblMessage.Text == "Flowstorage is retrieving your shared files...") {
+                        lblMessage.Text = "Failed to cancel the operation.";
+
                     } else {
 
                         try {
 
-                            label9.Text = "Cancelling Operation...";
+                            lblHeader.Text = "Cancelling Operation...";
                             if (con.State == System.Data.ConnectionState.Open) {
 
                                 // @ Close connection before turning it back on for retrieval cancellation
@@ -71,17 +66,20 @@ namespace FlowSERVER1 {
 
                         } catch (Exception) {
                             con.Close();
+
                             if(con.State == System.Data.ConnectionState.Closed) {
                                 con.Open();
+
                             }
                         }
 
-                        CloseForm.closeForm("Form3");
                         this.Close();
+
                     }
                 } 
+
             } catch (Exception) {
-                CloseForm.closeForm("Form3");
+
             }
         }
     }

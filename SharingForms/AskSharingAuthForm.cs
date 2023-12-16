@@ -59,7 +59,7 @@ namespace FlowSERVER1 {
                 await shareFileQuery.InitializeFileShare(
                     _receiverUsername, _userComment, _fileName, _tableName, _directoryName, _isFromShared);
 
-                CloseForm.closeForm("SharingAlert");
+                CloseForm.CloseSharingPopup();
 
                 new SucessSharedAlert(_receiverUsername).Show();
 

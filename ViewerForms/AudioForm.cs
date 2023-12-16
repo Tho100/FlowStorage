@@ -182,7 +182,7 @@ namespace FlowSERVER1 {
                 Application.OpenForms["AudioHelp"].Close();
             }
 
-            CloseForm.closeForm("AudioHelp");
+            CloseForm.CloseCustomPopup("AudioHelp");
         }
 
         private void PlayAudioWave(byte[] waveBytes) {

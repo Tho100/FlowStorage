@@ -63,10 +63,11 @@ namespace FlowSERVER1 {
 
                 InitializeDoc(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
-                CloseForm.closeForm("RetrievalAlert");
+                CloseForm.CloseRetrievalPopup();
 
             } catch (Exception) {
-                MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }

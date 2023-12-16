@@ -852,12 +852,10 @@ namespace FlowSERVER1 {
 
                         }
 
-                        CloseForm.closeForm("UploadingAlert");
+                        CloseForm.CloseUploadingPopup();
 
                     } catch (Exception) {
-                        CloseForm.closeForm("UploadingAlert");
-                        new CustomAlert(
-                            title: "Some went wrong", subheader: "Failed to upload this file.").Show();
+                        OnUploadFailed();
 
                     }
                 }
@@ -868,7 +866,13 @@ namespace FlowSERVER1 {
 
         }
 
-        public void DisplayError() {
+        private void OnUploadFailed() {
+            CloseForm.CloseUploadingPopup();
+            new CustomAlert(
+                title: "Some went wrong", subheader: "Failed to upload this file.").Show();
+        }
+
+        private void DisplayError() {
             Form bgBlur = new Form();
             using (UpgradeAccountAlert displayPic = new UpgradeAccountAlert()) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
@@ -904,7 +908,7 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                CloseForm.closeForm("UploadingAlert");
+                CloseForm.CloseUploadingPopup();
                 new CustomAlert(
                     title: "An error occurred", "Something went wrong while trying to upload files.").Show();
             }

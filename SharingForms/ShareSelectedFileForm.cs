@@ -52,7 +52,7 @@ namespace FlowSERVER1 {
                 await shareFile.InitializeFileShare(
                     shareToName, comment, _fileName, _tableName, _directoryName, _isFromShared);
 
-                CloseForm.closeForm("SharingAlert");
+                CloseForm.CloseSharingPopup();
 
                 new SucessSharedAlert(txtFieldShareToName.Text).Show();
 

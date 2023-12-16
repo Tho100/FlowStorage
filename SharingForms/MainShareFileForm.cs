@@ -207,7 +207,7 @@ namespace FlowSERVER1 {
                         await startSending(encryptText,toBase64Thumbnail);
                     }
 
-                    CloseForm.closeForm("SharingAlert");
+                    CloseForm.CloseSharingPopup();
 
                     new SucessSharedAlert(shareToName).Show();
 
