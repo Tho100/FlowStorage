@@ -153,7 +153,7 @@
             this.txtFieldRecoveryKey.Name = "txtFieldRecoveryKey";
             this.txtFieldRecoveryKey.PasswordChar = '\0';
             this.txtFieldRecoveryKey.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldRecoveryKey.PlaceholderText = "Enter your backup recovery key";
+            this.txtFieldRecoveryKey.PlaceholderText = "Enter your recovery key";
             this.txtFieldRecoveryKey.SelectedText = "";
             this.txtFieldRecoveryKey.Size = new System.Drawing.Size(331, 49);
             this.txtFieldRecoveryKey.TabIndex = 50;

@@ -53,7 +53,7 @@ namespace FlowSERVER1.Authentication {
                 string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
                 string email = EncryptionModel.Decrypt(File.ReadLines(authFile).Skip(1).First());
 
-                if (await startupQuery.IsAccountExist(username) == false) {
+                if (string.IsNullOrEmpty(username)) {
                     pnlRegistration.Visible = true;
                     return;
                 }
@@ -73,10 +73,9 @@ namespace FlowSERVER1.Authentication {
 
                 ShowHomePage();
 
-            } catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                new CustomAlert(title: "Something went wrong", subheader: "Are you connected to the internet?")
-                    .Show();
+            } catch (Exception) {
+                new CustomAlert(
+                    title: "Something went wrong", subheader: "Are you connected to the internet?").Show();
 
             } finally {
 

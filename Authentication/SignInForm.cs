@@ -149,14 +149,14 @@ namespace FlowSERVER1 {
                 try {
 
                     HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
+                    HomePage.instance.lblCurrentPageText.Text = "Home";
 
                     GlobalsData.fileTypeValuesSharedToMe.Clear();
                     GlobalsData.fileTypeValuesSharedToOthers.Clear();
 
                     await GenerateUserData();
 
-                    RetrievalAlert retrievalAlertForm = Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault();
-                    retrievalAlertForm?.Close();
+                    Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();
 
                     if (guna2CheckBox2.Checked) {
                         SetupAutoLogin(Globals.custUsername, Globals.custEmail);
@@ -164,9 +164,8 @@ namespace FlowSERVER1 {
                     }
 
                 } catch (Exception) {
-                    MessageBox.Show("An error occurred. Check your internet connection and try again.", "Flowstorage",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "An error occurred. Check your internet connection and try again.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
             } else {
