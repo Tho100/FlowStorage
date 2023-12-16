@@ -1,8 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FlowSERVER1.AuthenticationQuery {
@@ -40,6 +38,23 @@ namespace FlowSERVER1.AuthenticationQuery {
 
             Globals.accountType = accountType;
             return Globals.uploadFileLimit[accountType].ToString();
+
+        }
+
+        public async Task<string> GetUsernameByEmail(string email) {
+
+            const string selectUsernameQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
+
+            using (var command = new MySqlCommand(selectUsernameQuery, con)) {
+                command.Parameters.AddWithValue("@email", email);
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+
+            return String.Empty;
 
         }
 

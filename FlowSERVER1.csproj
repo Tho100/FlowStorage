@@ -433,7 +433,6 @@
     <Compile Include="AlertForms\CustomAlert.Designer.cs">
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="AuthenticationQuery\SignInQuery.cs" />
     <Compile Include="AuthenticationQuery\SignUpQuery.cs" />
     <Compile Include="AuthenticationQuery\StartupQuery.cs" />
     <Compile Include="AuthenticationQuery\UserAuthenticationQuery.cs" />

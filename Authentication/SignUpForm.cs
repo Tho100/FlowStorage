@@ -16,6 +16,7 @@ namespace FlowSERVER1.Authentication {
         private readonly MySqlConnection con = ConnectionModel.con;
 
         private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
+        private readonly StartupQuery startupQuery = new StartupQuery();
 
         private readonly HomePage accessHomePage = new HomePage();
         private readonly SignUpQuery signUpQuery = new SignUpQuery();
@@ -52,7 +53,7 @@ namespace FlowSERVER1.Authentication {
                 string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
                 string email = EncryptionModel.Decrypt(File.ReadLines(authFile).Skip(1).First());
 
-                if (AccountStartupValidation(username) == String.Empty) {
+                if (await startupQuery.IsAccountExist(username) == false) {
                     pnlRegistration.Visible = true;
                     return;
                 }
@@ -60,21 +61,11 @@ namespace FlowSERVER1.Authentication {
                 Globals.custUsername = username;
                 Globals.custEmail = email;
 
-                var foldersName = new List<string>();
-
-                using (var command = new MySqlCommand("SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username", ConnectionModel.con)) {
-                    command.Parameters.AddWithValue("@username", username);
-
-                    using (var reader = await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            foldersName.Add(EncryptionModel.Decrypt(reader.GetString(0)));
-                        }
-                    }
-                }
+                List<string> folders = await startupQuery.GetFolders(username);
 
                 accessHomePage.CallInitialStartupData = true;
 
-                accessHomePage.lstFoldersPage.Items.AddRange(foldersName.ToArray());
+                accessHomePage.lstFoldersPage.Items.AddRange(folders.ToArray());
                 accessHomePage.lblCurrentPageText.Text = "Home";
                 accessHomePage.lblLimitUploadText.Text = await userAuthQuery.GetUploadLimit();
 
@@ -82,7 +73,8 @@ namespace FlowSERVER1.Authentication {
 
                 ShowHomePage();
 
-            } catch (Exception) {
+            } catch (Exception eq) {
+                MessageBox.Show(eq.Message);
                 new CustomAlert(title: "Something went wrong", subheader: "Are you connected to the internet?")
                     .Show();
 
@@ -135,28 +127,6 @@ namespace FlowSERVER1.Authentication {
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(emailInput);
         } 
-
-        /// <summary>
-        /// 
-        /// Retrieve user username based on the parameter 'username'
-        /// which is retrieved from the cust_datas.txt. 
-        /// 
-        /// Usage; If returns String.Empty then show sign up panel else load data
-        ///        based on the username
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        private string AccountStartupValidation(string username) {
-
-            const string getUsername = "SELECT CUST_USERNAME FROM information WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(getUsername, con)) {
-                command.Parameters.AddWithValue("@username", username);
-                string concludeUsername = (string) command.ExecuteScalar();
-                return concludeUsername ?? String.Empty;
-            }
-
-        }
 
         /// <summary>
         /// 

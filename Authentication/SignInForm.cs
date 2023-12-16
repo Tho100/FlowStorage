@@ -20,8 +20,8 @@ namespace FlowSERVER1 {
 
         private readonly HomePage accessHomePage = HomePage.instance;
 
-        private readonly MySqlConnection con = ConnectionModel.con;
         private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
+        private readonly StartupQuery startupQuery = new StartupQuery();
 
         private string _returnedAuth0 { get; set; }
         private string _returnedAuth1 { get; set; }
@@ -70,17 +70,8 @@ namespace FlowSERVER1 {
             var garbageButton = accessHomePage.btnGarbageImage;
             var itsEmptyHereLabel = accessHomePage.lblEmptyHere;
 
-            const string selectUsernameQuery = "SELECT CUST_USERNAME FROM information WHERE CUST_EMAIL = @email";
+            _custUsername = await userAuthQuery.GetUsernameByEmail(_inputGetEmail);
 
-            using (var command = new MySqlCommand(selectUsernameQuery, con)) {
-                command.Parameters.AddWithValue("@email", _inputGetEmail);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        _custUsername = reader.GetString(0);
-                    }
-                }
-            }
- 
             flowLayout.Controls.Clear();
             accessHomePage.lstFoldersPage.Items.Clear();
 
@@ -100,19 +91,9 @@ namespace FlowSERVER1 {
             accessHomePage.btnGarbageImage.Visible = true;
         }
 
-        private async Task GenerateUserFolders(String userName) {
+        private async Task GenerateUserFolders(string username) {
 
-            var foldersName = new List<string>();
-
-            const string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(getTitles, ConnectionModel.con)) {
-                command.Parameters.AddWithValue("@username", userName);
-                using (MySqlDataReader fold_Reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await fold_Reader.ReadAsync()) {
-                        foldersName.Add(EncryptionModel.Decrypt(fold_Reader.GetString(0)));
-                    }
-                }
-            }
+            List<string> foldersName = await startupQuery.GetFolders(username);
 
             _homePage.lstFoldersPage.Items.AddRange(foldersName.ToArray());
             
@@ -179,6 +160,7 @@ namespace FlowSERVER1 {
 
                     if (guna2CheckBox2.Checked) {
                         SetupAutoLogin(Globals.custUsername, Globals.custEmail);
+
                     }
 
                 } catch (Exception) {
