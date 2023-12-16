@@ -224,8 +224,7 @@ namespace FlowSERVER1 {
             string origin = HomePage.instance.lblCurrentPageText.Text;
 
             if (origin == "Home") {
-
-                HashSet<string> directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+                var directoriesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Where(label => label.Text.All(c => Char.IsLetterOrDigit(c) || Char.IsWhiteSpace(c)))
@@ -236,17 +235,18 @@ namespace FlowSERVER1 {
                 lblTotalDirUploadCount.Text = countTotalDir.ToString();
 
             } else {
-
                 const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
                     command.Parameters.AddWithValue("@username", Globals.custUsername);
                     int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
                     lblTotalDirUploadCount.Text = totalDir.ToString();
                 }
+
             }
 
-            int countTotalFolders = HomePage.instance.lstFoldersPage.Items.Count - 3;
+            int countTotalFolders = HomePage.instance.lstFoldersPage.Items.Count;
             lblTotalFolderUploadCount.Text = countTotalFolders.ToString();
+
         }
 
 

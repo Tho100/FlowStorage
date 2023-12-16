@@ -435,6 +435,7 @@
     </Compile>
     <Compile Include="AuthenticationQuery\SignInQuery.cs" />
     <Compile Include="AuthenticationQuery\SignUpQuery.cs" />
+    <Compile Include="AuthenticationQuery\StartupQuery.cs" />
     <Compile Include="AuthenticationQuery\UserAuthenticationQuery.cs" />
     <Compile Include="Authentication\SignUpForm.cs">
       <SubType>Form</SubType>
