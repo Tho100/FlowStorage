@@ -1,13 +1,8 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Threading;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Sharing;
 using FlowSERVER1.Helper;
 using FlowSERVER1.SharingQuery;
 
@@ -24,7 +19,7 @@ namespace FlowSERVER1 {
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
 
-        public shareFileFORM(String fileName, bool isFromShared, String tableName,String directoryName) {
+        public shareFileFORM(String fileName, bool isFromShared, String tableName, String directoryName) {
 
             InitializeComponent();
 
@@ -47,12 +42,12 @@ namespace FlowSERVER1 {
 
             if (receiverUploadLimit != receiverCurrentTotalUploaded) {
 
-                new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
+                StartPopupForm.StartSharingPopup(shareToName);
                 
                 await shareFile.InitializeFileShare(
                     shareToName, comment, _fileName, _tableName, _directoryName, _isFromShared);
 
-                CloseForm.CloseSharingPopup();
+                ClosePopupForm.CloseSharingPopup();
 
                 new SucessSharedAlert(txtFieldShareToName.Text).Show();
 

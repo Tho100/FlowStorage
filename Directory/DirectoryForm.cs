@@ -45,8 +45,7 @@ namespace FlowSERVER1 {
 
                 var fileSizeInMb = Convert.FromBase64String(fileBase64EncodedData).Length / 1024 / 1024;
 
-                new Thread(() => new UploadingAlert(
-                    fileName, String.Empty, String.Empty, fileSize: fileSizeInMb).ShowDialog()).Start();
+                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
 
                 string fileType = Path.GetExtension(fileName);
 
@@ -68,7 +67,7 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadingAlert")).ToList().ForEach(form => form.Close());
+                ClosePopupForm.CloseUploadingPopup();
 
             } catch (Exception) {
                 new CustomAlert(
@@ -84,8 +83,7 @@ namespace FlowSERVER1 {
 
             var fileSizeInMb = Convert.FromBase64String(fileBase64EncodedData).Length / 1024 / 1024;
 
-            new Thread(() => new UploadingAlert(
-                fileName, String.Empty, String.Empty, fileSize: fileSizeInMb).ShowDialog()).Start();
+            StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
 
             string encryptedFileName = EncryptionModel.Encrypt(fileName);
             string encryptedDirectoryName = EncryptionModel.Encrypt(lblDirectoryName.Text);
@@ -112,7 +110,7 @@ namespace FlowSERVER1 {
                 await command.ExecuteNonQueryAsync();
             }
 
-            Application.OpenForms.OfType<Form>().Where(form => String.Equals(form.Name, "UploadingAlert")).ToList().ForEach(form => form.Close());
+            ClosePopupForm.CloseUploadingPopup();
 
         }
 
@@ -710,9 +708,7 @@ namespace FlowSERVER1 {
 
             flwLayoutDirectory.Controls.Add(panelTxt);
 
-            foreach (var form in Application.OpenForms.OfType<Form>().Where(form => form.Name == "UploadingAlert").ToList()) {
-                form.Close();
-            }
+            ClosePopupForm.CloseUploadingPopup();
 
         }
 
@@ -852,7 +848,7 @@ namespace FlowSERVER1 {
 
                         }
 
-                        CloseForm.CloseUploadingPopup();
+                        ClosePopupForm.CloseUploadingPopup();
 
                     } catch (Exception) {
                         OnUploadFailed();
@@ -867,7 +863,7 @@ namespace FlowSERVER1 {
         }
 
         private void OnUploadFailed() {
-            CloseForm.CloseUploadingPopup();
+            ClosePopupForm.CloseUploadingPopup();
             new CustomAlert(
                 title: "Some went wrong", subheader: "Failed to upload this file.").Show();
         }
@@ -908,7 +904,7 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                CloseForm.CloseUploadingPopup();
+                ClosePopupForm.CloseUploadingPopup();
                 new CustomAlert(
                     title: "An error occurred", "Something went wrong while trying to upload files.").Show();
             }

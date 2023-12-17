@@ -1,6 +1,6 @@
 ﻿
 using FlowSERVER1.AlertForms;
-
+using FlowSERVER1.Helper;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
@@ -169,16 +169,12 @@ namespace FlowSERVER1 {
 
                 picBanner.Click += (sender_f, e_f) => {
 
-                    RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader");
-                    ShowAlert.Show();
-                    DirectoryForm displayDirectory = new DirectoryForm(getDirTitle);
-                    displayDirectory.Show();
+                    StartPopupForm.StartRetrievalPopup();
 
-                    Application.OpenForms
-                   .OfType<Form>()
-                   .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-                   .ToList()
-                   .ForEach(form => form.Close());
+                    new DirectoryForm(getDirTitle).Show();
+
+                    ClosePopupForm.CloseRetrievalPopup();
+
                 };
 
                 clearRedundane();

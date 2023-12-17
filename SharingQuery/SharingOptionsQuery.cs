@@ -133,5 +133,24 @@ namespace FlowSERVER1.SharingQuery {
 
         }
 
+        /// <summary>
+        /// Verify if file is already shared
+        /// </summary>
+        /// <param name="_custUsername">Username of receiver</param>
+        /// <param name="_fileName">File name to be send</param>
+        /// <returns></returns>
+        public async Task<int> FileUploadCount(string receiverUsername, string fileName) {
+
+            const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
+
+            using (MySqlCommand command = new MySqlCommand(queryRetrieveCount, con)) {
+                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@receiver", receiverUsername);
+                command.Parameters.AddWithValue("@filename", fileName);
+                return Convert.ToInt32(await command.ExecuteScalarAsync());
+            }
+
+        }
+
     }
 }

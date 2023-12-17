@@ -66,8 +66,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your presentation.", "Loader")
-                .ShowDialog());
+                StartPopupForm.StartRetrievalPopup();
 
                 InitializePTX(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 

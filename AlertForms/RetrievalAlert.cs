@@ -10,16 +10,15 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
         private string originFrom { get; set; }
 
-        public RetrievalAlert(String alertMessage, String origin) {
+        public RetrievalAlert(String alertMessage, bool isFromLogin) {
 
             InitializeComponent();
 
             this.lblMessage.Text = alertMessage;
-            this.originFrom = origin;
 
             instance = this;
 
-            if(origin == "login") {
+            if(isFromLogin) {
                 btnCancelRetrieval.Visible = false;
 
             } else {

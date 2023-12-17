@@ -451,10 +451,11 @@
     <Compile Include="Global\GlobalsData.cs" />
     <Compile Include="Global\GlobalsTable.cs" />
     <Compile Include="Helper\CallDialogResultSave.cs" />
-    <Compile Include="Helper\CloseForm.cs" />
+    <Compile Include="Helper\ClosePopupForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
     <Compile Include="Helper\PanelGenerator.cs" />
     <Compile Include="Helper\GeneralCompressor.cs" />
+    <Compile Include="Helper\StartPopupForm.cs" />
     <Compile Include="Helper\UniqueFile.cs" />
     <Compile Include="Helper\UpdateChanges.cs" />
     <Compile Include="Helper\UpdateComment.cs" />

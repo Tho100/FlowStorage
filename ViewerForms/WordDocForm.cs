@@ -59,11 +59,11 @@ namespace FlowSERVER1 {
 
             try {
 
-                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your document.", "Loader").ShowDialog()).Start();
+                StartPopupForm.StartRetrievalPopup();
 
                 InitializeDoc(LoaderModel.LoadFile(_tableName, _directoryName, lblFileName.Text, _isFromShared));
 
-                CloseForm.CloseRetrievalPopup();
+                ClosePopupForm.CloseRetrievalPopup();
 
             } catch (Exception) {
                 MessageBox.Show(

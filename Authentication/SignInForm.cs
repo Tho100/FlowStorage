@@ -2,6 +2,7 @@
 using FlowSERVER1.Authentication;
 using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.Global;
+using FlowSERVER1.Helper;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -143,8 +144,7 @@ namespace FlowSERVER1 {
 
                 this.Close();
 
-                Thread _retrievalAlertForm = new Thread(() => new RetrievalAlert("Connecting to your account...", "login").ShowDialog());
-                _retrievalAlertForm.Start();
+                StartPopupForm.StartRetrievalPopup(isFromLogin: true);
 
                 try {
 

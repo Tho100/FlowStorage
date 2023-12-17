@@ -10,6 +10,8 @@ using System.Threading;
 using FlowSERVER1.Sharing;
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
+using FlowSERVER1.AuthenticationQuery;
+using FlowSERVER1.SharingQuery;
 
 namespace FlowSERVER1 {
     public partial class MainShareFileForm : Form {
@@ -17,6 +19,9 @@ namespace FlowSERVER1 {
         public MainShareFileForm instance;
 
         readonly private GeneralCompressor compressor = new GeneralCompressor();
+        readonly private Crud crud = new Crud();
+        readonly private SharingOptionsQuery sharingQuery = new SharingOptionsQuery();
+
         private string _fileName{ get; set; }
         private string _fileFullPath { get; set; }
         private string _fileExtension { get; set; }
@@ -42,22 +47,6 @@ namespace FlowSERVER1 {
 
         private void guna2Button6_Click(object sender, EventArgs e) {
             this.Close();
-        }
-
-        /// <summary>
-        /// This function will determine if the 
-        /// user is exists or not 
-        /// </summary>
-        /// <param name="receiverUsername"></param>
-        /// <returns></returns>
-        private async Task<int> userIsExists(String receiverUsername) {
-
-            const string countUser = "SELECT COUNT(*) FROM information WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(countUser,con)) {
-                command.Parameters.AddWithValue("@username", receiverUsername);
-                return Convert.ToInt32(await command.ExecuteScalarAsync());
-            }
-
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
@@ -95,26 +84,35 @@ namespace FlowSERVER1 {
         /// <returns></returns>
         private async Task startSending(String fileDataBase64, String thumbnailBase64 = null) {
 
-            const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@CUST_TO,@CUST_FROM,@CUST_FILE_PATH,@UPLOAD_DATE,@CUST_FILE,@FILE_EXT,@CUST_THUMB,@CUST_COMMENT)";
-
             try {
+                
+                string receiverUsername = txtFieldShareToName.Text;
+
+                string encryptedFileName = EncryptionModel.Encrypt(_fileName);
+                string encryptedComment = EncryptionModel.Encrypt(txtFieldComment.Text);
+
+                string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+                const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@to,@from,@file_name,@date,@file_data,@file_type,@thumbnail,@comment)";
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
-                    command.Parameters.AddWithValue("@CUST_TO", txtFieldShareToName.Text);
-                    command.Parameters.AddWithValue("@CUST_FROM", Globals.custUsername);
-                    command.Parameters.AddWithValue("@CUST_FILE_PATH", EncryptionModel.Encrypt(_fileName));
-                    command.Parameters.AddWithValue("@UPLOAD_DATE", DateTime.Now.ToString("dd/MM/yyyy"));
-                    command.Parameters.AddWithValue("@CUST_FILE", fileDataBase64);
-                    command.Parameters.AddWithValue("@FILE_EXT", _fileExtension);
-                    command.Parameters.AddWithValue("@CUST_COMMENT", EncryptionModel.Encrypt(txtFieldComment.Text));
-                    command.Parameters.AddWithValue("@CUST_THUMB", thumbnailBase64);
+                    command.Parameters.AddWithValue("@to", receiverUsername);
+                    command.Parameters.AddWithValue("@from", Globals.custUsername);
+                    command.Parameters.AddWithValue("@file_name", encryptedFileName);
+                    command.Parameters.AddWithValue("@date", todayDate);
+                    command.Parameters.AddWithValue("@file_data", fileDataBase64);
+                    command.Parameters.AddWithValue("@file_type", _fileExtension);
+                    command.Parameters.AddWithValue("@comment", encryptedComment);
+                    command.Parameters.AddWithValue("@thumbnail", thumbnailBase64);
                     command.Prepare();
 
                     await command.ExecuteNonQueryAsync();
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Sharing failed", subheader: "Something went wrong.").Show();
+                new CustomAlert(
+                    title: "Sharing failed", subheader: "Something went wrong.").Show();
+
             }
         }
 
@@ -125,7 +123,7 @@ namespace FlowSERVER1 {
 
             string shareToName = txtFieldShareToName.Text;
 
-            int receiverUploadLimit = await accountType(shareToName);
+            int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
             int receiverFilesCount = countReceiverShared(shareToName);
 
             if (receiverUploadLimit != receiverFilesCount) {
@@ -134,7 +132,7 @@ namespace FlowSERVER1 {
 
                     _currentFileName = txtFieldFileName.Text;
 
-                    new Thread(() => new SharingAlert(shareToName: shareToName).ShowDialog()).Start();
+                    StartPopupForm.StartSharingPopup(shareToName);
 
                     byte[] _compressedBytes = new GeneralCompressor().compressFileData(_fileBytes);
                     string _toBase64 = Convert.ToBase64String(_compressedBytes);
@@ -207,7 +205,7 @@ namespace FlowSERVER1 {
                         await startSending(encryptText,toBase64Thumbnail);
                     }
 
-                    CloseForm.CloseSharingPopup();
+                    ClosePopupForm.CloseSharingPopup();
 
                     new SucessSharedAlert(shareToName).Show();
 
@@ -222,29 +220,6 @@ namespace FlowSERVER1 {
                     title: "Sharing failed", subheader: "The receiver has reached the limit amount of files they can received.").Show();
 
             }
-
-        }
-
-        /// <summary>
-        /// This function will retrieves user 
-        /// account type 
-        /// </summary>
-        /// <param name="_receiverUsername">Receiver username who will received the file</param>
-        /// <returns></returns>
-        private async Task<int> accountType(String receiverUsername) {
-
-            const string _getAccountTypeQue = "SELECT acc_type FROM cust_type WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(_getAccountTypeQue,con)) {
-                command.Parameters.AddWithValue("@username", receiverUsername);
-                using(MySqlDataReader read = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if(await read.ReadAsync()) {
-                        return Globals.uploadFileLimit[read.GetString(0)];
-                    }
-                }
-            }
-
-            return 25;
-
         }
 
         /// <summary>
@@ -323,25 +298,6 @@ namespace FlowSERVER1 {
 
             return "0";
         }
-        
-        /// <summary>
-        /// Verify if file is already shared
-        /// </summary>
-        /// <param name="_custUsername">Username of receiver</param>
-        /// <param name="_fileName">File name to be send</param>
-        /// <returns></returns>
-        private int fileIsUploaded(String receiverUsername, String fileName) {
-
-            const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
-
-            using(MySqlCommand command = new MySqlCommand(queryRetrieveCount,con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
-                command.Parameters.AddWithValue("@receiver", receiverUsername);
-                command.Parameters.AddWithValue("@filename", fileName);
-                return Convert.ToInt32(command.ExecuteScalar());
-            }
-
-        }
 
         private string _currentFileName = "";
 
@@ -367,14 +323,16 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                int userExists = await userIsExists(textBox1);
+                int userExists = await sharingQuery.UserExistVerification(textBox1);
 
                 if (userExists == 0) {
                     MessageBox.Show($"User '{textBox1}' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                if (fileIsUploaded(textBox1, textBox2) > 0) {
+                int fileUploadCount = await sharingQuery.FileUploadCount(textBox1, textBox2);
+
+                if (fileUploadCount > 0) {
                     MessageBox.Show("This file is already shared.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }

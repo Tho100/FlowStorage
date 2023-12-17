@@ -113,9 +113,8 @@ namespace FlowSERVER1 {
 
                 var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
 
-                new Thread(() => new UploadingAlert(
-                    fileName, String.Empty, String.Empty, fileSize: fileSizeInMb).ShowDialog()).Start();
-
+                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
+                
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
                 string thumbnailCompressedBase64 = "";
 
@@ -148,7 +147,7 @@ namespace FlowSERVER1 {
 
                 }
 
-                CloseForm.CloseUploadingPopup();
+                ClosePopupForm.CloseUploadingPopup();
 
                 UpdateProgressBarValue();
 
@@ -166,8 +165,7 @@ namespace FlowSERVER1 {
 
                 var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
 
-                new Thread(() => new UploadingAlert(
-                    fileName, String.Empty, String.Empty, fileSize: fileSizeInMb).ShowDialog()).Start();
+                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
 
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
 
@@ -182,7 +180,7 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQuery, param);
 
-                CloseForm.CloseUploadingPopup();
+                ClosePopupForm.CloseUploadingPopup();
 
                 UpdateProgressBarValue();
 
@@ -200,8 +198,7 @@ namespace FlowSERVER1 {
 
                 var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
 
-                new Thread(() => new UploadingAlert(
-                    fileName, String.Empty, String.Empty, fileSize: fileSizeInMb).ShowDialog()).Start();
+                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
 
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
@@ -242,7 +239,7 @@ namespace FlowSERVER1 {
 
                 GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
 
-                CloseForm.CloseUploadingPopup();
+                ClosePopupForm.CloseUploadingPopup();
 
                 UpdateProgressBarValue();
 
@@ -262,8 +259,7 @@ namespace FlowSERVER1 {
 
                 var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
 
-                new Thread(() => new UploadingAlert(
-                    fileName, String.Empty, String.Empty, fileSize: fileSizeInMb).ShowDialog()).Start();
+                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
 
                 string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
@@ -290,7 +286,7 @@ namespace FlowSERVER1 {
 
                 await crud.Insert(insertQueryComment, paramComment);
 
-                CloseForm.CloseUploadingPopup();
+                ClosePopupForm.CloseUploadingPopup();
 
                 UpdateProgressBarValue();
 
@@ -327,8 +323,6 @@ namespace FlowSERVER1 {
                 };
 
                 await crud.Insert(insertQuery, param);
-
-                CloseForm.CloseUploadingPopup();
 
             } catch (Exception) {
                 BuildShowAlert(
@@ -1077,10 +1071,10 @@ namespace FlowSERVER1 {
 
                         }
 
-                        CloseForm.CloseUploadingPopup();
+                        ClosePopupForm.CloseUploadingPopup();
 
                     } catch (Exception) {
-                        CloseForm.CloseUploadingPopup();
+                        ClosePopupForm.CloseUploadingPopup();
 
                     }
 
@@ -1090,7 +1084,7 @@ namespace FlowSERVER1 {
             }
 
             BuildRedundaneVisibility();
-            CloseForm.CloseUploadingPopup();
+            ClosePopupForm.CloseUploadingPopup();
 
         }
 
@@ -1849,12 +1843,12 @@ namespace FlowSERVER1 {
 
                         }
 
-                        CloseForm.CloseUploadingPopup();
+                        ClosePopupForm.CloseUploadingPopup();
 
                     }
 
                 } catch (Exception) {
-                    CloseForm.CloseUploadingPopup();
+                    ClosePopupForm.CloseUploadingPopup();
 
                 }
 
@@ -1865,7 +1859,7 @@ namespace FlowSERVER1 {
             PublicStorageClosed = false;
 
             BuildRedundaneVisibility();
-            CloseForm.CloseUploadingPopup();
+            ClosePopupForm.CloseUploadingPopup();
 
         }
 
@@ -2652,7 +2646,7 @@ namespace FlowSERVER1 {
 
         private void OpenFolderDownloadDialog(string folderTitle, List<(string fileName, byte[] fileBytes)> files) {
 
-            CloseForm.CloseRetrievalPopup();
+            ClosePopupForm.CloseRetrievalPopup();
 
             var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), EncryptionModel.Decrypt(folderTitle));
             Directory.CreateDirectory(folderPath);
@@ -2713,10 +2707,10 @@ namespace FlowSERVER1 {
         private async Task BuildFilePanelFolder(List<String> fileType, String foldTitle, int currItem) {
 
             ClearRedundane();
-            CloseForm.CloseUploadingPopup();
 
-            new Thread(() => new RetrievalAlert(
-                "Flowstorage is retrieving your folder files.", "Loader").ShowDialog()).Start();
+            ClosePopupForm.CloseUploadingPopup();
+
+            StartPopupForm.StartRetrievalPopup();
 
             flwLayoutHome.Controls.Clear();
 
@@ -2977,29 +2971,28 @@ namespace FlowSERVER1 {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-                CloseForm.CloseRetrievalPopup();
+                ClosePopupForm.CloseRetrievalPopup();
 
             } catch (Exception) {
-                CloseForm.CloseRetrievalPopup();
+                ClosePopupForm.CloseRetrievalPopup();
                 BuildShowAlert(
                     title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
             }
         }
 
-        private async void CreateFilePanelFolder(String getFolderPath, String getFolderName, String[] filesName) {
+        private async void CreateFilePanelFolder(String folderPath, String folderName, String[] filesName) {
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
             int _IntCurr = 0;
 
-            new Thread(() => new UploadingAlert(
-                getFolderName, GlobalsTable.folderUploadTable, getFolderName).ShowDialog()).Start();
+            StartPopupForm.StartUploadingFolderPopup(folderName);
 
             GlobalsData.base64EncodedImageFolder.Clear();
             GlobalsData.base64EncodedThumbnailFolder.Clear();
 
-            foreach (var filesFullPath in Directory.EnumerateFiles(getFolderPath, "*")) {
+            foreach (var filesFullPath in Directory.EnumerateFiles(folderPath, "*")) {
 
                 _IntCurr++;
 
@@ -3119,7 +3112,7 @@ namespace FlowSERVER1 {
 
                         string compressImage = compressor.compressImageToBase64(filesFullPath);
                         string compressedImageToBase64 = EncryptionModel.Encrypt(compressImage);
-                        await InsertFileDataFolder(filesFullPath, getFolderName, compressedImageToBase64);
+                        await InsertFileDataFolder(filesFullPath, folderName, compressedImageToBase64);
 
                         textboxExl.Image = image;
                         textboxExl.Click += (sender_f, e_f) => {
@@ -3147,7 +3140,7 @@ namespace FlowSERVER1 {
                         string getEncoded = Convert.ToBase64String(getBytes);
                         string encryptEncoded = EncryptionModel.Encrypt(getEncoded);
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptEncoded);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptEncoded);
 
                         textboxExl.Click += (sender_t, e_t) => {
 
@@ -3159,7 +3152,7 @@ namespace FlowSERVER1 {
 
                     if (fileType == ".apk") {
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
@@ -3181,7 +3174,7 @@ namespace FlowSERVER1 {
                             compressedThumbnail = compressor.compressBase64Image(toBase64BitmapThumbnail);
                         }
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues, compressedThumbnail);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues, compressedThumbnail);
 
                         textboxExl.Image = toBitMap;
                         textboxExl.Click += (sender_vid, e_vid) => {
@@ -3198,7 +3191,7 @@ namespace FlowSERVER1 {
 
                     if (fileType == ".pdf") {
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3209,7 +3202,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.wordTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3220,7 +3213,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.excelTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3232,7 +3225,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.ptxTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3243,7 +3236,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.audioTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, getFolderName, encryptValues);
+                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3258,8 +3251,7 @@ namespace FlowSERVER1 {
 
             }
 
-            var uploadAlertForm = Application.OpenForms.OfType<Form>().FirstOrDefault(form => form.Name == "UploadingAlert");
-            uploadAlertForm?.Close();
+            ClosePopupForm.CloseUploadingPopup();
 
             btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
             btnGoHomePage.FillColor = Color.Transparent;
@@ -3299,7 +3291,7 @@ namespace FlowSERVER1 {
                 lblCurrentPageText.Text = "Home";
                 lstFoldersPage.SelectedIndex = -1;
 
-                CloseForm.CloseRetrievalPopup();
+                ClosePopupForm.CloseRetrievalPopup();
 
             }
         }
@@ -3560,7 +3552,7 @@ namespace FlowSERVER1 {
 
         private void guna2Button19_Click(object sender, EventArgs e) {
 
-            CloseForm.CloseRetrievalPopup();
+            ClosePopupForm.CloseRetrievalPopup();
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             RemoveAndDeleteFolder(selectedFolder);
@@ -3708,13 +3700,11 @@ namespace FlowSERVER1 {
                 picMain_Q.Image = Globals.DIRIcon;
                 picMain_Q.Click += (sender_dir, ev_dir) => {
 
-                    Thread ShowAlert = new Thread(() => new RetrievalAlert("Flowstorage is retrieving your directory files.", "Loader").ShowDialog());
-                    ShowAlert.Start();
+                    StartPopupForm.StartRetrievalPopup();
 
-                    DirectoryForm displayDirectory = new DirectoryForm(titleLab.Text);
-                    displayDirectory.Show();
+                    new DirectoryForm(titleLab.Text).Show();
 
-                    CloseForm.CloseRetrievalPopup();
+                    ClosePopupForm.CloseRetrievalPopup();
 
                 };
             }
@@ -4176,10 +4166,10 @@ namespace FlowSERVER1 {
 
                     }
 
-                    CloseForm.CloseUploadingPopup();
+                    ClosePopupForm.CloseUploadingPopup();
 
                 } catch (Exception) {
-                    CloseForm.CloseUploadingPopup();
+                    ClosePopupForm.CloseUploadingPopup();
 
                 }
 

@@ -59,9 +59,9 @@
             this.lblHeader.ForeColor = System.Drawing.Color.White;
             this.lblHeader.Location = new System.Drawing.Point(12, 20);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(122, 25);
+            this.lblHeader.Size = new System.Drawing.Size(107, 25);
             this.lblHeader.TabIndex = 53;
-            this.lblHeader.Text = "Please wait...";
+            this.lblHeader.Text = "Please wait";
             // 
             // btnCancelRetrieval
             // 

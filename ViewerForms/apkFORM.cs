@@ -65,8 +65,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                RetrievalAlert ShowAlert = new RetrievalAlert("Flowstorage is retrieving your APK data.", "Saver");
-                ShowAlert.Show();
+                StartPopupForm.StartRetrievalPopup();
 
                 SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
 

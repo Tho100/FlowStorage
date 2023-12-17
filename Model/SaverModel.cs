@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using Guna.UI2.WinForms;
-using Xamarin.Forms.Internals;
+using FlowSERVER1.Helper;
 
 namespace FlowSERVER1 {
 
@@ -35,7 +34,7 @@ namespace FlowSERVER1 {
         /// <param name="_getBytes"></param>
         private static void OpenSaveFileDialog(String fileName, Byte[] fileBytes) {
 
-            CloseRetrievalAlert();
+            ClosePopupForm.CloseRetrievalPopup();
 
             var dialog = new SaveFileDialog {
                 Filter = $"|*.{fileExtension}",
@@ -54,11 +53,13 @@ namespace FlowSERVER1 {
 
             try {
 
-                HashSet<string> filesName = new HashSet<string>(HomePage.instance.flwLayoutHome.Controls
+                var filesName = new List<string>(
+                    HomePage.instance.flwLayoutHome.Controls
                     .OfType<Guna2Panel>()
                     .SelectMany(panel => panel.Controls.OfType<Label>())
                     .Select(label => label.Text.ToLower())
-                    .Where(text => text.Contains(".")));
+                    .Where(text => text.Contains("."))
+                );
 
                 int indexOfImage = filesName.IndexOf(fileName.ToLower());
 
@@ -79,8 +80,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your file.", "Saver")
-                    .ShowDialog()).Start();
+                StartPopupForm.StartRetrievalPopup();
 
                 if (tableName == GlobalsTable.directoryUploadTable) {
 
@@ -96,7 +96,7 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                CloseRetrievalAlert();
+                                ClosePopupForm.CloseRetrievalPopup();
                                 
                                 stopFileRetrieval = false;
                                 return;
@@ -125,7 +125,7 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                CloseRetrievalAlert();
+                                ClosePopupForm.CloseRetrievalPopup();
 
                                 stopFileRetrieval = false;
                                 return;
@@ -153,7 +153,7 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                CloseRetrievalAlert();
+                                ClosePopupForm.CloseRetrievalPopup();
 
                                 stopFileRetrieval = false;
                                 return;
@@ -181,7 +181,7 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                CloseRetrievalAlert();
+                                ClosePopupForm.CloseRetrievalPopup();
 
                                 stopFileRetrieval = false;
                                 return;
@@ -209,7 +209,7 @@ namespace FlowSERVER1 {
 
                                 reader.Close();
 
-                                CloseRetrievalAlert();
+                                ClosePopupForm.CloseRetrievalPopup();
 
                                 stopFileRetrieval = false;
                                 return;
@@ -236,13 +236,11 @@ namespace FlowSERVER1 {
                         using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
 
                             if (stopFileRetrieval) {
-
                                 reader.Close();
-
-                                CloseRetrievalAlert();
-
+                                ClosePopupForm.CloseRetrievalPopup();
                                 stopFileRetrieval = false;
                                 return;
+
                             }
 
                             if (await reader.ReadAsync()) {
@@ -255,20 +253,15 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                CloseRetrievalAlert();
+                ClosePopupForm.CloseRetrievalPopup();
 
             } catch (Exception) {
-                CloseRetrievalAlert();
-                new CustomAlert(title: "An error occurred","Failed to download this file.");
+                ClosePopupForm.CloseRetrievalPopup();
+                new CustomAlert(
+                    title: "An error occurred","Failed to download this file.");
+
             }
         }
 
-        private static void CloseRetrievalAlert() {
-            Application.OpenForms
-            .OfType<Form>()
-            .Where(form => String.Equals(form.Name, "RetrievalAlert"))
-            .ToList()
-            .ForEach(form => form.Close());
-        }
     }
 }

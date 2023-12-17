@@ -61,14 +61,13 @@ namespace FlowSERVER1 {
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
 
-                        var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                        retrievalAlertFormsOne.ForEach(form => form.Close());
+                        ClosePopupForm.CloseRetrievalPopup();
 
                         if (stopFileRetrievalLoad) {
                             reader.Close();
-                            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                            retrievalAlertForms.ForEach(form => form.Close());
+                            ClosePopupForm.CloseRetrievalPopup();
                             stopFileRetrievalLoad = false;
+
                         }
 
 
@@ -96,14 +95,13 @@ namespace FlowSERVER1 {
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
 
-                        var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                        retrievalAlertFormsOne.ForEach(form => form.Close());
+                        ClosePopupForm.CloseRetrievalPopup();
 
                         if (stopFileRetrievalLoad) {
                             reader.Close();
-                            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                            retrievalAlertForms.ForEach(form => form.Close());
+                            ClosePopupForm.CloseRetrievalPopup();
                             stopFileRetrievalLoad = false;
+
                         }
 
 
@@ -132,14 +130,13 @@ namespace FlowSERVER1 {
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
 
-                        var retrievalAlertFormsOne = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                        retrievalAlertFormsOne.ForEach(form => form.Close());
+                        ClosePopupForm.CloseRetrievalPopup();
 
                         if (stopFileRetrievalLoad) {
                             reader.Close();
-                            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-                            retrievalAlertForms.ForEach(form => form.Close());
+                            ClosePopupForm.CloseRetrievalPopup();
                             stopFileRetrievalLoad = false;
+
                         }
 
                         var base64Encoded = reader.GetString(0);
@@ -167,13 +164,15 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
-                        CloseRetrievalAlertForms();
+
+                        ClosePopupForm.CloseRetrievalPopup();
 
                         if (stopFileRetrievalLoad) {
                             reader.Close();
-                            CloseRetrievalAlertForms();
+                            ClosePopupForm.CloseRetrievalPopup();
                             stopFileRetrievalLoad = false;
                             return;
+
                         }
 
                         var base64Encoded = reader.GetString(0);
@@ -200,11 +199,12 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
-                        CloseRetrievalAlertForms();
+
+                        ClosePopupForm.CloseRetrievalPopup();
 
                         if (stopFileRetrievalLoad) {
                             reader.Close();
-                            CloseRetrievalAlertForms();
+                            ClosePopupForm.CloseRetrievalPopup();
                             stopFileRetrievalLoad = false;
                             return;
                         }
@@ -232,11 +232,14 @@ namespace FlowSERVER1 {
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
-                        CloseRetrievalAlertForms();
+
+                        ClosePopupForm.CloseRetrievalPopup();
+
                         if (stopFileRetrievalLoad) {
                             reader.Close();
-                            CloseRetrievalAlertForms();
+                            ClosePopupForm.CloseRetrievalPopup();
                             stopFileRetrievalLoad = false;
+
                         }
 
                         string base64Encoded = reader.GetString(0);
@@ -253,10 +256,6 @@ namespace FlowSERVER1 {
             }
         }
 
-        private static void CloseRetrievalAlertForms() {
-            var retrievalAlertForms = Application.OpenForms.OfType<Form>().Where(form => form.Name == "RetrievalAlert").ToList();
-            retrievalAlertForms.ForEach(form => form.Close());
-        }
     }
 }
 

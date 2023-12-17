@@ -95,7 +95,7 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving audio data.", "Loader").ShowDialog()).Start();
+                    StartPopupForm.StartRetrievalPopup();
 
                     pictureBox3.Enabled = true;
 
@@ -182,7 +182,7 @@ namespace FlowSERVER1 {
                 Application.OpenForms["AudioHelp"].Close();
             }
 
-            CloseForm.CloseCustomPopup("AudioHelp");
+            ClosePopupForm.CloseCustomPopup("AudioHelp");
         }
 
         private void PlayAudioWave(byte[] waveBytes) {

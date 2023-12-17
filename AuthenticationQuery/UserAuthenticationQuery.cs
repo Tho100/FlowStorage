@@ -26,10 +26,10 @@ namespace FlowSERVER1.AuthenticationQuery {
             return accountInfo;
         }
 
-        public async Task<string> GetUploadLimit() {
+        public async Task<string> GetUploadLimit(string username = "") {
 
             string accountType = "";
-
+            
             const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);

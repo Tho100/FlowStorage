@@ -169,7 +169,7 @@ namespace FlowSERVER1 {
 
                 } else {
 
-                    new Thread(() => new RetrievalAlert("Flowstorage is retrieving video data..", "Loader").ShowDialog()).Start();
+                    StartPopupForm.StartRetrievalPopup();
 
                     guna2PictureBox1.Visible = false;
                     videoViewer.Visible = true;
@@ -182,7 +182,9 @@ namespace FlowSERVER1 {
                 btnPauseVideo.Visible = true;
 
             } catch (Exception) {
-                new CustomAlert(title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
+                new CustomAlert(
+                    title: "An error occurred", subheader: "Failed to play this video. It may be corrupted or in unsupported format.").Show();
+
             }
 
         }

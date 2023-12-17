@@ -62,13 +62,14 @@ namespace FlowSERVER1 {
 
             try {
 
-                new Thread(() => new RetrievalAlert("Flowstorage is retrieving your portable document.", "Loader").
-                ShowDialog()).Start();
+                StartPopupForm.StartRetrievalPopup();
 
                 InitializePDF(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text, isFromShared));
 
             } catch (Exception) {
-                MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
 
         }
