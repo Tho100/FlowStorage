@@ -134,7 +134,8 @@ namespace FlowSERVER1 {
                 .ToList()
                 .ForEach(form => form.Close());
 
-                MessageBox.Show("Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -189,12 +190,13 @@ namespace FlowSERVER1 {
 
         }
 
-        private async void RetrieveTextData(String PerformQue, String uploaderName) {
+        private async void RetrieveTextData(String query, String uploaderName) {
 
-            string getTxtQuery = PerformQue;
-            using (var command = new MySqlCommand(getTxtQuery, con)) {
+            string encryptedFileName = EncryptionModel.Encrypt(lblFileName.Text);
+
+            using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", uploaderName);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
+                command.Parameters.AddWithValue("@filename", encryptedFileName);
 
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
@@ -206,6 +208,7 @@ namespace FlowSERVER1 {
 
                         string toDecodedBase64 = Encoding.UTF8.GetString(decompressedBytes);
                         richTextBox1.Text = toDecodedBase64;
+
                     }
                 }
             }

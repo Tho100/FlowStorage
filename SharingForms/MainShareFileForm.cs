@@ -12,6 +12,7 @@ using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
 using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.SharingQuery;
+using Irony.Parsing;
 
 namespace FlowSERVER1 {
     public partial class MainShareFileForm : Form {
@@ -20,11 +21,14 @@ namespace FlowSERVER1 {
 
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private Crud crud = new Crud();
-        readonly private SharingOptionsQuery sharingQuery = new SharingOptionsQuery();
+
+        readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
+        readonly private ShareFileQuery shareFile = new ShareFileQuery();
 
         private string _fileName{ get; set; }
         private string _fileFullPath { get; set; }
         private string _fileExtension { get; set; }
+        private string _currentFileName { get; set; }
         private byte[] _fileBytes { get; set; }
 
         readonly private MySqlConnection con = ConnectionModel.con;
@@ -82,16 +86,22 @@ namespace FlowSERVER1 {
         /// <param name="setValue"></param>
         /// <param name="thumbnailValue"></param>
         /// <returns></returns>
-        private async Task startSending(String fileDataBase64, String thumbnailBase64 = null) {
+        private async Task InsertFileData(String fileDataBase64, String thumbnailBase64 = null) {
 
             try {
                 
+                string fileType = Path.GetExtension(_fileName);
+
                 string receiverUsername = txtFieldShareToName.Text;
 
                 string encryptedFileName = EncryptionModel.Encrypt(_fileName);
                 string encryptedComment = EncryptionModel.Encrypt(txtFieldComment.Text);
 
                 string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+                string compressedFileData = UniqueFile.IgnoreEncryption(fileType)
+                    ? fileDataBase64
+                    : EncryptionModel.Encrypt(fileDataBase64);
 
                 const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@to,@from,@file_name,@date,@file_data,@file_type,@thumbnail,@comment)";
 
@@ -100,7 +110,7 @@ namespace FlowSERVER1 {
                     command.Parameters.AddWithValue("@from", Globals.custUsername);
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@date", todayDate);
-                    command.Parameters.AddWithValue("@file_data", fileDataBase64);
+                    command.Parameters.AddWithValue("@file_data", compressedFileData);
                     command.Parameters.AddWithValue("@file_type", _fileExtension);
                     command.Parameters.AddWithValue("@comment", encryptedComment);
                     command.Parameters.AddWithValue("@thumbnail", thumbnailBase64);
@@ -119,14 +129,14 @@ namespace FlowSERVER1 {
         /// <summary>
         /// Main function for sharing file 
         /// </summary>
-        private async Task startSharing() {
+        private async Task StartSharingFile() {
 
             string shareToName = txtFieldShareToName.Text;
 
             int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
-            int receiverFilesCount = countReceiverShared(shareToName);
+            int receiverCurrentTotalUploaded = await shareFile.CountReceiverTotalShared(txtFieldShareToName.Text);
 
-            if (receiverUploadLimit != receiverFilesCount) {
+            if (receiverUploadLimit != receiverCurrentTotalUploaded) {
 
                 if (_currentFileName != txtFieldFileName.Text) {
 
@@ -134,45 +144,36 @@ namespace FlowSERVER1 {
 
                     StartPopupForm.StartSharingPopup(shareToName);
 
-                    byte[] _compressedBytes = new GeneralCompressor().compressFileData(_fileBytes);
-                    string _toBase64 = Convert.ToBase64String(_compressedBytes);
+                    byte[] compressedBytes = new GeneralCompressor().compressFileData(_fileBytes);
+                    string fileBase64Data = Convert.ToBase64String(compressedBytes);
 
                     if (Globals.imageTypes.Contains(_fileExtension)) {
                         string compressedImageBase64 = compressor.compressImageToBase64(_fileFullPath);
-                        string encryptText = EncryptionModel.Encrypt(compressedImageBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(compressedImageBase64);
 
                     } else if (Globals.wordTypes.Contains(_fileExtension)) {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);      
+                        await InsertFileData(fileBase64Data);      
                         
                     } else if (Globals.ptxTypes.Contains(_fileExtension)) {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (_fileExtension == ".exe") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (_fileExtension == ".msi") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (Globals.audioTypes.Contains(_fileExtension)) {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (_fileExtension == ".pdf") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (_fileExtension == ".apk") {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (Globals.excelTypes.Contains(_fileExtension)) {
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
-                        await startSending(encryptText);
+                        await InsertFileData(fileBase64Data);
 
                     } else if (Globals.textTypes.Contains(_fileExtension)) {
 
@@ -184,10 +185,9 @@ namespace FlowSERVER1 {
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
 
-                        string getEncoded = Convert.ToBase64String(compressedTextBytes);
-                        string encryptText = EncryptionModel.Encrypt(getEncoded);
+                        string encodedBase64 = Convert.ToBase64String(compressedTextBytes);
                         
-                        await startSending(encryptText);
+                        await InsertFileData(encodedBase64);
 
                     } else if (Globals.videoTypes.Contains(_fileExtension)) {
 
@@ -200,9 +200,8 @@ namespace FlowSERVER1 {
                             toBase64Thumbnail = Convert.ToBase64String(stream.ToArray());
                         }
 
-                        string encryptText = EncryptionModel.Encrypt(_toBase64);
+                        await InsertFileData(fileBase64Data, toBase64Thumbnail);
 
-                        await startSending(encryptText,toBase64Thumbnail);
                     }
 
                     ClosePopupForm.CloseSharingPopup();
@@ -223,85 +222,6 @@ namespace FlowSERVER1 {
         }
 
         /// <summary>
-        /// This function will do check if the 
-        /// receiver has password enabled for their file sharing
-        /// </summary>
-        private string hasPassword(String username) {
-
-            string sharingPassword = "";
-            string sharingIsDisabled = "";
-
-            const string queryGetAuth = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
-            using(MySqlCommand command = new MySqlCommand(queryGetAuth,con)) {
-                command.Parameters.AddWithValue("@username", username);
-                sharingPassword = command.ExecuteScalarAsync().ToString();
-            }
-
-            const string queryGetStatus = "SELECT PASSWORD_DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(queryGetStatus, con)) {
-                command.Parameters.AddWithValue("@username", username);
-                sharingIsDisabled = command.ExecuteScalarAsync().ToString();
-            }
-
-            if (sharingPassword == "DEF" || sharingIsDisabled == "1") {
-                sharingPassword = "";
-
-            } else {
-                return sharingPassword;
-
-            }
-
-            return sharingPassword;
-
-        }
-
-        /// <summary>
-        /// This function will count the number of 
-        /// files the user has been shared
-        /// </summary>
-        /// <param name="_receiverUsername"></param>
-        /// <returns></returns>
-        private int countReceiverShared(String _receiverUsername) {
-
-            const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @username";
-            int fileCount = 0;
-
-            using (MySqlCommand command = new MySqlCommand(countFileSharedQuery, con)) {
-                command.Parameters.AddWithValue("@username", _receiverUsername);
-
-                object result = command.ExecuteScalar();
-                if (result != null && result != DBNull.Value) {
-                    fileCount = Convert.ToInt32(result);
-                }
-            }
-
-            return fileCount;
-
-        }
-
-        /// <summary>
-        /// This function will retrieve user current 
-        /// file sharing status (enabeled or disabled)
-        /// </summary>
-        private async Task<string> retrieveDisabled(String receiverUsername) {
-
-            const string querySelectDisabled = "SELECT DISABLED FROM sharing_info WHERE CUST_USERNAME = @username";
-
-            using (MySqlCommand command = new MySqlCommand(querySelectDisabled, con)) {
-                command.Parameters.AddWithValue("@username", receiverUsername);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if (await reader.ReadAsync()) {
-                        return reader.GetString(0);
-                    }
-                }
-            }
-
-            return "0";
-        }
-
-        private string _currentFileName = "";
-
-        /// <summary>
         /// Button to start file sharing 
         /// </summary>
         /// <param name="sender"></param>
@@ -310,52 +230,48 @@ namespace FlowSERVER1 {
 
             try {
 
-                string textBox1 = txtFieldShareToName.Text;
-                string textBox2 = txtFieldFileName.Text;
+                string receiverUsername = txtFieldShareToName.Text;
+                string fileName = txtFieldFileName.Text;
 
-                if (textBox1 == Globals.custUsername) {
-                    MessageBox.Show("You can't share to yourself.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(receiverUsername)) {
                     return;
                 }
 
-                if (string.IsNullOrEmpty(textBox1) || string.IsNullOrEmpty(textBox2)) {
-                    MessageBox.Show("Please enter valid input in the text boxes.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (receiverUsername == Globals.custUsername) {
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "You can't share to yourself.").Show();
                     return;
                 }
 
-                int userExists = await sharingQuery.UserExistVerification(textBox1);
-
-                if (userExists == 0) {
-                    MessageBox.Show($"User '{textBox1}' not found.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (await sharingOptions.UserExistVerification(receiverUsername) == 0) {
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: $"The user {receiverUsername} does not exist.").Show();
                     return;
                 }
 
-                int fileUploadCount = await sharingQuery.FileUploadCount(textBox1, textBox2);
-
-                if (fileUploadCount > 0) {
-                    MessageBox.Show("This file is already shared.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (await shareFile.FileIsUploadedVerification(receiverUsername, fileName) > 0) {
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "This file is already shared.").Show();
                     return;
                 }
 
-                string disabled = await retrieveDisabled(textBox1);
-                if (disabled != "0") {
-                    MessageBox.Show($"The user {textBox1} disabled their file sharing.", "Sharing Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!(await sharingOptions.RetrieveIsSharingDisabled(receiverUsername) == "0")) {
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: $"The user {receiverUsername} disabled their file sharing.").Show();
                     return;
                 }
 
-                string password = hasPassword(textBox1);
-
-                if (!string.IsNullOrEmpty(password)) {
-                    AskSharingAuthForm _askPassForm = new AskSharingAuthForm(textBox1, textBox2, _fileExtension);
-                    _askPassForm.Show();
-
-                } else {
-                    await startSharing();
-
+                if (await sharingOptions.ReceiverHasAuthVerification(receiverUsername) != "") {
+                    new AskSharingAuthForm(
+                        receiverUsername, txtFieldComment.Text, fileName).Show();
+                    return;
                 }
+
+                await StartSharingFile();
 
             } catch (Exception) {
-                MessageBox.Show("An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }

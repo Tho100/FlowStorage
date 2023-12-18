@@ -1,12 +1,8 @@
 ﻿using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 using MySql.Data.MySqlClient;
-using Mysqlx.Connection;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FlowSERVER1.SharingQuery {
@@ -76,7 +72,7 @@ namespace FlowSERVER1.SharingQuery {
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
                 command.Parameters.AddWithValue("@username", Globals.custUsername);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
                         return readData.GetString(0);
                     }
@@ -208,12 +204,6 @@ namespace FlowSERVER1.SharingQuery {
 
             string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-            byte[] toBytes = Convert.FromBase64String(fileDataBase64);
-
-            string compressedUpdatedData = Globals.imageTypes.Contains(fileType)
-            ? fileDataBase64
-                : Convert.ToBase64String(compressor.compressFileData(toBytes));
-
             const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@receiver, @from, @file_name, @date, @file_data, @file_type, @thumbnail, @comment)";
 
             using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
@@ -221,7 +211,7 @@ namespace FlowSERVER1.SharingQuery {
                 command.Parameters.AddWithValue("@receiver", _receiverUsername);
                 command.Parameters.AddWithValue("@file_name", encryptedFileName);
                 command.Parameters.AddWithValue("@date", todayDate);
-                command.Parameters.AddWithValue("@file_data", compressedUpdatedData);
+                command.Parameters.AddWithValue("@file_data", fileDataBase64);
                 command.Parameters.AddWithValue("@file_type", fileType);
                 command.Parameters.AddWithValue("@comment", encryptedComment);
                 command.Parameters.AddWithValue("@thumbnail", thumbnail);
@@ -250,14 +240,12 @@ namespace FlowSERVER1.SharingQuery {
                 if (Globals.imageTypes.Contains(_fileExtension)) {
                     string finalTable = _tableName == GlobalsTable.psImage
                         ? GlobalsTable.psImage : GlobalsTable.homeImageTable;
-
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                 } else if (Globals.videoTypes.Contains(_fileExtension)) {
                     string finalTable = _tableName == GlobalsTable.psVideo
                         ? GlobalsTable.psVideo : GlobalsTable.homeVideoTable;
                     string getThumbnails = await RetrieveThumbnails(finalTable, _fileName);
-
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable), getThumbnails);
 
                 } else if (Globals.textTypes.Contains(_fileExtension)) {
@@ -270,7 +258,7 @@ namespace FlowSERVER1.SharingQuery {
                         ? GlobalsTable.psExcel : GlobalsTable.homeExcelTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == "pdf") {
+                } else if (_fileExtension == ".pdf") {
                     string finalTable = _tableName == GlobalsTable.psPdf
                         ? GlobalsTable.psPdf : GlobalsTable.homePdfTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
@@ -290,12 +278,12 @@ namespace FlowSERVER1.SharingQuery {
                         ? GlobalsTable.psAudio : GlobalsTable.homeAudioTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == "exe") {
+                } else if (_fileExtension == ".exe") {
                     string finalTable = _tableName == GlobalsTable.psExe
                         ? GlobalsTable.psExe : GlobalsTable.homeExeTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == "apk") {
+                } else if (_fileExtension == ".apk") {
                     string finalTable = _tableName == GlobalsTable.psApk
                         ? GlobalsTable.psApk : GlobalsTable.homeApkTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
