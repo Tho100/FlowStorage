@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 using System.Windows.Forms;
 
@@ -47,13 +48,14 @@ namespace FlowSERVER1 {
                         command.ExecuteNonQuery();
                     }
 
-                    Globals.sharingAuthStatus = "NOT_NULL";
+                    new TemporaryDataSharing().SharingAuthStatus = "notNull";
 
                     MessageBox.Show("You've successfully added a password for File Sharing.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else {
+
+            } else {
                 lblAlert.Visible = true;
+
             }
         }
 

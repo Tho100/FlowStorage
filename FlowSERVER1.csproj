@@ -450,7 +450,7 @@
     </Compile>
     <Compile Include="Global\GlobalsData.cs" />
     <Compile Include="Global\GlobalsTable.cs" />
-    <Compile Include="Global\TemporaryData.cs" />
+    <Compile Include="Temporary\TemporaryDataPayment.cs" />
     <Compile Include="Helper\CallDialogResultSave.cs" />
     <Compile Include="Helper\ClosePopupForm.cs" />
     <Compile Include="Global\GlobalStyle.cs" />
@@ -489,6 +489,7 @@
     </Compile>
     <Compile Include="SharingQuery\ShareFileQuery.cs" />
     <Compile Include="SharingQuery\SharingOptionsQuery.cs" />
+    <Compile Include="Temporary\TemporaryDataSharing.cs" />
     <Compile Include="ViewerForms\ApkForm.cs">
       <SubType>Form</SubType>
     </Compile>

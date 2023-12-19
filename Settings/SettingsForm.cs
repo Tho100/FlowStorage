@@ -1,16 +1,16 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
 using FlowSERVER1.Settings;
 using FlowSERVER1.SharingQuery;
+using FlowSERVER1.Temporary;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +26,7 @@ namespace FlowSERVER1 {
 
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
+        readonly private TemporaryDataSharing tempDataSharing = new TemporaryDataSharing();
 
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
@@ -97,7 +98,7 @@ namespace FlowSERVER1 {
                 btnAddSharingAuth.Visible = true;
                 btnAddSharingAuth.Enabled = true;
 
-                Globals.sharingAuthStatus = "DEF";
+                tempDataSharing.SharingAuthStatus = "DEF";
 
                 btnRmvSharingAuth.Visible = false;
                 btnRmvSharingAuth.Enabled = false;
@@ -122,9 +123,9 @@ namespace FlowSERVER1 {
                 lblDisableFileSharing.Text = "Enable File Sharing";
                 lblDescDisableSharing.Text = "Enabling file sharing will allows people to share a file to you";
 
-                Globals.sharingDisabledStatus = "1";
+                tempDataSharing.SharingDisabledStatus = "1";
 
-                 await sharingOptions.DisableSharing();
+                await sharingOptions.DisableSharing();
 
             }
         }
@@ -145,7 +146,7 @@ namespace FlowSERVER1 {
             lblDisableFileSharing.Text = "Disable File Sharing";
             lblDescDisableSharing.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
 
-            Globals.sharingDisabledStatus = "0";
+            tempDataSharing.SharingDisabledStatus = "0";
 
             await sharingOptions.EnableSharing();
 
@@ -166,7 +167,7 @@ namespace FlowSERVER1 {
 
             if(origin == "Home") {
 
-                if (tableName == "file_info_image") {
+                if (tableName == GlobalsTable.homeImageTable) {
 
                     List<string> dateLabels = new List<string>(HomePage.instance.flwLayoutHome.Controls
                         .OfType<Guna2Panel>()
@@ -198,7 +199,7 @@ namespace FlowSERVER1 {
 
             if (origin == "Home") {
                     
-                if(tableName == "file_info_image") {
+                if(tableName == GlobalsTable.homeImageTable) {
 
                     List<string> todayDateLabels = new List<string>(HomePage.instance.flwLayoutHome.Controls
                         .OfType<Guna2Panel>()
@@ -571,17 +572,16 @@ namespace FlowSERVER1 {
             try {
 
                 if (tabControlSettings.SelectedIndex == 2) {
+                    if(tempDataSharing.SharingDisabledStatus == String.Empty && tempDataSharing.SharingAuthStatus == String.Empty) {
 
-                    if(Globals.sharingDisabledStatus == String.Empty 
-                    && Globals.sharingAuthStatus == String.Empty) {
-                        Globals.sharingDisabledStatus = await sharingOptions
+                        tempDataSharing.SharingDisabledStatus = await sharingOptions
                             .RetrieveIsSharingDisabled(Globals.custUsername);
 
-                        Globals.sharingAuthStatus = await sharingOptions
+                        tempDataSharing.SharingAuthStatus = await sharingOptions
                             .ReceiverHasAuthVerification(Globals.custUsername);
                     }
 
-                    if (Globals.sharingAuthStatus != "DEF") {
+                    if (tempDataSharing.SharingAuthStatus != "DEF") {
 
                         btnRmvSharingAuth.Visible = true;
                         btnRmvSharingAuth.Enabled = true;
@@ -598,7 +598,7 @@ namespace FlowSERVER1 {
                         btnAddSharingAuth.Enabled = true;
                     }
 
-                    if (Globals.sharingDisabledStatus == "1") {
+                    if (tempDataSharing.SharingDisabledStatus == "1") {
                         btnDisableSharing.Enabled = false;
                         btnDisableSharing.Visible = false;
 

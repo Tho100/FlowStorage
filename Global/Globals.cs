@@ -7,11 +7,6 @@ namespace FlowSERVER1 {
         static public int PANEL_GAP_TOP = 275;
         static public int PANEL_GAP_HEIGHT = 100;
 
-        static public string sharingDisabledStatus = "";
-        static public string sharingAuthStatus = "";
-
-        static public string currentLanguage = "";
-
         static public string custUsername = "";
         static public string custEmail = "";
         static public string accountType = "";

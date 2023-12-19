@@ -9,7 +9,7 @@ using System.Windows;
 namespace FlowSERVER1.Helper {
     public class CurrencyConverter {
 
-        readonly static private TemporaryData tempData = new TemporaryData();
+        readonly static private TemporaryDataPayment tempData = new TemporaryDataPayment();
 
         public async Task ConvertToLocalCurrency() {
 

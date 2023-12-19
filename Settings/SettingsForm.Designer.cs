@@ -104,6 +104,7 @@
             this.btnCloseTab3 = new Guna.UI2.WinForms.Guna2Button();
             this.tabUpgradePage = new System.Windows.Forms.TabPage();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label27 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
@@ -116,6 +117,7 @@
             this.label49 = new System.Windows.Forms.Label();
             this.lblSupremePricing = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label34 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.btnUseExpress = new Guna.UI2.WinForms.Guna2Button();
@@ -129,6 +131,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.guna2Panel8 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label40 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
@@ -140,9 +143,6 @@
             this.btnOpenMaxPayment = new Guna.UI2.WinForms.Guna2Button();
             this.lblMaxPricing = new System.Windows.Forms.Label();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label27 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
             this.tabControlSettings.SuspendLayout();
             this.tabAccountPage.SuspendLayout();
             this.pnlCancelPlan.SuspendLayout();
@@ -539,7 +539,7 @@
             this.btnCloseTab1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnCloseTab1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnCloseTab1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.btnCloseTab1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseTab1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnCloseTab1.ForeColor = System.Drawing.Color.GhostWhite;
             this.btnCloseTab1.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab1.Image")));
             this.btnCloseTab1.Location = new System.Drawing.Point(10, 15);
@@ -1251,6 +1251,18 @@
             this.guna2Panel2.Size = new System.Drawing.Size(313, 473);
             this.guna2Panel2.TabIndex = 35;
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.Transparent;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.label27.Location = new System.Drawing.Point(196, 84);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(43, 20);
+            this.label27.TabIndex = 35;
+            this.label27.Text = "/mo.";
+            // 
             // label52
             // 
             this.label52.AutoSize = true;
@@ -1422,6 +1434,18 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(313, 473);
             this.guna2Panel1.TabIndex = 34;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.BackColor = System.Drawing.Color.Transparent;
+            this.label34.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.label34.Location = new System.Drawing.Point(185, 84);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(43, 20);
+            this.label34.TabIndex = 36;
+            this.label34.Text = "/mo.";
             // 
             // label29
             // 
@@ -1608,6 +1632,18 @@
             this.guna2Panel8.TabIndex = 0;
             this.guna2Panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel8_Paint);
             // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.Color.Transparent;
+            this.label40.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.label40.Location = new System.Drawing.Point(175, 84);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(43, 20);
+            this.label40.TabIndex = 37;
+            this.label40.Text = "/mo.";
+            // 
             // label28
             // 
             this.label28.AutoSize = true;
@@ -1750,42 +1786,6 @@
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.BackColor = System.Drawing.Color.Transparent;
-            this.label27.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label27.Location = new System.Drawing.Point(196, 84);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(43, 20);
-            this.label27.TabIndex = 35;
-            this.label27.Text = "/mo.";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.BackColor = System.Drawing.Color.Transparent;
-            this.label34.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label34.Location = new System.Drawing.Point(185, 84);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(43, 20);
-            this.label34.TabIndex = 36;
-            this.label34.Text = "/mo.";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.BackColor = System.Drawing.Color.Transparent;
-            this.label40.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label40.Location = new System.Drawing.Point(175, 84);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(43, 20);
-            this.label40.TabIndex = 37;
-            this.label40.Text = "/mo.";
             // 
             // SettingsForm
             // 
