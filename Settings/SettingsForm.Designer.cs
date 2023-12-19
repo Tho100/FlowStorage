@@ -114,8 +114,7 @@
             this.btnOpenSupremePayment = new Guna.UI2.WinForms.Guna2Button();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
+            this.lblSupremePricing = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
@@ -126,8 +125,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
+            this.lblExpressPricing = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.guna2Panel8 = new Guna.UI2.WinForms.Guna2Panel();
@@ -138,11 +136,13 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label72 = new System.Windows.Forms.Label();
             this.btnUseMax = new Guna.UI2.WinForms.Guna2Button();
             this.btnOpenMaxPayment = new Guna.UI2.WinForms.Guna2Button();
-            this.label40 = new System.Windows.Forms.Label();
+            this.lblMaxPricing = new System.Windows.Forms.Label();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
+            this.label27 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
             this.tabControlSettings.SuspendLayout();
             this.tabAccountPage.SuspendLayout();
             this.pnlCancelPlan.SuspendLayout();
@@ -1233,6 +1233,7 @@
             this.guna2Panel2.BorderColor = System.Drawing.Color.White;
             this.guna2Panel2.BorderRadius = 12;
             this.guna2Panel2.BorderThickness = 1;
+            this.guna2Panel2.Controls.Add(this.label27);
             this.guna2Panel2.Controls.Add(this.label52);
             this.guna2Panel2.Controls.Add(this.label43);
             this.guna2Panel2.Controls.Add(this.label44);
@@ -1243,8 +1244,7 @@
             this.guna2Panel2.Controls.Add(this.btnOpenSupremePayment);
             this.guna2Panel2.Controls.Add(this.label48);
             this.guna2Panel2.Controls.Add(this.label49);
-            this.guna2Panel2.Controls.Add(this.label50);
-            this.guna2Panel2.Controls.Add(this.label51);
+            this.guna2Panel2.Controls.Add(this.lblSupremePricing);
             this.guna2Panel2.FillColor = System.Drawing.Color.White;
             this.guna2Panel2.Location = new System.Drawing.Point(666, 46);
             this.guna2Panel2.Name = "guna2Panel2";
@@ -1387,29 +1387,18 @@
             this.label49.TabIndex = 27;
             this.label49.Text = "PRICING";
             // 
-            // label50
+            // lblSupremePricing
             // 
-            this.label50.AutoSize = true;
-            this.label50.BackColor = System.Drawing.Color.Transparent;
-            this.label50.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label50.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label50.Location = new System.Drawing.Point(253, 65);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(43, 20);
-            this.label50.TabIndex = 8;
-            this.label50.Text = "/mo.";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.BackColor = System.Drawing.Color.Transparent;
-            this.label51.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.label51.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label51.Location = new System.Drawing.Point(191, 47);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(74, 45);
-            this.label51.TabIndex = 1;
-            this.label51.Text = "$20";
+            this.lblSupremePricing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSupremePricing.BackColor = System.Drawing.Color.Transparent;
+            this.lblSupremePricing.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSupremePricing.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.lblSupremePricing.Location = new System.Drawing.Point(192, 52);
+            this.lblSupremePricing.Name = "lblSupremePricing";
+            this.lblSupremePricing.Size = new System.Drawing.Size(115, 32);
+            this.lblSupremePricing.TabIndex = 1;
+            this.lblSupremePricing.Text = "$20";
+            this.lblSupremePricing.Click += new System.EventHandler(this.lblSupremePricing_Click);
             // 
             // guna2Panel1
             // 
@@ -1417,6 +1406,7 @@
             this.guna2Panel1.BorderColor = System.Drawing.Color.White;
             this.guna2Panel1.BorderRadius = 12;
             this.guna2Panel1.BorderThickness = 1;
+            this.guna2Panel1.Controls.Add(this.label34);
             this.guna2Panel1.Controls.Add(this.label29);
             this.guna2Panel1.Controls.Add(this.label30);
             this.guna2Panel1.Controls.Add(this.btnUseExpress);
@@ -1426,8 +1416,7 @@
             this.guna2Panel1.Controls.Add(this.label36);
             this.guna2Panel1.Controls.Add(this.label37);
             this.guna2Panel1.Controls.Add(this.label39);
-            this.guna2Panel1.Controls.Add(this.label41);
-            this.guna2Panel1.Controls.Add(this.label42);
+            this.guna2Panel1.Controls.Add(this.lblExpressPricing);
             this.guna2Panel1.FillColor = System.Drawing.Color.White;
             this.guna2Panel1.Location = new System.Drawing.Point(343, 46);
             this.guna2Panel1.Name = "guna2Panel1";
@@ -1560,31 +1549,17 @@
             this.label39.Text = "PRICING";
             this.label39.Click += new System.EventHandler(this.label39_Click_1);
             // 
-            // label41
+            // lblExpressPricing
             // 
-            this.label41.AutoSize = true;
-            this.label41.BackColor = System.Drawing.Color.Transparent;
-            this.label41.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label41.Location = new System.Drawing.Point(223, 65);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(43, 20);
-            this.label41.TabIndex = 8;
-            this.label41.Text = "/mo.";
-            this.label41.Click += new System.EventHandler(this.label41_Click);
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.BackColor = System.Drawing.Color.Transparent;
-            this.label42.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label42.Location = new System.Drawing.Point(180, 47);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(56, 45);
-            this.label42.TabIndex = 1;
-            this.label42.Text = "$8";
-            this.label42.Click += new System.EventHandler(this.label42_Click);
+            this.lblExpressPricing.BackColor = System.Drawing.Color.Transparent;
+            this.lblExpressPricing.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExpressPricing.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.lblExpressPricing.Location = new System.Drawing.Point(183, 51);
+            this.lblExpressPricing.Name = "lblExpressPricing";
+            this.lblExpressPricing.Size = new System.Drawing.Size(115, 32);
+            this.lblExpressPricing.TabIndex = 1;
+            this.lblExpressPricing.Text = "$8";
+            this.lblExpressPricing.Click += new System.EventHandler(this.label42_Click);
             // 
             // label1
             // 
@@ -1615,6 +1590,7 @@
             this.guna2Panel8.BorderColor = System.Drawing.Color.White;
             this.guna2Panel8.BorderRadius = 12;
             this.guna2Panel8.BorderThickness = 1;
+            this.guna2Panel8.Controls.Add(this.label40);
             this.guna2Panel8.Controls.Add(this.label28);
             this.guna2Panel8.Controls.Add(this.label26);
             this.guna2Panel8.Controls.Add(this.label22);
@@ -1622,10 +1598,9 @@
             this.guna2Panel8.Controls.Add(this.label14);
             this.guna2Panel8.Controls.Add(this.label15);
             this.guna2Panel8.Controls.Add(this.label8);
-            this.guna2Panel8.Controls.Add(this.label72);
             this.guna2Panel8.Controls.Add(this.btnUseMax);
             this.guna2Panel8.Controls.Add(this.btnOpenMaxPayment);
-            this.guna2Panel8.Controls.Add(this.label40);
+            this.guna2Panel8.Controls.Add(this.lblMaxPricing);
             this.guna2Panel8.FillColor = System.Drawing.Color.White;
             this.guna2Panel8.Location = new System.Drawing.Point(20, 46);
             this.guna2Panel8.Name = "guna2Panel8";
@@ -1718,19 +1693,6 @@
             this.label8.Text = "PRICING";
             this.label8.Click += new System.EventHandler(this.label8_Click_1);
             // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.BackColor = System.Drawing.Color.Transparent;
-            this.label72.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label72.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label72.Location = new System.Drawing.Point(212, 65);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(43, 20);
-            this.label72.TabIndex = 8;
-            this.label72.Text = "/mo.";
-            this.label72.Click += new System.EventHandler(this.label72_Click);
-            // 
             // btnUseMax
             // 
             this.btnUseMax.BorderColor = System.Drawing.Color.Orange;
@@ -1771,24 +1733,59 @@
             this.btnOpenMaxPayment.Text = "Subscribe";
             this.btnOpenMaxPayment.Click += new System.EventHandler(this.guna2Button5_Click);
             // 
-            // label40
+            // lblMaxPricing
             // 
-            this.label40.AutoSize = true;
-            this.label40.BackColor = System.Drawing.Color.Transparent;
-            this.label40.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.label40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.label40.Location = new System.Drawing.Point(168, 47);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(56, 45);
-            this.label40.TabIndex = 1;
-            this.label40.Text = "$3";
-            this.label40.Click += new System.EventHandler(this.label40_Click);
+            this.lblMaxPricing.BackColor = System.Drawing.Color.Transparent;
+            this.lblMaxPricing.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxPricing.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.lblMaxPricing.Location = new System.Drawing.Point(172, 51);
+            this.lblMaxPricing.Name = "lblMaxPricing";
+            this.lblMaxPricing.Size = new System.Drawing.Size(115, 32);
+            this.lblMaxPricing.TabIndex = 1;
+            this.lblMaxPricing.Text = "$3";
+            this.lblMaxPricing.Click += new System.EventHandler(this.label40_Click);
             // 
             // guna2BorderlessForm1
             // 
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.Transparent;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.label27.Location = new System.Drawing.Point(196, 84);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(43, 20);
+            this.label27.TabIndex = 35;
+            this.label27.Text = "/mo.";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.BackColor = System.Drawing.Color.Transparent;
+            this.label34.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.label34.Location = new System.Drawing.Point(185, 84);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(43, 20);
+            this.label34.TabIndex = 36;
+            this.label34.Text = "/mo.";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.Color.Transparent;
+            this.label40.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.label40.Location = new System.Drawing.Point(175, 84);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(43, 20);
+            this.label40.TabIndex = 37;
+            this.label40.Text = "/mo.";
             // 
             // SettingsForm
             // 
@@ -1847,7 +1844,6 @@
         public System.Windows.Forms.Label label23;
         public System.Windows.Forms.Label label24;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel8;
-        private System.Windows.Forms.Label label40;
         private Guna.UI2.WinForms.Guna2Button btnOpenMaxPayment;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         public System.Windows.Forms.Label lblCountFileUploadToday;
@@ -1878,7 +1874,6 @@
         private Guna.UI2.WinForms.Guna2Button btnCloseTab3;
         public Guna.UI2.WinForms.Guna2Button btnEnableSharing;
         public Guna.UI2.WinForms.Guna2Button btnRmvSharingAuth;
-        private System.Windows.Forms.Label label72;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label lblDeleteMyAccount;
         public Guna.UI2.WinForms.Guna2Button btnDltAccount;
@@ -1921,8 +1916,6 @@
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.Label label51;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
@@ -1931,9 +1924,13 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label52;
         public System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label40;
+        public System.Windows.Forms.Label lblMaxPricing;
+        public System.Windows.Forms.Label lblSupremePricing;
+        public System.Windows.Forms.Label lblExpressPricing;
     }
 }

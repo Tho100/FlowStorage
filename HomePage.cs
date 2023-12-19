@@ -30,6 +30,7 @@ namespace FlowSERVER1 {
 
         readonly private Crud crud = new Crud();
         readonly private GeneralCompressor compressor = new GeneralCompressor();
+        readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
 
         public static HomePage instance { get; set; } = new HomePage();
         public bool CallInitialStartupData { get; set; } = false;
@@ -3961,9 +3962,14 @@ namespace FlowSERVER1 {
         private void panel3_Paint(object sender, PaintEventArgs e) {
         }
 
-        private void guna2Button14_Click(object sender, EventArgs e) {
+        private async void guna2Button14_Click(object sender, EventArgs e) {
+
             new SettingsForm().Show();
+
             SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePage"];
+
+            await currencyConverter.ConvertToLocalCurrency();
+
         }
 
         private void guna2ProgressBar1_ValueChanged(object sender, EventArgs e) {
@@ -4484,9 +4490,14 @@ namespace FlowSERVER1 {
             this.Close();
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private async void guna2Button2_Click(object sender, EventArgs e) {
+
             new SettingsForm().Show();
+
             SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePage"];
+
+            await currencyConverter.ConvertToLocalCurrency();
+
         }
 
         private void guna2Button1_Click_1(object sender, EventArgs e) {

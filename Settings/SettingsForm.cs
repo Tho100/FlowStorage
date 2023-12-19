@@ -1,13 +1,16 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Helper;
 using FlowSERVER1.Settings;
 using FlowSERVER1.SharingQuery;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +23,9 @@ namespace FlowSERVER1 {
         static public SettingsForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
+        readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
 
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
@@ -57,10 +62,10 @@ namespace FlowSERVER1 {
 
                 chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
-                string[] _halfTablesName = { "info_image", "info_text", "info_video", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audio", "info_excel" };
-                string[] _chartXAxisValues = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
+                string[] halfTablesName = { "info_image", "info_text", "info_video", "info_pdf", "info_apk", "info_exe", "info_word", "info_ptx", "info_audio", "info_excel" };
+                string[] chartXAxisValues = { "Image", "Text", "Video", "PDF", "APK", "Exe", "Document", "Presentation", "Audio", "Excel" };
 
-                foreach ((string tableName, string chartName) in _halfTablesName.Zip(_chartXAxisValues, (a, b) => (a, b))) {
+                foreach ((string tableName, string chartName) in halfTablesName.Zip(chartXAxisValues, (a, b) => (a, b))) {
                     await GenerateUploadChart(chartName, "file_" + tableName.ToLower());
                     await TotalUploadFileTodayCount("file_" + tableName.ToLower());
                     await TotalUploadFile("file_" + tableName.ToLower());
@@ -292,9 +297,6 @@ namespace FlowSERVER1 {
         private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custUsername);
         private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custEmail);
         private void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
-        private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
-
-        }
 
         private void remAccFORM_Load(object sender, EventArgs e) {
 
@@ -618,15 +620,16 @@ namespace FlowSERVER1 {
                     }
                 }
 
-            } catch (Exception ex) {
-                Debug.WriteLine(ex.Message);
-            }
+                if(tabControlSettings.SelectedIndex == 3) {
+                    await currencyConverter.ConvertToLocalCurrency();
+
+                }
+
+            } catch (Exception) { }
+
         }
 
         private void label22_Click(object sender, EventArgs e) {
-
-        }
-        private void label58_Click(object sender, EventArgs e) {
 
         }
 
@@ -679,6 +682,10 @@ namespace FlowSERVER1 {
         }
 
         private void label8_Click_1(object sender, EventArgs e) {
+
+        }
+
+        private void lblSupremePricing_Click(object sender, EventArgs e) {
 
         }
     }
