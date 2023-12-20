@@ -6,9 +6,12 @@ namespace FlowSERVER1.Helper {
         
         public static bool IgnoreEncryption(String fileType) {
 
-            HashSet<String> fileToIgnore = new HashSet<string>();
+            var fileToIgnore = new HashSet<string>();
             fileToIgnore.UnionWith(Globals.audioTypes);
             fileToIgnore.UnionWith(Globals.videoTypes);
+            fileToIgnore.Add(".exe");
+            fileToIgnore.Add(".msi");
+            fileToIgnore.Add(".apk");
 
             return fileToIgnore.Contains(fileType);
 
