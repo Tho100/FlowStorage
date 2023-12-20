@@ -3,6 +3,7 @@ using FlowSERVER1.Authentication;
 using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace FlowSERVER1 {
 
         private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         private readonly StartupQuery startupQuery = new StartupQuery();
+        private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private string _returnedAuth0 { get; set; }
         private string _returnedAuth1 { get; set; }
@@ -76,8 +78,8 @@ namespace FlowSERVER1 {
             flowLayout.Controls.Clear();
             accessHomePage.lstFoldersPage.Items.Clear();
 
-            Globals.custUsername = _custUsername;
-            Globals.custEmail = _inputGetEmail;
+            tempDataUser.Username = _custUsername;
+            tempDataUser.Email = _inputGetEmail;
 
             garbageButton.Visible = itsEmptyHereLabel.Visible = lblAlert.Visible = false;
 
@@ -159,7 +161,7 @@ namespace FlowSERVER1 {
                     Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();
 
                     if (guna2CheckBox2.Checked) {
-                        SetupAutoLogin(Globals.custUsername, Globals.custEmail);
+                        SetupAutoLogin(tempDataUser.Username, tempDataUser.Email);
 
                     }
 

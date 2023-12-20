@@ -1,5 +1,6 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Model;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
@@ -9,40 +10,41 @@ namespace FlowSERVER1.Settings {
     public partial class CancelPlanForm : Form {
 
         private readonly MySqlConnection con = ConnectionModel.con;
+        private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public CancelPlanForm() {
             InitializeComponent();
-            lblCurrentAccountPlan.Text = Globals.accountType;
+            lblCurrentAccountPlan.Text = tempDataUser.AccountType;
         }
 
         private async Task CancelUserSubscriptionPlan() {
 
             try {
 
-                StripeModel.CancelCustomerSubscription(Globals.custEmail);
-                StripeModel.DeleteCustomer(Globals.custEmail);
+                StripeModel.CancelCustomerSubscription(tempDataUser.Email);
+                StripeModel.DeleteCustomer(tempDataUser.Email);
 
                 const string updateUserAccountQuery = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
-                    command.Parameters.AddWithValue("@email", Globals.custEmail);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                    command.Parameters.AddWithValue("@email", tempDataUser.Email);
                     command.Parameters.AddWithValue("@type", "Basic");
                     await command.ExecuteNonQueryAsync();
                 }
 
                 const string insertBuyerQuery = "DELETE FROM cust_buyer WHERE CUST_USERNAME = @username";
                 using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
-                    commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
+                    commandSecond.Parameters.AddWithValue("@username", tempDataUser.Username);
                     await commandSecond.ExecuteNonQueryAsync();
                 }
 
-                Globals.accountType = "Basic";
+                tempDataUser.AccountType = "Basic";
 
                 SettingsForm.instance.lblAccountType.Text = "Basic";
                 SettingsForm.instance.InitiailizeUIOnAccountType("Basic");
                 SettingsForm.instance.pnlCancelPlan.Visible = false;
 
-                new CustomAlert(title: "Subscription plan cancelled successfully", subheader: $"You downgraded your account from {Globals.accountType} to Basic and you'll no longer be charged.").Show();
+                new CustomAlert(title: "Subscription plan cancelled successfully", subheader: $"You downgraded your account from {tempDataUser.AccountType} to Basic and you'll no longer be charged.").Show();
 
                 this.Close();
 

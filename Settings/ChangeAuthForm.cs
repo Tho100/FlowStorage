@@ -1,4 +1,5 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
@@ -9,7 +10,9 @@ namespace FlowSERVER1 {
     public partial class ChangeAuthForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         readonly private Crud crud = new Crud();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public ChangeAuthForm() {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace FlowSERVER1 {
             const string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(updatePasswordQuery, con)) {
                 command.Parameters.AddWithValue("@newpass", EncryptionModel.computeAuthCase(newAuth));
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 await command.ExecuteNonQueryAsync();
             }
 

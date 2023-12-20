@@ -7,10 +7,6 @@ namespace FlowSERVER1 {
         static public int PANEL_GAP_TOP = 275;
         static public int PANEL_GAP_HEIGHT = 100;
 
-        static public string custUsername = "";
-        static public string custEmail = "";
-        static public string accountType = "";
-
         static public readonly Image VerticalMenuImage = Properties.Resources.icons8_menu_vertical_30;
         static public readonly Image DirectoryGarbageImage = Properties.Resources.icons8_garbage_66__1_;
         static public readonly Image DIRIcon = Properties.Resources.DirIcon;

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FlowSERVER1.Temporary;
+using System;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class LimitedDirAlert : Form {
+
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
         public LimitedDirAlert() {
             InitializeComponent();
-            this.label7.Text = $"Current Account: {Globals.accountType}";
+            this.label7.Text = $"Current Account: {tempDataUser.AccountType}";
         }
 
 

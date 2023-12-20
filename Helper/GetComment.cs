@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 
 namespace FlowSERVER1 {
@@ -6,11 +7,12 @@ namespace FlowSERVER1 {
     public class GetComment {
 
         readonly private static MySqlConnection con = ConnectionModel.con;
+        readonly private static TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public static string getCommentSharedToMe(string fileName) {
 
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName)); 
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {
@@ -25,7 +27,7 @@ namespace FlowSERVER1 {
         public static string getCommentSharedToOthers(string fileName) {
 
             using (MySqlCommand command = new MySqlCommand("SELECT CUST_COMMENT FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName)); 
                 using (MySqlDataReader readerComment = command.ExecuteReader()) {
                     while (readerComment.Read()) {

@@ -1,19 +1,19 @@
 ﻿using FlowSERVER1.Global;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace FlowSERVER1.Helper {
     public class UpdateChanges {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private async Task UpdateData(string query, string updatedData, string fileName) {
             using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@update", updatedData);
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", fileName);
                 await command.ExecuteNonQueryAsync();
             }
@@ -43,7 +43,7 @@ namespace FlowSERVER1.Helper {
                 const string updateQuery = "UPDATE upload_info_directory SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
                 using (MySqlCommand command = new MySqlCommand(updateQuery, con)) {
                     command.Parameters.AddWithValue("@update", encryptedUpdatedData);
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@filename", encryptedFileName);
                     command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryOrFolderName));
                     await command.ExecuteNonQueryAsync();

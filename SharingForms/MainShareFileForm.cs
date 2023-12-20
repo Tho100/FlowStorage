@@ -13,6 +13,7 @@ using FlowSERVER1.Helper;
 using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.SharingQuery;
 using Irony.Parsing;
+using FlowSERVER1.Temporary;
 
 namespace FlowSERVER1 {
     public partial class MainShareFileForm : Form {
@@ -24,6 +25,7 @@ namespace FlowSERVER1 {
 
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
         readonly private ShareFileQuery shareFile = new ShareFileQuery();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private string _fileName{ get; set; }
         private string _fileFullPath { get; set; }
@@ -107,7 +109,7 @@ namespace FlowSERVER1 {
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@to", receiverUsername);
-                    command.Parameters.AddWithValue("@from", Globals.custUsername);
+                    command.Parameters.AddWithValue("@from", tempDataUser.Username);
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@date", todayDate);
                     command.Parameters.AddWithValue("@file_data", compressedFileData);
@@ -237,7 +239,7 @@ namespace FlowSERVER1 {
                     return;
                 }
 
-                if (receiverUsername == Globals.custUsername) {
+                if (receiverUsername == tempDataUser.Username) {
                     new CustomAlert(
                         title: "Sharing failed", subheader: "You can't share to yourself.").Show();
                     return;

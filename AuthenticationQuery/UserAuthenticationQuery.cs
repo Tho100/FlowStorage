@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace FlowSERVER1.AuthenticationQuery {
     public class UserAuthenticationQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public async Task<Dictionary<string, string>> GetAccountAuthentication(string userEmail) {
 
@@ -32,11 +34,11 @@ namespace FlowSERVER1.AuthenticationQuery {
             
             const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
             }
 
-            Globals.accountType = accountType;
+            tempDataUser.AccountType = accountType;
             return Globals.uploadFileLimit[accountType].ToString();
 
         }

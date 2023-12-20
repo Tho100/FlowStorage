@@ -7,6 +7,7 @@ namespace FlowSERVER1 {
     public partial class AddAuthSharing : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public AddAuthSharing() {
             InitializeComponent();
@@ -44,7 +45,7 @@ namespace FlowSERVER1 {
                     const string addSharingAuthQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {
                         command.Parameters.AddWithValue("@getval", EncryptionModel.computeAuthCase(txtFieldAuth.Text));
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.ExecuteNonQuery();
                     }
 

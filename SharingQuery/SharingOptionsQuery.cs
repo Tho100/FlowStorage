@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
 
@@ -6,6 +7,7 @@ namespace FlowSERVER1.SharingQuery {
     public class SharingOptionsQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         /// <summary>
         /// This function will determine if the 
@@ -37,7 +39,7 @@ namespace FlowSERVER1.SharingQuery {
 
             using (MySqlCommand command = new MySqlCommand(setPassSharingQuery, con)) {
                 command.Parameters.AddWithValue("@setPass", "DEF");
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 await command.ExecuteNonQueryAsync();
             }
 
@@ -50,7 +52,7 @@ namespace FlowSERVER1.SharingQuery {
 
             const string disableSharingQuery = "UPDATE sharing_info SET DISABLED = 1 WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(disableSharingQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 await command.ExecuteNonQueryAsync();
             }
 
@@ -63,7 +65,7 @@ namespace FlowSERVER1.SharingQuery {
 
             const string enabelSharingQuery = "UPDATE sharing_info SET DISABLED = 0 WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(enabelSharingQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 await command.ExecuteNonQueryAsync();
             }
 
@@ -144,7 +146,7 @@ namespace FlowSERVER1.SharingQuery {
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
 
             using (MySqlCommand command = new MySqlCommand(queryRetrieveCount, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@receiver", receiverUsername);
                 command.Parameters.AddWithValue("@filename", fileName);
                 return Convert.ToInt32(await command.ExecuteScalarAsync());

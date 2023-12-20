@@ -1,4 +1,5 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,9 @@ namespace FlowSERVER1 {
     public partial class BackupRecoveryKeyForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         readonly private Crud crud = new Crud();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public BackupRecoveryKeyForm() {
             InitializeComponent();
@@ -60,7 +63,7 @@ namespace FlowSERVER1 {
             string concludeStrings = "";
             const string query = "SELECT RECOV_TOK FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader read = command.ExecuteReader()) {
                     while (read.Read()) {
                         concludeStrings = read.GetString(0);

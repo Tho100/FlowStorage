@@ -490,6 +490,7 @@
     <Compile Include="SharingQuery\ShareFileQuery.cs" />
     <Compile Include="SharingQuery\SharingOptionsQuery.cs" />
     <Compile Include="Temporary\TemporaryDataSharing.cs" />
+    <Compile Include="Temporary\TemporaryDataUser.cs" />
     <Compile Include="ViewerForms\ApkForm.cs">
       <SubType>Form</SubType>
     </Compile>

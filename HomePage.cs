@@ -3,7 +3,7 @@ using FlowSERVER1.Authentication;
 using FlowSERVER1.ExtraForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
-
+using FlowSERVER1.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
@@ -31,6 +31,7 @@ namespace FlowSERVER1 {
         readonly private Crud crud = new Crud();
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public static HomePage instance { get; set; } = new HomePage();
         public bool CallInitialStartupData { get; set; } = false;
@@ -122,7 +123,7 @@ namespace FlowSERVER1 {
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@file_name, @username, @date, @file_data, @thumbnail_value)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_data", fileDataBase64Encoded);
 
@@ -173,7 +174,7 @@ namespace FlowSERVER1 {
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE) VALUES (@username, @file_name, @date, @file_data)";
                 var param = new Dictionary<string, string>
                 {
-                    { "@username", Globals.custUsername},
+                    { "@username", tempDataUser.Username},
                     { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
                     { "@file_data", fileDataBase64Encoded}
@@ -209,7 +210,7 @@ namespace FlowSERVER1 {
                 string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, CUST_TITLE, CUST_TAG) VALUES (@file_name, @username, @date, @file_data, @thumbnail_value, @title, @tag)";
                 using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@date", _todayDate);
                     command.Parameters.AddWithValue("@file_data", fileDataBase64Encoded);
                     command.Parameters.AddWithValue("@title", PublicStorageUserTitle);
@@ -268,7 +269,7 @@ namespace FlowSERVER1 {
                 string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE, CUST_TITLE, CUST_TAG) VALUES (@username, @file_name, @date, @file_data, @title, @tag)";
                 var param = new Dictionary<string, string>
                 {
-                    { "@username", Globals.custUsername},
+                    { "@username", tempDataUser.Username},
                     { "@file_name", encryptedFileName},
                     { "@date", _todayDate},
                     { "@file_data", fileDataBase64Encoded},
@@ -314,7 +315,7 @@ namespace FlowSERVER1 {
 
                 var param = new Dictionary<string, string>
                 {
-                        { "@username", Globals.custUsername},
+                        { "@username", tempDataUser.Username},
                         { "@folder_name", encryptedFolderName},
                         { "@file_name", encryptedFileName},
                         { "@file_type", fileType},
@@ -451,7 +452,7 @@ namespace FlowSERVER1 {
             } else {
                 string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         List<(string, string, string)> filesInfo = new List<(string, string, string)>();
                         while (await reader.ReadAsync()) {
@@ -493,7 +494,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info_image WHERE CUST_USERNAME = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
@@ -510,7 +511,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_video WHERE CUST_USERNAME = @username";
                         using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
@@ -551,7 +552,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeImageTable, String.Empty, Globals.custUsername);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -569,7 +570,7 @@ namespace FlowSERVER1 {
 
                         void textOnPressed(object sender, EventArgs e) {
 
-                            TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, String.Empty, Globals.custUsername);
+                            TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, String.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -581,7 +582,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, String.Empty, Globals.custUsername);
+                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, String.Empty, tempDataUser.Username);
                             displayExe.Show();
                         }
 
@@ -604,7 +605,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeVideoTable, String.Empty, Globals.custUsername);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeVideoTable, String.Empty, tempDataUser.Username);
                             vidFormShow.Show();
                         }
 
@@ -616,7 +617,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExcelTable, String.Empty, Globals.custUsername);
+                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExcelTable, String.Empty, tempDataUser.Username);
                             exlForm.Show();
                         }
 
@@ -627,7 +628,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.homeAudioTable, String.Empty, Globals.custUsername);
+                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.homeAudioTable, String.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -639,7 +640,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, Globals.custUsername, GlobalsTable.homeApkTable, String.Empty);
+                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, tempDataUser.Username, GlobalsTable.homeApkTable, String.Empty);
                             displayPic.Show();
                         }
 
@@ -651,7 +652,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.homePdfTable, String.Empty, Globals.custUsername);
+                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.homePdfTable, String.Empty, tempDataUser.Username);
                             displayPdf.Show();
                         }
 
@@ -663,7 +664,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.homePtxTable, String.Empty, Globals.custUsername);
+                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.homePtxTable, String.Empty, tempDataUser.Username);
                             displayPtx.Show();
                         }
 
@@ -675,7 +676,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.homeMsiTable, String.Empty, Globals.custUsername);
+                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.homeMsiTable, String.Empty, tempDataUser.Username);
                             displayMsi.Show();
                         }
 
@@ -688,7 +689,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, String.Empty, Globals.custUsername);
+                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, String.Empty, tempDataUser.Username);
                             displayMsi.Show();
                         }
 
@@ -821,7 +822,7 @@ namespace FlowSERVER1 {
 
                     Bitmap defaultImage = new Bitmap(imageName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, String.Empty, Globals.custUsername);
+                    PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
 
@@ -836,7 +837,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Click += (sender_t, e_t) => {
 
-                    TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, fileName, String.Empty, Globals.custUsername);
+                    TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, fileName, String.Empty, tempDataUser.Username);
                     txtFormShow.Show();
                 };
             }
@@ -847,7 +848,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, String.Empty, Globals.custUsername);
+                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, String.Empty, tempDataUser.Username);
                     displayExe.Show();
                 };
             }
@@ -866,7 +867,7 @@ namespace FlowSERVER1 {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, String.Empty, Globals.custUsername);
+                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, String.Empty, tempDataUser.Username);
                     vidShow.Show();
                 };
             }
@@ -876,7 +877,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, String.Empty, Globals.custUsername);
+                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, String.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
 
@@ -888,7 +889,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, String.Empty, Globals.custUsername);
+                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, String.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
             }
@@ -899,7 +900,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.homeApkTable, String.Empty);
+                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, String.Empty);
                     displayPic.Show();
                 };
             }
@@ -910,7 +911,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, String.Empty, Globals.custUsername);
+                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, String.Empty, tempDataUser.Username);
                     displayPdf.ShowDialog();
                 };
             }
@@ -921,7 +922,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, String.Empty, Globals.custUsername);
+                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, String.Empty, tempDataUser.Username);
                     displayPtx.ShowDialog();
                 };
             }
@@ -932,7 +933,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, String.Empty, Globals.custUsername);
+                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, String.Empty, tempDataUser.Username);
                     displayMsi.Show();
                 };
             }
@@ -943,7 +944,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, String.Empty, Globals.custUsername);
+                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, String.Empty, tempDataUser.Username);
                     displayWord.ShowDialog();
                 };
             }
@@ -963,7 +964,7 @@ namespace FlowSERVER1 {
 
             if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
 
-                if (selectFilesDialog.FileNames.Length + currentFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
+                if (selectFilesDialog.FileNames.Length + currentFilesCount > Globals.uploadFileLimit[tempDataUser.AccountType]) {
                     DisplayUpgradeAccountDialog();
                     return;
                 }
@@ -1191,7 +1192,7 @@ namespace FlowSERVER1 {
 
                     string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                             List<(string, string, string, string)> tuplesList = new List<(string, string, string, string)>();
                             while (await reader.ReadAsync()) {
@@ -1225,7 +1226,7 @@ namespace FlowSERVER1 {
 
                     selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName} WHERE CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                             while (await reader.ReadAsync()) {
                                 usernameList.Add(reader.GetString(0));
@@ -1254,7 +1255,7 @@ namespace FlowSERVER1 {
 
                             const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image WHERE CUST_USERNAME = @username";
                             using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
-                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
@@ -1286,7 +1287,7 @@ namespace FlowSERVER1 {
 
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video WHERE CUST_USERNAME = @username";
                             using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
@@ -1592,7 +1593,7 @@ namespace FlowSERVER1 {
 
                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, String.Empty, Globals.custUsername);
+                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, String.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
 
@@ -1606,7 +1607,7 @@ namespace FlowSERVER1 {
                 await InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
-                    TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, String.Empty, Globals.custUsername);
+                    TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, String.Empty, tempDataUser.Username);
                     txtFormShow.Show();
                 };
             }
@@ -1617,7 +1618,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, String.Empty, Globals.custUsername);
+                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, String.Empty, tempDataUser.Username);
                     displayExe.Show();
                 };
             }
@@ -1636,7 +1637,7 @@ namespace FlowSERVER1 {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, String.Empty, Globals.custUsername);
+                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, String.Empty, tempDataUser.Username);
                     vidShow.Show();
                 };
             }
@@ -1647,7 +1648,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, String.Empty, Globals.custUsername);
+                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, String.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
             }
@@ -1658,7 +1659,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, String.Empty, Globals.custUsername);
+                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, String.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
             }
@@ -1669,7 +1670,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.psApk, String.Empty);
+                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, String.Empty);
                     displayPic.Show();
                 };
             }
@@ -1680,7 +1681,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, String.Empty, Globals.custUsername);
+                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, String.Empty, tempDataUser.Username);
                     displayPdf.ShowDialog();
                 };
             }
@@ -1691,7 +1692,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, String.Empty, Globals.custUsername);
+                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, String.Empty, tempDataUser.Username);
                     displayPtx.ShowDialog();
                 };
             }
@@ -1701,7 +1702,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, String.Empty, Globals.custUsername);
+                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, String.Empty, tempDataUser.Username);
                     displayMsi.Show();
                 };
             }
@@ -1712,7 +1713,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, String.Empty, Globals.custUsername);
+                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, String.Empty, tempDataUser.Username);
                     displayWord.ShowDialog();
                 };
             }
@@ -1732,7 +1733,7 @@ namespace FlowSERVER1 {
 
             if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
 
-                if (selectFilesDialog.FileNames.Length + currentFilesCount > Globals.uploadFileLimit[Globals.accountType]) {
+                if (selectFilesDialog.FileNames.Length + currentFilesCount > Globals.uploadFileLimit[tempDataUser.AccountType]) {
                     DisplayUpgradeAccountDialog();
                     return;
                 } 
@@ -1878,12 +1879,12 @@ namespace FlowSERVER1 {
                 }
             }
 
-            lblIPsILimitedText.Text = Globals.uploadFileLimit[Globals.accountType].ToString();
+            lblIPsILimitedText.Text = Globals.uploadFileLimit[tempDataUser.AccountType].ToString();
 
             var username = new List<string>(flwLayoutHome.Controls
                 .OfType<Guna2Panel>()
                 .SelectMany(panel => panel.Controls.OfType<Label>())
-                .Where(label => label.Text.Contains(Globals.custUsername))
+                .Where(label => label.Text.Contains(tempDataUser.Username))
                 .Select(label => label.Text.Split('·')[0].Trim().ToLower()));
 
             lblIPsItemCountText.Text = username.Count.ToString();
@@ -1953,7 +1954,7 @@ namespace FlowSERVER1 {
 
             const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
                         return reader.GetString(0);
@@ -1971,7 +1972,7 @@ namespace FlowSERVER1 {
             filesInfoSharedOthers.Clear();
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -1996,7 +1997,7 @@ namespace FlowSERVER1 {
 
                 const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
                 using (MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
                             uploadToNameList.Add(reader.GetString(0));
@@ -2010,7 +2011,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
@@ -2096,7 +2097,7 @@ namespace FlowSERVER1 {
 
                             const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
                             using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                                 command.Parameters.AddWithValue("@ext", typeValues[i]);
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -2236,7 +2237,7 @@ namespace FlowSERVER1 {
             if (!GlobalsData.fileTypeValuesSharedToOthers.Any()) {
                 const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
                 using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     using (var readTypeOthers = await command.ExecuteReaderAsync()) {
                         while (await readTypeOthers.ReadAsync()) {
                             GlobalsData.fileTypeValuesSharedToOthers.Add(readTypeOthers.GetString(0));
@@ -2268,7 +2269,7 @@ namespace FlowSERVER1 {
             if (typeValuesOthers.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
                     command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
 
                     using (MySqlDataReader _readType = command.ExecuteReader()) {
                         while (_readType.Read()) {
@@ -2294,7 +2295,7 @@ namespace FlowSERVER1 {
 
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -2324,7 +2325,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     GlobalsData.base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
@@ -2404,7 +2405,7 @@ namespace FlowSERVER1 {
 
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                             using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(filesInfoShared[i].Item1));
 
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -2537,7 +2538,7 @@ namespace FlowSERVER1 {
             if (!GlobalsData.fileTypeValuesSharedToMe.Any()) {
                 const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
                             GlobalsData.fileTypeValuesSharedToMe.Add(reader.GetString(0));
@@ -2574,7 +2575,7 @@ namespace FlowSERVER1 {
             if (typeValues.Count == 0) {
                 using (MySqlCommand command = con.CreateCommand()) {
                     command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
 
                     using (MySqlDataReader _readType = command.ExecuteReader()) {
                         while (_readType.Read()) {
@@ -2621,7 +2622,7 @@ namespace FlowSERVER1 {
 
                     int numberOfFiles = Directory.GetFiles(getFolderPath, "*", SearchOption.AllDirectories).Length;
 
-                    if (numberOfFiles <= Globals.uploadFileLimit[Globals.accountType]) {
+                    if (numberOfFiles <= Globals.uploadFileLimit[tempDataUser.AccountType]) {
 
                         flwLayoutHome.Controls.Clear();
                         lstFoldersPage.Items.Add(getFolderName);
@@ -2632,7 +2633,7 @@ namespace FlowSERVER1 {
                         lstFoldersPage.SelectedIndex = folderListboxPosition;
 
                     } else {
-                        DisplayErrorFolder(Globals.accountType);
+                        DisplayErrorFolder(tempDataUser.AccountType);
                         lstFoldersPage.SelectedItem = "Home";
 
                     }
@@ -2665,7 +2666,7 @@ namespace FlowSERVER1 {
             var filesData = new List<(string fileName, byte[] fileBytes)>();
 
             using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldtitle", folderTitle);
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -2690,7 +2691,7 @@ namespace FlowSERVER1 {
 
             const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
             using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(selectedFolder));
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -2729,7 +2730,7 @@ namespace FlowSERVER1 {
 
                 const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
                 using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(foldTitle));
                     using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
@@ -2767,7 +2768,7 @@ namespace FlowSERVER1 {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(foldTitle));
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
@@ -2811,7 +2812,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, String.Empty, Globals.custUsername);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -2828,7 +2829,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, String.Empty, Globals.custUsername);
+                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, String.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -2853,7 +2854,7 @@ namespace FlowSERVER1 {
 
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
                             using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldTitle));
                                 command.Parameters.AddWithValue("@ext", originalTypeData[i]);
                                 using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -2880,7 +2881,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername);
+                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username);
                             displayVid.Show();
                         }
 
@@ -2892,7 +2893,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -2902,7 +2903,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            new AudioForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new AudioForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -2913,7 +2914,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            new ApkForm(fileName, Globals.custUsername, GlobalsTable.folderUploadTable, foldTitle);
+                            new ApkForm(fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, foldTitle);
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -2924,7 +2925,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            new PdfForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new PdfForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2935,7 +2936,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -2946,7 +2947,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            new MsiForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new MsiForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2958,7 +2959,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, Globals.custUsername).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -3122,7 +3123,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, String.Empty, Globals.custUsername);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
                             displayPic.Show();
 
                         };
@@ -3145,7 +3146,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Click += (sender_t, e_t) => {
 
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, String.Empty, Globals.custUsername);
+                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, String.Empty, tempDataUser.Username);
                             displayPic.Show();
                         };
 
@@ -3157,7 +3158,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
-                            ApkForm displayPic = new ApkForm(titleLab.Text, Globals.custUsername, GlobalsTable.folderUploadTable, String.Empty);
+                            ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, String.Empty);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3185,7 +3186,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, Globals.custUsername);
+                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
                             displayVid.ShowDialog();
                         };
                     }
@@ -3196,7 +3197,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            PdfForm displayPic = new PdfForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, Globals.custUsername);
+                            PdfForm displayPic = new PdfForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3207,7 +3208,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            WordDocForm displayPic = new WordDocForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, Globals.custUsername);
+                            WordDocForm displayPic = new WordDocForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3218,7 +3219,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, Globals.custUsername);
+                            ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3230,7 +3231,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            PtxForm displayPic = new PtxForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, Globals.custUsername);
+                            PtxForm displayPic = new PtxForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3241,7 +3242,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, Globals.custUsername);
+                            AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3279,7 +3280,7 @@ namespace FlowSERVER1 {
 
                 const string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
                 using (MySqlCommand command = new MySqlCommand(removeFoldQue, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldName));
                     await command.ExecuteNonQueryAsync();
                 }
@@ -3353,7 +3354,7 @@ namespace FlowSERVER1 {
 
                     int currentUploadCount = Convert.ToInt32(lblItemCountText.Text);
 
-                    if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
+                    if (currentUploadCount != Globals.uploadFileLimit[tempDataUser.AccountType]) {
                         OpenDialogHomeFile();
 
                     } else {
@@ -3388,7 +3389,7 @@ namespace FlowSERVER1 {
 
                 int currentUploadCount = returnedCountValue.Sum();
 
-                if (currentUploadCount != Globals.uploadFileLimit[Globals.accountType]) {
+                if (currentUploadCount != Globals.uploadFileLimit[tempDataUser.AccountType]) {
                     OpenDialogPublicStorage();
 
                 } else {
@@ -3423,11 +3424,11 @@ namespace FlowSERVER1 {
             try {
 
                 var folderUploadFailed = new LimitedFolderAlert(
-                    Globals.accountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
+                    tempDataUser.AccountType, "it looks like you've reached the max \r\namount of folder you can upload", true);
 
                 var countTotalFolders = lstFoldersPage.Items.Cast<string>().ToList().Count();
 
-                if (Globals.uploadFolderLimit[Globals.accountType] == countTotalFolders) {
+                if (Globals.uploadFolderLimit[tempDataUser.AccountType] == countTotalFolders) {
                     folderUploadFailed.Show();
                     return;
                 }
@@ -3497,7 +3498,7 @@ namespace FlowSERVER1 {
 
             const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
             using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -3576,7 +3577,7 @@ namespace FlowSERVER1 {
 
             const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -3679,13 +3680,13 @@ namespace FlowSERVER1 {
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
                             command.ExecuteNonQuery();
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
                             command.ExecuteNonQuery();
                         }
@@ -4058,7 +4059,7 @@ namespace FlowSERVER1 {
 
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (files.Length + flwLayoutHome.Controls.Count > Globals.uploadFileLimit[Globals.accountType]) {
+            if (files.Length + flwLayoutHome.Controls.Count > Globals.uploadFileLimit[tempDataUser.AccountType]) {
                 using (Form bgBlur = new Form()) {
                     bgBlur.StartPosition = FormStartPosition.Manual;
                     bgBlur.FormBorderStyle = FormBorderStyle.None;
@@ -4258,13 +4259,13 @@ namespace FlowSERVER1 {
         /// <param name="e"></param>
         private async void guna2Button27_Click(object sender, EventArgs e) {
 
-            if (Globals.accountType == "Max" || Globals.accountType == "Express" || Globals.accountType == "Supreme") {
+            if (tempDataUser.AccountType == "Max" || tempDataUser.AccountType == "Express" || tempDataUser.AccountType == "Supreme") {
                 string folderTitleGet = EncryptionModel.Encrypt(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
                 await DownloadUserFolder(folderTitleGet);
 
             } else {
                 new LimitedFolderAlert(
-                    Globals.accountType, 
+                    tempDataUser.AccountType, 
                     "Please upgrade your account \r\nplan to download folder.", false).Show();
             }
         }
@@ -4303,7 +4304,7 @@ namespace FlowSERVER1 {
 
                     string removeQuery = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.ExecuteNonQuery();
                     }
@@ -4314,7 +4315,7 @@ namespace FlowSERVER1 {
 
                     const string removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
                     using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(dirName));
                         command.ExecuteNonQuery();
@@ -4324,7 +4325,7 @@ namespace FlowSERVER1 {
 
                     const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                     using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
-                        cmd.Parameters.AddWithValue("@username", Globals.custUsername);
+                        cmd.Parameters.AddWithValue("@username", tempDataUser.Username);
                         cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         cmd.Parameters.AddWithValue("@sharedname", sharedToName);
 
@@ -4335,7 +4336,7 @@ namespace FlowSERVER1 {
 
                     const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     using (var command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
                         command.ExecuteNonQuery();
                     }
@@ -4413,7 +4414,7 @@ namespace FlowSERVER1 {
             bool fromSharedFiles = selectedFolder == "Shared Files";
 
             new shareFileFORM(
-                titleFile, fromSharedFiles, Globals.custUsername, dirName).Show();
+                titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
 
         }
 

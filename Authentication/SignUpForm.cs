@@ -1,5 +1,6 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.AuthenticationQuery;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 
 using System;
@@ -20,6 +21,8 @@ namespace FlowSERVER1.Authentication {
 
         private readonly HomePage accessHomePage = new HomePage();
         private readonly SignUpQuery signUpQuery = new SignUpQuery();
+
+        private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public SignUpForm() {
             InitializeComponent();
@@ -58,8 +61,8 @@ namespace FlowSERVER1.Authentication {
                     return;
                 }
 
-                Globals.custUsername = username;
-                Globals.custEmail = email;
+                tempDataUser.Username = username;
+                tempDataUser.Email = email;
 
                 List<string> folders = await startupQuery.GetFolders(username);
 
@@ -239,9 +242,9 @@ namespace FlowSERVER1.Authentication {
 
                     accessHomePage.CallInitialStartupData = false;
 
-                    Globals.custUsername = usernameInput;
-                    Globals.custEmail = emailInput;
-                    Globals.accountType = "Basic";
+                    tempDataUser.Username = usernameInput;
+                    tempDataUser.Email = emailInput;
+                    tempDataUser.AccountType = "Basic";
 
                     await signUpQuery.InsertUserRegistrationData(
                         usernameInput, emailInput, passwordInput, pinInput);

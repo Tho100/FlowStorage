@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
 using FlowSERVER1.SharingQuery;
+using FlowSERVER1.Temporary;
 
 namespace FlowSERVER1 {
     public partial class shareFileFORM : Form {
@@ -13,6 +14,7 @@ namespace FlowSERVER1 {
         readonly private ShareFileQuery shareFile = new ShareFileQuery();
 
         readonly private Crud crud = new Crud();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private string _fileName { get; set; }
         private string _tableName {get; set;}
@@ -58,7 +60,7 @@ namespace FlowSERVER1 {
 
             try {
 
-                if (txtFieldShareToName.Text == Globals.custUsername) {
+                if (txtFieldShareToName.Text == tempDataUser.Username) {
                     new CustomAlert(
                         title: "Sharing failed", subheader: "You can't share to yourself.").Show();
                     return;

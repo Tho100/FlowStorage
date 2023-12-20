@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace FlowSERVER1 {
     public partial class RenameFolderFileForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
         public RenameFolderFileForm(String foldTitle) {
             InitializeComponent();
 
@@ -46,7 +49,7 @@ namespace FlowSERVER1 {
 
             const string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
             using (MySqlCommand command = new MySqlCommand(queryRename, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@newtitle", EncryptionModel.Encrypt(newFolderName));
                 command.Parameters.AddWithValue("@oldtitle", EncryptionModel.Encrypt(oldFolderName));
 

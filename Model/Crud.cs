@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace FlowSERVER1 {
     public class Crud {
 
         private readonly MySqlConnection con = ConnectionModel.con;
+        private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public async Task<int> CountTableRow(String tableName) {
             using (var command = con.CreateCommand()) {
@@ -18,7 +20,7 @@ namespace FlowSERVER1 {
         public async Task<int> CountUserTableRow(String tableName) {
             using (var command = con.CreateCommand()) {
                 command.CommandText = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
         }
@@ -42,7 +44,7 @@ namespace FlowSERVER1 {
 
             const string getAuthQuery = "SELECT CUST_PASSWORD FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getAuthQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
                         authValue = reader.GetString(0);
@@ -60,7 +62,7 @@ namespace FlowSERVER1 {
 
             const string getAuthQuery = "SELECT CUST_PIN FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getAuthQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     if (await reader.ReadAsync()) {
                         authValue = reader.GetString(0);

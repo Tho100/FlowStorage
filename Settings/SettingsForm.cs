@@ -26,7 +26,9 @@ namespace FlowSERVER1 {
 
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
+
         readonly private TemporaryDataSharing tempDataSharing = new TemporaryDataSharing();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private List<int> _totalUploadToday { get; set; } = new List<int>();
         private List<int> _totalUploadAllTime { get; set; } = new List<int>();
@@ -39,15 +41,15 @@ namespace FlowSERVER1 {
 
             instance = this;
 
-            lblUserEmail.Text = Globals.custEmail;
-            lblUserUsername.Text = Globals.custUsername;
+            lblUserEmail.Text = tempDataUser.Email;
+            lblUserUsername.Text = tempDataUser.Username;
 
             foreach (var axis in chart1.ChartAreas[0].Axes) {
                 axis.MajorGrid.Enabled = false;
                 axis.MinorGrid.Enabled = false;
             }
 
-            if(Globals.accountType != "Basic") {
+            if(tempDataUser.AccountType != "Basic") {
                 pnlCancelPlan.Visible = true;
             }
 
@@ -183,7 +185,7 @@ namespace FlowSERVER1 {
 
                 string queryCount = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     int totalUploadCount = Convert.ToInt32(await command.ExecuteScalarAsync());
                     _totalUploadAllTime.Add(totalUploadCount);
                 }
@@ -215,7 +217,7 @@ namespace FlowSERVER1 {
 
                 string queryCount = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username AND UPLOAD_DATE = @date";
                 using (MySqlCommand command = new MySqlCommand(queryCount, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@date", currentDate);
 
                     int totalCount = Convert.ToInt32(await command.ExecuteScalarAsync());
@@ -243,7 +245,7 @@ namespace FlowSERVER1 {
             } else {
                 const string countDirQuery = "SELECT COUNT(*) FROM file_info_directory WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(countDirQuery, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     int totalDir = Convert.ToInt32(await command.ExecuteScalarAsync());
                     lblTotalDirUploadCount.Text = totalDir.ToString();
                 }
@@ -269,7 +271,7 @@ namespace FlowSERVER1 {
             string querySelectDate = $"SELECT UPLOAD_DATE, COUNT(UPLOAD_DATE) FROM {tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
 
             using (MySqlCommand command = new MySqlCommand(querySelectDate, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
@@ -295,8 +297,8 @@ namespace FlowSERVER1 {
         private void guna2Button23_Click(object sender, EventArgs e) => new AddAuthSharing().Show();
         private void guna2Button12_Click(object sender, EventArgs e) => new ChangeAuthForm().Show();
         private void guna2Button1_Click_2(object sender, EventArgs e) => new BackupRecoveryKeyForm().Show();
-        private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custUsername);
-        private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(Globals.custEmail);
+        private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Username);
+        private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Email);
         private void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
 
         private void remAccFORM_Load(object sender, EventArgs e) {
@@ -400,7 +402,7 @@ namespace FlowSERVER1 {
 
         private void InitializeUploadLimitLabel() {
 
-            string accountType = Globals.accountType;
+            string accountType = tempDataUser.AccountType;
 
             lblAccountType.Text = accountType;
 
@@ -464,10 +466,10 @@ namespace FlowSERVER1 {
                     custEmails.Add(customer.Email);
                 }
 
-                if (custEmails.Contains(Globals.custEmail)) {
+                if (custEmails.Contains(tempDataUser.Email)) {
 
                     var options = new Stripe.CustomerListOptions {
-                        Email = Globals.custEmail,
+                        Email = tempDataUser.Email,
                         Limit = 1
                     };
 
@@ -478,8 +480,8 @@ namespace FlowSERVER1 {
 
                     const string updateUserAccountQuery = "UPDATE cust_type SET ACC_TYPE = @type WHERE CUST_EMAIL = @email AND CUST_USERNAME = @username";
                     using (MySqlCommand command = new MySqlCommand(updateUserAccountQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
-                        command.Parameters.AddWithValue("@email", Globals.custEmail);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                        command.Parameters.AddWithValue("@email", tempDataUser.Email);
                         command.Parameters.AddWithValue("@type", _selectedAccountType);
                         await command.ExecuteNonQueryAsync();
                     }
@@ -487,8 +489,8 @@ namespace FlowSERVER1 {
 
                     const string insertBuyerQuery = "INSERT INTO cust_buyer(CUST_USERNAME,CUST_EMAIL,ACC_TYPE,CUST_ID,PURCHASE_DATE) VALUES (@username,@email,@type,@id,@date)";
                     using (MySqlCommand commandSecond = new MySqlCommand(insertBuyerQuery, con)) {
-                        commandSecond.Parameters.AddWithValue("@username", Globals.custUsername);
-                        commandSecond.Parameters.AddWithValue("@email", Globals.custEmail);
+                        commandSecond.Parameters.AddWithValue("@username", tempDataUser.Username);
+                        commandSecond.Parameters.AddWithValue("@email", tempDataUser.Email);
                         commandSecond.Parameters.AddWithValue("@type", _selectedAccountType);
                         commandSecond.Parameters.AddWithValue("@id", customerId);
                         commandSecond.Parameters.AddWithValue("@date", dateTimeNow);
@@ -497,7 +499,7 @@ namespace FlowSERVER1 {
                     }
 
                     lblAccountType.Text = _selectedAccountType;
-                    Globals.accountType = _selectedAccountType;
+                    tempDataUser.AccountType = _selectedAccountType;
 
                     new PaymentSuceededAlert(_selectedAccountType).Show();
 
@@ -575,10 +577,10 @@ namespace FlowSERVER1 {
                     if(tempDataSharing.SharingDisabledStatus == String.Empty && tempDataSharing.SharingAuthStatus == String.Empty) {
 
                         tempDataSharing.SharingDisabledStatus = await sharingOptions
-                            .RetrieveIsSharingDisabled(Globals.custUsername);
+                            .RetrieveIsSharingDisabled(tempDataUser.Username);
 
                         tempDataSharing.SharingAuthStatus = await sharingOptions
-                            .ReceiverHasAuthVerification(Globals.custUsername);
+                            .ReceiverHasAuthVerification(tempDataUser.Username);
                     }
 
                     if (tempDataSharing.SharingAuthStatus != "DEF") {

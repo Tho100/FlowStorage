@@ -1,6 +1,7 @@
 ﻿
 using FlowSERVER1.AlertForms;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Temporary;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
@@ -12,17 +13,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
-    /// <summary>
-    /// Create directory form class
-    /// </summary>
+
     public partial class CreateDirectoryForm : Form {
 
         public static CreateDirectoryForm instance;
+
         private readonly MySqlConnection con = ConnectionModel.con;
+        private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public CreateDirectoryForm() {
             InitializeComponent();
-            this.Text = "Create New Directory";
             instance = this;
         }
         public void Form4_Load(object sender, EventArgs e) {
@@ -143,13 +143,13 @@ namespace FlowSERVER1 {
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
                             command.ExecuteNonQuery();
                         }
 
                         using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", Globals.custUsername);
+                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
                             command.ExecuteNonQuery();
                         }
@@ -240,8 +240,8 @@ namespace FlowSERVER1 {
 
             if (!(directoriesName.Contains(directoryName))) {
 
-                int maxFilesCount = Globals.uploadFileLimit[Globals.accountType];
-                int maxDirCount = Globals.uploadDirectoryLimit[Globals.accountType];
+                int maxFilesCount = Globals.uploadFileLimit[tempDataUser.AccountType];
+                int maxDirCount = Globals.uploadDirectoryLimit[tempDataUser.AccountType];
 
                 if (currentTotalFiles != maxFilesCount && countTotalDir != maxDirCount) {
 
@@ -259,7 +259,7 @@ namespace FlowSERVER1 {
                         var param = new Dictionary<string, string>
                         {
                             { "@dirname", EncryptionModel.Encrypt(directoryName)},
-                            { "@username",Globals.custUsername}
+                            { "@username",tempDataUser.Username}
                         };
 
 
@@ -304,6 +304,10 @@ namespace FlowSERVER1 {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
             this.Close();
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
@@ -22,6 +23,8 @@ namespace FlowSERVER1 {
         public readonly TextForm instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private bool _isFromSharing { get; set; }
         private string _directoryName { get; set; }
@@ -92,15 +95,15 @@ namespace FlowSERVER1 {
 
                 } else if (tableName == GlobalsTable.homeTextTable) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, tempDataUser.Username);
 
                 } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, tempDataUser.Username);
 
                 } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, Globals.custUsername);
+                    RetrieveTextData(getTxtQuery, tempDataUser.Username);
 
                 } else if (tableName == "ps_info_text") {
                     const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
@@ -145,7 +148,7 @@ namespace FlowSERVER1 {
             const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
             using (var command = new MySqlCommand(getTxtQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryForm.instance.lblDirectoryName.Text));
 
@@ -170,7 +173,7 @@ namespace FlowSERVER1 {
             const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
             using (var command = new MySqlCommand(getTxtQuery, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(HomePage.instance.lstFoldersPage.GetItemText(HomePage.instance.lstFoldersPage.SelectedItem)));
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
 

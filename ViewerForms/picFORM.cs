@@ -11,11 +11,14 @@ using System.Collections.Generic;
 using Guna.UI2.WinForms;
 using System.Linq;
 using System.IO;
+using FlowSERVER1.Temporary;
 
 namespace FlowSERVER1 {
     public partial class PicForm : Form {
 
         public readonly PicForm instance;
+
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private bool IsVisibleFilterPanel { get; set; } = false;
         private Image defaultImage { get; set; }
@@ -345,7 +348,7 @@ namespace FlowSERVER1 {
             using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@newval", values);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 if (await command.ExecuteNonQueryAsync() == 1) {
                     MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -359,7 +362,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@newval", values);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_directoryName));
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 if (await command.ExecuteNonQueryAsync() == 1) {
                     MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -375,7 +378,7 @@ namespace FlowSERVER1 {
                 command.Parameters.AddWithValue("@newval", values);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(lblFileName.Text));
                 command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(folderName));
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 if (await command.ExecuteNonQueryAsync() == 1) {
                     MessageBox.Show("Changes saved successfully.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -481,11 +484,11 @@ namespace FlowSERVER1 {
                     int height = defaultImage.Height;
 
                     if(_tableName == GlobalsTable.homeImageTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, String.Empty, Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
                         displayPic.Show();
 
                     } else if (_tableName == GlobalsTable.folderUploadTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, String.Empty, Globals.custUsername);
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
                         displayPic.Show();
 
                     } 

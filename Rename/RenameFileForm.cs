@@ -7,11 +7,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using FlowSERVER1.Temporary;
 
 namespace FlowSERVER1 {
     public partial class RenameFileForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
         private string _fileName {get; set; }
         private string _tableName{ get; set; }
         private string _panelName { get; set; }
@@ -44,7 +48,7 @@ namespace FlowSERVER1 {
 
                 string removeQuery = $"UPDATE {_tableName} SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     await command.ExecuteNonQueryAsync();
@@ -55,7 +59,7 @@ namespace FlowSERVER1 {
             } else if (_tableName == GlobalsTable.folderUploadTable) {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_directoryName));
                     command.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
@@ -66,7 +70,7 @@ namespace FlowSERVER1 {
 
                 const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
-                    cmd.Parameters.AddWithValue("@username", Globals.custUsername);
+                    cmd.Parameters.AddWithValue("@username", tempDataUser.Username);
                     cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     cmd.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     cmd.Parameters.AddWithValue("@sharedname", _sharedToName);
@@ -78,7 +82,7 @@ namespace FlowSERVER1 {
 
                 const string removeQuery = "UPDATE cust_sharing SET CUST_FILE_PATH = @newname WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                 using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
-                    cmd.Parameters.AddWithValue("@username", Globals.custUsername);
+                    cmd.Parameters.AddWithValue("@username", tempDataUser.Username);
                     cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     cmd.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));
                     cmd.Parameters.AddWithValue("@sharedname", _sharedToName);
@@ -89,7 +93,7 @@ namespace FlowSERVER1 {
             } else if (_tableName == GlobalsTable.directoryUploadTable) {
 
                 using (MySqlCommand command = new MySqlCommand("UPDATE upload_info_directory SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(_directoryName));
                     command.Parameters.AddWithValue("@newname", EncryptionModel.Encrypt(newFileName));

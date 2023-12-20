@@ -123,6 +123,7 @@
             this.guna2Button1.TabIndex = 76;
             this.guna2Button1.Text = "Get API";
             this.guna2Button1.TextOffset = new System.Drawing.Point(0, -2);
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // btnUnlockToken
             // 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FlowSERVER1.Temporary;
+using System;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class UpgradeAccountAlert : Form {
         public UpgradeAccountAlert() {
             InitializeComponent();
-            this.label3.Text = $"Current Account: {Globals.accountType}"; 
+            this.lblAccountType.Text = $"Current Account: {new TemporaryDataUser().AccountType}"; 
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) => this.Close();

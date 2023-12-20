@@ -34,9 +34,9 @@
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblAccountType = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnUpgradePlan = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -90,16 +90,16 @@
             this.label2.TabIndex = 24;
             this.label2.Text = "It\'s looks like you\'ve selected number \r\nof files than you can upload";
             // 
-            // label3
+            // lblAccountType
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.LightGray;
-            this.label3.Location = new System.Drawing.Point(133, 119);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(145, 17);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "Current Account: Basic";
+            this.lblAccountType.AutoSize = true;
+            this.lblAccountType.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccountType.ForeColor = System.Drawing.Color.LightGray;
+            this.lblAccountType.Location = new System.Drawing.Point(133, 119);
+            this.lblAccountType.Name = "lblAccountType";
+            this.lblAccountType.Size = new System.Drawing.Size(145, 17);
+            this.lblAccountType.TabIndex = 25;
+            this.lblAccountType.Text = "Current Account: Basic";
             // 
             // label5
             // 
@@ -112,26 +112,26 @@
             this.label5.TabIndex = 27;
             this.label5.Text = ":(";
             // 
-            // guna2Button1
+            // btnUpgradePlan
             // 
-            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button1.Animated = true;
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button1.BorderRadius = 12;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(356, 147);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(128, 39);
-            this.guna2Button1.TabIndex = 28;
-            this.guna2Button1.Text = "Upgrade Plan";
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnUpgradePlan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpgradePlan.Animated = true;
+            this.btnUpgradePlan.BackColor = System.Drawing.Color.Transparent;
+            this.btnUpgradePlan.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnUpgradePlan.BorderRadius = 12;
+            this.btnUpgradePlan.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpgradePlan.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpgradePlan.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUpgradePlan.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUpgradePlan.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnUpgradePlan.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpgradePlan.ForeColor = System.Drawing.Color.White;
+            this.btnUpgradePlan.Location = new System.Drawing.Point(356, 147);
+            this.btnUpgradePlan.Name = "btnUpgradePlan";
+            this.btnUpgradePlan.Size = new System.Drawing.Size(128, 39);
+            this.btnUpgradePlan.TabIndex = 28;
+            this.btnUpgradePlan.Text = "Upgrade Plan";
+            this.btnUpgradePlan.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // UpgradeAccountAlert
             // 
@@ -139,9 +139,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ClientSize = new System.Drawing.Size(497, 199);
-            this.Controls.Add(this.guna2Button1);
+            this.Controls.Add(this.btnUpgradePlan);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblAccountType);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2Button2);
@@ -163,8 +163,8 @@
         public Guna.UI2.WinForms.Guna2Button guna2Button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblAccountType;
         private System.Windows.Forms.Label label5;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        public Guna.UI2.WinForms.Guna2Button btnUpgradePlan;
     }
 }

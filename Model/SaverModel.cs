@@ -10,6 +10,7 @@ using FlowSERVER1.AlertForms;
 using FlowSERVER1.Global;
 using Guna.UI2.WinForms;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Temporary;
 
 namespace FlowSERVER1 {
 
@@ -20,7 +21,10 @@ namespace FlowSERVER1 {
     public partial class SaverModel {
 
         private static readonly MySqlConnection con = ConnectionModel.con;
+
         public static readonly SaverModel Instance = new SaverModel();
+        private static readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
         public static bool stopFileRetrieval { get; set; } = false;
         private static string fileExtension { get; set; }
 
@@ -87,7 +91,7 @@ namespace FlowSERVER1 {
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                         command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
 
@@ -116,7 +120,7 @@ namespace FlowSERVER1 {
                     string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                         command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(directoryName));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
@@ -145,7 +149,7 @@ namespace FlowSERVER1 {
                     string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
@@ -173,7 +177,7 @@ namespace FlowSERVER1 {
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 
@@ -201,7 +205,7 @@ namespace FlowSERVER1 {
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", Globals.custUsername);
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
                         command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                         using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
 

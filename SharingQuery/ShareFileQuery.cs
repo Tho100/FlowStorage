@@ -1,5 +1,5 @@
 ﻿using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.IO;
@@ -9,7 +9,8 @@ namespace FlowSERVER1.SharingQuery {
     public class ShareFileQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        readonly private GeneralCompressor compressor = new GeneralCompressor();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
         private string _fileName { get; set; }
         private string _fileExtension { get; set; }
         private string _tableName { get; set; }
@@ -30,7 +31,7 @@ namespace FlowSERVER1.SharingQuery {
 
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @sender AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
             using (MySqlCommand command = new MySqlCommand(queryRetrieveCount, con)) {
-                command.Parameters.AddWithValue("@sender", Globals.custUsername);
+                command.Parameters.AddWithValue("@sender", tempDataUser.Username);
                 command.Parameters.AddWithValue("@receiver", username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 count = Convert.ToInt32(await command.ExecuteScalarAsync());
@@ -70,7 +71,7 @@ namespace FlowSERVER1.SharingQuery {
             string queryGetFileByte = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
@@ -88,7 +89,7 @@ namespace FlowSERVER1.SharingQuery {
             const string queryGetFileData = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using (MySqlCommand command = new MySqlCommand(queryGetFileData, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
@@ -106,7 +107,7 @@ namespace FlowSERVER1.SharingQuery {
             const string queryGetFileData = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename LIMIT 1;";
 
             using (MySqlCommand command = new MySqlCommand(queryGetFileData, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
@@ -125,7 +126,7 @@ namespace FlowSERVER1.SharingQuery {
 
             string queryGetFileByte = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {columnName} = @dirname LIMIT 1;";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -144,7 +145,7 @@ namespace FlowSERVER1.SharingQuery {
 
             string queryGetFileByte = $"SELECT CUST_THUMB FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
@@ -162,7 +163,7 @@ namespace FlowSERVER1.SharingQuery {
 
             string queryGetFileByte = $"SELECT CUST_THUMB FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {columnName} = @dirname";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
@@ -179,7 +180,7 @@ namespace FlowSERVER1.SharingQuery {
 
             string queryGetFileByte = $"SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = {columnName} AND CUST_FILE_PATH = @filename LIMIT 1;";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
@@ -207,7 +208,7 @@ namespace FlowSERVER1.SharingQuery {
             const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@receiver, @from, @file_name, @date, @file_data, @file_type, @thumbnail, @comment)";
 
             using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                command.Parameters.AddWithValue("@from", Globals.custUsername);
+                command.Parameters.AddWithValue("@from", tempDataUser.Username);
                 command.Parameters.AddWithValue("@receiver", _receiverUsername);
                 command.Parameters.AddWithValue("@file_name", encryptedFileName);
                 command.Parameters.AddWithValue("@date", todayDate);

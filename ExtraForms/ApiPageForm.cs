@@ -1,11 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FlowSERVER1.Temporary;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,7 +9,9 @@ namespace FlowSERVER1 {
     public partial class ApiPageForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         readonly private Crud crud = new Crud();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public ApiPageForm() {
             InitializeComponent();
@@ -45,7 +43,7 @@ namespace FlowSERVER1 {
 
             const string query = "SELECT ACCESS_TOK FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader read =  (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     if (await read.ReadAsync()) {
                         txtFieldToken.Text = read.GetString(0);
@@ -77,6 +75,10 @@ namespace FlowSERVER1 {
         private void guna2Button4_Click(object sender, EventArgs e) {
             Clipboard.SetText(txtFieldToken.Text);
             label13.Visible = true;
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e) {
+
         }
     }
 }

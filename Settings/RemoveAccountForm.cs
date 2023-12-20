@@ -1,4 +1,5 @@
 ﻿using FlowSERVER1.Global;
+using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,9 @@ namespace FlowSERVER1 {
     public partial class RemoveAccountForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
+
         readonly private Crud crud = new Crud();
+        readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public RemoveAccountForm() {
             InitializeComponent();
@@ -21,7 +24,7 @@ namespace FlowSERVER1 {
             if (tableName != GlobalsTable.sharingTable) {
                 string query = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username";
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     await command.ExecuteNonQueryAsync();
                 }
 
@@ -29,7 +32,7 @@ namespace FlowSERVER1 {
 
                 const string query = "DELETE FROM cust_sharing WHERE CUST_FROM = @username";
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
-                    command.Parameters.AddWithValue("@username", Globals.custUsername);
+                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -42,7 +45,7 @@ namespace FlowSERVER1 {
 
             string checkPassword_Query = $"SELECT {columnName} FROM information WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
-                command.Parameters.AddWithValue("@username", Globals.custUsername);
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
                     while (readerPass_.Read()) {
                         _concludeValue.Add(readerPass_.GetString(0));
