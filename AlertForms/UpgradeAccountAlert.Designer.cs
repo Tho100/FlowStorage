@@ -126,7 +126,7 @@
             this.btnUpgradePlan.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnUpgradePlan.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpgradePlan.ForeColor = System.Drawing.Color.White;
-            this.btnUpgradePlan.Location = new System.Drawing.Point(356, 147);
+            this.btnUpgradePlan.Location = new System.Drawing.Point(355, 148);
             this.btnUpgradePlan.Name = "btnUpgradePlan";
             this.btnUpgradePlan.Size = new System.Drawing.Size(128, 39);
             this.btnUpgradePlan.TabIndex = 28;

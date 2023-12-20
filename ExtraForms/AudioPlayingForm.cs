@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
     public partial class AudioPlayingForm : Form {
-        public AudioPlayingForm(String audioName) {
+        public AudioPlayingForm(string audioName) {
 
             InitializeComponent();
             label2.Text = audioName;
@@ -20,9 +14,9 @@ namespace FlowSERVER1 {
 
             Rectangle screenBounds = Screen.GetBounds(this);
 
-            int x = screenBounds.Right - this.Width - 10; 
-            int y = screenBounds.Bottom - this.Height - 45; 
-            this.Location = new Point(x, y);
+            int x = screenBounds.Right - Width - 10;
+            int y = screenBounds.Bottom - Height - 45;
+            Location = new Point(x, y);
         }
 
         private void label2_Click(object sender, EventArgs e) {
@@ -30,7 +24,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
     }
 }

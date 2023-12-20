@@ -126,6 +126,7 @@
             this.Name = "RecoveryFailedAlert";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.RecoveryFailedAlert_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

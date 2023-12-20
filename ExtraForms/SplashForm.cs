@@ -24,7 +24,8 @@ namespace FlowSERVER1 {
                 keepAliveTimer.Enabled = true;
 
             } catch (Exception) {
-                new CustomAlert(title: "Failed to start Flowstorage", subheader: "Are you connected to the internet?").Show();
+                new CustomAlert(
+                    title: "Failed to start Flowstorage", subheader: "Are you connected to the internet?").Show();
             }
 
         }

@@ -18,7 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,6 +28,7 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
 
         readonly private Crud crud = new Crud();
+
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
@@ -56,9 +56,6 @@ namespace FlowSERVER1 {
             this.DragOver += new DragEventHandler(Form1_DragOver);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
             this.DragLeave += new EventHandler(Form1_DragLeave);
-
-            var form4Instances = Application.OpenForms.OfType<Form>().Where(form => form.Name == "Form4").ToList();
-            form4Instances.ForEach(form => form.Close());
 
             this.flwLayoutHome.HorizontalScroll.Maximum = 0;
             this.flwLayoutHome.VerticalScroll.Maximum = 0;
@@ -1068,8 +1065,7 @@ namespace FlowSERVER1 {
                                 selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptText);
 
                         } else {
-                            UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(selectedFileName);
-                            unsupportedFileFormartForm.Show();
+                            BuildShowAlert(title: "Upload Failed","File type is not supported.");
 
                         }
 
@@ -1840,8 +1836,7 @@ namespace FlowSERVER1 {
                                 selectedItems, GlobalsTable.psWord, "PanDoc", docxCurr, encryptText);
 
                         } else {
-                            UnknownTypeAlert unsupportedFileFormartForm = new UnknownTypeAlert(selectedFileName);
-                            unsupportedFileFormartForm.Show();
+                            BuildShowAlert(title: "Upload Failed", "File type is not supported.");
 
                         }
 
@@ -3818,7 +3813,7 @@ namespace FlowSERVER1 {
 
             string[] searchTerms = searchText.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-            List<Guna2Panel> disposedPanels = new List<Guna2Panel>();
+            var disposedPanels = new List<Guna2Panel>();
 
             for (int i = flwLayoutHome.Controls.Count - 1; i >= 0; i--) {
                 Control ctrl = flwLayoutHome.Controls[i];
@@ -3855,26 +3850,30 @@ namespace FlowSERVER1 {
 
                 flwLayoutHome.Controls.Clear();
 
-                if (origin == "Home") {
-                    await BuildHomeFiles();
+                switch(origin) {
+                    case "Home":
+                        await BuildHomeFiles();
+                        break;
 
-                } else if (origin == "Shared To Me") {
-                    GlobalsData.fileTypeValuesSharedToMe.Clear();
-                    await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                    case "Shared To Me":
+                        GlobalsData.fileTypeValuesSharedToMe.Clear();
+                        await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                        break;
 
-                } else if (origin == "Shared Files") {
-                    GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                    await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                    case "Shared Files":
+                        GlobalsData.fileTypeValuesSharedToOthers.Clear();
+                        await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                        break;
 
-                } else {
-                    await RefreshFolder();
+                    case "Public Storage":
+                        GlobalsData.base64EncodedImagePs.Clear();
+                        GlobalsData.base64EncodedThumbnailPs.Clear();
+                        await BuildPublicStorageFiles();
+                        break;
 
-                }
-
-                if (origin == "Public Storage") {
-                    GlobalsData.base64EncodedImagePs.Clear();
-                    GlobalsData.base64EncodedThumbnailPs.Clear();
-                    await BuildPublicStorageFiles();
+                    default:
+                        await RefreshFolder();
+                        break;
 
                 }
 

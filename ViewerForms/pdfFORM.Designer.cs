@@ -90,14 +90,12 @@
             this.pdfDocumentViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
             this.pdfDocumentViewer1.FormFillEnabled = false;
             this.pdfDocumentViewer1.Location = new System.Drawing.Point(354, 76);
-            this.pdfDocumentViewer1.MultiPagesThreshold = 60;
             this.pdfDocumentViewer1.Name = "pdfDocumentViewer1";
             this.pdfDocumentViewer1.OnRenderPageExceptionEvent = null;
             this.pdfDocumentViewer1.PageLayoutMode = Spire.PdfViewer.Forms.PageLayoutMode.SinglePageContinuous;
             this.pdfDocumentViewer1.Size = new System.Drawing.Size(778, 540);
             this.pdfDocumentViewer1.TabIndex = 52;
             this.pdfDocumentViewer1.Text = "pdfDocumentViewer1";
-            this.pdfDocumentViewer1.Threshold = 60;
             this.pdfDocumentViewer1.ViewerMode = Spire.PdfViewer.Forms.PdfViewerMode.PdfViewerMode.MultiPage;
             this.pdfDocumentViewer1.ZoomFactor = 1F;
             this.pdfDocumentViewer1.ZoomMode = Spire.PdfViewer.Forms.ZoomMode.Default;

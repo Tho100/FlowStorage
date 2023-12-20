@@ -847,6 +847,10 @@ namespace FlowSERVER1 {
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptBase64String);
 
+                        } else {
+                            new CustomAlert(
+                                title: "Upload Failed", subheader: "File type is not supported.").Show();
+
                         }
 
                         ClosePopupForm.CloseUploadingPopup();

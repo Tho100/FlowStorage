@@ -60,6 +60,7 @@
             this.label8.Size = new System.Drawing.Size(311, 20);
             this.label8.TabIndex = 62;
             this.label8.Text = "Flowstorage is retrieving your statistics data.";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 

@@ -550,12 +550,6 @@
       <DependentUpon>AccountRecoveryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\EncryptionModel.cs" />
-    <Compile Include="AlertForms\ErrorLoadAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\ErrorLoadAlert.Designer.cs">
-      <DependentUpon>ErrorLoadAlert.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewerForms\exeFORM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -724,12 +718,6 @@
     <Compile Include="ViewerForms\TextForm.Designer.cs">
       <DependentUpon>TextForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AlertForms\UnknownTypeAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\UnknownTypeAlert.Designer.cs">
-      <DependentUpon>UnknownTypeAlert.cs</DependentUpon>
-    </Compile>
     <Compile Include="AlertForms\UpgradeAccountAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -805,9 +793,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Recovery\AccountRecoveryForm.resx">
       <DependentUpon>AccountRecoveryForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\ErrorLoadAlert.resx">
-      <DependentUpon>ErrorLoadAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\exeFORM.resx">
       <DependentUpon>exeFORM.cs</DependentUpon>
@@ -896,9 +881,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\TextForm.resx">
       <DependentUpon>TextForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\UnknownTypeAlert.resx">
-      <DependentUpon>UnknownTypeAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForms\UpgradeAccountAlert.resx">
       <DependentUpon>UpgradeAccountAlert.cs</DependentUpon>

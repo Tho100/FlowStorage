@@ -392,7 +392,7 @@
             this.btnUpload.ForeColor = System.Drawing.Color.White;
             this.btnUpload.Location = new System.Drawing.Point(35, 490);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(512, 54);
+            this.btnUpload.Size = new System.Drawing.Size(512, 56);
             this.btnUpload.TabIndex = 17;
             this.btnUpload.Text = "Upload";
             this.btnUpload.Click += new System.EventHandler(this.guna2Button2_Click);
