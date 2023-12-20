@@ -1102,6 +1102,7 @@ namespace FlowSERVER1 {
                 }
             }
 
+            UpdateProgressBarValue();
             BuildRedundaneVisibility();
 
         }
@@ -1981,249 +1982,240 @@ namespace FlowSERVER1 {
 
         private async Task BuildFilePanelSharedToOthers(List<String> fileTypes, String parameterName, int itemCurr) {
 
-            //try {
+            var imageValues = new List<Image>();
+            var onPressedEvent = new List<EventHandler>();
+            var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                var imageValues = new List<Image>();
-                var onPressedEvent = new List<EventHandler>();
-                var onMoreOptionButtonPressed = new List<EventHandler>();
+            var typeValues = new List<string>(fileTypes);
+            var uploadToNameList = new List<string>();
 
-                var typeValues = new List<string>(fileTypes);
-                var uploadToNameList = new List<string>();
+            const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
+            using (MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        uploadToNameList.Add(reader.GetString(0));
+                    }
+                }
+            }
 
-                const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
-                using (MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            uploadToNameList.Add(reader.GetString(0));
+            if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
+
+                if (GlobalsData.base64EncodedImageSharedOthers.Count == 0) {
+
+                    const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
+                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
+
+                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            while (await readBase64.ReadAsync()) {
+                                GlobalsData.base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                            }
+                            readBase64.Close();
                         }
                     }
                 }
+            }
 
-                if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
+            for (int i = 0; i < itemCurr; i++) {
 
-                    if (GlobalsData.base64EncodedImageSharedOthers.Count == 0) {
+                int accessIndex = i;
+                string uploadToName = uploadToNameList[accessIndex];
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
+                void moreOptionOnPressedEvent(object sender, EventArgs e) {
+
+                    lblFileNameOnPanel.Text = filesInfoSharedOthers[accessIndex].Item1;
+                    lblFileTableName.Text = GlobalsTable.sharingTable;
+                    lblSharedToName.Text = uploadToName;
+                    lblFilePanelName.Text = parameterName + accessIndex;
+                    pnlFileOptions.Visible = true;
+                }
+
+                onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
+
+
+                if (Globals.imageTypes.Contains(typeValues[i])) {
+
+                    if (GlobalsData.base64EncodedImageSharedOthers.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageSharedOthers[i]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            imageValues.Add(Image.FromStream(toMs));
+                        }
+                    }
+
+                    void imageOnPressed(object sender, EventArgs e) {
+
+                        var getImgName = (Guna2PictureBox)sender;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+
+                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        displayPic.Show();
+                    }
+
+
+                    onPressedEvent.Add(imageOnPressed);
+
+                }
+
+                if (Globals.textTypes.Contains(typeValues[i])) {
+
+                    imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
+
+                    void textOnPressed(object sender, EventArgs e) {
+
+                        TextForm displayTxt = new TextForm(GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true);
+                        displayTxt.Show();
+
+                    }
+
+                    onPressedEvent.Add(textOnPressed);
+                }
+
+                if (typeValues[i] == ".exe") {
+
+                    imageValues.Add(Globals.EXEImage);
+
+                    void exeOnPressed(object sender, EventArgs e) {
+                        exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
+                        displayExe.Show();
+                    }
+
+                    onPressedEvent.Add(exeOnPressed);
+                }
+
+                if (Globals.videoTypes.Contains(typeValues[i])) {
+
+                    if (GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
+
+                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
                         using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                            command.Parameters.AddWithValue("@ext", typeValues[i]);
 
                             using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
+                                    GlobalsData.base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
                                 }
                                 readBase64.Close();
                             }
                         }
                     }
+
+                    if (GlobalsData.base64EncodedThumbnailSharedOthers.Count > 0) {
+                        byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedOthers[0]);
+                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
+                            imageValues.Add(Image.FromStream(toMs));
+                        }
+
+                    }
+
+                    void videoOnPressed(object sender, EventArgs e) {
+
+                        var getImgName = (Guna2PictureBox)sender;
+                        var getWidth = getImgName.Image.Width;
+                        var getHeight = getImgName.Image.Height;
+
+                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        vidFormShow.Show();
+                    }
+
+                    onPressedEvent.Add(videoOnPressed);
                 }
 
-                for (int i = 0; i < itemCurr; i++) {
+                if (Globals.excelTypes.Contains(typeValues[i])) {
 
-                    int accessIndex = i;
-                    string uploadToName = uploadToNameList[accessIndex];
+                    imageValues.Add(Globals.EXCELImage);
 
-                    void moreOptionOnPressedEvent(object sender, EventArgs e) {
-
-                        lblFileNameOnPanel.Text = filesInfoSharedOthers[accessIndex].Item1;
-                        lblFileTableName.Text = GlobalsTable.sharingTable;
-                        lblSharedToName.Text = uploadToName;
-                        lblFilePanelName.Text = parameterName + accessIndex;
-                        pnlFileOptions.Visible = true;
+                    void excelOnPressed(object sender, EventArgs e) {
+                        ExcelForm exlForm = new ExcelForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        exlForm.Show();
                     }
 
-                    onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
+                    onPressedEvent.Add(excelOnPressed);
+                }
+                if (Globals.audioTypes.Contains(typeValues[i])) {
 
+                    imageValues.Add(Globals.AudioImage);
 
-                    if (Globals.imageTypes.Contains(typeValues[i])) {
-
-                        if (GlobalsData.base64EncodedImageSharedOthers.Count > i) {
-                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageSharedOthers[i]);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                imageValues.Add(Image.FromStream(toMs));
-                            }
-                        }
-
-                        void imageOnPressed(object sender, EventArgs e) {
-
-                            var getImgName = (Guna2PictureBox)sender;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            displayPic.Show();
-                        }
-
-
-                        onPressedEvent.Add(imageOnPressed);
-
+                    void audioOnPressed(object sender, EventArgs e) {
+                        AudioForm displayPic = new AudioForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        displayPic.Show();
                     }
 
-                    if (Globals.textTypes.Contains(typeValues[i])) {
-
-                        imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
-
-                        void textOnPressed(object sender, EventArgs e) {
-
-                            TextForm displayTxt = new TextForm(GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true);
-                            displayTxt.Show();
-
-                        }
-
-                        onPressedEvent.Add(textOnPressed);
-                    }
-
-                    if (typeValues[i] == ".exe") {
-
-                        imageValues.Add(Globals.EXEImage);
-
-                        void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
-                            displayExe.Show();
-                        }
-
-                        onPressedEvent.Add(exeOnPressed);
-                    }
-
-                    if (Globals.videoTypes.Contains(typeValues[i])) {
-
-                        if (GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
-
-                            const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                command.Parameters.AddWithValue("@ext", typeValues[i]);
-
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
-                                    }
-                                    readBase64.Close();
-                                }
-                            }
-                        }
-
-                        if (GlobalsData.base64EncodedThumbnailSharedOthers.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedOthers[0]);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                imageValues.Add(Image.FromStream(toMs));
-                            }
-
-                        }
-
-                        void videoOnPressed(object sender, EventArgs e) {
-
-                            var getImgName = (Guna2PictureBox)sender;
-                            var getWidth = getImgName.Image.Width;
-                            var getHeight = getImgName.Image.Height;
-
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            vidFormShow.Show();
-                        }
-
-                        onPressedEvent.Add(videoOnPressed);
-                    }
-
-                    if (Globals.excelTypes.Contains(typeValues[i])) {
-
-                        imageValues.Add(Globals.EXCELImage);
-
-                        void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            exlForm.Show();
-                        }
-
-                        onPressedEvent.Add(excelOnPressed);
-                    }
-                    if (Globals.audioTypes.Contains(typeValues[i])) {
-
-                        imageValues.Add(Globals.AudioImage);
-
-                        void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            displayPic.Show();
-                        }
-
-                        onPressedEvent.Add(audioOnPressed);
-                    }
-
-                    if (typeValues[i] == ".apk") {
-
-                        imageValues.Add(Globals.APKImage);
-
-                        void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true);
-                            displayPic.Show();
-                        }
-
-                        onPressedEvent.Add(apkOnPressed);
-                    }
-
-                    if (typeValues[i] == ".pdf") {
-
-                        imageValues.Add(Globals.PDFImage);
-
-                        void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            displayPdf.Show();
-                        }
-
-                        onPressedEvent.Add(pdfOnPressed);
-                    }
-
-                    if (Globals.ptxTypes.Contains(typeValues[i])) {
-
-                        imageValues.Add(Globals.PTXImage);
-
-                        void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            displayPtx.Show();
-                        }
-
-                        onPressedEvent.Add(ptxOnPressed);
-                    }
-
-                    if (typeValues[i] == ".msi") {
-
-                        imageValues.Add(Globals.MSIImage);
-
-                        void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            displayMsi.Show();
-                        }
-
-                        onPressedEvent.Add(msiOnPressed);
-
-                    }
-
-                    if (Globals.wordTypes.Contains(typeValues[i])) {
-
-                        imageValues.Add(Globals.DOCImage);
-
-                        void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                            displayMsi.Show();
-                        }
-
-                        onPressedEvent.Add(wordOnPressed);
-                    }
+                    onPressedEvent.Add(audioOnPressed);
                 }
 
-                PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                if (typeValues[i] == ".apk") {
 
-                BuildRedundaneVisibility();
+                    imageValues.Add(Globals.APKImage);
 
-                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
+                    void apkOnPressed(object sender, EventArgs e) {
+                        ApkForm displayPic = new ApkForm(filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true);
+                        displayPic.Show();
+                    }
 
-            /*} catch (Exception eq) {
-                MessageBox.Show(eq.Message);
-                //BuildShowAlert(
-                    //title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                    onPressedEvent.Add(apkOnPressed);
+                }
 
-            }*/
+                if (typeValues[i] == ".pdf") {
+
+                    imageValues.Add(Globals.PDFImage);
+
+                    void pdfOnPressed(object sender, EventArgs e) {
+                        PdfForm displayPdf = new PdfForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        displayPdf.Show();
+                    }
+
+                    onPressedEvent.Add(pdfOnPressed);
+                }
+
+                if (Globals.ptxTypes.Contains(typeValues[i])) {
+
+                    imageValues.Add(Globals.PTXImage);
+
+                    void ptxOnPressed(object sender, EventArgs e) {
+                        PtxForm displayPtx = new PtxForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        displayPtx.Show();
+                    }
+
+                    onPressedEvent.Add(ptxOnPressed);
+                }
+
+                if (typeValues[i] == ".msi") {
+
+                    imageValues.Add(Globals.MSIImage);
+
+                    void msiOnPressed(object sender, EventArgs e) {
+                        MsiForm displayMsi = new MsiForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        displayMsi.Show();
+                    }
+
+                    onPressedEvent.Add(msiOnPressed);
+
+                }
+
+                if (Globals.wordTypes.Contains(typeValues[i])) {
+
+                    imageValues.Add(Globals.DOCImage);
+
+                    void wordOnPressed(object sender, EventArgs e) {
+                        WordDocForm displayMsi = new WordDocForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
+                        displayMsi.Show();
+                    }
+
+                    onPressedEvent.Add(wordOnPressed);
+                }
+            }
+
+            PanelGenerator panelGenerator = new PanelGenerator();
+            panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+
+            BuildRedundaneVisibility();
+
+            lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
         }
 
@@ -2242,6 +2234,7 @@ namespace FlowSERVER1 {
             }
 
             await BuildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
+            UpdateProgressBarValue();
             BuildRedundaneVisibility();
 
         }
@@ -2524,7 +2517,9 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(
+                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+
             }
         }
 
@@ -2534,7 +2529,7 @@ namespace FlowSERVER1 {
                 const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
                 using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
                     command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
                             GlobalsData.fileTypeValuesSharedToMe.Add(reader.GetString(0));
                         }
@@ -2548,6 +2543,7 @@ namespace FlowSERVER1 {
 
             }
 
+            UpdateProgressBarValue();
             BuildRedundaneVisibility();
 
         }
@@ -2704,8 +2700,6 @@ namespace FlowSERVER1 {
         private async Task BuildFilePanelFolder(List<String> fileType, String foldTitle, int currItem) {
 
             ClearRedundane();
-
-            ClosePopupForm.CloseUploadingPopup();
 
             StartPopupForm.StartRetrievalPopup();
 
@@ -3912,7 +3906,6 @@ namespace FlowSERVER1 {
 
             lblMyFolders.Visible = false;
             lstFoldersPage.Visible = false;
-            lstFoldersPage.SelectedIndex = -1;
 
             btnGoHomePage.FillColor = GlobalStyle.DarkPurpleColor;
 
