@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using FlowSERVER1.AlertForms;
+using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.Helper;
 using FlowSERVER1.SharingQuery;
 using FlowSERVER1.Temporary;
@@ -12,6 +13,7 @@ namespace FlowSERVER1 {
 
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
         readonly private ShareFileQuery shareFile = new ShareFileQuery();
+        readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
 
         readonly private Crud crud = new Crud();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
@@ -36,10 +38,11 @@ namespace FlowSERVER1 {
 
         private async Task StartSharingFile() {
 
-            int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
-            int receiverCurrentTotalUploaded = await shareFile.CountReceiverTotalShared(txtFieldShareToName.Text);
-
             string shareToName = txtFieldShareToName.Text;
+
+            int receiverUploadLimit = await userAuthQuery.GetUploadLimit(shareToName);
+            int receiverCurrentTotalUploaded = await shareFile.CountReceiverTotalShared(shareToName);
+
             string comment = txtFieldComment.Text;
 
             if (receiverUploadLimit != receiverCurrentTotalUploaded) {

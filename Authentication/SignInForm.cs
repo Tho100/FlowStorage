@@ -41,7 +41,7 @@ namespace FlowSERVER1 {
             instance = this;
         }
 
-        private void SetupAutoLogin(String username, String email) {
+        private void SetupAutoLogin(string username, string email) {
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
 
@@ -238,9 +238,11 @@ namespace FlowSERVER1 {
                 if (userCanSignIn) {
 
                     int calculatePercentageUsage = 0;
-                    string accountType = await userAuthQuery.GetUploadLimit();
+                    int uploadLimit = await userAuthQuery.GetUploadLimit(tempDataUser.Username);
 
-                    if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(accountType, out int getLimitedValue)) {
+                    tempDataUser.AccountType = Globals.uploadFileLimitToAccountType[uploadLimit];
+
+                    if (int.TryParse(HomePage.instance.lblItemCountText.Text, out int getCurrentCount) && int.TryParse(uploadLimit.ToString(), out int getLimitedValue)) {
                         if (getLimitedValue == 0) {
                             HomePage.instance.lblUsagePercentage.Text = "0%";
 
@@ -250,7 +252,7 @@ namespace FlowSERVER1 {
 
                         }
 
-                        HomePage.instance.lblLimitUploadText.Text = accountType;
+                        HomePage.instance.lblLimitUploadText.Text = uploadLimit.ToString();
                         HomePage.instance.progressBarUsageStorage.Value = calculatePercentageUsage;
 
                     }

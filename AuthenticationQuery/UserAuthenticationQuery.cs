@@ -10,13 +10,13 @@ namespace FlowSERVER1.AuthenticationQuery {
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
-        public async Task<Dictionary<string, string>> GetAccountAuthentication(string userEmail) {
+        public async Task<Dictionary<string, string>> GetAccountAuthentication(string email) {
 
             var accountInfo = new Dictionary<string, string>();
 
             string checkPasswordQuery = "SELECT CUST_PASSWORD, CUST_PIN FROM information WHERE CUST_EMAIL = @email";
             using (var command = new MySqlCommand(checkPasswordQuery, con)) {
-                command.Parameters.AddWithValue("@email", userEmail);
+                command.Parameters.AddWithValue("@email", email);
                 using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         accountInfo["password"] = reader.GetString(0);
@@ -28,18 +28,34 @@ namespace FlowSERVER1.AuthenticationQuery {
             return accountInfo;
         }
 
-        public async Task<string> GetUploadLimit(string username = "") {
+        public async Task<int> GetUploadLimit(string username) {
 
             string accountType = "";
             
             const string querySelectType = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(querySelectType, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                command.Parameters.AddWithValue("@username", username);
                 accountType = Convert.ToString(await command.ExecuteScalarAsync());
             }
 
-            tempDataUser.AccountType = accountType;
-            return Globals.uploadFileLimit[accountType].ToString();
+            return Globals.uploadFileLimit[accountType];
+
+        }
+
+        public async Task<string> GetAccountType(string username) {
+
+            const string getAccountTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(getAccountTypeQuery, con)) {
+                command.Parameters.AddWithValue("@username", username);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    if (await reader.ReadAsync()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+
+            return string.Empty;
 
         }
 
@@ -56,7 +72,44 @@ namespace FlowSERVER1.AuthenticationQuery {
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
+
+        }
+
+        public async Task<string> GetEmailByEmail(string email) {
+
+            const string selectUsernameQuery = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
+
+            using (var command = new MySqlCommand(selectUsernameQuery, con)) {
+                command.Parameters.AddWithValue("@email", email);
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+
+            return string.Empty;
+
+        }
+
+        public async Task<string> GetRecoveryKeyByEmail(string email) {
+
+            const string query = "SELECT RECOV_TOK FROM information WHERE CUST_EMAIL = @email";
+
+            using (MySqlCommand command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@email", email);
+
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        if(string.IsNullOrEmpty(reader.GetString(0))) {
+                            return EncryptionModel.Decrypt(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+
+            return string.Empty;
 
         }
 

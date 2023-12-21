@@ -23,6 +23,7 @@ namespace FlowSERVER1 {
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private Crud crud = new Crud();
 
+        readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
         readonly private ShareFileQuery shareFile = new ShareFileQuery();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
@@ -135,7 +136,7 @@ namespace FlowSERVER1 {
 
             string shareToName = txtFieldShareToName.Text;
 
-            int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(txtFieldShareToName.Text)];
+            int receiverUploadLimit = await userAuthQuery.GetUploadLimit(shareToName);
             int receiverCurrentTotalUploaded = await shareFile.CountReceiverTotalShared(txtFieldShareToName.Text);
 
             if (receiverUploadLimit != receiverCurrentTotalUploaded) {

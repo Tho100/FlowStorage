@@ -49,12 +49,17 @@ namespace FlowSERVER1 {
 
                 if(authcase0 == await crud.ReturnUserPIN() && authcase1 == await crud.ReturnUserAuth()) {
                     SaveRecoveryTokenToLocal(RetrieveRecoveryToken());
+
                 } else {
-                    new CustomAlert(title: "Export failed", subheader: "Password or PIN is incorrect.").Show();
+                    new CustomAlert(
+                        title: "Export failed", subheader: "Password or PIN is incorrect.").Show();
+
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Export failed", subheader: "An unknown error occurred, are you connected to the internet?").Show();
+                new CustomAlert(
+                    title: "Export failed", subheader: "An unknown error occurred, are you connected to the internet?").Show();
+
             }
         }
 

@@ -29,7 +29,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblAlert = new System.Windows.Forms.Label();
             this.txtFieldEmail = new Guna.UI2.WinForms.Guna2TextBox();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnVerify = new Guna.UI2.WinForms.Guna2Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtFieldRecoveryKey = new Guna.UI2.WinForms.Guna2TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -97,27 +97,27 @@
             this.txtFieldEmail.TabIndex = 16;
             this.txtFieldEmail.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
-            // guna2Button2
+            // btnVerify
             // 
-            this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button2.Animated = true;
-            this.guna2Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button2.BorderRadius = 12;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(47, 305);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(331, 54);
-            this.guna2Button2.TabIndex = 15;
-            this.guna2Button2.Text = "Next";
-            this.guna2Button2.TextOffset = new System.Drawing.Point(0, -2);
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnVerify.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnVerify.Animated = true;
+            this.btnVerify.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.btnVerify.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnVerify.BorderRadius = 12;
+            this.btnVerify.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnVerify.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnVerify.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnVerify.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnVerify.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnVerify.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnVerify.ForeColor = System.Drawing.Color.White;
+            this.btnVerify.Location = new System.Drawing.Point(47, 305);
+            this.btnVerify.Name = "btnVerify";
+            this.btnVerify.Size = new System.Drawing.Size(331, 54);
+            this.btnVerify.TabIndex = 15;
+            this.btnVerify.Text = "Next";
+            this.btnVerify.TextOffset = new System.Drawing.Point(0, -2);
+            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
             // 
             // label2
             // 
@@ -224,7 +224,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.guna2Button2);
+            this.Controls.Add(this.btnVerify);
             this.Controls.Add(this.lblAlert);
             this.Controls.Add(this.txtFieldEmail);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -244,7 +244,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblAlert;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldEmail;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
+        public Guna.UI2.WinForms.Guna2Button btnVerify;
         private System.Windows.Forms.Label label2;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldRecoveryKey;
         private System.Windows.Forms.Label label1;

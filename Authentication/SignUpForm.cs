@@ -14,8 +14,6 @@ using System.Windows.Forms;
 namespace FlowSERVER1.Authentication {
     public partial class SignUpForm : Form {
 
-        private readonly MySqlConnection con = ConnectionModel.con;
-
         private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         private readonly StartupQuery startupQuery = new StartupQuery();
 
@@ -68,9 +66,14 @@ namespace FlowSERVER1.Authentication {
 
                 accessHomePage.CallInitialStartupData = true;
 
+                string uploadLimit = (await userAuthQuery.GetUploadLimit(tempDataUser.Username)).ToString();
+                string accountType = await userAuthQuery.GetAccountType(tempDataUser.Username);
+
                 accessHomePage.lstFoldersPage.Items.AddRange(folders.ToArray());
                 accessHomePage.lblCurrentPageText.Text = "Home";
-                accessHomePage.lblLimitUploadText.Text = await userAuthQuery.GetUploadLimit();
+                accessHomePage.lblLimitUploadText.Text = uploadLimit;
+
+                tempDataUser.AccountType = accountType;
 
                 pnlRegistration.Visible = false;
 
@@ -124,7 +127,7 @@ namespace FlowSERVER1.Authentication {
         /// </summary>
         /// <param name="emailInput"></param>
         /// <returns></returns>
-        private bool ValidateEmailInput(String emailInput) {
+        private bool ValidateEmailInput(string emailInput) {
             const string _regPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
             var regex = new Regex(_regPattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(emailInput);
@@ -180,7 +183,7 @@ namespace FlowSERVER1.Authentication {
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(pinInput)) {
+                    if (string.IsNullOrEmpty(pinInput)) {
                         lblAlertPin.Visible = true;
                         lblAlertPin.Text = "Please add a PIN number.";
                         return;
@@ -216,19 +219,19 @@ namespace FlowSERVER1.Authentication {
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(emailInput)) {
+                    if (string.IsNullOrEmpty(emailInput)) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Please add your email";
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(passwordInput)) {
+                    if (string.IsNullOrEmpty(passwordInput)) {
                         lblAlertPassword.Visible = true;
                         return;
 
                     }
 
-                    if (String.IsNullOrEmpty(usernameInput)) {
+                    if (string.IsNullOrEmpty(usernameInput)) {
                         lblAlertUsername.Visible = true;
                         return;
                     }
@@ -271,9 +274,9 @@ namespace FlowSERVER1.Authentication {
         /// called FlowStorageInfos located in %appdata%
         /// </summary>
         /// <param name="_custUsername">Username of user</param>
-        private void StupAutoLogin(String custUsername, String custEmail) {
+        private void StupAutoLogin(string custUsername, string custEmail) {
 
-            String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
             if (!Directory.Exists(appDataPath)) {
 
                 DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
@@ -306,10 +309,10 @@ namespace FlowSERVER1.Authentication {
 
             accessHomePage.lblLimitUploadText.Text = "25";
 
-            txtBoxUsernameField.Text = String.Empty;
-            txtBoxAuth0Field.Text = String.Empty;
-            txtBoxEmailField.Text = String.Empty;
-            txtBoxAuth1Field.Text = String.Empty;
+            txtBoxUsernameField.Text = string.Empty;
+            txtBoxAuth0Field.Text = string.Empty;
+            txtBoxEmailField.Text = string.Empty;
+            txtBoxAuth1Field.Text = string.Empty;
         }
 
         private void guna2Button10_Click(object sender, EventArgs e) => new SignInForm(this).Show();

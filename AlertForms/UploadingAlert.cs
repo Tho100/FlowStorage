@@ -39,7 +39,7 @@ namespace FlowSERVER1 {
         private System.Windows.Forms.Timer timer;
         private int progressValue = 0;
 
-        public UploadingAlert(String fileName, String tableName, String directoryName, long fileSize = 0) {
+        public UploadingAlert(string fileName, string tableName, string directoryName, long fileSize = 0) {
 
             InitializeComponent();
 
@@ -91,12 +91,12 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="FileName"></param>
         /// <param name="TableName"></param>
-        private void FileDeletionNormal(String FileName, String TableName) {
+        private void FileDeletionNormal(string fileName, string tableName) {
 
-            string fileDeletionQuery = $"DELETE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+            string fileDeletionQuery = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using(MySqlCommand command = new MySqlCommand(fileDeletionQuery,con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(FileName));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 command.ExecuteNonQuery();
             }
         }
@@ -104,13 +104,13 @@ namespace FlowSERVER1 {
         /// <summary>
         /// File deletion function for directory
         /// </summary>
-        private void FileDeletionDirectory(String _FileName) {
+        private void FileDeletionDirectory(string fileName) {
 
             const string fileDeletionQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
 
             using(MySqlCommand command = new MySqlCommand(fileDeletionQuery,con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_FileName));
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(DirectoryName));
                 command.ExecuteNonQuery();
             }
@@ -178,13 +178,13 @@ namespace FlowSERVER1 {
 
                         Application.OpenForms
                          .OfType<Form>()
-                         .Where(form => String.Equals(form.Name, "cancelFORM"))
+                         .Where(form => string.Equals(form.Name, "cancelFORM"))
                          .ToList()
                          .ForEach(form => form.Close());
 
                         string fileType = Path.GetExtension(FileName);
 
-                        if(TableName == String.Empty) {
+                        if(TableName == string.Empty) {
 
                             if (Globals.imageTypes.Contains(fileType)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
@@ -270,62 +270,6 @@ namespace FlowSERVER1 {
                         }
                     }
                 }
-
-                /*if (TableName == String.Empty) {
-
-                    Control foundControl = null;
-                    foreach(Control _getControls in HomePage.instance.flwLayoutHome.Controls) {
-                        if(_getControls.Name == ControlName) {
-                            foundControl = _getControls; 
-                            break;
-                        }
-                    }
-
-                    if (foundControl != null) {
-                        HomePage.instance.flwLayoutHome.Controls.Remove(foundControl);
-                        foundControl.Dispose();
-                    }
-                
-                    HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
-
-                    if(HomePage.instance.flwLayoutHome.Controls.Count == 0) {
-                        HomePage.instance.btnGarbageImage.Visible = true;
-                        HomePage.instance.lblEmptyHere.Visible = true;
-                    }
-
-                } else if (TableName == GlobalsTable.directoryUploadTable) {
-                    Control foundControl = null;
-                    foreach (Control _getControls in DirectoryForm.instance.flwLayoutDirectory.Controls) {
-                        if (_getControls.Name == ControlName) {
-                            foundControl = _getControls;
-                            break;
-                        }
-                    }
-
-                    if (foundControl != null) {
-                        DirectoryForm.instance.flwLayoutDirectory.Controls.Remove(foundControl);
-                        foundControl.Dispose();
-                    }
-
-                    if (DirectoryForm.instance.flwLayoutDirectory.Controls.Count == 0) {
-                        DirectoryForm.instance.guna2Button6.Visible = true;
-                        DirectoryForm.instance.label8.Visible = true;
-                    }
-
-                } else if (TableName == GlobalsTable.folderUploadTable) {
-                    Control foundControl = null;
-                    foreach (Control _getControls in HomePage.instance.flwLayoutHome.Controls) {
-                        if (_getControls.Name == ControlName) {
-                            foundControl = _getControls;
-                            break;
-                        }
-                    }
-
-                    if (foundControl != null) {
-                        HomePage.instance.flwLayoutHome.Controls.Remove(foundControl);
-                        foundControl.Dispose();
-                    }
-                }*/
 
             } catch (Exception) {
                 MessageBox.Show(

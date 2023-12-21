@@ -36,7 +36,7 @@ namespace FlowSERVER1 {
         /// </summary>
         /// <param name="_FileTitle"></param>
         /// <param name="_getBytes"></param>
-        private static void OpenSaveFileDialog(String fileName, Byte[] fileBytes) {
+        private static void OpenSaveFileDialog(string fileName, byte[] fileBytes) {
 
             ClosePopupForm.CloseRetrievalPopup();
 
@@ -51,7 +51,7 @@ namespace FlowSERVER1 {
 
         }
 
-        public static async void SaveSelectedFile(String fileName, String tableName, String directoryName, bool isFromShared = false, bool isFromMyPs = false) {
+        public static async void SaveSelectedFile(string fileName, string tableName, string directoryName, bool isFromShared = false, bool isFromMyPs = false) {
 
             fileExtension = fileName.Split('.').Last();
 

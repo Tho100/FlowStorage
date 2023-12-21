@@ -21,7 +21,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
         public static string getCommentSharedToOthers(string fileName) {
@@ -36,7 +36,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
         public static string getCommentPublicStorage(string fileName) {
@@ -50,7 +50,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
 

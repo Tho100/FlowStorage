@@ -79,7 +79,7 @@ namespace FlowSERVER1 {
         private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
         private void guna2Button3_Click_1(object sender, EventArgs e)
             => new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem)).Show();
-        private void BuildShowAlert(String title, String subheader)
+        private void BuildShowAlert(string title, string subheader)
             => new CustomAlert(title: title, subheader: subheader).Show();
 
         private void UpdateProgressBarValue() {
@@ -475,7 +475,7 @@ namespace FlowSERVER1 {
         /// <param name="parameterName"></param>
         /// <param name="currItem"></param>
         /// <returns></returns>
-        private async Task BuildFilePanelHome(String tableName, String parameterName, int currItem) {
+        private async Task BuildFilePanelHome(string tableName, string parameterName, int currItem) {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
@@ -549,7 +549,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -567,7 +567,7 @@ namespace FlowSERVER1 {
 
                         void textOnPressed(object sender, EventArgs e) {
 
-                            TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, String.Empty, tempDataUser.Username);
+                            TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -579,7 +579,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, String.Empty, tempDataUser.Username);
+                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
                             displayExe.Show();
                         }
 
@@ -602,7 +602,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeVideoTable, String.Empty, tempDataUser.Username);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.homeVideoTable, string.Empty, tempDataUser.Username);
                             vidFormShow.Show();
                         }
 
@@ -614,7 +614,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExcelTable, String.Empty, tempDataUser.Username);
+                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExcelTable, string.Empty, tempDataUser.Username);
                             exlForm.Show();
                         }
 
@@ -625,7 +625,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.homeAudioTable, String.Empty, tempDataUser.Username);
+                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.homeAudioTable, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -637,7 +637,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, tempDataUser.Username, GlobalsTable.homeApkTable, String.Empty);
+                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, tempDataUser.Username, GlobalsTable.homeApkTable, string.Empty);
                             displayPic.Show();
                         }
 
@@ -649,7 +649,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.homePdfTable, String.Empty, tempDataUser.Username);
+                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.homePdfTable, string.Empty, tempDataUser.Username);
                             displayPdf.Show();
                         }
 
@@ -661,7 +661,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.homePtxTable, String.Empty, tempDataUser.Username);
+                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.homePtxTable, string.Empty, tempDataUser.Username);
                             displayPtx.Show();
                         }
 
@@ -673,7 +673,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.homeMsiTable, String.Empty, tempDataUser.Username);
+                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.homeMsiTable, string.Empty, tempDataUser.Username);
                             displayMsi.Show();
                         }
 
@@ -686,7 +686,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, String.Empty, tempDataUser.Username);
+                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username);
                             displayMsi.Show();
                         }
 
@@ -819,7 +819,7 @@ namespace FlowSERVER1 {
 
                     Bitmap defaultImage = new Bitmap(imageName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
+                    PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
 
@@ -834,7 +834,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Click += (sender_t, e_t) => {
 
-                    TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, fileName, String.Empty, tempDataUser.Username);
+                    TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, fileName, string.Empty, tempDataUser.Username);
                     txtFormShow.Show();
                 };
             }
@@ -845,7 +845,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, String.Empty, tempDataUser.Username);
+                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
                     displayExe.Show();
                 };
             }
@@ -864,7 +864,7 @@ namespace FlowSERVER1 {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, String.Empty, tempDataUser.Username);
+                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, string.Empty, tempDataUser.Username);
                     vidShow.Show();
                 };
             }
@@ -874,7 +874,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, String.Empty, tempDataUser.Username);
+                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, string.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
 
@@ -886,7 +886,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, String.Empty, tempDataUser.Username);
+                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, string.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
             }
@@ -897,7 +897,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, String.Empty);
+                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, string.Empty);
                     displayPic.Show();
                 };
             }
@@ -908,7 +908,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, String.Empty, tempDataUser.Username);
+                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, string.Empty, tempDataUser.Username);
                     displayPdf.ShowDialog();
                 };
             }
@@ -919,7 +919,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, String.Empty, tempDataUser.Username);
+                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, string.Empty, tempDataUser.Username);
                     displayPtx.ShowDialog();
                 };
             }
@@ -930,7 +930,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, String.Empty, tempDataUser.Username);
+                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, string.Empty, tempDataUser.Username);
                     displayMsi.Show();
                 };
             }
@@ -941,7 +941,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, String.Empty, tempDataUser.Username);
+                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username);
                     displayWord.ShowDialog();
                 };
             }
@@ -1162,7 +1162,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task BuildFilePanelPublicStorage(String tableName, String parameterName, int currItem, bool isFromMyPs = false) {
+        private async Task BuildFilePanelPublicStorage(string tableName, string parameterName, int currItem, bool isFromMyPs = false) {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
@@ -1326,7 +1326,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, String.Empty, uploaderName);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, string.Empty, uploaderName);
                             displayPic.Show();
                         }
 
@@ -1343,7 +1343,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.psText, filesInfo[accessIndex].Item1, String.Empty, uploaderName);
+                            TextForm displayPic = new TextForm(GlobalsTable.psText, filesInfo[accessIndex].Item1, string.Empty, uploaderName);
                             displayPic.Show();
                         }
 
@@ -1355,7 +1355,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.psExe, String.Empty, uploaderName);
+                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName);
                             displayExe.Show();
                         }
 
@@ -1378,7 +1378,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, String.Empty, uploaderName);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, string.Empty, uploaderName);
                             vidFormShow.Show();
                         }
 
@@ -1390,7 +1390,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.psExcel, String.Empty, uploaderName);
+                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.psExcel, string.Empty, uploaderName);
                             exlForm.Show();
                         }
 
@@ -1401,7 +1401,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.psAudio, String.Empty, uploaderName);
+                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.psAudio, string.Empty, uploaderName);
                             displayPic.Show();
                         }
 
@@ -1413,7 +1413,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, String.Empty);
+                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, string.Empty);
                             displayPic.Show();
                         }
 
@@ -1425,7 +1425,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.psPdf, String.Empty, uploaderName);
+                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.psPdf, string.Empty, uploaderName);
                             displayPdf.Show();
                         }
 
@@ -1437,7 +1437,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.psPtx, String.Empty, uploaderName);
+                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.psPtx, string.Empty, uploaderName);
                             displayPtx.Show();
                         }
 
@@ -1449,7 +1449,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.psMsi, String.Empty, uploaderName);
+                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.psMsi, string.Empty, uploaderName);
                             displayMsi.Show();
                         }
 
@@ -1462,7 +1462,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.psWord, String.Empty, uploaderName);
+                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.psWord, string.Empty, uploaderName);
                             displayMsi.Show();
                         }
 
@@ -1590,7 +1590,7 @@ namespace FlowSERVER1 {
 
                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, String.Empty, tempDataUser.Username);
+                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, string.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
 
@@ -1604,7 +1604,7 @@ namespace FlowSERVER1 {
                 await InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
-                    TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, String.Empty, tempDataUser.Username);
+                    TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, string.Empty, tempDataUser.Username);
                     txtFormShow.Show();
                 };
             }
@@ -1615,7 +1615,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, String.Empty, tempDataUser.Username);
+                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username);
                     displayExe.Show();
                 };
             }
@@ -1634,7 +1634,7 @@ namespace FlowSERVER1 {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, String.Empty, tempDataUser.Username);
+                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, string.Empty, tempDataUser.Username);
                     vidShow.Show();
                 };
             }
@@ -1645,7 +1645,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, String.Empty, tempDataUser.Username);
+                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, string.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
             }
@@ -1656,7 +1656,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, String.Empty, tempDataUser.Username);
+                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, string.Empty, tempDataUser.Username);
                     displayPic.Show();
                 };
             }
@@ -1667,7 +1667,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, String.Empty);
+                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, string.Empty);
                     displayPic.Show();
                 };
             }
@@ -1678,7 +1678,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, String.Empty, tempDataUser.Username);
+                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, string.Empty, tempDataUser.Username);
                     displayPdf.ShowDialog();
                 };
             }
@@ -1689,7 +1689,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, String.Empty, tempDataUser.Username);
+                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, string.Empty, tempDataUser.Username);
                     displayPtx.ShowDialog();
                 };
             }
@@ -1699,7 +1699,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, String.Empty, tempDataUser.Username);
+                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, string.Empty, tempDataUser.Username);
                     displayMsi.Show();
                 };
             }
@@ -1710,7 +1710,7 @@ namespace FlowSERVER1 {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, String.Empty, tempDataUser.Username);
+                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, string.Empty, tempDataUser.Username);
                     displayWord.ShowDialog();
                 };
             }
@@ -1958,7 +1958,7 @@ namespace FlowSERVER1 {
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
 
         }
 
@@ -1973,14 +1973,14 @@ namespace FlowSERVER1 {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
-                        filesInfoSharedOthers.Add((fileName, uploadDate, String.Empty));
+                        filesInfoSharedOthers.Add((fileName, uploadDate, string.Empty));
                     }
                 }
             }
 
         }
 
-        private async Task BuildFilePanelSharedToOthers(List<String> fileTypes, String parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToOthers(List<string> fileTypes, string parameterName, int itemCurr) {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
@@ -2288,14 +2288,14 @@ namespace FlowSERVER1 {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
-                        filesInfoShared.Add((fileName, uploadDate, String.Empty));
+                        filesInfoShared.Add((fileName, uploadDate, string.Empty));
                     }
                 }
             }
 
         }
 
-        private async Task BuildFilePanelSharedToMe(List<String> fileTypes, String parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToMe(List<string> fileTypes, string parameterName, int itemCurr) {
 
             try {
 
@@ -2697,7 +2697,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task BuildFilePanelFolder(List<String> fileType, String foldTitle, int currItem) {
+        private async Task BuildFilePanelFolder(List<string> fileType, string foldTitle, int currItem) {
 
             ClearRedundane();
 
@@ -2732,7 +2732,7 @@ namespace FlowSERVER1 {
                             }
 
                             filePaths.Add(fileName);
-                            filesInfo.Add((fileName, uploadDate, String.Empty));
+                            filesInfo.Add((fileName, uploadDate, string.Empty));
                         }
                         reader.Close();
                     }
@@ -2801,7 +2801,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -2818,7 +2818,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, String.Empty, tempDataUser.Username);
+                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
 
@@ -2830,7 +2830,7 @@ namespace FlowSERVER1 {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, String.Empty);
+                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, string.Empty);
                             displayExe.Show();
                         }
 
@@ -2972,7 +2972,7 @@ namespace FlowSERVER1 {
             }
         }
 
-        private async void CreateFilePanelFolder(String folderPath, String folderName, String[] filesName) {
+        private async void CreateFilePanelFolder(string folderPath, string folderName, string[] filesName) {
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
@@ -3112,7 +3112,7 @@ namespace FlowSERVER1 {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
                             displayPic.Show();
 
                         };
@@ -3135,7 +3135,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Click += (sender_t, e_t) => {
 
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, String.Empty, tempDataUser.Username);
+                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         };
 
@@ -3147,7 +3147,7 @@ namespace FlowSERVER1 {
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
-                            ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, String.Empty);
+                            ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, string.Empty);
                             displayPic.ShowDialog();
                         };
                     }
@@ -3260,7 +3260,7 @@ namespace FlowSERVER1 {
         /// Garbage (delete folder) button is clicked
         /// </summary>
         /// <param name="foldName"></param>
-        private async void RemoveAndDeleteFolder(String foldName) {
+        private async void RemoveAndDeleteFolder(string foldName) {
 
             DialogResult verifyDeletion = MessageBox.Show(
                 $"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -3293,7 +3293,7 @@ namespace FlowSERVER1 {
         /// they can upload
         /// </summary>
         /// <param name="CurAcc"></param>
-        public void DisplayErrorFolder(String CurAcc) {
+        public void DisplayErrorFolder(string CurAcc) {
             Form bgBlur = new Form();
             using (LimitedFolderFileAlert displayPic = new LimitedFolderFileAlert(CurAcc)) {
                 bgBlur.StartPosition = FormStartPosition.Manual;
@@ -3479,7 +3479,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private async Task FolderOnSelected(String folderName) {
+        private async Task FolderOnSelected(string folderName) {
 
             BuildButtonsOnFolderNameSelected();
 
@@ -4188,45 +4188,45 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button18_Click(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".png,.jpeg,.jpg";
         }
 
         private void guna2Button17_Click_2(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".txt,.html,.md,.sql,.css,.js,.csv";
         }
 
         private void guna2Button22_Click_1(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".doc,.docx";
 
         }
 
         private void guna2Button20_Click(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".mp3,.wav";
 
         }
 
         private void guna2Button21_Click(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".xlsx,xls";
         }
 
         private void guna2Button23_Click(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".mp4,.avi,.mov,wmv";
 
         }
 
         private void guna2Button24_Click(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".pdf";
         }
 
         private void guna2Button25_Click(object sender, EventArgs e) {
-            txtBoxSearchFile.Text = String.Empty;
+            txtBoxSearchFile.Text = string.Empty;
         }
 
         #endregion END - Filter type section

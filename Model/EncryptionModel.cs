@@ -7,7 +7,7 @@ namespace FlowSERVER1 {
 
         private static readonly byte[] keyByte = Encoding.UTF8.GetBytes("Rw2345_789qTz345");
 
-        public static string Encrypt(String value) {
+        public static string Encrypt(string value) {
 
             try {
 
@@ -27,10 +27,11 @@ namespace FlowSERVER1 {
 
             } catch (Exception) { }
 
-            return String.Empty;
+            return string.Empty;
+
         }
 
-        public static string Decrypt(String encryptedValue) {
+        public static string Decrypt(string encryptedValue) {
 
             try {
 
@@ -53,7 +54,7 @@ namespace FlowSERVER1 {
 
             } catch (Exception) { }
 
-            return String.Empty;
+            return string.Empty;
 
         }
 

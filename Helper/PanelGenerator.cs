@@ -105,7 +105,7 @@ namespace FlowSERVER1.Helper {
             };
         }
 
-        public void GeneratePublicStoragePanel(string parameterName, int length, List<(string, string, string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, List<String> usernameList, bool moreButtonVisible = true) {
+        public void GeneratePublicStoragePanel(string parameterName, int length, List<(string, string, string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, List<string> usernameList, bool moreButtonVisible = true) {
 
             for (int i = 0; i < length; i++) {
 

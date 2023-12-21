@@ -28,7 +28,7 @@ namespace FlowSERVER1 {
         readonly private MySqlConnection con = ConnectionModel.con;
         private string _todayDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
 
-        public DirectoryForm(String directoryName) {
+        public DirectoryForm(string directoryName) {
             InitializeComponent();
 
             instance = this;
@@ -218,7 +218,7 @@ namespace FlowSERVER1 {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
-                        filesInfo.Add((fileName, uploadDate, String.Empty));
+                        filesInfo.Add((fileName, uploadDate, string.Empty));
                     }
                 }
             }

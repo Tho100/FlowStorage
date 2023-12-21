@@ -4,7 +4,7 @@ using System;
 namespace FlowSERVER1.Model {
     public class StripeModel {
 
-        static public void AddNewCustomer(String email, String name) {
+        static public void AddNewCustomer(string email, string name) {
 
             const string key = "sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN"; // Replace with valid KEY
             Stripe.StripeConfiguration.ApiKey = key;
@@ -18,7 +18,7 @@ namespace FlowSERVER1.Model {
             service.Create(options);
         }
 
-        static public void CancelCustomerSubscription(String email) {
+        static public void CancelCustomerSubscription(string email) {
 
             const string key = "sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN"; // Replace with valid KEY
             Stripe.StripeConfiguration.ApiKey = key;
@@ -53,7 +53,7 @@ namespace FlowSERVER1.Model {
 
         }
 
-        static public void DeleteCustomer(String email) {
+        static public void DeleteCustomer(string email) {
 
             const string key = "sk_test_51MO4YYF2lxRV33xsBfTJLQypyLBjhoxYdz18VoLrZZ6hin4eJrAV9O6NzduqR02vosmC4INFgBgxD5TkrkpM3sZs00hqhx3ZzN"; // Replace with valid KEY
             Stripe.StripeConfiguration.ApiKey = key;

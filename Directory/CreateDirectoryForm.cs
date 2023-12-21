@@ -288,7 +288,7 @@ namespace FlowSERVER1 {
 
                 string directoryNameInput = guna2TextBox1.Text.Trim();
 
-                if (!String.IsNullOrEmpty(directoryNameInput)) {
+                if (!string.IsNullOrEmpty(directoryNameInput)) {
                     await ValidateAndCreateDirectory(totalFiles, directoryNameInput);
                 }
 

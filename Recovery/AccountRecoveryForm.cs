@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using FlowSERVER1.AuthenticationQuery;
 using MySql.Data.MySqlClient;
 
 namespace FlowSERVER1 {
     public partial class ValidateRecoveryEmail : Form {
-
-        readonly private MySqlConnection con = ConnectionModel.con;
 
         public ValidateRecoveryEmail() {
             InitializeComponent();
@@ -16,111 +14,36 @@ namespace FlowSERVER1 {
 
         }
 
-        private string SelectValueCustomColumn(String columnName) {
-
-            string returnedValue = null;
-
-            List<string> listReturnedValues = new List<string>();
-
-            string query = $"SELECT {columnName} FROM information WHERE CUST_EMAIL = @email";
-
-            using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
-                using (MySqlDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
-                        listReturnedValues.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-            if (listReturnedValues.Count > 0 && listReturnedValues[0] != "") {
-                returnedValue = listReturnedValues[0];
-            }
-
-            return returnedValue;
-        }
-
-        private string ReturnRecoveryValue() {
-
-            string recoveryTokenValue = null;
-
-            List<string> listRecoveryToken = new List<string>();
-
-            const string checkPassword_Query = "SELECT RECOV_TOK FROM information WHERE CUST_EMAIL = @email";
-
-            using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
-                command.CommandText = checkPassword_Query;
-                command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
-
-                using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
-                    while (readerPass_.Read()) {
-                        listRecoveryToken.Add(readerPass_.GetString(0));
-                    }
-                }
-            }
-
-            if (listRecoveryToken.Count > 0 && listRecoveryToken[0] != "") {
-                recoveryTokenValue = EncryptionModel.Decrypt(listRecoveryToken[0]);
-            }
-
-            return recoveryTokenValue;
-        }
-
-        private string EmailIsExistVerification() {
-
-            List<String> _concludeValue = new List<String>();
-
-            string _custEmail = null;
-            const string checkPassword_Query = "SELECT CUST_EMAIL FROM information WHERE CUST_EMAIL = @email";
-
-            using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
-                command.CommandText = checkPassword_Query;
-                command.Parameters.AddWithValue("@email", txtFieldEmail.Text);
-
-                using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
-                    while (readerPass_.Read()) {
-                        _concludeValue.Add(readerPass_.GetString(0));
-                    }
-                }
-            }
-
-            if (_concludeValue.Count > 0 && _concludeValue[0] != "") {
-                _custEmail = _concludeValue[0];
-            }
-
-            return _custEmail;
-        }
-
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnVerify_Click(object sender, EventArgs e) {
 
             try {
 
-                if(EmailIsExistVerification() == null) {
+                string emailInput = txtFieldEmail.Text;
+                string recoveryInput = txtFieldRecoveryKey.Text;
+
+                var userAuthQuery = new UserAuthenticationQuery();
+
+                if (await userAuthQuery.GetEmailByEmail(emailInput) == string.Empty) {
                     lblAlert.Text = "Account not found.";
                     lblAlert.Visible = true;
                     return;
                 }
 
-                if(txtFieldRecoveryKey.Text != ReturnRecoveryValue()) {
+                if(await userAuthQuery.GetRecoveryKeyByEmail(emailInput) != recoveryInput) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Invalid recovery key.";
                     return;
                 }
 
-                ChangeAuthForm _showPasswordRecovery = new ChangeAuthForm();
-                _showPasswordRecovery.Show();
+                new ChangeAuthForm().Show();
 
                 this.Close();
 
 
             } catch (Exception) {
                 lblAlert.Visible = true;
+
             }
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {

@@ -19,30 +19,30 @@ namespace FlowSERVER1 {
         private static string fileName { get; set; }
         private static string fileType { get; set; }
 
-        public static Byte[] LoadFile(String _TableName, String _DirectoryName,String _FileName, bool _isFromSharedTo = false) {
+        public static Byte[] LoadFile(string tableName, string directoryName, string selectedFileName, bool isFromSharedFiles = false) {
 
             try {
 
-                fileName = _FileName;
-                fileType = $".{_FileName.Split('.').Last()}";
+                fileName = selectedFileName;
+                fileType = $".{selectedFileName.Split('.').Last()}";
 
-                if (GlobalsTable.publicTables.Contains(_TableName)) {
-                    RetrieveHomeDataAsync(_TableName);
+                if (GlobalsTable.publicTables.Contains(tableName)) {
+                    RetrieveHomeDataAsync(tableName);
 
-                } else if (_TableName == GlobalsTable.directoryUploadTable) {
-                    RetrieveDirectoryDataAsync(_DirectoryName);
+                } else if (tableName == GlobalsTable.directoryUploadTable) {
+                    RetrieveDirectoryDataAsync(directoryName);
                  
-                } else if (_TableName == GlobalsTable.folderUploadTable) {
-                    RetrieveFolderDataAsync(_DirectoryName);
+                } else if (tableName == GlobalsTable.folderUploadTable) {
+                    RetrieveFolderDataAsync(directoryName);
                     
-                } else if (_TableName == GlobalsTable.sharingTable && _isFromSharedTo == true) {
+                } else if (tableName == GlobalsTable.sharingTable && isFromSharedFiles == true) {
                     RetrieveSharedToOtherData();
 
-                } else if (_TableName == GlobalsTable.sharingTable) {
+                } else if (tableName == GlobalsTable.sharingTable) {
                     RetrieveSharedToMeData();
 
-                } else if (GlobalsTable.publicTablesPs.Contains(_TableName)) {
-                    RetrievePublicStorageData(_TableName);
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    RetrievePublicStorageData(tableName);
 
                 }
 
@@ -55,7 +55,7 @@ namespace FlowSERVER1 {
 
         }
 
-        private static async void RetrievePublicStorageData(String table) {
+        private static async void RetrievePublicStorageData(string table) {
 
             string selectFileDataQuery = $"SELECT CUST_FILE FROM {table} WHERE CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
@@ -226,9 +226,9 @@ namespace FlowSERVER1 {
             }
         }
 
-        private static async void RetrieveHomeDataAsync(String TableName) {
+        private static async void RetrieveHomeDataAsync(string tableName) {
 
-            string selectFileDataQuery = $"SELECT CUST_FILE FROM {TableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
+            string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath";
             using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));

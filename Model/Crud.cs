@@ -10,14 +10,14 @@ namespace FlowSERVER1 {
         private readonly MySqlConnection con = ConnectionModel.con;
         private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
-        public async Task<int> CountTableRow(String tableName) {
+        public async Task<int> CountTableRow(string tableName) {
             using (var command = con.CreateCommand()) {
                 command.CommandText = $"SELECT COUNT(*) FROM {tableName}";
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
         }
 
-        public async Task<int> CountUserTableRow(String tableName) {
+        public async Task<int> CountUserTableRow(string tableName) {
             using (var command = con.CreateCommand()) {
                 command.CommandText = $"SELECT COUNT(*) FROM {tableName} WHERE CUST_USERNAME = @username";
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
@@ -72,22 +72,6 @@ namespace FlowSERVER1 {
 
             return authValue;
 
-        }
-
-        public async Task<string> ReturnUserAccountType(string username) {
-
-            const string getAccountTypeQuery = "SELECT ACC_TYPE FROM cust_type WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(getAccountTypeQuery, con)) {
-                command.Parameters.AddWithValue("@username", username);
-
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if (await reader.ReadAsync()) {
-                        return reader.GetString(0);
-                    }
-                }
-            }
-
-            return "";
         }
     }
 }

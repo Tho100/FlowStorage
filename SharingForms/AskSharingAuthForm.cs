@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.IO;
 using System.Threading;
 
 using FlowSERVER1.Sharing;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Global;
 using FlowSERVER1.SharingQuery;
+using FlowSERVER1.AuthenticationQuery;
 
 namespace FlowSERVER1 {
     public partial class AskSharingAuthForm : Form {
@@ -23,8 +20,9 @@ namespace FlowSERVER1 {
 
         readonly private SharingOptionsQuery sharingOptionsQuery = new SharingOptionsQuery();
         readonly private ShareFileQuery shareFileQuery = new ShareFileQuery();
+        readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
 
-        public AskSharingAuthForm(String receiverUsername, String comment, String fileName) {
+        public AskSharingAuthForm(string receiverUsername, string comment, string fileName) {
             InitializeComponent();
             this._receiverUsername = receiverUsername;
             this._fileName = fileName;
@@ -49,7 +47,7 @@ namespace FlowSERVER1 {
 
         private async Task StartSharingFile() {
 
-            int receiverUploadLimit = Globals.uploadFileLimit[await crud.ReturnUserAccountType(_receiverUsername)];
+            int receiverUploadLimit = await userAuthQuery.GetUploadLimit(_receiverUsername);
             int receiverCurrentTotalUploaded = await shareFileQuery.CountReceiverTotalShared(_receiverUsername);
 
             if (receiverUploadLimit != receiverCurrentTotalUploaded) {

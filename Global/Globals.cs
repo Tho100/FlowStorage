@@ -60,6 +60,14 @@ namespace FlowSERVER1 {
             { "Supreme", 2000 },
         };
 
+        static public readonly Dictionary<int, string> uploadFileLimitToAccountType = new Dictionary<int, string>
+        {
+            { 25, "Basic" },
+            { 150, "Max" },
+            { 800, "Express" },
+            { 2000, "Supreme" },
+        };
+
         static public readonly Dictionary<string, int> uploadDirectoryLimit = new Dictionary<string, int>
         {
             { "Basic", 2 },

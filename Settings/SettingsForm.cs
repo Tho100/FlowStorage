@@ -373,7 +373,7 @@ namespace FlowSERVER1 {
 
         }
 
-        public void InitiailizeUIOnAccountType(String selectedAcc) {
+        public void InitiailizeUIOnAccountType(string selectedAcc) {
 
             if (selectedAcc == "Supreme") {
                 btnOpenExpressPayment.Enabled = false;
@@ -407,7 +407,7 @@ namespace FlowSERVER1 {
             lblAccountType.Text = accountType;
 
             if (accountType == "Basic") {
-                lblLimitedUpload.Text = "Limited to 20";
+                lblLimitedUpload.Text = "Limited to 25";
                 
             } else if (accountType == "Max") {
                 lblLimitedUpload.Text = "Limited to 150";
