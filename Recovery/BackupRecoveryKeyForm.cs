@@ -1,10 +1,9 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace FlowSERVER1 {
@@ -12,7 +11,7 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        readonly private Crud crud = new Crud();
+        readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public BackupRecoveryKeyForm() {
@@ -44,11 +43,19 @@ namespace FlowSERVER1 {
 
             try {
 
-                string authcase0 = EncryptionModel.computeAuthCase(txtFieldAuth.Text);
-                string authcase1 = EncryptionModel.computeAuthCase(txtFieldPIN.Text);
+                string passwordHashedInput = EncryptionModel.computeAuthCase(txtFieldAuth.Text);
+                string pinHashedInput = EncryptionModel.computeAuthCase(txtFieldPIN.Text);
 
-                if(authcase0 == await crud.ReturnUserPIN() && authcase1 == await crud.ReturnUserAuth()) {
-                    SaveRecoveryTokenToLocal(RetrieveRecoveryToken());
+                var authenticationInfo = await userAuthQuery.GetAccountAuthentication(tempDataUser.Email);
+
+                string password = authenticationInfo["password"];
+                string pin = authenticationInfo["pin"];
+
+                if(pinHashedInput == pin && passwordHashedInput == password) {
+
+                    string recoveryHashedToken = await userAuthQuery.GetRecoveryKeyByEmail(tempDataUser.Email);
+
+                    SaveRecoveryTokenToLocal(recoveryHashedToken);
 
                 } else {
                     new CustomAlert(
@@ -61,23 +68,6 @@ namespace FlowSERVER1 {
                     title: "Export failed", subheader: "An unknown error occurred, are you connected to the internet?").Show();
 
             }
-        }
-
-        private string RetrieveRecoveryToken() {
-
-            string concludeStrings = "";
-            const string query = "SELECT RECOV_TOK FROM information WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader read = command.ExecuteReader()) {
-                    while (read.Read()) {
-                        concludeStrings = read.GetString(0);
-                    }
-                }
-            }
-
-            return EncryptionModel.Decrypt(concludeStrings);
-
         }
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {

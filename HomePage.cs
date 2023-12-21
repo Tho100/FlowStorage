@@ -3,6 +3,7 @@ using FlowSERVER1.Authentication;
 using FlowSERVER1.ExtraForms;
 using FlowSERVER1.Global;
 using FlowSERVER1.Helper;
+using FlowSERVER1.Query;
 using FlowSERVER1.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -29,6 +30,7 @@ namespace FlowSERVER1 {
 
         readonly private Crud crud = new Crud();
 
+        readonly private InsertFileDataQuery insertFileData = new InsertFileDataQuery();
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
@@ -102,231 +104,6 @@ namespace FlowSERVER1 {
             if(CallInitialStartupData) {
                 await BuildHomeFiles();
                 UpdateProgressBarValue();
-            }
-
-        }
-
-        private async Task InsertFileDataVideo(string selectedItems, string nameTable, string fileName, string fileDataBase64Encoded) {
-
-            try {
-
-                var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
-
-                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
-                
-                string encryptedFileName = EncryptionModel.Encrypt(fileName);
-                string thumbnailCompressedBase64 = "";
-
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB) VALUES (@file_name, @username, @date, @file_data, @thumbnail_value)";
-                using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                    command.Parameters.AddWithValue("@file_name", encryptedFileName);
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@date", _todayDate);
-                    command.Parameters.AddWithValue("@file_data", fileDataBase64Encoded);
-
-                    using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
-                        var toBitMap = shellFile.Thumbnail.Bitmap;
-                        using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                            string toBase64 = Convert.ToBase64String(stream.ToArray());
-                            thumbnailCompressedBase64 = compressor.compressBase64Image(toBase64);
-                            command.Parameters.AddWithValue("@thumbnail_value", thumbnailCompressedBase64);
-                        }
-                    }
-
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                if (lblCurrentPageText.Text == "Home") {
-                    GlobalsData.base64EncodedThumbnailHome.Add(thumbnailCompressedBase64);
-
-                } else if (lblCurrentPageText.Text == "Public Storage") {
-                    GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
-
-                }
-
-                ClosePopupForm.CloseUploadingPopup();
-
-                UpdateProgressBarValue();
-
-            } catch (Exception) {
-                BuildShowAlert(
-                    title: "Upload failed", subheader: $"Failed to upload {fileName}");
-
-            }
-
-        }
-
-        private async Task InsertFileData(string fileName, string fileDataBase64Encoded, string nameTable) {
-
-            try {
-
-                var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
-
-                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
-
-                string encryptedFileName = EncryptionModel.Encrypt(fileName);
-
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE) VALUES (@username, @file_name, @date, @file_data)";
-                var param = new Dictionary<string, string>
-                {
-                    { "@username", tempDataUser.Username},
-                    { "@file_name", encryptedFileName},
-                    { "@date", _todayDate},
-                    { "@file_data", fileDataBase64Encoded}
-                };
-
-                await crud.Insert(insertQuery, param);
-
-                ClosePopupForm.CloseUploadingPopup();
-
-                UpdateProgressBarValue();
-
-            } catch (Exception) {
-                BuildShowAlert(
-                    title: "Upload failed", subheader: $"Failed to upload {fileName}");
-
-            }
-
-        }
-
-        private async Task InsertFileVideoDataPublic(string selectedItems, string fileName, string fileDataBase64Encoded) {
-
-            try {
-
-                var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
-
-                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
-
-                string encryptedFileName = EncryptionModel.Encrypt(fileName);
-                string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
-
-                string thumbnailCompressedBase64 = "";
-
-                string insertQuery = $"INSERT INTO ps_info_video (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, CUST_TITLE, CUST_TAG) VALUES (@file_name, @username, @date, @file_data, @thumbnail_value, @title, @tag)";
-                using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
-                    command.Parameters.AddWithValue("@file_name", encryptedFileName);
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@date", _todayDate);
-                    command.Parameters.AddWithValue("@file_data", fileDataBase64Encoded);
-                    command.Parameters.AddWithValue("@title", PublicStorageUserTitle);
-                    command.Parameters.AddWithValue("@tag", PublicStorageUserTag);
-
-                    using (var shellFile = ShellFile.FromFilePath(selectedItems)) {
-                        var toBitMap = shellFile.Thumbnail.Bitmap;
-                        using (var stream = new MemoryStream()) {
-                            toBitMap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                            thumbnailCompressedBase64 = Convert.ToBase64String(stream.ToArray());
-
-                            command.Parameters.AddWithValue("@thumbnail_value", thumbnailCompressedBase64);
-                        }
-                    }
-
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                string insertQueryComment = $"INSERT INTO ps_info_comment (CUST_FILE_NAME, CUST_COMMENT) VALUES (@file_name, @comment)";
-                var paramComment = new Dictionary<string, string>
-                {
-                    { "@file_name", encryptedFileName},
-                    { "@comment", encryptedComment},
-                };
-
-                await crud.Insert(insertQueryComment, paramComment);
-
-                GlobalsData.base64EncodedThumbnailPs.Add(thumbnailCompressedBase64);
-
-                ClosePopupForm.CloseUploadingPopup();
-
-                UpdateProgressBarValue();
-
-                PublicStorageUserComment = null;
-
-            } catch (Exception) {
-                BuildShowAlert(
-                    title: "Upload failed", subheader: $"Failed to upload {fileName}");
-
-            }
-
-        }
-
-        public async Task InsertFileDataPublic(string fileName, string fileDataBase64Encoded, string nameTable) {
-
-            try {
-
-                var fileSizeInMb = Convert.FromBase64String(fileDataBase64Encoded).Length / 1024 / 1024;
-
-                StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
-
-                string encryptedComment = EncryptionModel.Encrypt(PublicStorageUserComment);
-                string encryptedFileName = EncryptionModel.Encrypt(fileName);
-
-                string insertQuery = $"INSERT INTO {nameTable} (CUST_USERNAME,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE, CUST_TITLE, CUST_TAG) VALUES (@username, @file_name, @date, @file_data, @title, @tag)";
-                var param = new Dictionary<string, string>
-                {
-                    { "@username", tempDataUser.Username},
-                    { "@file_name", encryptedFileName},
-                    { "@date", _todayDate},
-                    { "@file_data", fileDataBase64Encoded},
-                    { "@title", PublicStorageUserTitle},
-                    { "@tag", PublicStorageUserTag},
-                };
-
-                await crud.Insert(insertQuery, param);
-
-                string insertQueryComment = $"INSERT INTO ps_info_comment (CUST_FILE_NAME, CUST_COMMENT) VALUES (@file_name, @comment)";
-                var paramComment = new Dictionary<string, string>
-                {
-                    { "@file_name", encryptedFileName},
-                    { "@comment", encryptedComment},
-                };
-
-                await crud.Insert(insertQueryComment, paramComment);
-
-                ClosePopupForm.CloseUploadingPopup();
-
-                UpdateProgressBarValue();
-
-                PublicStorageUserComment = null;
-
-            } catch (Exception) {
-                BuildShowAlert(
-                    title: "Upload failed", subheader: $"Failed to upload {fileName}");
-
-            }
-
-        }
-
-        private async Task InsertFileDataFolder(string filesFullPath, string folderName, string fileDataBase64Encoded, string thumbnailBase64 = null) {
-
-            try {
-
-                string encryptedFolderName = EncryptionModel.Encrypt(folderName);
-                string encryptedFileName = EncryptionModel.Encrypt(Path.GetFileName(filesFullPath));
-
-                string fileType = filesFullPath.Substring(filesFullPath.LastIndexOf('.') + 1);
-
-                const string insertQuery = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@folder_name, @username, @file_data, @file_type, @date, @file_name, @thumbnail)";
-
-                var param = new Dictionary<string, string>
-                {
-                        { "@username", tempDataUser.Username},
-                        { "@folder_name", encryptedFolderName},
-                        { "@file_name", encryptedFileName},
-                        { "@file_type", fileType},
-                        { "@date", _todayDate},
-                        { "@file_data", fileDataBase64Encoded},
-                        { "@thumbnail", thumbnailBase64},
-                };
-
-                await crud.Insert(insertQuery, param);
-
-            } catch (Exception) {
-                BuildShowAlert(
-                    title: "Upload failed", subheader: $"Failed to upload this folder.");
-
             }
 
         }
@@ -806,7 +583,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeImageTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 GlobalsData.base64EncodedImageHome.Add(EncryptionModel.Decrypt(keyVal));
 
@@ -830,7 +607,7 @@ namespace FlowSERVER1 {
                 string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
 
@@ -841,7 +618,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeExeTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
@@ -852,7 +629,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeVideoTable) {
 
-                await InsertFileDataVideo(fileFullPath, tableName, fileName, keyVal);
+                await insertFileData.InsertFileDataVideo(fileFullPath, tableName, fileName, keyVal);
 
                 ShellFile shellFile = ShellFile.FromFilePath(fileFullPath);
                 Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -870,7 +647,7 @@ namespace FlowSERVER1 {
             }
             if (tableName == GlobalsTable.homeAudioTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
@@ -882,7 +659,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeExcelTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
@@ -893,7 +670,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeApkTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
@@ -904,7 +681,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homePdfTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
@@ -915,7 +692,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homePtxTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -926,7 +703,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeMsiTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -937,7 +714,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.homeWordTable) {
 
-                await InsertFileData(fileName, keyVal, tableName);
+                await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1081,7 +858,9 @@ namespace FlowSERVER1 {
                 }
             }
 
+            UpdateProgressBarValue();
             BuildRedundaneVisibility();
+
             ClosePopupForm.CloseUploadingPopup();
 
         }
@@ -1177,6 +956,7 @@ namespace FlowSERVER1 {
 
                 } else {
                     filesInfo = new List<(string, string, string, string)>();
+
                 }
 
                 if (isFromMyPs == true) {
@@ -1204,7 +984,7 @@ namespace FlowSERVER1 {
                     }
                 }
 
-                List<string> usernameList = new List<string>();
+                var usernameList = new List<string>();
 
                 string selectUploaderNameQuery = null;
 
@@ -1478,7 +1258,9 @@ namespace FlowSERVER1 {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+                BuildShowAlert(
+                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+
             }            
 
         }
@@ -1577,7 +1359,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psImage) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 GlobalsData.base64EncodedImagePs.Add(EncryptionModel.Decrypt(keyVal));
 
@@ -1601,7 +1383,7 @@ namespace FlowSERVER1 {
                 string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
                     TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, string.Empty, tempDataUser.Username);
@@ -1611,7 +1393,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psExe) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
@@ -1622,7 +1404,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psVideo) {
 
-                await InsertFileVideoDataPublic(fileFullPath, fileName, keyVal);
+                await insertFileData.InsertFileVideoDataPublic(fileFullPath, fileName, keyVal);
 
                 ShellFile shellFile = ShellFile.FromFilePath(fileFullPath);
                 Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -1641,7 +1423,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psAudio) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
@@ -1652,7 +1434,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psExcel) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
@@ -1663,7 +1445,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psApk) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
@@ -1674,7 +1456,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psPdf) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
@@ -1685,7 +1467,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psPtx) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1695,7 +1477,7 @@ namespace FlowSERVER1 {
             }
             if (tableName == GlobalsTable.psMsi) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1706,7 +1488,7 @@ namespace FlowSERVER1 {
 
             if (tableName == GlobalsTable.psWord) {
 
-                await InsertFileDataPublic(fileName, keyVal, tableName);
+                await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
@@ -1856,7 +1638,9 @@ namespace FlowSERVER1 {
 
             PublicStorageClosed = false;
 
+            UpdateProgressBarValue();
             BuildRedundaneVisibility();
+
             ClosePopupForm.CloseUploadingPopup();
 
         }
@@ -2958,6 +2742,7 @@ namespace FlowSERVER1 {
                 PanelGenerator panelGenerator = new PanelGenerator();
                 panelGenerator.GeneratePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
+                UpdateProgressBarValue();
                 BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
@@ -3103,7 +2888,9 @@ namespace FlowSERVER1 {
 
                         string compressImage = compressor.compressImageToBase64(filesFullPath);
                         string compressedImageToBase64 = EncryptionModel.Encrypt(compressImage);
-                        await InsertFileDataFolder(filesFullPath, folderName, compressedImageToBase64);
+
+                        await insertFileData.InsertFileDataFolder(
+                            filesFullPath, folderName, compressedImageToBase64);
 
                         textboxExl.Image = image;
                         textboxExl.Click += (sender_f, e_f) => {
@@ -3131,7 +2918,7 @@ namespace FlowSERVER1 {
                         string getEncoded = Convert.ToBase64String(getBytes);
                         string encryptEncoded = EncryptionModel.Encrypt(getEncoded);
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptEncoded);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptEncoded);
 
                         textboxExl.Click += (sender_t, e_t) => {
 
@@ -3143,7 +2930,7 @@ namespace FlowSERVER1 {
 
                     if (fileType == ".apk") {
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
@@ -3165,7 +2952,7 @@ namespace FlowSERVER1 {
                             compressedThumbnail = compressor.compressBase64Image(toBase64BitmapThumbnail);
                         }
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues, compressedThumbnail);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues, compressedThumbnail);
 
                         textboxExl.Image = toBitMap;
                         textboxExl.Click += (sender_vid, e_vid) => {
@@ -3182,7 +2969,7 @@ namespace FlowSERVER1 {
 
                     if (fileType == ".pdf") {
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3193,7 +2980,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.wordTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3204,7 +2991,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.excelTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3216,7 +3003,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.ptxTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3227,7 +3014,7 @@ namespace FlowSERVER1 {
 
                     if (Globals.audioTypes.Contains(fileType)) {
 
-                        await InsertFileDataFolder(filesFullPath, folderName, encryptValues);
+                        await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
@@ -3243,6 +3030,8 @@ namespace FlowSERVER1 {
             }
 
             ClosePopupForm.CloseUploadingPopup();
+
+            UpdateProgressBarValue();
 
             btnShowFolderPage.FillColor = Color.FromArgb(255, 71, 19, 191);
             btnGoHomePage.FillColor = Color.Transparent;

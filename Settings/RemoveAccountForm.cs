@@ -1,4 +1,6 @@
-﻿using FlowSERVER1.Global;
+﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.AuthenticationQuery;
+using FlowSERVER1.Global;
 using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
@@ -12,14 +14,14 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        readonly private Crud crud = new Crud();
+        readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public RemoveAccountForm() {
             InitializeComponent();
         }
 
-        private async Task RemoveUserData(String tableName) {
+        private async Task RemoveUserData(string tableName) {
 
             if (tableName != GlobalsTable.sharingTable) {
                 string query = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username";
@@ -39,39 +41,24 @@ namespace FlowSERVER1 {
 
         }
 
-        private string ReturnCustomColumn(String columnName) {
-
-            List<string> _concludeValue = new List<string>();
-
-            string checkPassword_Query = $"SELECT {columnName} FROM information WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(checkPassword_Query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader readerPass_ = command.ExecuteReader()) {
-                    while (readerPass_.Read()) {
-                        _concludeValue.Add(readerPass_.GetString(0));
-                    }
-                }
-            }
-
-            return _concludeValue[0];
-
-        }
-
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
             try {
 
-                string userReturnedAuth = await crud.ReturnUserAuth();
-                string userReturnedPin = await crud.ReturnUserPIN();
+                var authenticationInfo = await userAuthQuery.GetAccountAuthentication(tempDataUser.Email);
 
-                if (txtFieldPIN.Text == userReturnedPin) {
-                    if (txtFieldAuth.Text == userReturnedAuth) {
+                string password = authenticationInfo["password"];
+                string pin = authenticationInfo["pin"];
+
+                if (txtFieldPIN.Text == pin) {
+                    if (txtFieldAuth.Text == password) {
                         if (MessageBox.Show("Delete your account?\nYour data will be deleted PERMANENTLY.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
-                            String _getPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-                            String _getAuth = _getPath + "\\CUST_DATAS.txt";
-                            if (File.Exists(_getAuth)) {
-                                Directory.Delete(_getPath, true);
+                            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
+                            string fileLoc = path + "\\CUST_DATAS.txt";
+                            if (File.Exists(fileLoc)) {
+                                Directory.Delete(path, true);
+
                             }
 
                             foreach (string tablesName in GlobalsTable.publicTables) {
@@ -87,15 +74,19 @@ namespace FlowSERVER1 {
                     } else {
                         lblAlert.Visible = true;
                         lblAlert.Text = "Password is incorrect.";
+
                     }
 
                 } else {
                     lblAlert.Visible = true;
                     lblAlert.Text = "PIN is incorrect.";
+
                 }
 
             } catch (Exception) {
-                MessageBox.Show("Failed to delete account.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new CustomAlert(
+                    title: "Failed to delete account", subheader: "Are you connected to the internet?");
+
             }
 
         }

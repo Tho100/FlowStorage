@@ -1,7 +1,6 @@
 ﻿using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -57,7 +56,7 @@ namespace FlowSERVER1 {
 
         private async void guna2Button3_Click(object sender, EventArgs e) {
 
-            try {
+            /*try {
 
                 string userInputPin = EncryptionModel.computeAuthCase(txtFieldPin.Text);
 
@@ -69,7 +68,8 @@ namespace FlowSERVER1 {
 
             } catch (Exception) {
                 MessageBox.Show("Please try again later.", "An error occurred",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-            }
+            }*/
+
         }
 
         private void guna2Button4_Click(object sender, EventArgs e) {

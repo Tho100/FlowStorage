@@ -433,9 +433,10 @@
     <Compile Include="AlertForms\CustomAlert.Designer.cs">
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="AuthenticationQuery\SignUpQuery.cs" />
-    <Compile Include="AuthenticationQuery\StartupQuery.cs" />
-    <Compile Include="AuthenticationQuery\UserAuthenticationQuery.cs" />
+    <Compile Include="Query\InsertFileDataQuery.cs" />
+    <Compile Include="Query\SignUpQuery.cs" />
+    <Compile Include="Query\StartupQuery.cs" />
+    <Compile Include="Query\UserAuthenticationQuery.cs" />
     <Compile Include="Authentication\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -461,7 +462,7 @@
     <Compile Include="Helper\UniqueFile.cs" />
     <Compile Include="Helper\UpdateChanges.cs" />
     <Compile Include="Helper\UpdateComment.cs" />
-    <Compile Include="Model\Crud.cs" />
+    <Compile Include="Query\Crud.cs" />
     <Compile Include="ExtraForms\ApiPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -487,8 +488,8 @@
     <Compile Include="SharingForms\SharingAlert.Designer.cs">
       <DependentUpon>SharingAlert.cs</DependentUpon>
     </Compile>
-    <Compile Include="SharingQuery\ShareFileQuery.cs" />
-    <Compile Include="SharingQuery\SharingOptionsQuery.cs" />
+    <Compile Include="Query\SharingQuery\ShareFileQuery.cs" />
+    <Compile Include="Query\SharingQuery\SharingOptionsQuery.cs" />
     <Compile Include="Temporary\TemporaryDataSharing.cs" />
     <Compile Include="Temporary\TemporaryDataUser.cs" />
     <Compile Include="ViewerForms\ApkForm.cs">

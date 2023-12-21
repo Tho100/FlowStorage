@@ -1,4 +1,5 @@
 ﻿using FlowSERVER1.AlertForms;
+using FlowSERVER1.AuthenticationQuery;
 using FlowSERVER1.Temporary;
 using MySql.Data.MySqlClient;
 using System;
@@ -11,7 +12,7 @@ namespace FlowSERVER1 {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        readonly private Crud crud = new Crud();
+        readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public ChangeAuthForm() {
@@ -41,29 +42,30 @@ namespace FlowSERVER1 {
 
             try {
 
-                var _getNewPass = txtFieldNewAuth.Text;
-                var _getVerify = txtFieldVerifyNewAuth.Text;
-                var _getOldPass = txtFieldCurrentAuth.Text;
+                var newPasswordInput = txtFieldNewAuth.Text;
+                var verifyInput = txtFieldVerifyNewAuth.Text;
 
-                if (_getNewPass != _getVerify) {
+                var oldPassowrdInput = txtFieldCurrentAuth.Text;
+
+                if (newPasswordInput != verifyInput) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "New password does not match.";
                     return;
                 }
 
-                if (_getNewPass == String.Empty) {
+                if (newPasswordInput == string.Empty) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Please add a new password.";
                     return;
                 }
 
-                if (_getVerify == String.Empty) {
+                if (verifyInput == string.Empty) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "New password does not match.";
                     return;
                 }
 
-                if (await crud.ReturnUserAuth() != EncryptionModel.computeAuthCase(_getOldPass)) {
+                if (await userAuthQuery.GetPassword() != EncryptionModel.computeAuthCase(oldPassowrdInput)) {
                     lblAlert.Visible = true;
                     lblAlert.Text = "Password is incorrect.";
                     return;
@@ -71,7 +73,7 @@ namespace FlowSERVER1 {
 
                 if (MessageBox.Show("Do you want to proceed your action?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes) {
 
-                    await StartInformationUpdate(_getNewPass);
+                    await StartInformationUpdate(newPasswordInput);
 
                     Form bgBlur = new Form();
                     using (SuccessResetAuthAlert displayDirectory = new SuccessResetAuthAlert()) {
@@ -94,7 +96,9 @@ namespace FlowSERVER1 {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "An error occurred", subheader: "Failed to change your password due to unknown error, are you connected to the internet?").Show();
+                new CustomAlert(
+                    title: "An error occurred", subheader: "Failed to change your password due to unknown error, are you connected to the internet?").Show();
+
             }
 
         }
