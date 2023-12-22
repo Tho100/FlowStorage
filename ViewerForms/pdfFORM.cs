@@ -3,7 +3,6 @@ using FlowstorageDesktop.Helper;
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
@@ -182,6 +181,7 @@ namespace FlowstorageDesktop {
         }
 
         private async void guna2Button7_Click(object sender, EventArgs e) {
+
             if (lblUserComment.Text != txtFieldComment.Text) {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
@@ -192,6 +192,7 @@ namespace FlowstorageDesktop {
             txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
+
         }
 
         private void guna2Separator1_Click(object sender, EventArgs e) {

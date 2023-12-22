@@ -27,7 +27,7 @@ namespace FlowstorageDesktop {
             this.Close();
         }
 
-        private async Task StartInformationUpdate(String newAuth) {
+        private async Task StartInformationUpdate(string newAuth) {
 
             const string updatePasswordQuery = "UPDATE information SET CUST_PASSWORD = @newpass WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(updatePasswordQuery, con)) {

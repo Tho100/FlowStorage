@@ -1,16 +1,15 @@
-﻿using System;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
+using Guna.UI2.WinForms;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-
-using FlowstorageDesktop.AlertForms;
-using FlowstorageDesktop.Global;
-using Guna.UI2.WinForms;
-using FlowstorageDesktop.Helper;
-using FlowstorageDesktop.Temporary;
 
 namespace FlowstorageDesktop {
 
@@ -74,8 +73,10 @@ namespace FlowstorageDesktop {
 
                     if(GlobalsTable.publicTables.Contains(tableName)) {
                         imageBase64Encoded = GlobalsData.base64EncodedImageHome[indexOfImage];
+
                     } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
                         imageBase64Encoded = GlobalsData.base64EncodedImagePs[indexOfImage];
+
                     }
 
                     var imageBytes = Convert.FromBase64String(imageBase64Encoded);

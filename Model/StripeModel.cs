@@ -1,5 +1,4 @@
 ﻿using Stripe;
-using System;
 
 namespace FlowstorageDesktop.Model {
     public class StripeModel {

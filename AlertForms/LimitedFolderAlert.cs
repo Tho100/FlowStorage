@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
     public partial class LimitedFolderAlert : Form {
-        public LimitedFolderAlert(String accountType, String message, bool subMessageVisible) {
+        public LimitedFolderAlert(string accountType, string message, bool subMessageVisible) {
             InitializeComponent();
 
             this.label7.Text = $"Current Account: {accountType}";

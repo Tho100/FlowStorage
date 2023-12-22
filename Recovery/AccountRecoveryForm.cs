@@ -1,7 +1,6 @@
-﻿using System;
+﻿using FlowstorageDesktop.AuthenticationQuery;
+using System;
 using System.Windows.Forms;
-using FlowstorageDesktop.AuthenticationQuery;
-using MySql.Data.MySqlClient;
 
 namespace FlowstorageDesktop {
     public partial class ValidateRecoveryEmail : Form {

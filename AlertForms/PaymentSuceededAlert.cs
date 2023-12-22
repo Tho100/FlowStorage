@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace FlowstorageDesktop {
     public partial class PaymentSuceededAlert : Form {
         public static PaymentSuceededAlert instance;
-        public PaymentSuceededAlert(String accountType) {
+        public PaymentSuceededAlert(string accountType) {
             InitializeComponent();
             instance = this;
             this.lblAccountType.Text = accountType;

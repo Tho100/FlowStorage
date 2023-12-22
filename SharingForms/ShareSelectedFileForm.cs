@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using FlowstorageDesktop.AlertForms;
+﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.AuthenticationQuery;
 using FlowstorageDesktop.Helper;
 using FlowstorageDesktop.SharingQuery;
 using FlowstorageDesktop.Temporary;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
     public partial class shareFileFORM : Form {

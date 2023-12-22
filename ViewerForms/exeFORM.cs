@@ -12,7 +12,7 @@ namespace FlowstorageDesktop {
         private bool _isFromShared { get; set; }
         private bool _isFromSharing { get; set; }
 
-        public exeFORM(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public exeFORM(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -53,28 +53,21 @@ namespace FlowstorageDesktop {
 
         }
         private void exeFORM_Load(object sender, EventArgs e) {
-        }
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2PictureBox1_Click(object sender, EventArgs e) {
 
         }
+
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
+
 
         private void label2_Click(object sender, EventArgs e) {
 
         }
+
         private void guna2Button4_Click(object sender, EventArgs e) {
             SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
         }
 
         private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
 
         }
 
@@ -93,24 +86,23 @@ namespace FlowstorageDesktop {
         }
 
         private async void guna2Button9_Click(object sender, EventArgs e) {
+
             if (lblUserComment.Text != txtFieldComment.Text) {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button9.Visible = false;
             txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
-        }
-
-        private void label7_Click(object sender, EventArgs e) {
 
         }
 
         private void guna2VSeparator1_Click(object sender, EventArgs e) {
 
         }
+
     }
 }

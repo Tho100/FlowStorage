@@ -43,7 +43,7 @@ namespace FlowstorageDesktop {
         }
 
         private async void guna2Button1_Click(object sender, EventArgs e) {
-
+             
             try {
 
                 string passwordHashedInput = EncryptionModel.computeAuthCase(txtFieldAuth.Text);

@@ -1,19 +1,15 @@
-﻿using System;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.SharingQuery;
+using FlowstorageDesktop.Temporary;
+using Microsoft.WindowsAPICodePack.Shell;
+using MySql.Data.MySqlClient;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using Microsoft.WindowsAPICodePack.Shell;
-using System.Threading;
-
-using FlowstorageDesktop.Sharing;
-using FlowstorageDesktop.AlertForms;
-using FlowstorageDesktop.Helper;
-using FlowstorageDesktop.AuthenticationQuery;
-using FlowstorageDesktop.SharingQuery;
-using Irony.Parsing;
-using FlowstorageDesktop.Temporary;
 
 namespace FlowstorageDesktop {
     public partial class MainShareFileForm : Form {

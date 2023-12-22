@@ -34,11 +34,14 @@
             this.txtFieldAuth = new Guna.UI2.WinForms.Guna2TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
+            this.label3 = new System.Windows.Forms.Label();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2BorderlessForm1
             // 
+            this.guna2BorderlessForm1.BorderRadius = 12;
             this.guna2BorderlessForm1.ContainerControl = this;
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
@@ -46,19 +49,20 @@
             // guna2Panel1
             // 
             this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.BorderRadius = 5;
+            this.guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.txtFieldPIN);
-            this.guna2Panel1.Controls.Add(this.btnCancel);
             this.guna2Panel1.Controls.Add(this.lblAlert);
+            this.guna2Panel1.Controls.Add(this.btnCancel);
             this.guna2Panel1.Controls.Add(this.btnDeleteAccount);
             this.guna2Panel1.Controls.Add(this.txtFieldAuth);
             this.guna2Panel1.Controls.Add(this.label2);
             this.guna2Panel1.Controls.Add(this.guna2Button1);
-            this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.guna2Panel1.Location = new System.Drawing.Point(12, 12);
+            this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Panel1.Location = new System.Drawing.Point(32, 71);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(442, 228);
+            this.guna2Panel1.Size = new System.Drawing.Size(415, 278);
             this.guna2Panel1.TabIndex = 26;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
@@ -79,7 +83,7 @@
             this.txtFieldPIN.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.txtFieldPIN.ForeColor = System.Drawing.Color.White;
             this.txtFieldPIN.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldPIN.Location = new System.Drawing.Point(280, 59);
+            this.txtFieldPIN.Location = new System.Drawing.Point(275, 76);
             this.txtFieldPIN.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldPIN.MaxLength = 3;
             this.txtFieldPIN.Name = "txtFieldPIN";
@@ -87,7 +91,7 @@
             this.txtFieldPIN.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldPIN.PlaceholderText = "PIN";
             this.txtFieldPIN.SelectedText = "";
-            this.txtFieldPIN.Size = new System.Drawing.Size(98, 44);
+            this.txtFieldPIN.Size = new System.Drawing.Size(98, 49);
             this.txtFieldPIN.TabIndex = 23;
             this.txtFieldPIN.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
@@ -105,20 +109,21 @@
             this.btnCancel.FillColor = System.Drawing.Color.Empty;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(89, 130);
+            this.btnCancel.Location = new System.Drawing.Point(59, 147);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(113, 35);
+            this.btnCancel.Size = new System.Drawing.Size(113, 54);
             this.btnCancel.TabIndex = 22;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.guna2Button4_Click);
             // 
             // lblAlert
             // 
-            this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblAlert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.lblAlert.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAlert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlert.Location = new System.Drawing.Point(152, 186);
+            this.lblAlert.Location = new System.Drawing.Point(140, 222);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.Size = new System.Drawing.Size(142, 20);
             this.lblAlert.TabIndex = 21;
@@ -139,9 +144,9 @@
             this.btnDeleteAccount.FillColor = System.Drawing.Color.Firebrick;
             this.btnDeleteAccount.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteAccount.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteAccount.Location = new System.Drawing.Point(212, 130);
+            this.btnDeleteAccount.Location = new System.Drawing.Point(178, 147);
             this.btnDeleteAccount.Name = "btnDeleteAccount";
-            this.btnDeleteAccount.Size = new System.Drawing.Size(153, 35);
+            this.btnDeleteAccount.Size = new System.Drawing.Size(195, 54);
             this.btnDeleteAccount.TabIndex = 19;
             this.btnDeleteAccount.Text = "Delete Account";
             this.btnDeleteAccount.Click += new System.EventHandler(this.guna2Button2_Click);
@@ -163,24 +168,24 @@
             this.txtFieldAuth.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFieldAuth.ForeColor = System.Drawing.Color.White;
             this.txtFieldAuth.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtFieldAuth.Location = new System.Drawing.Point(64, 59);
+            this.txtFieldAuth.Location = new System.Drawing.Point(59, 76);
             this.txtFieldAuth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFieldAuth.Name = "txtFieldAuth";
             this.txtFieldAuth.PasswordChar = '*';
             this.txtFieldAuth.PlaceholderForeColor = System.Drawing.Color.Gray;
             this.txtFieldAuth.PlaceholderText = "Password";
             this.txtFieldAuth.SelectedText = "";
-            this.txtFieldAuth.Size = new System.Drawing.Size(208, 44);
+            this.txtFieldAuth.Size = new System.Drawing.Size(208, 49);
             this.txtFieldAuth.TabIndex = 18;
             this.txtFieldAuth.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(75, 25);
+            this.label2.Location = new System.Drawing.Point(60, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(315, 20);
             this.label2.TabIndex = 17;
@@ -206,12 +211,36 @@
             this.guna2Button1.TabIndex = 0;
             this.guna2Button1.Text = "Delete Account";
             // 
+            // guna2Separator1
+            // 
+            this.guna2Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Separator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.guna2Separator1.Location = new System.Drawing.Point(0, 49);
+            this.guna2Separator1.Name = "guna2Separator1";
+            this.guna2Separator1.Size = new System.Drawing.Size(486, 10);
+            this.guna2Separator1.TabIndex = 39;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(10, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(157, 25);
+            this.label3.TabIndex = 40;
+            this.label3.Text = "Remove Account";
+            // 
             // RemoveAccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(466, 252);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(486, 378);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.guna2Separator1);
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -221,6 +250,7 @@
             this.Load += new System.EventHandler(this.ConfirmRemFORM_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -235,5 +265,7 @@
         private System.Windows.Forms.Label lblAlert;
         public Guna.UI2.WinForms.Guna2Button btnCancel;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldPIN;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
+        private System.Windows.Forms.Label label3;
     }
 }

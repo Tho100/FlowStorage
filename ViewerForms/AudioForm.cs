@@ -1,15 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-using System.IO;
-using System.Media;
-using NAudio.Wave;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
-
-using FlowstorageDesktop.Helper; 
+﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Global;
-using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Helper;
+using NAudio.Wave;
+using System;
+using System.IO;
+using System.Linq;
+using System.Media;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
     public partial class AudioForm : Form {

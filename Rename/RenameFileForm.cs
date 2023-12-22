@@ -1,13 +1,13 @@
 ﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using FlowstorageDesktop.Temporary;
 
 namespace FlowstorageDesktop {
     public partial class RenameFileForm : Form {
@@ -16,13 +16,13 @@ namespace FlowstorageDesktop {
 
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
-        private string _fileName {get; set; }
+        private string _fileName { get; set; }
         private string _tableName{ get; set; }
         private string _panelName { get; set; }
         private string _sharedToName { get; set; }
         private string _directoryName { get; set; }
 
-        public RenameFileForm(String fileName,String tableName, String panelName, String directoryName = "", String sharedToName = "") {
+        public RenameFileForm(string fileName, string tableName, string panelName, string directoryName = "", string sharedToName = "") {
 
             InitializeComponent();
 
@@ -42,7 +42,7 @@ namespace FlowstorageDesktop {
             this.Close();
         }
 
-        private async Task RenameFileAsync(String newFileName) {
+        private async Task RenameFileAsync(string newFileName) {
 
             if (GlobalsTable.publicTables.Contains(_tableName) || GlobalsTable.publicTablesPs.Contains(_tableName)) {
 
@@ -109,7 +109,7 @@ namespace FlowstorageDesktop {
             lblAlert.Text = $"File has been renamed to {newFileName}.";
         }
 
-        private void UpdateFileLabelUI(String newFileName) {
+        private void UpdateFileLabelUI(string newFileName) {
 
             Control[] matches = new Control[0];
 
@@ -134,7 +134,7 @@ namespace FlowstorageDesktop {
             string fileExtensions = _fileName.Split('.').Last();
             string newFileName = txtFieldNewFileName.Text + "." + fileExtensions;
 
-            if(String.IsNullOrEmpty(newFileName)) {
+            if(string.IsNullOrEmpty(newFileName)) {
                 return;
             }
 

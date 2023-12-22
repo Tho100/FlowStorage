@@ -14,7 +14,8 @@ namespace FlowstorageDesktop.Helper {
 
             }
 
-            DialogResult verifySave = MessageBox.Show(verifySaveText, "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+            DialogResult verifySave = MessageBox.Show(
+                verifySaveText, "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
             return verifySave;
         
         }

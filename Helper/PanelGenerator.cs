@@ -30,7 +30,7 @@ namespace FlowstorageDesktop.Helper {
                     DirectoryForm.instance.flwLayoutDirectory.Controls.Add(panelPic_Q);
                 }
 
-                var panelF = (Guna2Panel)panelPic_Q;
+                var panelF = panelPic_Q;
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);
@@ -124,7 +124,7 @@ namespace FlowstorageDesktop.Helper {
 
                 HomePage.instance.flwLayoutHome.Controls.Add(panelPic_Q);
 
-                var panelF = (Guna2Panel)panelPic_Q;
+                var panelF = panelPic_Q;
 
                 Label dateLab = new Label();
                 panelF.Controls.Add(dateLab);

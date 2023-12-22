@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FlowstorageDesktop.AlertForms;
+using MySql.Data.MySqlClient;
+using System;
 using System.Timers;
 using System.Windows.Forms;
-using FlowstorageDesktop.AlertForms;
-using MySql.Data.MySqlClient;
 
 namespace FlowstorageDesktop {
     public partial class SplashForm : Form {

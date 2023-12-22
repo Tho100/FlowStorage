@@ -163,7 +163,7 @@ namespace FlowstorageDesktop {
         /// they have uploaded (in total)
         /// </summary>
         /// <param name="_tableName"></param>
-        private async Task TotalUploadFile(String tableName) {
+        private async Task TotalUploadFile(string tableName) {
 
             string origin = HomePage.instance.lblCurrentPageText.Text;
 
@@ -193,7 +193,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private async Task TotalUploadFileTodayCount(String tableName) {
+        private async Task TotalUploadFileTodayCount(string tableName) {
 
             string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -266,7 +266,7 @@ namespace FlowstorageDesktop {
         /// <param name="_serName"></param>
         /// <param name="_tableName"></param>
 
-        private async Task GenerateUploadChart(String seriesName, String tableName) {
+        private async Task GenerateUploadChart(string seriesName, string tableName) {
 
             string querySelectDate = $"SELECT UPLOAD_DATE, COUNT(UPLOAD_DATE) FROM {tableName} WHERE CUST_USERNAME = @username GROUP BY UPLOAD_DATE HAVING COUNT(UPLOAD_DATE) > 0";
 
@@ -574,7 +574,7 @@ namespace FlowstorageDesktop {
             try {
 
                 if (tabControlSettings.SelectedIndex == 2) {
-                    if(tempDataSharing.SharingDisabledStatus == String.Empty && tempDataSharing.SharingAuthStatus == String.Empty) {
+                    if(tempDataSharing.SharingDisabledStatus == string.Empty && tempDataSharing.SharingAuthStatus == string.Empty) {
 
                         tempDataSharing.SharingDisabledStatus = await sharingOptions
                             .RetrieveIsSharingDisabled(tempDataUser.Username);

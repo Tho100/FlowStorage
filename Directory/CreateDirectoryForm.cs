@@ -273,7 +273,8 @@ namespace FlowstorageDesktop {
                 }
 
             } else {
-                MessageBox.Show("Directory with this name already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Directory with this name already exists", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
 
@@ -290,10 +291,13 @@ namespace FlowstorageDesktop {
 
                 if (!string.IsNullOrEmpty(directoryNameInput)) {
                     await ValidateAndCreateDirectory(totalFiles, directoryNameInput);
+
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "An error occurred", subheader: "Failed to create directory. Please try again later.").Show();
+                new CustomAlert(
+                    title: "An error occurred", subheader: "Failed to create directory. Please try again later.").Show();
+
             }
 
         }

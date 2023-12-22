@@ -33,7 +33,7 @@ namespace FlowstorageDesktop {
         /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
 
-            if (txtFieldAuth.Text != String.Empty) {
+            if (txtFieldAuth.Text != string.Empty) {
                 if (MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 
                     SettingsForm.instance.btnAddSharingAuth.Visible = false;

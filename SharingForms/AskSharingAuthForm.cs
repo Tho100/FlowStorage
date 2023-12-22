@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
-
+﻿using FlowstorageDesktop.AuthenticationQuery;
 using FlowstorageDesktop.Sharing;
 using FlowstorageDesktop.SharingQuery;
-using FlowstorageDesktop.AuthenticationQuery;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
     public partial class AskSharingAuthForm : Form {

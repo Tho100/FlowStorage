@@ -1,7 +1,6 @@
 ﻿using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace FlowstorageDesktop {

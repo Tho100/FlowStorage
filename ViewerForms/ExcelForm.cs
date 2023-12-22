@@ -35,7 +35,7 @@ namespace FlowstorageDesktop {
         /// <param name="directoryName"></param>
         /// <param name="uploaderName"></param>
 
-        public ExcelForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false) {
+        public ExcelForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false) {
 
             InitializeComponent();
 
@@ -133,7 +133,8 @@ namespace FlowstorageDesktop {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Failed to load this workbook", subheader: "It may be broken or unsupported format.").Show();
+                new CustomAlert(
+                    title: "Failed to load this workbook", subheader: "It may be broken or unsupported format.").Show();
             }
 
         }
@@ -252,7 +253,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             btnSaveComment.Visible = false;
             txtFieldComment.Visible = false;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace ePOSOne.btnProduct
-{
+namespace ePOSOne.btnProduct {
     public class Button_WOC : Button
     {
         private Color _borderColor = Color.Silver;

@@ -59,7 +59,7 @@
             this.btnConfirmCancelPlan.ForeColor = System.Drawing.Color.White;
             this.btnConfirmCancelPlan.Location = new System.Drawing.Point(19, 236);
             this.btnConfirmCancelPlan.Name = "btnConfirmCancelPlan";
-            this.btnConfirmCancelPlan.Size = new System.Drawing.Size(294, 48);
+            this.btnConfirmCancelPlan.Size = new System.Drawing.Size(294, 54);
             this.btnConfirmCancelPlan.TabIndex = 23;
             this.btnConfirmCancelPlan.Text = "Confirm";
             this.btnConfirmCancelPlan.TextOffset = new System.Drawing.Point(0, -1);
