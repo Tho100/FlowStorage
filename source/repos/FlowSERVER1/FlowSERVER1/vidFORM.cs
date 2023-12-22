@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class vidFORM : Form {
         public static vidFORM instance;
         public vidFORM(Image getThumb, int width, int height, String getTitle) {

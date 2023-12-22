@@ -1,7 +1,7 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
 using Microsoft.WindowsAPICodePack.Shell;
 using MySql.Data.MySqlClient;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.Query {
+namespace FlowstorageDesktop.Query {
     public class InsertFileDataQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;

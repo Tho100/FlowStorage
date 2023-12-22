@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class PaymentSuceededAlert : Form {
         public static PaymentSuceededAlert instance;
         public PaymentSuceededAlert(String accountType) {

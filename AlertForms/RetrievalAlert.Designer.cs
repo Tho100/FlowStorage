@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class RetrievalAlert {
         /// <summary>
         /// Required designer variable.
@@ -86,7 +86,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.giphy__10_;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.giphy__10_;
             this.pictureBox1.Location = new System.Drawing.Point(465, 15);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(26, 26);

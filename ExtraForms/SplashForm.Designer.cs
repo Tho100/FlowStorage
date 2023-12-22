@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class SplashForm {
         /// <summary>
         /// Required designer variable.
@@ -45,7 +45,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.Untitled__83_;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.Untitled__83_;
             this.pictureBox1.Location = new System.Drawing.Point(0, -11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(578, 244);

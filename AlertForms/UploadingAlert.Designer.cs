@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class UploadingAlert {
         /// <summary>
         /// Required designer variable.
@@ -102,7 +102,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.giphy__10_;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.giphy__10_;
             this.pictureBox1.Location = new System.Drawing.Point(73, 51);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(11, 10);
@@ -113,7 +113,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::FlowSERVER1.Properties.Resources.download_ico;
+            this.pictureBox2.Image = global::FlowstorageDesktop.Properties.Resources.download_ico;
             this.pictureBox2.Location = new System.Drawing.Point(14, 22);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(46, 41);

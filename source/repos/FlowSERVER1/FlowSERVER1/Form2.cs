@@ -15,7 +15,7 @@ using Guna.UI2.WinForms;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace FlowSERVER1
+namespace FlowstorageDesktop
 {
     public partial class Form2 : Form
     {

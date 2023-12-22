@@ -1,7 +1,7 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
 using MySql.Data.MySqlClient;
@@ -16,7 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class DirectoryForm : Form {
 
         public static DirectoryForm instance;

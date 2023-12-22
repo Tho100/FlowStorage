@@ -1,11 +1,11 @@
-﻿using FlowSERVER1.Global;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.SharingQuery {
+namespace FlowstorageDesktop.SharingQuery {
     public class ShareFileQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;
@@ -27,17 +27,15 @@ namespace FlowSERVER1.SharingQuery {
         /// <returns></returns>
         public async Task<int> FileIsUploadedVerification(String username, String fileName) {
 
-            int count = 0;
-
             const string queryRetrieveCount = "SELECT COUNT(CUST_TO) FROM cust_sharing WHERE CUST_FROM = @sender AND CUST_FILE_PATH = @filename AND CUST_TO = @receiver";
             using (MySqlCommand command = new MySqlCommand(queryRetrieveCount, con)) {
                 command.Parameters.AddWithValue("@sender", tempDataUser.Username);
                 command.Parameters.AddWithValue("@receiver", username);
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                count = Convert.ToInt32(await command.ExecuteScalarAsync());
+                return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
 
-            return count;
+            return 0;
 
         }
 

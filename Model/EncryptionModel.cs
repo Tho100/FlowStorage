@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public static class EncryptionModel {
 
         private static readonly byte[] keyByte = Encoding.UTF8.GetBytes("Rw2345_789qTz345");

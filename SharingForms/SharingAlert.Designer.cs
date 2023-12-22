@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1.Sharing {
+﻿namespace FlowstorageDesktop.Sharing {
     partial class SharingAlert {
         /// <summary>
         /// Required designer variable.
@@ -64,7 +64,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.giphy__10_;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.giphy__10_;
             this.pictureBox1.Location = new System.Drawing.Point(469, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(26, 26);

@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class SignInForm {
         /// <summary>
         /// Required designer variable.
@@ -180,7 +180,7 @@
             this.guna2Button1.FillColor = System.Drawing.Color.Empty;
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
+            this.guna2Button1.Image = global::FlowstorageDesktop.Properties.Resources.icons8_closed_eye_241;
             this.guna2Button1.Location = new System.Drawing.Point(12, 235);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(31, 26);
@@ -201,7 +201,7 @@
             this.guna2Button3.FillColor = System.Drawing.Color.Empty;
             this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
-            this.guna2Button3.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
+            this.guna2Button3.Image = global::FlowstorageDesktop.Properties.Resources.icons8_eye_24;
             this.guna2Button3.Location = new System.Drawing.Point(12, 235);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(31, 26);

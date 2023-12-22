@@ -1,6 +1,6 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.AuthenticationQuery;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace FlowSERVER1.Authentication {
+namespace FlowstorageDesktop.Authentication {
     public partial class SignUpForm : Form {
 
         private readonly UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();

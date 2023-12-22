@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class exeFORM {
         /// <summary>
         /// Required designer variable.

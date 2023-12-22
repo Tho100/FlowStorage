@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using FlowSERVER1.AlertForms;
-using FlowSERVER1.AuthenticationQuery;
-using FlowSERVER1.Helper;
-using FlowSERVER1.SharingQuery;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.SharingQuery;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class shareFileFORM : Form {
 
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();

@@ -1,12 +1,12 @@
-﻿using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     /// <summary>
     /// PDF Viewer form

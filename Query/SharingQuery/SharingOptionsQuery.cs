@@ -1,9 +1,9 @@
-﻿using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.SharingQuery {
+namespace FlowstorageDesktop.SharingQuery {
     public class SharingOptionsQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;

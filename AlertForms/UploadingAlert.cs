@@ -5,11 +5,11 @@ using System.Threading;
 using System.Linq;
 using System.Drawing;
 
-using FlowSERVER1.Global;
+using FlowstorageDesktop.Global;
 using System.IO;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     /// <summary>
     /// 

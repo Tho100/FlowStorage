@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class RecoveryFailedAlert : Form {
         public RecoveryFailedAlert() {
             InitializeComponent();

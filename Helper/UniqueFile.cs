@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class UniqueFile {
         
         public static bool IgnoreEncryption(string fileType) {

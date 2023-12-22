@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class ChangeAuthForm {
         /// <summary>
         /// Required designer variable.
@@ -117,7 +117,7 @@
             this.guna2Button5.FillColor = System.Drawing.Color.Empty;
             this.guna2Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button5.ForeColor = System.Drawing.Color.White;
-            this.guna2Button5.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
+            this.guna2Button5.Image = global::FlowstorageDesktop.Properties.Resources.icons8_closed_eye_241;
             this.guna2Button5.Location = new System.Drawing.Point(385, 229);
             this.guna2Button5.Name = "guna2Button5";
             this.guna2Button5.Size = new System.Drawing.Size(31, 26);
@@ -138,7 +138,7 @@
             this.guna2Button6.FillColor = System.Drawing.Color.Empty;
             this.guna2Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
+            this.guna2Button6.Image = global::FlowstorageDesktop.Properties.Resources.icons8_eye_24;
             this.guna2Button6.Location = new System.Drawing.Point(385, 229);
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(31, 26);
@@ -160,7 +160,7 @@
             this.guna2Button3.FillColor = System.Drawing.Color.Empty;
             this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button3.ForeColor = System.Drawing.Color.White;
-            this.guna2Button3.Image = global::FlowSERVER1.Properties.Resources.icons8_closed_eye_241;
+            this.guna2Button3.Image = global::FlowstorageDesktop.Properties.Resources.icons8_closed_eye_241;
             this.guna2Button3.Location = new System.Drawing.Point(385, 54);
             this.guna2Button3.Name = "guna2Button3";
             this.guna2Button3.Size = new System.Drawing.Size(31, 26);
@@ -181,7 +181,7 @@
             this.guna2Button4.FillColor = System.Drawing.Color.Empty;
             this.guna2Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button4.ForeColor = System.Drawing.Color.White;
-            this.guna2Button4.Image = global::FlowSERVER1.Properties.Resources.icons8_eye_24;
+            this.guna2Button4.Image = global::FlowstorageDesktop.Properties.Resources.icons8_eye_24;
             this.guna2Button4.Location = new System.Drawing.Point(385, 54);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(31, 26);

@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1
+﻿namespace FlowstorageDesktop
 {
     partial class HomePage
     {
@@ -246,7 +246,7 @@
             this.btnFileSharing.FillColor = System.Drawing.Color.Empty;
             this.btnFileSharing.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnFileSharing.ForeColor = System.Drawing.Color.LightGray;
-            this.btnFileSharing.Image = global::FlowSERVER1.Properties.Resources.icons8_share_64;
+            this.btnFileSharing.Image = global::FlowstorageDesktop.Properties.Resources.icons8_share_64;
             this.btnFileSharing.ImageOffset = new System.Drawing.Point(1, 0);
             this.btnFileSharing.ImageSize = new System.Drawing.Size(30, 30);
             this.btnFileSharing.Location = new System.Drawing.Point(6, 333);
@@ -478,7 +478,7 @@
             this.btnLogout.FillColor = System.Drawing.Color.Empty;
             this.btnLogout.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.Firebrick;
-            this.btnLogout.Image = global::FlowSERVER1.Properties.Resources.icons8_logout_64__1_;
+            this.btnLogout.Image = global::FlowstorageDesktop.Properties.Resources.icons8_logout_64__1_;
             this.btnLogout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnLogout.ImageOffset = new System.Drawing.Point(-18, 1);
             this.btnLogout.ImageSize = new System.Drawing.Size(35, 35);
@@ -491,7 +491,7 @@
             // 
             // guna2PictureBox1
             // 
-            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.DirIcon;
+            this.guna2PictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.DirIcon;
             this.guna2PictureBox1.ImageRotate = 0F;
             this.guna2PictureBox1.Location = new System.Drawing.Point(16, 102);
             this.guna2PictureBox1.Name = "guna2PictureBox1";
@@ -639,7 +639,7 @@
             this.btnShowPs.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnShowPs.ForeColor = System.Drawing.Color.White;
             this.btnShowPs.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnShowPs.Image = global::FlowSERVER1.Properties.Resources.icons8_open_parcel_24;
+            this.btnShowPs.Image = global::FlowstorageDesktop.Properties.Resources.icons8_open_parcel_24;
             this.btnShowPs.ImageSize = new System.Drawing.Size(24, 24);
             this.btnShowPs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnShowPs.Location = new System.Drawing.Point(6, 126);
@@ -661,7 +661,7 @@
             this.btnShowFolderPage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnShowFolderPage.ForeColor = System.Drawing.Color.White;
             this.btnShowFolderPage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnShowFolderPage.Image = global::FlowSERVER1.Properties.Resources.icons8_folder_48;
+            this.btnShowFolderPage.Image = global::FlowstorageDesktop.Properties.Resources.icons8_folder_48;
             this.btnShowFolderPage.ImageSize = new System.Drawing.Size(29, 29);
             this.btnShowFolderPage.Location = new System.Drawing.Point(6, 78);
             this.btnShowFolderPage.Name = "btnShowFolderPage";
@@ -681,7 +681,7 @@
             this.btnGoHomePage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnGoHomePage.ForeColor = System.Drawing.Color.White;
             this.btnGoHomePage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnGoHomePage.Image = global::FlowSERVER1.Properties.Resources.icons8_home_page_32;
+            this.btnGoHomePage.Image = global::FlowstorageDesktop.Properties.Resources.icons8_home_page_32;
             this.btnGoHomePage.ImageSize = new System.Drawing.Size(22, 22);
             this.btnGoHomePage.Location = new System.Drawing.Point(7, 30);
             this.btnGoHomePage.Name = "btnGoHomePage";
@@ -754,7 +754,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.download_ico;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.download_ico;
             this.pictureBox1.Location = new System.Drawing.Point(505, 181);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(52, 47);
@@ -1046,7 +1046,7 @@
             this.btnDeleteFile.FillColor = System.Drawing.Color.Empty;
             this.btnDeleteFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.btnDeleteFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnDeleteFile.Image = global::FlowSERVER1.Properties.Resources.icons8_garbage_66;
+            this.btnDeleteFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_garbage_66;
             this.btnDeleteFile.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnDeleteFile.ImageSize = new System.Drawing.Size(26, 26);
             this.btnDeleteFile.Location = new System.Drawing.Point(11, 177);
@@ -1142,7 +1142,7 @@
             this.btnShareFile.FillColor = System.Drawing.Color.Empty;
             this.btnShareFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShareFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_64;
+            this.btnShareFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_share_64;
             this.btnShareFile.ImageOffset = new System.Drawing.Point(1, 0);
             this.btnShareFile.ImageSize = new System.Drawing.Size(24, 24);
             this.btnShareFile.Location = new System.Drawing.Point(14, 92);
@@ -1165,7 +1165,7 @@
             this.btnRenameFile.FillColor = System.Drawing.Color.Empty;
             this.btnRenameFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRenameFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnRenameFile.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
+            this.btnRenameFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_edit_48;
             this.btnRenameFile.Location = new System.Drawing.Point(18, 51);
             this.btnRenameFile.Name = "btnRenameFile";
             this.btnRenameFile.Size = new System.Drawing.Size(147, 31);
@@ -1367,7 +1367,7 @@
             this.btnMyPsFiles.FillColor = System.Drawing.Color.Empty;
             this.btnMyPsFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMyPsFiles.ForeColor = System.Drawing.Color.LightGray;
-            this.btnMyPsFiles.Image = global::FlowSERVER1.Properties.Resources.icons8_documents_folder_48__2_;
+            this.btnMyPsFiles.Image = global::FlowstorageDesktop.Properties.Resources.icons8_documents_folder_48__2_;
             this.btnMyPsFiles.ImageSize = new System.Drawing.Size(24, 24);
             this.btnMyPsFiles.Location = new System.Drawing.Point(9, 134);
             this.btnMyPsFiles.Name = "btnMyPsFiles";
@@ -1548,7 +1548,7 @@
             this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.guna2Button1.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Image = global::FlowSERVER1.Properties.Resources.icons8_tune_48;
+            this.guna2Button1.Image = global::FlowstorageDesktop.Properties.Resources.icons8_tune_48;
             this.guna2Button1.ImageSize = new System.Drawing.Size(19, 19);
             this.guna2Button1.Location = new System.Drawing.Point(886, 13);
             this.guna2Button1.Name = "guna2Button1";
@@ -1559,7 +1559,7 @@
             // imgDiscover
             // 
             this.imgDiscover.BackColor = System.Drawing.Color.Transparent;
-            this.imgDiscover.Image = global::FlowSERVER1.Properties.Resources.icons8_compass_48;
+            this.imgDiscover.Image = global::FlowstorageDesktop.Properties.Resources.icons8_compass_48;
             this.imgDiscover.Location = new System.Drawing.Point(457, 78);
             this.imgDiscover.Name = "imgDiscover";
             this.imgDiscover.Size = new System.Drawing.Size(22, 22);
@@ -1605,7 +1605,7 @@
             this.btnRefreshFiles.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.btnRefreshFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefreshFiles.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshFiles.Image = global::FlowSERVER1.Properties.Resources.icons8_update_left_rotation_24;
+            this.btnRefreshFiles.Image = global::FlowstorageDesktop.Properties.Resources.icons8_update_left_rotation_24;
             this.btnRefreshFiles.Location = new System.Drawing.Point(1259, 13);
             this.btnRefreshFiles.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnRefreshFiles.Name = "btnRefreshFiles";
@@ -1644,7 +1644,7 @@
             this.btnOpenRenameFolderPage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.btnOpenRenameFolderPage.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnOpenRenameFolderPage.ForeColor = System.Drawing.Color.White;
-            this.btnOpenRenameFolderPage.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
+            this.btnOpenRenameFolderPage.Image = global::FlowstorageDesktop.Properties.Resources.icons8_edit_48;
             this.btnOpenRenameFolderPage.ImageSize = new System.Drawing.Size(19, 19);
             this.btnOpenRenameFolderPage.Location = new System.Drawing.Point(1198, 13);
             this.btnOpenRenameFolderPage.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
@@ -1694,7 +1694,7 @@
             this.txtBoxSearchFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.txtBoxSearchFile.ForeColor = System.Drawing.Color.Silver;
             this.txtBoxSearchFile.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.txtBoxSearchFile.IconLeft = global::FlowSERVER1.Properties.Resources.icons8_search_30__1_;
+            this.txtBoxSearchFile.IconLeft = global::FlowstorageDesktop.Properties.Resources.icons8_search_30__1_;
             this.txtBoxSearchFile.IconLeftOffset = new System.Drawing.Point(4, 0);
             this.txtBoxSearchFile.IconLeftSize = new System.Drawing.Size(18, 18);
             this.txtBoxSearchFile.Location = new System.Drawing.Point(287, 13);
@@ -1723,7 +1723,7 @@
             this.btnShared.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.btnShared.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.btnShared.ForeColor = System.Drawing.Color.White;
-            this.btnShared.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
+            this.btnShared.Image = global::FlowstorageDesktop.Properties.Resources.icons8_share_26;
             this.btnShared.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnShared.ImageOffset = new System.Drawing.Point(4, 0);
             this.btnShared.ImageSize = new System.Drawing.Size(15, 15);

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FlowSERVER1.Properties
+namespace FlowstorageDesktop.Properties
 {
 
 

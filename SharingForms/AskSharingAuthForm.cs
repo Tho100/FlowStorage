@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-using FlowSERVER1.Sharing;
-using FlowSERVER1.SharingQuery;
-using FlowSERVER1.AuthenticationQuery;
+using FlowstorageDesktop.Sharing;
+using FlowstorageDesktop.SharingQuery;
+using FlowstorageDesktop.AuthenticationQuery;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class AskSharingAuthForm : Form {
         private string _receiverUsername { get; set; }
         private string _fileName { get; set; }

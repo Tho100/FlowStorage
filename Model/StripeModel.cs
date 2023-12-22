@@ -1,7 +1,7 @@
 ﻿using Stripe;
 using System;
 
-namespace FlowSERVER1.Model {
+namespace FlowstorageDesktop.Model {
     public class StripeModel {
 
         static public void AddNewCustomer(string email, string name) {

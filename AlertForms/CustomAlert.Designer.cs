@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1.AlertForms {
+﻿namespace FlowstorageDesktop.AlertForms {
     partial class CustomAlert {
         /// <summary>
         /// Required designer variable.

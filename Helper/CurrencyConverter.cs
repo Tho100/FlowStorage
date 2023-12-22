@@ -1,4 +1,4 @@
-﻿using FlowSERVER1.Global;
+﻿using FlowstorageDesktop.Global;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class CurrencyConverter {
 
         readonly static private TemporaryDataPayment tempData = new TemporaryDataPayment();

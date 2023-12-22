@@ -1,13 +1,13 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.AuthenticationQuery;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class ChangeAuthForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;

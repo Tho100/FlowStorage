@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1.ExtraForms {
+﻿namespace FlowstorageDesktop.ExtraForms {
     partial class PublishPublicStorage {
         /// <summary>
         /// Required designer variable.

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class Form1 : Form {
         public static Form1 instance;
         public Label setupLabel;

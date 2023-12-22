@@ -1,9 +1,9 @@
-﻿using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
 using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class exeFORM : Form {
 
         readonly public exeFORM instance;

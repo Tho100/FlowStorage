@@ -1,6 +1,6 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
 using LibVLCSharp.Shared;
 using System;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class VideoForm : Form {
 
         public readonly VideoForm instance;

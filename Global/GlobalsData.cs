@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FlowSERVER1.Global {
+namespace FlowstorageDesktop.Global {
     public class GlobalsData {
 
         static public List<string> fileTypeValuesSharedToOthers = new List<string>();

@@ -1,9 +1,9 @@
-﻿using FlowSERVER1.AlertForms;
+﻿using FlowstorageDesktop.AlertForms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FlowSERVER1.ExtraForms {
+namespace FlowstorageDesktop.ExtraForms {
     public partial class PublishPublicStorage : Form {
         public PublishPublicStorage(string fileName) {
             InitializeComponent();

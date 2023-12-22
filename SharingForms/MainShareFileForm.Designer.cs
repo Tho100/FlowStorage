@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class MainShareFileForm {
         /// <summary>
         /// Required designer variable.

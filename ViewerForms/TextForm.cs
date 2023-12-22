@@ -1,7 +1,7 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     /// <summary>
     /// Load user text file 

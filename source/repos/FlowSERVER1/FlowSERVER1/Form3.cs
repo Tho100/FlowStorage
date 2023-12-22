@@ -12,7 +12,7 @@ using MySql;
 using MySql.Data.MySqlClient;
 using System.IO;
 
-namespace FlowSERVER1
+namespace FlowstorageDesktop
 {
 
     public partial class Form3 : Form

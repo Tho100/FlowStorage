@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class ApiPageForm {
         /// <summary>
         /// Required designer variable.
@@ -407,7 +407,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::FlowSERVER1.Properties.Resources.Group_15__2_;
+            this.pictureBox2.Image = global::FlowstorageDesktop.Properties.Resources.Group_15__2_;
             this.pictureBox2.Location = new System.Drawing.Point(14, 13);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(442, 300);

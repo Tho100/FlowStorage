@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1.Settings {
+﻿namespace FlowstorageDesktop.Settings {
     partial class CancelPlanForm {
         /// <summary>
         /// Required designer variable.

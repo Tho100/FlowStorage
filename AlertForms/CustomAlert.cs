@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1.AlertForms {
+namespace FlowstorageDesktop.AlertForms {
     public partial class CustomAlert : Form {
         public CustomAlert(string title, string subheader) {
             InitializeComponent();

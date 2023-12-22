@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class GeneralCompressor {
 
         public byte[] compressFileData(byte[] data) {

@@ -1,10 +1,10 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Authentication;
-using FlowSERVER1.ExtraForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Query;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Authentication;
+using FlowstorageDesktop.ExtraForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Query;
+using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
@@ -22,7 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     public partial class HomePage : Form {
 

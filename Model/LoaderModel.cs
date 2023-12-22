@@ -2,12 +2,12 @@
 using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
-using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     public partial class LoaderModel {
 

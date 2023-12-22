@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class RenameFileForm {
         /// <summary>
         /// Required designer variable.

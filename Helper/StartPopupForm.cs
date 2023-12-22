@@ -1,8 +1,8 @@
-﻿using FlowSERVER1.Global;
-using FlowSERVER1.Sharing;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Sharing;
 using System.Threading;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class StartPopupForm {
 
         public static void StartUploadingFilePopup(string fileName, long fileSize = 0) {

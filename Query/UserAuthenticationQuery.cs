@@ -1,10 +1,10 @@
-﻿using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.AuthenticationQuery {
+namespace FlowstorageDesktop.AuthenticationQuery {
     public class UserAuthenticationQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class PanelGenerator {
 
         public void GeneratePanel(string parameterName, int length, List<(string,string, string)> filesInfo, List<EventHandler> onPressed, List<EventHandler> onPressedMoreButton, List<Image> pictureImage, bool isFromPs = false, bool moreButtonVisible = true, bool isFromDirectory = false) {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class picFORM : Form {
         public static picFORM instance;
         public picFORM(Image userImage, int width, int height,string title) {

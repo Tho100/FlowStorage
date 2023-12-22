@@ -1,19 +1,18 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Authentication;
-using FlowSERVER1.AuthenticationQuery;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
-using MySql.Data.MySqlClient;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Authentication;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class SignInForm : Form {
 
         public static SignInForm instance;

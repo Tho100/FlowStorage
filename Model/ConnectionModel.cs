@@ -5,7 +5,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public class ConnectionModel {
 
         private static string getConnection = ConfigurationManager.ConnectionStrings["djkioJ33AW=KDOdsad"].ConnectionString;//DecryptConnection("0afe74-gksuwpe8r",ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString);

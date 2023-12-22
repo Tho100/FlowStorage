@@ -11,7 +11,7 @@ using MySql;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class txtFORM : Form {
         public static txtFORM instance;
         public txtFORM(String getText,String fileName) {

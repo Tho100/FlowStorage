@@ -1,17 +1,15 @@
-﻿using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Temporary;
 using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class LimitedDirAlert : Form {
 
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
-
         public LimitedDirAlert() {
             InitializeComponent();
-            this.label7.Text = $"Current Account: {tempDataUser.AccountType}";
+            lblAccount.Text = $"Current Account: {tempDataUser.AccountType}";
         }
-
 
         private void DirErFORM_Load(object sender, EventArgs e) {
 

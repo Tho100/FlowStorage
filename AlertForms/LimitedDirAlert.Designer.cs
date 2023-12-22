@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class LimitedDirAlert {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblAccount = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
@@ -66,16 +66,16 @@
             this.label6.TabIndex = 50;
             this.label6.Text = "Upgrade to Supreme to upload up to 5 directories!";
             // 
-            // label7
+            // lblAccount
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.LightGray;
-            this.label7.Location = new System.Drawing.Point(136, 106);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(163, 20);
-            this.label7.TabIndex = 49;
-            this.label7.Text = "Current Account: Basic";
+            this.lblAccount.AutoSize = true;
+            this.lblAccount.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccount.ForeColor = System.Drawing.Color.LightGray;
+            this.lblAccount.Location = new System.Drawing.Point(136, 106);
+            this.lblAccount.Name = "lblAccount";
+            this.lblAccount.Size = new System.Drawing.Size(163, 20);
+            this.lblAccount.TabIndex = 49;
+            this.lblAccount.Text = "Current Account: Basic";
             // 
             // label8
             // 
@@ -150,7 +150,7 @@
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblAccount);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.guna2Button2);
@@ -172,7 +172,7 @@
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblAccount;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         public Guna.UI2.WinForms.Guna2Button guna2Button2;

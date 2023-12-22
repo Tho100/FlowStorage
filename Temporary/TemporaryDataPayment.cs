@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace FlowSERVER1.Global {
+namespace FlowstorageDesktop.Global {
 
     class TemporaryDataPayment : INotifyPropertyChanged {
 

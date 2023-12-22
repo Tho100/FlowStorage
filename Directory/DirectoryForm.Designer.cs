@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1
+﻿namespace FlowstorageDesktop
 {
     partial class DirectoryForm
     {
@@ -327,7 +327,7 @@
             this.btnShareFile.FillColor = System.Drawing.Color.Empty;
             this.btnShareFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShareFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_64;
+            this.btnShareFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_share_64;
             this.btnShareFile.ImageOffset = new System.Drawing.Point(1, 0);
             this.btnShareFile.ImageSize = new System.Drawing.Size(24, 24);
             this.btnShareFile.Location = new System.Drawing.Point(14, 92);
@@ -352,7 +352,7 @@
             this.btnDelete.FillColor = System.Drawing.Color.Empty;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.btnDelete.ForeColor = System.Drawing.Color.LightGray;
-            this.btnDelete.Image = global::FlowSERVER1.Properties.Resources.icons8_garbage_66;
+            this.btnDelete.Image = global::FlowstorageDesktop.Properties.Resources.icons8_garbage_66;
             this.btnDelete.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnDelete.ImageSize = new System.Drawing.Size(26, 26);
             this.btnDelete.Location = new System.Drawing.Point(10, 179);
@@ -375,7 +375,7 @@
             this.btnRenameFile.FillColor = System.Drawing.Color.Empty;
             this.btnRenameFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRenameFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnRenameFile.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
+            this.btnRenameFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_edit_48;
             this.btnRenameFile.Location = new System.Drawing.Point(18, 51);
             this.btnRenameFile.Name = "btnRenameFile";
             this.btnRenameFile.Size = new System.Drawing.Size(147, 31);

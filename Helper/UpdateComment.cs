@@ -1,8 +1,8 @@
-﻿using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class UpdateComment {
 
         readonly private MySqlConnection con = ConnectionModel.con;

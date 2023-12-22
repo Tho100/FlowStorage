@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-namespace FlowSERVER1
+namespace FlowstorageDesktop
 {
     public partial class Form4 : Form
     {

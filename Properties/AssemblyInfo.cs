@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("File hosting for Windows 10 and above.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Crivlet Sdn Bhd")]
-[assembly: AssemblyProduct("FlowSERVER1")]
+[assembly: AssemblyProduct("FlowstorageDesktop")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

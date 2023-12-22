@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Timers;
 using System.Windows.Forms;
-using FlowSERVER1.AlertForms;
+using FlowstorageDesktop.AlertForms;
 using MySql.Data.MySqlClient;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class SplashForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public class ClosePopupForm {
 
         private const string uploadingAlert = "UploadingAlert";

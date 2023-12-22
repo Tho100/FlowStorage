@@ -1,11 +1,11 @@
-﻿using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
 using System;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class WordDocForm : Form {
 
         private string _tableName { get; set; }

@@ -7,15 +7,15 @@ using MySql.Data.MySqlClient;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Threading;
 
-using FlowSERVER1.Sharing;
-using FlowSERVER1.AlertForms;
-using FlowSERVER1.Helper;
-using FlowSERVER1.AuthenticationQuery;
-using FlowSERVER1.SharingQuery;
+using FlowstorageDesktop.Sharing;
+using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.SharingQuery;
 using Irony.Parsing;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class MainShareFileForm : Form {
 
         public MainShareFileForm instance;

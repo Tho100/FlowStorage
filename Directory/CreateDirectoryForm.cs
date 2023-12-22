@@ -1,7 +1,7 @@
 ﻿
-using FlowSERVER1.AlertForms;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     public partial class CreateDirectoryForm : Form {
 
@@ -92,7 +92,7 @@ namespace FlowSERVER1 {
                 Guna2PictureBox picBanner = new Guna2PictureBox();
                 panel.Controls.Add(picBanner);
                 picBanner.Name = "PicBanner" + currMain;
-                picBanner.Image = FlowSERVER1.Properties.Resources.DirIcon;
+                picBanner.Image = FlowstorageDesktop.Properties.Resources.DirIcon;
                 picBanner.SizeMode = PictureBoxSizeMode.CenterImage;
                 picBanner.BorderRadius = 8;
                 picBanner.Width = 226;

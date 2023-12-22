@@ -1,10 +1,10 @@
-﻿using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class ApiPageForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;

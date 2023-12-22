@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class CancellingAlert {
         /// <summary>
         /// Required designer variable.
@@ -45,6 +45,7 @@
             this.label3.Size = new System.Drawing.Size(131, 139);
             this.label3.TabIndex = 60;
             this.label3.Text = "...";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label9
             // 

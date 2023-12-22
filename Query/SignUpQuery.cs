@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.AuthenticationQuery {
+namespace FlowstorageDesktop.AuthenticationQuery {
     public class SignUpQuery {
 
         readonly private MySqlConnection con = ConnectionModel.con;

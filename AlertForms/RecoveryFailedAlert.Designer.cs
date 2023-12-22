@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class RecoveryFailedAlert {
         /// <summary>
         /// Required designer variable.

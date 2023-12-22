@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class RetrievalAlert : Form {
 
         public static RetrievalAlert instance;

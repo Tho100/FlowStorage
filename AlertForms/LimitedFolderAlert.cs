@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class LimitedFolderAlert : Form {
-        public LimitedFolderAlert(String accountType,String message, bool subMessageVisible) {
+        public LimitedFolderAlert(String accountType, String message, bool subMessageVisible) {
             InitializeComponent();
 
             this.label7.Text = $"Current Account: {accountType}";

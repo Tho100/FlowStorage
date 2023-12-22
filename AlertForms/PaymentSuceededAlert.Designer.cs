@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class PaymentSuceededAlert {
         /// <summary>
         /// Required designer variable.
@@ -98,7 +98,7 @@
             // 
             // guna2PictureBox1
             // 
-            this.guna2PictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_partying_face_96;
+            this.guna2PictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.icons8_partying_face_96;
             this.guna2PictureBox1.ImageRotate = 0F;
             this.guna2PictureBox1.Location = new System.Drawing.Point(20, 21);
             this.guna2PictureBox1.Name = "guna2PictureBox1";

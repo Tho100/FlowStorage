@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class LimitedFolderFileAlert : Form {
         public LimitedFolderFileAlert(string _currentAccount) {
             InitializeComponent();
@@ -17,8 +17,7 @@ namespace FlowSERVER1 {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            SettingsForm remAccShow = new SettingsForm();
-            remAccShow.Show();
+            new SettingsForm().Show();
             SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabPage3"];
             Close();
         }

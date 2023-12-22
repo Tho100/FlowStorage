@@ -14,7 +14,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using Guna.UI2.WinForms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class LogIN : Form {
         public static LogIN instance;
         public LogIN() {

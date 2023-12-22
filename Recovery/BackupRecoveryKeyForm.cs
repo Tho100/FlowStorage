@@ -1,12 +1,12 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.AuthenticationQuery;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class BackupRecoveryKeyForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
@@ -31,10 +31,13 @@ namespace FlowSERVER1 {
         }
 
         private void SaveRecoveryTokenToLocal(string contentValue) {
-            SaveFileDialog _OpenDialog = new SaveFileDialog();
-            _OpenDialog.FileName = "FlowstorageRECOVERYKEY.txt";
-            if (_OpenDialog.ShowDialog() == DialogResult.OK) {
-                File.WriteAllText(_OpenDialog.FileName, contentValue);
+
+            var saveDialog  = new SaveFileDialog();
+            saveDialog.FileName = "FlowstorageRECOVERYKEY.txt";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK) {
+                File.WriteAllText(saveDialog.FileName, contentValue);
+
             }
            
         }

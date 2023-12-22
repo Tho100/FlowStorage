@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FlowSERVER1.Global {
+namespace FlowstorageDesktop.Global {
     public class GlobalsTable {
 
         static public readonly string homeImageTable = "file_info_image";

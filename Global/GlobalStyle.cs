@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public class GlobalStyle {
 
         // Date label

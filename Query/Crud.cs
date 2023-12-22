@@ -1,10 +1,10 @@
-﻿using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public class Crud {
 
         private readonly MySqlConnection con = ConnectionModel.con;

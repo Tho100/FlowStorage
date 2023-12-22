@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class TextForm {
         /// <summary>
         /// Required designer variable.
@@ -259,7 +259,7 @@
             this.btnShareFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnShareFile.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnShareFile.ForeColor = System.Drawing.Color.White;
-            this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
+            this.btnShareFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_share_26;
             this.btnShareFile.ImageSize = new System.Drawing.Size(17, 17);
             this.btnShareFile.Location = new System.Drawing.Point(914, 17);
             this.btnShareFile.Name = "btnShareFile";
@@ -281,7 +281,7 @@
             this.guna2Button8.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button8.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button8.ForeColor = System.Drawing.Color.White;
-            this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
+            this.guna2Button8.Image = global::FlowstorageDesktop.Properties.Resources.icons8_subtract_30;
             this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
             this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
             this.guna2Button8.Location = new System.Drawing.Point(1002, 17);
@@ -421,7 +421,7 @@
             this.btnEditComment.FillColor = System.Drawing.Color.Transparent;
             this.btnEditComment.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnEditComment.ForeColor = System.Drawing.Color.White;
-            this.btnEditComment.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
+            this.btnEditComment.Image = global::FlowstorageDesktop.Properties.Resources.icons8_edit_48;
             this.btnEditComment.ImageSize = new System.Drawing.Size(21, 21);
             this.btnEditComment.Location = new System.Drawing.Point(292, 271);
             this.btnEditComment.Name = "btnEditComment";
@@ -443,7 +443,7 @@
             this.guna2Button12.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button12.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button12.ForeColor = System.Drawing.Color.White;
-            this.guna2Button12.Image = global::FlowSERVER1.Properties.Resources.icons8_done_26;
+            this.guna2Button12.Image = global::FlowstorageDesktop.Properties.Resources.icons8_done_26;
             this.guna2Button12.ImageSize = new System.Drawing.Size(19, 19);
             this.guna2Button12.Location = new System.Drawing.Point(298, 269);
             this.guna2Button12.Name = "guna2Button12";

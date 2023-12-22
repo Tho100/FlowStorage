@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace FlowSERVER1.Temporary {
+namespace FlowstorageDesktop.Temporary {
     public class TemporaryDataUser : INotifyPropertyChanged {
 
         static private string username = "";

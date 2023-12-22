@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class AudioPlayingForm : Form {
         public AudioPlayingForm(string audioName) {
 

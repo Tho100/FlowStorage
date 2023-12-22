@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class AudioPlayingForm {
         /// <summary>
         /// Required designer variable.
@@ -43,8 +43,8 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowSERVER1.Properties.Resources.icons8_audio_file_60;
-            this.pictureBox1.InitialImage = global::FlowSERVER1.Properties.Resources.icons8_audio_file_60;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.icons8_audio_file_60;
+            this.pictureBox1.InitialImage = global::FlowstorageDesktop.Properties.Resources.icons8_audio_file_60;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(42, 42);

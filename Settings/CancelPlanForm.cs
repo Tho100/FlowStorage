@@ -1,12 +1,12 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Model;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Model;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1.Settings {
+namespace FlowstorageDesktop.Settings {
     public partial class CancelPlanForm : Form {
 
         private readonly MySqlConnection con = ConnectionModel.con;

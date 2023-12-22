@@ -1,10 +1,10 @@
-﻿using FlowSERVER1.Global;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.Threading.Tasks;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class UpdateChanges {
 
         readonly private MySqlConnection con = ConnectionModel.con;

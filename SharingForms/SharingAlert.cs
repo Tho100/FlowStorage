@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FlowSERVER1.Sharing {
+namespace FlowstorageDesktop.Sharing {
     public partial class SharingAlert : Form {
 
         public SharingAlert(string shareToName) {

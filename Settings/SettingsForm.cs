@@ -1,9 +1,9 @@
-﻿using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Settings;
-using FlowSERVER1.SharingQuery;
-using FlowSERVER1.Temporary;
+﻿using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Settings;
+using FlowstorageDesktop.SharingQuery;
+using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     public partial class SettingsForm : Form {
 

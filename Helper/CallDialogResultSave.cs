@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace FlowSERVER1.Helper {
+namespace FlowstorageDesktop.Helper {
     public class CallDialogResultSave {
         public static DialogResult CallDialogResult(bool isFromSharing) {
 

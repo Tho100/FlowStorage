@@ -5,15 +5,15 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using FlowSERVER1.Global;
-using FlowSERVER1.Helper;
+using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Helper;
 using System.Collections.Generic;
 using Guna.UI2.WinForms;
 using System.Linq;
 using System.IO;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class PicForm : Form {
 
         public readonly PicForm instance;

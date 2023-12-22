@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class BackupRecoveryKeyForm {
         /// <summary>
         /// Required designer variable.

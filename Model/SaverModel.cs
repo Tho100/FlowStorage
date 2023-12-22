@@ -6,13 +6,13 @@ using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
-using FlowSERVER1.AlertForms;
-using FlowSERVER1.Global;
+using FlowstorageDesktop.AlertForms;
+using FlowstorageDesktop.Global;
 using Guna.UI2.WinForms;
-using FlowSERVER1.Helper;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
 
     /// <summary>
     /// Download file class

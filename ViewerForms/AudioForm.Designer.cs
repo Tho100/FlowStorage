@@ -1,4 +1,4 @@
-﻿namespace FlowSERVER1 {
+﻿namespace FlowstorageDesktop {
     partial class AudioForm {
         /// <summary>
         /// Required designer variable.
@@ -271,7 +271,7 @@
             this.guna2Button7.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button7.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button7.ForeColor = System.Drawing.Color.White;
-            this.guna2Button7.Image = global::FlowSERVER1.Properties.Resources.icons8_done_26;
+            this.guna2Button7.Image = global::FlowstorageDesktop.Properties.Resources.icons8_done_26;
             this.guna2Button7.ImageSize = new System.Drawing.Size(19, 19);
             this.guna2Button7.Location = new System.Drawing.Point(295, 256);
             this.guna2Button7.Name = "guna2Button7";
@@ -294,7 +294,7 @@
             this.btnEditComment.FillColor = System.Drawing.Color.Transparent;
             this.btnEditComment.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnEditComment.ForeColor = System.Drawing.Color.White;
-            this.btnEditComment.Image = global::FlowSERVER1.Properties.Resources.icons8_edit_48;
+            this.btnEditComment.Image = global::FlowstorageDesktop.Properties.Resources.icons8_edit_48;
             this.btnEditComment.ImageSize = new System.Drawing.Size(21, 21);
             this.btnEditComment.Location = new System.Drawing.Point(298, 256);
             this.btnEditComment.Name = "btnEditComment";
@@ -317,7 +317,7 @@
             this.btnShareFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnShareFile.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnShareFile.ForeColor = System.Drawing.Color.White;
-            this.btnShareFile.Image = global::FlowSERVER1.Properties.Resources.icons8_share_26;
+            this.btnShareFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_share_26;
             this.btnShareFile.ImageSize = new System.Drawing.Size(17, 17);
             this.btnShareFile.Location = new System.Drawing.Point(953, 17);
             this.btnShareFile.Name = "btnShareFile";
@@ -376,7 +376,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.Image = global::FlowSERVER1.Properties.Resources.Group_1;
+            this.pictureBox3.Image = global::FlowstorageDesktop.Properties.Resources.Group_1;
             this.pictureBox3.Location = new System.Drawing.Point(620, 248);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(253, 104);
@@ -398,7 +398,7 @@
             this.guna2Button8.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.guna2Button8.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.guna2Button8.ForeColor = System.Drawing.Color.White;
-            this.guna2Button8.Image = global::FlowSERVER1.Properties.Resources.icons8_subtract_30;
+            this.guna2Button8.Image = global::FlowstorageDesktop.Properties.Resources.icons8_subtract_30;
             this.guna2Button8.ImageOffset = new System.Drawing.Point(0, 1);
             this.guna2Button8.ImageSize = new System.Drawing.Size(22, 22);
             this.guna2Button8.Location = new System.Drawing.Point(1041, 17);
@@ -464,7 +464,7 @@
             this.btnReplayAudio.FillColor = System.Drawing.Color.Empty;
             this.btnReplayAudio.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnReplayAudio.ForeColor = System.Drawing.Color.White;
-            this.btnReplayAudio.Image = global::FlowSERVER1.Properties.Resources.icons8_restart_500__1_;
+            this.btnReplayAudio.Image = global::FlowstorageDesktop.Properties.Resources.icons8_restart_500__1_;
             this.btnReplayAudio.ImageSize = new System.Drawing.Size(27, 27);
             this.btnReplayAudio.Location = new System.Drawing.Point(1076, 568);
             this.btnReplayAudio.Name = "btnReplayAudio";

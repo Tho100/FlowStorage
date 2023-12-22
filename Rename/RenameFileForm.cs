@@ -1,4 +1,4 @@
-﻿using FlowSERVER1.Global;
+﻿using FlowstorageDesktop.Global;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
 using System;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using FlowSERVER1.Temporary;
+using FlowstorageDesktop.Temporary;
 
-namespace FlowSERVER1 {
+namespace FlowstorageDesktop {
     public partial class RenameFileForm : Form {
 
         readonly private MySqlConnection con = ConnectionModel.con;
