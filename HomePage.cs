@@ -4276,7 +4276,9 @@ namespace FlowstorageDesktop {
 
             lblCurrentPageText.Text = "Shared Files";
             lblCurrentPageText.Visible = true;
+
             btnDeleteFolder.Visible = false;
+            pnlSubPanelDetails.Visible = false;
 
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
 
@@ -4298,6 +4300,8 @@ namespace FlowstorageDesktop {
 
             lblCurrentPageText.Text = "Shared To Me";
             lblCurrentPageText.Visible = true;
+
+            pnlSubPanelDetails.Visible = true;
             btnDeleteFolder.Visible = false;
 
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
