@@ -96,7 +96,6 @@ namespace FlowstorageDesktop.Query {
             } catch (Exception) {
                 BuildShowAlert(
                     title: "Upload failed", subheader: $"Failed to upload {fileName}");
-
             }
 
         }

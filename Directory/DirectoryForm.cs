@@ -1,6 +1,7 @@
 ﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Query;
 using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
@@ -918,29 +919,20 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button26_Click(object sender, EventArgs e) {
+        private async void guna2Button26_Click(object sender, EventArgs e) {
 
             string fileName = lblFileNameOnPanel.Text;
             string panelname = lblFilePanelName.Text;
+            string directoryName = lblDirectoryName.Text;
 
-            DialogResult verifyDialog = MessageBox.Show($"Delete '{fileName}'?", "Flowstorage", 
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult verifyDialog = MessageBox.Show(
+                $"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDialog == DialogResult.Yes) {
-                using (var command = con.CreateCommand()) {
-                    const string noSafeUpdate = "SET SQL_SAFE_UPDATES = 0;";
-                    command.CommandText = noSafeUpdate;
-                    command.ExecuteNonQuery();
-                }
-
-                using (var command = con.CreateCommand()) {
-                    const string removeQuery = "DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
-                    command.CommandText = removeQuery;
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                    command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                    command.ExecuteNonQuery();
-                }
+                
+                var deleteFileQuery = new DeleteFileDataQuery();
+                await deleteFileQuery.DeleteFileData(
+                    GlobalsTable.directoryUploadTable, fileName, directoryName);
 
                 Control[] matches = this.Controls.Find(panelname, true);
 

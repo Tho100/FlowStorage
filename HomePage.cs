@@ -4064,71 +4064,29 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnDeleteFile_Click_1(object sender, EventArgs e) {
+        private async void btnDeleteFile_Click_1(object sender, EventArgs e) {
 
-            string titleFile = lblFileNameOnPanel.Text;
+            string fileName = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
             string panelName = lblFilePanelName.Text;
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
             DialogResult verifyDialog = MessageBox.Show(
-                $"Delete '{titleFile}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                $"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDialog == DialogResult.Yes) {
 
-                using (MySqlCommand command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
-                    command.ExecuteNonQuery();
-                }
-
-                if (GlobalsTable.publicTables.Contains(tableName) || GlobalsTable.publicTablesPs.Contains(tableName)) {
-
-                    string removeQuery = $"DELETE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                        command.ExecuteNonQuery();
-                    }
-
-                    GlobalsData.filesMetadataCacheHome.Clear();
-
-                } else if (tableName == GlobalsTable.folderUploadTable) {
-
-                    const string removeQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
-                    using (MySqlCommand command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                        command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(dirName));
-                        command.ExecuteNonQuery();
-                    }
-
-                } else if (tableName == GlobalsTable.sharingTable && sharedToName != "sharedToName") {
-
-                    const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename AND CUST_TO = @sharedname";
-                    using (MySqlCommand cmd = new MySqlCommand(removeQuery, con)) {
-                        cmd.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        cmd.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                        cmd.Parameters.AddWithValue("@sharedname", sharedToName);
-
-                        cmd.ExecuteNonQuery();
-                    }
-
-                } else if (tableName == GlobalsTable.sharingTable && sharedToName == "sharedToName") {
-
-                    const string removeQuery = "DELETE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    using (var command = new MySqlCommand(removeQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(titleFile));
-                        command.ExecuteNonQuery();
-                    }
-
-                }
+                var deleteFileQuery = new DeleteFileDataQuery();
+                await deleteFileQuery.DeleteFileData(tableName, fileName, dirName, sharedToName);
 
                 Control[] matches = this.Controls.Find(panelName, true);
+
                 if (matches.Length > 0 && matches[0] is Guna2Panel) {
                     Guna2Panel myPanel = (Guna2Panel)matches[0];
                     flwLayoutHome.Controls.Remove(myPanel);
                     myPanel.Dispose();
+
                 }
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();

@@ -433,6 +433,8 @@
     <Compile Include="AlertForms\CustomAlert.Designer.cs">
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\FileUploadException.cs" />
+    <Compile Include="Query\DeleteFileDataQuery.cs" />
     <Compile Include="Query\InsertFileDataQuery.cs" />
     <Compile Include="Query\SignUpQuery.cs" />
     <Compile Include="Query\StartupQuery.cs" />

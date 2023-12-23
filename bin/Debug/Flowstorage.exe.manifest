@@ -187,14 +187,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="7609856">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flowstorage.exe" size="7614976">
       <assemblyIdentity name="Flowstorage" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hLhvI7jNH4YnZr9yE2SgwY3f3BD6d9HX3W8tFJn/xbY=</dsig:DigestValue>
+        <dsig:DigestValue>R+usbwiiTORjAztdwuxp4c73H3oLLbtTr4O3AUNuSng=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -242,7 +242,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hn4Dy044tTJNp+GglFgdj2gzMNMe9xFgg6l2fN0atqA=</dsig:DigestValue>
+        <dsig:DigestValue>jSJV/lcYkkJJN/WeXej/g5SttyN9tPsbPrYlGW4Z0OM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1074,13 +1074,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Flowstorage.exe.config" size="9847">
+  <file name="Flowstorage.exe.config" size="10106">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>o1nfUn4sL9SrxHaIwolN0WZCzjiyzqWb+YBpUsexr04=</dsig:DigestValue>
+      <dsig:DigestValue>89iQyBba+E5lGu7S9Nvg2nWsL60TpLl68IuKUOXygYk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="libvlc\win-x64\hrtfs\dodeca_and_7channel_3DSL_HRTF.sofa" size="92388">
