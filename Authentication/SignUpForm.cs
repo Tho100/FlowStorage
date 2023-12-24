@@ -1,5 +1,6 @@
 ﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Model;
 using FlowstorageDesktop.Temporary;
 using System;
 using System.Collections.Generic;
@@ -35,22 +36,14 @@ namespace FlowstorageDesktop.Authentication {
 
             try {
 
-                string startupPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowStorageInfos");
+                var autoLoginData = new AutoLoginModel().ReadAutoLoginData();
 
-                if (!Directory.Exists(startupPath)) {
+                if(string.IsNullOrEmpty(autoLoginData)) {
                     return;
                 }
 
-                new DirectoryInfo(startupPath).Attributes &= ~FileAttributes.Hidden;
-
-                string authFile = Path.Combine(startupPath, "CUST_DATAS.txt");
-                if (!File.Exists(authFile) || new FileInfo(authFile).Length == 0) {
-                    return;
-                }
-
-                string username = EncryptionModel.Decrypt(File.ReadLines(authFile).First());
-                string email = EncryptionModel.Decrypt(File.ReadLines(authFile).Skip(1).First());
+                string username = EncryptionModel.Decrypt(File.ReadLines(autoLoginData).First());
+                string email = EncryptionModel.Decrypt(File.ReadLines(autoLoginData).Skip(1).First());
 
                 if (string.IsNullOrEmpty(username)) {
                     pnlRegistration.Visible = true;
@@ -251,7 +244,8 @@ namespace FlowstorageDesktop.Authentication {
                         usernameInput, emailInput, passwordInput, pinInput);
 
                     ClearRegistrationFields();
-                    StupAutoLogin(usernameInput, emailInput);
+
+                    new AutoLoginModel().SetupAutoLogin(usernameInput, emailInput);
 
                     accessHomePage.lblCurrentPageText.Text = "Home";
                     accessHomePage.lblUsagePercentage.Text = "0%";
@@ -263,37 +257,6 @@ namespace FlowstorageDesktop.Authentication {
             } catch (Exception) {
                 new CustomAlert(
                     title: "Failed to register your account", subheader: "Are you connected to the internet?").Show();
-
-            }
-        }
-
-        /// <summary>
-        /// Create file and insert user username into that file in a sub folder 
-        /// called FlowStorageInfos located in %appdata%
-        /// </summary>
-        /// <param name="_custUsername">Username of user</param>
-        private void StupAutoLogin(string custUsername, string custEmail) {
-
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-            if (!Directory.Exists(appDataPath)) {
-
-                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
-
-                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
-                }
-
-                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-
-            } else {
-                Directory.Delete(appDataPath, true);
-                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
-                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(custUsername));
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(custEmail));
-                }
-                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
             }
         }

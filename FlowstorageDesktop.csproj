@@ -433,6 +433,7 @@
     <Compile Include="AlertForms\CustomAlert.Designer.cs">
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\AutoLoginModel.cs" />
     <Compile Include="Query\DeleteFileDataQuery.cs" />
     <Compile Include="Query\InsertFileDataQuery.cs" />
     <Compile Include="Query\SignUpQuery.cs" />

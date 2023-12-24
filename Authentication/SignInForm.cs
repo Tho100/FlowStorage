@@ -3,6 +3,7 @@ using FlowstorageDesktop.Authentication;
 using FlowstorageDesktop.AuthenticationQuery;
 using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Model;
 using FlowstorageDesktop.Temporary;
 
 using System;
@@ -38,32 +39,6 @@ namespace FlowstorageDesktop {
             this.mainForm = mainForm;
 
             instance = this;
-        }
-
-        private void SetupAutoLogin(string username, string email) {
-
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FlowStorageInfos";
-
-            if (!Directory.Exists(appDataPath)) {
-
-                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
-                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(username));
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(email));
-                }
-                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-
-            } else {
-                Directory.Delete(appDataPath, true);
-                DirectoryInfo setupDir = Directory.CreateDirectory(appDataPath);
-                using (StreamWriter _performWrite = File.CreateText(appDataPath + "\\CUST_DATAS.txt")) {
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(username));
-                    _performWrite.WriteLine(EncryptionModel.Encrypt(email));
-                }
-                setupDir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-
-            }
-
         }
 
         private async Task SetupUserInformation() {
@@ -160,7 +135,7 @@ namespace FlowstorageDesktop {
                     Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();
 
                     if (guna2CheckBox2.Checked) {
-                        SetupAutoLogin(tempDataUser.Username, tempDataUser.Email);
+                        new AutoLoginModel().SetupAutoLogin(tempDataUser.Username, tempDataUser.Email);
 
                     }
 
@@ -175,6 +150,7 @@ namespace FlowstorageDesktop {
             }
 
             return authenticationSuccessful;
+
         }
 
         /// <summary>
