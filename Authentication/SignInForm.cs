@@ -135,7 +135,7 @@ namespace FlowstorageDesktop {
                     Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();
 
                     if (guna2CheckBox2.Checked) {
-                        new AutoLoginModel().SetupAutoLogin(tempDataUser.Username, tempDataUser.Email);
+                        new AutoLoginModel().SetupAutoLoginData(tempDataUser.Username, tempDataUser.Email);
 
                     }
 
