@@ -12,7 +12,7 @@ namespace FlowstorageDesktop.Model {
         /// called FlowStorageInfos located in %appdata%
         /// </summary>
         /// <param name="username">Username of user</param>
-        public void SetupAutoLogin(string username, string email) {
+        public void SetupAutoLoginData(string username, string email) {
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"\\{folderName}";
 

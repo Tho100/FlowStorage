@@ -245,7 +245,7 @@ namespace FlowstorageDesktop.Authentication {
 
                     ClearRegistrationFields();
 
-                    new AutoLoginModel().SetupAutoLogin(usernameInput, emailInput);
+                    new AutoLoginModel().SetupAutoLoginData(usernameInput, emailInput);
 
                     accessHomePage.lblCurrentPageText.Text = "Home";
                     accessHomePage.lblUsagePercentage.Text = "0%";
