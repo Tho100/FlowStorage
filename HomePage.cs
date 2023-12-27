@@ -9,6 +9,7 @@ using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
 using MySql.Data.MySqlClient;
+using DiscordRPC;
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySqlX.XDevAPI;
 
 namespace FlowstorageDesktop {
 
@@ -75,6 +77,21 @@ namespace FlowstorageDesktop {
 
         private void Form1_Load(object sender, EventArgs e) {
             InitializeHomeFiles();
+            InitializeDiscordRPC();
+        }
+
+        private void InitializeDiscordRPC() {
+            
+            var client = new DiscordRpcClient("1189562428929867837");
+            client.Initialize();
+
+            client.SetPresence(new RichPresence() {
+                State = "Searching for lost files...",
+                Assets = new Assets() {
+                    LargeImageKey = "group_15_1_"
+                }
+            });
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
