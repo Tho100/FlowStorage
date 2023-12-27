@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySqlX.XDevAPI;
+using System.Configuration;
 
 namespace FlowstorageDesktop {
 
@@ -82,7 +83,9 @@ namespace FlowstorageDesktop {
 
         private void InitializeDiscordRPC() {
             
-            var client = new DiscordRpcClient("1189562428929867837");
+            string getClientKey = ConfigurationManager.ConnectionStrings["discRp"].ConnectionString;
+
+            var client = new DiscordRpcClient(getClientKey);
             client.Initialize();
 
             client.SetPresence(new RichPresence() {

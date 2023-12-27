@@ -8,10 +8,9 @@ using System.Text;
 namespace FlowstorageDesktop {
     public class ConnectionModel {
 
-        private static string getConnection = ConfigurationManager.ConnectionStrings["djkioJ33AW=KDOdsad"].ConnectionString;//DecryptConnection("0afe74-gksuwpe8r",ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString);
-        public static MySqlConnection con = new MySqlConnection(getConnection);
+        private static string getConnection = ConfigurationManager.ConnectionStrings["djkioJ33AW=KDOdsad"].ConnectionString;//DecryptConnection("0afe74-gksuwpe8r", ConfigurationManager.ConnectionStrings["CONNECTIONSETUP"].ConnectionString);
 
-        //public static MySqlCommand command;
+        public static MySqlConnection con = new MySqlConnection(getConnection);
 
         private static string DecryptConnection(string key, string cipherText) {
             byte[] iv = new byte[16];
