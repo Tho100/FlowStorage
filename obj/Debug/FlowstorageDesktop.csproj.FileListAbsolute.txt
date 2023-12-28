@@ -1349,3 +1349,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.exe
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\Flowstorage.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.Properties.Resources.resources
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DiscordRPC.dll
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DiscordRPC.pdb
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DiscordRPC.xml

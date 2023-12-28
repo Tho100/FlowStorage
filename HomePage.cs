@@ -10,6 +10,7 @@ using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
 using MySql.Data.MySqlClient;
+using DiscordRPC;
 
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySqlX.XDevAPI;
 
 namespace FlowstorageDesktop {
 
