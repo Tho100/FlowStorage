@@ -8,14 +8,14 @@ namespace FlowstorageDesktop {
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
 
-        public MsiForm(String fileName, String tableName, String directoryName, String uploaderUsername, bool isFromShared = false) {
+        public MsiForm(string fileName, string tableName, string directoryName, string uploaderUsername, bool isFromShared = false) {
             InitializeComponent();
 
             this._tableName = tableName;
             this._directoryName = directoryName;
             this._isFromShared = isFromShared;
 
-            if (isFromShared == true) {
+            if (isFromShared) {
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 

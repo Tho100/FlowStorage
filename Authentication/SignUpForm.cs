@@ -192,7 +192,7 @@ namespace FlowstorageDesktop.Authentication {
                         return;
                     }
 
-                    if (!ValidateEmailInput(emailInput) == true) {
+                    if (!ValidateEmailInput(emailInput)) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Entered email is not valid.";
                         return;

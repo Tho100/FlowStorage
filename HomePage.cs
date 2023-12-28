@@ -1,4 +1,5 @@
-﻿using FlowstorageDesktop.AlertForms;
+﻿using DiscordRPC;
+using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Authentication;
 using FlowstorageDesktop.ExtraForms;
 using FlowstorageDesktop.Global;
@@ -12,6 +13,7 @@ using MySql.Data.MySqlClient;
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -75,6 +77,23 @@ namespace FlowstorageDesktop {
 
         private void Form1_Load(object sender, EventArgs e) {
             InitializeHomeFiles();
+            InitializeDiscordRPC();
+        }
+
+        private void InitializeDiscordRPC() {
+
+            string clientId = ConfigurationManager.ConnectionStrings["discRp"].ConnectionString;
+
+            var client = new DiscordRpcClient(clientId);
+            client.Initialize();
+
+            client.SetPresence(new RichPresence() {
+                State = "Searching for lost files...",
+                Assets = new Assets() {
+                    LargeImageKey = "group_15_1_"
+                }
+            });
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
@@ -959,7 +978,7 @@ namespace FlowstorageDesktop {
 
                 }
 
-                if (isFromMyPs == true) {
+                if (isFromMyPs) {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
 

@@ -25,7 +25,7 @@ namespace FlowstorageDesktop {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public PdfForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public PdfForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace FlowstorageDesktop {
             this._directoryName = directoryName;
             this._isFromSharing = isFromSharing;
 
-            if (isFromShared == true) {
+            if (isFromShared) {
                 btnEditComment.Visible = true;
 
                 label4.Text = "Shared To";
@@ -141,7 +141,7 @@ namespace FlowstorageDesktop {
             this.WindowState = FormWindowState.Minimized;
             Application.OpenForms
               .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .Where(form => form.Name == "bgBlurForm")
               .ToList()
               .ForEach(form => form.Hide());
         }
@@ -186,7 +186,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;

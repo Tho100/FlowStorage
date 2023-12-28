@@ -85,7 +85,7 @@ namespace FlowstorageDesktop {
         /// <param name="setValue"></param>
         /// <param name="thumbnailValue"></param>
         /// <returns></returns>
-        private async Task InsertFileData(String fileDataBase64, String thumbnailBase64 = null) {
+        private async Task InsertFileData(string fileDataBase64, string thumbnailBase64 = null) {
 
             try {
                 

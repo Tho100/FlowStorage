@@ -25,7 +25,7 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (isFromShared == true) {
+            if (isFromShared) {
                 btnEditComment.Visible = true;
                 guna2Button9.Visible = true;
 
