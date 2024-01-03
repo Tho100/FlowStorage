@@ -226,7 +226,7 @@ namespace FlowstorageDesktop {
 
             int countTotalDir = directoriesName.Count();
 
-            if(directoryName.ToLower().Contains("directory")) {
+            if (directoryName.ToLower().Contains("directory")) {
                 MessageBox.Show("Can't name directory `directory`.", "Flowstorage", 
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -245,7 +245,7 @@ namespace FlowstorageDesktop {
 
                 if (currentTotalFiles != maxFilesCount && countTotalDir != maxDirCount) {
 
-                    if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
+                    if (HomePage.instance.lblCurrentPageText.Text != "Home") {
                         MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     } else {
@@ -287,7 +287,7 @@ namespace FlowstorageDesktop {
                 string filesCount = HomePage.instance.lblItemCountText.Text;
                 int totalFiles = int.Parse(filesCount);
 
-                string directoryNameInput = guna2TextBox1.Text.Trim();
+                string directoryNameInput = txtFieldDirName.Text.Trim();
 
                 if (!string.IsNullOrEmpty(directoryNameInput)) {
                     await ValidateAndCreateDirectory(totalFiles, directoryNameInput);

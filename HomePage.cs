@@ -1,5 +1,4 @@
-﻿using DiscordRPC;
-using FlowstorageDesktop.AlertForms;
+﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Authentication;
 using FlowstorageDesktop.ExtraForms;
 using FlowstorageDesktop.Global;
@@ -25,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySqlX.XDevAPI;
+using FlowstorageDesktop.Query.DataCaller;
 
 namespace FlowstorageDesktop {
 
@@ -35,9 +35,15 @@ namespace FlowstorageDesktop {
         readonly private Crud crud = new Crud();
 
         readonly private InsertFileDataQuery insertFileData = new InsertFileDataQuery();
+
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
+        readonly private HomeDataCaller homeDataCaller = new HomeDataCaller();
+        readonly private PsDataCaller psDataCaller = new PsDataCaller();
+        readonly private SharedFilesDataCaller sharedFilesDataCaller = new SharedFilesDataCaller();
+        readonly private SharedToMeDataCaller sharedToMeDataCaller = new SharedToMeDataCaller();
 
         public static HomePage instance { get; set; } = new HomePage();
         public bool CallInitialStartupData { get; set; } = false;
@@ -234,38 +240,6 @@ namespace FlowstorageDesktop {
 
         /// <summary>
         /// 
-        /// Get user Home files metadata: file name, upload date
-        /// 
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <returns></returns>
-        private async Task<List<(string, string, string)>> GetFileMetadataHome(string tableName) {
-
-            if (GlobalsData.filesMetadataCacheHome.ContainsKey(tableName)) {
-                return GlobalsData.filesMetadataCacheHome[tableName];
-
-            } else {
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {tableName} WHERE CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string, string)> filesInfo = new List<(string, string, string)>();
-                        while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            filesInfo.Add((fileName, uploadDate, string.Empty));
-                        }
-
-                        GlobalsData.filesMetadataCacheHome[tableName] = filesInfo;
-                        return filesInfo;
-                    }
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// 
         /// Generate user Home files panel on startup
         /// 
         /// </summary>
@@ -281,39 +255,19 @@ namespace FlowstorageDesktop {
 
             try {
 
-                List<(string, string, string)> filesInfo = await GetFileMetadataHome(tableName);
+                List<(string, string, string)> filesInfo = await homeDataCaller.GetFileMetadata(tableName);
 
                 if (tableName == GlobalsTable.homeImageTable) {
-
                     if (GlobalsData.base64EncodedImageHome.Count == 0) {
+                        await homeDataCaller.AddImageCaching();
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info_image WHERE CUST_USERNAME = @username";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    GlobalsData.base64EncodedImageHome.Add(base64String);
-                                }
-                            }
-                        }
                     }
                 }
 
                 if (tableName == GlobalsTable.homeVideoTable) {
-
                     if (GlobalsData.base64EncodedThumbnailHome.Count == 0) {
+                        await homeDataCaller.AddVideoThumbnailCaching();
 
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_video WHERE CUST_USERNAME = @username";
-                        using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedThumbnailHome.Add(readBase64.GetString(0));
-                                }
-                            }
-                        }
                     }
                 }
 
@@ -888,6 +842,20 @@ namespace FlowstorageDesktop {
 
         private async Task BuildHomeFiles() {
 
+            var directoriesName = new List<Tuple<string>>();
+
+            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
+            using (var command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        directoriesName.Add(new Tuple<string>(fileName));
+                    }
+                }
+            }
+
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
@@ -896,7 +864,7 @@ namespace FlowstorageDesktop {
                         await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
 
                     } else {
-                        await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
+                        BuildDirectoryPanel(directoriesName, await crud.CountUserTableRow(tableName));
 
                     }
                 }
@@ -913,6 +881,20 @@ namespace FlowstorageDesktop {
 
             GlobalsData.filesMetadataCacheHome.Clear();
 
+            var directoriesName = new List<Tuple<string>>();
+
+            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
+            using (var command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+
+                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        directoriesName.Add(new Tuple<string>(fileName));
+                    }
+                }
+            }
+
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
@@ -921,7 +903,7 @@ namespace FlowstorageDesktop {
                         await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
 
                     } else {
-                        await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
+                        BuildDirectoryPanel(directoriesName, await crud.CountUserTableRow(tableName));
 
                     }
                 }
@@ -935,32 +917,6 @@ namespace FlowstorageDesktop {
         #endregion END - Home section
 
         #region Public Storage section
-        private async Task<List<(string, string, string, string)>> GetFileMetadataPublicStorage(string tableName) {
-
-            if (GlobalsData.filesMetadataCachePs.ContainsKey(tableName)) {
-                return GlobalsData.filesMetadataCachePs[tableName];
-
-            } else {
-
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName}";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string, string, string)> filesInfo = new List<(string, string, string, string)>();
-                        while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            string tagValue = reader.GetString(2);
-                            string titleValue = reader.GetString(3);
-                            filesInfo.Add((fileName, uploadDate, tagValue, titleValue));
-                        }
-
-                        GlobalsData.filesMetadataCachePs[tableName] = filesInfo;
-                        return filesInfo;
-                    }
-                }
-            }
-
-        }
 
         private async Task BuildFilePanelPublicStorage(string tableName, string parameterName, int currItem, bool isFromMyPs = false) {
 
@@ -973,7 +929,7 @@ namespace FlowstorageDesktop {
                 List<(string, string, string, string)> filesInfo;
 
                 if (isFromMyPs == false) {
-                    filesInfo = await GetFileMetadataPublicStorage(tableName);
+                    filesInfo = await psDataCaller.GetFileMetadata(tableName);
 
                 } else {
                     filesInfo = new List<(string, string, string, string)>();
@@ -987,112 +943,33 @@ namespace FlowstorageDesktop {
                 }
 
                 if (isFromMyPs) {
-
-                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            List<(string, string, string, string)> tuplesList = new List<(string, string, string, string)>();
-                            while (await reader.ReadAsync()) {
-                                string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                                string uploadDate = reader.GetString(1);
-                                string tagValue = reader.GetString(2);
-                                string titleValue = reader.GetString(3);
-                                tuplesList.Add((fileName, uploadDate, tagValue, titleValue));
-                            }
-                            filesInfo.AddRange(tuplesList);
-                        }
-                    }
+                    filesInfo = await psDataCaller.GetFileMetadataMyPs(tableName);
+                    
                 }
 
                 var usernameList = new List<string>();
 
-                string selectUploaderNameQuery = null;
-
                 if (isFromMyPs == false) {
-
-                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName}";
-                    using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
-                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await reader.ReadAsync()) {
-                                usernameList.Add(reader.GetString(0));
-                            }
-                        }
-                    }
+                    var uploaderName = await psDataCaller.GetUploaderName(tableName);
+                    usernameList.AddRange(uploaderName);
 
                 } else {
+                    var uploaderName = await psDataCaller.GetUploaderNameMyPs(tableName);
+                    usernameList.AddRange(uploaderName);
 
-                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await reader.ReadAsync()) {
-                                usernameList.Add(reader.GetString(0));
-                            }
-                        }
-                    }
                 }
 
                 if (tableName == GlobalsTable.psImage) {
-
                     if (GlobalsData.base64EncodedImagePs.Count == 0) {
+                        await psDataCaller.AddImageCaching(isFromMyPs);
 
-                        if (isFromMyPs == false) {
-
-                            const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                        GlobalsData.base64EncodedImagePs.Add(base64String);
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image WHERE CUST_USERNAME = @username";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                        GlobalsData.base64EncodedImagePs.Add(base64String);
-                                    }
-                                }
-                            }
-
-                        }
                     }
                 }
 
                 if (tableName == GlobalsTable.psVideo) {
-
                     if (GlobalsData.base64EncodedThumbnailPs.Count == 0) {
-
-                        if (isFromMyPs == false) {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video";
-                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video WHERE CUST_USERNAME = @username";
-                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
-                        }
+                        await psDataCaller.AddVideoThumbnailCaching(isFromMyPs);
+                        
                     }
                 }
 
@@ -1747,26 +1624,6 @@ namespace FlowstorageDesktop {
 
         #region Shared to others section
 
-        /// <summary>
-        /// Retrieve username of file that has been shared to
-        /// </summary>
-        /// <returns></returns>
-        private async Task<string> SharingUploaderName() {
-
-            const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
-            using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if (await reader.ReadAsync()) {
-                        return reader.GetString(0);
-                    }
-                }
-            }
-
-            return string.Empty;
-
-        }
-
         List<(string, string, string)> filesInfoSharedOthers = new List<(string, string, string)>();
         private async Task CallFilesInformationOthers() {
 
@@ -1792,33 +1649,12 @@ namespace FlowstorageDesktop {
             var onMoreOptionButtonPressed = new List<EventHandler>();
 
             var typeValues = new List<string>(fileTypes);
-            var uploadToNameList = new List<string>();
-
-            const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
-            using (MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        uploadToNameList.Add(reader.GetString(0));
-                    }
-                }
-            }
+            var uploadToNameList = await sharedFilesDataCaller.GetSharedToUsername();
 
             if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
-
                 if (GlobalsData.base64EncodedImageSharedOthers.Count == 0) {
-
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                GlobalsData.base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
-                            }
-                            readBase64.Close();
-                        }
-                    }
+                    await sharedFilesDataCaller.AddImageCaching();
+                    
                 }
             }
 
@@ -1893,19 +1729,8 @@ namespace FlowstorageDesktop {
                 if (Globals.videoTypes.Contains(typeValues[i])) {
 
                     if (GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
+                        await sharedFilesDataCaller.AddVideoThumbnailCaching(typeValues[i]);
 
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@ext", typeValues[i]);
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
-                                }
-                                readBase64.Close();
-                            }
-                        }
                     }
 
                     if (GlobalsData.base64EncodedThumbnailSharedOthers.Count > 0) {
@@ -2027,18 +1852,12 @@ namespace FlowstorageDesktop {
         private async Task BuildSharedToOthers() {
 
             if (!GlobalsData.fileTypeValuesSharedToOthers.Any()) {
-                const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (var readTypeOthers = await command.ExecuteReaderAsync()) {
-                        while (await readTypeOthers.ReadAsync()) {
-                            GlobalsData.fileTypeValuesSharedToOthers.Add(readTypeOthers.GetString(0));
-                        }
-                    }
-                }
+                await sharedFilesDataCaller.AddFileTypeCaching();
+
             }
 
             await BuildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
+
             UpdateProgressBarValue();
             BuildRedundaneVisibility();
 
@@ -2050,30 +1869,27 @@ namespace FlowstorageDesktop {
         /// 
         /// </summary>
         /// <param name="username"></param>
-        /// <param name="typeValuesOthers"></param>
+        /// <param name="typeValuesOthersCache"></param>
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
+        private async Task RefreshGenerateUserSharedOthers(string dirName) {
 
             GlobalsData.base64EncodedImageSharedOthers.Clear();
             GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
 
-            if (typeValuesOthers.Count == 0) {
-                using (MySqlCommand command = con.CreateCommand()) {
-                    command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
+            var typeValues = new List<string>();
 
-                    using (MySqlDataReader _readType = command.ExecuteReader()) {
-                        while (_readType.Read()) {
-                            typeValuesOthers.Add(_readType.GetString(0));
-                        }
-                    }
-                }
+            if (GlobalsData.fileTypeValuesSharedToOthers.Count == 0) {
+                typeValues = await sharedFilesDataCaller.GetFileType();
+
+            } else {
+                typeValues = GlobalsData.fileTypeValuesSharedToOthers;
+
             }
 
             await CallFilesInformationOthers();
-            await BuildFilePanelSharedToOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
+            await BuildFilePanelSharedToOthers(typeValues, dirName, typeValues.Count);
 
         }
 
@@ -2082,14 +1898,14 @@ namespace FlowstorageDesktop {
         #region Shared to me section
 
         List<(string, string, string)> filesInfoShared = new List<(string, string, string)>();
-        private async Task CallFilesInformationShared() {
+        private async Task CallFilesInformationSharedToMe() {
 
             filesInfoShared.Clear();
 
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         string uploadDate = reader.GetString(1);
@@ -2097,7 +1913,7 @@ namespace FlowstorageDesktop {
                     }
                 }
             }
-
+            
         }
 
         private async Task BuildFilePanelSharedToMe(List<string> fileTypes, string parameterName, int itemCurr) {
@@ -2108,24 +1924,14 @@ namespace FlowstorageDesktop {
                 var onPressedEvent = new List<EventHandler>();
                 var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                string uploaderUsername = await SharingUploaderName();
+                string uploaderUsername = await sharedToMeDataCaller.SharedToMeUploaderName();
 
                 var typeValues = new List<string>(fileTypes);
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
-
                     if (GlobalsData.base64EncodedImageSharedToMe.Count == 0) {
+                        await sharedToMeDataCaller.AddImageCaching();
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
-                                }
-                                readBase64.Close();
-                            }
-                        }
                     }
                 }
 
@@ -2195,18 +2001,8 @@ namespace FlowstorageDesktop {
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
                         if (GlobalsData.base64EncodedThumbnailSharedToMe.Count == 0) {
+                            await sharedToMeDataCaller.AddVideoThumbnailCaching(filesInfoShared[i].Item1);
 
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                            using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(filesInfoShared[i].Item1));
-
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailSharedToMe.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
                         }
 
                         if (GlobalsData.base64EncodedThumbnailSharedToMe.Count > 0) {
@@ -2331,22 +2127,11 @@ namespace FlowstorageDesktop {
         private async Task BuildSharedToMe() {
 
             if (!GlobalsData.fileTypeValuesSharedToMe.Any()) {
-                const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            GlobalsData.fileTypeValuesSharedToMe.Add(reader.GetString(0));
-                        }
-                    }
-                }
+                await sharedToMeDataCaller.AddFileTypeCaching();
 
-                await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
+            } 
 
-            } else {
-                await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
-
-            }
+            await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
 
             UpdateProgressBarValue();
             BuildRedundaneVisibility();
@@ -2363,27 +2148,24 @@ namespace FlowstorageDesktop {
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName) {
+        private async Task RefreshGenerateUserSharedToMe(string dirName) {
 
             GlobalsData.base64EncodedImageSharedToMe.Clear();
             GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
 
-            if (typeValues.Count == 0) {
-                using (MySqlCommand command = con.CreateCommand()) {
-                    command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
+            var typeValues = new List<string>();
 
-                    using (MySqlDataReader _readType = command.ExecuteReader()) {
-                        while (_readType.Read()) {
-                            typeValues.Add(_readType.GetString(0));
-                        }
-                    }
-                }
+            if (GlobalsData.fileTypeValuesSharedToMe.Count == 0) {
+                typeValues = await sharedToMeDataCaller.GetFileType();
+
+            } else {
+                typeValues = GlobalsData.fileTypeValuesSharedToMe;
+
             }
 
-            await CallFilesInformationShared();
-
+            await CallFilesInformationSharedToMe();
             await BuildFilePanelSharedToMe(typeValues, dirName, typeValues.Count);
+
         }
 
         #endregion END - Shared to me
@@ -2455,6 +2237,7 @@ namespace FlowstorageDesktop {
             }
 
             Process.Start(folderPath);
+
         }
 
         private async Task DownloadUserFolder(string folderTitle) {
@@ -2464,7 +2247,7 @@ namespace FlowstorageDesktop {
             using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldtitle", folderTitle);
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         var fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
@@ -2489,7 +2272,7 @@ namespace FlowstorageDesktop {
             using (var command = new MySqlCommand(getFileType, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(selectedFolder));
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         fileTypesList.Add(reader.GetString(0));
                     }
@@ -2523,10 +2306,10 @@ namespace FlowstorageDesktop {
                 var filePaths = new HashSet<string>();
 
                 const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
+                using (var command = new MySqlCommand(selectFileData, con)) {
                     command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(foldTitle));
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                         while (await reader.ReadAsync()) {
 
                             string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -2561,10 +2344,10 @@ namespace FlowstorageDesktop {
                     if (GlobalsData.base64EncodedImageFolder.Count == 0) {
 
                         const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
+                        using (var command = new MySqlCommand(retrieveImgQuery, con)) {
                             command.Parameters.AddWithValue("@username", tempDataUser.Username);
                             command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(foldTitle));
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                            using (var readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                 while (await readBase64.ReadAsync()) {
                                     string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
                                     GlobalsData.base64EncodedImageFolder.Add(base64String);
@@ -2647,11 +2430,11 @@ namespace FlowstorageDesktop {
                         if (GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
 
                             const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
-                            using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
+                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
                                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldTitle));
                                 command.Parameters.AddWithValue("@ext", originalTypeData[i]);
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                                using (var readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                                     while (await readBase64.ReadAsync()) {
                                         GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
                                     }
@@ -3299,7 +3082,7 @@ namespace FlowstorageDesktop {
             using (var command = new MySqlCommand(getFileType, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         fileTypes.Add(reader.GetString(0));
                     }
@@ -3370,26 +3153,12 @@ namespace FlowstorageDesktop {
 
         #region Build directory panel section
 
-        private async Task buildDirectoryPanel(int rowLength) {
+        private void BuildDirectoryPanel(List<Tuple<string>> filesInfo, int directoryCount) {
 
-            var filesInfo = new List<Tuple<string>>();
+            for (int i = 0; i < directoryCount; i++) {
 
-            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        filesInfo.Add(new Tuple<string>(fileName));
-                    }
-                }
-            }
-
-            for (int i = 0; i < rowLength; i++) {
-
-                var panelPic_Q = new Guna2Panel() {
-                    Name = "ABC02" + i,
+                var mainPanel = new Guna2Panel() {
+                    Name = "directoryPar" + i,
                     Width = 200,
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
@@ -3398,13 +3167,13 @@ namespace FlowstorageDesktop {
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
-                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                flwLayoutHome.Controls.Add(panelPic_Q);
 
-                var panelF = panelPic_Q;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
+
+                flwLayoutHome.Controls.Add(mainPanel);
 
                 Label directoryLab = new Label();
-                panelF.Controls.Add(directoryLab);
+                mainPanel.Controls.Add(directoryLab);
                 directoryLab.Name = "DirLab" + i;
                 directoryLab.Visible = true;
                 directoryLab.Enabled = true;
@@ -3416,7 +3185,7 @@ namespace FlowstorageDesktop {
                 directoryLab.Text = "Directory";
 
                 Label titleLab = new Label();
-                panelF.Controls.Add(titleLab);
+                mainPanel.Controls.Add(titleLab);
                 titleLab.Name = "titleImgL" + i;
                 titleLab.Font = GlobalStyle.TitleLabelFont;
                 titleLab.ForeColor = GlobalStyle.GainsboroColor;
@@ -3429,7 +3198,7 @@ namespace FlowstorageDesktop {
                 titleLab.Text = filesInfo[i].Item1;
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
-                panelF.Controls.Add(picMain_Q);
+                mainPanel.Controls.Add(picMain_Q);
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                 picMain_Q.BorderRadius = 8;
@@ -3439,20 +3208,20 @@ namespace FlowstorageDesktop {
 
                 picMain_Q.Anchor = AnchorStyles.None;
 
-                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+                int picMain_Q_x = (mainPanel.Width - picMain_Q.Width) / 2;
                 picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
-                    panelF.ShadowDecoration.Enabled = true;
-                    panelF.ShadowDecoration.BorderRadius = 8;
+                    mainPanel.ShadowDecoration.Enabled = true;
+                    mainPanel.ShadowDecoration.BorderRadius = 8;
                 };
 
                 picMain_Q.MouseLeave += (_senderQ, _evQ) => {
-                    panelF.ShadowDecoration.Enabled = false;
+                    mainPanel.ShadowDecoration.Enabled = false;
                 };
 
                 Guna2Button remBut = new Guna2Button();
-                panelF.Controls.Add(remBut);
+                mainPanel.Controls.Add(remBut);
                 remBut.Name = "Rem" + i;
                 remBut.Width = 29;
                 remBut.Height = 26;
@@ -3490,7 +3259,7 @@ namespace FlowstorageDesktop {
                             command.ExecuteNonQuery();
                         }
 
-                        panelPic_Q.Dispose();
+                        mainPanel.Dispose();
 
                         BuildRedundaneVisibility();
                         UpdateProgressBarValue();
@@ -3574,11 +3343,11 @@ namespace FlowstorageDesktop {
 
             if (lblCurrentPageText.Text == "Shared To Me") {
                 GlobalsData.fileTypeValuesSharedToMe.Clear();
-                await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                await RefreshGenerateUserSharedToMe("DirParMe");
 
             } else if (lblCurrentPageText.Text == "Shared Files") {
                 GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                await RefreshGenerateUserSharedOthers("DirParOther");
 
             } else if (lblCurrentPageText.Text == "Home") {
                 GlobalsData.base64EncodedImageHome.Clear();
@@ -3661,12 +3430,12 @@ namespace FlowstorageDesktop {
 
                     case "Shared To Me":
                         GlobalsData.fileTypeValuesSharedToMe.Clear();
-                        await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                        await RefreshGenerateUserSharedToMe("DirParMe");
                         break;
 
                     case "Shared Files":
                         GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                        await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                        await RefreshGenerateUserSharedOthers("DirParOther");
                         break;
 
                     case "Public Storage":
@@ -4314,7 +4083,7 @@ namespace FlowstorageDesktop {
             BuildButtonOnSharedFilesSelected();
             ClearRedundane();
 
-            await CallFilesInformationShared();
+            await CallFilesInformationSharedToMe();
             await BuildSharedToMe();
 
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
