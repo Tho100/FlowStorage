@@ -1602,20 +1602,11 @@ namespace FlowstorageDesktop {
 
         List<(string, string, string)> filesInfoSharedOthers = new List<(string, string, string)>();
         private async Task CallFilesInformationOthers() {
-
+            
             filesInfoSharedOthers.Clear();
 
-            const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        filesInfoSharedOthers.Add((fileName, uploadDate, string.Empty));
-                    }
-                }
-            }
+            var filesInfo = await sharedFilesDataCaller.GetFileMetadata();
+            filesInfoSharedOthers.AddRange(filesInfo);
 
         }
 
@@ -1879,17 +1870,8 @@ namespace FlowstorageDesktop {
 
             filesInfoShared.Clear();
 
-            const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        filesInfoShared.Add((fileName, uploadDate, string.Empty));
-                    }
-                }
-            }
+            var filesInfo = await sharedFilesDataCaller.GetFileMetadata();
+            filesInfoShared.AddRange(filesInfo);
             
         }
 

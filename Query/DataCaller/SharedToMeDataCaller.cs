@@ -10,6 +10,26 @@ namespace FlowstorageDesktop.Query.DataCaller {
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
+        public async Task<List<(string, string, string)>> GetFileMetadata() {
+
+            List<(string, string, string)> filesInfo = new List<(string, string, string)>();
+
+            const string query = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
+            using (var command = new MySqlCommand(query, con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        string uploadDate = reader.GetString(1);
+                        filesInfo.Add((fileName, uploadDate, string.Empty));
+                    }
+                }
+            }
+
+            return filesInfo;
+
+        }
+
         /// <summary>
         /// Retrieve username of file that has been shared to
         /// </summary>
