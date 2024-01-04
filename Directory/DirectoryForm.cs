@@ -2,6 +2,7 @@
 using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using FlowstorageDesktop.Query;
+using FlowstorageDesktop.Query.DataCaller;
 using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
@@ -24,6 +25,7 @@ namespace FlowstorageDesktop {
         readonly private Crud crud = new Crud();
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+        readonly private DirectoryDataCaller directoryDataCaller = new DirectoryDataCaller();
 
         readonly private MySqlConnection con = ConnectionModel.con;
         private string _todayDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
@@ -142,7 +144,7 @@ namespace FlowstorageDesktop {
 
             foreach (string fileType in fileExtensions.Keys) {
 
-                int count = CountFilesInDirectory(fileType);
+                int count = await directoryDataCaller.CountFilesInDirectory(fileType, lblDirectoryName.Text);
 
                 if (count > 0) {
                     string controlName = fileExtensions[fileType].Item1;
@@ -150,26 +152,11 @@ namespace FlowstorageDesktop {
                     await BuildFilePanelOnLoad(fileType, tableName, controlName, count);
 
                 }
-
             }
 
             BuildRedundaneVisibility();
             lblFilesCount.Text = $"{flwLayoutDirectory.Controls.Count} File(s)";
 
-        }
-
-        private int CountFilesInDirectory(string fileType) {
-
-            string encryptedDirectoryName = EncryptionModel.Encrypt(lblDirectoryName.Text);
-
-            const string query = "SELECT COUNT(*) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@dirname", encryptedDirectoryName);
-                command.Parameters.AddWithValue("@ext", fileType);
-
-                return Convert.ToInt32(command.ExecuteScalar());
-            }
         }
 
         private void BuildRedundaneVisibility() {
@@ -205,61 +192,28 @@ namespace FlowstorageDesktop {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
-            var onMoreOptionButtonPressed = new List<EventHandler>();
+            var onMoreOptionButtonPressed = new List<EventHandler>(); 
 
-            var filesInfo = new List<(string, string, string)>();
+            string directoryName = lblDirectoryName.Text;
 
-            const string selectFileDataDir = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-            using (MySqlCommand command = new MySqlCommand(selectFileDataDir, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                command.Parameters.AddWithValue("@ext", fileType);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        filesInfo.Add((fileName, uploadDate, string.Empty));
-                    }
-                }
-            }
+            var filesInfo = await directoryDataCaller.GetFileMetadata(fileType, directoryName);
 
             var base64EncodedImage = new List<string>();
             var base64EncodedThumbnail = new List<string>();
 
             if (Globals.imageTypes.Contains(fileType)) {
-
                 if (base64EncodedImage.Count == 0) {
-
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", fileType);
-
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedImage.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
-                            }
-                        }
-                    }
+                    var images = await directoryDataCaller.GetImages(fileType, directoryName);
+                    base64EncodedImage.AddRange(images);
+                    
                 }
             }
 
             if (Globals.videoTypes.Contains(fileType)) {
-
                 if (base64EncodedThumbnail.Count == 0) {
+                    var thumbnails = await directoryDataCaller.GetVideoThumbnail(fileType, directoryName);
+                    base64EncodedThumbnail.AddRange(thumbnails);
 
-                    const string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", fileType);
-                        using (var readBase64 = await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedThumbnail.Add(readBase64.GetString(0));
-                            }
-                        }
-                    }
                 }
             }
 

@@ -23,7 +23,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySqlX.XDevAPI;
 using FlowstorageDesktop.Query.DataCaller;
 
 namespace FlowstorageDesktop {
@@ -842,19 +841,7 @@ namespace FlowstorageDesktop {
 
         private async Task BuildHomeFiles() {
 
-            var directoriesName = new List<Tuple<string>>();
-
-            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-            using (var command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        directoriesName.Add(new Tuple<string>(fileName));
-                    }
-                }
-            }
+            var directoriesName = await homeDataCaller.GetDirectories();
 
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
@@ -881,19 +868,7 @@ namespace FlowstorageDesktop {
 
             GlobalsData.filesMetadataCacheHome.Clear();
 
-            var directoriesName = new List<Tuple<string>>();
-
-            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-            using (var command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        directoriesName.Add(new Tuple<string>(fileName));
-                    }
-                }
-            }
+            var directoriesName = await homeDataCaller.GetDirectories();
 
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
@@ -3153,7 +3128,7 @@ namespace FlowstorageDesktop {
 
         #region Build directory panel section
 
-        private void BuildDirectoryPanel(List<Tuple<string>> filesInfo, int directoryCount) {
+        private void BuildDirectoryPanel(List<string> directoriesName, int directoryCount) {
 
             for (int i = 0; i < directoryCount; i++) {
 
@@ -3195,7 +3170,7 @@ namespace FlowstorageDesktop {
                 titleLab.Width = 160;
                 titleLab.Height = 20;
                 titleLab.AutoEllipsis = true;
-                titleLab.Text = filesInfo[i].Item1;
+                titleLab.Text = directoriesName[i];
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
                 mainPanel.Controls.Add(picMain_Q);

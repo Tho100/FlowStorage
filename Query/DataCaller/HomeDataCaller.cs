@@ -43,6 +43,26 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         }
 
+        public async Task<List<string>> GetDirectories() {
+
+            var directories = new List<string>();
+
+            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
+            using (var command = new MySqlCommand(selectFileData, con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
+                    while (await reader.ReadAsync()) {
+                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
+                        directories.Add(fileName);
+                    }
+                }
+            }
+
+            return directories;
+
+        }
+
         public async Task AddImageCaching() {
 
             const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info_image WHERE CUST_USERNAME = @username";
