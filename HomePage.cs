@@ -43,6 +43,7 @@ namespace FlowstorageDesktop {
         readonly private PsDataCaller psDataCaller = new PsDataCaller();
         readonly private SharedFilesDataCaller sharedFilesDataCaller = new SharedFilesDataCaller();
         readonly private SharedToMeDataCaller sharedToMeDataCaller = new SharedToMeDataCaller();
+        readonly private FolderDataCaller folderDataCaller = new FolderDataCaller();
 
         public static HomePage instance { get; set; } = new HomePage();
         public bool CallInitialStartupData { get; set; } = false;
@@ -1603,6 +1604,7 @@ namespace FlowstorageDesktop {
         private async Task CallFilesInformationOthers() {
 
             filesInfoSharedOthers.Clear();
+
             const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
             using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
@@ -2215,52 +2217,27 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async Task DownloadUserFolder(string folderTitle) {
+        private async Task DownloadUserFolder(string folderName) {
 
-            var filesData = new List<(string fileName, byte[] fileBytes)>();
+            var filesData = await folderDataCaller.GetDownloadFolderData(folderName);
+            OpenFolderDownloadDialog(folderName, filesData);
 
-            using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldtitle", folderTitle);
-                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        var fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
-                        var fileBytes = Convert.FromBase64String(base64Encoded);
-                        filesData.Add((fileName, fileBytes));
-                    }
-                }
-            }
-
-            OpenFolderDownloadDialog(folderTitle, filesData);
         }
 
         private async Task RefreshFolder() {
 
             GlobalsData.base64EncodedImageFolder.Clear();
 
-            string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            string selectedFolderName = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-            var fileTypesList = new List<string>();
-
-            const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-            using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(selectedFolder));
-                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        fileTypesList.Add(reader.GetString(0));
-                    }
-                }
-            }
-            
+            var fileTypesList = await folderDataCaller.GetFileType(selectedFolderName);
             var fileTypesLength = fileTypesList.Count;
 
-            await BuildFilePanelFolder(fileTypesList, selectedFolder, fileTypesLength);
+            await BuildFilePanelFolder(fileTypesList, selectedFolderName, fileTypesLength);
 
         }
 
-        private async Task BuildFilePanelFolder(List<string> fileType, string foldTitle, int currItem) {
+        private async Task BuildFilePanelFolder(List<string> fileType, string folderName, int currItem) {
 
             ClearRedundane();
 
@@ -2277,29 +2254,7 @@ namespace FlowstorageDesktop {
                 var onPressedEvent = new List<EventHandler>();
                 var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                var filesInfo = new List<(string, string, string)>();
-                var filePaths = new HashSet<string>();
-
-                const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
-                using (var command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(foldTitle));
-                    using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            
-                            if (filePaths.Contains(fileName)) {
-                                continue;
-                            }
-
-                            filePaths.Add(fileName);
-                            filesInfo.Add((fileName, uploadDate, string.Empty));
-                        }
-                        reader.Close();
-                    }
-                }
+                var filesInfo = await folderDataCaller.GetFileMetadata(folderName);
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
@@ -2317,18 +2272,8 @@ namespace FlowstorageDesktop {
                     }
 
                     if (GlobalsData.base64EncodedImageFolder.Count == 0) {
-
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
-                        using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(foldTitle));
-                            using (var readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    GlobalsData.base64EncodedImageFolder.Add(base64String);
-                                }
-                            }
-                        }
+                        await folderDataCaller.AddImageCaching(folderName);
+                        
                     }
                 }
 
@@ -2393,7 +2338,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, string.Empty);
+                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, folderName, string.Empty);
                             displayExe.Show();
                         }
 
@@ -2403,18 +2348,8 @@ namespace FlowstorageDesktop {
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
                         if (GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
-                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldTitle));
-                                command.Parameters.AddWithValue("@ext", originalTypeData[i]);
-                                using (var readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
+                            await folderDataCaller.AddVideoThumbnailCaching(folderName, originalTypeData[i]);
+                            
                         }
 
                         if (GlobalsData.base64EncodedThumbnailFolder.Count > 0) {
@@ -2433,7 +2368,7 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username);
+                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username);
                             displayVid.Show();
                         }
 
@@ -2445,7 +2380,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -2455,7 +2390,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            new AudioForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new AudioForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -2466,7 +2401,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            new ApkForm(fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, foldTitle);
+                            new ApkForm(fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, folderName);
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -2477,7 +2412,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            new PdfForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new PdfForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2488,7 +2423,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -2499,7 +2434,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            new MsiForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new MsiForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2511,7 +2446,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -2828,23 +2763,19 @@ namespace FlowstorageDesktop {
         /// Garbage (delete folder) button is clicked
         /// </summary>
         /// <param name="foldName"></param>
-        private async void RemoveAndDeleteFolder(string foldName) {
+        private async void RemoveAndDeleteFolder(string folderName) {
 
             DialogResult verifyDeletion = MessageBox.Show(
-                $"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                $"Delete {folderName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDeletion == DialogResult.Yes) {
 
-                const string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-                using (MySqlCommand command = new MySqlCommand(removeFoldQue, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldName));
-                    await command.ExecuteNonQueryAsync();
-                }
+                await folderDataCaller.DeleteFolder(folderName);
 
-                lstFoldersPage.Items.Remove(foldName);
+                lstFoldersPage.Items.Remove(folderName);
 
                 BuildButtonsOnHomePageSelected();
+
                 await BuildHomeFiles();
 
                 lblCurrentPageText.Text = "Home";
@@ -3051,18 +2982,7 @@ namespace FlowstorageDesktop {
 
             BuildButtonsOnFolderNameSelected();
 
-            var fileTypes = new List<string>();
-
-            const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-            using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
-                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        fileTypes.Add(reader.GetString(0));
-                    }
-                }
-            }
+            var fileTypes = await folderDataCaller.GetFileType(folderName);
 
             var currMainLength = fileTypes.Count;
 

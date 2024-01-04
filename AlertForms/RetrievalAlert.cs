@@ -70,6 +70,9 @@ namespace FlowstorageDesktop {
                                 con.Open();
 
                             }
+
+                            this.Close();
+
                         }
 
                         this.Close();
@@ -78,7 +81,7 @@ namespace FlowstorageDesktop {
                 } 
 
             } catch (Exception) {
-
+                this.Close();
             }
         }
     }

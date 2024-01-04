@@ -1,10 +1,7 @@
 ﻿using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
-using Spire.OfficeViewer.Forms;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FlowstorageDesktop.Query.DataCaller {

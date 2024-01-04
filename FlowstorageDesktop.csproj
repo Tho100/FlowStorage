@@ -438,6 +438,7 @@
     </Compile>
     <Compile Include="Model\AutoLoginModel.cs" />
     <Compile Include="Query\DataCaller\DirectoryDataCaller.cs" />
+    <Compile Include="Query\DataCaller\FolderDataCaller.cs" />
     <Compile Include="Query\DataCaller\HomeDataCaller.cs" />
     <Compile Include="Query\DataCaller\PsDataCaller.cs" />
     <Compile Include="Query\DataCaller\SharedFilesDataCaller.cs" />
