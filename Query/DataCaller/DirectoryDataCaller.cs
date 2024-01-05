@@ -86,5 +86,25 @@ namespace FlowstorageDesktop.Query.DataCaller {
             }
         }
 
+        public async Task DeleteDirectory(string directoryName) {
+
+            using (var command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
+                await command.ExecuteNonQueryAsync();
+            }
+
+            using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
+                await command.ExecuteNonQueryAsync();
+            }
+
+            using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
+                await command.ExecuteNonQueryAsync();
+            }
+
+        }
+
     }
 }

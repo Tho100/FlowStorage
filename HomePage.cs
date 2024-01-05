@@ -44,6 +44,7 @@ namespace FlowstorageDesktop {
         readonly private SharedFilesDataCaller sharedFilesDataCaller = new SharedFilesDataCaller();
         readonly private SharedToMeDataCaller sharedToMeDataCaller = new SharedToMeDataCaller();
         readonly private FolderDataCaller folderDataCaller = new FolderDataCaller();
+        readonly private DirectoryDataCaller directoryDataCaller = new DirectoryDataCaller();
 
         public static HomePage instance { get; set; } = new HomePage();
         public bool CallInitialStartupData { get; set; } = false;
@@ -3111,30 +3112,16 @@ namespace FlowstorageDesktop {
                 remBut.Visible = true;
                 remBut.Location = GlobalStyle.GarbageButtonLoc;
 
-                remBut.Click += (sender_im, e_im) => {
+                remBut.Click += async (sender_im, e_im) => {
 
-                    var titleFile = titleLab.Text;
+                    string directoryName = titleLab.Text; 
 
                     DialogResult verifyDialog = MessageBox.Show(
-                        $"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        $"Delete {directoryName} directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (verifyDialog == DialogResult.Yes) {
-
-                        using (var command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
-                            command.ExecuteNonQuery();
-                        }
+                        
+                        await directoryDataCaller.DeleteDirectory(directoryName);
 
                         mainPanel.Dispose();
 
