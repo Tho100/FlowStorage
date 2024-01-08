@@ -22,7 +22,7 @@ namespace FlowstorageDesktop {
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
 
-        public shareFileFORM(String fileName, bool isFromShared, String tableName, String directoryName) {
+        public shareFileFORM(string fileName, bool isFromShared, string tableName, string directoryName) {
 
             InitializeComponent();
 
@@ -68,7 +68,7 @@ namespace FlowstorageDesktop {
                     return;
                 }
 
-                if (txtFieldShareToName.Text == String.Empty) {
+                if (txtFieldShareToName.Text == string.Empty) {
                     return;
                 }
 

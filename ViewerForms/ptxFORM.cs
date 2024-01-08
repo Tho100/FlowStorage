@@ -38,7 +38,7 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (_isFromShared == true) {
+            if (_isFromShared) {
                 btnEditComment.Visible = true;
                 guna2Button7.Visible = true;
 
@@ -75,7 +75,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void InitializePTX(Byte[] ptxByte) {
+        private void InitializePTX(byte[] ptxByte) {
             if (ptxByte != null) {
                 lblFileSize.Text = $"{GetFileSize.fileSize(ptxByte):F2}Mb";
                 MemoryStream convertToStream = new MemoryStream(ptxByte);
@@ -126,7 +126,7 @@ namespace FlowstorageDesktop {
             this.WindowState = FormWindowState.Minimized;
             Application.OpenForms
               .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .Where(form => string.Equals(form.Name, "bgBlurForm"))
               .ToList()
               .ForEach(form => form.Hide());
         }
@@ -151,7 +151,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;

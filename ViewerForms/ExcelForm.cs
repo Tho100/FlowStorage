@@ -47,7 +47,7 @@ namespace FlowstorageDesktop {
             this._directoryName = directoryName;
             this._tableName = tableName;
 
-            if (_isFromSharing == true) {
+            if (_isFromSharing) {
                 btnEditComment.Visible = true;
                 btnSaveComment.Visible = true;
 

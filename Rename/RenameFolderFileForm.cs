@@ -11,7 +11,7 @@ namespace FlowstorageDesktop {
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
-        public RenameFolderFileForm(String foldTitle) {
+        public RenameFolderFileForm(string foldTitle) {
             InitializeComponent();
 
             this.lblCurrentFolderName.Text = foldTitle;
@@ -74,7 +74,7 @@ namespace FlowstorageDesktop {
             string newFolderName = txtFieldNewFolderName.Text;
             string oldFolderName = lblCurrentFolderName.Text;
 
-            if(String.IsNullOrEmpty(newFolderName)) {
+            if(string.IsNullOrEmpty(newFolderName)) {
                 return;
             }
 

@@ -230,7 +230,7 @@ namespace FlowstorageDesktop.SharingQuery {
             this._directoryName = directoryName;
             this._fileExtension = Path.GetExtension(fileName);
 
-            if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
+            if (!_isFromShared && _tableName == GlobalsTable.sharingTable) {
                 string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_TO");
                 await InsertFileData(await GetFileMetadataSharedToMe(_fileName), getThumbnails);
 
@@ -289,7 +289,7 @@ namespace FlowstorageDesktop.SharingQuery {
 
                 }
 
-            } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
+            } else if (_isFromShared && _tableName == GlobalsTable.sharingTable) {
                 string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_FROM");
                 await InsertFileData(await GetFileMetadataSharedToOthers(_fileName), getThumbnails);
 

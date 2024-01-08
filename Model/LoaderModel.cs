@@ -18,7 +18,7 @@ namespace FlowstorageDesktop {
         private static string fileName { get; set; }
         private static string fileType { get; set; }
 
-        public static Byte[] LoadFile(string tableName, string directoryName, string selectedFileName, bool isFromSharedFiles = false) {
+        public static byte[] LoadFile(string tableName, string directoryName, string selectedFileName, bool isFromSharedFiles = false) {
 
             try {
 
@@ -34,7 +34,7 @@ namespace FlowstorageDesktop {
                 } else if (tableName == GlobalsTable.folderUploadTable) {
                     RetrieveFolderDataAsync(directoryName);
                     
-                } else if (tableName == GlobalsTable.sharingTable && isFromSharedFiles == true) {
+                } else if (tableName == GlobalsTable.sharingTable && isFromSharedFiles) {
                     RetrieveSharedToOtherData();
 
                 } else if (tableName == GlobalsTable.sharingTable) {

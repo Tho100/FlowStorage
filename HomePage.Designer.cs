@@ -1858,7 +1858,11 @@
             this.Text = "Flowstorage";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HomePage_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.HomePage_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HomePage_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.HomePage_DragEnter);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.HomePage_DragOver);
+            this.DragLeave += new System.EventHandler(this.HomePage_DragLeave);
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();

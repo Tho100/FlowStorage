@@ -25,7 +25,7 @@ namespace FlowstorageDesktop {
         private SoundPlayer _wavAudioPlayer { get; set; }
         private WaveOut _mp3WaveOut { get; set; }
 
-        public AudioForm(String fileName, String tableName,String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public AudioForm(string fileName, string tableName,string directoryName,string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -35,7 +35,7 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (isFromShared == true) {
+            if (isFromShared) {
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
@@ -347,7 +347,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;

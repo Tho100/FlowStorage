@@ -64,7 +64,7 @@ namespace FlowstorageDesktop {
 
             pbImage.Image = setupImage;
 
-            if (isFromShared == true) {
+            if (isFromShared) {
                 label4.Text = "Shared To";
                 btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
@@ -316,10 +316,10 @@ namespace FlowstorageDesktop {
 
             try {
 
-                if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
+                if (_isFromShared && _tableName == GlobalsTable.sharingTable) {
                     await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
 
-                } else if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
+                } else if (!_isFromShared && _tableName == GlobalsTable.sharingTable) {
                     await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
 
                 } else if (_tableName == GlobalsTable.homeImageTable){
@@ -413,7 +413,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button10.Visible = false;
             txtFieldComment.Visible = false;
@@ -483,11 +483,11 @@ namespace FlowstorageDesktop {
                     int height = defaultImage.Height;
 
                     if(_tableName == GlobalsTable.homeImageTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username);
                         displayPic.Show();
 
                     } else if (_tableName == GlobalsTable.folderUploadTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
+                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
                         displayPic.Show();
 
                     } 

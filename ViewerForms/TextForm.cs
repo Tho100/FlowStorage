@@ -43,7 +43,7 @@ namespace FlowstorageDesktop {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public TextForm(String tableName, String fileName, String directoryName, String uploaderName, bool isFromSharing = false) {
+        public TextForm(string tableName, string fileName, string directoryName, string uploaderName, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -58,7 +58,7 @@ namespace FlowstorageDesktop {
 
                 var fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
 
-                if (isFromSharing == true) {
+                if (isFromSharing) {
 
                     btnEditComment.Visible = true;
                     guna2Button12.Visible = true;
@@ -97,11 +97,11 @@ namespace FlowstorageDesktop {
                     const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, tempDataUser.Username);
 
-                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
+                } else if (tableName == GlobalsTable.sharingTable && !_isFromSharing) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, tempDataUser.Username);
 
-                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
+                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing) {
                     const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                     RetrieveTextData(getTxtQuery, tempDataUser.Username);
 
@@ -133,7 +133,7 @@ namespace FlowstorageDesktop {
 
                 Application.OpenForms
                 .OfType<Form>()
-                .Where(form => String.Equals(form.Name, "SheetRetrieval"))
+                .Where(form => string.Equals(form.Name, "SheetRetrieval"))
                 .ToList()
                 .ForEach(form => form.Close());
 
@@ -143,7 +143,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void RetrieveDirectoryData(String fileName) {
+        private async void RetrieveDirectoryData(string fileName) {
 
             const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
@@ -168,7 +168,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void RetrieveFolderData(String fileName) {
+        private async void RetrieveFolderData(string fileName) {
 
             const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
 
@@ -193,7 +193,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void RetrieveTextData(String query, String uploaderName) {
+        private async void RetrieveTextData(string query, string uploaderName) {
 
             string encryptedFileName = EncryptionModel.Encrypt(lblFileName.Text);
 
@@ -365,7 +365,7 @@ namespace FlowstorageDesktop {
         private void txtFORM_Load(object sender, EventArgs e) {
             Application.OpenForms
              .OfType<Form>()
-             .Where(form => String.Equals(form.Name, "SheetRetrieval"))
+             .Where(form => string.Equals(form.Name, "SheetRetrieval"))
              .ToList()
              .ForEach(form => form.Close());
         }
@@ -441,7 +441,7 @@ namespace FlowstorageDesktop {
             this.WindowState = FormWindowState.Minimized;
             Application.OpenForms
               .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .Where(form => string.Equals(form.Name, "bgBlurForm"))
               .ToList()
               .ForEach(form => form.Hide());
         }
@@ -491,7 +491,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             txtFieldComment.Visible = false;

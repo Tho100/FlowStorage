@@ -65,10 +65,10 @@ namespace FlowstorageDesktop {
 
             this.AllowDrop = true;
 
-            this.DragEnter += new DragEventHandler(Form1_DragEnter);
-            this.DragOver += new DragEventHandler(Form1_DragOver);
-            this.DragDrop += new DragEventHandler(Form1_DragDrop);
-            this.DragLeave += new EventHandler(Form1_DragLeave);
+            this.DragEnter += new DragEventHandler(HomePage_DragEnter);
+            this.DragOver += new DragEventHandler(HomePage_DragOver);
+            this.DragDrop += new DragEventHandler(HomePage_DragDrop);
+            this.DragLeave += new EventHandler(HomePage_DragLeave);
 
             this.flwLayoutHome.HorizontalScroll.Maximum = 0;
             this.flwLayoutHome.VerticalScroll.Maximum = 0;
@@ -84,7 +84,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
+        private void HomePage_Load(object sender, EventArgs e) {
             InitializeHomeFiles();
             InitializeDiscordRPC();
         }
@@ -905,7 +905,7 @@ namespace FlowstorageDesktop {
 
                 List<(string, string, string, string)> filesInfo;
 
-                if (isFromMyPs == false) {
+                if (!isFromMyPs) {
                     filesInfo = await psDataCaller.GetFileMetadata(tableName);
 
                 } else {
@@ -926,7 +926,7 @@ namespace FlowstorageDesktop {
 
                 var usernameList = new List<string>();
 
-                if (isFromMyPs == false) {
+                if (!isFromMyPs) {
                     var uploaderName = await psDataCaller.GetUploaderName(tableName);
                     usernameList.AddRange(uploaderName);
 
@@ -1414,7 +1414,7 @@ namespace FlowstorageDesktop {
 
                     new PublishPublicStorage(fileName: selectedFileName).ShowDialog();
 
-                    if (PublicStorageClosed == false) {
+                    if (!PublicStorageClosed) {
 
                         byte[] retrieveBytes = File.ReadAllBytes(selectedItems);
                         byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
@@ -3464,18 +3464,18 @@ namespace FlowstorageDesktop {
 
         #region Drag and drop upload section
 
-        private void Form1_DragEnter(object sender, DragEventArgs e) {
+        private void HomePage_DragEnter(object sender, DragEventArgs e) {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effect = DragDropEffects.Copy;
             }
         }
 
-        private void Form1_DragOver(object sender, DragEventArgs e) {
+        private void HomePage_DragOver(object sender, DragEventArgs e) {
             pnlDragAndDropUpload.Visible = true;
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void Form1_DragLeave(object sender, EventArgs e) => pnlDragAndDropUpload.Visible = false;
+        private void HomePage_DragLeave(object sender, EventArgs e) => pnlDragAndDropUpload.Visible = false;
 
 
         /// <summary>
@@ -3486,7 +3486,7 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void Form1_DragDrop(object sender, DragEventArgs e) {
+        private async void HomePage_DragDrop(object sender, DragEventArgs e) {
 
             pnlDragAndDropUpload.Visible = false;
 

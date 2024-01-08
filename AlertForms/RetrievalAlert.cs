@@ -10,7 +10,7 @@ namespace FlowstorageDesktop {
         readonly private MySqlConnection con = ConnectionModel.con;
         private string originFrom { get; set; }
 
-        public RetrievalAlert(String alertMessage, bool isFromLogin) {
+        public RetrievalAlert(string alertMessage, bool isFromLogin) {
 
             InitializeComponent();
 

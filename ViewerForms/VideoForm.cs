@@ -18,7 +18,7 @@ namespace FlowstorageDesktop {
         private bool _isFromSharing { get; set; }
         private bool _isEndReached { get; set; }
 
-        public VideoForm(Image getThumb, int width, int height, String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public VideoForm(Image getThumb, int width, int height, string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -33,7 +33,7 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (_isFromShared == true) {
+            if (_isFromShared) {
                 btnEditComment.Visible = true;
                 guna2Button12.Visible = true;
 
@@ -306,7 +306,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             txtFieldComment.Visible = false;

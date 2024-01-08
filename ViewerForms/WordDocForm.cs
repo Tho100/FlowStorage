@@ -22,7 +22,7 @@ namespace FlowstorageDesktop {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public WordDocForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = true) {
+        public WordDocForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = true) {
 
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (_isFromShared == true) {
+            if (_isFromShared) {
                 label4.Text = "Shared To";
                 btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
@@ -174,7 +174,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             txtFieldComment.Visible = false;

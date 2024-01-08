@@ -93,7 +93,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         public async Task AddImageCaching(bool isFromMyPs) {
 
-            if (isFromMyPs == false) {
+            if (!isFromMyPs) {
 
                 const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image";
                 using (var command = new MySqlCommand(retrieveImagesQuery, con)) {
@@ -124,7 +124,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         public async Task AddVideoThumbnailCaching(bool isFromMyPs) {
 
-            if (isFromMyPs == false) {
+            if (!isFromMyPs) {
 
                 const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video";
                 using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {

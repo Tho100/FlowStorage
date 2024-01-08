@@ -31,11 +31,11 @@ namespace FlowstorageDesktop.Helper {
                 string updateQuery = $"UPDATE {tableName} SET CUST_FILE = @update WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
                 await UpdateData(updateQuery, encryptedUpdatedData, encryptedFileName);
 
-            } else if (tableName == GlobalsTable.sharingTable && isFromSharing == false) {
+            } else if (tableName == GlobalsTable.sharingTable && !isFromSharing) {
                 const string updateQuery = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
                 await UpdateData(updateQuery, encryptedUpdatedData, encryptedFileName);
 
-            } else if (tableName == GlobalsTable.sharingTable && isFromSharing == true) {
+            } else if (tableName == GlobalsTable.sharingTable && isFromSharing) {
                 const string updateQuery = "UPDATE cust_sharing SET CUST_FILE = @update WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
                 await UpdateData(updateQuery, encryptedUpdatedData, encryptedFileName);
 

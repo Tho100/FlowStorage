@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
     public partial class SucessSharedAlert : Form {
-        public SucessSharedAlert(String receiverName) {
+        public SucessSharedAlert(string receiverName) {
             InitializeComponent();
             label8.Text = $"This file has been shared to {receiverName}.";
         }

@@ -11,7 +11,7 @@ namespace FlowstorageDesktop {
         private bool _isFromSharing { get; set; }
         private bool _isFromShared { get; set; }
 
-        public ApkForm(String fileName, String uploaderName, String tableName, String directoryName, bool isFromShared = false, bool isFromSharing = false) {
+        public ApkForm(string fileName, string uploaderName, string tableName, string directoryName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -21,7 +21,7 @@ namespace FlowstorageDesktop {
             this._isFromSharing = isFromSharing;
             this._isFromShared = isFromShared;
 
-            if (_isFromShared == true) {
+            if (_isFromShared) {
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
@@ -86,7 +86,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;
