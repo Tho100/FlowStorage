@@ -516,19 +516,40 @@ namespace FlowstorageDesktop {
             }
         }
 
+        private bool IsAlreadySubscribed() {
+
+            if(tempDataUser.AccountType != "Basic") {
+                new CustomAlert(
+                    title: "Subscription Failure", subheader: "Unable to subscribe. To proceed with this plan, please cancel your current subscription.").Show();
+                return true;
+            }
+
+            return false;
+
+        }
+
         private void guna2Button5_Click(object sender, EventArgs e) {
+            if(IsAlreadySubscribed()) {
+                return;
+            }
             _selectedAccountType = "Max";
             btnUseMax.Visible = true;
             Process.Start("https://buy.stripe.com/test_9AQ16Y9Hb6GbfKwcMP"); // Live mode
         }
 
         private void guna2Button7_Click(object sender, EventArgs e) {
+            if (IsAlreadySubscribed()) {
+                return;
+            }
             _selectedAccountType = "Supreme";
             btnUseSupreme.Visible = true;
             Process.Start("https://buy.stripe.com/3csdTTeDxcxI2cMcMO"); // Test mode
         }
 
         private void guna2Button6_Click(object sender, EventArgs e) {
+            if (IsAlreadySubscribed()) {
+                return;
+            }
             _selectedAccountType = "Express";
             btnUseExpress.Visible = true;
             Process.Start("https://buy.stripe.com/6oEbLLanh41c3gQ9AA"); // Live mode
