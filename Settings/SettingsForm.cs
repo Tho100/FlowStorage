@@ -512,7 +512,8 @@ namespace FlowstorageDesktop {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Cannot proceed", subheader: "Failed to make a payment.").Show();
+                new CustomAlert(
+                    title: "Cannot proceed", subheader: "Failed to make a payment.").Show();
             }
         }
 

@@ -3801,8 +3801,6 @@ namespace FlowstorageDesktop {
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblSelectedDirName.Text;
 
-            string fileExtensions = titleFile.Split('.').Last();
-
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
 
@@ -3880,9 +3878,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button3_Click(object sender, EventArgs e) => this.Close();
 
         private async void guna2Button2_Click(object sender, EventArgs e) {
 
