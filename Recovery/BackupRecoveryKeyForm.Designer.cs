@@ -51,7 +51,6 @@
             // 
             // txtFieldPIN
             // 
-            this.txtFieldPIN.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldPIN.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldPIN.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldPIN.BorderRadius = 8;
@@ -80,7 +79,6 @@
             // 
             // txtFieldAuth
             // 
-            this.txtFieldAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldAuth.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldAuth.BorderRadius = 8;
@@ -147,7 +145,6 @@
             // 
             // btnExport
             // 
-            this.btnExport.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnExport.Animated = true;
             this.btnExport.BackColor = System.Drawing.Color.Transparent;
             this.btnExport.BorderRadius = 10;
@@ -167,7 +164,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -180,7 +176,6 @@
             // 
             // label4
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -228,6 +223,7 @@
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -242,6 +238,7 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

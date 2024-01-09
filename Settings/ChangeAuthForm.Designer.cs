@@ -54,7 +54,8 @@
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConfirm.Animated = true;
             this.btnConfirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.btnConfirm.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -105,7 +106,7 @@
             // 
             // guna2Button5
             // 
-            this.guna2Button5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button5.Animated = true;
             this.guna2Button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -148,7 +149,7 @@
             // 
             // guna2Button3
             // 
-            this.guna2Button3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button3.Animated = true;
             this.guna2Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -191,7 +192,8 @@
             // 
             // txtFieldVerifyNewAuth
             // 
-            this.txtFieldVerifyNewAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldVerifyNewAuth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFieldVerifyNewAuth.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldVerifyNewAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldVerifyNewAuth.BorderRadius = 8;
@@ -218,7 +220,6 @@
             // 
             // label3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.Gainsboro;
@@ -230,7 +231,8 @@
             // 
             // guna2Button2
             // 
-            this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button2.Animated = true;
             this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -257,7 +259,7 @@
             this.lblAlert.BackColor = System.Drawing.Color.Transparent;
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlert.Location = new System.Drawing.Point(76, 279);
+            this.lblAlert.Location = new System.Drawing.Point(77, 279);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.Size = new System.Drawing.Size(125, 17);
             this.lblAlert.TabIndex = 19;
@@ -267,7 +269,8 @@
             // 
             // txtFieldCurrentAuth
             // 
-            this.txtFieldCurrentAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldCurrentAuth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFieldCurrentAuth.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldCurrentAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldCurrentAuth.BorderRadius = 8;
@@ -294,7 +297,8 @@
             // 
             // txtFieldNewAuth
             // 
-            this.txtFieldNewAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldNewAuth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFieldNewAuth.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldNewAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldNewAuth.BorderRadius = 8;
@@ -321,7 +325,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
@@ -333,7 +336,6 @@
             // 
             // label2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;

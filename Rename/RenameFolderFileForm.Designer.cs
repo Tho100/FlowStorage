@@ -68,7 +68,8 @@
             // 
             // guna2Button6
             // 
-            this.guna2Button6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button6.Animated = true;
             this.guna2Button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -90,7 +91,8 @@
             // 
             // guna2Button2
             // 
-            this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Button2.Animated = true;
             this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button2.BorderRadius = 12;
@@ -110,7 +112,8 @@
             // 
             // txtFieldNewFolderName
             // 
-            this.txtFieldNewFolderName.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtFieldNewFolderName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFieldNewFolderName.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldNewFolderName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldNewFolderName.BorderRadius = 8;
@@ -149,7 +152,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -175,7 +177,6 @@
             // 
             // lblAlert
             // 
-            this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblAlert.AutoSize = true;
             this.lblAlert.BackColor = System.Drawing.Color.Transparent;
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);

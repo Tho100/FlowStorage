@@ -58,11 +58,10 @@
             // 
             // lblAlert
             // 
-            this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblAlert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-            this.lblAlert.Location = new System.Drawing.Point(149, 267);
+            this.lblAlert.Location = new System.Drawing.Point(149, 262);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.Size = new System.Drawing.Size(136, 20);
             this.lblAlert.TabIndex = 19;
@@ -71,7 +70,6 @@
             // 
             // txtFieldEmail
             // 
-            this.txtFieldEmail.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldEmail.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldEmail.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldEmail.BorderRadius = 8;
@@ -99,7 +97,6 @@
             // 
             // btnVerify
             // 
-            this.btnVerify.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnVerify.Animated = true;
             this.btnVerify.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.btnVerify.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -121,7 +118,6 @@
             // 
             // label2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
@@ -133,7 +129,6 @@
             // 
             // txtFieldRecoveryKey
             // 
-            this.txtFieldRecoveryKey.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldRecoveryKey.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldRecoveryKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldRecoveryKey.BorderRadius = 8;
@@ -160,7 +155,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
@@ -173,11 +167,11 @@
             // guna2VSeparator1
             // 
             this.guna2VSeparator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2VSeparator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2VSeparator1.Location = new System.Drawing.Point(420, 57);
             this.guna2VSeparator1.Name = "guna2VSeparator1";
-            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 425);
+            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 409);
             this.guna2VSeparator1.TabIndex = 52;
             // 
             // guna2Separator1
@@ -216,7 +210,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(682, 482);
+            this.ClientSize = new System.Drawing.Size(682, 466);
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.guna2VSeparator1);
             this.Controls.Add(this.guna2Separator1);

@@ -45,7 +45,6 @@
             // 
             // btnConfirmCancelPlan
             // 
-            this.btnConfirmCancelPlan.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnConfirmCancelPlan.Animated = true;
             this.btnConfirmCancelPlan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.btnConfirmCancelPlan.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -72,7 +71,7 @@
             this.guna2Separator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Separator1.Location = new System.Drawing.Point(-6, 48);
             this.guna2Separator1.Name = "guna2Separator1";
-            this.guna2Separator1.Size = new System.Drawing.Size(1039, 10);
+            this.guna2Separator1.Size = new System.Drawing.Size(505, 10);
             this.guna2Separator1.TabIndex = 38;
             // 
             // label3

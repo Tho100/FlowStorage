@@ -47,7 +47,6 @@
             // 
             // guna2Button2
             // 
-            this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.guna2Button2.Animated = true;
             this.guna2Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -69,7 +68,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gainsboro;
@@ -82,7 +80,6 @@
             // 
             // label2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gainsboro;
@@ -127,7 +124,6 @@
             // 
             // label3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.Gainsboro;
@@ -168,7 +164,6 @@
             // 
             // guna2Button1
             // 
-            this.guna2Button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.guna2Button1.Animated = true;
             this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
             this.guna2Button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -189,7 +184,6 @@
             // 
             // guna2Button3
             // 
-            this.guna2Button3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.guna2Button3.Animated = true;
             this.guna2Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.guna2Button3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
@@ -236,7 +230,6 @@
             // 
             // lblAlert
             // 
-            this.lblAlert.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblAlert.BackColor = System.Drawing.Color.Transparent;
             this.lblAlert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
@@ -251,7 +244,6 @@
             // 
             // txtFieldAuth
             // 
-            this.txtFieldAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldAuth.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldAuth.BorderRadius = 8;
@@ -279,7 +271,6 @@
             // 
             // txtFieldEmail
             // 
-            this.txtFieldEmail.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldEmail.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldEmail.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldEmail.BorderRadius = 8;
@@ -348,7 +339,7 @@
             // guna2VSeparator1
             // 
             this.guna2VSeparator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2VSeparator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2VSeparator1.Location = new System.Drawing.Point(402, 72);
             this.guna2VSeparator1.Name = "guna2VSeparator1";
