@@ -127,9 +127,6 @@ namespace FlowstorageDesktop {
                     HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
                     HomePage.instance.lblCurrentPageText.Text = "Home";
 
-                    GlobalsData.fileTypeValuesSharedToMe.Clear();
-                    GlobalsData.fileTypeValuesSharedToOthers.Clear();
-
                     await GenerateUserData();
 
                     Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();

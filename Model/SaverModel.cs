@@ -118,7 +118,7 @@ namespace FlowstorageDesktop {
 
                 } else if (tableName == GlobalsTable.folderUploadTable) {
 
-                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
+                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldtitle";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", tempDataUser.Username);

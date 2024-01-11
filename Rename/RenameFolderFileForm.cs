@@ -42,7 +42,7 @@ namespace FlowstorageDesktop {
         
         private async Task RenameFolderAsync(string newFolderName,string oldFolderName) {
 
-            const string queryRename = "UPDATE folder_upload_info SET FOLDER_TITLE = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @oldtitle";
+            const string queryRename = "UPDATE folder_upload_info SET FOLDER_NAME = @newtitle WHERE CUST_USERNAME = @username AND FOLDER_NAME = @oldtitle";
             using (MySqlCommand command = new MySqlCommand(queryRename, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@newtitle", EncryptionModel.Encrypt(newFolderName));

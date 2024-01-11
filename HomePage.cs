@@ -29,8 +29,6 @@ namespace FlowstorageDesktop {
 
     public partial class HomePage : Form {
 
-        readonly private MySqlConnection con = ConnectionModel.con;
-
         readonly private Crud crud = new Crud();
 
         readonly private InsertFileDataQuery insertFileData = new InsertFileDataQuery();
@@ -254,7 +252,7 @@ namespace FlowstorageDesktop {
             var onPressedEvent = new List<EventHandler>();
             var onMoreOptionButtonPressed = new List<EventHandler>();
 
-            try {
+            //try {
 
                 List<(string, string, string)> filesInfo = await homeDataCaller.GetFileMetadata(tableName);
 
@@ -306,20 +304,17 @@ namespace FlowstorageDesktop {
                             displayPic.Show();
                         }
 
-
                         onPressedEvent.Add(imageOnPressed);
 
                     }
 
-
                     if (tableName == GlobalsTable.homeTextTable) {
 
-                        var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
+                        var getExtension = filesInfo[i].Item1.Split('.').Last();
                         var textTypeToImage = Globals.textTypeToImage[getExtension];
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-
                             TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
@@ -462,10 +457,10 @@ namespace FlowstorageDesktop {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-            } catch (Exception) {
+            /*} catch (Exception) {
                 BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
-            }
+            */
 
         }
 
@@ -1611,14 +1606,17 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async Task BuildFilePanelSharedToOthers(List<string> fileTypes, string parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToOthers(string parameterName) {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
             var onMoreOptionButtonPressed = new List<EventHandler>();
 
-            var typeValues = new List<string>(fileTypes);
+            var typeValues = filesInfoSharedOthers.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
+
             var uploadToNameList = await sharedFilesDataCaller.GetSharedToUsername();
+
+            int length = typeValues.Count;
 
             if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
                 if (GlobalsData.base64EncodedImageSharedOthers.Count == 0) {
@@ -1627,7 +1625,7 @@ namespace FlowstorageDesktop {
                 }
             }
 
-            for (int i = 0; i < itemCurr; i++) {
+            for (int i = 0; i < length; i++) {
 
                 int accessIndex = i;
                 string uploadToName = uploadToNameList[accessIndex];
@@ -1683,22 +1681,10 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(textOnPressed);
                 }
 
-                if (typeValues[i] == ".exe") {
-
-                    imageValues.Add(Globals.EXEImage);
-
-                    void exeOnPressed(object sender, EventArgs e) {
-                        exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
-                        displayExe.Show();
-                    }
-
-                    onPressedEvent.Add(exeOnPressed);
-                }
-
                 if (Globals.videoTypes.Contains(typeValues[i])) {
 
                     if (GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
-                        await sharedFilesDataCaller.AddVideoThumbnailCaching(typeValues[i]);
+                        await sharedFilesDataCaller.AddVideoThumbnailCaching(filesInfoSharedOthers[i].Item1);
 
                     }
 
@@ -1735,6 +1721,7 @@ namespace FlowstorageDesktop {
 
                     onPressedEvent.Add(excelOnPressed);
                 }
+
                 if (Globals.audioTypes.Contains(typeValues[i])) {
 
                     imageValues.Add(Globals.AudioImage);
@@ -1747,7 +1734,19 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(audioOnPressed);
                 }
 
-                if (typeValues[i] == ".apk") {
+                if (typeValues[i] == "exe") {
+
+                    imageValues.Add(Globals.EXEImage);
+
+                    void exeOnPressed(object sender, EventArgs e) {
+                        exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
+                        displayExe.Show();
+                    }
+
+                    onPressedEvent.Add(exeOnPressed);
+                }
+
+                if (typeValues[i] == "apk") {
 
                     imageValues.Add(Globals.APKImage);
 
@@ -1759,7 +1758,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(apkOnPressed);
                 }
 
-                if (typeValues[i] == ".pdf") {
+                if (typeValues[i] == "pdf") {
 
                     imageValues.Add(Globals.PDFImage);
 
@@ -1783,7 +1782,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(ptxOnPressed);
                 }
 
-                if (typeValues[i] == ".msi") {
+                if (typeValues[i] == "msi") {
 
                     imageValues.Add(Globals.MSIImage);
 
@@ -1810,7 +1809,7 @@ namespace FlowstorageDesktop {
             }
 
             PanelGenerator panelGenerator = new PanelGenerator();
-            panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+            panelGenerator.GeneratePanel(parameterName, length, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
             BuildRedundaneVisibility();
 
@@ -1820,12 +1819,7 @@ namespace FlowstorageDesktop {
 
         private async Task BuildSharedToOthers() {
 
-            if (!GlobalsData.fileTypeValuesSharedToOthers.Any()) {
-                await sharedFilesDataCaller.AddFileTypeCaching();
-
-            }
-
-            await BuildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
+            await BuildFilePanelSharedToOthers("DirParOther");
 
             UpdateProgressBarValue();
             BuildRedundaneVisibility();
@@ -1847,18 +1841,8 @@ namespace FlowstorageDesktop {
             GlobalsData.base64EncodedImageSharedOthers.Clear();
             GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
 
-            var typeValues = new List<string>();
-
-            if (GlobalsData.fileTypeValuesSharedToOthers.Count == 0) {
-                typeValues = await sharedFilesDataCaller.GetFileType();
-
-            } else {
-                typeValues = GlobalsData.fileTypeValuesSharedToOthers;
-
-            }
-
             await CallFilesInformationOthers();
-            await BuildFilePanelSharedToOthers(typeValues, dirName, typeValues.Count);
+            await BuildFilePanelSharedToOthers(dirName);
 
         }
 
@@ -1866,27 +1850,29 @@ namespace FlowstorageDesktop {
 
         #region Shared to me section
 
-        List<(string, string, string)> filesInfoShared = new List<(string, string, string)>();
+        List<(string, string, string)> filesInfoSharedToMe = new List<(string, string, string)>();
         private async Task CallFilesInformationSharedToMe() {
 
-            filesInfoShared.Clear();
+            filesInfoSharedToMe.Clear();
 
-            var filesInfo = await sharedFilesDataCaller.GetFileMetadata();
-            filesInfoShared.AddRange(filesInfo);
+            var filesInfo = await sharedToMeDataCaller.GetFileMetadata();
+            filesInfoSharedToMe.AddRange(filesInfo);
             
         }
 
-        private async Task BuildFilePanelSharedToMe(List<string> fileTypes, string parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToMe(string parameterName) {
 
-            try {
+            //try {
 
                 var imageValues = new List<Image>();
                 var onPressedEvent = new List<EventHandler>();
                 var onMoreOptionButtonPressed = new List<EventHandler>();
 
                 string uploaderUsername = await sharedToMeDataCaller.SharedToMeUploaderName();
+                
+                var typeValues = filesInfoSharedToMe.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
 
-                var typeValues = new List<string>(fileTypes);
+                int length = typeValues.Count;
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
                     if (GlobalsData.base64EncodedImageSharedToMe.Count == 0) {
@@ -1895,13 +1881,13 @@ namespace FlowstorageDesktop {
                     }
                 }
 
-                for (int i = 0; i < itemCurr; i++) {
+                for (int i = 0; i < length; i++) {
 
                     int accessIndex = i;
 
                     void moreOptionOnPressedEvent(object sender, EventArgs e) {
 
-                        lblFileNameOnPanel.Text = filesInfoShared[accessIndex].Item1;
+                        lblFileNameOnPanel.Text = filesInfoSharedToMe[accessIndex].Item1;
                         lblFileTableName.Text = GlobalsTable.sharingTable;
                         lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
@@ -1925,7 +1911,7 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPic.Show();
                         }
 
@@ -1939,29 +1925,18 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false);
+                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoSharedToMe[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false);
                             displayPic.Show();
                         }
 
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[i] == ".exe") {
-
-                        imageValues.Add(Globals.EXEImage);
-
-                        void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayExe.Show();
-                        }
-
-                        onPressedEvent.Add(exeOnPressed);
-                    }
-
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
                         if (GlobalsData.base64EncodedThumbnailSharedToMe.Count == 0) {
-                            await sharedToMeDataCaller.AddVideoThumbnailCaching(filesInfoShared[i].Item1);
+                            MessageBox.Show(filesInfoSharedToMe[i].Item1);
+                            await sharedToMeDataCaller.AddVideoThumbnailCaching(filesInfoSharedToMe[i].Item1);
 
                         }
 
@@ -1979,7 +1954,7 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
 
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             vidFormShow.Show();
                         }
 
@@ -1991,42 +1966,55 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            ExcelForm exlForm = new ExcelForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             exlForm.Show();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
                     }
+
                     if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            AudioForm displayPic = new AudioForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPic.Show();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (typeValues[i] == ".apk") {
+                    if (typeValues[i] == "exe") {
+
+                        imageValues.Add(Globals.EXEImage);
+
+                        void exeOnPressed(object sender, EventArgs e) {
+                            exeFORM displayExe = new exeFORM(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            displayExe.Show();
+                        }
+
+                        onPressedEvent.Add(exeOnPressed);
+                    }
+
+                    if (typeValues[i] == "apk") {
 
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfoShared[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false);
+                            ApkForm displayPic = new ApkForm(filesInfoSharedToMe[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false);
                             displayPic.Show();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (typeValues[i] == ".pdf") {
+                    if (typeValues[i] == "pdf") {
 
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            PdfForm displayPdf = new PdfForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPdf.Show();
                         }
 
@@ -2038,19 +2026,19 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            PtxForm displayPtx = new PtxForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayPtx.Show();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (typeValues[i] == ".msi") {
+                    if (typeValues[i] == "msi") {
 
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            MsiForm displayMsi = new MsiForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayMsi.Show();
                         }
 
@@ -2063,7 +2051,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            WordDocForm displayMsi = new WordDocForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayMsi.Show();
                         }
                         onPressedEvent.Add(wordOnPressed);
@@ -2071,27 +2059,22 @@ namespace FlowstorageDesktop {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoShared, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel(parameterName, length, filesInfoSharedToMe, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 BuildRedundaneVisibility();
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-            } catch (Exception) {
+            /*} catch (Exception) {
                 BuildShowAlert(
                     title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
-            }
+            }*/
         }
 
         private async Task BuildSharedToMe() {
 
-            if (!GlobalsData.fileTypeValuesSharedToMe.Any()) {
-                await sharedToMeDataCaller.AddFileTypeCaching();
-
-            } 
-
-            await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
+            await BuildFilePanelSharedToMe("DirParMe");
 
             UpdateProgressBarValue();
             BuildRedundaneVisibility();
@@ -2113,18 +2096,8 @@ namespace FlowstorageDesktop {
             GlobalsData.base64EncodedImageSharedToMe.Clear();
             GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
 
-            var typeValues = new List<string>();
-
-            if (GlobalsData.fileTypeValuesSharedToMe.Count == 0) {
-                typeValues = await sharedToMeDataCaller.GetFileType();
-
-            } else {
-                typeValues = GlobalsData.fileTypeValuesSharedToMe;
-
-            }
-
             await CallFilesInformationSharedToMe();
-            await BuildFilePanelSharedToMe(typeValues, dirName, typeValues.Count);
+            await BuildFilePanelSharedToMe(dirName);
 
         }
 
@@ -3206,11 +3179,9 @@ namespace FlowstorageDesktop {
             flwLayoutHome.Controls.Clear();
 
             if (lblCurrentPageText.Text == "Shared To Me") {
-                GlobalsData.fileTypeValuesSharedToMe.Clear();
                 await RefreshGenerateUserSharedToMe("DirParMe");
 
             } else if (lblCurrentPageText.Text == "Shared Files") {
-                GlobalsData.fileTypeValuesSharedToOthers.Clear();
                 await RefreshGenerateUserSharedOthers("DirParOther");
 
             } else if (lblCurrentPageText.Text == "Home") {
@@ -3293,12 +3264,10 @@ namespace FlowstorageDesktop {
                         break;
 
                     case "Shared To Me":
-                        GlobalsData.fileTypeValuesSharedToMe.Clear();
                         await RefreshGenerateUserSharedToMe("DirParMe");
                         break;
 
                     case "Shared Files":
-                        GlobalsData.fileTypeValuesSharedToOthers.Clear();
                         await RefreshGenerateUserSharedOthers("DirParOther");
                         break;
 

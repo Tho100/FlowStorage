@@ -31,25 +31,25 @@ namespace FlowstorageDesktop {
         static private readonly Image PYImage = Properties.Resources.icons8_python_file_48;
 
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
-        {".png",".jpg",".jpeg"};
+        {"png","jpg","jpeg"};
 
         static public readonly HashSet<string> textTypes = new HashSet<string>
-        {".txt",".csv",".sql",".html",".css",".py",".xml",".js",".md"};
+        {"txt","csv","sql","html","css","py","xml","js","md"};
 
         static public readonly HashSet<string> videoTypes = new HashSet<string> 
-        {".mp4",".mov",".avi",".wmv"};
+        {"mp4","mov","avi","wmv"};
 
         static public readonly HashSet<string> audioTypes = new HashSet<string>
-        {".mp3",".wav"};
+        {"mp3","wav"};
 
         static public readonly HashSet<string> wordTypes = new HashSet<string>
-        {".doc",".docx"};
+        {"doc","docx"};
 
         static public readonly HashSet<string> excelTypes = new HashSet<string>
-        {".xls",".xlsx"};
+        {"xls","xlsx"};
 
         static public readonly HashSet<string> ptxTypes = new HashSet<string>
-        {".ppt",".pptx"};
+        {"ppt","pptx"};
 
 
         static public readonly Dictionary<string, int> uploadFileLimit = new Dictionary<string, int>
@@ -86,15 +86,15 @@ namespace FlowstorageDesktop {
 
         static public readonly Dictionary<string, Image> textTypeToImage = new Dictionary<string, Image> 
         {
-            { ".txt", TextImage},
-            { ".md", TextImage},
-            { ".csv", CSVImage},
-            { ".js", JsImage},
-            { ".css", CssImage},
-            { ".html", HTMLImage},
-            { ".sql", SQLImage},
-            { ".py", PYImage},
-            { ".xml", TextImage},
+            { "txt", TextImage},
+            { "md", TextImage},
+            { "csv", CSVImage},
+            { "js", JsImage},
+            { "css", CssImage},
+            { "html", HTMLImage},
+            { "sql", SQLImage},
+            { "py", PYImage},
+            { "xml", TextImage},
         };
 
         static public readonly Dictionary<string, Image> textTypeToImageFolder = new Dictionary<string, Image>

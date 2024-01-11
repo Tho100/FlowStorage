@@ -19,7 +19,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
             var filesInfo = new List<(string, string, string)>();
             var filePaths = new HashSet<string>();
 
-            const string query = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
+            const string query = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldname";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(folderName));
@@ -47,7 +47,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
             var filesData = new List<(string fileName, byte[] fileBytes)>();
 
-            const string query = "SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+            const string query = "SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldtitle";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldtitle", folderName);
@@ -69,7 +69,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
             var fileTypes = new List<string>();
 
-            const string query = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+            const string query = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
@@ -86,7 +86,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         public async Task AddImageCaching(string folderName) {
 
-            const string query = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
+            const string query = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldtitle";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(folderName));
@@ -102,7 +102,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         public async Task AddVideoThumbnailCaching(string folderName, string fileType) {
 
-            const string query = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
+            const string query = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername AND FILE_TYPE = @ext";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
@@ -118,7 +118,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         public async Task DeleteFolder(string folderName) {
             
-            const string query = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
+            const string query = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername";
             using (MySqlCommand command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));

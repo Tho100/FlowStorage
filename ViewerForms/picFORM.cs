@@ -329,7 +329,7 @@ namespace FlowstorageDesktop {
                     await ExecuteChangesDirectory("UPDATE upload_info_directory SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", values);
 
                 } else if (_tableName == GlobalsTable.folderUploadTable) {
-                    await ExecuteChangesFolder("UPDATE folder_upload_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldname", values);
+                    await ExecuteChangesFolder("UPDATE folder_upload_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldname", values);
 
                 } else {
                     MessageBox.Show("Can't apply filter for this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);

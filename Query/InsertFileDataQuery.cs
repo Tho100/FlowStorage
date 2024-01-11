@@ -213,7 +213,7 @@ namespace FlowstorageDesktop.Query {
 
                 string fileType = filesFullPath.Substring(filesFullPath.LastIndexOf('.') + 1);
 
-                const string insertQuery = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@folder_name, @username, @file_data, @file_type, @date, @file_name, @thumbnail)";
+                const string insertQuery = "INSERT INTO folder_upload_info(FOLDER_NAME,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@folder_name, @username, @file_data, @file_type, @date, @file_name, @thumbnail)";
 
                 var param = new Dictionary<string, string>
                 {

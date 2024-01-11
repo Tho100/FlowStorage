@@ -170,7 +170,7 @@ namespace FlowstorageDesktop {
 
         private async void RetrieveFolderData(string fileName) {
 
-            const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+            const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername AND CUST_FILE_PATH = @filename";
 
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);

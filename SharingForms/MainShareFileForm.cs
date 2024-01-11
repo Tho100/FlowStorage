@@ -17,7 +17,6 @@ namespace FlowstorageDesktop {
         public MainShareFileForm instance;
 
         readonly private GeneralCompressor compressor = new GeneralCompressor();
-        readonly private Crud crud = new Crud();
 
         readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
@@ -102,7 +101,7 @@ namespace FlowstorageDesktop {
                     ? fileDataBase64
                     : EncryptionModel.Encrypt(fileDataBase64);
 
-                const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@to,@from,@file_name,@date,@file_data,@file_type,@thumbnail,@comment)";
+                const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_THUMB,CUST_COMMENT) VALUES (@to,@from,@file_name,@date,@file_data,@thumbnail,@comment)";
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@to", receiverUsername);
@@ -110,7 +109,6 @@ namespace FlowstorageDesktop {
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@date", todayDate);
                     command.Parameters.AddWithValue("@file_data", compressedFileData);
-                    command.Parameters.AddWithValue("@file_type", _fileExtension);
                     command.Parameters.AddWithValue("@comment", encryptedComment);
                     command.Parameters.AddWithValue("@thumbnail", thumbnailBase64);
                     command.Prepare();

@@ -58,7 +58,7 @@ namespace FlowstorageDesktop {
 
             } else if (_tableName == GlobalsTable.folderUploadTable) {
 
-                using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
+                using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldername", con)) {
                     command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_directoryName));

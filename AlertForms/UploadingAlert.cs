@@ -121,7 +121,7 @@ namespace FlowstorageDesktop {
         /// <param name="_FoldName"></param>
         private void FileDeletionFolder(string _FileName, string _FoldName) {
 
-            const string fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
+            const string fileDeletionQuery = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldtitle";
 
             using (MySqlCommand command = new MySqlCommand(fileDeletionQuery, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
