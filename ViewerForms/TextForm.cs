@@ -56,7 +56,7 @@ namespace FlowstorageDesktop {
                 this._directoryName = directoryName;
                 this._isFromSharing = isFromSharing;
 
-                var fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
+                var fileType = lblFileName.Text.Split('.').Last();
 
                 if (isFromSharing) {
 
@@ -403,7 +403,7 @@ namespace FlowstorageDesktop {
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
 
-            string fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
+            string fileType = lblFileName.Text.Split('.').Last();
 
             SaveFileDialog saveDialog = new SaveFileDialog();
 

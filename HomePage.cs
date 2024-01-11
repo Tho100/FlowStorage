@@ -575,7 +575,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeTextTable) {
 
-                string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                string textType = titleLab.Text.Split('.').Last();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
                 await insertFileData.InsertFileData(fileName, keyVal, tableName);
@@ -988,8 +988,9 @@ namespace FlowstorageDesktop {
 
                     if (tableName == GlobalsTable.psText) {
 
-                        var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
+                        var getExtension = filesInfo[i].Item1.Split('.').Last();
                         var textTypeToImage = Globals.textTypeToImage[getExtension];
+
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
@@ -1250,7 +1251,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.psText) {
 
-                string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                string textType = titleLab.Text.Split('.').Last();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
                 await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
@@ -1862,7 +1863,7 @@ namespace FlowstorageDesktop {
 
         private async Task BuildFilePanelSharedToMe(string parameterName) {
 
-            //try {
+            try {
 
                 var imageValues = new List<Image>();
                 var onPressedEvent = new List<EventHandler>();
@@ -2065,11 +2066,12 @@ namespace FlowstorageDesktop {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-            /*} catch (Exception) {
+            } catch (Exception) {
                 BuildShowAlert(
                     title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
-            }*/
+            }
+
         }
 
         private async Task BuildSharedToMe() {
@@ -2277,7 +2279,7 @@ namespace FlowstorageDesktop {
 
                     if (Globals.textTypes.Contains(typeValues[i])) {
 
-                        var getExtension = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
+                        var getExtension = fileName.Split('.').Last();
                         var textTypeToImage = Globals.textTypeToImageFolder[getExtension];
                         imageValues.Add(textTypeToImage);
 

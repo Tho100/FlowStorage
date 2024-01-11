@@ -280,7 +280,7 @@ namespace FlowstorageDesktop {
 
                 if (tableName == GlobalsTable.homeTextTable) {
 
-                    string textTypes = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
+                    string textTypes = fileName.Split('.').Last();
                     imageValues.Add(Globals.textTypeToImage[textTypes]);
 
                     void videoOnPressed(object sender, EventArgs e) {

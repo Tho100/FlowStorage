@@ -84,6 +84,7 @@ namespace FlowstorageDesktop.SharingQuery {
                 string isEnabled = Convert.ToString(await command.ExecuteScalarAsync());
                 string concludeOutput = isEnabled == "1" ? "1" : "0";
                 return concludeOutput;
+
             }
 
         }
@@ -105,8 +106,7 @@ namespace FlowstorageDesktop.SharingQuery {
                         if (reader.GetString(0) == "DEF") {
                             storeVal = "";
 
-                        }
-                        else {
+                        } else {
                             storeVal = reader.GetString(0);
 
                         }

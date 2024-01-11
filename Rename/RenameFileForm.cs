@@ -115,8 +115,8 @@ namespace FlowstorageDesktop {
 
             if (_tableName != GlobalsTable.sharingTable && _tableName != GlobalsTable.folderUploadTable && _tableName != GlobalsTable.directoryUploadTable) {
                 matches = HomePage.instance.Controls.Find(_panelName, true);
-            }
-            else if (_tableName == GlobalsTable.directoryUploadTable) {
+
+            } else if (_tableName == GlobalsTable.directoryUploadTable) {
                 matches = DirectoryForm.instance.Controls.Find(_panelName, true);
             }
 
