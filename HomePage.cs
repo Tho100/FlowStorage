@@ -2188,14 +2188,11 @@ namespace FlowstorageDesktop {
 
             string selectedFolderName = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-            var fileTypesList = await folderDataCaller.GetFileType(selectedFolderName);
-            var fileTypesLength = fileTypesList.Count;
-
-            await BuildFilePanelFolder(fileTypesList, selectedFolderName, fileTypesLength);
+            await BuildFilePanelFolder(selectedFolderName);
 
         }
 
-        private async Task BuildFilePanelFolder(List<string> fileType, string folderName, int currItem) {
+        private async Task BuildFilePanelFolder(string folderName) {
 
             ClearRedundane();
 
@@ -2205,14 +2202,15 @@ namespace FlowstorageDesktop {
 
             try {
 
-                var originalTypeData = new List<string>(fileType);
-                var typeValues = originalTypeData.Select(f => "." + f).ToList();
-
                 var imageValues = new List<Image>();
                 var onPressedEvent = new List<EventHandler>();
                 var onMoreOptionButtonPressed = new List<EventHandler>();
 
                 var filesInfo = await folderDataCaller.GetFileMetadata(folderName);
+
+                var typeValues = filesInfo.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
+
+                int length = typeValues.Count;
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
@@ -2235,7 +2233,7 @@ namespace FlowstorageDesktop {
                     }
                 }
 
-                for (int i = 0; i < currItem; i++) {
+                for (int i = 0; i < length; i++) {
 
                     int accessIndex = i;
                     string fileName = filesInfo[accessIndex].Item1;
@@ -2276,7 +2274,6 @@ namespace FlowstorageDesktop {
 
                     }
 
-
                     if (Globals.textTypes.Contains(typeValues[i])) {
 
                         var getExtension = fileName.Split('.').Last();
@@ -2291,7 +2288,7 @@ namespace FlowstorageDesktop {
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[i] == ".exe") {
+                    if (typeValues[i] == "exe") {
 
                         imageValues.Add(Globals.EXEImage);
 
@@ -2306,7 +2303,7 @@ namespace FlowstorageDesktop {
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
                         if (GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
-                            await folderDataCaller.AddVideoThumbnailCaching(folderName, originalTypeData[i]);
+                            await folderDataCaller.AddVideoThumbnailCaching(folderName, filesInfo[i].Item1);
                             
                         }
 
@@ -2354,7 +2351,7 @@ namespace FlowstorageDesktop {
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (typeValues[i] == ".apk") {
+                    if (typeValues[i] == "apk") {
 
                         imageValues.Add(Globals.APKImage);
 
@@ -2365,7 +2362,7 @@ namespace FlowstorageDesktop {
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (typeValues[i] == ".pdf") {
+                    if (typeValues[i] == "pdf") {
 
                         imageValues.Add(Globals.PDFImage);
 
@@ -2387,7 +2384,7 @@ namespace FlowstorageDesktop {
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (typeValues[i] == ".msi") {
+                    if (typeValues[i] == "msi") {
 
                         imageValues.Add(Globals.MSIImage);
 
@@ -2412,7 +2409,7 @@ namespace FlowstorageDesktop {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel("folderParameter", length, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 UpdateProgressBarValue();
                 BuildRedundaneVisibility();
@@ -2940,11 +2937,7 @@ namespace FlowstorageDesktop {
 
             BuildButtonsOnFolderNameSelected();
 
-            var fileTypes = await folderDataCaller.GetFileType(folderName);
-
-            var currMainLength = fileTypes.Count;
-
-            await BuildFilePanelFolder(fileTypes, folderName, currMainLength);
+            await BuildFilePanelFolder(folderName);
             BuildRedundaneVisibility();
 
         }

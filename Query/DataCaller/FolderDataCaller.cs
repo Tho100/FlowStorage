@@ -65,25 +65,6 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         }
 
-        public async Task<List<string>> GetFileType(string folderName) {
-
-            var fileTypes = new List<string>();
-
-            const string query = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        fileTypes.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-            return fileTypes;
-
-        }
-
         public async Task AddImageCaching(string folderName) {
 
             const string query = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldtitle";
@@ -100,13 +81,13 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         }
 
-        public async Task AddVideoThumbnailCaching(string folderName, string fileType) {
+        public async Task AddVideoThumbnailCaching(string folderName, string fileName) {
 
-            const string query = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername AND FILE_TYPE = @ext";
+            const string query = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
-                command.Parameters.AddWithValue("@ext", fileType);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (var readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readBase64.ReadAsync()) {
                         GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));

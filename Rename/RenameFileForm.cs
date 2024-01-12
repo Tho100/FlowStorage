@@ -111,7 +111,7 @@ namespace FlowstorageDesktop {
 
         private void UpdateFileLabelUI(string newFileName) {
 
-            Control[] matches = new Control[0];
+            var matches = new Control[0];
 
             if (_tableName != GlobalsTable.sharingTable && _tableName != GlobalsTable.folderUploadTable && _tableName != GlobalsTable.directoryUploadTable) {
                 matches = HomePage.instance.Controls.Find(_panelName, true);
@@ -122,10 +122,11 @@ namespace FlowstorageDesktop {
 
             if (matches.Length > 0 && matches[0] is Guna2Panel) {
 
-                Guna2Panel myPanel = (Guna2Panel)matches[0];
+                var myPanel = (Guna2Panel)matches[0];
 
-                Label titleLabel = myPanel.Controls.OfType<Label>().LastOrDefault();
+                var titleLabel = myPanel.Controls.OfType<Label>().LastOrDefault();
                 titleLabel.Text = newFileName;
+
             }
         }
 
