@@ -14,7 +14,6 @@ namespace FlowstorageDesktop {
         readonly private ShareFileQuery shareFile = new ShareFileQuery();
         readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
 
-        readonly private Crud crud = new Crud();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         private string _fileName { get; set; }

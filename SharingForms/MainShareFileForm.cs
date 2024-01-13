@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -61,7 +62,9 @@ namespace FlowstorageDesktop {
 
                 string fileExtension = selectFilesDialog.FileName;
                 string fileName = selectFilesDialog.SafeFileName;
-                string retrieved = Path.GetExtension(fileExtension);
+                string retrieved = fileExtension.Split('.').Last();
+
+                MessageBox.Show(retrieved);
 
                 _fileName = fileName;
                 _fileFullPath = selectFilesDialog.FileName;
@@ -88,7 +91,7 @@ namespace FlowstorageDesktop {
 
             try {
                 
-                string fileType = Path.GetExtension(_fileName);
+                string fileType = _fileName.Split('.').Last();
 
                 string receiverUsername = txtFieldShareToName.Text;
 
@@ -154,19 +157,19 @@ namespace FlowstorageDesktop {
                     } else if (Globals.ptxTypes.Contains(_fileExtension)) {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".exe") {
+                    } else if (_fileExtension == "exe") {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".msi") {
+                    } else if (_fileExtension == "msi") {
                         await InsertFileData(fileBase64Data);
 
                     } else if (Globals.audioTypes.Contains(_fileExtension)) {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".pdf") {
+                    } else if (_fileExtension == "pdf") {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".apk") {
+                    } else if (_fileExtension == "apk") {
                         await InsertFileData(fileBase64Data);
 
                     } else if (Globals.excelTypes.Contains(_fileExtension)) {

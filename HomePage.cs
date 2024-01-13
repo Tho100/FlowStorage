@@ -252,7 +252,7 @@ namespace FlowstorageDesktop {
             var onPressedEvent = new List<EventHandler>();
             var onMoreOptionButtonPressed = new List<EventHandler>();
 
-            //try {
+            try {
 
                 List<(string, string, string)> filesInfo = await homeDataCaller.GetFileMetadata(tableName);
 
@@ -457,10 +457,10 @@ namespace FlowstorageDesktop {
 
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
-            /*} catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
-
-            */
+            } catch (Exception) {
+                BuildShowAlert(
+                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
+            }
 
         }
 
@@ -2308,7 +2308,6 @@ namespace FlowstorageDesktop {
                         }
 
                         if (GlobalsData.base64EncodedThumbnailFolder.Count > 0) {
-
                             byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailFolder[0]);
                             using (MemoryStream toMs = new MemoryStream(getBytes)) {
                                 imageValues.Add(Image.FromStream(toMs));
@@ -2340,6 +2339,7 @@ namespace FlowstorageDesktop {
 
                         onPressedEvent.Add(excelOnPressed);
                     }
+
                     if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
@@ -2430,7 +2430,7 @@ namespace FlowstorageDesktop {
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-            int _IntCurr = 0;
+            int curr = 0;
 
             StartPopupForm.StartUploadingFolderPopup(folderName);
 
@@ -2439,10 +2439,10 @@ namespace FlowstorageDesktop {
 
             foreach (var filesFullPath in Directory.EnumerateFiles(folderPath, "*")) {
 
-                _IntCurr++;
+                curr++;
 
                 var filePanel = new Guna2Panel() {
-                    Name = $"PanExlFold{_IntCurr}",
+                    Name = $"PanExlFold{curr}",
                     Width = 200,
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
@@ -2458,7 +2458,7 @@ namespace FlowstorageDesktop {
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = $"titleImgL{_IntCurr}";
+                titleLab.Name = $"titleImgL{curr}";
                 titleLab.Font = GlobalStyle.TitleLabelFont;
                 titleLab.ForeColor = GlobalStyle.GainsboroColor;
                 titleLab.Visible = true;
@@ -2467,11 +2467,11 @@ namespace FlowstorageDesktop {
                 titleLab.AutoEllipsis = true;
                 titleLab.Width = 160;
                 titleLab.Height = 20;
-                titleLab.Text = filesName[_IntCurr - 1];
+                titleLab.Text = filesName[curr - 1];
 
                 var textboxExl = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxExl);
-                textboxExl.Name = $"ExeExlFold{_IntCurr}";
+                textboxExl.Name = $"ExeExlFold{curr}";
                 textboxExl.Width = 190;
                 textboxExl.Height = 145;
                 textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -2504,7 +2504,7 @@ namespace FlowstorageDesktop {
 
                 Guna2Button remButExl = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButExl);
-                remButExl.Name = $"RemExlButFold{_IntCurr}";
+                remButExl.Name = $"RemExlButFold{curr}";
                 remButExl.Width = 29;
                 remButExl.Height = 26;
                 remButExl.ImageOffset = GlobalStyle.GarbageOffset;
@@ -2529,7 +2529,7 @@ namespace FlowstorageDesktop {
 
                 Label dateLabExl = new Label();
                 mainPanelTxt.Controls.Add(dateLabExl);
-                dateLabExl.Name = $"LabExlUpFold{_IntCurr}";
+                dateLabExl.Name = $"LabExlUpFold{curr}";
                 dateLabExl.Font = GlobalStyle.DateLabelFont;
                 dateLabExl.ForeColor = GlobalStyle.DarkGrayColor;
                 dateLabExl.Visible = true;
@@ -2542,7 +2542,7 @@ namespace FlowstorageDesktop {
 
                 try {
 
-                    string fileType = Path.GetExtension(filesFullPath);
+                    string fileType = filesFullPath.Split('.').Last();
 
                     byte[] retrieveBytes = File.ReadAllBytes(filesFullPath);
                     byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
@@ -2597,7 +2597,7 @@ namespace FlowstorageDesktop {
 
                     }
 
-                    if (fileType == ".apk") {
+                    if (fileType == "apk") {
 
                         await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
@@ -2636,7 +2636,7 @@ namespace FlowstorageDesktop {
                         };
                     }
 
-                    if (fileType == ".pdf") {
+                    if (fileType == "pdf") {
 
                         await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 

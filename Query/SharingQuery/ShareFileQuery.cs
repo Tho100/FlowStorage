@@ -35,8 +35,6 @@ namespace FlowstorageDesktop.SharingQuery {
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
 
-            return 0;
-
         }
 
         /// <summary>
@@ -193,8 +191,6 @@ namespace FlowstorageDesktop.SharingQuery {
 
         private async Task InsertFileData(string fileDataBase64, string thumbnailBase64 = null) {
 
-            string fileType = Path.GetExtension(_fileName);
-
             string encryptedFileName = EncryptionModel.Encrypt(_fileName);
             string encryptedComment = string.IsNullOrEmpty(_comment)
                 ? string.Empty : EncryptionModel.Encrypt(_comment);
@@ -256,7 +252,7 @@ namespace FlowstorageDesktop.SharingQuery {
                         ? GlobalsTable.psExcel : GlobalsTable.homeExcelTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == ".pdf") {
+                } else if (_fileExtension == "pdf") {
                     string finalTable = _tableName == GlobalsTable.psPdf
                         ? GlobalsTable.psPdf : GlobalsTable.homePdfTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
@@ -276,12 +272,12 @@ namespace FlowstorageDesktop.SharingQuery {
                         ? GlobalsTable.psAudio : GlobalsTable.homeAudioTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == ".exe") {
+                } else if (_fileExtension == "exe") {
                     string finalTable = _tableName == GlobalsTable.psExe
                         ? GlobalsTable.psExe : GlobalsTable.homeExeTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == ".apk") {
+                } else if (_fileExtension == "apk") {
                     string finalTable = _tableName == GlobalsTable.psApk
                         ? GlobalsTable.psApk : GlobalsTable.homeApkTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));

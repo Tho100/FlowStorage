@@ -23,7 +23,7 @@ namespace FlowstorageDesktop {
             try {
 
                 fileName = selectedFileName;
-                fileType = $".{selectedFileName.Split('.').Last()}";
+                fileType = selectedFileName.Split('.').Last();
 
                 if (GlobalsTable.publicTables.Contains(tableName)) {
                     RetrieveHomeDataAsync(tableName);

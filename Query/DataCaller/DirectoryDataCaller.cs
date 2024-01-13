@@ -1,5 +1,7 @@
-﻿using FlowstorageDesktop.Temporary;
+﻿using FlowstorageDesktop.Global;
+using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
+using Spire.OfficeViewer.Forms;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,15 +12,14 @@ namespace FlowstorageDesktop.Query.DataCaller {
         readonly private MySqlConnection con = ConnectionModel.con;
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
-        public async Task<List<(string, string, string)>> GetFileMetadata(string fileType, string directoryName) {
+        public async Task<List<(string, string, string)>> GetFileMetadata(string directoryName) {
 
             var filesInfo = new List<(string, string, string)>();
 
-            const string query = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+            const string query = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-                command.Parameters.AddWithValue("@ext", fileType);
                 using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         string fileName = EncryptionModel.Decrypt(reader.GetString(0));
@@ -32,43 +33,34 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         }
 
-        public async Task<List<string>> GetImages(string fileType, string directoryName) {
+        public async Task AddImageCaching(string directoryName) {
 
-            var base64EncodedImages = new List<string>();
-
-            const string query = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+            const string query = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-                command.Parameters.AddWithValue("@ext", fileType);
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        base64EncodedImages.Add(EncryptionModel.Decrypt(reader.GetString(0)));
+                        GlobalsData.base64EncodedImageDirectory.Add(EncryptionModel.Decrypt(reader.GetString(0)));
                     }
                 }
             }
-
-            return base64EncodedImages;
 
         }
 
-        public async Task<List<string>> GetVideoThumbnail(string fileType, string directoryName) {
+        public async Task AddVideoThumbnailCaching(string fileName, string directoryName) {
 
-            var base64EncodedThumbnails = new List<string>();
-
-            const string query = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
+            const string query = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-                command.Parameters.AddWithValue("@ext", fileType);
+                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (var reader = await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        base64EncodedThumbnails.Add(reader.GetString(0));
+                        GlobalsData.base64EncodedThumbnailDirectory.Add(reader.GetString(0));
                     }
                 }
             }
-
-            return base64EncodedThumbnails;
 
         }
 
