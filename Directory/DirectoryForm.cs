@@ -336,7 +336,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void Form3_Load(object sender, EventArgs e) {
+        private void DirectoryForm_Load(object sender, EventArgs e) {
 
         }
 
@@ -811,6 +811,7 @@ namespace FlowstorageDesktop {
                 ClosePopupForm.CloseUploadingPopup();
                 OnUploadFailed();
             }
+
         }
 
         private void guna2VSeparator1_Click(object sender, EventArgs e) {

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DirectoryForm));
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
@@ -39,7 +38,6 @@
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.btnCloseDirectory = new Guna.UI2.WinForms.Guna2Button();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.lblDirectoryName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -59,10 +57,6 @@
             this.guna2Panel3.SuspendLayout();
             this.pnlFileOptions.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // guna2Panel3
             // 
@@ -442,9 +436,9 @@
             this.lblFilesCount.ForeColor = System.Drawing.Color.Silver;
             this.lblFilesCount.Location = new System.Drawing.Point(93, 45);
             this.lblFilesCount.Name = "lblFilesCount";
-            this.lblFilesCount.Size = new System.Drawing.Size(50, 17);
+            this.lblFilesCount.Size = new System.Drawing.Size(53, 17);
             this.lblFilesCount.TabIndex = 76;
-            this.lblFilesCount.Text = "12 Files";
+            this.lblFilesCount.Text = "0 File(s)";
             // 
             // DirectoryForm
             // 
@@ -467,7 +461,7 @@
             this.Name = "DirectoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Directory";
-            this.Load += new System.EventHandler(this.Form3_Load);
+            this.Load += new System.EventHandler(this.DirectoryForm_Load);
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel3.PerformLayout();
             this.pnlFileOptions.ResumeLayout(false);
@@ -478,7 +472,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         public System.Windows.Forms.FlowLayoutPanel flwLayoutDirectory;
         private Guna.UI2.WinForms.Guna2Button btnUploadFile;
@@ -487,7 +480,6 @@
         public System.Windows.Forms.Label label8;
         public Guna.UI2.WinForms.Guna2Button guna2Button6;
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label lblDirectoryName;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
