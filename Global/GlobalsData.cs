@@ -3,17 +3,11 @@
 namespace FlowstorageDesktop.Global {
     public class GlobalsData {
 
-        static public List<string> base64EncodedImageDirectory = new List<string>();
-        static public List<string> base64EncodedThumbnailDirectory = new List<string>();
-
         static public List<string> base64EncodedImageSharedOthers = new List<string>();
-        static public List<string> base64EncodedThumbnailSharedOthers = new List<string>();
 
-        static public List<string> base64EncodedThumbnailSharedToMe = new List<string>();
         static public List<string> base64EncodedImageSharedToMe = new List<string>();
 
         static public List<string> base64EncodedImageFolder = new List<string>();
-        static public List<string> base64EncodedThumbnailFolder = new List<string>();
 
         static public Dictionary<string, List<(string, string, string)>> filesMetadataCacheHome = new Dictionary<string, List<(string, string, string)>>();
         static public List<string> base64EncodedImageHome = new List<string>();

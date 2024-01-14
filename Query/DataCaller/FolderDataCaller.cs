@@ -81,22 +81,6 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         }
 
-        public async Task AddVideoThumbnailCaching(string folderName, string fileName) {
-
-            const string query = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername AND CUST_FILE_PATH = @filename";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                using (var readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await readBase64.ReadAsync()) {
-                        GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
-                    }
-                }
-            }
-
-        }
-
         public async Task DeleteFolder(string folderName) {
             
             const string query = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername";

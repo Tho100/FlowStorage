@@ -54,7 +54,7 @@ namespace FlowstorageDesktop {
 
 
 
-        private async void guna2Button3_Click(object sender, EventArgs e) {
+        private void guna2Button3_Click(object sender, EventArgs e) {
 
             /*try {
 

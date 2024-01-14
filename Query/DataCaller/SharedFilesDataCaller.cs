@@ -61,21 +61,5 @@ namespace FlowstorageDesktop.Query.DataCaller {
             }
 
         }
-
-        public async Task AddVideoThumbnailCaching(string fileName) {
-
-            const string query = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        GlobalsData.base64EncodedThumbnailSharedOthers.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-        }
-
     }
 }

@@ -1684,18 +1684,7 @@ namespace FlowstorageDesktop {
 
                 if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                    if (GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
-                        await sharedFilesDataCaller.AddVideoThumbnailCaching(filesInfoSharedOthers[i].Item1);
-
-                    }
-
-                    if (GlobalsData.base64EncodedThumbnailSharedOthers.Count > 0) {
-                        byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedOthers[0]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            imageValues.Add(Image.FromStream(toMs));
-                        }
-
-                    }
+                    imageValues.Add(Globals.VideoImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
 
@@ -1840,7 +1829,6 @@ namespace FlowstorageDesktop {
         private async Task RefreshGenerateUserSharedOthers(string dirName) {
 
             GlobalsData.base64EncodedImageSharedOthers.Clear();
-            GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
 
             await CallFilesInformationOthers();
             await BuildFilePanelSharedToOthers(dirName);
@@ -1935,18 +1923,7 @@ namespace FlowstorageDesktop {
 
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                        if (GlobalsData.base64EncodedThumbnailSharedToMe.Count == 0) {
-                            MessageBox.Show(filesInfoSharedToMe[i].Item1);
-                            await sharedToMeDataCaller.AddVideoThumbnailCaching(filesInfoSharedToMe[i].Item1);
-
-                        }
-
-                        if (GlobalsData.base64EncodedThumbnailSharedToMe.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedToMe[0]);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                imageValues.Add(Image.FromStream(toMs));
-                            }
-                        }
+                        imageValues.Add(Globals.VideoImage);
 
                         void videoOnPressed(object sender, EventArgs e) {
 
@@ -2096,7 +2073,6 @@ namespace FlowstorageDesktop {
         private async Task RefreshGenerateUserSharedToMe(string dirName) {
 
             GlobalsData.base64EncodedImageSharedToMe.Clear();
-            GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
 
             await CallFilesInformationSharedToMe();
             await BuildFilePanelSharedToMe(dirName);
@@ -2223,7 +2199,6 @@ namespace FlowstorageDesktop {
                             previousSelectedItem = selectedItem;
 
                             GlobalsData.base64EncodedImageFolder.Clear();
-                            GlobalsData.base64EncodedThumbnailFolder.Clear();
                         }
                     }
 
@@ -2302,18 +2277,7 @@ namespace FlowstorageDesktop {
 
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                        if (GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
-                            await folderDataCaller.AddVideoThumbnailCaching(folderName, filesInfo[i].Item1);
-                            
-                        }
-
-                        if (GlobalsData.base64EncodedThumbnailFolder.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailFolder[0]);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                imageValues.Add(Image.FromStream(toMs));
-                            }
-
-                        }
+                        imageValues.Add(Globals.VideoImage);
 
                         void videoOnPressed(object sender, EventArgs e) {
 
@@ -2435,7 +2399,6 @@ namespace FlowstorageDesktop {
             StartPopupForm.StartUploadingFolderPopup(folderName);
 
             GlobalsData.base64EncodedImageFolder.Clear();
-            GlobalsData.base64EncodedThumbnailFolder.Clear();
 
             foreach (var filesFullPath in Directory.EnumerateFiles(folderPath, "*")) {
 
@@ -3389,10 +3352,8 @@ namespace FlowstorageDesktop {
             GlobalsData.base64EncodedImageHome.Clear();
             GlobalsData.base64EncodedThumbnailHome.Clear();
 
-            GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
             GlobalsData.base64EncodedImageSharedOthers.Clear();
 
-            GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
             GlobalsData.base64EncodedImageSharedToMe.Clear();
 
             GlobalsData.base64EncodedImagePs.Clear();

@@ -13,6 +13,7 @@ namespace FlowstorageDesktop {
 
         static public readonly Image PDFImage = Properties.Resources.icons8_pdf_60__1_;
         static public readonly Image AudioImage = Properties.Resources.icons8_audio_file_60;
+        static public readonly Image VideoImage = Properties.Resources.video_image;
 
         static public readonly Image DOCImage = Properties.Resources.icons8_microsoft_word_60;
         static public readonly Image PTXImage = Properties.Resources.icons8_microsoft_powerpoint_60;

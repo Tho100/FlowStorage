@@ -467,7 +467,6 @@
             this.Name = "DirectoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Directory";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DirectoryForm_FormClosed);
             this.Load += new System.EventHandler(this.Form3_Load);
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel3.PerformLayout();

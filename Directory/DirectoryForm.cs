@@ -150,7 +150,9 @@ namespace FlowstorageDesktop {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
-            var onMoreOptionButtonPressed = new List<EventHandler>(); 
+            var onMoreOptionButtonPressed = new List<EventHandler>();
+
+            var base64EncodedImage = new List<string>();
 
             string directoryName = lblDirectoryName.Text;
 
@@ -175,13 +177,14 @@ namespace FlowstorageDesktop {
 
                 if (Globals.imageTypes.Contains(typeValues[i])) {
 
-                    if (GlobalsData.base64EncodedImageDirectory.Count == 0) {
-                        await directoryDataCaller.AddImageCaching(directoryName);
+                    if (base64EncodedImage.Count == 0) {
+                        var images = await directoryDataCaller.GetImage(directoryName);
+                        base64EncodedImage.AddRange(images);
 
                     }
 
-                    if (GlobalsData.base64EncodedImageDirectory.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedImageDirectory[i]);
+                    if (base64EncodedImage.Count > i) {
+                        byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
                         using (MemoryStream toMs = new MemoryStream(getBytes)) {
                             imageValues.Add(Image.FromStream(toMs));
                         }
@@ -204,17 +207,7 @@ namespace FlowstorageDesktop {
 
                 if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                    if (GlobalsData.base64EncodedThumbnailDirectory.Count == 0) {
-                        await directoryDataCaller.AddVideoThumbnailCaching(fileName, directoryName);
-
-                    }
-
-                    if (GlobalsData.base64EncodedThumbnailDirectory.Count > 0) {
-                        byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailDirectory[0]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            imageValues.Add(Image.FromStream(toMs));
-                        }
-                    }
+                    imageValues.Add(Globals.VideoImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
 
@@ -888,9 +881,5 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void DirectoryForm_FormClosed(object sender, FormClosedEventArgs e) {
-            GlobalsData.base64EncodedThumbnailDirectory.Clear();
-            GlobalsData.base64EncodedImageDirectory.Clear();
-        }
     }
 }

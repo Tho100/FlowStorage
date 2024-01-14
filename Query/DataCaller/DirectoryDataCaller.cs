@@ -33,7 +33,9 @@ namespace FlowstorageDesktop.Query.DataCaller {
 
         }
 
-        public async Task AddImageCaching(string directoryName) {
+        public async Task<List<string>> GetImage(string directoryName) {
+
+            var base64EncodedImage = new List<string>();
 
             const string query = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname";
             using (var command = new MySqlCommand(query, con)) {
@@ -41,41 +43,13 @@ namespace FlowstorageDesktop.Query.DataCaller {
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
-                        GlobalsData.base64EncodedImageDirectory.Add(EncryptionModel.Decrypt(reader.GetString(0)));
+                        base64EncodedImage.Add(EncryptionModel.Decrypt(reader.GetString(0)));
                     }
                 }
             }
 
-        }
+            return base64EncodedImage;
 
-        public async Task AddVideoThumbnailCaching(string fileName, string directoryName) {
-
-            const string query = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND CUST_FILE_PATH = @filename";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
-                using (var reader = await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        GlobalsData.base64EncodedThumbnailDirectory.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-        }
-
-        public async Task<int> CountFilesInDirectory(string fileType, string directoryName) {
-
-            string encryptedDirectoryName = EncryptionModel.Encrypt(directoryName);
-
-            const string query = "SELECT COUNT(*) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@dirname", encryptedDirectoryName);
-                command.Parameters.AddWithValue("@ext", fileType);
-
-                return Convert.ToInt32(await command.ExecuteScalarAsync());
-            }
         }
 
         public async Task DeleteDirectory(string directoryName) {
