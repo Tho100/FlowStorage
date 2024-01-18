@@ -8,7 +8,6 @@ using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
-using MySql.Data.MySqlClient;
 using DiscordRPC;
 
 using System;
@@ -724,7 +723,7 @@ namespace FlowstorageDesktop {
                 foreach (var selectedItems in selectFilesDialog.FileNames) {
 
                     string selectedFileName = Path.GetFileName(selectedItems);
-                    string fileType = Path.GetExtension(selectedItems);
+                    string fileType = selectedFileName.Split('.').Last();
 
                     if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                         continue;
@@ -767,7 +766,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
 
-                        } else if (fileType == ".exe") {
+                        } else if (fileType == "exe") {
                             exeCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
@@ -787,12 +786,12 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
-                        } else if (fileType == ".apk") {
+                        } else if (fileType == "apk") {
                             apkCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
 
-                        } else if (fileType == ".pdf") {
+                        } else if (fileType == "pdf") {
                             pdfCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
@@ -802,7 +801,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
 
-                        } else if (fileType == ".msi") {
+                        } else if (fileType == "msi") {
                             msiCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
@@ -1444,7 +1443,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psText, "PanTxt", txtCurr, encryptTextValues);
 
-                        } else if (fileType == ".exe") {
+                        } else if (fileType == "exe") {
                             exeCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psExe, "PanExe", exeCurr, encryptText);
@@ -1464,12 +1463,12 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psAudio, "PanAud", audCurr, encryptText);
 
-                        } else if (fileType == ".apk") {
+                        } else if (fileType == "apk") {
                             apkCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psApk, "PanApk", apkCurr, encryptText);
 
-                        } else if (fileType == ".pdf") {
+                        } else if (fileType == "pdf") {
                             pdfCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psPdf, "PanPdf", pdfCurr, encryptText);
@@ -1479,7 +1478,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psPtx, "PanPtx", ptxCurr, encryptText);
 
-                        } else if (fileType == ".msi") {
+                        } else if (fileType == "msi") {
                             msiCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psMsi, "PanMsi", msiCurr, encryptText);
@@ -2095,9 +2094,10 @@ namespace FlowstorageDesktop {
 
         private void OpenFolderDialog() {
 
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "";
-            dialog.IsFolderPicker = true;
+            var dialog = new CommonOpenFileDialog {
+                InitialDirectory = "",
+                IsFolderPicker = true
+            };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
 
@@ -3452,7 +3452,8 @@ namespace FlowstorageDesktop {
 
             foreach (var selectedItems in filePathList) {
 
-                string fileType = Path.GetExtension(selectedItems);
+                string fileName = Path.GetFileName(selectedItems);
+                string fileType = fileName.Split('.').Last();
 
                 try {
 
@@ -3486,7 +3487,7 @@ namespace FlowstorageDesktop {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptTextValue);
 
-                    } else if (fileType == ".exe") {
+                    } else if (fileType == "exe") {
                         exeCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
@@ -3506,12 +3507,12 @@ namespace FlowstorageDesktop {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
-                    } else if (fileType == ".apk") {
+                    } else if (fileType == "apk") {
                         apkCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
 
-                    } else if (fileType == ".pdf") {
+                    } else if (fileType == "pdf") {
                         pdfCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
@@ -3521,7 +3522,7 @@ namespace FlowstorageDesktop {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
 
-                    } else if (fileType == ".msi") {
+                    } else if (fileType == "msi") {
                         msiCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
@@ -3651,7 +3652,7 @@ namespace FlowstorageDesktop {
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
-            DialogResult verifyDialog = MessageBox.Show(
+            var verifyDialog = MessageBox.Show(
                 $"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDialog == DialogResult.Yes) {
@@ -3659,25 +3660,16 @@ namespace FlowstorageDesktop {
                 var deleteFileQuery = new DeleteFileDataQuery();
                 await deleteFileQuery.DeleteFileData(tableName, fileName, dirName, sharedToName);
 
-                Control[] matches = this.Controls.Find(panelName, true);
+                var matches = this.Controls.Find(panelName, true);
 
-                if (matches.Length > 0 && matches[0] is Guna2Panel) {
-                    Guna2Panel myPanel = (Guna2Panel)matches[0];
+                if (matches.Length > 0 && matches[0] is Guna2Panel myPanel) {
                     flwLayoutHome.Controls.Remove(myPanel);
                     myPanel.Dispose();
-
                 }
 
-                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
+                UpdateProgressBarValue();
                 BuildRedundaneVisibility();
-
-                int getCurrentCount = int.Parse(lblItemCountText.Text);
-                int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-                lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-                progressBarUsageStorage.Value = calculatePercentageUsage;
 
                 pnlFileOptions.Visible = false;
 

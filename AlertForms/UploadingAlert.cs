@@ -162,17 +162,12 @@ namespace FlowstorageDesktop {
 
                 if(con.State == System.Data.ConnectionState.Open) {
 
-                    // @ Close connection before turning it back on for file deletion
                     con.Close();
 
                     if(con.State == System.Data.ConnectionState.Closed) {
 
-                        // @ This will shows a form that alert user about the file upload 
-                        // cancellation
-                        Thread waitForm = new Thread(() => new CancellingAlert().ShowDialog());
-                        waitForm.Start();
+                        new Thread(() => new CancellingAlert().ShowDialog()).Start();
 
-                        // @ Turn connection back on to delete the cancelled file
                         con.Open();
 
                         Application.OpenForms
@@ -181,14 +176,14 @@ namespace FlowstorageDesktop {
                          .ToList()
                          .ForEach(form => form.Close());
 
-                        string fileType = Path.GetExtension(FileName);
+                        string fileType = FileName.Split('.').Last();
 
                         if(TableName == string.Empty) {
 
                             if (Globals.imageTypes.Contains(fileType)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homeImageTable);
 
-                            } else if (fileType == ".msi") {
+                            } else if (fileType == "msi") {
                                 FileDeletionNormal(FileName, GlobalsTable.homeMsiTable);
 
                             } else if (Globals.audioTypes.Contains(fileType)) {
@@ -200,13 +195,13 @@ namespace FlowstorageDesktop {
                             } else if (Globals.ptxTypes.Contains(fileType)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homePtxTable);
 
-                            } else if (fileType == ".pdf") {
+                            } else if (fileType == "pdf") {
                                 FileDeletionNormal(FileName, GlobalsTable.homePdfTable);
 
                             } else if (Globals.textTypes.Contains(fileType)) {
                                 FileDeletionNormal(FileName, GlobalsTable.homeTextTable);
 
-                            } else if (fileType == ".exe") {
+                            } else if (fileType == "exe") {
                                 FileDeletionNormal(FileName, GlobalsTable.homeExeTable);
 
                             }
@@ -216,7 +211,7 @@ namespace FlowstorageDesktop {
                             if (Globals.imageTypes.Contains(fileType)) {
                                 FileDeletionDirectory(FileName);
 
-                            } else if (fileType == ".msi") {
+                            } else if (fileType == "msi") {
                                 FileDeletionDirectory(FileName);
 
                             } else if (Globals.audioTypes.Contains(fileType)) {
@@ -228,13 +223,13 @@ namespace FlowstorageDesktop {
                             } else if (Globals.ptxTypes.Contains(fileType)) {
                                 FileDeletionDirectory(FileName);
 
-                            } else if (fileType == ".pdf") {
+                            } else if (fileType == "pdf") {
                                 FileDeletionDirectory(FileName);
 
                             } else if (Globals.textTypes.Contains(fileType)) {
                                 FileDeletionDirectory(FileName);
 
-                            } else if (fileType == ".exe") {
+                            } else if (fileType == "exe") {
                                 FileDeletionDirectory(FileName);
                             }
 
@@ -242,7 +237,7 @@ namespace FlowstorageDesktop {
                             if (Globals.imageTypes.Contains(fileType)) {
                                 FileDeletionFolder(FileName, GlobalsTable.homeImageTable);
 
-                            } else if (fileType == ".msi") {
+                            } else if (fileType == "msi") {
                                 FileDeletionFolder(FileName, GlobalsTable.homeMsiTable);
 
                             } else if (Globals.audioTypes.Contains(fileType)) {
@@ -254,18 +249,20 @@ namespace FlowstorageDesktop {
                             } else if (Globals.ptxTypes.Contains(fileType)) {
                                 FileDeletionFolder(FileName, GlobalsTable.homePtxTable);
 
-                            } else if (fileType == ".pdf") {
+                            } else if (fileType == "pdf") {
                                 FileDeletionFolder(FileName, GlobalsTable.homePdfTable);
 
                             } else if (Globals.textTypes.Contains(fileType)) {
                                 FileDeletionFolder(FileName, GlobalsTable.homeTextTable);
 
-                            } else if (fileType == ".exe") {
+                            } else if (fileType == "exe") {
                                 FileDeletionFolder(FileName, GlobalsTable.homeExeTable);
 
                             }
+
                         } else if (TableName == GlobalsTable.sharingTable) {
                             FileDeletionSharing(FileName);
+
                         }
                     }
                 }
