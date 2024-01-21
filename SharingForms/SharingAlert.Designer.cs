@@ -80,7 +80,7 @@
             this.lblSharingTo.Name = "lblSharingTo";
             this.lblSharingTo.Size = new System.Drawing.Size(352, 20);
             this.lblSharingTo.TabIndex = 64;
-            this.lblSharingTo.Text = "Sharing to danishisglesbian";
+            this.lblSharingTo.Text = "Sharing to name";
             this.lblSharingTo.Click += new System.EventHandler(this.lblSharingTo_Click);
             // 
             // label9

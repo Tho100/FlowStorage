@@ -76,7 +76,6 @@
             this.label1.Size = new System.Drawing.Size(99, 20);
             this.label1.TabIndex = 7;
             this.label1.Text = "Password";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -88,7 +87,6 @@
             this.label2.Size = new System.Drawing.Size(99, 20);
             this.label2.TabIndex = 5;
             this.label2.Text = "Email";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // linkLabel1
             // 
@@ -120,7 +118,6 @@
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.guna2CircleButton1.Size = new System.Drawing.Size(5, 5);
             this.guna2CircleButton1.TabIndex = 50;
-            this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
             // 
             // label3
             // 
@@ -132,7 +129,6 @@
             this.label3.Size = new System.Drawing.Size(45, 20);
             this.label3.TabIndex = 48;
             this.label3.Text = "PIN";
-            this.label3.Click += new System.EventHandler(this.label3_Click_1);
             // 
             // txtFieldPIN
             // 
@@ -226,7 +222,6 @@
             this.guna2CheckBox2.UncheckedState.BorderThickness = 1;
             this.guna2CheckBox2.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.guna2CheckBox2.UseVisualStyleBackColor = false;
-            this.guna2CheckBox2.CheckedChanged += new System.EventHandler(this.guna2CheckBox2_CheckedChanged);
             // 
             // lblAlert
             // 
@@ -240,7 +235,6 @@
             this.lblAlert.TabIndex = 19;
             this.lblAlert.Text = "Password or PIN number is incorrect";
             this.lblAlert.Visible = false;
-            this.lblAlert.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtFieldAuth
             // 
@@ -267,7 +261,6 @@
             this.txtFieldAuth.SelectedText = "";
             this.txtFieldAuth.Size = new System.Drawing.Size(207, 49);
             this.txtFieldAuth.TabIndex = 17;
-            this.txtFieldAuth.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
             // txtFieldEmail
             // 
@@ -294,7 +287,6 @@
             this.txtFieldEmail.SelectedText = "";
             this.txtFieldEmail.Size = new System.Drawing.Size(304, 49);
             this.txtFieldEmail.TabIndex = 16;
-            this.txtFieldEmail.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // guna2BorderlessForm1
             // 
@@ -313,7 +305,6 @@
             this.label5.Size = new System.Drawing.Size(203, 25);
             this.label5.TabIndex = 6;
             this.label5.Text = "Sign In to Flowstorage";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // guna2Button4
             // 
@@ -384,7 +375,6 @@
             this.Name = "SignInForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sign In";
-            this.Load += new System.EventHandler(this.LogIN_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -227,6 +227,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password-Recovery";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.ValidateRecoveryEmail_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

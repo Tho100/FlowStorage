@@ -49,5 +49,8 @@ namespace FlowstorageDesktop {
             this.Close();
         }
 
+        private void ValidateRecoveryEmail_Load(object sender, EventArgs e) {
+
+        }
     }
 }

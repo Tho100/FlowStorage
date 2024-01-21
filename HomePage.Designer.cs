@@ -163,7 +163,6 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(207, 669);
             this.pnlMain.TabIndex = 1;
-            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // pictureBox5
             // 
@@ -184,7 +183,6 @@
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(175, 10);
             this.guna2Separator1.TabIndex = 34;
-            this.guna2Separator1.Click += new System.EventHandler(this.guna2Separator1_Click);
             // 
             // lblEssentials
             // 
@@ -209,7 +207,6 @@
             this.lblUpload.Size = new System.Drawing.Size(59, 20);
             this.lblUpload.TabIndex = 32;
             this.lblUpload.Text = "Upload";
-            this.lblUpload.Click += new System.EventHandler(this.label10_Click);
             // 
             // btnUploadFolder
             // 
@@ -319,7 +316,6 @@
             this.pnlFolders.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.pnlFolders.Size = new System.Drawing.Size(207, 669);
             this.pnlFolders.TabIndex = 36;
-            this.pnlFolders.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // button1
             // 
@@ -351,7 +347,6 @@
             this.pnlSubPanelDetails.Name = "pnlSubPanelDetails";
             this.pnlSubPanelDetails.Size = new System.Drawing.Size(178, 205);
             this.pnlSubPanelDetails.TabIndex = 23;
-            this.pnlSubPanelDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel4_Paint);
             // 
             // lblUsagePercentage
             // 
@@ -447,7 +442,6 @@
             this.lblItemCountText.Size = new System.Drawing.Size(19, 21);
             this.lblItemCountText.TabIndex = 21;
             this.lblItemCountText.Text = "0";
-            this.lblItemCountText.Click += new System.EventHandler(this.lblItemCountText_Click);
             // 
             // label2
             // 
@@ -460,7 +454,6 @@
             this.label2.Size = new System.Drawing.Size(83, 17);
             this.label2.TabIndex = 20;
             this.label2.Text = "Items Count";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // btnLogout
             // 
@@ -549,7 +542,6 @@
             this.label3.TabIndex = 27;
             this.label3.Text = "Guest";
             this.label3.Visible = false;
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // flwLayoutHome
             // 
@@ -563,7 +555,6 @@
             this.flwLayoutHome.Size = new System.Drawing.Size(1007, 532);
             this.flwLayoutHome.TabIndex = 16;
             this.flwLayoutHome.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flowLayoutPanel1_Scroll);
-            this.flwLayoutHome.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // flowLayoutPanel2
             // 
@@ -586,7 +577,6 @@
             this.richTextBox1.TabIndex = 50;
             this.richTextBox1.Text = "";
             this.richTextBox1.Visible = false;
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // lblCurrentPageText
             // 
@@ -599,7 +589,6 @@
             this.lblCurrentPageText.Size = new System.Drawing.Size(439, 31);
             this.lblCurrentPageText.TabIndex = 21;
             this.lblCurrentPageText.Text = "Public Storage";
-            this.lblCurrentPageText.Click += new System.EventHandler(this.label26_Click);
             // 
             // panel2
             // 
@@ -732,7 +721,6 @@
             this.lblEmptyHere.Size = new System.Drawing.Size(189, 32);
             this.lblEmptyHere.TabIndex = 26;
             this.lblEmptyHere.Text = "It\'s empty here..";
-            this.lblEmptyHere.Click += new System.EventHandler(this.label8_Click);
             // 
             // pnlDragAndDropUpload
             // 
@@ -750,7 +738,6 @@
             this.pnlDragAndDropUpload.Size = new System.Drawing.Size(1021, 524);
             this.pnlDragAndDropUpload.TabIndex = 41;
             this.pnlDragAndDropUpload.Visible = false;
-            this.pnlDragAndDropUpload.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint_1);
             // 
             // pictureBox1
             // 
@@ -761,7 +748,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
             // 
             // label25
             // 
@@ -775,7 +761,6 @@
             this.label25.Size = new System.Drawing.Size(183, 64);
             this.label25.TabIndex = 42;
             this.label25.Text = "Drag and Drop \r\n  upload here";
-            this.label25.Click += new System.EventHandler(this.label25_Click);
             // 
             // pnlFilterType
             // 
@@ -799,7 +784,6 @@
             this.pnlFilterType.Size = new System.Drawing.Size(587, 184);
             this.pnlFilterType.TabIndex = 39;
             this.pnlFilterType.Visible = false;
-            this.pnlFilterType.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // guna2Button25
             // 
@@ -1030,7 +1014,6 @@
             this.pnlFileOptions.Size = new System.Drawing.Size(314, 232);
             this.pnlFileOptions.TabIndex = 47;
             this.pnlFileOptions.Visible = false;
-            this.pnlFileOptions.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_1);
             // 
             // btnDeleteFile
             // 
@@ -1225,7 +1208,6 @@
             this.pnlPublicStorage.Size = new System.Drawing.Size(207, 668);
             this.pnlPublicStorage.TabIndex = 52;
             this.pnlPublicStorage.Visible = false;
-            this.pnlPublicStorage.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPublicStorage_Paint);
             // 
             // pnlPsSubDetails
             // 
@@ -1247,7 +1229,6 @@
             this.pnlPsSubDetails.Name = "pnlPsSubDetails";
             this.pnlPsSubDetails.Size = new System.Drawing.Size(178, 205);
             this.pnlPsSubDetails.TabIndex = 38;
-            this.pnlPsSubDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPsSubDetails_Paint);
             // 
             // lblUsagePercentagePs
             // 
@@ -1426,7 +1407,6 @@
             this.lblGreetingText.TabIndex = 18;
             this.lblGreetingText.Text = "Good morning Aqweqweshy :)";
             this.lblGreetingText.Visible = false;
-            this.lblGreetingText.Click += new System.EventHandler(this.label1_Click);
             // 
             // pnlExceedStorage
             // 
@@ -1628,7 +1608,6 @@
             this.btnGarbageImage.Name = "btnGarbageImage";
             this.btnGarbageImage.Size = new System.Drawing.Size(91, 76);
             this.btnGarbageImage.TabIndex = 17;
-            this.btnGarbageImage.Click += new System.EventHandler(this.guna2Button6_Click);
             // 
             // btnOpenRenameFolderPage
             // 
@@ -1857,12 +1836,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Flowstorage";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HomePage_FormClosing);
             this.Load += new System.EventHandler(this.HomePage_Load);
-            /*this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HomePage_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.HomePage_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.HomePage_DragOver);
-            this.DragLeave += new System.EventHandler(this.HomePage_DragLeave);*/
+
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();

@@ -54,17 +54,15 @@ namespace FlowstorageDesktop {
 
         private void guna2Button1_Click(object sender, EventArgs e) {
 
-            var selectFilesDialog = new OpenFileDialog();
-
-            selectFilesDialog.Filter = Globals.filterFileType;
+            var selectFilesDialog = new OpenFileDialog {
+                Filter = Globals.filterFileType
+            };
 
             if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
 
                 string fileExtension = selectFilesDialog.FileName;
                 string fileName = selectFilesDialog.SafeFileName;
                 string retrieved = fileExtension.Split('.').Last();
-
-                MessageBox.Show(retrieved);
 
                 _fileName = fileName;
                 _fileFullPath = selectFilesDialog.FileName;
@@ -77,6 +75,7 @@ namespace FlowstorageDesktop {
                 lblFileSize.Text = $"File Size: {GetFileSize.fileSize(_fileBytes):F2}Mb";
                 lblFileSize.Visible = true;
             }
+
         }
 
         /// <summary>

@@ -326,7 +326,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
+                            ExeForm displayExe = new ExeForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
                             displayExe.Show();
                         }
 
@@ -592,7 +592,7 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
+                    ExeForm displayExe = new ExeForm(titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
                     displayExe.Show();
                 };
             }
@@ -1005,7 +1005,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName);
+                            ExeForm displayExe = new ExeForm(filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName);
                             displayExe.Show();
                         }
 
@@ -1267,7 +1267,7 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username);
+                    ExeForm displayExe = new ExeForm(titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username);
                     displayExe.Show();
                 };
             }
@@ -1728,7 +1728,7 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.EXEImage);
 
                     void exeOnPressed(object sender, EventArgs e) {
-                        exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
+                        ExeForm displayExe = new ExeForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
                         displayExe.Show();
                     }
 
@@ -1967,7 +1967,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
+                            ExeForm displayExe = new ExeForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
                             displayExe.Show();
                         }
 
@@ -2268,7 +2268,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, folderName, string.Empty);
+                            ExeForm displayExe = new ExeForm(fileName, GlobalsTable.folderUploadTable, folderName, string.Empty);
                             displayExe.Show();
                         }
 
@@ -2864,38 +2864,6 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
         private async Task FolderOnSelected(string folderName) {
 
             BuildButtonsOnFolderNameSelected();
@@ -3080,14 +3048,6 @@ namespace FlowstorageDesktop {
 
         #endregion END - Build directory panel section
 
-        private void label10_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator1_Click(object sender, EventArgs e) {
-
-        }
-
         private void flowLayoutPanel1_Scroll(object sender, ScrollEventArgs e) {
             this.Invalidate();
             base.OnScroll(e);
@@ -3248,10 +3208,6 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e) {
-
-        }
-
         /// <summary>
         /// Go to Home button is pressed
         /// </summary>
@@ -3320,9 +3276,6 @@ namespace FlowstorageDesktop {
             pnlFolders.BringToFront();
             pnlPublicStorage.SendToBack();
             pnlMain.SendToBack();
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e) {
         }
 
         private async void guna2Button14_Click(object sender, EventArgs e) {
@@ -3600,15 +3553,6 @@ namespace FlowstorageDesktop {
 
         #endregion END - Filter type section
 
-        private void guna2Panel2_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label26_Click(object sender, EventArgs e) {
-
-        }
-
-
         /// <summary>
         /// 
         /// Download folder button.
@@ -3629,10 +3573,6 @@ namespace FlowstorageDesktop {
                     tempDataUser.AccountType, 
                     "Please upgrade your account \r\nplan to download folder.", false).Show();
             }
-        }
-
-        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
-
         }
 
         private void guna2Button28_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
@@ -3726,15 +3666,6 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void label25_Click(object sender, EventArgs e) {
-
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         /// <summary>
         /// 
         /// Public storage upload file
@@ -3787,14 +3718,6 @@ namespace FlowstorageDesktop {
             await BuildMyPublicStorageFiles();
         }
 
-        private void pictureBox1_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void HomePage_FormClosing(object sender, FormClosingEventArgs e) {
-
-        }
-
         private void guna2Button3_Click(object sender, EventArgs e) => this.Close();
 
         private async void guna2Button2_Click(object sender, EventArgs e) {
@@ -3810,18 +3733,6 @@ namespace FlowstorageDesktop {
         private void guna2Button1_Click_1(object sender, EventArgs e) {
             pnlShared.Visible = false;
             pnlFilterType.Visible = !pnlFilterType.Visible;
-        }
-
-        private void lblItemCountText_Click(object sender, EventArgs e) {
-
-        }
-
-        private void pnlPsSubDetails_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void pnlPublicStorage_Paint(object sender, PaintEventArgs e) {
-
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {

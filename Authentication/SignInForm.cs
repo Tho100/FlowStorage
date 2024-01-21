@@ -1,14 +1,12 @@
 ﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Authentication;
 using FlowstorageDesktop.AuthenticationQuery;
-using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using FlowstorageDesktop.Model;
 using FlowstorageDesktop.Temporary;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -188,10 +186,6 @@ namespace FlowstorageDesktop {
             Close();
         }
 
-        private void label4_Click(object sender, EventArgs e) {
-
-        }
-
         /// <summary>
         /// 
         /// Perform authentication and fetch user data on login
@@ -240,10 +234,6 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void LogIN_Load(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button1.Visible = true;
             guna2Button3.Visible = false;
@@ -256,42 +246,10 @@ namespace FlowstorageDesktop {
             txtFieldAuth.PasswordChar = '\0';
         }
 
-        private void guna2CheckBox2_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
             if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPIN.Text, "[^0-9]")) {
                 txtFieldPIN.Text = txtFieldPIN.Text.Remove(txtFieldPIN.Text.Length - 1);
             }
-        }
-
-        private void guna2CircleButton1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label3_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e) {
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

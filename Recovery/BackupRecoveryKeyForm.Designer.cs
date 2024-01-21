@@ -71,7 +71,7 @@
             this.txtFieldPIN.Name = "txtFieldPIN";
             this.txtFieldPIN.PasswordChar = '*';
             this.txtFieldPIN.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldPIN.PlaceholderText = "Enter your PIN key";
+            this.txtFieldPIN.PlaceholderText = "Enter your PIN";
             this.txtFieldPIN.SelectedText = "";
             this.txtFieldPIN.Size = new System.Drawing.Size(155, 49);
             this.txtFieldPIN.TabIndex = 25;

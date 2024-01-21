@@ -241,7 +241,7 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.EXEImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        exeFORM displayExe = new exeFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
+                        ExeForm displayExe = new ExeForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
                         displayExe.Show();
                     }
 
@@ -336,38 +336,8 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void DirectoryForm_Load(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void label8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-
-        }
-
+        private void guna2Button1_Click(object sender, EventArgs e) => this.Close();
+    
         /// <summary>
         /// Initialize file panel variable (for increment)
         /// </summary>
@@ -510,7 +480,7 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    new exeFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).Show();
+                    new ExeForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).Show();
                 };
             }
 
@@ -814,10 +784,6 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2VSeparator1_Click(object sender, EventArgs e) {
-
-        }
-
         private async void guna2Button26_Click(object sender, EventArgs e) {
 
             string fileName = lblFileNameOnPanel.Text;
@@ -848,9 +814,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button28_Click(object sender, EventArgs e) {
-            pnlFileOptions.Visible = false;
-        }
+        private void guna2Button28_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
 
         private void guna2Button30_Click(object sender, EventArgs e) {
 

@@ -72,7 +72,6 @@
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(1104, 568);
             this.guna2Panel3.TabIndex = 20;
-            this.guna2Panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint);
             // 
             // label8
             // 
@@ -85,7 +84,6 @@
             this.label8.Size = new System.Drawing.Size(214, 32);
             this.label8.TabIndex = 28;
             this.label8.Text = "Directory is empty";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // guna2Button6
             // 
@@ -103,7 +101,6 @@
             this.guna2Button6.Name = "guna2Button6";
             this.guna2Button6.Size = new System.Drawing.Size(76, 92);
             this.guna2Button6.TabIndex = 27;
-            this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
             // 
             // flwLayoutDirectory
             // 
@@ -113,7 +110,6 @@
             this.flwLayoutDirectory.Name = "flwLayoutDirectory";
             this.flwLayoutDirectory.Size = new System.Drawing.Size(1075, 551);
             this.flwLayoutDirectory.TabIndex = 16;
-            this.flwLayoutDirectory.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // btnUploadFile
             // 
@@ -145,7 +141,6 @@
             this.guna2VSeparator1.Name = "guna2VSeparator1";
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 47);
             this.guna2VSeparator1.TabIndex = 32;
-            this.guna2VSeparator1.Click += new System.EventHandler(this.guna2VSeparator1_Click);
             // 
             // btnCloseDirectory
             // 
@@ -186,7 +181,6 @@
             this.lblDirectoryName.Size = new System.Drawing.Size(792, 28);
             this.lblDirectoryName.TabIndex = 7;
             this.lblDirectoryName.Text = "Directory: ";
-            this.lblDirectoryName.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -199,7 +193,6 @@
             this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "Directory";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // guna2Separator1
             // 
@@ -461,7 +454,6 @@
             this.Name = "DirectoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Directory";
-            this.Load += new System.EventHandler(this.DirectoryForm_Load);
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel3.PerformLayout();
             this.pnlFileOptions.ResumeLayout(false);

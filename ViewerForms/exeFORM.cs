@@ -4,15 +4,15 @@ using System;
 using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
-    public partial class exeFORM : Form {
+    public partial class ExeForm : Form {
 
-        readonly public exeFORM instance;
+        readonly public ExeForm instance;
         public string _tableName { get; set; }
         public string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
         private bool _isFromSharing { get; set; }
 
-        public exeFORM(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public ExeForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 

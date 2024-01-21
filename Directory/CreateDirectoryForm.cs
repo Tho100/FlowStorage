@@ -26,11 +26,8 @@ namespace FlowstorageDesktop {
             InitializeComponent();
             instance = this;
         }
-        public void Form4_Load(object sender, EventArgs e) {
 
-        }
-
-        public void clearRedundane() {
+        public void ClearRedundane() {
             HomePage.instance.btnGarbageImage.Visible = false;
             HomePage.instance.lblEmptyHere.Visible = false;
         }
@@ -162,7 +159,7 @@ namespace FlowstorageDesktop {
 
                 };
 
-                clearRedundane();
+                ClearRedundane();
 
                 this.Close();
 
@@ -288,16 +285,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
+        private void guna2Button1_Click(object sender, EventArgs e) => this.Close();
 
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
     }
 }

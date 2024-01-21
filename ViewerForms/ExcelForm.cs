@@ -232,7 +232,8 @@ namespace FlowstorageDesktop {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Something went wrong", "Failed to save changes.").Show();
+                new CustomAlert(
+                    title: "Something went wrong", subheader: "Failed to save changes.").Show();
 
             }
         }

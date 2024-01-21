@@ -1,5 +1,5 @@
 ﻿namespace FlowstorageDesktop {
-    partial class exeFORM {
+    partial class ExeForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(exeFORM));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExeForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblFileName = new System.Windows.Forms.Label();
             this.lblUploaderName = new System.Windows.Forms.Label();
@@ -298,7 +298,7 @@
             this.guna2Button9.Visible = false;
             this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
             // 
-            // exeFORM
+            // ExeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -322,7 +322,7 @@
             this.Controls.Add(this.guna2Button9);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "exeFORM";
+            this.Name = "ExeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Viewer";
             this.TopMost = true;

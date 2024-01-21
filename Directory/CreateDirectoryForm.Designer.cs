@@ -91,7 +91,6 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(368, 284);
             this.guna2Panel1.TabIndex = 17;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // btnCancel
             // 
@@ -141,7 +140,6 @@
             this.txtFieldDirName.SelectedText = "";
             this.txtFieldDirName.Size = new System.Drawing.Size(297, 49);
             this.txtFieldDirName.TabIndex = 16;
-            this.txtFieldDirName.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // label4
             // 
@@ -187,7 +185,6 @@
             this.Name = "CreateDirectoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Create Directory";
-            this.Load += new System.EventHandler(this.Form4_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
