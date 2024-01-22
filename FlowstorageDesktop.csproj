@@ -533,9 +533,6 @@
     <Compile Include="ExtraForms\AudioPlayingForm.Designer.cs">
       <DependentUpon>AudioPlayingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Button_WOC.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="AlertForms\CancellingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
