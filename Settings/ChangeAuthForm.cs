@@ -19,13 +19,7 @@ namespace FlowstorageDesktop {
             InitializeComponent();
         }
 
-        private void label4_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
         private async Task StartInformationUpdate(string newAuth) {
 
@@ -103,10 +97,6 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void guna2Button3_Click(object sender, EventArgs e) {
             guna2Button3.Visible = false;
             guna2Button4.Visible = true;
@@ -131,12 +121,5 @@ namespace FlowstorageDesktop {
             txtFieldCurrentAuth.PasswordChar = '*';
         }
 
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e) {
-
-        }
     }
 }

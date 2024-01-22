@@ -222,7 +222,6 @@
             this.tabAccountPage.Size = new System.Drawing.Size(997, 593);
             this.tabAccountPage.TabIndex = 0;
             this.tabAccountPage.Text = "Account";
-            this.tabAccountPage.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // label19
             // 
@@ -297,7 +296,6 @@
             this.label5.Size = new System.Drawing.Size(80, 17);
             this.label5.TabIndex = 43;
             this.label5.Text = "Information";
-            this.label5.Click += new System.EventHandler(this.label5_Click_1);
             // 
             // label2
             // 
@@ -374,7 +372,6 @@
             this.lblDescChangeAuth.Size = new System.Drawing.Size(276, 17);
             this.lblDescChangeAuth.TabIndex = 27;
             this.lblDescChangeAuth.Text = "Update your Flowstorage account password";
-            this.lblDescChangeAuth.Click += new System.EventHandler(this.label8_Click);
             // 
             // lblLimitedUpload
             // 
@@ -388,7 +385,6 @@
             this.lblLimitedUpload.Size = new System.Drawing.Size(219, 21);
             this.lblLimitedUpload.TabIndex = 33;
             this.lblLimitedUpload.Text = "Limited to 25";
-            this.lblLimitedUpload.Click += new System.EventHandler(this.label37_Click);
             // 
             // lblAccountType
             // 
@@ -402,7 +398,6 @@
             this.lblAccountType.Size = new System.Drawing.Size(219, 21);
             this.lblAccountType.TabIndex = 29;
             this.lblAccountType.Text = "Basic";
-            this.lblAccountType.Click += new System.EventHandler(this.label6_Click);
             // 
             // lblChangeMyPassword
             // 
@@ -427,7 +422,6 @@
             this.label38.Size = new System.Drawing.Size(101, 21);
             this.label38.TabIndex = 32;
             this.label38.Text = "Item Upload";
-            this.label38.Click += new System.EventHandler(this.label38_Click);
             // 
             // label7
             // 
@@ -440,7 +434,6 @@
             this.label7.Size = new System.Drawing.Size(110, 21);
             this.label7.TabIndex = 28;
             this.label7.Text = "Account Type";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // lblUserUsername
             // 
@@ -526,7 +519,6 @@
             this.lblSettings.Size = new System.Drawing.Size(90, 30);
             this.lblSettings.TabIndex = 31;
             this.lblSettings.Text = "Settings";
-            this.lblSettings.Click += new System.EventHandler(this.label22_Click);
             // 
             // btnCloseTab1
             // 
@@ -595,7 +587,6 @@
             this.label18.Size = new System.Drawing.Size(143, 25);
             this.label18.TabIndex = 47;
             this.label18.Text = "Cancel my plan";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // label12
             // 
@@ -609,7 +600,6 @@
             this.label12.Size = new System.Drawing.Size(187, 17);
             this.label12.TabIndex = 49;
             this.label12.Text = "Cancel your subscription plan";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // tabStatsPage
             // 
@@ -625,7 +615,6 @@
             this.tabStatsPage.Size = new System.Drawing.Size(997, 593);
             this.tabStatsPage.TabIndex = 1;
             this.tabStatsPage.Text = "Statistics";
-            this.tabStatsPage.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // guna2Panel3
             // 
@@ -643,7 +632,6 @@
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(357, 77);
             this.guna2Panel3.TabIndex = 44;
-            this.guna2Panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_2);
             // 
             // lblFile
             // 
@@ -655,7 +643,6 @@
             this.lblFile.Size = new System.Drawing.Size(166, 21);
             this.lblFile.TabIndex = 39;
             this.lblFile.Text = "File Count";
-            this.lblFile.Click += new System.EventHandler(this.label28_Click_1);
             // 
             // lblCountFileUploadToday
             // 
@@ -679,7 +666,6 @@
             this.label31.Size = new System.Drawing.Size(246, 21);
             this.label31.TabIndex = 33;
             this.label31.Text = "Total upload today";
-            this.label31.Click += new System.EventHandler(this.label31_Click_1);
             // 
             // label32
             // 
@@ -722,7 +708,6 @@
             this.guna2Panel6.Name = "guna2Panel6";
             this.guna2Panel6.Size = new System.Drawing.Size(611, 437);
             this.guna2Panel6.TabIndex = 42;
-            this.guna2Panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel6_Paint);
             // 
             // label24
             // 
@@ -835,7 +820,6 @@
             this.chart1.Series.Add(series11);
             this.chart1.Size = new System.Drawing.Size(602, 404);
             this.chart1.TabIndex = 31;
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // guna2Panel5
             // 
@@ -859,7 +843,6 @@
             this.guna2Panel5.Name = "guna2Panel5";
             this.guna2Panel5.Size = new System.Drawing.Size(357, 160);
             this.guna2Panel5.TabIndex = 32;
-            this.guna2Panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel5_Paint);
             // 
             // label53
             // 
@@ -958,7 +941,6 @@
             this.label9.Size = new System.Drawing.Size(199, 21);
             this.label9.TabIndex = 33;
             this.label9.Text = "Directory Count";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
@@ -1012,7 +994,6 @@
             this.tabSharingPage.Size = new System.Drawing.Size(997, 593);
             this.tabSharingPage.TabIndex = 4;
             this.tabSharingPage.Text = "File Sharing";
-            this.tabSharingPage.Click += new System.EventHandler(this.tabPage5_Click);
             // 
             // label20
             // 
@@ -1166,7 +1147,6 @@
             this.lblDescSetAuthSharing.Size = new System.Drawing.Size(339, 17);
             this.lblDescSetAuthSharing.TabIndex = 27;
             this.lblDescSetAuthSharing.Text = "Ask for password before people can share a file to you";
-            this.lblDescSetAuthSharing.Click += new System.EventHandler(this.label66_Click);
             // 
             // lblSetPassword
             // 
@@ -1179,7 +1159,6 @@
             this.lblSetPassword.Size = new System.Drawing.Size(123, 25);
             this.lblSetPassword.TabIndex = 26;
             this.lblSetPassword.Text = "Set Password";
-            this.lblSetPassword.Click += new System.EventHandler(this.lblSetPassword_Click);
             // 
             // lblSettings3
             // 
@@ -1225,7 +1204,6 @@
             this.tabUpgradePage.Size = new System.Drawing.Size(997, 593);
             this.tabUpgradePage.TabIndex = 2;
             this.tabUpgradePage.Text = "Upgrade";
-            this.tabUpgradePage.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // guna2Panel2
             // 
@@ -1410,7 +1388,6 @@
             this.lblSupremePricing.Size = new System.Drawing.Size(115, 32);
             this.lblSupremePricing.TabIndex = 1;
             this.lblSupremePricing.Text = "$20";
-            this.lblSupremePricing.Click += new System.EventHandler(this.lblSupremePricing_Click);
             // 
             // guna2Panel1
             // 
@@ -1546,7 +1523,6 @@
             this.label36.Size = new System.Drawing.Size(49, 20);
             this.label36.TabIndex = 29;
             this.label36.Text = "PLAN";
-            this.label36.Click += new System.EventHandler(this.label36_Click);
             // 
             // label37
             // 
@@ -1571,7 +1547,6 @@
             this.label39.Size = new System.Drawing.Size(70, 20);
             this.label39.TabIndex = 27;
             this.label39.Text = "PRICING";
-            this.label39.Click += new System.EventHandler(this.label39_Click_1);
             // 
             // lblExpressPricing
             // 
@@ -1583,7 +1558,6 @@
             this.lblExpressPricing.Size = new System.Drawing.Size(115, 32);
             this.lblExpressPricing.TabIndex = 1;
             this.lblExpressPricing.Text = "$8";
-            this.lblExpressPricing.Click += new System.EventHandler(this.label42_Click);
             // 
             // label1
             // 
@@ -1630,7 +1604,6 @@
             this.guna2Panel8.Name = "guna2Panel8";
             this.guna2Panel8.Size = new System.Drawing.Size(313, 473);
             this.guna2Panel8.TabIndex = 0;
-            this.guna2Panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel8_Paint);
             // 
             // label40
             // 
@@ -1727,7 +1700,6 @@
             this.label8.Size = new System.Drawing.Size(70, 20);
             this.label8.TabIndex = 27;
             this.label8.Text = "PRICING";
-            this.label8.Click += new System.EventHandler(this.label8_Click_1);
             // 
             // btnUseMax
             // 
@@ -1779,7 +1751,6 @@
             this.lblMaxPricing.Size = new System.Drawing.Size(115, 32);
             this.lblMaxPricing.TabIndex = 1;
             this.lblMaxPricing.Text = "$3";
-            this.lblMaxPricing.Click += new System.EventHandler(this.label40_Click);
             // 
             // guna2BorderlessForm1
             // 
@@ -1799,7 +1770,6 @@
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
-            this.Load += new System.EventHandler(this.remAccFORM_Load);
             this.tabControlSettings.ResumeLayout(false);
             this.tabAccountPage.ResumeLayout(false);
             this.tabAccountPage.PerformLayout();

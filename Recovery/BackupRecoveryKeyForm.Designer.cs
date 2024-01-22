@@ -141,7 +141,6 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(353, 280);
             this.guna2Panel1.TabIndex = 38;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // btnExport
             // 
@@ -185,7 +184,6 @@
             this.label4.Size = new System.Drawing.Size(30, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "PIN";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label2
             // 
@@ -278,7 +276,6 @@
             this.Name = "BackupRecoveryKeyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backup Recovery Key";
-            this.Load += new System.EventHandler(this.RecovFORM_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);

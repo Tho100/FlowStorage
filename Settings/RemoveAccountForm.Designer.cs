@@ -67,7 +67,6 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(415, 278);
             this.guna2Panel1.TabIndex = 26;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // txtFieldPIN
             // 
@@ -184,7 +183,6 @@
             this.txtFieldAuth.SelectedText = "";
             this.txtFieldAuth.Size = new System.Drawing.Size(208, 49);
             this.txtFieldAuth.TabIndex = 18;
-            this.txtFieldAuth.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // label2
             // 
@@ -255,7 +253,6 @@
             this.Name = "RemoveAccountForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Delete Account";
-            this.Load += new System.EventHandler(this.ConfirmRemFORM_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

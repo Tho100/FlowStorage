@@ -90,17 +90,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button4_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
+        private void guna2Button4_Click(object sender, EventArgs e) => this.Close();
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
             if (System.Text.RegularExpressions.Regex.IsMatch(txtFieldPIN.Text, "[^0-9]")) {
@@ -108,12 +98,5 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void ConfirmRemFORM_Load(object sender, EventArgs e) {
-
-        }
     }
 }

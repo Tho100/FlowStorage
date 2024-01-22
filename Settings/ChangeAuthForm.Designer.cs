@@ -102,7 +102,6 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(454, 450);
             this.guna2Panel1.TabIndex = 31;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // guna2Button5
             // 
@@ -265,7 +264,6 @@
             this.lblAlert.TabIndex = 19;
             this.lblAlert.Text = "Username is taken.";
             this.lblAlert.Visible = false;
-            this.lblAlert.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtFieldCurrentAuth
             // 
@@ -356,7 +354,6 @@
             this.label6.Size = new System.Drawing.Size(161, 25);
             this.label6.TabIndex = 6;
             this.label6.Text = "Change Password";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // guna2Separator1
             // 

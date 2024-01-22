@@ -93,7 +93,6 @@
             this.txtFieldEmail.SelectedText = "";
             this.txtFieldEmail.Size = new System.Drawing.Size(331, 49);
             this.txtFieldEmail.TabIndex = 16;
-            this.txtFieldEmail.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // btnVerify
             // 
@@ -227,7 +226,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password-Recovery";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.ValidateRecoveryEmail_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

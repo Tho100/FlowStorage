@@ -301,78 +301,6 @@ namespace FlowstorageDesktop {
         private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Email);
         private void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
 
-        private void remAccFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void tabPage2_Click(object sender, EventArgs e) {
-        }
-
-
-        private void tabPage1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel6_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label37_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label38_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel10_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label28_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel3_Paint_2(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label29_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void label30_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel9_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel5_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel8_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         public void InitiailizeUIOnAccountType(string selectedAcc) {
 
             if (selectedAcc == "Supreme") {
@@ -570,21 +498,6 @@ namespace FlowstorageDesktop {
 
         #endregion END - Account upgrade section
 
-        private void label9_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label31_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void tabPage3_Click(object sender, EventArgs e) {
-
-        }
-
-        private void tabPage5_Click(object sender, EventArgs e) {
-        }
-
         /// <summary>
         /// If user selected File Sharing tab page
         /// then retrieve their current file sharing information
@@ -653,64 +566,5 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void label22_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void label66_Click(object sender, EventArgs e) {
-
-        }
-
-        private void lblSetPassword_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label18_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label41_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label42_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label39_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void label36_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label72_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label40_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label8_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void lblSupremePricing_Click(object sender, EventArgs e) {
-
-        }
     }
 }
