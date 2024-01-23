@@ -564,10 +564,10 @@ namespace FlowstorageDesktop {
                     var imageWidth = imageName.Image.Width;
                     var imageHeight = imageName.Image.Height;
 
-                    Bitmap defaultImage = new Bitmap(imageName.Image);
+                    var defaultImage = new Bitmap(imageName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new PicForm(
+                        defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
 
             }
@@ -580,9 +580,8 @@ namespace FlowstorageDesktop {
                 await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
-
-                    TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, fileName, string.Empty, tempDataUser.Username);
-                    txtFormShow.Show();
+                    new TextForm(
+                        GlobalsTable.homeTextTable, fileName, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -592,8 +591,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExeForm displayExe = new ExeForm(titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
-                    displayExe.Show();
+                    new ExeForm(
+                        titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -609,10 +608,10 @@ namespace FlowstorageDesktop {
                     var getImgName = (Guna2PictureBox)sender_ex;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
-                    Bitmap defaultImg = new Bitmap(getImgName.Image);
+                    var defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, string.Empty, tempDataUser.Username);
-                    vidShow.Show();
+                    new VideoForm(
+                        defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homeAudioTable) {
@@ -621,8 +620,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new AudioForm(
+                        titleLab.Text, GlobalsTable.homeAudioTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
 
             }
@@ -633,8 +632,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new ExcelForm(
+                        titleLab.Text, GlobalsTable.homeExcelTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -644,8 +643,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, string.Empty);
-                    displayPic.Show();
+                    new ApkForm(
+                        titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, string.Empty).ShowDialog();
                 };
             }
 
@@ -655,8 +654,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, string.Empty, tempDataUser.Username);
-                    displayPdf.ShowDialog();
+                    new PdfForm(
+                        titleLab.Text, GlobalsTable.homePdfTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -666,8 +665,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, string.Empty, tempDataUser.Username);
-                    displayPtx.ShowDialog();
+                    new PtxForm(
+                        titleLab.Text, GlobalsTable.homePtxTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -677,8 +676,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, string.Empty, tempDataUser.Username);
-                    displayMsi.Show();
+                    new MsiForm(
+                        titleLab.Text, GlobalsTable.homeMsiTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -688,8 +687,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username);
-                    displayWord.ShowDialog();
+                    new WordDocForm(
+                        titleLab.Text, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -975,15 +974,13 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, string.Empty, uploaderName);
-                            displayPic.Show();
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, string.Empty, uploaderName).ShowDialog();
                         }
-
 
                         onPressedEvent.Add(imageOnPressed);
 
                     }
-
 
                     if (tableName == GlobalsTable.psText) {
 
@@ -993,8 +990,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.psText, filesInfo[accessIndex].Item1, string.Empty, uploaderName);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.psText, filesInfo[accessIndex].Item1, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -1005,8 +1002,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            ExeForm displayExe = new ExeForm(filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName);
-                            displayExe.Show();
+                            new ExeForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(exeOnPressed);
@@ -1026,10 +1023,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, string.Empty, uploaderName);
-                            vidFormShow.Show();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(videoOnPressed);
@@ -1040,8 +1037,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.psExcel, string.Empty, uploaderName);
-                            exlForm.Show();
+                            new ExcelForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psExcel, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -1051,8 +1048,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.psAudio, string.Empty, uploaderName);
-                            displayPic.Show();
+                            new AudioForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psAudio, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -1063,8 +1060,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, string.Empty);
-                            displayPic.Show();
+                            new ApkForm(
+                                filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, string.Empty).ShowDialog();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -1075,8 +1072,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.psPdf, string.Empty, uploaderName);
-                            displayPdf.Show();
+                            new PdfForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psPdf, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -1087,8 +1084,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.psPtx, string.Empty, uploaderName);
-                            displayPtx.Show();
+                            new PtxForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psPtx, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -1099,8 +1096,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.psMsi, string.Empty, uploaderName);
-                            displayMsi.Show();
+                            new MsiForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psMsi, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -1112,8 +1109,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.psWord, string.Empty, uploaderName);
-                            displayMsi.Show();
+                            new WordDocForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psWord, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -1239,11 +1236,10 @@ namespace FlowstorageDesktop {
                     var getImgName = (Guna2PictureBox)sender_f;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
+                    var defaultImage = new Bitmap(getImgName.Image);
 
-                    Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new PicForm(
+                        defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, string.Empty, tempDataUser.Username).ShowDialog();
                 };
 
             }
@@ -1256,8 +1252,8 @@ namespace FlowstorageDesktop {
                 await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
-                    TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, string.Empty, tempDataUser.Username);
-                    txtFormShow.Show();
+                    new TextForm(
+                        GlobalsTable.psText, fileName, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1267,8 +1263,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExeForm displayExe = new ExeForm(titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username);
-                    displayExe.Show();
+                    new ExeForm(
+                        titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1284,10 +1280,10 @@ namespace FlowstorageDesktop {
                     var getImgName = (Guna2PictureBox)sender_ex;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
-                    Bitmap defaultImg = new Bitmap(getImgName.Image);
+                    var defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, string.Empty, tempDataUser.Username);
-                    vidShow.Show();
+                    new VideoForm(
+                        defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1297,8 +1293,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new AudioForm(
+                        titleLab.Text, GlobalsTable.psAudio, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1308,8 +1304,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new ExcelForm(
+                        titleLab.Text, GlobalsTable.psExcel, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1319,8 +1315,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, string.Empty);
-                    displayPic.Show();
+                    new ApkForm(
+                        titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, string.Empty).ShowDialog();
                 };
             }
 
@@ -1330,8 +1326,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, string.Empty, tempDataUser.Username);
-                    displayPdf.ShowDialog();
+                    new PdfForm(
+                        titleLab.Text, GlobalsTable.psPdf, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1341,8 +1337,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, string.Empty, tempDataUser.Username);
-                    displayPtx.ShowDialog();
+                    new PtxForm(
+                        titleLab.Text, GlobalsTable.psPtx, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.psMsi) {
@@ -1351,8 +1347,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, string.Empty, tempDataUser.Username);
-                    displayMsi.Show();
+                    new MsiForm(
+                        titleLab.Text, GlobalsTable.psMsi, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1362,8 +1358,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, string.Empty, tempDataUser.Username);
-                    displayWord.ShowDialog();
+                    new WordDocForm(
+                        titleLab.Text, GlobalsTable.psWord, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1656,10 +1652,10 @@ namespace FlowstorageDesktop {
                         var getImgName = (Guna2PictureBox)sender;
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        var defaultImage = new Bitmap(getImgName.Image);
 
-                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPic.Show();
+                        new PicForm(
+                            defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
 
@@ -1672,10 +1668,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                     void textOnPressed(object sender, EventArgs e) {
-
-                        TextForm displayTxt = new TextForm(GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true);
-                        displayTxt.Show();
-
+                        new TextForm(
+                            GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(textOnPressed);
@@ -1690,10 +1684,10 @@ namespace FlowstorageDesktop {
                         var getImgName = (Guna2PictureBox)sender;
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
+                        var defaultImage = new Bitmap(getImgName.Image);
 
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        vidFormShow.Show();
+                        new VideoForm(
+                            defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
@@ -1704,8 +1698,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.EXCELImage);
 
                     void excelOnPressed(object sender, EventArgs e) {
-                        ExcelForm exlForm = new ExcelForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        exlForm.Show();
+                        new ExcelForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(excelOnPressed);
@@ -1716,8 +1710,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.AudioImage);
 
                     void audioOnPressed(object sender, EventArgs e) {
-                        AudioForm displayPic = new AudioForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPic.Show();
+                        new AudioForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(audioOnPressed);
@@ -1728,8 +1722,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.EXEImage);
 
                     void exeOnPressed(object sender, EventArgs e) {
-                        ExeForm displayExe = new ExeForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
-                        displayExe.Show();
+                        new ExeForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(exeOnPressed);
@@ -1740,8 +1734,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.APKImage);
 
                     void apkOnPressed(object sender, EventArgs e) {
-                        ApkForm displayPic = new ApkForm(filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true);
-                        displayPic.Show();
+                        new ApkForm(
+                            filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(apkOnPressed);
@@ -1752,8 +1746,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.PDFImage);
 
                     void pdfOnPressed(object sender, EventArgs e) {
-                        PdfForm displayPdf = new PdfForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPdf.Show();
+                        new PdfForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(pdfOnPressed);
@@ -1764,8 +1758,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.PTXImage);
 
                     void ptxOnPressed(object sender, EventArgs e) {
-                        PtxForm displayPtx = new PtxForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPtx.Show();
+                        new PtxForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(ptxOnPressed);
@@ -1776,8 +1770,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.MSIImage);
 
                     void msiOnPressed(object sender, EventArgs e) {
-                        MsiForm displayMsi = new MsiForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayMsi.Show();
+                        new MsiForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(msiOnPressed);
@@ -1789,8 +1783,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.DOCImage);
 
                     void wordOnPressed(object sender, EventArgs e) {
-                        WordDocForm displayMsi = new WordDocForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayMsi.Show();
+                        new WordDocForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(wordOnPressed);
@@ -1899,8 +1893,8 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPic.Show();
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
 
@@ -1913,8 +1907,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoSharedToMe[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.sharingTable, filesInfoSharedToMe[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -1929,10 +1923,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            vidFormShow.Show();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog(); 
                         }
 
                         onPressedEvent.Add(videoOnPressed);
@@ -1943,8 +1937,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            exlForm.Show();
+                            new ExcelForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -1955,8 +1949,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPic.Show();
+                            new AudioForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -1967,8 +1961,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            ExeForm displayExe = new ExeForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayExe.Show();
+                            new ExeForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(exeOnPressed);
@@ -1979,8 +1973,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfoSharedToMe[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false);
-                            displayPic.Show();
+                            new ApkForm(
+                                filesInfoSharedToMe[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -1991,8 +1985,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPdf.Show();
+                            new PdfForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2003,8 +1997,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPtx.Show();
+                            new PtxForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -2015,8 +2009,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayMsi.Show();
+                            new MsiForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2028,8 +2022,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayMsi.Show();
+                            new WordDocForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
                         onPressedEvent.Add(wordOnPressed);
                     }
@@ -2240,10 +2234,9 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username).ShowDialog();
                         }
-
 
                         onPressedEvent.Add(imageOnPressed);
 
@@ -2256,8 +2249,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.folderUploadTable, fileName, string.Empty, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -2268,8 +2261,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            ExeForm displayExe = new ExeForm(fileName, GlobalsTable.folderUploadTable, folderName, string.Empty);
-                            displayExe.Show();
+                            new ExeForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, string.Empty).ShowDialog();
                         }
 
                         onPressedEvent.Add(exeOnPressed);
@@ -2284,10 +2277,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username);
-                            displayVid.Show();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(videoOnPressed);
@@ -2298,7 +2291,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
+                            new ExcelForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -2309,7 +2303,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            new AudioForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
+                            new AudioForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -2320,7 +2315,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            new ApkForm(fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, folderName);
+                            new ApkForm(
+                                fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, folderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -2331,7 +2327,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            new PdfForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
+                            new PdfForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2342,7 +2339,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
+                            new PtxForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -2353,7 +2351,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            new MsiForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
+                            new MsiForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2365,7 +2364,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).Show();
+                            new WordDocForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -2448,10 +2448,6 @@ namespace FlowstorageDesktop {
 
                 textboxExl.Location = new Point(picMain_Q_x, 10);
 
-                textboxExl.Click += (sender_w, ev_w) => {
-
-                };
-
                 textboxExl.MouseHover += (_senderM, _ev) => {
                     mainPanelTxt.ShadowDecoration.Enabled = true;
                     mainPanelTxt.ShadowDecoration.BorderRadius = 8;
@@ -2459,10 +2455,6 @@ namespace FlowstorageDesktop {
 
                 textboxExl.MouseLeave += (_senderQ, _evQ) => {
                     mainPanelTxt.ShadowDecoration.Enabled = false;
-                };
-
-                textboxExl.Click += (sender_eq, e_eq) => {
-
                 };
 
                 Guna2Button remButExl = new Guna2Button();
@@ -2529,10 +2521,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender_f;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            var defaultImage = new Bitmap(getImgName.Image);
+                            
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username).ShowDialog();
 
                         };
                     }
@@ -2553,9 +2545,8 @@ namespace FlowstorageDesktop {
                         await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptEncoded);
 
                         textboxExl.Click += (sender_t, e_t) => {
-
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.folderUploadTable, titleLab.Text, string.Empty, tempDataUser.Username).ShowDialog();
                         };
 
                     }
@@ -2566,8 +2557,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
-                            ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, string.Empty);
-                            displayPic.ShowDialog();
+                            new ApkForm(
+                                titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, string.Empty).ShowDialog();
                         };
                     }
 
@@ -2592,10 +2583,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender_vid;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayVid.ShowDialog();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -2605,8 +2596,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            PdfForm displayPic = new PdfForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new PdfForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -2616,8 +2607,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            WordDocForm displayPic = new WordDocForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new WordDocForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -2627,8 +2618,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new ExcelForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -2639,8 +2630,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            PtxForm displayPic = new PtxForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new PtxForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -2650,8 +2641,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new AudioForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 

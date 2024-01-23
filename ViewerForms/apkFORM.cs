@@ -53,13 +53,6 @@ namespace FlowstorageDesktop {
             this.Close();
         }
 
-        private void apkFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
         private void guna2Button4_Click(object sender, EventArgs e) {
 
             try {
@@ -103,8 +96,5 @@ namespace FlowstorageDesktop {
             txtFieldComment.Text = lblUserComment.Text;
         }
 
-        private void label7_Click(object sender, EventArgs e) {
-
-        }
     }
 }

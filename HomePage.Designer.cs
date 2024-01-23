@@ -385,7 +385,6 @@
             this.progressBarUsageStorage.TabIndex = 35;
             this.progressBarUsageStorage.Text = "guna2ProgressBar1";
             this.progressBarUsageStorage.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.progressBarUsageStorage.ValueChanged += new System.EventHandler(this.guna2ProgressBar1_ValueChanged);
             // 
             // btnOpenUpgradePage
             // 

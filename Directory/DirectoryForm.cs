@@ -455,8 +455,8 @@ namespace FlowstorageDesktop {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPic.Show();
+                    new PicForm(
+                        defaultImage, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog(); 
                 };
 
             }
@@ -469,8 +469,8 @@ namespace FlowstorageDesktop {
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
                 textboxPic.Click += (sender_t, e_t) => {
-                    TextForm txtFormShow = new TextForm(GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, tempDataUser.Username);
-                    txtFormShow.Show();
+                    new TextForm(
+                        GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -480,7 +480,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    new ExeForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).Show();
+                    new ExeForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -498,8 +499,9 @@ namespace FlowstorageDesktop {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    vidShow.Show();
+                    new VideoForm(
+                        defaultImg, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
+                    
                 };
 
             }
@@ -509,8 +511,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPic.Show();
+                    new AudioForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -520,8 +522,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPic.Show();
+                    new ExcelForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -531,8 +533,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(fileName, tempDataUser.Username, GlobalsTable.directoryUploadTable, lblDirectoryName.Text);
-                    displayPic.Show();
+                    new ApkForm(
+                        fileName, tempDataUser.Username, GlobalsTable.directoryUploadTable, lblDirectoryName.Text).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homePdfTable) {
@@ -541,8 +543,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPdf.ShowDialog();
+                    new PdfForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homePtxTable) {
@@ -551,8 +553,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPtx.ShowDialog();
+                    new PtxForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homeMsiTable) {
@@ -561,8 +563,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayMsi.Show();
+                    new MsiForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -572,8 +574,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayWord.ShowDialog();
+                    new WordDocForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 

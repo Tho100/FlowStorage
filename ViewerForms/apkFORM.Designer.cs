@@ -70,7 +70,6 @@
             this.lblFileName.Size = new System.Drawing.Size(318, 105);
             this.lblFileName.TabIndex = 34;
             this.lblFileName.Text = "label1";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // label4
             // 
@@ -325,7 +324,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "APK Viewer";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.apkFORM_Load);
             this.ResumeLayout(false);
 
         }
