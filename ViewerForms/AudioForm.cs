@@ -157,8 +157,8 @@ namespace FlowstorageDesktop {
         /// <param name="_mp3ByteIn"></param>
         private void PlayAudioMp3(byte[] mp3Bytes) {
 
-            Stream _setupStream = new MemoryStream(mp3Bytes);
-            _NReader = new Mp3FileReader(_setupStream);
+            var stream = new MemoryStream(mp3Bytes);
+            _NReader = new Mp3FileReader(stream);
 
             double getDurationSeconds = _NReader.TotalTime.TotalSeconds;
             int minutes = (int)(getDurationSeconds / 60);
@@ -170,19 +170,17 @@ namespace FlowstorageDesktop {
             _setupWaveOut.Play();
             _mp3WaveOut = _setupWaveOut;
 
-            _elapsedTickTimer = new System.Windows.Forms.Timer();
+            _elapsedTickTimer = new Timer();
             _elapsedTickTimer.Interval = 1000;
             _elapsedTickTimer.Tick += new EventHandler(timer_Tick);
             _elapsedTickTimer.Start();
 
-            AudioHelp breakFixedValue = new AudioHelp();
-            breakFixedValue.ShowDialog();
+            new AudioHelp().ShowDialog();
 
-            if (Application.OpenForms["AudioHelp"] != null) {
-                Application.OpenForms["AudioHelp"].Close();
-            }
+            Application.OpenForms["AudioHelp"]?.Close();
 
             ClosePopupForm.CloseCustomPopup("AudioHelp");
+
         }
 
         private void PlayAudioWave(byte[] waveBytes) {

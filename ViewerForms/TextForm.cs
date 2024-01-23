@@ -406,10 +406,10 @@ namespace FlowstorageDesktop {
 
             string fileType = lblFileName.Text.Split('.').Last();
 
-            SaveFileDialog saveDialog = new SaveFileDialog();
-
-            saveDialog.FileName = lblFileName.Text;
-            saveDialog.Filter = "Files|*" + fileType;
+            SaveFileDialog saveDialog = new SaveFileDialog {
+                FileName = lblFileName.Text,
+                Filter = "Files|*" + fileType
+            };
 
             try {
 
