@@ -26,7 +26,6 @@ namespace FlowstorageDesktop {
         private int gaussianBlurValue { get; set; }
         private int brightnessValue { get; set; }
         private float saturationValue { get; set; }
-
         private string _tableName { get; set; }
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
@@ -64,27 +63,31 @@ namespace FlowstorageDesktop {
 
             pbImage.Image = setupImage;
 
+            label4.Text = isFromShared ? "Shared To" : "Uploaded By";
+
+            lblUserComment.Visible = true;
+
             if (isFromShared) {
-                label4.Text = "Shared To";
+                string comment = GetComment.getCommentSharedToOthers(fileName: title);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
                 btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: title) != "" ? GetComment.getCommentSharedToOthers(fileName: title) : "(No Comment)";
 
             } else {
-                label4.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
 
-            }
+                if(GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label4.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: title);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: title);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
-            }
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: title);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
+            } 
 
             lblUploaderName.Text = uploaderName;
 
@@ -97,10 +100,6 @@ namespace FlowstorageDesktop {
                 btnNext.Visible = false;
 
             }
-
-        }
-
-        private void picFORM_Load(object sender, EventArgs e) {
 
         }
 
@@ -129,35 +128,10 @@ namespace FlowstorageDesktop {
             this.TopMost = true;
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button5_Click(object sender, EventArgs e) {
             new shareFileFORM(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
-
-        private void label7_Click(object sender, EventArgs e) {
-
-        }
-
-        private void filterPanel_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
 
             label8.Text = guna2TrackBar1.Value.ToString() + "%";
@@ -394,10 +368,6 @@ namespace FlowstorageDesktop {
             label8.Text = "0%";
         }
 
-        private void guna2VSeparator1_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button9_Click(object sender, EventArgs e) {
             txtFieldComment.Enabled = true;
             txtFieldComment.Visible = true;
@@ -424,10 +394,6 @@ namespace FlowstorageDesktop {
 
         private void guna2Button11_Click_1(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void guna2PictureBox1_Click(object sender, EventArgs e) {
-
         }
 
         private List<string> GetImageBase64Encoded() {
@@ -483,12 +449,12 @@ namespace FlowstorageDesktop {
                     int height = defaultImage.Height;
 
                     if(_tableName == GlobalsTable.homeImageTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username);
-                        displayPic.Show();
+                        new PicForm(
+                            defaultImage, width, height, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username).Show();
 
                     } else if (_tableName == GlobalsTable.folderUploadTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
-                        displayPic.Show();
+                        new PicForm(
+                            defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username).Show();
 
                     } 
 
@@ -506,5 +472,6 @@ namespace FlowstorageDesktop {
         private void guna2Button12_Click(object sender, EventArgs e) {
             SwitchImageImplementation(-1);
         }
+
     }
 }

@@ -60,7 +60,6 @@
             this.lblFileName.Size = new System.Drawing.Size(318, 105);
             this.lblFileName.TabIndex = 25;
             this.lblFileName.Text = "filename.exe";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblUploaderName
             // 
@@ -71,7 +70,6 @@
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 27;
             this.lblUploaderName.Text = "guest919402";
-            this.lblUploaderName.Click += new System.EventHandler(this.label2_Click);
             // 
             // guna2Button2
             // 
@@ -177,7 +175,6 @@
             this.guna2VSeparator1.Name = "guna2VSeparator1";
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 617);
             this.guna2VSeparator1.TabIndex = 66;
-            this.guna2VSeparator1.Click += new System.EventHandler(this.guna2VSeparator1_Click);
             // 
             // label5
             // 
@@ -326,7 +323,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Viewer";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.exeFORM_Load);
             this.ResumeLayout(false);
 
         }

@@ -19,7 +19,7 @@ namespace FlowstorageDesktop {
         private bool _isFromSharing { get; set; }
 
         private byte[] _audioBytes { get; set; }
-        private System.Windows.Forms.Timer _elapsedTickTimer { get; set; }
+        private Timer _elapsedTickTimer { get; set; }
         private TimeSpan _elapsedTime { get; set; }
         private Mp3FileReader _NReader { get; set; }
         private SoundPlayer _wavAudioPlayer { get; set; }
@@ -35,28 +35,30 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (isFromShared) {
-                guna2Button7.Visible = true;
-                btnEditComment.Visible = true;
+            label5.Text = isFromShared ? "Shared To" : "Uploaded By";
 
-                label5.Text = "Shared To";
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label5.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label5.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderUsername.Text = uploaderName;

@@ -15,57 +15,46 @@ namespace FlowstorageDesktop {
             this._directoryName = directoryName;
             this._isFromShared = isFromShared;
 
-            if (isFromShared) {
-                btnEditComment.Visible = true;
-                guna2Button9.Visible = true;
+            label6.Text = isFromShared ? "Shared To" : "Uploaded By";
 
-                label6.Text = "Shared To";
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label6.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label6.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderName.Text = uploaderUsername;
 
         }
 
-        private void msiFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
         private void guna2Button4_Click(object sender, EventArgs e) {
             SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName);
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e) {
-
         }
 
         private void btnShareFile_Click(object sender, EventArgs e) {
             new shareFileFORM(
                 lblFileName.Text, _isFromShared, _tableName, _directoryName).Show();
         }
+
     }
 }

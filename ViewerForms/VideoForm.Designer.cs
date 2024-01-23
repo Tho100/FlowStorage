@@ -77,7 +77,6 @@
             this.lblFileName.Size = new System.Drawing.Size(318, 87);
             this.lblFileName.TabIndex = 25;
             this.lblFileName.Text = "Video";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblUploaderName
             // 
@@ -102,7 +101,6 @@
             this.videoViewer.TabIndex = 38;
             this.videoViewer.Text = "videoView1";
             this.videoViewer.Visible = false;
-            this.videoViewer.Click += new System.EventHandler(this.videoView1_Click_2);
             // 
             // lblUserComment
             // 
@@ -362,7 +360,6 @@
             this.guna2Button8.Name = "guna2Button8";
             this.guna2Button8.Size = new System.Drawing.Size(38, 0);
             this.guna2Button8.TabIndex = 78;
-            this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
             // 
             // btnShareFile
             // 
@@ -418,7 +415,6 @@
             this.pictureBox1.TabIndex = 98;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // btnPlayVideo
             // 
@@ -454,7 +450,6 @@
             this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.guna2PictureBox1.TabIndex = 26;
             this.guna2PictureBox1.TabStop = false;
-            this.guna2PictureBox1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
             // guna2Button4
             // 
@@ -585,7 +580,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Video Viewer";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.vidFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.videoViewer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();

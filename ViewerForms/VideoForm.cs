@@ -24,8 +24,7 @@ namespace FlowstorageDesktop {
 
             instance = this;
 
-            var setupImage = ResizeImage(getThumb, new Size(width, height));
-            guna2PictureBox1.Image = setupImage;
+            guna2PictureBox1.Image = ResizeImage(getThumb, new Size(width, height));
 
             this.lblFileName.Text = fileName;
             this._tableName = tableName;
@@ -33,28 +32,30 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (_isFromShared) {
-                btnEditComment.Visible = true;
-                guna2Button12.Visible = true;
+            label5.Text = isFromShared ? "Shared To" : "Uploaded By";
 
-                label5.Text = "Shared To";
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label5.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label5.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderName.Text = uploaderName;
@@ -63,14 +64,6 @@ namespace FlowstorageDesktop {
 
         public static Image ResizeImage(Image userImg, Size size) {
             return new Bitmap(userImg, size);
-        }
-
-        private void vidFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void guna2PictureBox1_Click(object sender, EventArgs e) {
-
         }
 
         private void guna2Button2_Click(object sender, EventArgs e) {
@@ -222,21 +215,9 @@ namespace FlowstorageDesktop {
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button8_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button9_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
             this.TopMost = false;
-        }
-
-        private void videoView1_Click_2(object sender, EventArgs e) {
-
         }
 
 
@@ -312,10 +293,6 @@ namespace FlowstorageDesktop {
             txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e) {
-
         }
 
     }
