@@ -26,20 +26,20 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainShareFileForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblFileSharing = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.lblFileSize = new System.Windows.Forms.Label();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnSelectFile = new Guna.UI2.WinForms.Guna2Button();
             this.txtFieldFileName = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.lblFileToSend = new System.Windows.Forms.Label();
+            this.btnCloseForm = new Guna.UI2.WinForms.Guna2Button();
+            this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.txtFieldShareToName = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblShareTo = new System.Windows.Forms.Label();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblCommentCounter = new System.Windows.Forms.Label();
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblComment = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
@@ -52,17 +52,17 @@
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // label3
+            // lblFileSharing
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(12, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(112, 25);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "File Sharing";
+            this.lblFileSharing.AutoSize = true;
+            this.lblFileSharing.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileSharing.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileSharing.ForeColor = System.Drawing.Color.White;
+            this.lblFileSharing.Location = new System.Drawing.Point(12, 18);
+            this.lblFileSharing.Name = "lblFileSharing";
+            this.lblFileSharing.Size = new System.Drawing.Size(112, 25);
+            this.lblFileSharing.TabIndex = 6;
+            this.lblFileSharing.Text = "File Sharing";
             // 
             // guna2Panel1
             // 
@@ -71,19 +71,18 @@
             this.guna2Panel1.BorderRadius = 8;
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.lblFileSize);
-            this.guna2Panel1.Controls.Add(this.guna2Button1);
+            this.guna2Panel1.Controls.Add(this.btnSelectFile);
             this.guna2Panel1.Controls.Add(this.txtFieldFileName);
-            this.guna2Panel1.Controls.Add(this.label1);
-            this.guna2Panel1.Controls.Add(this.guna2Button6);
-            this.guna2Panel1.Controls.Add(this.guna2Button2);
+            this.guna2Panel1.Controls.Add(this.lblFileToSend);
+            this.guna2Panel1.Controls.Add(this.btnCloseForm);
+            this.guna2Panel1.Controls.Add(this.btnShareFile);
             this.guna2Panel1.Controls.Add(this.txtFieldShareToName);
-            this.guna2Panel1.Controls.Add(this.label4);
+            this.guna2Panel1.Controls.Add(this.lblShareTo);
             this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.Location = new System.Drawing.Point(27, 77);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(452, 411);
             this.guna2Panel1.TabIndex = 29;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // lblFileSize
             // 
@@ -98,25 +97,25 @@
             this.lblFileSize.Text = "File Size: 12Mb";
             this.lblFileSize.Visible = false;
             // 
-            // guna2Button1
+            // btnSelectFile
             // 
-            this.guna2Button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button1.Animated = true;
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderRadius = 10;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Location = new System.Drawing.Point(311, 138);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(108, 49);
-            this.guna2Button1.TabIndex = 34;
-            this.guna2Button1.Text = "Select File";
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnSelectFile.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnSelectFile.Animated = true;
+            this.btnSelectFile.BackColor = System.Drawing.Color.Transparent;
+            this.btnSelectFile.BorderRadius = 10;
+            this.btnSelectFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSelectFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSelectFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSelectFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSelectFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnSelectFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectFile.ForeColor = System.Drawing.Color.White;
+            this.btnSelectFile.Location = new System.Drawing.Point(311, 138);
+            this.btnSelectFile.Name = "btnSelectFile";
+            this.btnSelectFile.Size = new System.Drawing.Size(108, 49);
+            this.btnSelectFile.TabIndex = 34;
+            this.btnSelectFile.Text = "Select File";
+            this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
             // 
             // txtFieldFileName
             // 
@@ -144,61 +143,60 @@
             this.txtFieldFileName.SelectedText = "";
             this.txtFieldFileName.Size = new System.Drawing.Size(260, 49);
             this.txtFieldFileName.TabIndex = 33;
-            this.txtFieldFileName.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
-            // label1
+            // lblFileToSend
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(43, 113);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 20);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "File To Send";
+            this.lblFileToSend.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblFileToSend.BackColor = System.Drawing.Color.Transparent;
+            this.lblFileToSend.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblFileToSend.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblFileToSend.Location = new System.Drawing.Point(43, 113);
+            this.lblFileToSend.Name = "lblFileToSend";
+            this.lblFileToSend.Size = new System.Drawing.Size(130, 20);
+            this.lblFileToSend.TabIndex = 32;
+            this.lblFileToSend.Text = "File To Send";
             // 
-            // guna2Button6
+            // btnCloseForm
             // 
-            this.guna2Button6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button6.Animated = true;
-            this.guna2Button6.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button6.BorderRadius = 12;
-            this.guna2Button6.BorderThickness = 2;
-            this.guna2Button6.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button6.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button6.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button6.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2Button6.ForeColor = System.Drawing.Color.White;
-            this.guna2Button6.Location = new System.Drawing.Point(39, 292);
-            this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(380, 54);
-            this.guna2Button6.TabIndex = 31;
-            this.guna2Button6.Text = "Close";
-            this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
+            this.btnCloseForm.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCloseForm.Animated = true;
+            this.btnCloseForm.BackColor = System.Drawing.Color.Transparent;
+            this.btnCloseForm.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnCloseForm.BorderRadius = 12;
+            this.btnCloseForm.BorderThickness = 2;
+            this.btnCloseForm.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseForm.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseForm.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCloseForm.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCloseForm.FillColor = System.Drawing.Color.Transparent;
+            this.btnCloseForm.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCloseForm.ForeColor = System.Drawing.Color.White;
+            this.btnCloseForm.Location = new System.Drawing.Point(39, 292);
+            this.btnCloseForm.Name = "btnCloseForm";
+            this.btnCloseForm.Size = new System.Drawing.Size(380, 54);
+            this.btnCloseForm.TabIndex = 31;
+            this.btnCloseForm.Text = "Close";
+            this.btnCloseForm.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
-            // guna2Button2
+            // btnShareFile
             // 
-            this.guna2Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.guna2Button2.Animated = true;
-            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.BorderRadius = 12;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Location = new System.Drawing.Point(39, 231);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(380, 54);
-            this.guna2Button2.TabIndex = 17;
-            this.guna2Button2.Text = "Share";
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnShareFile.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnShareFile.Animated = true;
+            this.btnShareFile.BackColor = System.Drawing.Color.Transparent;
+            this.btnShareFile.BorderRadius = 12;
+            this.btnShareFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnShareFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnShareFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnShareFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnShareFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnShareFile.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnShareFile.ForeColor = System.Drawing.Color.White;
+            this.btnShareFile.Location = new System.Drawing.Point(39, 231);
+            this.btnShareFile.Name = "btnShareFile";
+            this.btnShareFile.Size = new System.Drawing.Size(380, 54);
+            this.btnShareFile.TabIndex = 17;
+            this.btnShareFile.Text = "Share";
+            this.btnShareFile.Click += new System.EventHandler(this.btnShareFile_Click);
             // 
             // txtFieldShareToName
             // 
@@ -227,17 +225,17 @@
             this.txtFieldShareToName.Size = new System.Drawing.Size(380, 49);
             this.txtFieldShareToName.TabIndex = 16;
             // 
-            // label4
+            // lblShareTo
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(43, 20);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(130, 20);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Share To";
+            this.lblShareTo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblShareTo.BackColor = System.Drawing.Color.Transparent;
+            this.lblShareTo.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblShareTo.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblShareTo.Location = new System.Drawing.Point(43, 20);
+            this.lblShareTo.Name = "lblShareTo";
+            this.lblShareTo.Size = new System.Drawing.Size(130, 20);
+            this.lblShareTo.TabIndex = 5;
+            this.lblShareTo.Text = "Share To";
             // 
             // guna2Panel3
             // 
@@ -245,29 +243,27 @@
             this.guna2Panel3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.guna2Panel3.BorderRadius = 8;
             this.guna2Panel3.BorderThickness = 1;
-            this.guna2Panel3.Controls.Add(this.label5);
+            this.guna2Panel3.Controls.Add(this.lblCommentCounter);
             this.guna2Panel3.Controls.Add(this.txtFieldComment);
-            this.guna2Panel3.Controls.Add(this.label6);
+            this.guna2Panel3.Controls.Add(this.lblComment);
             this.guna2Panel3.FillColor = System.Drawing.Color.Transparent;
             this.guna2Panel3.Location = new System.Drawing.Point(510, 77);
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(440, 411);
             this.guna2Panel3.TabIndex = 35;
-            this.guna2Panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint_1);
             // 
-            // label5
+            // lblCommentCounter
             // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(379, 372);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 17);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "0/295";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
+            this.lblCommentCounter.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblCommentCounter.AutoSize = true;
+            this.lblCommentCounter.BackColor = System.Drawing.Color.Transparent;
+            this.lblCommentCounter.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCommentCounter.ForeColor = System.Drawing.Color.Silver;
+            this.lblCommentCounter.Location = new System.Drawing.Point(379, 372);
+            this.lblCommentCounter.Name = "lblCommentCounter";
+            this.lblCommentCounter.Size = new System.Drawing.Size(41, 17);
+            this.lblCommentCounter.TabIndex = 17;
+            this.lblCommentCounter.Text = "0/295";
             // 
             // txtFieldComment
             // 
@@ -299,18 +295,17 @@
             this.txtFieldComment.TabIndex = 16;
             this.txtFieldComment.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
-            // label6
+            // lblComment
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(23, 25);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(141, 20);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Comment (Optional)";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.lblComment.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblComment.BackColor = System.Drawing.Color.Transparent;
+            this.lblComment.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblComment.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblComment.Location = new System.Drawing.Point(23, 25);
+            this.lblComment.Name = "lblComment";
+            this.lblComment.Size = new System.Drawing.Size(141, 20);
+            this.lblComment.TabIndex = 5;
+            this.lblComment.Text = "Comment (Optional)";
             // 
             // guna2Separator1
             // 
@@ -329,7 +324,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(977, 514);
             this.Controls.Add(this.guna2Separator1);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblFileSharing);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.guna2Panel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -337,7 +332,6 @@
             this.Name = "MainShareFileForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Sharing";
-            this.Load += new System.EventHandler(this.sharingFORM_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel3.PerformLayout();
@@ -349,19 +343,19 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblFileSharing;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button2;
+        public Guna.UI2.WinForms.Guna2Button btnShareFile;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldShareToName;
-        private System.Windows.Forms.Label label4;
-        public Guna.UI2.WinForms.Guna2Button guna2Button6;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private System.Windows.Forms.Label lblShareTo;
+        public Guna.UI2.WinForms.Guna2Button btnCloseForm;
+        public Guna.UI2.WinForms.Guna2Button btnSelectFile;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldFileName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblFileToSend;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblComment;
+        private System.Windows.Forms.Label lblCommentCounter;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private System.Windows.Forms.Label lblFileSize;
     }

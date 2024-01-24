@@ -15,8 +15,6 @@ using System.Windows.Forms;
 namespace FlowstorageDesktop {
     public partial class MainShareFileForm : Form {
 
-        public MainShareFileForm instance;
-
         readonly private GeneralCompressor compressor = new GeneralCompressor();
 
         readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
@@ -32,27 +30,13 @@ namespace FlowstorageDesktop {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public string _verifySetPas = "";
-
         public MainShareFileForm() {
             InitializeComponent();
-            instance = this;
         }
 
-        private void sharingFORM_Load(object sender, EventArgs e) {
+        private void btnCloseForm_Click(object sender, EventArgs e) => this.Close();
 
-            
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
+        private void btnSelectFile_Click(object sender, EventArgs e) {
 
             var selectFilesDialog = new OpenFileDialog {
                 Filter = Globals.filterFileType
@@ -225,7 +209,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnShareFile_Click(object sender, EventArgs e) {
 
             try {
 
@@ -276,23 +260,8 @@ namespace FlowstorageDesktop {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            label5.Text = txtFieldComment.Text.Length + "/295";
+            lblCommentCounter.Text = txtFieldComment.Text.Length + "/295";
         }
 
-        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-
-        }
     }
 }

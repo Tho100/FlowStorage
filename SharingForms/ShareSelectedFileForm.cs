@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
-    public partial class shareFileFORM : Form {
+    public partial class ShareSelectedFileForm : Form {
 
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
         readonly private ShareFileQuery shareFile = new ShareFileQuery();
@@ -21,7 +21,7 @@ namespace FlowstorageDesktop {
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
 
-        public shareFileFORM(string fileName, bool isFromShared, string tableName, string directoryName) {
+        public ShareSelectedFileForm(string fileName, bool isFromShared, string tableName, string directoryName) {
 
             InitializeComponent();
 
@@ -57,7 +57,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnShareFile_Click(object sender, EventArgs e) {
 
             try {
 
@@ -108,18 +108,7 @@ namespace FlowstorageDesktop {
             lblCountCharComment.Text = txtFieldComment.Text.Length.ToString() + "/295";
         }
 
-        private void shareFileFORM_Load(object sender, EventArgs e) {
+        private void btnCloseForm_Click(object sender, EventArgs e) => this.Close();
 
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) => this.Close();
-
-        private void btnShareToName_TextChanged(object sender, EventArgs e) {
-
-        }
     }
 }

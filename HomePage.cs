@@ -3639,7 +3639,7 @@ namespace FlowstorageDesktop {
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
 
-            new shareFileFORM(titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
+            new ShareSelectedFileForm(titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
 
         }
 
