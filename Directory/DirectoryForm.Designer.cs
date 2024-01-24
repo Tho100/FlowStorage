@@ -386,10 +386,10 @@
             this.btnHideFileOptionPnl.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnHideFileOptionPnl.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnHideFileOptionPnl.ForeColor = System.Drawing.Color.White;
-            this.btnHideFileOptionPnl.Image = ((System.Drawing.Image)(resources.GetObject("btnHideFileOptionPnl.Image")));
             this.btnHideFileOptionPnl.ImageSize = new System.Drawing.Size(18, 18);
             this.btnHideFileOptionPnl.Location = new System.Drawing.Point(267, 11);
             this.btnHideFileOptionPnl.Name = "btnHideFileOptionPnl";
+            this.btnHideFileOptionPnl.Image = ((System.Drawing.Image)(resources.GetObject("btnHideFileOptionPnl.Image")));
             this.btnHideFileOptionPnl.Size = new System.Drawing.Size(35, 32);
             this.btnHideFileOptionPnl.TabIndex = 49;
             this.btnHideFileOptionPnl.Click += new System.EventHandler(this.btnHideFileOptionsPnl_Click);

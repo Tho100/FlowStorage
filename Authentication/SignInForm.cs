@@ -129,7 +129,7 @@ namespace FlowstorageDesktop {
 
                     Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();
 
-                    if (guna2CheckBox2.Checked) {
+                    if (chcBoxRememberMe.Checked) {
                         new AutoLoginModel().SetupAutoLoginData(tempDataUser.Username, tempDataUser.Email);
 
                     }
@@ -193,7 +193,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnSignIn_Click(object sender, EventArgs e) {
 
             try {
 
@@ -234,15 +234,15 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            guna2Button1.Visible = true;
-            guna2Button3.Visible = false;
+        private void btnHidePassword_Click(object sender, EventArgs e) {
+            btnHidePassword.Visible = false;
+            btnShowPassword.Visible = true;
             txtFieldAuth.PasswordChar = '*';
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            guna2Button1.Visible = false;
-            guna2Button3.Visible = true;
+        private void btnShowPassword_Click(object sender, EventArgs e) {
+            btnHidePassword.Visible = true;
+            btnShowPassword.Visible = false;
             txtFieldAuth.PasswordChar = '\0';
         }
 
@@ -257,7 +257,7 @@ namespace FlowstorageDesktop {
             this.Close();
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) => this.Close();
-        
+        private void btnCloseForm_Click(object sender, EventArgs e) => this.Close();
+
     }
 }
