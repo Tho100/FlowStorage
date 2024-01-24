@@ -843,7 +843,7 @@ namespace FlowstorageDesktop {
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
 
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 titleFile, false, GlobalsTable.directoryUploadTable, dirName).Show();
 
         }

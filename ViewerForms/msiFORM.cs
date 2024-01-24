@@ -52,7 +52,7 @@ namespace FlowstorageDesktop {
         }
 
         private void btnShareFile_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromShared, _tableName, _directoryName).Show();
         }
 

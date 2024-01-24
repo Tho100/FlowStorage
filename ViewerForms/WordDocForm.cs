@@ -147,7 +147,7 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
 
         }
