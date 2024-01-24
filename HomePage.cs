@@ -102,9 +102,9 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
-        private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
-        private void guna2Button3_Click_1(object sender, EventArgs e)
+        private void btnCreateDirectory_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
+        private void btnOpenMainShare_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
+        private void btnOpenRenameFolderFile_Click(object sender, EventArgs e)
             => new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem)).Show();
         private void BuildShowAlert(string title, string subheader)
             => new CustomAlert(title: title, subheader: subheader).Show();
@@ -2902,7 +2902,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button19_Click(object sender, EventArgs e) {
+        private void btnDeleteFolder_Click(object sender, EventArgs e) {
 
             ClosePopupForm.CloseRetrievalPopup();
 
@@ -3083,7 +3083,7 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void guna2Button4_Click(object sender, EventArgs e) {
+        private async void btnRefreshFiles_Click(object sender, EventArgs e) {
 
             flwLayoutHome.Controls.Clear();
 
@@ -3204,7 +3204,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button9_Click_1(object sender, EventArgs e) {
+        private async void btnGoHomePage_Click(object sender, EventArgs e) {
 
             BuildButtonsOnHomePageSelected();
 
@@ -3250,7 +3250,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button13_Click(object sender, EventArgs e) {
+        private void btnGoFolderPage_Click(object sender, EventArgs e) {
 
             pnlSubPanelDetails.Visible = false;
             btnLogout.Visible = false;
@@ -3269,7 +3269,7 @@ namespace FlowstorageDesktop {
             pnlMain.SendToBack();
         }
 
-        private async void guna2Button14_Click(object sender, EventArgs e) {
+        private async void btnOpenUpgradePage_Click(object sender, EventArgs e) {
 
             new SettingsForm().Show();
 
@@ -3490,51 +3490,42 @@ namespace FlowstorageDesktop {
 
         #region Filter type section
 
-        bool filterTypePanelVisible = false;
-        private void guna2Button16_Click(object sender, EventArgs e) {
-            filterTypePanelVisible = !filterTypePanelVisible;
-            pnlFilterType.Visible = filterTypePanelVisible;
-        }
-
-        private void guna2Button18_Click(object sender, EventArgs e) {
+        private void btnFilterImages_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".png,.jpeg,.jpg";
         }
 
-        private void guna2Button17_Click_2(object sender, EventArgs e) {
+        private void btnFilterText_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".txt,.html,.md,.sql,.css,.js,.csv";
         }
 
-        private void guna2Button22_Click_1(object sender, EventArgs e) {
+        private void btnFilterDocuments_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".doc,.docx";
-
         }
 
-        private void guna2Button20_Click(object sender, EventArgs e) {
+        private void btnFilterAudio_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".mp3,.wav";
-
         }
 
-        private void guna2Button21_Click(object sender, EventArgs e) {
+        private void btnFilterExcel_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".xlsx,xls";
         }
 
-        private void guna2Button23_Click(object sender, EventArgs e) {
+        private void btnFilterVideos_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".mp4,.avi,.mov,wmv";
-
         }
 
-        private void guna2Button24_Click(object sender, EventArgs e) {
+        private void btnFilterPdf_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".pdf";
         }
 
-        private void guna2Button25_Click(object sender, EventArgs e) {
+        private void btnClearFilter_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
         }
 
@@ -3549,7 +3540,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button27_Click(object sender, EventArgs e) {
+        private async void btnDownloadFolder_Click(object sender, EventArgs e) {
 
             if (tempDataUser.AccountType == "Max" || tempDataUser.AccountType == "Express" || tempDataUser.AccountType == "Supreme") {
                 string folderTitleGet = EncryptionModel.Encrypt(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
@@ -3571,7 +3562,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void btnDeleteFile_Click_1(object sender, EventArgs e) {
+        private async void btnDeleteFile_Click(object sender, EventArgs e) {
 
             string fileName = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
@@ -3603,7 +3594,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button30_Click(object sender, EventArgs e) {
+        private void btnRenameFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
@@ -3611,11 +3602,11 @@ namespace FlowstorageDesktop {
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
-            RenameFileForm renameFileFORM = new RenameFileForm(titleFile, tableName, panelName, dirName, sharedToName);
-            renameFileFORM.Show();
+            new RenameFileForm(titleFile, tableName, panelName, dirName, sharedToName).Show();
+
         }
 
-        private void guna2Button32_Click(object sender, EventArgs e) {
+        private void btnDownloadFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
@@ -3640,7 +3631,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button29_Click(object sender, EventArgs e) {
+        private void btnOpenShareFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblSelectedDirName.Text;
@@ -3648,8 +3639,7 @@ namespace FlowstorageDesktop {
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
 
-            new shareFileFORM(
-                titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
+            new shareFileFORM(titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
 
         }
 
@@ -3661,7 +3651,7 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void guna2Button4_Click_1(object sender, EventArgs e) {
+        private async void btnGoPsPage_Click(object sender, EventArgs e) {
 
             btnShowPs.FillColor = GlobalStyle.DarkPurpleColor;
 
@@ -3705,9 +3695,9 @@ namespace FlowstorageDesktop {
             await BuildMyPublicStorageFiles();
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e) => this.Close();
+        private void btnCloseHomePage_Click(object sender, EventArgs e) => this.Close();
 
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnOpenUpgradePage2_Click(object sender, EventArgs e) {
 
             new SettingsForm().Show();
 
@@ -3717,17 +3707,17 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button1_Click_1(object sender, EventArgs e) {
+        private void btnShowFilterTypePnl_Click(object sender, EventArgs e) {
             pnlShared.Visible = false;
             pnlFilterType.Visible = !pnlFilterType.Visible;
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e) {
+        private void btnShowSharedPnl_Click(object sender, EventArgs e) {
             pnlFilterType.Visible = false;
             pnlShared.Visible = !pnlShared.Visible;
         }
 
-        private async void guna2Button7_Click_1(object sender, EventArgs e) {
+        private async void btnGoSharedFilesPage_Click(object sender, EventArgs e) {
 
             flwLayoutHome.Controls.Clear();
 
@@ -3751,7 +3741,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void guna2Button6_Click_1(object sender, EventArgs e) {
+        private async void btnGoSharedToMePage_Click(object sender, EventArgs e) {
 
             flwLayoutHome.Controls.Clear();
 
