@@ -336,7 +336,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) => this.Close();
+        private void btnCloseDirectory_Click(object sender, EventArgs e) => this.Close();
     
         /// <summary>
         /// Initialize file panel variable (for increment)
@@ -786,7 +786,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void guna2Button26_Click(object sender, EventArgs e) {
+        private async void btnDeleteFile_Click(object sender, EventArgs e) {
 
             string fileName = lblFileNameOnPanel.Text;
             string panelname = lblFilePanelName.Text;
@@ -816,20 +816,20 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button28_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
+        private void btnHideFileOptionsPnl_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
 
-        private void guna2Button30_Click(object sender, EventArgs e) {
+        private void btnOpenRenameFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = GlobalsTable.directoryUploadTable;
             string panelName = lblFilePanelName.Text;
             string dirName = lblDirectoryName.Text;
 
-            RenameFileForm renameFileFORM = new RenameFileForm(titleFile, tableName, panelName, dirName);
-            renameFileFORM.Show();
+            new RenameFileForm(titleFile, tableName, panelName, dirName).Show();
+
         }
 
-        private void guna2Button32_Click(object sender, EventArgs e) {
+        private void btnDownloadFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
@@ -838,7 +838,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button29_Click(object sender, EventArgs e) {
+        private void btnOpenShareFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;

@@ -50,7 +50,7 @@
             this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
             this.btnRenameFile = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button28 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnHideFileOptionPnl = new Guna.UI2.WinForms.Guna2Button();
             this.lblFileNameOnPanel = new System.Windows.Forms.Label();
             this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.lblFilesCount = new System.Windows.Forms.Label();
@@ -161,7 +161,7 @@
             this.btnCloseDirectory.Name = "btnCloseDirectory";
             this.btnCloseDirectory.Size = new System.Drawing.Size(38, 31);
             this.btnCloseDirectory.TabIndex = 33;
-            this.btnCloseDirectory.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnCloseDirectory.Click += new System.EventHandler(this.btnCloseDirectory_Click);
             // 
             // guna2BorderlessForm1
             // 
@@ -219,7 +219,7 @@
             this.pnlFileOptions.Controls.Add(this.btnShareFile);
             this.pnlFileOptions.Controls.Add(this.btnDelete);
             this.pnlFileOptions.Controls.Add(this.btnRenameFile);
-            this.pnlFileOptions.Controls.Add(this.guna2Button28);
+            this.pnlFileOptions.Controls.Add(this.btnHideFileOptionPnl);
             this.pnlFileOptions.Controls.Add(this.lblFileNameOnPanel);
             this.pnlFileOptions.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.pnlFileOptions.ForeColor = System.Drawing.Color.Transparent;
@@ -301,7 +301,7 @@
             this.btnDownload.TabIndex = 51;
             this.btnDownload.Text = "Download";
             this.btnDownload.TextOffset = new System.Drawing.Point(1, 0);
-            this.btnDownload.Click += new System.EventHandler(this.guna2Button32_Click);
+            this.btnDownload.Click += new System.EventHandler(this.btnDownloadFile_Click);
             // 
             // btnShareFile
             // 
@@ -323,7 +323,7 @@
             this.btnShareFile.TabIndex = 38;
             this.btnShareFile.Text = "Share this file";
             this.btnShareFile.TextOffset = new System.Drawing.Point(1, 0);
-            this.btnShareFile.Click += new System.EventHandler(this.guna2Button29_Click);
+            this.btnShareFile.Click += new System.EventHandler(this.btnOpenShareFile_Click);
             // 
             // btnDelete
             // 
@@ -348,7 +348,7 @@
             this.btnDelete.TabIndex = 39;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextOffset = new System.Drawing.Point(1, 0);
-            this.btnDelete.Click += new System.EventHandler(this.guna2Button26_Click);
+            this.btnDelete.Click += new System.EventHandler(this.btnDeleteFile_Click);
             // 
             // btnRenameFile
             // 
@@ -369,30 +369,30 @@
             this.btnRenameFile.TabIndex = 37;
             this.btnRenameFile.Text = "Rename this file";
             this.btnRenameFile.TextOffset = new System.Drawing.Point(1, 0);
-            this.btnRenameFile.Click += new System.EventHandler(this.guna2Button30_Click);
+            this.btnRenameFile.Click += new System.EventHandler(this.btnOpenRenameFile_Click);
             // 
-            // guna2Button28
+            // btnHideFileOptionPnl
             // 
-            this.guna2Button28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button28.Animated = true;
-            this.guna2Button28.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button28.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button28.BorderRadius = 6;
-            this.guna2Button28.BorderThickness = 1;
-            this.guna2Button28.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button28.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button28.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button28.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button28.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button28.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button28.ForeColor = System.Drawing.Color.White;
-            this.guna2Button28.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button28.Image")));
-            this.guna2Button28.ImageSize = new System.Drawing.Size(18, 18);
-            this.guna2Button28.Location = new System.Drawing.Point(267, 11);
-            this.guna2Button28.Name = "guna2Button28";
-            this.guna2Button28.Size = new System.Drawing.Size(35, 32);
-            this.guna2Button28.TabIndex = 49;
-            this.guna2Button28.Click += new System.EventHandler(this.guna2Button28_Click);
+            this.btnHideFileOptionPnl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHideFileOptionPnl.Animated = true;
+            this.btnHideFileOptionPnl.BackColor = System.Drawing.Color.Transparent;
+            this.btnHideFileOptionPnl.BorderColor = System.Drawing.Color.Transparent;
+            this.btnHideFileOptionPnl.BorderRadius = 6;
+            this.btnHideFileOptionPnl.BorderThickness = 1;
+            this.btnHideFileOptionPnl.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnHideFileOptionPnl.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnHideFileOptionPnl.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnHideFileOptionPnl.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnHideFileOptionPnl.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnHideFileOptionPnl.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnHideFileOptionPnl.ForeColor = System.Drawing.Color.White;
+            this.btnHideFileOptionPnl.Image = ((System.Drawing.Image)(resources.GetObject("btnHideFileOptionPnl.Image")));
+            this.btnHideFileOptionPnl.ImageSize = new System.Drawing.Size(18, 18);
+            this.btnHideFileOptionPnl.Location = new System.Drawing.Point(267, 11);
+            this.btnHideFileOptionPnl.Name = "btnHideFileOptionPnl";
+            this.btnHideFileOptionPnl.Size = new System.Drawing.Size(35, 32);
+            this.btnHideFileOptionPnl.TabIndex = 49;
+            this.btnHideFileOptionPnl.Click += new System.EventHandler(this.btnHideFileOptionsPnl_Click);
             // 
             // lblFileNameOnPanel
             // 
@@ -484,7 +484,7 @@
         private Guna.UI2.WinForms.Guna2Button btnShareFile;
         private Guna.UI2.WinForms.Guna2Button btnDelete;
         private Guna.UI2.WinForms.Guna2Button btnRenameFile;
-        public Guna.UI2.WinForms.Guna2Button guna2Button28;
+        public Guna.UI2.WinForms.Guna2Button btnHideFileOptionPnl;
         private System.Windows.Forms.Label lblFileNameOnPanel;
         private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
         public System.Windows.Forms.Label lblFilesCount;
