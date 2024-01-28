@@ -542,7 +542,7 @@ namespace FlowstorageDesktop {
                         btnEnableSharing.Visible = true;
                         btnEnableSharing.Enabled = true;
 
-                        lblDisableFileSharing.Text = "Enable File Sharing";
+                        lblDisableFileSharing.Text = "Enable file sharing";
                         lblDescDisableSharing.Text = "Enabling file sharing will allows people to share a file to you";
 
                     } else {
@@ -552,7 +552,7 @@ namespace FlowstorageDesktop {
                         btnEnableSharing.Visible = false;
                         btnEnableSharing.Enabled = false;
 
-                        lblDisableFileSharing.Text = "Disable File Sharing";
+                        lblDisableFileSharing.Text = "Disable file sharing";
                         lblDescDisableSharing.Text = "Disabling file sharing will not allow people to share a file to you. You can still share to people however.";
                     }
                 }

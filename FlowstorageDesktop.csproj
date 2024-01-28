@@ -840,6 +840,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Authentication\SignInForm.resx">
       <DependentUpon>SignInForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -925,7 +926,6 @@
   <ItemGroup>
     <Content Include="MainIco.ico" />
     <Content Include="Resources\DirIcon.png" />
-    <None Include="Resources\icons8-close-48.png" />
     <None Include="Resources\icons8-tune-48.png" />
     <None Include="Resources\icons8-compass-48.png" />
     <None Include="Resources\icons8-tune-24.png" />
