@@ -225,7 +225,8 @@ namespace FlowstorageDesktop {
                 pbImage.Image = filteredImage;
 
             } catch (Exception) {
-                MessageBox.Show("Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
@@ -434,16 +435,17 @@ namespace FlowstorageDesktop {
                     .Where(label => label.Text.Contains('.'))
                     .Select(label => label.Text.ToLower()));
 
-                int currentFileIndex = fileNames.IndexOf(lblFileName.Text);
+                int currentFileIndex = fileNames.IndexOf(lblFileName.Text.ToLower());
 
                 int nextFileIndex = direction == -1 ? currentFileIndex - 1 : currentFileIndex + 1;
+
                 string fileName = fileNames[nextFileIndex];
                 string imageBase64Encoded = GetImageBase64Encoded().ElementAt(nextFileIndex);
 
                 byte[] imageBytes = Convert.FromBase64String(imageBase64Encoded);
                 using (MemoryStream stream = new MemoryStream(imageBytes)) {
 
-                    Bitmap defaultImage = new Bitmap(stream);
+                    var defaultImage = new Bitmap(stream);
 
                     int width = defaultImage.Width;
                     int height = defaultImage.Height;
@@ -461,15 +463,16 @@ namespace FlowstorageDesktop {
                     this.Close();
 
                 }
-    
-            } catch (ArgumentOutOfRangeException) {};
+
+            } catch (ArgumentOutOfRangeException) { };
+
         }
 
-        private void guna2Button9_Click_1(object sender, EventArgs e) {
+        private void btnNextImage_Click(object sender, EventArgs e) {
             SwitchImageImplementation(1);
         }
 
-        private void guna2Button12_Click(object sender, EventArgs e) {
+        private void btnPreviousImage_Click(object sender, EventArgs e) {
             SwitchImageImplementation(-1);
         }
 

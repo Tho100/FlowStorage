@@ -711,7 +711,7 @@
             this.btnNext.TabIndex = 100;
             this.btnNext.Text = ">";
             this.btnNext.Visible = false;
-            this.btnNext.Click += new System.EventHandler(this.guna2Button9_Click_1);
+            this.btnNext.Click += new System.EventHandler(this.btnNextImage_Click);
             // 
             // btnPrevious
             // 
@@ -733,7 +733,7 @@
             this.btnPrevious.TabIndex = 101;
             this.btnPrevious.Text = "<";
             this.btnPrevious.Visible = false;
-            this.btnPrevious.Click += new System.EventHandler(this.guna2Button12_Click);
+            this.btnPrevious.Click += new System.EventHandler(this.btnPreviousImage_Click);
             // 
             // PicForm
             // 
