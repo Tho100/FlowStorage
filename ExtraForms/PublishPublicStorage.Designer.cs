@@ -221,7 +221,7 @@
             this.btnMusic.Size = new System.Drawing.Size(115, 32);
             this.btnMusic.TabIndex = 42;
             this.btnMusic.Text = "Music";
-            this.btnMusic.Click += new System.EventHandler(this.guna2Button2_Click_1);
+            this.btnMusic.Click += new System.EventHandler(this.btnMusic_Click);
             // 
             // btnRandom
             // 

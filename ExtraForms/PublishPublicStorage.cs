@@ -100,7 +100,7 @@ namespace FlowstorageDesktop.ExtraForms {
             btnCreativity.FillColor = Color.DarkGray;
         }
 
-        private void guna2Button2_Click_1(object sender, EventArgs e) {
+        private void btnMusic_Click(object sender, EventArgs e) {
             HomePage.instance.PublicStorageUserTag = "Music";
             btnMusic.FillColor = Color.Tomato;
             btnRandom.FillColor = Color.DarkGray;

@@ -565,12 +565,6 @@
     <Compile Include="ViewerForms\exeFORM.Designer.cs">
       <DependentUpon>exeFORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="AlertForms\RecoveryFailedAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\RecoveryFailedAlert.Designer.cs">
-      <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helper\GetFileSize.cs" />
     <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
@@ -805,9 +799,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\exeFORM.resx">
       <DependentUpon>exeFORM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\RecoveryFailedAlert.resx">
-      <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
