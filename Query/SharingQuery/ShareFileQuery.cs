@@ -35,8 +35,6 @@ namespace FlowstorageDesktop.SharingQuery {
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
 
-            return 0;
-
         }
 
         /// <summary>
@@ -193,8 +191,6 @@ namespace FlowstorageDesktop.SharingQuery {
 
         private async Task InsertFileData(string fileDataBase64, string thumbnailBase64 = null) {
 
-            string fileType = Path.GetExtension(_fileName);
-
             string encryptedFileName = EncryptionModel.Encrypt(_fileName);
             string encryptedComment = string.IsNullOrEmpty(_comment)
                 ? string.Empty : EncryptionModel.Encrypt(_comment);
@@ -203,7 +199,7 @@ namespace FlowstorageDesktop.SharingQuery {
 
             string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-            const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@receiver, @from, @file_name, @date, @file_data, @file_type, @thumbnail, @comment)";
+            const string insertQuery = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_THUMB,CUST_COMMENT) VALUES (@receiver, @from, @file_name, @date, @file_data, @thumbnail, @comment)";
 
             using (MySqlCommand command = new MySqlCommand(insertQuery, con)) {
                 command.Parameters.AddWithValue("@from", tempDataUser.Username);
@@ -211,7 +207,6 @@ namespace FlowstorageDesktop.SharingQuery {
                 command.Parameters.AddWithValue("@file_name", encryptedFileName);
                 command.Parameters.AddWithValue("@date", todayDate);
                 command.Parameters.AddWithValue("@file_data", fileDataBase64);
-                command.Parameters.AddWithValue("@file_type", fileType);
                 command.Parameters.AddWithValue("@comment", encryptedComment);
                 command.Parameters.AddWithValue("@thumbnail", thumbnail);
 
@@ -230,7 +225,7 @@ namespace FlowstorageDesktop.SharingQuery {
             this._directoryName = directoryName;
             this._fileExtension = Path.GetExtension(fileName);
 
-            if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
+            if (!_isFromShared && _tableName == GlobalsTable.sharingTable) {
                 string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_TO");
                 await InsertFileData(await GetFileMetadataSharedToMe(_fileName), getThumbnails);
 
@@ -257,7 +252,7 @@ namespace FlowstorageDesktop.SharingQuery {
                         ? GlobalsTable.psExcel : GlobalsTable.homeExcelTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == ".pdf") {
+                } else if (_fileExtension == "pdf") {
                     string finalTable = _tableName == GlobalsTable.psPdf
                         ? GlobalsTable.psPdf : GlobalsTable.homePdfTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
@@ -277,19 +272,19 @@ namespace FlowstorageDesktop.SharingQuery {
                         ? GlobalsTable.psAudio : GlobalsTable.homeAudioTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == ".exe") {
+                } else if (_fileExtension == "exe") {
                     string finalTable = _tableName == GlobalsTable.psExe
                         ? GlobalsTable.psExe : GlobalsTable.homeExeTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
-                } else if (_fileExtension == ".apk") {
+                } else if (_fileExtension == "apk") {
                     string finalTable = _tableName == GlobalsTable.psApk
                         ? GlobalsTable.psApk : GlobalsTable.homeApkTable;
                     await InsertFileData(await GetFileMetadata(_fileName, finalTable));
 
                 }
 
-            } else if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
+            } else if (_isFromShared && _tableName == GlobalsTable.sharingTable) {
                 string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_FROM");
                 await InsertFileData(await GetFileMetadataSharedToOthers(_fileName), getThumbnails);
 
@@ -302,10 +297,10 @@ namespace FlowstorageDesktop.SharingQuery {
 
             } else if (_tableName == GlobalsTable.folderUploadTable) {
                 string getThumbnails = await RetrieveThumbnailsExtra(
-                    GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName);
+                    GlobalsTable.folderUploadTable, "FOLDER_NAME", _directoryName, _fileName);
 
                 await InsertFileData(await GetFileMetadataExtra(
-                    GlobalsTable.folderUploadTable, "FOLDER_TITLE", _directoryName, _fileName), getThumbnails);
+                    GlobalsTable.folderUploadTable, "FOLDER_NAME", _directoryName, _fileName), getThumbnails);
             }
 
         }

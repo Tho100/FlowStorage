@@ -58,7 +58,7 @@ namespace FlowstorageDesktop {
 
             } else if (_tableName == GlobalsTable.folderUploadTable) {
 
-                using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername", con)) {
+                using (MySqlCommand command = new MySqlCommand("UPDATE folder_upload_info SET CUST_FILE_PATH = @newname WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldername", con)) {
                     command.Parameters.AddWithValue("@username", tempDataUser.Username);
                     command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(_fileName));
                     command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(_directoryName));
@@ -111,21 +111,22 @@ namespace FlowstorageDesktop {
 
         private void UpdateFileLabelUI(string newFileName) {
 
-            Control[] matches = new Control[0];
+            var matches = new Control[0];
 
             if (_tableName != GlobalsTable.sharingTable && _tableName != GlobalsTable.folderUploadTable && _tableName != GlobalsTable.directoryUploadTable) {
                 matches = HomePage.instance.Controls.Find(_panelName, true);
-            }
-            else if (_tableName == GlobalsTable.directoryUploadTable) {
+
+            } else if (_tableName == GlobalsTable.directoryUploadTable) {
                 matches = DirectoryForm.instance.Controls.Find(_panelName, true);
             }
 
             if (matches.Length > 0 && matches[0] is Guna2Panel) {
 
-                Guna2Panel myPanel = (Guna2Panel)matches[0];
+                var myPanel = (Guna2Panel)matches[0];
 
-                Label titleLabel = myPanel.Controls.OfType<Label>().LastOrDefault();
+                var titleLabel = myPanel.Controls.OfType<Label>().LastOrDefault();
                 titleLabel.Text = newFileName;
+
             }
         }
 

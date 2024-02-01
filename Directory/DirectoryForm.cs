@@ -2,6 +2,7 @@
 using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using FlowstorageDesktop.Query;
+using FlowstorageDesktop.Query.DataCaller;
 using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Shell;
@@ -24,6 +25,7 @@ namespace FlowstorageDesktop {
         readonly private Crud crud = new Crud();
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+        readonly private DirectoryDataCaller directoryDataCaller = new DirectoryDataCaller();
 
         readonly private MySqlConnection con = ConnectionModel.con;
         private string _todayDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
@@ -48,18 +50,15 @@ namespace FlowstorageDesktop {
 
                 StartPopupForm.StartUploadingFilePopup(fileName, fileSizeInMb);
 
-                string fileType = Path.GetExtension(fileName);
-
                 string encryptedFileName = EncryptionModel.Encrypt(fileName);
                 string encryptedDirectoryname = EncryptionModel.Encrypt(lblDirectoryName.Text);
 
-                const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@file_name, @username, @date, @file_data, @thumbnail, @file_type, @dir_name)";
+                const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, DIR_NAME) VALUES (@file_name, @username, @date, @file_data, @thumbnail, @dir_name)";
 
                 var param = new Dictionary<string, string>
                 {
                     { "@username", tempDataUser.Username},
                     { "@file_name", encryptedFileName},
-                    { "@file_type", fileType},
                     { "@dir_name", encryptedDirectoryname},
                     { "@date", _todayDate},
                     { "@file_data", fileBase64EncodedData},
@@ -71,16 +70,14 @@ namespace FlowstorageDesktop {
                 ClosePopupForm.CloseUploadingPopup();
 
             } catch (Exception) {
-                new CustomAlert(
-                    title: "Something went wrong", subheader: "Failed to upload this file.").Show();
-
+                OnUploadFailed();
             }
+
         }
 
         private async Task InsertFileDataVideo(string filePath, string fileBase64EncodedData) {
 
             string fileName = Path.GetFileName(filePath);
-            string fileType = Path.GetExtension(fileName);
 
             var fileSizeInMb = Convert.FromBase64String(fileBase64EncodedData).Length / 1024 / 1024;
 
@@ -89,12 +86,11 @@ namespace FlowstorageDesktop {
             string encryptedFileName = EncryptionModel.Encrypt(fileName);
             string encryptedDirectoryName = EncryptionModel.Encrypt(lblDirectoryName.Text);
 
-            const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, FILE_EXT, DIR_NAME) VALUES (@file_name, @username, @date, @file_data, @thumbnail, @file_type, @dir_name)";
+            const string insertQuery = "INSERT INTO upload_info_directory (CUST_FILE_PATH, CUST_USERNAME, UPLOAD_DATE, CUST_FILE, CUST_THUMB, DIR_NAME) VALUES (@file_name, @username, @date, @file_data, @thumbnail, @dir_name)";
 
             using (var command = new MySqlCommand(insertQuery, con)) {
                 command.Parameters.AddWithValue("@file_name", encryptedFileName);
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@file_type", fileType);
                 command.Parameters.AddWithValue("@date", _todayDate);
                 command.Parameters.AddWithValue("@dir_name", encryptedDirectoryName);
                 command.Parameters.AddWithValue("@file_data", fileBase64EncodedData);
@@ -117,59 +113,11 @@ namespace FlowstorageDesktop {
 
         private async void InitializeDirectoryFiles() {
 
-            Dictionary<string, (string, string)> fileExtensions = new Dictionary<string, (string, string)> {
-                { ".png", ("imgFilePng", GlobalsTable.homeImageTable) },
-                { ".jpg", ("imgFileJpg", GlobalsTable.homeImageTable) },
-                { ".jpeg", ("imgFilePeg", GlobalsTable.homeImageTable) },
-                { ".txt", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".js", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".sql", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".py", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".html", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".csv", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".css", ("txtFile", GlobalsTable.homeTextTable) },
-                { ".exe", ("exeFile", GlobalsTable.homeExeTable) },
-                { ".mp4", ("vidFile", GlobalsTable.homeVideoTable) },
-                { ".wav", ("vidFile", GlobalsTable.homeVideoTable) },
-                { ".xlsx", ("exlFile", GlobalsTable.homeExcelTable) },
-                { ".mp3", ("audiFile", GlobalsTable.homeAudioTable) },
-                { ".apk", ("apkFile", GlobalsTable.homeApkTable) },
-                { ".pdf", ("pdfFile", GlobalsTable.homePdfTable) },
-                { ".pptx", ("ptxFile", GlobalsTable.homePtxTable) },
-                { ".msi", ("msiFile", GlobalsTable.homeMsiTable) },
-                { ".docx", ("docFile", GlobalsTable.homeWordTable) },
-            };
-
-            foreach (string fileType in fileExtensions.Keys) {
-
-                int count = CountFilesInDirectory(fileType);
-
-                if (count > 0) {
-                    string controlName = fileExtensions[fileType].Item1;
-                    string tableName = fileExtensions[fileType].Item2;
-                    await BuildFilePanelOnLoad(fileType, tableName, controlName, count);
-
-                }
-
-            }
+            await BuildFilePanelOnLoad();
 
             BuildRedundaneVisibility();
             lblFilesCount.Text = $"{flwLayoutDirectory.Controls.Count} File(s)";
 
-        }
-
-        private int CountFilesInDirectory(string fileType) {
-
-            string encryptedDirectoryName = EncryptionModel.Encrypt(lblDirectoryName.Text);
-
-            const string query = "SELECT COUNT(*) FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-            using (var command = new MySqlCommand(query, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@dirname", encryptedDirectoryName);
-                command.Parameters.AddWithValue("@ext", fileType);
-
-                return Convert.ToInt32(command.ExecuteScalar());
-            }
         }
 
         private void BuildRedundaneVisibility() {
@@ -197,73 +145,24 @@ namespace FlowstorageDesktop {
         /// Control will be generated on the flowlayout panel
         /// based on the count of files
         /// </summary>
-        /// <param name="_tableName"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="currItem"></param>
 
-        private async Task BuildFilePanelOnLoad(string fileType, string tableName, string parameterName, int currItem) {
+        private async Task BuildFilePanelOnLoad() {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
             var onMoreOptionButtonPressed = new List<EventHandler>();
 
-            var filesInfo = new List<(string, string, string)>();
-
-            const string selectFileDataDir = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-            using (MySqlCommand command = new MySqlCommand(selectFileDataDir, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                command.Parameters.AddWithValue("@ext", fileType);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        filesInfo.Add((fileName, uploadDate, string.Empty));
-                    }
-                }
-            }
-
             var base64EncodedImage = new List<string>();
-            var base64EncodedThumbnail = new List<string>();
 
-            if (Globals.imageTypes.Contains(fileType)) {
+            string directoryName = lblDirectoryName.Text;
 
-                if (base64EncodedImage.Count == 0) {
+            var filesInfo = await directoryDataCaller.GetFileMetadata(directoryName);
 
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", fileType);
+            var typeValues = filesInfo.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
 
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedImage.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
-                            }
-                        }
-                    }
-                }
-            }
+            int length = typeValues.Count;
 
-            if (Globals.videoTypes.Contains(fileType)) {
-
-                if (base64EncodedThumbnail.Count == 0) {
-
-                    const string retrieveImgQuery = "SELECT CUST_THUMB FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname AND FILE_EXT = @ext";
-                    using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(lblDirectoryName.Text));
-                        command.Parameters.AddWithValue("@ext", fileType);
-                        using (var readBase64 = await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                base64EncodedThumbnail.Add(readBase64.GetString(0));
-                            }
-                        }
-                    }
-                }
-            }
-
-            for (int i = 0; i < currItem; i++) {
+            for (int i = 0; i < length; i++) {
 
                 int accessIndex = i;
                 string fileName = filesInfo[accessIndex].Item1;
@@ -271,12 +170,18 @@ namespace FlowstorageDesktop {
                 void moreOptionOnPressedEvent(object sender, EventArgs e) {
                     pnlFileOptions.Visible = true;
                     lblFileNameOnPanel.Text = filesInfo[accessIndex].Item1;
-                    lblFilePanelName.Text = parameterName + accessIndex;
+                    lblFilePanelName.Text = "dirParam" + accessIndex;
                 }
 
                 onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-                if (tableName == GlobalsTable.homeImageTable) {
+                if (Globals.imageTypes.Contains(typeValues[i])) {
+
+                    if (base64EncodedImage.Count == 0) {
+                        var images = await directoryDataCaller.GetImage(directoryName);
+                        base64EncodedImage.AddRange(images);
+
+                    }
 
                     if (base64EncodedImage.Count > i) {
                         byte[] getBytes = Convert.FromBase64String(base64EncodedImage[i]);
@@ -300,14 +205,9 @@ namespace FlowstorageDesktop {
 
                 }
 
-                if (tableName == GlobalsTable.homeVideoTable) {
+                if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                    if (base64EncodedThumbnail.Count > i) {
-                        byte[] getBytes = Convert.FromBase64String(base64EncodedThumbnail[i]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            imageValues.Add(Image.FromStream(toMs));
-                        }
-                    }
+                    imageValues.Add(Globals.VideoImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
 
@@ -323,10 +223,9 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
+                if (Globals.textTypes.Contains(typeValues[i])) {
 
-                if (tableName == GlobalsTable.homeTextTable) {
-
-                    string textTypes = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
+                    string textTypes = fileName.Split('.').Last();
                     imageValues.Add(Globals.textTypeToImage[textTypes]);
 
                     void videoOnPressed(object sender, EventArgs e) {
@@ -337,19 +236,19 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homeExeTable) {
+                if (typeValues[i] == "exe") {
 
                     imageValues.Add(Globals.EXEImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        exeFORM displayExe = new exeFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
+                        ExeForm displayExe = new ExeForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
                         displayExe.Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homeExcelTable) {
+                if (Globals.excelTypes.Contains(typeValues[i])) {
 
                     imageValues.Add(Globals.EXCELImage);
 
@@ -361,7 +260,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homeAudioTable) {
+                if (Globals.audioTypes.Contains(typeValues[i])) {
 
                     imageValues.Add(Globals.AudioImage);
 
@@ -373,7 +272,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homeApkTable) {
+                if (typeValues[i] == "apk") {
 
                     imageValues.Add(Globals.APKImage);
 
@@ -385,7 +284,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homePdfTable) {
+                if (typeValues[i] == "pdf") {
 
                     imageValues.Add(Globals.PDFImage);
 
@@ -396,7 +295,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homePtxTable) {
+                if (Globals.ptxTypes.Contains(typeValues[i])) {
 
                     imageValues.Add(Globals.PTXImage);
 
@@ -407,7 +306,7 @@ namespace FlowstorageDesktop {
                     onPressedEvent.Add(videoOnPressed);
                 }
 
-                if (tableName == GlobalsTable.homeMsiTable) {
+                if (typeValues[i] == "msi") {
 
                     imageValues.Add(Globals.MSIImage);
 
@@ -419,7 +318,7 @@ namespace FlowstorageDesktop {
 
                 }
 
-                if (tableName == GlobalsTable.homeWordTable) {
+                if (Globals.wordTypes.Contains(typeValues[i])) {
 
                     imageValues.Add(Globals.DOCImage);
 
@@ -433,41 +332,12 @@ namespace FlowstorageDesktop {
             }
 
             PanelGenerator panelGenerator = new PanelGenerator();
-            panelGenerator.GeneratePanel(parameterName, currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromDirectory: true);
-        }
-
-        private void Form3_Load(object sender, EventArgs e) {
+            panelGenerator.GeneratePanel("dirParam", length, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues, isFromDirectory: true);
 
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void label8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-
-        }
-
+        private void btnCloseDirectory_Click(object sender, EventArgs e) => this.Close();
+    
         /// <summary>
         /// Initialize file panel variable (for increment)
         /// </summary>
@@ -585,8 +455,8 @@ namespace FlowstorageDesktop {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPic.Show();
+                    new PicForm(
+                        defaultImage, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog(); 
                 };
 
             }
@@ -595,12 +465,12 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                string textType = titleLab.Text.Split('.').Last();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
                 textboxPic.Click += (sender_t, e_t) => {
-                    TextForm txtFormShow = new TextForm(GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, tempDataUser.Username);
-                    txtFormShow.Show();
+                    new TextForm(
+                        GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -610,7 +480,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    new exeFORM(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).Show();
+                    new ExeForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -628,8 +499,9 @@ namespace FlowstorageDesktop {
                     var getHeight = getImgName.Image.Height;
                     Bitmap defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    vidShow.Show();
+                    new VideoForm(
+                        defaultImg, getWidth, getHeight, fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
+                    
                 };
 
             }
@@ -639,8 +511,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPic.Show();
+                    new AudioForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -650,8 +522,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPic.Show();
+                    new ExcelForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -661,8 +533,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(fileName, tempDataUser.Username, GlobalsTable.directoryUploadTable, lblDirectoryName.Text);
-                    displayPic.Show();
+                    new ApkForm(
+                        fileName, tempDataUser.Username, GlobalsTable.directoryUploadTable, lblDirectoryName.Text).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homePdfTable) {
@@ -671,8 +543,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPdf.ShowDialog();
+                    new PdfForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homePtxTable) {
@@ -681,8 +553,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayPtx.ShowDialog();
+                    new PtxForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homeMsiTable) {
@@ -691,8 +563,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayMsi.Show();
+                    new MsiForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -702,8 +574,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username);
-                    displayWord.ShowDialog();
+                    new WordDocForm(
+                        fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -759,7 +631,7 @@ namespace FlowstorageDesktop {
                 foreach (var selectedItems in open.FileNames) {
 
                     string fileName = Path.GetFileName(selectedItems);
-                    string fileType = Path.GetExtension(selectedItems);
+                    string fileType = selectedItems.Split('.').Last();
 
                     if (filesName.Contains(Path.GetFileName(selectedItems).ToLower().Trim())) {
                         continue;
@@ -783,8 +655,8 @@ namespace FlowstorageDesktop {
 
                             string compressedImageBase64 = compressor.compressImageToBase64(selectedItems);
                             string encryptedImage = EncryptionModel.Encrypt(compressedImageBase64);
-                            await CreateFilePanel
-                                (selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedImage);
+                            await CreateFilePanel(
+                                selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedImage);
                                 
                         } else if (Globals.textTypes.Contains(fileType)) {
                             txtCurr++;
@@ -802,7 +674,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
 
-                        } else if (fileType == ".exe") {
+                        } else if (fileType == "exe") {
                             exeCurr++;
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptBase64String);
@@ -822,12 +694,12 @@ namespace FlowstorageDesktop {
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptBase64String);
 
-                        } else if (fileType == ".apk") {
+                        } else if (fileType == "apk") {
                             apkCurr++;
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptBase64String);
 
-                        } else if (fileType == ".pdf") {
+                        } else if (fileType == "pdf") {
                             pdfCurr++;
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptBase64String);
@@ -837,7 +709,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptBase64String);
 
-                        } else if (fileType == ".msi") {
+                        } else if (fileType == "msi") {
                             msiCurr++;
                             await CreateFilePanel(
                                 selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptBase64String);
@@ -857,7 +729,6 @@ namespace FlowstorageDesktop {
 
                     } catch (Exception) {
                         OnUploadFailed();
-
                     }
                 }
             }
@@ -910,22 +781,18 @@ namespace FlowstorageDesktop {
 
             } catch (Exception) {
                 ClosePopupForm.CloseUploadingPopup();
-                new CustomAlert(
-                    title: "An error occurred", "Something went wrong while trying to upload files.").Show();
+                OnUploadFailed();
             }
-        }
-
-        private void guna2VSeparator1_Click(object sender, EventArgs e) {
 
         }
 
-        private async void guna2Button26_Click(object sender, EventArgs e) {
+        private async void btnDeleteFile_Click(object sender, EventArgs e) {
 
             string fileName = lblFileNameOnPanel.Text;
             string panelname = lblFilePanelName.Text;
             string directoryName = lblDirectoryName.Text;
 
-            DialogResult verifyDialog = MessageBox.Show(
+            var verifyDialog = MessageBox.Show(
                 $"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDialog == DialogResult.Yes) {
@@ -937,8 +804,8 @@ namespace FlowstorageDesktop {
                 Control[] matches = this.Controls.Find(panelname, true);
 
                 if (matches.Length > 0 && matches[0] is Guna2Panel) {
-                    Guna2Panel myPanel = (Guna2Panel)matches[0];
-                    myPanel.Dispose();
+                    var filePanel = (Guna2Panel) matches[0];
+                    filePanel.Dispose();
                 }
 
                 BuildRedundaneVisibility();
@@ -949,22 +816,20 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button28_Click(object sender, EventArgs e) {
-            pnlFileOptions.Visible = false;
-        }
+        private void btnHideFileOptionsPnl_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
 
-        private void guna2Button30_Click(object sender, EventArgs e) {
+        private void btnOpenRenameFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = GlobalsTable.directoryUploadTable;
             string panelName = lblFilePanelName.Text;
             string dirName = lblDirectoryName.Text;
 
-            RenameFileForm renameFileFORM = new RenameFileForm(titleFile, tableName, panelName, dirName);
-            renameFileFORM.Show();
+            new RenameFileForm(titleFile, tableName, panelName, dirName).Show();
+
         }
 
-        private void guna2Button32_Click(object sender, EventArgs e) {
+        private void btnDownloadFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
@@ -973,14 +838,15 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button29_Click(object sender, EventArgs e) {
+        private void btnOpenShareFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
 
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 titleFile, false, GlobalsTable.directoryUploadTable, dirName).Show();
 
         }
+
     }
 }

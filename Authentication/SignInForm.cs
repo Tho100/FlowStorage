@@ -1,14 +1,12 @@
 ﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Authentication;
 using FlowstorageDesktop.AuthenticationQuery;
-using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using FlowstorageDesktop.Model;
 using FlowstorageDesktop.Temporary;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -127,14 +125,11 @@ namespace FlowstorageDesktop {
                     HomePage.instance.lblItemCountText.Text = HomePage.instance.flwLayoutHome.Controls.Count.ToString();
                     HomePage.instance.lblCurrentPageText.Text = "Home";
 
-                    GlobalsData.fileTypeValuesSharedToMe.Clear();
-                    GlobalsData.fileTypeValuesSharedToOthers.Clear();
-
                     await GenerateUserData();
 
                     Application.OpenForms.OfType<RetrievalAlert>().FirstOrDefault().Close();
 
-                    if (guna2CheckBox2.Checked) {
+                    if (chcBoxRememberMe.Checked) {
                         new AutoLoginModel().SetupAutoLoginData(tempDataUser.Username, tempDataUser.Email);
 
                     }
@@ -191,10 +186,6 @@ namespace FlowstorageDesktop {
             Close();
         }
 
-        private void label4_Click(object sender, EventArgs e) {
-
-        }
-
         /// <summary>
         /// 
         /// Perform authentication and fetch user data on login
@@ -202,7 +193,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnSignIn_Click(object sender, EventArgs e) {
 
             try {
 
@@ -243,24 +234,16 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void LogIN_Load(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            guna2Button1.Visible = true;
-            guna2Button3.Visible = false;
+        private void btnHidePassword_Click(object sender, EventArgs e) {
+            btnHidePassword.Visible = false;
+            btnShowPassword.Visible = true;
             txtFieldAuth.PasswordChar = '*';
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            guna2Button1.Visible = false;
-            guna2Button3.Visible = true;
+        private void btnShowPassword_Click(object sender, EventArgs e) {
+            btnHidePassword.Visible = true;
+            btnShowPassword.Visible = false;
             txtFieldAuth.PasswordChar = '\0';
-        }
-
-        private void guna2CheckBox2_CheckedChanged(object sender, EventArgs e) {
-
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
@@ -269,40 +252,12 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2CircleButton1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label3_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e) {
-
-        }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             new ValidateRecoveryEmail().Show();
             this.Close();
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) => this.Close();
-        
+        private void btnCloseForm_Click(object sender, EventArgs e) => this.Close();
+
     }
 }

@@ -58,7 +58,6 @@
             this.bannerPictureBox.Size = new System.Drawing.Size(562, 665);
             this.bannerPictureBox.TabIndex = 52;
             this.bannerPictureBox.TabStop = false;
-            this.bannerPictureBox.Click += new System.EventHandler(this.bannerPictureBox_Click);
             // 
             // pnlRegistration
             // 
@@ -89,7 +88,6 @@
             this.pnlRegistration.Name = "pnlRegistration";
             this.pnlRegistration.Size = new System.Drawing.Size(1322, 826);
             this.pnlRegistration.TabIndex = 29;
-            this.pnlRegistration.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
             // 
             // button1
             // 
@@ -383,7 +381,6 @@
             this.Name = "SignUpForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Flowstorage";
-            this.Load += new System.EventHandler(this.SignUpForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bannerPictureBox)).EndInit();
             this.pnlRegistration.ResumeLayout(false);
             this.pnlRegistration.PerformLayout();

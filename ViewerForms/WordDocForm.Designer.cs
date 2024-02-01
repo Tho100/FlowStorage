@@ -78,7 +78,6 @@
             this.lblFileName.Size = new System.Drawing.Size(317, 98);
             this.lblFileName.TabIndex = 37;
             this.lblFileName.Text = "label1";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblUserComment
             // 
@@ -121,7 +120,6 @@
             this.label6.Size = new System.Drawing.Size(195, 23);
             this.label6.TabIndex = 63;
             this.label6.Text = "Document File";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // guna2Separator2
             // 
@@ -140,7 +138,6 @@
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(805, 10);
             this.guna2Separator1.TabIndex = 66;
-            this.guna2Separator1.Click += new System.EventHandler(this.guna2Separator1_Click);
             // 
             // guna2VSeparator1
             // 
@@ -359,7 +356,6 @@
             this.txtFieldComment.Size = new System.Drawing.Size(312, 292);
             this.txtFieldComment.TabIndex = 99;
             this.txtFieldComment.Visible = false;
-            this.txtFieldComment.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
             // btnEditComment
             // 
@@ -419,7 +415,6 @@
             this.documentViewer1.TabIndex = 101;
             this.documentViewer1.Text = "documentViewer1";
             this.documentViewer1.ZoomMode = Spire.OfficeViewer.Forms.ZoomMode.Default;
-            this.documentViewer1.Click += new System.EventHandler(this.documentViewer1_Click);
             // 
             // WordDocForm
             // 
@@ -456,7 +451,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Word Document Viewer";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.wordFORM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

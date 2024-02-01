@@ -19,13 +19,13 @@ namespace FlowstorageDesktop {
         private bool _isFromSharing { get; set; }
 
         private byte[] _audioBytes { get; set; }
-        private System.Windows.Forms.Timer _elapsedTickTimer { get; set; }
+        private Timer _elapsedTickTimer { get; set; }
         private TimeSpan _elapsedTime { get; set; }
         private Mp3FileReader _NReader { get; set; }
         private SoundPlayer _wavAudioPlayer { get; set; }
         private WaveOut _mp3WaveOut { get; set; }
 
-        public AudioForm(String fileName, String tableName,String directoryName,String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public AudioForm(string fileName, string tableName,string directoryName,string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -35,28 +35,30 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (isFromShared == true) {
-                guna2Button7.Visible = true;
-                btnEditComment.Visible = true;
+            label5.Text = isFromShared ? "Shared To" : "Uploaded By";
 
-                label5.Text = "Shared To";
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label5.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label5.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderUsername.Text = uploaderName;
@@ -155,8 +157,8 @@ namespace FlowstorageDesktop {
         /// <param name="_mp3ByteIn"></param>
         private void PlayAudioMp3(byte[] mp3Bytes) {
 
-            Stream _setupStream = new MemoryStream(mp3Bytes);
-            _NReader = new Mp3FileReader(_setupStream);
+            var stream = new MemoryStream(mp3Bytes);
+            _NReader = new Mp3FileReader(stream);
 
             double getDurationSeconds = _NReader.TotalTime.TotalSeconds;
             int minutes = (int)(getDurationSeconds / 60);
@@ -168,19 +170,17 @@ namespace FlowstorageDesktop {
             _setupWaveOut.Play();
             _mp3WaveOut = _setupWaveOut;
 
-            _elapsedTickTimer = new System.Windows.Forms.Timer();
+            _elapsedTickTimer = new Timer();
             _elapsedTickTimer.Interval = 1000;
             _elapsedTickTimer.Tick += new EventHandler(timer_Tick);
             _elapsedTickTimer.Start();
 
-            AudioHelp breakFixedValue = new AudioHelp();
-            breakFixedValue.ShowDialog();
+            new AudioHelp().ShowDialog();
 
-            if (Application.OpenForms["AudioHelp"] != null) {
-                Application.OpenForms["AudioHelp"].Close();
-            }
+            Application.OpenForms["AudioHelp"]?.Close();
 
             ClosePopupForm.CloseCustomPopup("AudioHelp");
+
         }
 
         private void PlayAudioWave(byte[] waveBytes) {
@@ -320,7 +320,7 @@ namespace FlowstorageDesktop {
         }
 
         private void guna2Button1_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
@@ -347,7 +347,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;

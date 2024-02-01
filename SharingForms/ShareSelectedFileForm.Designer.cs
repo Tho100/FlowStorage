@@ -1,5 +1,5 @@
 ﻿namespace FlowstorageDesktop {
-    partial class shareFileFORM {
+    partial class ShareSelectedFileForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,18 +24,18 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(shareFileFORM));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShareSelectedFileForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblFileName = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.lblCountCharComment = new System.Windows.Forms.Label();
             this.txtFieldComment = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnUpload = new Guna.UI2.WinForms.Guna2Button();
+            this.lblComment = new System.Windows.Forms.Label();
+            this.btnShareFile = new Guna.UI2.WinForms.Guna2Button();
             this.txtFieldShareToName = new Guna.UI2.WinForms.Guna2TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnCloseForm = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,8 +66,8 @@
             this.guna2Panel1.BorderThickness = 1;
             this.guna2Panel1.Controls.Add(this.lblCountCharComment);
             this.guna2Panel1.Controls.Add(this.txtFieldComment);
-            this.guna2Panel1.Controls.Add(this.label6);
-            this.guna2Panel1.Controls.Add(this.btnUpload);
+            this.guna2Panel1.Controls.Add(this.lblComment);
+            this.guna2Panel1.Controls.Add(this.btnShareFile);
             this.guna2Panel1.Controls.Add(this.txtFieldShareToName);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.FillColor = System.Drawing.Color.Transparent;
@@ -75,7 +75,6 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(634, 385);
             this.guna2Panel1.TabIndex = 30;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // lblCountCharComment
             // 
@@ -121,38 +120,38 @@
             this.txtFieldComment.TabIndex = 33;
             this.txtFieldComment.TextChanged += new System.EventHandler(this.guna2TextBox4_TextChanged);
             // 
-            // label6
+            // lblComment
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(25, 105);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(136, 17);
-            this.label6.TabIndex = 32;
-            this.label6.Text = "Comment (Optional)";
+            this.lblComment.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblComment.AutoSize = true;
+            this.lblComment.BackColor = System.Drawing.Color.Transparent;
+            this.lblComment.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblComment.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblComment.Location = new System.Drawing.Point(25, 105);
+            this.lblComment.Name = "lblComment";
+            this.lblComment.Size = new System.Drawing.Size(136, 17);
+            this.lblComment.TabIndex = 32;
+            this.lblComment.Text = "Comment (Optional)";
             // 
-            // btnUpload
+            // btnShareFile
             // 
-            this.btnUpload.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnUpload.Animated = true;
-            this.btnUpload.BackColor = System.Drawing.Color.Transparent;
-            this.btnUpload.BorderRadius = 10;
-            this.btnUpload.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnUpload.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnUpload.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnUpload.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnUpload.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.btnUpload.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.Location = new System.Drawing.Point(22, 311);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(475, 58);
-            this.btnUpload.TabIndex = 17;
-            this.btnUpload.Text = "Share";
-            this.btnUpload.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnShareFile.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnShareFile.Animated = true;
+            this.btnShareFile.BackColor = System.Drawing.Color.Transparent;
+            this.btnShareFile.BorderRadius = 10;
+            this.btnShareFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnShareFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnShareFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnShareFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnShareFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnShareFile.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnShareFile.ForeColor = System.Drawing.Color.White;
+            this.btnShareFile.Location = new System.Drawing.Point(22, 311);
+            this.btnShareFile.Name = "btnShareFile";
+            this.btnShareFile.Size = new System.Drawing.Size(475, 58);
+            this.btnShareFile.TabIndex = 17;
+            this.btnShareFile.Text = "Share";
+            this.btnShareFile.Click += new System.EventHandler(this.btnShareFile_Click);
             // 
             // txtFieldShareToName
             // 
@@ -180,7 +179,6 @@
             this.txtFieldShareToName.SelectedText = "";
             this.txtFieldShareToName.Size = new System.Drawing.Size(423, 49);
             this.txtFieldShareToName.TabIndex = 16;
-            this.txtFieldShareToName.TextChanged += new System.EventHandler(this.btnShareToName_TextChanged);
             // 
             // label4
             // 
@@ -205,44 +203,43 @@
             this.guna2Separator1.Size = new System.Drawing.Size(861, 10);
             this.guna2Separator1.TabIndex = 37;
             // 
-            // guna2Button1
+            // btnCloseForm
             // 
-            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button1.Animated = true;
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
-            this.guna2Button1.BorderRadius = 6;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button1.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
-            this.guna2Button1.Location = new System.Drawing.Point(624, 12);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(38, 31);
-            this.guna2Button1.TabIndex = 38;
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnCloseForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseForm.Animated = true;
+            this.btnCloseForm.BackColor = System.Drawing.Color.Transparent;
+            this.btnCloseForm.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(3)))), ((int)(((byte)(153)))));
+            this.btnCloseForm.BorderRadius = 6;
+            this.btnCloseForm.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseForm.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCloseForm.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCloseForm.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCloseForm.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
+            this.btnCloseForm.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btnCloseForm.ForeColor = System.Drawing.Color.White;
+            this.btnCloseForm.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseForm.Image")));
+            this.btnCloseForm.Location = new System.Drawing.Point(624, 12);
+            this.btnCloseForm.Name = "btnCloseForm";
+            this.btnCloseForm.Size = new System.Drawing.Size(38, 31);
+            this.btnCloseForm.TabIndex = 38;
+            this.btnCloseForm.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
-            // shareFileFORM
+            // ShareSelectedFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(676, 493);
-            this.Controls.Add(this.guna2Button1);
+            this.Controls.Add(this.btnCloseForm);
             this.Controls.Add(this.guna2Separator1);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "shareFileFORM";
+            this.Name = "ShareSelectedFileForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Sharing";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.shareFileFORM_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -254,13 +251,13 @@
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private System.Windows.Forms.Label lblFileName;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        public Guna.UI2.WinForms.Guna2Button btnUpload;
+        public Guna.UI2.WinForms.Guna2Button btnShareFile;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldShareToName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblCountCharComment;
         public Guna.UI2.WinForms.Guna2TextBox txtFieldComment;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblComment;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        public Guna.UI2.WinForms.Guna2Button btnCloseForm;
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.Helper;
+using FlowstorageDesktop.Query.DataCaller;
 using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using MySql.Data.MySqlClient;
@@ -25,11 +26,8 @@ namespace FlowstorageDesktop {
             InitializeComponent();
             instance = this;
         }
-        public void Form4_Load(object sender, EventArgs e) {
 
-        }
-
-        public void clearRedundane() {
+        public void ClearRedundane() {
             HomePage.instance.btnGarbageImage.Visible = false;
             HomePage.instance.lblEmptyHere.Visible = false;
         }
@@ -40,13 +38,14 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="currMain"></param>
         /// <param name="getDirTitle"></param>
-        private void GenerateDirectory(int currMain, string getDirTitle) {
+        private void GenerateDirectory(int currParameter, string directoryName) {
 
             try {
 
                 var flowlayout = HomePage.instance.flwLayoutHome;
+
                 var panelPic = new Guna2Panel() {
-                    Name = "DirPan" + currMain,
+                    Name = "DirPan" + currParameter,
                     Width = 200,
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
@@ -60,12 +59,12 @@ namespace FlowstorageDesktop {
 
                 flowlayout.Controls.Add(panelPic);
 
-                var panel = ((Guna2Panel)flowlayout.Controls["DirPan" + currMain]);
+                var panel = ((Guna2Panel)flowlayout.Controls["DirPan" + currParameter]);
 
                 Label dirName = new Label();
                 panel.Controls.Add(dirName);
-                dirName.Name = "DirName" + currMain;
-                dirName.Text = getDirTitle;
+                dirName.Name = "DirName" + currParameter;
+                dirName.Text = directoryName;
                 dirName.Visible = true;
                 dirName.Enabled = true;
                 dirName.Font = GlobalStyle.TitleLabelFont;
@@ -79,7 +78,7 @@ namespace FlowstorageDesktop {
 
                 Label directoryLab = new Label();
                 panel.Controls.Add(directoryLab);
-                directoryLab.Name = "DirLab" + currMain;
+                directoryLab.Name = "DirLab" + currParameter;
                 directoryLab.Visible = true;
                 directoryLab.Enabled = true;
                 directoryLab.Font = GlobalStyle.DateLabelFont;
@@ -91,7 +90,7 @@ namespace FlowstorageDesktop {
 
                 Guna2PictureBox picBanner = new Guna2PictureBox();
                 panel.Controls.Add(picBanner);
-                picBanner.Name = "PicBanner" + currMain;
+                picBanner.Name = "PicBanner" + currParameter;
                 picBanner.Image = FlowstorageDesktop.Properties.Resources.DirIcon;
                 picBanner.SizeMode = PictureBoxSizeMode.CenterImage;
                 picBanner.BorderRadius = 8;
@@ -116,7 +115,7 @@ namespace FlowstorageDesktop {
 
                 Guna2Button remButTxt = new Guna2Button();
                 panel.Controls.Add(remButTxt);
-                remButTxt.Name = "RemTxtBut" + currMain;
+                remButTxt.Name = "RemTxtBut" + currParameter;
                 remButTxt.Width = 29;
                 remButTxt.Height = 26;
                 remButTxt.ImageOffset = GlobalStyle.GarbageOffset;
@@ -129,33 +128,16 @@ namespace FlowstorageDesktop {
                 remButTxt.Location = GlobalStyle.GarbageButtonLoc;
                 remButTxt.BringToFront();
 
-                remButTxt.Click += (sender_tx, e_tx) => {
+                remButTxt.Click += async (sender_tx, e_tx) => {
 
-
-                    var titleFile = dirName.Text;
-
-                    DialogResult verifyDialog = MessageBox.Show($"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult verifyDialog = MessageBox.Show($"Delete '{directoryName}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (verifyDialog == DialogResult.Yes) {
 
-                        using (var command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleFile));
-                            command.ExecuteNonQuery();
-                        }
+                        var directoryDataCaller = new DirectoryDataCaller();
+                        await directoryDataCaller.DeleteDirectory(directoryName);
 
                         panel.Dispose();
-
 
                         if (HomePage.instance.flwLayoutHome.Controls.Count == 0) {
                             HomePage.instance.lblEmptyHere.Visible = true;
@@ -171,18 +153,19 @@ namespace FlowstorageDesktop {
 
                     StartPopupForm.StartRetrievalPopup();
 
-                    new DirectoryForm(getDirTitle).Show();
+                    new DirectoryForm(directoryName).Show();
 
                     ClosePopupForm.CloseRetrievalPopup();
 
                 };
 
-                clearRedundane();
+                ClearRedundane();
 
                 this.Close();
 
             } catch (Exception) {
-                new CustomAlert(title: "Failed to create directory", subheader: "Are you connected to the internet?").Show();
+                new CustomAlert(
+                    title: "Failed to create directory", subheader: "Are you connected to the internet?").Show();
             }
 
         }
@@ -226,7 +209,7 @@ namespace FlowstorageDesktop {
 
             int countTotalDir = directoriesName.Count();
 
-            if(directoryName.ToLower().Contains("directory")) {
+            if (directoryName.ToLower().Contains("directory")) {
                 MessageBox.Show("Can't name directory `directory`.", "Flowstorage", 
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -245,7 +228,7 @@ namespace FlowstorageDesktop {
 
                 if (currentTotalFiles != maxFilesCount && countTotalDir != maxDirCount) {
 
-                    if ((string)HomePage.instance.lstFoldersPage.Items[HomePage.instance.lstFoldersPage.SelectedIndex] != "Home") {
+                    if (HomePage.instance.lblCurrentPageText.Text != "Home") {
                         MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     } else {
@@ -287,7 +270,7 @@ namespace FlowstorageDesktop {
                 string filesCount = HomePage.instance.lblItemCountText.Text;
                 int totalFiles = int.Parse(filesCount);
 
-                string directoryNameInput = guna2TextBox1.Text.Trim();
+                string directoryNameInput = txtFieldDirName.Text.Trim();
 
                 if (!string.IsNullOrEmpty(directoryNameInput)) {
                     await ValidateAndCreateDirectory(totalFiles, directoryNameInput);
@@ -302,16 +285,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e) {
+        private void guna2Button1_Click(object sender, EventArgs e) => this.Close();
 
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
     }
 }

@@ -49,7 +49,7 @@ namespace FlowstorageDesktop.Query {
 
             } else if (tableName == GlobalsTable.folderUploadTable) {
 
-                const string query = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldername";
+                const string query = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldername";
                 var param = new Dictionary<string, string>
                 {
                     {"@username", tempDataUser.Username},

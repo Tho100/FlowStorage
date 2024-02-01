@@ -8,16 +8,14 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
     public partial class MainShareFileForm : Form {
 
-        public MainShareFileForm instance;
-
         readonly private GeneralCompressor compressor = new GeneralCompressor();
-        readonly private Crud crud = new Crud();
 
         readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private SharingOptionsQuery sharingOptions = new SharingOptionsQuery();
@@ -32,37 +30,23 @@ namespace FlowstorageDesktop {
 
         readonly private MySqlConnection con = ConnectionModel.con;
 
-        public string _verifySetPas = "";
-
         public MainShareFileForm() {
             InitializeComponent();
-            instance = this;
         }
 
-        private void sharingFORM_Load(object sender, EventArgs e) {
+        private void btnCloseForm_Click(object sender, EventArgs e) => this.Close();
 
-            
-        }
+        private void btnSelectFile_Click(object sender, EventArgs e) {
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-
-            var selectFilesDialog = new OpenFileDialog();
-
-            selectFilesDialog.Filter = Globals.filterFileType;
+            var selectFilesDialog = new OpenFileDialog {
+                Filter = Globals.filterFileType
+            };
 
             if (selectFilesDialog.ShowDialog() == DialogResult.OK) {
 
                 string fileExtension = selectFilesDialog.FileName;
                 string fileName = selectFilesDialog.SafeFileName;
-                string retrieved = Path.GetExtension(fileExtension);
+                string retrieved = fileExtension.Split('.').Last();
 
                 _fileName = fileName;
                 _fileFullPath = selectFilesDialog.FileName;
@@ -75,6 +59,7 @@ namespace FlowstorageDesktop {
                 lblFileSize.Text = $"File Size: {GetFileSize.fileSize(_fileBytes):F2}Mb";
                 lblFileSize.Visible = true;
             }
+
         }
 
         /// <summary>
@@ -85,11 +70,11 @@ namespace FlowstorageDesktop {
         /// <param name="setValue"></param>
         /// <param name="thumbnailValue"></param>
         /// <returns></returns>
-        private async Task InsertFileData(String fileDataBase64, String thumbnailBase64 = null) {
+        private async Task InsertFileData(string fileDataBase64, string thumbnailBase64 = null) {
 
             try {
                 
-                string fileType = Path.GetExtension(_fileName);
+                string fileType = _fileName.Split('.').Last();
 
                 string receiverUsername = txtFieldShareToName.Text;
 
@@ -102,7 +87,7 @@ namespace FlowstorageDesktop {
                     ? fileDataBase64
                     : EncryptionModel.Encrypt(fileDataBase64);
 
-                const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,FILE_EXT,CUST_THUMB,CUST_COMMENT) VALUES (@to,@from,@file_name,@date,@file_data,@file_type,@thumbnail,@comment)";
+                const string query = "INSERT INTO cust_sharing (CUST_TO,CUST_FROM,CUST_FILE_PATH,UPLOAD_DATE,CUST_FILE,CUST_THUMB,CUST_COMMENT) VALUES (@to,@from,@file_name,@date,@file_data,@thumbnail,@comment)";
 
                 using (MySqlCommand command = new MySqlCommand(query, con)) {
                     command.Parameters.AddWithValue("@to", receiverUsername);
@@ -110,7 +95,6 @@ namespace FlowstorageDesktop {
                     command.Parameters.AddWithValue("@file_name", encryptedFileName);
                     command.Parameters.AddWithValue("@date", todayDate);
                     command.Parameters.AddWithValue("@file_data", compressedFileData);
-                    command.Parameters.AddWithValue("@file_type", _fileExtension);
                     command.Parameters.AddWithValue("@comment", encryptedComment);
                     command.Parameters.AddWithValue("@thumbnail", thumbnailBase64);
                     command.Prepare();
@@ -156,19 +140,19 @@ namespace FlowstorageDesktop {
                     } else if (Globals.ptxTypes.Contains(_fileExtension)) {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".exe") {
+                    } else if (_fileExtension == "exe") {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".msi") {
+                    } else if (_fileExtension == "msi") {
                         await InsertFileData(fileBase64Data);
 
                     } else if (Globals.audioTypes.Contains(_fileExtension)) {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".pdf") {
+                    } else if (_fileExtension == "pdf") {
                         await InsertFileData(fileBase64Data);
 
-                    } else if (_fileExtension == ".apk") {
+                    } else if (_fileExtension == "apk") {
                         await InsertFileData(fileBase64Data);
 
                     } else if (Globals.excelTypes.Contains(_fileExtension)) {
@@ -225,7 +209,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnShareFile_Click(object sender, EventArgs e) {
 
             try {
 
@@ -276,23 +260,8 @@ namespace FlowstorageDesktop {
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-            label5.Text = txtFieldComment.Text.Length + "/295";
+            lblCommentCounter.Text = txtFieldComment.Text.Length + "/295";
         }
 
-        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2TextBox2_TextChanged(object sender, EventArgs e) {
-
-        }
     }
 }

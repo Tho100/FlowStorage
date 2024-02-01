@@ -8,11 +8,11 @@ using FlowstorageDesktop.Temporary;
 using Guna.UI2.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
-using MySql.Data.MySqlClient;
 using DiscordRPC;
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -22,20 +22,26 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySqlX.XDevAPI;
+using FlowstorageDesktop.Query.DataCaller;
 
 namespace FlowstorageDesktop {
 
     public partial class HomePage : Form {
 
-        readonly private MySqlConnection con = ConnectionModel.con;
-
         readonly private Crud crud = new Crud();
 
         readonly private InsertFileDataQuery insertFileData = new InsertFileDataQuery();
+
         readonly private GeneralCompressor compressor = new GeneralCompressor();
         readonly private CurrencyConverter currencyConverter = new CurrencyConverter();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
+
+        readonly private HomeDataCaller homeDataCaller = new HomeDataCaller();
+        readonly private PsDataCaller psDataCaller = new PsDataCaller();
+        readonly private SharedFilesDataCaller sharedFilesDataCaller = new SharedFilesDataCaller();
+        readonly private SharedToMeDataCaller sharedToMeDataCaller = new SharedToMeDataCaller();
+        readonly private FolderDataCaller folderDataCaller = new FolderDataCaller();
+        readonly private DirectoryDataCaller directoryDataCaller = new DirectoryDataCaller();
 
         public static HomePage instance { get; set; } = new HomePage();
         public bool CallInitialStartupData { get; set; } = false;
@@ -56,10 +62,10 @@ namespace FlowstorageDesktop {
 
             this.AllowDrop = true;
 
-            this.DragEnter += new DragEventHandler(Form1_DragEnter);
-            this.DragOver += new DragEventHandler(Form1_DragOver);
-            this.DragDrop += new DragEventHandler(Form1_DragDrop);
-            this.DragLeave += new EventHandler(Form1_DragLeave);
+            this.DragEnter += new DragEventHandler(HomePage_DragEnter);
+            this.DragOver += new DragEventHandler(HomePage_DragOver);
+            this.DragDrop += new DragEventHandler(HomePage_DragDrop);
+            this.DragLeave += new EventHandler(HomePage_DragLeave);
 
             this.flwLayoutHome.HorizontalScroll.Maximum = 0;
             this.flwLayoutHome.VerticalScroll.Maximum = 0;
@@ -75,14 +81,16 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
+        private void HomePage_Load(object sender, EventArgs e) {
             InitializeHomeFiles();
             InitializeDiscordRPC();
         }
 
         private void InitializeDiscordRPC() {
-            
-            var client = new DiscordRpcClient("1189562428929867837");
+
+            string clientId = ConfigurationManager.ConnectionStrings["discRp"].ConnectionString;
+
+            var client = new DiscordRpcClient(clientId);
             client.Initialize();
 
             client.SetPresence(new RichPresence() {
@@ -94,9 +102,9 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
-        private void guna2Button7_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
-        private void guna2Button3_Click_1(object sender, EventArgs e)
+        private void btnCreateDirectory_Click(object sender, EventArgs e) => new CreateDirectoryForm().Show();
+        private void btnOpenMainShare_Click(object sender, EventArgs e) => new MainShareFileForm().Show();
+        private void btnOpenRenameFolderFile_Click(object sender, EventArgs e)
             => new RenameFolderFileForm(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem)).Show();
         private void BuildShowAlert(string title, string subheader)
             => new CustomAlert(title: title, subheader: subheader).Show();
@@ -230,38 +238,6 @@ namespace FlowstorageDesktop {
 
         /// <summary>
         /// 
-        /// Get user Home files metadata: file name, upload date
-        /// 
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <returns></returns>
-        private async Task<List<(string, string, string)>> GetFileMetadataHome(string tableName) {
-
-            if (GlobalsData.filesMetadataCacheHome.ContainsKey(tableName)) {
-                return GlobalsData.filesMetadataCacheHome[tableName];
-
-            } else {
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE FROM {tableName} WHERE CUST_USERNAME = @username";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string, string)> filesInfo = new List<(string, string, string)>();
-                        while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            filesInfo.Add((fileName, uploadDate, string.Empty));
-                        }
-
-                        GlobalsData.filesMetadataCacheHome[tableName] = filesInfo;
-                        return filesInfo;
-                    }
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// 
         /// Generate user Home files panel on startup
         /// 
         /// </summary>
@@ -277,39 +253,19 @@ namespace FlowstorageDesktop {
 
             try {
 
-                List<(string, string, string)> filesInfo = await GetFileMetadataHome(tableName);
+                List<(string, string, string)> filesInfo = await homeDataCaller.GetFileMetadata(tableName);
 
                 if (tableName == GlobalsTable.homeImageTable) {
-
                     if (GlobalsData.base64EncodedImageHome.Count == 0) {
+                        await homeDataCaller.AddImageCaching();
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM file_info_image WHERE CUST_USERNAME = @username";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            using (MySqlDataReader readBase64 = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    GlobalsData.base64EncodedImageHome.Add(base64String);
-                                }
-                            }
-                        }
                     }
                 }
 
                 if (tableName == GlobalsTable.homeVideoTable) {
-
                     if (GlobalsData.base64EncodedThumbnailHome.Count == 0) {
+                        await homeDataCaller.AddVideoThumbnailCaching();
 
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM file_info_video WHERE CUST_USERNAME = @username";
-                        using (var command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedThumbnailHome.Add(readBase64.GetString(0));
-                                }
-                            }
-                        }
                     }
                 }
 
@@ -347,20 +303,17 @@ namespace FlowstorageDesktop {
                             displayPic.Show();
                         }
 
-
                         onPressedEvent.Add(imageOnPressed);
 
                     }
 
-
                     if (tableName == GlobalsTable.homeTextTable) {
 
-                        var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
+                        var getExtension = filesInfo[i].Item1.Split('.').Last();
                         var textTypeToImage = Globals.textTypeToImage[getExtension];
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-
                             TextForm displayPic = new TextForm(GlobalsTable.homeTextTable, filesInfo[accessIndex].Item1, string.Empty, tempDataUser.Username);
                             displayPic.Show();
                         }
@@ -373,7 +326,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
+                            ExeForm displayExe = new ExeForm(filesInfo[accessIndex].Item1, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
                             displayExe.Show();
                         }
 
@@ -504,8 +457,8 @@ namespace FlowstorageDesktop {
                 lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
             } catch (Exception) {
-                BuildShowAlert(title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
-
+                BuildShowAlert(
+                    title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
             }
 
         }
@@ -611,25 +564,24 @@ namespace FlowstorageDesktop {
                     var imageWidth = imageName.Image.Width;
                     var imageHeight = imageName.Image.Height;
 
-                    Bitmap defaultImage = new Bitmap(imageName.Image);
+                    var defaultImage = new Bitmap(imageName.Image);
 
-                    PicForm displayPic = new PicForm(defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new PicForm(
+                        defaultImage, imageWidth, imageHeight, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
 
             }
 
             if (tableName == GlobalsTable.homeTextTable) {
 
-                string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                string textType = titleLab.Text.Split('.').Last();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
                 await insertFileData.InsertFileData(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
-
-                    TextForm txtFormShow = new TextForm(GlobalsTable.homeTextTable, fileName, string.Empty, tempDataUser.Username);
-                    txtFormShow.Show();
+                    new TextForm(
+                        GlobalsTable.homeTextTable, fileName, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -639,8 +591,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username);
-                    displayExe.Show();
+                    new ExeForm(
+                        titleLab.Text, GlobalsTable.homeExeTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -656,10 +608,10 @@ namespace FlowstorageDesktop {
                     var getImgName = (Guna2PictureBox)sender_ex;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
-                    Bitmap defaultImg = new Bitmap(getImgName.Image);
+                    var defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, string.Empty, tempDataUser.Username);
-                    vidShow.Show();
+                    new VideoForm(
+                        defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.homeVideoTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.homeAudioTable) {
@@ -668,8 +620,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.homeAudioTable, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new AudioForm(
+                        titleLab.Text, GlobalsTable.homeAudioTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
 
             }
@@ -680,8 +632,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.homeExcelTable, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new ExcelForm(
+                        titleLab.Text, GlobalsTable.homeExcelTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -691,8 +643,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, string.Empty);
-                    displayPic.Show();
+                    new ApkForm(
+                        titleLab.Text, tempDataUser.Username, GlobalsTable.homeApkTable, string.Empty).ShowDialog();
                 };
             }
 
@@ -702,8 +654,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.homePdfTable, string.Empty, tempDataUser.Username);
-                    displayPdf.ShowDialog();
+                    new PdfForm(
+                        titleLab.Text, GlobalsTable.homePdfTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -713,8 +665,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.homePtxTable, string.Empty, tempDataUser.Username);
-                    displayPtx.ShowDialog();
+                    new PtxForm(
+                        titleLab.Text, GlobalsTable.homePtxTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -724,8 +676,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.homeMsiTable, string.Empty, tempDataUser.Username);
-                    displayMsi.Show();
+                    new MsiForm(
+                        titleLab.Text, GlobalsTable.homeMsiTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -735,8 +687,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username);
-                    displayWord.ShowDialog();
+                    new WordDocForm(
+                        titleLab.Text, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -770,7 +722,7 @@ namespace FlowstorageDesktop {
                 foreach (var selectedItems in selectFilesDialog.FileNames) {
 
                     string selectedFileName = Path.GetFileName(selectedItems);
-                    string fileType = Path.GetExtension(selectedItems);
+                    string fileType = selectedFileName.Split('.').Last();
 
                     if (fileNameLabels.Contains(selectedFileName.ToLower().Trim())) {
                         continue;
@@ -813,7 +765,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
 
-                        } else if (fileType == ".exe") {
+                        } else if (fileType == "exe") {
                             exeCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
@@ -833,12 +785,12 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
-                        } else if (fileType == ".apk") {
+                        } else if (fileType == "apk") {
                             apkCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
 
-                        } else if (fileType == ".pdf") {
+                        } else if (fileType == "pdf") {
                             pdfCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
@@ -848,7 +800,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
 
-                        } else if (fileType == ".msi") {
+                        } else if (fileType == "msi") {
                             msiCurr++;
                             await CreateFilePanelHome(
                                 selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
@@ -884,6 +836,8 @@ namespace FlowstorageDesktop {
 
         private async Task BuildHomeFiles() {
 
+            var directoriesName = await homeDataCaller.GetDirectories();
+
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
@@ -892,7 +846,7 @@ namespace FlowstorageDesktop {
                         await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
 
                     } else {
-                        await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
+                        BuildDirectoryPanel(directoriesName, await crud.CountUserTableRow(tableName));
 
                     }
                 }
@@ -909,6 +863,8 @@ namespace FlowstorageDesktop {
 
             GlobalsData.filesMetadataCacheHome.Clear();
 
+            var directoriesName = await homeDataCaller.GetDirectories();
+
             foreach (string tableName in GlobalsTable.publicTables) {
                 if (GlobalsTable.tableToFileType.ContainsKey(tableName)) {
                     string fileType = GlobalsTable.tableToFileType[tableName];
@@ -917,7 +873,7 @@ namespace FlowstorageDesktop {
                         await BuildFilePanelHome(tableName, fileType, await crud.CountUserTableRow(tableName));
 
                     } else {
-                        await buildDirectoryPanel(await crud.CountUserTableRow(tableName));
+                        BuildDirectoryPanel(directoriesName, await crud.CountUserTableRow(tableName));
 
                     }
                 }
@@ -931,32 +887,6 @@ namespace FlowstorageDesktop {
         #endregion END - Home section
 
         #region Public Storage section
-        private async Task<List<(string, string, string, string)>> GetFileMetadataPublicStorage(string tableName) {
-
-            if (GlobalsData.filesMetadataCachePs.ContainsKey(tableName)) {
-                return GlobalsData.filesMetadataCachePs[tableName];
-
-            } else {
-
-                string selectFileData = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName}";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                        List<(string, string, string, string)> filesInfo = new List<(string, string, string, string)>();
-                        while (await reader.ReadAsync()) {
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            string tagValue = reader.GetString(2);
-                            string titleValue = reader.GetString(3);
-                            filesInfo.Add((fileName, uploadDate, tagValue, titleValue));
-                        }
-
-                        GlobalsData.filesMetadataCachePs[tableName] = filesInfo;
-                        return filesInfo;
-                    }
-                }
-            }
-
-        }
 
         private async Task BuildFilePanelPublicStorage(string tableName, string parameterName, int currItem, bool isFromMyPs = false) {
 
@@ -968,127 +898,48 @@ namespace FlowstorageDesktop {
 
                 List<(string, string, string, string)> filesInfo;
 
-                if (isFromMyPs == false) {
-                    filesInfo = await GetFileMetadataPublicStorage(tableName);
+                if (!isFromMyPs) {
+                    filesInfo = await psDataCaller.GetFileMetadata(tableName);
 
                 } else {
                     filesInfo = new List<(string, string, string, string)>();
 
                 }
 
-                if (isFromMyPs == true) {
+                if (isFromMyPs) {
                     GlobalsData.base64EncodedImagePs.Clear();
                     GlobalsData.base64EncodedThumbnailPs.Clear();
 
                 }
 
                 if (isFromMyPs) {
-
-                    string selectFileDataQuery = $"SELECT CUST_FILE_PATH, UPLOAD_DATE, CUST_TAG, CUST_TITLE FROM {tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                            List<(string, string, string, string)> tuplesList = new List<(string, string, string, string)>();
-                            while (await reader.ReadAsync()) {
-                                string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                                string uploadDate = reader.GetString(1);
-                                string tagValue = reader.GetString(2);
-                                string titleValue = reader.GetString(3);
-                                tuplesList.Add((fileName, uploadDate, tagValue, titleValue));
-                            }
-                            filesInfo.AddRange(tuplesList);
-                        }
-                    }
+                    filesInfo = await psDataCaller.GetFileMetadataMyPs(tableName);
+                    
                 }
 
                 var usernameList = new List<string>();
 
-                string selectUploaderNameQuery = null;
-
-                if (isFromMyPs == false) {
-
-                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName}";
-                    using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
-                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await reader.ReadAsync()) {
-                                usernameList.Add(reader.GetString(0));
-                            }
-                        }
-                    }
+                if (!isFromMyPs) {
+                    var uploaderName = await psDataCaller.GetUploaderName(tableName);
+                    usernameList.AddRange(uploaderName);
 
                 } else {
+                    var uploaderName = await psDataCaller.GetUploaderNameMyPs(tableName);
+                    usernameList.AddRange(uploaderName);
 
-                    selectUploaderNameQuery = $"SELECT CUST_USERNAME FROM {tableName} WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(selectUploaderNameQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await reader.ReadAsync()) {
-                                usernameList.Add(reader.GetString(0));
-                            }
-                        }
-                    }
                 }
 
                 if (tableName == GlobalsTable.psImage) {
-
                     if (GlobalsData.base64EncodedImagePs.Count == 0) {
+                        await psDataCaller.AddImageCaching(isFromMyPs);
 
-                        if (isFromMyPs == false) {
-
-                            const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                        GlobalsData.base64EncodedImagePs.Add(base64String);
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            const string retrieveImagesQuery = "SELECT CUST_FILE FROM ps_info_image WHERE CUST_USERNAME = @username";
-                            using (MySqlCommand command = new MySqlCommand(retrieveImagesQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                        GlobalsData.base64EncodedImagePs.Add(base64String);
-                                    }
-                                }
-                            }
-
-                        }
                     }
                 }
 
                 if (tableName == GlobalsTable.psVideo) {
-
                     if (GlobalsData.base64EncodedThumbnailPs.Count == 0) {
-
-                        if (isFromMyPs == false) {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video";
-                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM ps_info_video WHERE CUST_USERNAME = @username";
-                            using (var command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailPs.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
-                        }
+                        await psDataCaller.AddVideoThumbnailCaching(isFromMyPs);
+                        
                     }
                 }
 
@@ -1123,25 +974,24 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, string.Empty, uploaderName);
-                            displayPic.Show();
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psImage, string.Empty, uploaderName).ShowDialog();
                         }
-
 
                         onPressedEvent.Add(imageOnPressed);
 
                     }
 
-
                     if (tableName == GlobalsTable.psText) {
 
-                        var getExtension = filesInfo[i].Item1.Substring(filesInfo[i].Item1.LastIndexOf('.')).TrimStart();
+                        var getExtension = filesInfo[i].Item1.Split('.').Last();
                         var textTypeToImage = Globals.textTypeToImage[getExtension];
+
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.psText, filesInfo[accessIndex].Item1, string.Empty, uploaderName);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.psText, filesInfo[accessIndex].Item1, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(textOnPressed);
@@ -1152,8 +1002,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName);
-                            displayExe.Show();
+                            new ExeForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psExe, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(exeOnPressed);
@@ -1173,10 +1023,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, string.Empty, uploaderName);
-                            vidFormShow.Show();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, filesInfo[accessIndex].Item1, GlobalsTable.psVideo, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(videoOnPressed);
@@ -1187,8 +1037,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfo[accessIndex].Item1, GlobalsTable.psExcel, string.Empty, uploaderName);
-                            exlForm.Show();
+                            new ExcelForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psExcel, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
@@ -1198,8 +1048,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfo[accessIndex].Item1, GlobalsTable.psAudio, string.Empty, uploaderName);
-                            displayPic.Show();
+                            new AudioForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psAudio, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
@@ -1210,8 +1060,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, string.Empty);
-                            displayPic.Show();
+                            new ApkForm(
+                                filesInfo[accessIndex].Item1, uploaderName, GlobalsTable.psApk, string.Empty).ShowDialog();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
@@ -1222,8 +1072,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfo[accessIndex].Item1, GlobalsTable.psPdf, string.Empty, uploaderName);
-                            displayPdf.Show();
+                            new PdfForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psPdf, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -1234,8 +1084,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfo[accessIndex].Item1, GlobalsTable.psPtx, string.Empty, uploaderName);
-                            displayPtx.Show();
+                            new PtxForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psPtx, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
@@ -1246,8 +1096,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfo[accessIndex].Item1, GlobalsTable.psMsi, string.Empty, uploaderName);
-                            displayMsi.Show();
+                            new MsiForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psMsi, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -1259,8 +1109,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.psWord, string.Empty, uploaderName);
-                            displayMsi.Show();
+                            new WordDocForm(
+                                filesInfo[accessIndex].Item1, GlobalsTable.psWord, string.Empty, uploaderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -1386,25 +1236,24 @@ namespace FlowstorageDesktop {
                     var getImgName = (Guna2PictureBox)sender_f;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
+                    var defaultImage = new Bitmap(getImgName.Image);
 
-                    Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                    PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new PicForm(
+                        defaultImage, getWidth, getHeight, fileName, GlobalsTable.psImage, string.Empty, tempDataUser.Username).ShowDialog();
                 };
 
             }
 
             if (tableName == GlobalsTable.psText) {
 
-                string textType = titleLab.Text.Substring(titleLab.Text.LastIndexOf('.')).TrimStart();
+                string textType = titleLab.Text.Split('.').Last();
                 textboxPic.Image = Globals.textTypeToImage[textType];
 
                 await insertFileData.InsertFileDataPublic(fileName, keyVal, tableName);
 
                 textboxPic.Click += (sender_t, e_t) => {
-                    TextForm txtFormShow = new TextForm(GlobalsTable.psText, fileName, string.Empty, tempDataUser.Username);
-                    txtFormShow.Show();
+                    new TextForm(
+                        GlobalsTable.psText, fileName, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1414,8 +1263,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXEImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    exeFORM displayExe = new exeFORM(titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username);
-                    displayExe.Show();
+                    new ExeForm(
+                        titleLab.Text, GlobalsTable.psExe, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1431,10 +1280,10 @@ namespace FlowstorageDesktop {
                     var getImgName = (Guna2PictureBox)sender_ex;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
-                    Bitmap defaultImg = new Bitmap(getImgName.Image);
+                    var defaultImg = new Bitmap(getImgName.Image);
 
-                    VideoForm vidShow = new VideoForm(defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, string.Empty, tempDataUser.Username);
-                    vidShow.Show();
+                    new VideoForm(
+                        defaultImg, getWidth, getHeight, titleLab.Text, GlobalsTable.psVideo, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1444,8 +1293,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.AudioImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.psAudio, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new AudioForm(
+                        titleLab.Text, GlobalsTable.psAudio, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1455,8 +1304,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.EXCELImage;
                 textboxPic.Click += (sender_ex, e_ex) => {
-                    ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.psExcel, string.Empty, tempDataUser.Username);
-                    displayPic.Show();
+                    new ExcelForm(
+                        titleLab.Text, GlobalsTable.psExcel, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1466,8 +1315,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.APKImage;
                 textboxPic.Click += (sender_gi, e_gi) => {
-                    ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, string.Empty);
-                    displayPic.Show();
+                    new ApkForm(
+                        titleLab.Text, tempDataUser.Username, GlobalsTable.psApk, string.Empty).ShowDialog();
                 };
             }
 
@@ -1477,8 +1326,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PDFImage;
                 textboxPic.Click += (sender_pd, e_pd) => {
-                    PdfForm displayPdf = new PdfForm(titleLab.Text, GlobalsTable.psPdf, string.Empty, tempDataUser.Username);
-                    displayPdf.ShowDialog();
+                    new PdfForm(
+                        titleLab.Text, GlobalsTable.psPdf, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1488,8 +1337,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.PTXImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    PtxForm displayPtx = new PtxForm(titleLab.Text, GlobalsTable.psPtx, string.Empty, tempDataUser.Username);
-                    displayPtx.ShowDialog();
+                    new PtxForm(
+                        titleLab.Text, GlobalsTable.psPtx, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
             if (tableName == GlobalsTable.psMsi) {
@@ -1498,8 +1347,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.MSIImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    MsiForm displayMsi = new MsiForm(titleLab.Text, GlobalsTable.psMsi, string.Empty, tempDataUser.Username);
-                    displayMsi.Show();
+                    new MsiForm(
+                        titleLab.Text, GlobalsTable.psMsi, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1509,8 +1358,8 @@ namespace FlowstorageDesktop {
 
                 textboxPic.Image = Globals.DOCImage;
                 textboxPic.Click += (sender_ptx, e_ptx) => {
-                    WordDocForm displayWord = new WordDocForm(titleLab.Text, GlobalsTable.psWord, string.Empty, tempDataUser.Username);
-                    displayWord.ShowDialog();
+                    new WordDocForm(
+                        titleLab.Text, GlobalsTable.psWord, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
 
@@ -1556,7 +1405,7 @@ namespace FlowstorageDesktop {
 
                     new PublishPublicStorage(fileName: selectedFileName).ShowDialog();
 
-                    if (PublicStorageClosed == false) {
+                    if (!PublicStorageClosed) {
 
                         byte[] retrieveBytes = File.ReadAllBytes(selectedItems);
                         byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
@@ -1590,7 +1439,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psText, "PanTxt", txtCurr, encryptTextValues);
 
-                        } else if (fileType == ".exe") {
+                        } else if (fileType == "exe") {
                             exeCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psExe, "PanExe", exeCurr, encryptText);
@@ -1610,12 +1459,12 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psAudio, "PanAud", audCurr, encryptText);
 
-                        } else if (fileType == ".apk") {
+                        } else if (fileType == "apk") {
                             apkCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psApk, "PanApk", apkCurr, encryptText);
 
-                        } else if (fileType == ".pdf") {
+                        } else if (fileType == "pdf") {
                             pdfCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psPdf, "PanPdf", pdfCurr, encryptText);
@@ -1625,7 +1474,7 @@ namespace FlowstorageDesktop {
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psPtx, "PanPtx", ptxCurr, encryptText);
 
-                        } else if (fileType == ".msi") {
+                        } else if (fileType == "msi") {
                             msiCurr++;
                             await CreateFilePanelPublicStorage(
                                 selectedItems, GlobalsTable.psMsi, "PanMsi", msiCurr, encryptText);
@@ -1743,82 +1592,36 @@ namespace FlowstorageDesktop {
 
         #region Shared to others section
 
-        /// <summary>
-        /// Retrieve username of file that has been shared to
-        /// </summary>
-        /// <returns></returns>
-        private async Task<string> SharingUploaderName() {
-
-            const string selectUploaderName = "SELECT CUST_FROM FROM cust_sharing WHERE CUST_TO = @username";
-            using (MySqlCommand command = new MySqlCommand(selectUploaderName, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    if (await reader.ReadAsync()) {
-                        return reader.GetString(0);
-                    }
-                }
-            }
-
-            return string.Empty;
-
-        }
-
         List<(string, string, string)> filesInfoSharedOthers = new List<(string, string, string)>();
         private async Task CallFilesInformationOthers() {
-
+            
             filesInfoSharedOthers.Clear();
-            const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_FROM = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        filesInfoSharedOthers.Add((fileName, uploadDate, string.Empty));
-                    }
-                }
-            }
+
+            var filesInfo = await sharedFilesDataCaller.GetFileMetadata();
+            filesInfoSharedOthers.AddRange(filesInfo);
 
         }
 
-        private async Task BuildFilePanelSharedToOthers(List<string> fileTypes, string parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToOthers(string parameterName) {
 
             var imageValues = new List<Image>();
             var onPressedEvent = new List<EventHandler>();
             var onMoreOptionButtonPressed = new List<EventHandler>();
 
-            var typeValues = new List<string>(fileTypes);
-            var uploadToNameList = new List<string>();
+            var typeValues = filesInfoSharedOthers.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
 
-            const string selectUploadToName = "SELECT CUST_TO FROM cust_sharing WHERE CUST_FROM = @username";
-            using (MySqlCommand command = new MySqlCommand(selectUploadToName, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        uploadToNameList.Add(reader.GetString(0));
-                    }
-                }
-            }
+            var uploadToNameList = await sharedFilesDataCaller.GetSharedToUsername();
+
+            int length = typeValues.Count;
 
             if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
-
                 if (GlobalsData.base64EncodedImageSharedOthers.Count == 0) {
-
-                    const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username";
-                    using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                        using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                            while (await readBase64.ReadAsync()) {
-                                GlobalsData.base64EncodedImageSharedOthers.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
-                            }
-                            readBase64.Close();
-                        }
-                    }
+                    await sharedFilesDataCaller.AddImageCaching();
+                    
                 }
             }
 
-            for (int i = 0; i < itemCurr; i++) {
+            for (int i = 0; i < length; i++) {
 
                 int accessIndex = i;
                 string uploadToName = uploadToNameList[accessIndex];
@@ -1849,10 +1652,10 @@ namespace FlowstorageDesktop {
                         var getImgName = (Guna2PictureBox)sender;
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
+                        var defaultImage = new Bitmap(getImgName.Image);
 
-                        PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPic.Show();
+                        new PicForm(
+                            defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
 
@@ -1865,62 +1668,26 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                     void textOnPressed(object sender, EventArgs e) {
-
-                        TextForm displayTxt = new TextForm(GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true);
-                        displayTxt.Show();
-
+                        new TextForm(
+                            GlobalsTable.sharingTable, filesInfoSharedOthers[accessIndex].Item1, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(textOnPressed);
                 }
 
-                if (typeValues[i] == ".exe") {
-
-                    imageValues.Add(Globals.EXEImage);
-
-                    void exeOnPressed(object sender, EventArgs e) {
-                        exeFORM displayExe = new exeFORM(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true);
-                        displayExe.Show();
-                    }
-
-                    onPressedEvent.Add(exeOnPressed);
-                }
-
                 if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                    if (GlobalsData.base64EncodedThumbnailSharedOthers.Count == 0) {
-
-                        const string retrieveImgQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_FROM = @username AND FILE_EXT = @ext";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@ext", typeValues[i]);
-
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedThumbnailSharedOthers.Add(readBase64.GetString(0));
-                                }
-                                readBase64.Close();
-                            }
-                        }
-                    }
-
-                    if (GlobalsData.base64EncodedThumbnailSharedOthers.Count > 0) {
-                        byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedOthers[0]);
-                        using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                            imageValues.Add(Image.FromStream(toMs));
-                        }
-
-                    }
+                    imageValues.Add(Globals.VideoImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
 
                         var getImgName = (Guna2PictureBox)sender;
                         var getWidth = getImgName.Image.Width;
                         var getHeight = getImgName.Image.Height;
+                        var defaultImage = new Bitmap(getImgName.Image);
 
-                        Bitmap defaultImage = new Bitmap(getImgName.Image);
-                        VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        vidFormShow.Show();
+                        new VideoForm(
+                            defaultImage, getWidth, getHeight, filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
@@ -1931,43 +1698,56 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.EXCELImage);
 
                     void excelOnPressed(object sender, EventArgs e) {
-                        ExcelForm exlForm = new ExcelForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        exlForm.Show();
+                        new ExcelForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(excelOnPressed);
                 }
+
                 if (Globals.audioTypes.Contains(typeValues[i])) {
 
                     imageValues.Add(Globals.AudioImage);
 
                     void audioOnPressed(object sender, EventArgs e) {
-                        AudioForm displayPic = new AudioForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPic.Show();
+                        new AudioForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(audioOnPressed);
                 }
 
-                if (typeValues[i] == ".apk") {
+                if (typeValues[i] == "exe") {
+
+                    imageValues.Add(Globals.EXEImage);
+
+                    void exeOnPressed(object sender, EventArgs e) {
+                        new ExeForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
+                    }
+
+                    onPressedEvent.Add(exeOnPressed);
+                }
+
+                if (typeValues[i] == "apk") {
 
                     imageValues.Add(Globals.APKImage);
 
                     void apkOnPressed(object sender, EventArgs e) {
-                        ApkForm displayPic = new ApkForm(filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true);
-                        displayPic.Show();
+                        new ApkForm(
+                            filesInfoSharedOthers[accessIndex].Item1, uploadToName, GlobalsTable.sharingTable, lblGreetingText.Text, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(apkOnPressed);
                 }
 
-                if (typeValues[i] == ".pdf") {
+                if (typeValues[i] == "pdf") {
 
                     imageValues.Add(Globals.PDFImage);
 
                     void pdfOnPressed(object sender, EventArgs e) {
-                        PdfForm displayPdf = new PdfForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPdf.Show();
+                        new PdfForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(pdfOnPressed);
@@ -1978,20 +1758,20 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.PTXImage);
 
                     void ptxOnPressed(object sender, EventArgs e) {
-                        PtxForm displayPtx = new PtxForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayPtx.Show();
+                        new PtxForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(ptxOnPressed);
                 }
 
-                if (typeValues[i] == ".msi") {
+                if (typeValues[i] == "msi") {
 
                     imageValues.Add(Globals.MSIImage);
 
                     void msiOnPressed(object sender, EventArgs e) {
-                        MsiForm displayMsi = new MsiForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayMsi.Show();
+                        new MsiForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(msiOnPressed);
@@ -2003,8 +1783,8 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.DOCImage);
 
                     void wordOnPressed(object sender, EventArgs e) {
-                        WordDocForm displayMsi = new WordDocForm(filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true);
-                        displayMsi.Show();
+                        new WordDocForm(
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(wordOnPressed);
@@ -2012,7 +1792,7 @@ namespace FlowstorageDesktop {
             }
 
             PanelGenerator panelGenerator = new PanelGenerator();
-            panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+            panelGenerator.GeneratePanel(parameterName, length, filesInfoSharedOthers, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
             BuildRedundaneVisibility();
 
@@ -2022,19 +1802,8 @@ namespace FlowstorageDesktop {
 
         private async Task BuildSharedToOthers() {
 
-            if (!GlobalsData.fileTypeValuesSharedToOthers.Any()) {
-                const string getFilesTypeOthers = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                using (var command = new MySqlCommand(getFilesTypeOthers, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (var readTypeOthers = await command.ExecuteReaderAsync()) {
-                        while (await readTypeOthers.ReadAsync()) {
-                            GlobalsData.fileTypeValuesSharedToOthers.Add(readTypeOthers.GetString(0));
-                        }
-                    }
-                }
-            }
+            await BuildFilePanelSharedToOthers("DirParOther");
 
-            await BuildFilePanelSharedToOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther", GlobalsData.fileTypeValuesSharedToOthers.Count);
             UpdateProgressBarValue();
             BuildRedundaneVisibility();
 
@@ -2046,30 +1815,16 @@ namespace FlowstorageDesktop {
         /// 
         /// </summary>
         /// <param name="username"></param>
-        /// <param name="typeValuesOthers"></param>
+        /// <param name="typeValuesOthersCache"></param>
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task RefreshGenerateUserSharedOthers(List<string> typeValuesOthers, string dirName) {
+        private async Task RefreshGenerateUserSharedOthers(string dirName) {
 
             GlobalsData.base64EncodedImageSharedOthers.Clear();
-            GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
-
-            if (typeValuesOthers.Count == 0) {
-                using (MySqlCommand command = con.CreateCommand()) {
-                    command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_FROM = @username";
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                    using (MySqlDataReader _readType = command.ExecuteReader()) {
-                        while (_readType.Read()) {
-                            typeValuesOthers.Add(_readType.GetString(0));
-                        }
-                    }
-                }
-            }
 
             await CallFilesInformationOthers();
-            await BuildFilePanelSharedToOthers(typeValuesOthers, dirName, typeValuesOthers.Count);
+            await BuildFilePanelSharedToOthers(dirName);
 
         }
 
@@ -2077,26 +1832,17 @@ namespace FlowstorageDesktop {
 
         #region Shared to me section
 
-        List<(string, string, string)> filesInfoShared = new List<(string, string, string)>();
-        private async Task CallFilesInformationShared() {
+        List<(string, string, string)> filesInfoSharedToMe = new List<(string, string, string)>();
+        private async Task CallFilesInformationSharedToMe() {
 
-            filesInfoShared.Clear();
+            filesInfoSharedToMe.Clear();
 
-            const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM cust_sharing WHERE CUST_TO = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        string uploadDate = reader.GetString(1);
-                        filesInfoShared.Add((fileName, uploadDate, string.Empty));
-                    }
-                }
-            }
-
+            var filesInfo = await sharedToMeDataCaller.GetFileMetadata();
+            filesInfoSharedToMe.AddRange(filesInfo);
+            
         }
 
-        private async Task BuildFilePanelSharedToMe(List<string> fileTypes, string parameterName, int itemCurr) {
+        private async Task BuildFilePanelSharedToMe(string parameterName) {
 
             try {
 
@@ -2104,34 +1850,26 @@ namespace FlowstorageDesktop {
                 var onPressedEvent = new List<EventHandler>();
                 var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                string uploaderUsername = await SharingUploaderName();
+                string uploaderUsername = await sharedToMeDataCaller.SharedToMeUploaderName();
+                
+                var typeValues = filesInfoSharedToMe.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
 
-                var typeValues = new List<string>(fileTypes);
+                int length = typeValues.Count;
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
-
                     if (GlobalsData.base64EncodedImageSharedToMe.Count == 0) {
+                        await sharedToMeDataCaller.AddImageCaching();
 
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    GlobalsData.base64EncodedImageSharedToMe.Add(EncryptionModel.Decrypt(readBase64.GetString(0)));
-                                }
-                                readBase64.Close();
-                            }
-                        }
                     }
                 }
 
-                for (int i = 0; i < itemCurr; i++) {
+                for (int i = 0; i < length; i++) {
 
                     int accessIndex = i;
 
                     void moreOptionOnPressedEvent(object sender, EventArgs e) {
 
-                        lblFileNameOnPanel.Text = filesInfoShared[accessIndex].Item1;
+                        lblFileNameOnPanel.Text = filesInfoSharedToMe[accessIndex].Item1;
                         lblFileTableName.Text = GlobalsTable.sharingTable;
                         lblFilePanelName.Text = parameterName + accessIndex;
                         pnlFileOptions.Visible = true;
@@ -2155,8 +1893,8 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPic.Show();
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
 
@@ -2169,58 +1907,26 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.textTypeToImage[typeValues[i]]);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.sharingTable, filesInfoShared[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.sharingTable, filesInfoSharedToMe[accessIndex].Item1, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[i] == ".exe") {
-
-                        imageValues.Add(Globals.EXEImage);
-
-                        void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayExe.Show();
-                        }
-
-                        onPressedEvent.Add(exeOnPressed);
-                    }
-
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                        if (GlobalsData.base64EncodedThumbnailSharedToMe.Count == 0) {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                            using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(filesInfoShared[i].Item1));
-
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailSharedToMe.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
-                        }
-
-                        if (GlobalsData.base64EncodedThumbnailSharedToMe.Count > 0) {
-                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailSharedToMe[0]);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                imageValues.Add(Image.FromStream(toMs));
-                            }
-                        }
+                        imageValues.Add(Globals.VideoImage);
 
                         void videoOnPressed(object sender, EventArgs e) {
 
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm vidFormShow = new VideoForm(defaultImage, getWidth, getHeight, filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            vidFormShow.Show();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog(); 
                         }
 
                         onPressedEvent.Add(videoOnPressed);
@@ -2231,43 +1937,56 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            ExcelForm exlForm = new ExcelForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            exlForm.Show();
+                            new ExcelForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
                     }
+
                     if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            AudioForm displayPic = new AudioForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPic.Show();
+                            new AudioForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (typeValues[i] == ".apk") {
+                    if (typeValues[i] == "exe") {
+
+                        imageValues.Add(Globals.EXEImage);
+
+                        void exeOnPressed(object sender, EventArgs e) {
+                            new ExeForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
+                        }
+
+                        onPressedEvent.Add(exeOnPressed);
+                    }
+
+                    if (typeValues[i] == "apk") {
 
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            ApkForm displayPic = new ApkForm(filesInfoShared[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false);
-                            displayPic.Show();
+                            new ApkForm(
+                                filesInfoSharedToMe[accessIndex].Item1, uploaderUsername, GlobalsTable.sharingTable, lblGreetingText.Text, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (typeValues[i] == ".pdf") {
+                    if (typeValues[i] == "pdf") {
 
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            PdfForm displayPdf = new PdfForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPdf.Show();
+                            new PdfForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2278,20 +1997,20 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            PtxForm displayPtx = new PtxForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayPtx.Show();
+                            new PtxForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (typeValues[i] == ".msi") {
+                    if (typeValues[i] == "msi") {
 
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            MsiForm displayMsi = new MsiForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayMsi.Show();
+                            new MsiForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2303,15 +2022,15 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfoShared[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false);
-                            displayMsi.Show();
+                            new WordDocForm(
+                                filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
                         onPressedEvent.Add(wordOnPressed);
                     }
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePanel(parameterName, itemCurr, filesInfoShared, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel(parameterName, length, filesInfoSharedToMe, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 BuildRedundaneVisibility();
 
@@ -2322,27 +2041,12 @@ namespace FlowstorageDesktop {
                     title: "Something went wrong", "Failed to load your files. Try to hit the refresh button.");
 
             }
+
         }
 
         private async Task BuildSharedToMe() {
 
-            if (!GlobalsData.fileTypeValuesSharedToMe.Any()) {
-                const string getFilesTypeQuery = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                using (MySqlCommand command = new MySqlCommand(getFilesTypeQuery, ConnectionModel.con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
-                            GlobalsData.fileTypeValuesSharedToMe.Add(reader.GetString(0));
-                        }
-                    }
-                }
-
-                await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
-
-            } else {
-                await BuildFilePanelSharedToMe(GlobalsData.fileTypeValuesSharedToMe, "DirParMe", GlobalsData.fileTypeValuesSharedToMe.Count);
-
-            }
+            await BuildFilePanelSharedToMe("DirParMe");
 
             UpdateProgressBarValue();
             BuildRedundaneVisibility();
@@ -2359,27 +2063,13 @@ namespace FlowstorageDesktop {
         /// <param name="dirName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        private async Task RefreshGenerateUserShared(List<string> typeValues, string dirName) {
+        private async Task RefreshGenerateUserSharedToMe(string dirName) {
 
             GlobalsData.base64EncodedImageSharedToMe.Clear();
-            GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
 
-            if (typeValues.Count == 0) {
-                using (MySqlCommand command = con.CreateCommand()) {
-                    command.CommandText = "SELECT FILE_EXT FROM cust_sharing WHERE CUST_TO = @username";
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
+            await CallFilesInformationSharedToMe();
+            await BuildFilePanelSharedToMe(dirName);
 
-                    using (MySqlDataReader _readType = command.ExecuteReader()) {
-                        while (_readType.Read()) {
-                            typeValues.Add(_readType.GetString(0));
-                        }
-                    }
-                }
-            }
-
-            await CallFilesInformationShared();
-
-            await BuildFilePanelSharedToMe(typeValues, dirName, typeValues.Count);
         }
 
         #endregion END - Shared to me
@@ -2398,9 +2088,10 @@ namespace FlowstorageDesktop {
 
         private void OpenFolderDialog() {
 
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "";
-            dialog.IsFolderPicker = true;
+            var dialog = new CommonOpenFileDialog {
+                InitialDirectory = "",
+                IsFolderPicker = true
+            };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
 
@@ -2451,54 +2142,27 @@ namespace FlowstorageDesktop {
             }
 
             Process.Start(folderPath);
+
         }
 
-        private async Task DownloadUserFolder(string folderTitle) {
+        private async Task DownloadUserFolder(string folderName) {
 
-            var filesData = new List<(string fileName, byte[] fileBytes)>();
+            var filesData = await folderDataCaller.GetDownloadFolderData(folderName);
+            OpenFolderDownloadDialog(folderName, filesData);
 
-            using (var command = new MySqlCommand($"SELECT CUST_FILE_PATH, CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle", con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldtitle", folderTitle);
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        var fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));
-                        var fileBytes = Convert.FromBase64String(base64Encoded);
-                        filesData.Add((fileName, fileBytes));
-                    }
-                }
-            }
-
-            OpenFolderDownloadDialog(folderTitle, filesData);
         }
 
         private async Task RefreshFolder() {
 
             GlobalsData.base64EncodedImageFolder.Clear();
 
-            string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
+            string selectedFolderName = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-            var fileTypesList = new List<string>();
-
-            const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-            using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(selectedFolder));
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        fileTypesList.Add(reader.GetString(0));
-                    }
-                }
-            }
-            
-            var fileTypesLength = fileTypesList.Count;
-
-            await BuildFilePanelFolder(fileTypesList, selectedFolder, fileTypesLength);
+            await BuildFilePanelFolder(selectedFolderName);
 
         }
 
-        private async Task BuildFilePanelFolder(List<string> fileType, string foldTitle, int currItem) {
+        private async Task BuildFilePanelFolder(string folderName) {
 
             ClearRedundane();
 
@@ -2508,36 +2172,15 @@ namespace FlowstorageDesktop {
 
             try {
 
-                var originalTypeData = new List<string>(fileType);
-                var typeValues = originalTypeData.Select(f => "." + f).ToList();
-
                 var imageValues = new List<Image>();
                 var onPressedEvent = new List<EventHandler>();
                 var onMoreOptionButtonPressed = new List<EventHandler>();
 
-                var filesInfo = new List<(string, string, string)>();
-                var filePaths = new HashSet<string>();
+                var filesInfo = await folderDataCaller.GetFileMetadata(folderName);
 
-                const string selectFileData = "SELECT CUST_FILE_PATH, UPLOAD_DATE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldname";
-                using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@foldname", EncryptionModel.Encrypt(foldTitle));
-                    using (MySqlDataReader reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
-                        while (await reader.ReadAsync()) {
+                var typeValues = filesInfo.Select(metadata => metadata.Item1.Split('.').Last()).ToList();
 
-                            string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                            string uploadDate = reader.GetString(1);
-                            
-                            if (filePaths.Contains(fileName)) {
-                                continue;
-                            }
-
-                            filePaths.Add(fileName);
-                            filesInfo.Add((fileName, uploadDate, string.Empty));
-                        }
-                        reader.Close();
-                    }
-                }
+                int length = typeValues.Count;
 
                 if (typeValues.Any(tv => Globals.imageTypes.Contains(tv))) {
 
@@ -2550,27 +2193,16 @@ namespace FlowstorageDesktop {
                             previousSelectedItem = selectedItem;
 
                             GlobalsData.base64EncodedImageFolder.Clear();
-                            GlobalsData.base64EncodedThumbnailFolder.Clear();
                         }
                     }
 
                     if (GlobalsData.base64EncodedImageFolder.Count == 0) {
-
-                        const string retrieveImgQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldtitle";
-                        using (MySqlCommand command = new MySqlCommand(retrieveImgQuery, con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@foldtitle", EncryptionModel.Encrypt(foldTitle));
-                            using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                while (await readBase64.ReadAsync()) {
-                                    string base64String = EncryptionModel.Decrypt(readBase64.GetString(0));
-                                    GlobalsData.base64EncodedImageFolder.Add(base64String);
-                                }
-                            }
-                        }
+                        await folderDataCaller.AddImageCaching(folderName);
+                        
                     }
                 }
 
-                for (int i = 0; i < currItem; i++) {
+                for (int i = 0; i < length; i++) {
 
                     int accessIndex = i;
                     string fileName = filesInfo[accessIndex].Item1;
@@ -2602,37 +2234,35 @@ namespace FlowstorageDesktop {
                             var getHeight = getImgName.Image.Height;
                             Bitmap defaultImage = new Bitmap(getImgName.Image);
 
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username).ShowDialog();
                         }
-
 
                         onPressedEvent.Add(imageOnPressed);
 
                     }
 
-
                     if (Globals.textTypes.Contains(typeValues[i])) {
 
-                        var getExtension = fileName.Substring(fileName.LastIndexOf('.')).TrimStart();
+                        var getExtension = fileName.Split('.').Last();
                         var textTypeToImage = Globals.textTypeToImageFolder[getExtension];
                         imageValues.Add(textTypeToImage);
 
                         void textOnPressed(object sender, EventArgs e) {
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, fileName, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.folderUploadTable, fileName, string.Empty, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(textOnPressed);
                     }
 
-                    if (typeValues[i] == ".exe") {
+                    if (typeValues[i] == "exe") {
 
                         imageValues.Add(Globals.EXEImage);
 
                         void exeOnPressed(object sender, EventArgs e) {
-                            exeFORM displayExe = new exeFORM(fileName, GlobalsTable.folderUploadTable, foldTitle, string.Empty);
-                            displayExe.Show();
+                            new ExeForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, string.Empty).ShowDialog();
                         }
 
                         onPressedEvent.Add(exeOnPressed);
@@ -2640,39 +2270,17 @@ namespace FlowstorageDesktop {
 
                     if (Globals.videoTypes.Contains(typeValues[i])) {
 
-                        if (GlobalsData.base64EncodedThumbnailFolder.Count == 0) {
-
-                            const string retrieveThumbnailQuery = "SELECT CUST_THUMB FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND FILE_TYPE = @ext";
-                            using (MySqlCommand command = new MySqlCommand(retrieveThumbnailQuery, con)) {
-                                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldTitle));
-                                command.Parameters.AddWithValue("@ext", originalTypeData[i]);
-                                using (MySqlDataReader readBase64 = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                                    while (await readBase64.ReadAsync()) {
-                                        GlobalsData.base64EncodedThumbnailFolder.Add(readBase64.GetString(0));
-                                    }
-                                }
-                            }
-                        }
-
-                        if (GlobalsData.base64EncodedThumbnailFolder.Count > 0) {
-
-                            byte[] getBytes = Convert.FromBase64String(GlobalsData.base64EncodedThumbnailFolder[0]);
-                            using (MemoryStream toMs = new MemoryStream(getBytes)) {
-                                imageValues.Add(Image.FromStream(toMs));
-                            }
-
-                        }
+                        imageValues.Add(Globals.VideoImage);
 
                         void videoOnPressed(object sender, EventArgs e) {
 
                             var getImgName = (Guna2PictureBox)sender;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username);
-                            displayVid.Show();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(videoOnPressed);
@@ -2683,39 +2291,44 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.EXCELImage);
 
                         void excelOnPressed(object sender, EventArgs e) {
-                            new ExcelForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new ExcelForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(excelOnPressed);
                     }
+
                     if (Globals.audioTypes.Contains(typeValues[i])) {
 
                         imageValues.Add(Globals.AudioImage);
 
                         void audioOnPressed(object sender, EventArgs e) {
-                            new AudioForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new AudioForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(audioOnPressed);
                     }
 
-                    if (typeValues[i] == ".apk") {
+                    if (typeValues[i] == "apk") {
 
                         imageValues.Add(Globals.APKImage);
 
                         void apkOnPressed(object sender, EventArgs e) {
-                            new ApkForm(fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, foldTitle);
+                            new ApkForm(
+                                fileName, tempDataUser.Username, GlobalsTable.folderUploadTable, folderName).ShowDialog();
                         }
 
                         onPressedEvent.Add(apkOnPressed);
                     }
 
-                    if (typeValues[i] == ".pdf") {
+                    if (typeValues[i] == "pdf") {
 
                         imageValues.Add(Globals.PDFImage);
 
                         void pdfOnPressed(object sender, EventArgs e) {
-                            new PdfForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new PdfForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(pdfOnPressed);
@@ -2726,18 +2339,20 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.PTXImage);
 
                         void ptxOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new PtxForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(ptxOnPressed);
                     }
 
-                    if (typeValues[i] == ".msi") {
+                    if (typeValues[i] == "msi") {
 
                         imageValues.Add(Globals.MSIImage);
 
                         void msiOnPressed(object sender, EventArgs e) {
-                            new MsiForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new MsiForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(msiOnPressed);
@@ -2749,7 +2364,8 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(fileName, GlobalsTable.folderUploadTable, foldTitle, tempDataUser.Username).Show();
+                            new WordDocForm(
+                                fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
                         onPressedEvent.Add(wordOnPressed);
@@ -2757,7 +2373,7 @@ namespace FlowstorageDesktop {
                 }
 
                 PanelGenerator panelGenerator = new PanelGenerator();
-                panelGenerator.GeneratePanel("folderParameter", currItem, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
+                panelGenerator.GeneratePanel("folderParameter", length, filesInfo, onPressedEvent, onMoreOptionButtonPressed, imageValues);
 
                 UpdateProgressBarValue();
                 BuildRedundaneVisibility();
@@ -2778,19 +2394,18 @@ namespace FlowstorageDesktop {
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
 
-            int _IntCurr = 0;
+            int curr = 0;
 
             StartPopupForm.StartUploadingFolderPopup(folderName);
 
             GlobalsData.base64EncodedImageFolder.Clear();
-            GlobalsData.base64EncodedThumbnailFolder.Clear();
 
             foreach (var filesFullPath in Directory.EnumerateFiles(folderPath, "*")) {
 
-                _IntCurr++;
+                curr++;
 
                 var filePanel = new Guna2Panel() {
-                    Name = $"PanExlFold{_IntCurr}",
+                    Name = $"PanExlFold{curr}",
                     Width = 200,
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
@@ -2806,7 +2421,7 @@ namespace FlowstorageDesktop {
 
                 Label titleLab = new Label();
                 mainPanelTxt.Controls.Add(titleLab);
-                titleLab.Name = $"titleImgL{_IntCurr}";
+                titleLab.Name = $"titleImgL{curr}";
                 titleLab.Font = GlobalStyle.TitleLabelFont;
                 titleLab.ForeColor = GlobalStyle.GainsboroColor;
                 titleLab.Visible = true;
@@ -2815,11 +2430,11 @@ namespace FlowstorageDesktop {
                 titleLab.AutoEllipsis = true;
                 titleLab.Width = 160;
                 titleLab.Height = 20;
-                titleLab.Text = filesName[_IntCurr - 1];
+                titleLab.Text = filesName[curr - 1];
 
                 var textboxExl = new Guna2PictureBox();
                 mainPanelTxt.Controls.Add(textboxExl);
-                textboxExl.Name = $"ExeExlFold{_IntCurr}";
+                textboxExl.Name = $"ExeExlFold{curr}";
                 textboxExl.Width = 190;
                 textboxExl.Height = 145;
                 textboxExl.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -2833,10 +2448,6 @@ namespace FlowstorageDesktop {
 
                 textboxExl.Location = new Point(picMain_Q_x, 10);
 
-                textboxExl.Click += (sender_w, ev_w) => {
-
-                };
-
                 textboxExl.MouseHover += (_senderM, _ev) => {
                     mainPanelTxt.ShadowDecoration.Enabled = true;
                     mainPanelTxt.ShadowDecoration.BorderRadius = 8;
@@ -2846,13 +2457,9 @@ namespace FlowstorageDesktop {
                     mainPanelTxt.ShadowDecoration.Enabled = false;
                 };
 
-                textboxExl.Click += (sender_eq, e_eq) => {
-
-                };
-
                 Guna2Button remButExl = new Guna2Button();
                 mainPanelTxt.Controls.Add(remButExl);
-                remButExl.Name = $"RemExlButFold{_IntCurr}";
+                remButExl.Name = $"RemExlButFold{curr}";
                 remButExl.Width = 29;
                 remButExl.Height = 26;
                 remButExl.ImageOffset = GlobalStyle.GarbageOffset;
@@ -2877,7 +2484,7 @@ namespace FlowstorageDesktop {
 
                 Label dateLabExl = new Label();
                 mainPanelTxt.Controls.Add(dateLabExl);
-                dateLabExl.Name = $"LabExlUpFold{_IntCurr}";
+                dateLabExl.Name = $"LabExlUpFold{curr}";
                 dateLabExl.Font = GlobalStyle.DateLabelFont;
                 dateLabExl.ForeColor = GlobalStyle.DarkGrayColor;
                 dateLabExl.Visible = true;
@@ -2890,7 +2497,7 @@ namespace FlowstorageDesktop {
 
                 try {
 
-                    string fileType = Path.GetExtension(filesFullPath);
+                    string fileType = filesFullPath.Split('.').Last();
 
                     byte[] retrieveBytes = File.ReadAllBytes(filesFullPath);
                     byte[] compressedBytes = new GeneralCompressor().compressFileData(retrieveBytes);
@@ -2914,10 +2521,10 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender_f;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-
-                            PicForm displayPic = new PicForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            var defaultImage = new Bitmap(getImgName.Image);
+                            
+                            new PicForm(
+                                defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username).ShowDialog();
 
                         };
                     }
@@ -2938,21 +2545,20 @@ namespace FlowstorageDesktop {
                         await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptEncoded);
 
                         textboxExl.Click += (sender_t, e_t) => {
-
-                            TextForm displayPic = new TextForm(GlobalsTable.folderUploadTable, titleLab.Text, string.Empty, tempDataUser.Username);
-                            displayPic.Show();
+                            new TextForm(
+                                GlobalsTable.folderUploadTable, titleLab.Text, string.Empty, tempDataUser.Username).ShowDialog();
                         };
 
                     }
 
-                    if (fileType == ".apk") {
+                    if (fileType == "apk") {
 
                         await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.APKImage;
                         textboxExl.Click += (sender_ap, e_ap) => {
-                            ApkForm displayPic = new ApkForm(titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, string.Empty);
-                            displayPic.ShowDialog();
+                            new ApkForm(
+                                titleLab.Text, tempDataUser.Username, GlobalsTable.folderUploadTable, string.Empty).ShowDialog();
                         };
                     }
 
@@ -2977,21 +2583,21 @@ namespace FlowstorageDesktop {
                             var getImgName = (Guna2PictureBox)sender_vid;
                             var getWidth = getImgName.Image.Width;
                             var getHeight = getImgName.Image.Height;
+                            var defaultImage = new Bitmap(getImgName.Image);
 
-                            Bitmap defaultImage = new Bitmap(getImgName.Image);
-                            VideoForm displayVid = new VideoForm(defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayVid.ShowDialog();
+                            new VideoForm(
+                                defaultImage, getWidth, getHeight, titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
-                    if (fileType == ".pdf") {
+                    if (fileType == "pdf") {
 
                         await insertFileData.InsertFileDataFolder(filesFullPath, folderName, encryptValues);
 
                         textboxExl.Image = Globals.PDFImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            PdfForm displayPic = new PdfForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new PdfForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -3001,8 +2607,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            WordDocForm displayPic = new WordDocForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new WordDocForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -3012,8 +2618,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.DOCImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            ExcelForm displayPic = new ExcelForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new ExcelForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -3024,8 +2630,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.PTXImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            PtxForm displayPic = new PtxForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new PtxForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -3035,8 +2641,8 @@ namespace FlowstorageDesktop {
 
                         textboxExl.Image = Globals.AudioImage;
                         textboxExl.Click += (sender_pdf, e_pdf) => {
-                            AudioForm displayPic = new AudioForm(titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username);
-                            displayPic.ShowDialog();
+                            new AudioForm(
+                                titleLab.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }
 
@@ -3066,23 +2672,19 @@ namespace FlowstorageDesktop {
         /// Garbage (delete folder) button is clicked
         /// </summary>
         /// <param name="foldName"></param>
-        private async void RemoveAndDeleteFolder(string foldName) {
+        private async void RemoveAndDeleteFolder(string folderName) {
 
             DialogResult verifyDeletion = MessageBox.Show(
-                $"Delete {foldName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                $"Delete {folderName} folder?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDeletion == DialogResult.Yes) {
 
-                const string removeFoldQue = "DELETE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-                using (MySqlCommand command = new MySqlCommand(removeFoldQue, con)) {
-                    command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                    command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(foldName));
-                    await command.ExecuteNonQueryAsync();
-                }
+                await folderDataCaller.DeleteFolder(folderName);
 
-                lstFoldersPage.Items.Remove(foldName);
+                lstFoldersPage.Items.Remove(folderName);
 
                 BuildButtonsOnHomePageSelected();
+
                 await BuildHomeFiles();
 
                 lblCurrentPageText.Text = "Home";
@@ -3253,58 +2855,11 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel4_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
         private async Task FolderOnSelected(string folderName) {
 
             BuildButtonsOnFolderNameSelected();
 
-            var fileTypes = new List<string>();
-
-            const string getFileType = "SELECT file_type FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername";
-            using (var command = new MySqlCommand(getFileType, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                command.Parameters.AddWithValue("@foldername", EncryptionModel.Encrypt(folderName));
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        fileTypes.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-            var currMainLength = fileTypes.Count;
-
-            await BuildFilePanelFolder(fileTypes, folderName, currMainLength);
+            await BuildFilePanelFolder(folderName);
             BuildRedundaneVisibility();
 
         }
@@ -3347,7 +2902,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button19_Click(object sender, EventArgs e) {
+        private void btnDeleteFolder_Click(object sender, EventArgs e) {
 
             ClosePopupForm.CloseRetrievalPopup();
 
@@ -3366,26 +2921,12 @@ namespace FlowstorageDesktop {
 
         #region Build directory panel section
 
-        private async Task buildDirectoryPanel(int rowLength) {
+        private void BuildDirectoryPanel(List<string> directoriesName, int directoryCount) {
 
-            var filesInfo = new List<Tuple<string>>();
+            for (int i = 0; i < directoryCount; i++) {
 
-            const string selectFileData = "SELECT DIR_NAME FROM file_info_directory WHERE CUST_USERNAME = @username";
-            using (MySqlCommand command = new MySqlCommand(selectFileData, con)) {
-                command.Parameters.AddWithValue("@username", tempDataUser.Username);
-
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        string fileName = EncryptionModel.Decrypt(reader.GetString(0));
-                        filesInfo.Add(new Tuple<string>(fileName));
-                    }
-                }
-            }
-
-            for (int i = 0; i < rowLength; i++) {
-
-                var panelPic_Q = new Guna2Panel() {
-                    Name = "ABC02" + i,
+                var mainPanel = new Guna2Panel() {
+                    Name = "directoryPar" + i,
                     Width = 200,
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
@@ -3394,13 +2935,13 @@ namespace FlowstorageDesktop {
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
-                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
-                flwLayoutHome.Controls.Add(panelPic_Q);
 
-                var panelF = panelPic_Q;
+                Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
+
+                flwLayoutHome.Controls.Add(mainPanel);
 
                 Label directoryLab = new Label();
-                panelF.Controls.Add(directoryLab);
+                mainPanel.Controls.Add(directoryLab);
                 directoryLab.Name = "DirLab" + i;
                 directoryLab.Visible = true;
                 directoryLab.Enabled = true;
@@ -3412,7 +2953,7 @@ namespace FlowstorageDesktop {
                 directoryLab.Text = "Directory";
 
                 Label titleLab = new Label();
-                panelF.Controls.Add(titleLab);
+                mainPanel.Controls.Add(titleLab);
                 titleLab.Name = "titleImgL" + i;
                 titleLab.Font = GlobalStyle.TitleLabelFont;
                 titleLab.ForeColor = GlobalStyle.GainsboroColor;
@@ -3422,10 +2963,10 @@ namespace FlowstorageDesktop {
                 titleLab.Width = 160;
                 titleLab.Height = 20;
                 titleLab.AutoEllipsis = true;
-                titleLab.Text = filesInfo[i].Item1;
+                titleLab.Text = directoriesName[i];
 
                 Guna2PictureBox picMain_Q = new Guna2PictureBox();
-                panelF.Controls.Add(picMain_Q);
+                mainPanel.Controls.Add(picMain_Q);
                 picMain_Q.Name = "ImgG" + i;
                 picMain_Q.SizeMode = PictureBoxSizeMode.CenterImage;
                 picMain_Q.BorderRadius = 8;
@@ -3435,20 +2976,20 @@ namespace FlowstorageDesktop {
 
                 picMain_Q.Anchor = AnchorStyles.None;
 
-                int picMain_Q_x = (panelF.Width - picMain_Q.Width) / 2;
+                int picMain_Q_x = (mainPanel.Width - picMain_Q.Width) / 2;
                 picMain_Q.Location = new Point(picMain_Q_x, 10);
 
                 picMain_Q.MouseHover += (_senderM, _ev) => {
-                    panelF.ShadowDecoration.Enabled = true;
-                    panelF.ShadowDecoration.BorderRadius = 8;
+                    mainPanel.ShadowDecoration.Enabled = true;
+                    mainPanel.ShadowDecoration.BorderRadius = 8;
                 };
 
                 picMain_Q.MouseLeave += (_senderQ, _evQ) => {
-                    panelF.ShadowDecoration.Enabled = false;
+                    mainPanel.ShadowDecoration.Enabled = false;
                 };
 
                 Guna2Button remBut = new Guna2Button();
-                panelF.Controls.Add(remBut);
+                mainPanel.Controls.Add(remBut);
                 remBut.Name = "Rem" + i;
                 remBut.Width = 29;
                 remBut.Height = 26;
@@ -3461,32 +3002,18 @@ namespace FlowstorageDesktop {
                 remBut.Visible = true;
                 remBut.Location = GlobalStyle.GarbageButtonLoc;
 
-                remBut.Click += (sender_im, e_im) => {
+                remBut.Click += async (sender_im, e_im) => {
 
-                    var titleFile = titleLab.Text;
+                    string directoryName = titleLab.Text; 
 
                     DialogResult verifyDialog = MessageBox.Show(
-                        $"Delete '{titleFile}' directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        $"Delete {directoryName} directory?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (verifyDialog == DialogResult.Yes) {
+                        
+                        await directoryDataCaller.DeleteDirectory(directoryName);
 
-                        using (var command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;", con)) {
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = new MySqlCommand("DELETE FROM file_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (var command = new MySqlCommand("DELETE FROM upload_info_directory WHERE CUST_USERNAME = @username AND DIR_NAME = @dirname", con)) {
-                            command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                            command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(titleLab.Text));
-                            command.ExecuteNonQuery();
-                        }
-
-                        panelPic_Q.Dispose();
+                        mainPanel.Dispose();
 
                         BuildRedundaneVisibility();
                         UpdateProgressBarValue();
@@ -3511,14 +3038,6 @@ namespace FlowstorageDesktop {
         }
 
         #endregion END - Build directory panel section
-
-        private void label10_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator1_Click(object sender, EventArgs e) {
-
-        }
 
         private void flowLayoutPanel1_Scroll(object sender, ScrollEventArgs e) {
             this.Invalidate();
@@ -3564,17 +3083,15 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void guna2Button4_Click(object sender, EventArgs e) {
+        private async void btnRefreshFiles_Click(object sender, EventArgs e) {
 
             flwLayoutHome.Controls.Clear();
 
             if (lblCurrentPageText.Text == "Shared To Me") {
-                GlobalsData.fileTypeValuesSharedToMe.Clear();
-                await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                await RefreshGenerateUserSharedToMe("DirParMe");
 
             } else if (lblCurrentPageText.Text == "Shared Files") {
-                GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                await RefreshGenerateUserSharedOthers("DirParOther");
 
             } else if (lblCurrentPageText.Text == "Home") {
                 GlobalsData.base64EncodedImageHome.Clear();
@@ -3656,13 +3173,11 @@ namespace FlowstorageDesktop {
                         break;
 
                     case "Shared To Me":
-                        GlobalsData.fileTypeValuesSharedToMe.Clear();
-                        await RefreshGenerateUserShared(GlobalsData.fileTypeValuesSharedToMe, "DirParMe");
+                        await RefreshGenerateUserSharedToMe("DirParMe");
                         break;
 
                     case "Shared Files":
-                        GlobalsData.fileTypeValuesSharedToOthers.Clear();
-                        await RefreshGenerateUserSharedOthers(GlobalsData.fileTypeValuesSharedToOthers, "DirParOther");
+                        await RefreshGenerateUserSharedOthers("DirParOther");
                         break;
 
                     case "Public Storage":
@@ -3684,16 +3199,12 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e) {
-
-        }
-
         /// <summary>
         /// Go to Home button is pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button9_Click_1(object sender, EventArgs e) {
+        private async void btnGoHomePage_Click(object sender, EventArgs e) {
 
             BuildButtonsOnHomePageSelected();
 
@@ -3739,7 +3250,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button13_Click(object sender, EventArgs e) {
+        private void btnGoFolderPage_Click(object sender, EventArgs e) {
 
             pnlSubPanelDetails.Visible = false;
             btnLogout.Visible = false;
@@ -3758,20 +3269,13 @@ namespace FlowstorageDesktop {
             pnlMain.SendToBack();
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e) {
-        }
-
-        private async void guna2Button14_Click(object sender, EventArgs e) {
+        private async void btnOpenUpgradePage_Click(object sender, EventArgs e) {
 
             new SettingsForm().Show();
 
             SettingsForm.instance.tabControlSettings.SelectedTab = SettingsForm.instance.tabControlSettings.TabPages["tabUpgradePage"];
 
             await currencyConverter.ConvertToLocalCurrency();
-
-        }
-
-        private void guna2ProgressBar1_ValueChanged(object sender, EventArgs e) {
 
         }
 
@@ -3788,10 +3292,8 @@ namespace FlowstorageDesktop {
             GlobalsData.base64EncodedImageHome.Clear();
             GlobalsData.base64EncodedThumbnailHome.Clear();
 
-            GlobalsData.base64EncodedThumbnailSharedOthers.Clear();
             GlobalsData.base64EncodedImageSharedOthers.Clear();
 
-            GlobalsData.base64EncodedThumbnailSharedToMe.Clear();
             GlobalsData.base64EncodedImageSharedToMe.Clear();
 
             GlobalsData.base64EncodedImagePs.Clear();
@@ -3827,18 +3329,18 @@ namespace FlowstorageDesktop {
 
         #region Drag and drop upload section
 
-        private void Form1_DragEnter(object sender, DragEventArgs e) {
+        private void HomePage_DragEnter(object sender, DragEventArgs e) {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effect = DragDropEffects.Copy;
             }
         }
 
-        private void Form1_DragOver(object sender, DragEventArgs e) {
+        private void HomePage_DragOver(object sender, DragEventArgs e) {
             pnlDragAndDropUpload.Visible = true;
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void Form1_DragLeave(object sender, EventArgs e) => pnlDragAndDropUpload.Visible = false;
+        private void HomePage_DragLeave(object sender, EventArgs e) => pnlDragAndDropUpload.Visible = false;
 
 
         /// <summary>
@@ -3849,7 +3351,7 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void Form1_DragDrop(object sender, DragEventArgs e) {
+        private async void HomePage_DragDrop(object sender, DragEventArgs e) {
 
             pnlDragAndDropUpload.Visible = false;
 
@@ -3890,7 +3392,8 @@ namespace FlowstorageDesktop {
 
             foreach (var selectedItems in filePathList) {
 
-                string fileType = Path.GetExtension(selectedItems);
+                string fileName = Path.GetFileName(selectedItems);
+                string fileType = fileName.Split('.').Last();
 
                 try {
 
@@ -3924,7 +3427,7 @@ namespace FlowstorageDesktop {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptTextValue);
 
-                    } else if (fileType == ".exe") {
+                    } else if (fileType == "exe") {
                         exeCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptText);
@@ -3944,12 +3447,12 @@ namespace FlowstorageDesktop {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptText);
 
-                    } else if (fileType == ".apk") {
+                    } else if (fileType == "apk") {
                         apkCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptText);
 
-                    } else if (fileType == ".pdf") {
+                    } else if (fileType == "pdf") {
                         pdfCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptText);
@@ -3959,7 +3462,7 @@ namespace FlowstorageDesktop {
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptText);
 
-                    } else if (fileType == ".msi") {
+                    } else if (fileType == "msi") {
                         msiCurr++;
                         await CreateFilePanelHome(
                             selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptText);
@@ -3987,64 +3490,46 @@ namespace FlowstorageDesktop {
 
         #region Filter type section
 
-        bool filterTypePanelVisible = false;
-        private void guna2Button16_Click(object sender, EventArgs e) {
-            filterTypePanelVisible = !filterTypePanelVisible;
-            pnlFilterType.Visible = filterTypePanelVisible;
-        }
-
-        private void guna2Button18_Click(object sender, EventArgs e) {
+        private void btnFilterImages_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".png,.jpeg,.jpg";
         }
 
-        private void guna2Button17_Click_2(object sender, EventArgs e) {
+        private void btnFilterText_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".txt,.html,.md,.sql,.css,.js,.csv";
         }
 
-        private void guna2Button22_Click_1(object sender, EventArgs e) {
+        private void btnFilterDocuments_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".doc,.docx";
-
         }
 
-        private void guna2Button20_Click(object sender, EventArgs e) {
+        private void btnFilterAudio_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".mp3,.wav";
-
         }
 
-        private void guna2Button21_Click(object sender, EventArgs e) {
+        private void btnFilterExcel_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".xlsx,xls";
         }
 
-        private void guna2Button23_Click(object sender, EventArgs e) {
+        private void btnFilterVideos_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".mp4,.avi,.mov,wmv";
-
         }
 
-        private void guna2Button24_Click(object sender, EventArgs e) {
+        private void btnFilterPdf_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
             txtBoxSearchFile.Text = ".pdf";
         }
 
-        private void guna2Button25_Click(object sender, EventArgs e) {
+        private void btnClearFilter_Click(object sender, EventArgs e) {
             txtBoxSearchFile.Text = string.Empty;
         }
 
         #endregion END - Filter type section
-
-        private void guna2Panel2_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label26_Click(object sender, EventArgs e) {
-
-        }
-
 
         /// <summary>
         /// 
@@ -4055,7 +3540,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void guna2Button27_Click(object sender, EventArgs e) {
+        private async void btnDownloadFolder_Click(object sender, EventArgs e) {
 
             if (tempDataUser.AccountType == "Max" || tempDataUser.AccountType == "Express" || tempDataUser.AccountType == "Supreme") {
                 string folderTitleGet = EncryptionModel.Encrypt(lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem));
@@ -4068,10 +3553,6 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Panel3_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
         private void guna2Button28_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
 
         /// <summary>
@@ -4081,7 +3562,7 @@ namespace FlowstorageDesktop {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void btnDeleteFile_Click_1(object sender, EventArgs e) {
+        private async void btnDeleteFile_Click(object sender, EventArgs e) {
 
             string fileName = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
@@ -4089,7 +3570,7 @@ namespace FlowstorageDesktop {
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
-            DialogResult verifyDialog = MessageBox.Show(
+            var verifyDialog = MessageBox.Show(
                 $"Delete '{fileName}'?", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDialog == DialogResult.Yes) {
@@ -4097,32 +3578,23 @@ namespace FlowstorageDesktop {
                 var deleteFileQuery = new DeleteFileDataQuery();
                 await deleteFileQuery.DeleteFileData(tableName, fileName, dirName, sharedToName);
 
-                Control[] matches = this.Controls.Find(panelName, true);
+                var matches = this.Controls.Find(panelName, true);
 
-                if (matches.Length > 0 && matches[0] is Guna2Panel) {
-                    Guna2Panel myPanel = (Guna2Panel)matches[0];
+                if (matches.Length > 0 && matches[0] is Guna2Panel myPanel) {
                     flwLayoutHome.Controls.Remove(myPanel);
                     myPanel.Dispose();
-
                 }
 
-                lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();
 
+                UpdateProgressBarValue();
                 BuildRedundaneVisibility();
-
-                int getCurrentCount = int.Parse(lblItemCountText.Text);
-                int getLimitedValue = int.Parse(lblLimitUploadText.Text);
-                int calculatePercentageUsage = (int)(((float)getCurrentCount / getLimitedValue) * 100);
-                lblUsagePercentage.Text = calculatePercentageUsage.ToString() + "%";
-
-                progressBarUsageStorage.Value = calculatePercentageUsage;
 
                 pnlFileOptions.Visible = false;
 
             }
         }
 
-        private void guna2Button30_Click(object sender, EventArgs e) {
+        private void btnRenameFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
@@ -4130,11 +3602,11 @@ namespace FlowstorageDesktop {
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
-            RenameFileForm renameFileFORM = new RenameFileForm(titleFile, tableName, panelName, dirName, sharedToName);
-            renameFileFORM.Show();
+            new RenameFileForm(titleFile, tableName, panelName, dirName, sharedToName).Show();
+
         }
 
-        private void guna2Button32_Click(object sender, EventArgs e) {
+        private void btnDownloadFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
@@ -4159,27 +3631,15 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button29_Click(object sender, EventArgs e) {
+        private void btnOpenShareFile_Click(object sender, EventArgs e) {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblSelectedDirName.Text;
 
-            string fileExtensions = titleFile.Split('.').Last();
-
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
 
-            new shareFileFORM(
-                titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
-
-        }
-
-        private void label25_Click(object sender, EventArgs e) {
-
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
+            new ShareSelectedFileForm(titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
 
         }
 
@@ -4191,7 +3651,7 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private async void guna2Button4_Click_1(object sender, EventArgs e) {
+        private async void btnGoPsPage_Click(object sender, EventArgs e) {
 
             btnShowPs.FillColor = GlobalStyle.DarkPurpleColor;
 
@@ -4235,19 +3695,9 @@ namespace FlowstorageDesktop {
             await BuildMyPublicStorageFiles();
         }
 
-        private void pictureBox1_Click_1(object sender, EventArgs e) {
+        private void btnCloseHomePage_Click(object sender, EventArgs e) => this.Close();
 
-        }
-
-        private void HomePage_FormClosing(object sender, FormClosingEventArgs e) {
-
-        }
-
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private async void guna2Button2_Click(object sender, EventArgs e) {
+        private async void btnOpenUpgradePage2_Click(object sender, EventArgs e) {
 
             new SettingsForm().Show();
 
@@ -4257,29 +3707,17 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button1_Click_1(object sender, EventArgs e) {
+        private void btnShowFilterTypePnl_Click(object sender, EventArgs e) {
             pnlShared.Visible = false;
             pnlFilterType.Visible = !pnlFilterType.Visible;
         }
 
-        private void lblItemCountText_Click(object sender, EventArgs e) {
-
-        }
-
-        private void pnlPsSubDetails_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void pnlPublicStorage_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Button5_Click(object sender, EventArgs e) {
+        private void btnShowSharedPnl_Click(object sender, EventArgs e) {
             pnlFilterType.Visible = false;
             pnlShared.Visible = !pnlShared.Visible;
         }
 
-        private async void guna2Button7_Click_1(object sender, EventArgs e) {
+        private async void btnGoSharedFilesPage_Click(object sender, EventArgs e) {
 
             flwLayoutHome.Controls.Clear();
 
@@ -4303,14 +3741,14 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void guna2Button6_Click_1(object sender, EventArgs e) {
+        private async void btnGoSharedToMePage_Click(object sender, EventArgs e) {
 
             flwLayoutHome.Controls.Clear();
 
             BuildButtonOnSharedFilesSelected();
             ClearRedundane();
 
-            await CallFilesInformationShared();
+            await CallFilesInformationSharedToMe();
             await BuildSharedToMe();
 
             lblItemCountText.Text = flwLayoutHome.Controls.Count.ToString();

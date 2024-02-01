@@ -25,7 +25,7 @@ namespace FlowstorageDesktop {
         /// <param name="_DirectoryName"></param>
         /// <param name="_UploaderName"></param>
 
-        public PdfForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = false) {
+        public PdfForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -34,27 +34,30 @@ namespace FlowstorageDesktop {
             this._directoryName = directoryName;
             this._isFromSharing = isFromSharing;
 
-            if (isFromShared == true) {
-                btnEditComment.Visible = true;
+            label4.Text = isFromShared ? "Shared To" : "Uploaded By";
 
-                label4.Text = "Shared To";
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label4.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label4.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderName.Text = uploaderName;
@@ -141,7 +144,7 @@ namespace FlowstorageDesktop {
             this.WindowState = FormWindowState.Minimized;
             Application.OpenForms
               .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .Where(form => form.Name == "bgBlurForm")
               .ToList()
               .ForEach(form => form.Hide());
         }
@@ -155,7 +158,7 @@ namespace FlowstorageDesktop {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
@@ -186,7 +189,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;

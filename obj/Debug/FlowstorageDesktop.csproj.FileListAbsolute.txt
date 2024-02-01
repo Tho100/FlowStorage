@@ -1327,7 +1327,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.ChangeAuthForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.RetrievalAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.SettingsLoadingAlert.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.shareFileFORM.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.MainShareFileForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.SplashForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.PaymentSuceededAlert.resources
@@ -1352,3 +1351,4 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DiscordRPC.dll
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DiscordRPC.pdb
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\bin\Debug\DiscordRPC.xml
+C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.ShareSelectedFileForm.resources

@@ -64,7 +64,6 @@
             this.label4.TabIndex = 46;
             this.label4.Text = "(Preview is not available)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // lblFileName
             // 
@@ -75,7 +74,6 @@
             this.lblFileName.Size = new System.Drawing.Size(284, 93);
             this.lblFileName.TabIndex = 43;
             this.lblFileName.Text = "label1";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // guna2Button4
             // 
@@ -322,7 +320,6 @@
             this.Name = "MsiForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.msiFORM_Load);
             this.ResumeLayout(false);
 
         }

@@ -192,7 +192,7 @@ namespace FlowstorageDesktop.Authentication {
                         return;
                     }
 
-                    if (!ValidateEmailInput(emailInput) == true) {
+                    if (!ValidateEmailInput(emailInput)) {
                         lblAlertEmail.Visible = true;
                         lblAlertEmail.Text = "Entered email is not valid.";
                         return;
@@ -276,24 +276,13 @@ namespace FlowstorageDesktop.Authentication {
             txtBoxAuth1Field.Text = string.Empty;
         }
 
-        private void guna2Button10_Click(object sender, EventArgs e) => new SignInForm(this).Show();
-
-        private void guna2Panel7_Paint(object sender, PaintEventArgs e) {
-
-        }
 
         private void txtBoxAuth1Field_TextChanged(object sender, EventArgs e) {
             if (Regex.IsMatch(txtBoxAuth1Field.Text, "[^0-9]")) {
                 txtBoxAuth1Field.Text = txtBoxAuth1Field.Text.Remove(txtBoxAuth1Field.Text.Length - 1);
             }
         }
+        private void guna2Button10_Click(object sender, EventArgs e) => new SignInForm(this).Show();
 
-        private void SignUpForm_Load(object sender, EventArgs e) {
-
-        }
-
-        private void bannerPictureBox_Click(object sender, EventArgs e) {
-
-        }
     }
 }

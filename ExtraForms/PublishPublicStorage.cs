@@ -10,7 +10,7 @@ namespace FlowstorageDesktop.ExtraForms {
             txtFieldFileName.Text = fileName;
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e) {
+        private void btnClose_Click(object sender, EventArgs e) {
 
             HomePage.instance.PublicStorageUserComment = null;
             HomePage.instance.PublicStorageUserTag = null;
@@ -21,7 +21,7 @@ namespace FlowstorageDesktop.ExtraForms {
             return;
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
+        private void btnUpload_Click(object sender, EventArgs e) {
 
             HomePage.instance.PublicStorageUserComment = txtFieldComment.Text;
             HomePage.instance.PublicStorageUserTitle =  string.IsNullOrEmpty(txtFieldTitle.Text) 
@@ -38,14 +38,6 @@ namespace FlowstorageDesktop.ExtraForms {
 
         private void txtFieldComment_TextChanged(object sender, EventArgs e) {
             lblCountCharComment.Text = $"{txtFieldComment.TextLength}/295";
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e) {
-
         }
 
         private void btnEnter_Click(object sender, EventArgs e) {
@@ -108,7 +100,7 @@ namespace FlowstorageDesktop.ExtraForms {
             btnCreativity.FillColor = Color.DarkGray;
         }
 
-        private void guna2Button2_Click_1(object sender, EventArgs e) {
+        private void btnMusic_Click(object sender, EventArgs e) {
             HomePage.instance.PublicStorageUserTag = "Music";
             btnMusic.FillColor = Color.Tomato;
             btnRandom.FillColor = Color.DarkGray;
@@ -118,10 +110,6 @@ namespace FlowstorageDesktop.ExtraForms {
             btnEducation.FillColor = Color.DarkGray;
             btnData.FillColor = Color.DarkGray;
             btnCreativity.FillColor = Color.DarkGray;
-        }
-
-        private void PublishPublicStorage_Load(object sender, EventArgs e) {
-
         }
 
         private void btnData_Click(object sender, EventArgs e) {
@@ -148,8 +136,5 @@ namespace FlowstorageDesktop.ExtraForms {
             btnMusic.FillColor = Color.DarkGray;
         }
 
-        private void txtFieldFileName_TextChanged(object sender, EventArgs e) {
-
-        }
     }
 }

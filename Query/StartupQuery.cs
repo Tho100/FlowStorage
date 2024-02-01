@@ -18,7 +18,7 @@ namespace FlowstorageDesktop.AuthenticationQuery {
 
             var folders = new List<string>();
 
-            const string getTitles = "SELECT DISTINCT FOLDER_TITLE FROM folder_upload_info WHERE CUST_USERNAME = @username";
+            const string getTitles = "SELECT DISTINCT FOLDER_NAME FROM folder_upload_info WHERE CUST_USERNAME = @username";
             using (MySqlCommand command = new MySqlCommand(getTitles, con)) {
                 command.Parameters.AddWithValue("@username", username);
                 using (MySqlDataReader fold_Reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {

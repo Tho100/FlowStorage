@@ -8,9 +8,9 @@ namespace FlowstorageDesktop {
         public static RetrievalAlert instance;
 
         readonly private MySqlConnection con = ConnectionModel.con;
-        private string originFrom { get; set; }
+        private string _originFrom { get; set; }
 
-        public RetrievalAlert(String alertMessage, bool isFromLogin) {
+        public RetrievalAlert(string alertMessage, bool isFromLogin) {
 
             InitializeComponent();
 
@@ -38,10 +38,10 @@ namespace FlowstorageDesktop {
 
                 lblMessage.Text = "Cancelling operation...";
 
-                if(originFrom == "Saver") {
+                if(_originFrom == "Saver") {
                     SaverModel.stopFileRetrieval = true;
 
-                } else if (originFrom == "Loader") {
+                } else if (_originFrom == "Loader") {
                     if(lblMessage.Text == "Flowstorage is retrieving your directory files." || lblMessage.Text == "Flowstorage is retrieving your folder files." || lblMessage.Text == "Flowstorage is retrieving your shared files...") {
                         lblMessage.Text = "Failed to cancel the operation.";
 
@@ -51,14 +51,9 @@ namespace FlowstorageDesktop {
 
                             lblHeader.Text = "Cancelling Operation...";
                             if (con.State == System.Data.ConnectionState.Open) {
-
-                                // @ Close connection before turning it back on for retrieval cancellation
                                 con.Close();
 
                                 if (con.State == System.Data.ConnectionState.Closed) {
-
-                                    // @ Turn connection back on so that the user can 
-                                    // reuse the application properly
                                     con.Open();
                                 }
                             }
@@ -70,6 +65,9 @@ namespace FlowstorageDesktop {
                                 con.Open();
 
                             }
+
+                            this.Close();
+
                         }
 
                         this.Close();
@@ -78,8 +76,9 @@ namespace FlowstorageDesktop {
                 } 
 
             } catch (Exception) {
-
+                this.Close();
             }
+
         }
     }
 }

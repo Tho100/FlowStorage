@@ -437,6 +437,12 @@
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\AutoLoginModel.cs" />
+    <Compile Include="Query\DataCaller\DirectoryDataCaller.cs" />
+    <Compile Include="Query\DataCaller\FolderDataCaller.cs" />
+    <Compile Include="Query\DataCaller\HomeDataCaller.cs" />
+    <Compile Include="Query\DataCaller\PsDataCaller.cs" />
+    <Compile Include="Query\DataCaller\SharedFilesDataCaller.cs" />
+    <Compile Include="Query\DataCaller\SharedToMeDataCaller.cs" />
     <Compile Include="Query\DeleteFileDataQuery.cs" />
     <Compile Include="Query\InsertFileDataQuery.cs" />
     <Compile Include="Query\SignUpQuery.cs" />
@@ -527,9 +533,6 @@
     <Compile Include="ExtraForms\AudioPlayingForm.Designer.cs">
       <DependentUpon>AudioPlayingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Button_WOC.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="AlertForms\CancellingAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -561,12 +564,6 @@
     </Compile>
     <Compile Include="ViewerForms\exeFORM.Designer.cs">
       <DependentUpon>exeFORM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AlertForms\RecoveryFailedAlert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AlertForms\RecoveryFailedAlert.Designer.cs">
-      <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\GetFileSize.cs" />
     <Compile Include="HomePage.cs">
@@ -803,9 +800,6 @@
     <EmbeddedResource Include="ViewerForms\exeFORM.resx">
       <DependentUpon>exeFORM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AlertForms\RecoveryFailedAlert.resx">
-      <DependentUpon>RecoveryFailedAlert.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
     </EmbeddedResource>
@@ -837,6 +831,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Authentication\SignInForm.resx">
       <DependentUpon>SignInForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

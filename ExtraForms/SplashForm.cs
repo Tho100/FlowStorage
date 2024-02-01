@@ -31,7 +31,7 @@ namespace FlowstorageDesktop {
         }
 
         private void KeepAliveTimer_Elapsed(object sender, ElapsedEventArgs e) {
-            if (con.Ping() == false) {
+            if (!con.Ping()) {
                 con.Close();
                 con.Open();
             }

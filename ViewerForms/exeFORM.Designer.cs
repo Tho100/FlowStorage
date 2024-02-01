@@ -1,5 +1,5 @@
 ﻿namespace FlowstorageDesktop {
-    partial class exeFORM {
+    partial class ExeForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(exeFORM));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExeForm));
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
             this.lblFileName = new System.Windows.Forms.Label();
             this.lblUploaderName = new System.Windows.Forms.Label();
@@ -60,7 +60,6 @@
             this.lblFileName.Size = new System.Drawing.Size(318, 105);
             this.lblFileName.TabIndex = 25;
             this.lblFileName.Text = "filename.exe";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblUploaderName
             // 
@@ -71,7 +70,6 @@
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 27;
             this.lblUploaderName.Text = "guest919402";
-            this.lblUploaderName.Click += new System.EventHandler(this.label2_Click);
             // 
             // guna2Button2
             // 
@@ -177,7 +175,6 @@
             this.guna2VSeparator1.Name = "guna2VSeparator1";
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 617);
             this.guna2VSeparator1.TabIndex = 66;
-            this.guna2VSeparator1.Click += new System.EventHandler(this.guna2VSeparator1_Click);
             // 
             // label5
             // 
@@ -298,7 +295,7 @@
             this.guna2Button9.Visible = false;
             this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
             // 
-            // exeFORM
+            // ExeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -322,11 +319,10 @@
             this.Controls.Add(this.guna2Button9);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "exeFORM";
+            this.Name = "ExeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Viewer";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.exeFORM_Load);
             this.ResumeLayout(false);
 
         }

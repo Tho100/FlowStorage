@@ -21,7 +21,7 @@ namespace FlowstorageDesktop {
         private int _currentSheetIndex { get; set; } = 1;
         private int _changedIndex { get; set; } = 0;
         private byte[] _sheetsByte { get; set; }
-        private bool _isFromSharing { get; set; }
+        private bool _isFromShared { get; set; }
 
         readonly private UpdateChanges saveChanges = new UpdateChanges();
 
@@ -47,27 +47,30 @@ namespace FlowstorageDesktop {
             this._directoryName = directoryName;
             this._tableName = tableName;
 
-            if (_isFromSharing == true) {
-                btnEditComment.Visible = true;
-                btnSaveComment.Visible = true;
+            label4.Text = isFromShared ? "Shared To" : "Uploaded By";
 
-                label4.Text = "Shared To";
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label4.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label4.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderName.Text = uploaderName;
@@ -178,8 +181,8 @@ namespace FlowstorageDesktop {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
-                lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
+            new ShareSelectedFileForm(
+                lblFileName.Text, _isFromShared, _tableName, _directoryName).Show();
         }
 
         private byte[] UpdatedChangesBytes() {
@@ -210,7 +213,7 @@ namespace FlowstorageDesktop {
 
             try {
 
-                if(CallDialogResultSave.CallDialogResult(_isFromSharing) == DialogResult.Yes) {
+                if(CallDialogResultSave.CallDialogResult(_isFromShared) == DialogResult.Yes) {
 
                     byte[] updatedBytes = UpdatedChangesBytes();
 
@@ -218,7 +221,7 @@ namespace FlowstorageDesktop {
 
                         string toBase64String = Convert.ToBase64String(updatedBytes);
                         string fileName = lblFileName.Text;
-                        await saveChanges.SaveChangesUpdate(fileName, toBase64String, _tableName, _isFromSharing, _directoryName);
+                        await saveChanges.SaveChangesUpdate(fileName, toBase64String, _tableName, _isFromShared, _directoryName);
 
                         new CustomAlert(
                             title: "Changes saved",
@@ -232,7 +235,8 @@ namespace FlowstorageDesktop {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Something went wrong", "Failed to save changes.").Show();
+                new CustomAlert(
+                    title: "Something went wrong", subheader: "Failed to save changes.").Show();
 
             }
         }

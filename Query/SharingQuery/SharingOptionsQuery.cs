@@ -15,7 +15,7 @@ namespace FlowstorageDesktop.SharingQuery {
         /// </summary>
         /// <param name="_receiverUsername"></param>
         /// <returns></returns>
-        public async Task<int> UserExistVerification(String receiverUsername) {
+        public async Task<int> UserExistVerification(string receiverUsername) {
 
             int count = 0;
 
@@ -84,6 +84,7 @@ namespace FlowstorageDesktop.SharingQuery {
                 string isEnabled = Convert.ToString(await command.ExecuteScalarAsync());
                 string concludeOutput = isEnabled == "1" ? "1" : "0";
                 return concludeOutput;
+
             }
 
         }
@@ -92,7 +93,7 @@ namespace FlowstorageDesktop.SharingQuery {
         /// This function will do check if the 
         /// receiver has password enabled for their file sharing
         /// </summary>
-        public async Task<string> ReceiverHasAuthVerification(String username) {
+        public async Task<string> ReceiverHasAuthVerification(string username) {
 
             string storeVal = "";
 
@@ -105,8 +106,7 @@ namespace FlowstorageDesktop.SharingQuery {
                         if (reader.GetString(0) == "DEF") {
                             storeVal = "";
 
-                        }
-                        else {
+                        } else {
                             storeVal = reader.GetString(0);
 
                         }
@@ -118,7 +118,7 @@ namespace FlowstorageDesktop.SharingQuery {
 
         }
 
-        public async Task<string> GetReceiverAuth(String receiverUsername) {
+        public async Task<string> GetReceiverAuth(string receiverUsername) {
 
             const string query = "SELECT SET_PASS FROM sharing_info WHERE CUST_USERNAME = @username";
 
@@ -131,7 +131,7 @@ namespace FlowstorageDesktop.SharingQuery {
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
 
         }
 

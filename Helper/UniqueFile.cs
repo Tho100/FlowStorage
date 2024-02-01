@@ -8,9 +8,9 @@ namespace FlowstorageDesktop.Helper {
             var fileToIgnore = new HashSet<string>();
             fileToIgnore.UnionWith(Globals.audioTypes);
             fileToIgnore.UnionWith(Globals.videoTypes);
-            fileToIgnore.Add(".exe");
-            fileToIgnore.Add(".msi");
-            fileToIgnore.Add(".apk");
+            fileToIgnore.Add("exe");
+            fileToIgnore.Add("msi");
+            fileToIgnore.Add("apk");
 
             return fileToIgnore.Contains(fileType);
 

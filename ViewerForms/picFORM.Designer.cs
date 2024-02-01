@@ -92,7 +92,6 @@
             this.lblFileName.Size = new System.Drawing.Size(318, 105);
             this.lblFileName.TabIndex = 17;
             this.lblFileName.Text = "label1";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblUploaderName
             // 
@@ -104,7 +103,6 @@
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 28;
             this.lblUploaderName.Text = " ACETYLCHOLINESTERASE ";
-            this.lblUploaderName.Click += new System.EventHandler(this.label2_Click);
             // 
             // lblUserComment
             // 
@@ -117,7 +115,6 @@
             this.lblUserComment.TabIndex = 29;
             this.lblUserComment.Text = resources.GetString("lblUserComment.Text");
             this.lblUserComment.Visible = false;
-            this.lblUserComment.Click += new System.EventHandler(this.label3_Click);
             // 
             // guna2VSeparator1
             // 
@@ -128,7 +125,6 @@
             this.guna2VSeparator1.Name = "guna2VSeparator1";
             this.guna2VSeparator1.Size = new System.Drawing.Size(10, 617);
             this.guna2VSeparator1.TabIndex = 31;
-            this.guna2VSeparator1.Click += new System.EventHandler(this.guna2VSeparator1_Click);
             // 
             // guna2Separator1
             // 
@@ -192,7 +188,6 @@
             this.lblImageResolution.Size = new System.Drawing.Size(75, 17);
             this.lblImageResolution.TabIndex = 66;
             this.lblImageResolution.Text = "(1024x1920)";
-            this.lblImageResolution.Click += new System.EventHandler(this.label7_Click);
             // 
             // filterPanel
             // 
@@ -212,7 +207,6 @@
             this.filterPanel.Size = new System.Drawing.Size(263, 438);
             this.filterPanel.TabIndex = 68;
             this.filterPanel.Visible = false;
-            this.filterPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.filterPanel_Paint);
             // 
             // guna2Button7
             // 
@@ -417,7 +411,6 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(230, 83);
             this.guna2Panel1.TabIndex = 70;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // label9
             // 
@@ -599,7 +592,6 @@
             this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbImage.TabIndex = 0;
             this.pbImage.TabStop = false;
-            this.pbImage.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
             // txtFieldComment
             // 
@@ -719,7 +711,7 @@
             this.btnNext.TabIndex = 100;
             this.btnNext.Text = ">";
             this.btnNext.Visible = false;
-            this.btnNext.Click += new System.EventHandler(this.guna2Button9_Click_1);
+            this.btnNext.Click += new System.EventHandler(this.btnNextImage_Click);
             // 
             // btnPrevious
             // 
@@ -741,7 +733,7 @@
             this.btnPrevious.TabIndex = 101;
             this.btnPrevious.Text = "<";
             this.btnPrevious.Visible = false;
-            this.btnPrevious.Click += new System.EventHandler(this.guna2Button12_Click);
+            this.btnPrevious.Click += new System.EventHandler(this.btnPreviousImage_Click);
             // 
             // PicForm
             // 
@@ -779,7 +771,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image Viewer";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.picFORM_Load);
             this.filterPanel.ResumeLayout(false);
             this.guna2Panel4.ResumeLayout(false);
             this.guna2Panel4.PerformLayout();

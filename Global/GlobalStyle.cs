@@ -48,14 +48,14 @@ namespace FlowstorageDesktop {
 
         public static readonly Dictionary<string, Color> psBackgroundColorTag = new Dictionary<string, Color>
         {
-            {"Gaming",Color.SteelBlue},
-            {"Education",Color.Firebrick},
-            {"Software",Color.MediumSeaGreen},
-            {"Entertainment",Color.Orange},
-            {"Random",Color.DimGray},
-            {"Music",Color.Tomato},
-            {"Data",Color.DarkTurquoise},
-            {"Creativity",Color.BlueViolet},
+            {"Gaming", Color.SteelBlue},
+            {"Education", Color.Firebrick},
+            {"Software", Color.MediumSeaGreen},
+            {"Entertainment", Color.Orange},
+            {"Random", Color.DimGray},
+            {"Music", Color.Tomato},
+            {"Data", Color.DarkTurquoise},
+            {"Creativity", Color.BlueViolet},
         };
 
     }

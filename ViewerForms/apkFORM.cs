@@ -11,7 +11,7 @@ namespace FlowstorageDesktop {
         private bool _isFromSharing { get; set; }
         private bool _isFromShared { get; set; }
 
-        public ApkForm(String fileName, String uploaderName, String tableName, String directoryName, bool isFromShared = false, bool isFromSharing = false) {
+        public ApkForm(string fileName, string uploaderName, string tableName, string directoryName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -21,7 +21,7 @@ namespace FlowstorageDesktop {
             this._isFromSharing = isFromSharing;
             this._isFromShared = isFromShared;
 
-            if (_isFromShared == true) {
+            if (_isFromShared) {
                 guna2Button7.Visible = true;
                 btnEditComment.Visible = true;
 
@@ -53,13 +53,6 @@ namespace FlowstorageDesktop {
             this.Close();
         }
 
-        private void apkFORM_Load(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
         private void guna2Button4_Click(object sender, EventArgs e) {
 
             try {
@@ -76,7 +69,7 @@ namespace FlowstorageDesktop {
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
@@ -86,7 +79,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button7.Visible = false;
             txtFieldComment.Visible = false;
@@ -103,8 +96,5 @@ namespace FlowstorageDesktop {
             txtFieldComment.Text = lblUserComment.Text;
         }
 
-        private void label7_Click(object sender, EventArgs e) {
-
-        }
     }
 }

@@ -43,7 +43,7 @@ namespace FlowstorageDesktop {
         /// <param name="_directory"></param>
         /// <param name="_UploaderUsername"></param>
 
-        public TextForm(String tableName, String fileName, String directoryName, String uploaderName, bool isFromSharing = false) {
+        public TextForm(string tableName, string fileName, string directoryName, string uploaderName, bool isFromSharing = false) {
 
             InitializeComponent();
 
@@ -56,84 +56,42 @@ namespace FlowstorageDesktop {
                 this._directoryName = directoryName;
                 this._isFromSharing = isFromSharing;
 
-                var fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
+                label4.Text = isFromSharing ? "Shared To" : "Uploaded By";
 
-                if (isFromSharing == true) {
+                lblUserComment.Visible = true;
 
+                if (isFromSharing) {
+                    string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
                     btnEditComment.Visible = true;
-                    guna2Button12.Visible = true;
-
-                    isFromSharing = true;
-
-                    label4.Text = "Shared To";
                     btnShareFile.Visible = false;
-                    lblUserComment.Visible = true;
-                    lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
                 } else {
-                    label4.Text = "Uploaded By";
-                    lblUserComment.Visible = true;
-                    lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-                }
+                    if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                        lblUserComment.Text = "(No Comment)";
 
-                if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                    label4.Text = "Uploaded By";
-                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                    lblUserComment.Visible = true;
-                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                    } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                        string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                        lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                    } else {
+                        string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                        lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                    }
                 }
 
                 lblUploaderName.Text = uploaderName;
 
-                if (tableName == GlobalsTable.directoryUploadTable) {
-                    RetrieveDirectoryData(fileName);
-
-                } else if (tableName == GlobalsTable.folderUploadTable) {
-                    RetrieveFolderData(fileName);
-
-                } else if (tableName == GlobalsTable.homeTextTable) {
-                    const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, tempDataUser.Username);
-
-                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == false) {
-                    const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, tempDataUser.Username);
-
-                } else if (tableName == GlobalsTable.sharingTable && _isFromSharing == true) {
-                    const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, tempDataUser.Username);
-
-                } else if (tableName == "ps_info_text") {
-                    const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
-                    RetrieveTextData(getTxtQuery, uploaderName);
-
-                }
-
-                switch(fileType) {
-                    case ".py":
-                        PythonSyntax();
-                        break;
-
-                    case ".html":
-                        HTMLSyntax();
-                        break;
-
-                    case ".css":
-                        CSSSyntax();
-                        break;
-                    
-                    case ".js":
-                        JSSyntax();
-                        break;
-                }
+                InitializeTextData(tableName, fileName, uploaderName);
+                InitializeTextSyntax();
 
             } catch (Exception) {
 
                 Application.OpenForms
                 .OfType<Form>()
-                .Where(form => String.Equals(form.Name, "SheetRetrieval"))
+                .Where(form => string.Equals(form.Name, "SheetRetrieval"))
                 .ToList()
                 .ForEach(form => form.Close());
 
@@ -143,7 +101,59 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void RetrieveDirectoryData(String fileName) {
+        private void InitializeTextSyntax() {
+
+            string fileType = lblFileName.Text.Split('.').Last();
+
+            switch (fileType) {
+                case ".py":
+                    PythonSyntax();
+                    break;
+
+                case ".html":
+                    HTMLSyntax();
+                    break;
+
+                case ".css":
+                    CSSSyntax();
+                    break;
+
+                case ".js":
+                    JSSyntax();
+                    break;
+            }
+
+        }
+
+        private void InitializeTextData(string tableName, string fileName, string uploaderName) {
+
+            if (tableName == GlobalsTable.directoryUploadTable) {
+                RetrieveDirectoryData(fileName);
+
+            } else if (tableName == GlobalsTable.folderUploadTable) {
+                RetrieveFolderData(fileName);
+
+            } else if (tableName == GlobalsTable.homeTextTable) {
+                const string getTxtQuery = "SELECT CUST_FILE FROM file_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                RetrieveTextData(getTxtQuery, tempDataUser.Username);
+
+            } else if (tableName == GlobalsTable.sharingTable && !_isFromSharing) {
+                const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
+                RetrieveTextData(getTxtQuery, tempDataUser.Username);
+
+            } else if (tableName == GlobalsTable.sharingTable && _isFromSharing) {
+                const string getTxtQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
+                RetrieveTextData(getTxtQuery, tempDataUser.Username);
+
+            } else if (tableName == "ps_info_text") {
+                const string getTxtQuery = "SELECT CUST_FILE FROM ps_info_text WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
+                RetrieveTextData(getTxtQuery, uploaderName);
+
+            }
+
+        }
+
+        private async void RetrieveDirectoryData(string fileName) {
 
             const string getTxtQuery = "SELECT CUST_FILE FROM upload_info_directory WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname";
 
@@ -168,9 +178,9 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void RetrieveFolderData(String fileName) {
+        private async void RetrieveFolderData(string fileName) {
 
-            const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_TITLE = @foldername AND CUST_FILE_PATH = @filename";
+            const string getTxtQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND FOLDER_NAME = @foldername AND CUST_FILE_PATH = @filename";
 
             using (var command = new MySqlCommand(getTxtQuery, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
@@ -193,7 +203,7 @@ namespace FlowstorageDesktop {
 
         }
 
-        private async void RetrieveTextData(String query, String uploaderName) {
+        private async void RetrieveTextData(string query, string uploaderName) {
 
             string encryptedFileName = EncryptionModel.Encrypt(lblFileName.Text);
 
@@ -365,14 +375,12 @@ namespace FlowstorageDesktop {
         private void txtFORM_Load(object sender, EventArgs e) {
             Application.OpenForms
              .OfType<Form>()
-             .Where(form => String.Equals(form.Name, "SheetRetrieval"))
+             .Where(form => string.Equals(form.Name, "SheetRetrieval"))
              .ToList()
              .ForEach(form => form.Close());
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
         private void guna2Button3_Click(object sender, EventArgs e) {
             this.guna2BorderlessForm1.BorderRadius = 12;
@@ -389,13 +397,6 @@ namespace FlowstorageDesktop {
             lblFileName.AutoSize = true;
         }
 
-        private void haha_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
         /// <summary>
         /// Retrieve text from TextBox and save
         /// </summary>
@@ -403,12 +404,12 @@ namespace FlowstorageDesktop {
         /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
 
-            string fileType = lblFileName.Text.Substring(lblFileName.Text.LastIndexOf('.')).TrimStart();
+            string fileType = lblFileName.Text.Split('.').Last();
 
-            SaveFileDialog saveDialog = new SaveFileDialog();
-
-            saveDialog.FileName = lblFileName.Text;
-            saveDialog.Filter = "Files|*" + fileType;
+            SaveFileDialog saveDialog = new SaveFileDialog {
+                FileName = lblFileName.Text,
+                Filter = "Files|*" + fileType
+            };
 
             try {
 
@@ -429,25 +430,17 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button8_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
             Application.OpenForms
               .OfType<Form>()
-              .Where(form => String.Equals(form.Name, "bgBlurForm"))
+              .Where(form => string.Equals(form.Name, "bgBlurForm"))
               .ToList()
               .ForEach(form => form.Hide());
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
@@ -471,32 +464,37 @@ namespace FlowstorageDesktop {
                 }
 
             } catch (Exception) {
-                new CustomAlert(title: "Something went wrong", "Failed to save changes.").Show();
+                new CustomAlert(
+                    title: "Something went wrong", "Failed to save changes.").Show();
 
             }
 
         }
 
         private void guna2Button11_Click(object sender, EventArgs e) {
+
             txtFieldComment.Enabled = true;
             txtFieldComment.Visible = true;
             btnEditComment.Visible = false;
             guna2Button12.Visible = true;
             lblUserComment.Visible = false;
             txtFieldComment.Text = lblUserComment.Text;
+
         }
 
         private async void guna2Button12_Click(object sender, EventArgs e) {
+
             if (lblUserComment.Text != txtFieldComment.Text) {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
         }
+
     }
 }

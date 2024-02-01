@@ -211,16 +211,13 @@ namespace FlowstorageDesktop.Query {
                 string encryptedFolderName = EncryptionModel.Encrypt(folderName);
                 string encryptedFileName = EncryptionModel.Encrypt(Path.GetFileName(filesFullPath));
 
-                string fileType = filesFullPath.Substring(filesFullPath.LastIndexOf('.') + 1);
-
-                const string insertQuery = "INSERT INTO folder_upload_info(FOLDER_TITLE,CUST_USERNAME,CUST_FILE,FILE_TYPE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@folder_name, @username, @file_data, @file_type, @date, @file_name, @thumbnail)";
+                const string insertQuery = "INSERT INTO folder_upload_info(FOLDER_NAME,CUST_USERNAME,CUST_FILE,UPLOAD_DATE,CUST_FILE_PATH,CUST_THUMB) VALUES (@folder_name, @username, @file_data, @date, @file_name, @thumbnail)";
 
                 var param = new Dictionary<string, string>
                 {
                         { "@username", tempDataUser.Username},
                         { "@folder_name", encryptedFolderName},
                         { "@file_name", encryptedFileName},
-                        { "@file_type", fileType},
                         { "@date", _todayDate},
                         { "@file_data", fileDataBase64Encoded},
                         { "@thumbnail", thumbnailBase64},

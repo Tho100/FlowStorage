@@ -60,7 +60,6 @@
             this.lblFileName.Size = new System.Drawing.Size(317, 106);
             this.lblFileName.TabIndex = 21;
             this.lblFileName.Text = "label1";
-            this.lblFileName.Click += new System.EventHandler(this.label1_Click);
             // 
             // guna2textbox1
             // 
@@ -90,7 +89,6 @@
             this.guna2textbox1.SelectedText = "";
             this.guna2textbox1.Size = new System.Drawing.Size(779, 532);
             this.guna2textbox1.TabIndex = 24;
-            this.guna2textbox1.TextChanged += new System.EventHandler(this.haha_TextChanged);
             // 
             // guna2BorderlessForm1
             // 
@@ -108,7 +106,6 @@
             this.lblUploaderName.Size = new System.Drawing.Size(266, 36);
             this.lblUploaderName.TabIndex = 28;
             this.lblUploaderName.Text = "Uploaded By urmom";
-            this.lblUploaderName.Click += new System.EventHandler(this.label2_Click);
             // 
             // richTextBox1
             // 

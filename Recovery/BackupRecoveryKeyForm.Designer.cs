@@ -51,7 +51,6 @@
             // 
             // txtFieldPIN
             // 
-            this.txtFieldPIN.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldPIN.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldPIN.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldPIN.BorderRadius = 8;
@@ -72,7 +71,7 @@
             this.txtFieldPIN.Name = "txtFieldPIN";
             this.txtFieldPIN.PasswordChar = '*';
             this.txtFieldPIN.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.txtFieldPIN.PlaceholderText = "Enter your PIN key";
+            this.txtFieldPIN.PlaceholderText = "Enter your PIN";
             this.txtFieldPIN.SelectedText = "";
             this.txtFieldPIN.Size = new System.Drawing.Size(155, 49);
             this.txtFieldPIN.TabIndex = 25;
@@ -80,7 +79,6 @@
             // 
             // txtFieldAuth
             // 
-            this.txtFieldAuth.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtFieldAuth.BackColor = System.Drawing.Color.Transparent;
             this.txtFieldAuth.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtFieldAuth.BorderRadius = 8;
@@ -143,11 +141,9 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(353, 280);
             this.guna2Panel1.TabIndex = 38;
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // btnExport
             // 
-            this.btnExport.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnExport.Animated = true;
             this.btnExport.BackColor = System.Drawing.Color.Transparent;
             this.btnExport.BorderRadius = 10;
@@ -167,7 +163,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -180,7 +175,6 @@
             // 
             // label4
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -190,7 +184,6 @@
             this.label4.Size = new System.Drawing.Size(30, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "PIN";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label2
             // 
@@ -228,6 +221,7 @@
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -242,6 +236,7 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -281,7 +276,6 @@
             this.Name = "BackupRecoveryKeyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backup Recovery Key";
-            this.Load += new System.EventHandler(this.RecovFORM_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);

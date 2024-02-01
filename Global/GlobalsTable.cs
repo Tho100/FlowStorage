@@ -32,7 +32,6 @@ namespace FlowstorageDesktop.Global {
         static public readonly string directoryInfoTable = "file_info_directory";
         static public readonly string directoryUploadTable = "upload_info_directory";
 
-
         static public readonly Dictionary<string, string> tableToFileType = new Dictionary<string, string>
         {
             { homeImageTable, "imgFile" },

@@ -18,12 +18,12 @@ namespace FlowstorageDesktop {
         private static string fileName { get; set; }
         private static string fileType { get; set; }
 
-        public static Byte[] LoadFile(string tableName, string directoryName, string selectedFileName, bool isFromSharedFiles = false) {
+        public static byte[] LoadFile(string tableName, string directoryName, string selectedFileName, bool isFromSharedFiles = false) {
 
             try {
 
                 fileName = selectedFileName;
-                fileType = $".{selectedFileName.Split('.').Last()}";
+                fileType = selectedFileName.Split('.').Last();
 
                 if (GlobalsTable.publicTables.Contains(tableName)) {
                     RetrieveHomeDataAsync(tableName);
@@ -34,7 +34,7 @@ namespace FlowstorageDesktop {
                 } else if (tableName == GlobalsTable.folderUploadTable) {
                     RetrieveFolderDataAsync(directoryName);
                     
-                } else if (tableName == GlobalsTable.sharingTable && isFromSharedFiles == true) {
+                } else if (tableName == GlobalsTable.sharingTable && isFromSharedFiles) {
                     RetrieveSharedToOtherData();
 
                 } else if (tableName == GlobalsTable.sharingTable) {
@@ -123,7 +123,7 @@ namespace FlowstorageDesktop {
 
         private static async void RetrieveFolderDataAsync(string directoryName) {
 
-            const string selectFileDataQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_TITLE = @foldtitle";
+            const string selectFileDataQuery = "SELECT CUST_FILE FROM folder_upload_info WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filepath AND FOLDER_NAME = @foldtitle";
             using (MySqlCommand command = new MySqlCommand(selectFileDataQuery, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@filepath", EncryptionModel.Encrypt(fileName));

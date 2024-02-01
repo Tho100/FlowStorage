@@ -26,7 +26,6 @@ namespace FlowstorageDesktop {
         private int gaussianBlurValue { get; set; }
         private int brightnessValue { get; set; }
         private float saturationValue { get; set; }
-
         private string _tableName { get; set; }
         private string _directoryName { get; set; }
         private bool _isFromShared { get; set; }
@@ -64,27 +63,31 @@ namespace FlowstorageDesktop {
 
             pbImage.Image = setupImage;
 
-            if (isFromShared == true) {
-                label4.Text = "Shared To";
+            label4.Text = isFromShared ? "Shared To" : "Uploaded By";
+
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: title);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
                 btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: title) != "" ? GetComment.getCommentSharedToOthers(fileName: title) : "(No Comment)";
 
             } else {
-                label4.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: title) != "" ? GetComment.getCommentSharedToMe(fileName: title) : "(No Comment)";
 
-            }
+                if(GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label4.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: title);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: title);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
-            }
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: title);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
+            } 
 
             lblUploaderName.Text = uploaderName;
 
@@ -97,10 +100,6 @@ namespace FlowstorageDesktop {
                 btnNext.Visible = false;
 
             }
-
-        }
-
-        private void picFORM_Load(object sender, EventArgs e) {
 
         }
 
@@ -129,35 +128,10 @@ namespace FlowstorageDesktop {
             this.TopMost = true;
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
-
-        private void label7_Click(object sender, EventArgs e) {
-
-        }
-
-        private void filterPanel_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e) {
 
             label8.Text = guna2TrackBar1.Value.ToString() + "%";
@@ -251,7 +225,8 @@ namespace FlowstorageDesktop {
                 pbImage.Image = filteredImage;
 
             } catch (Exception) {
-                MessageBox.Show("Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Cannot apply Grayscale with this filter.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
@@ -316,10 +291,10 @@ namespace FlowstorageDesktop {
 
             try {
 
-                if (_isFromShared == true && _tableName == GlobalsTable.sharingTable) {
+                if (_isFromShared && _tableName == GlobalsTable.sharingTable) {
                     await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename", values);
 
-                } else if (_isFromShared == false && _tableName == GlobalsTable.sharingTable) {
+                } else if (!_isFromShared && _tableName == GlobalsTable.sharingTable) {
                     await ExecuteChanges("UPDATE cust_sharing SET CUST_FILE = @newval WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename", values);
 
                 } else if (_tableName == GlobalsTable.homeImageTable){
@@ -329,7 +304,7 @@ namespace FlowstorageDesktop {
                     await ExecuteChangesDirectory("UPDATE upload_info_directory SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND DIR_NAME = @dirname", values);
 
                 } else if (_tableName == GlobalsTable.folderUploadTable) {
-                    await ExecuteChangesFolder("UPDATE folder_upload_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldname", values);
+                    await ExecuteChangesFolder("UPDATE folder_upload_info SET CUST_FILE = @newval WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldname", values);
 
                 } else {
                     MessageBox.Show("Can't apply filter for this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -394,10 +369,6 @@ namespace FlowstorageDesktop {
             label8.Text = "0%";
         }
 
-        private void guna2VSeparator1_Click(object sender, EventArgs e) {
-
-        }
-
         private void guna2Button9_Click(object sender, EventArgs e) {
             txtFieldComment.Enabled = true;
             txtFieldComment.Visible = true;
@@ -413,7 +384,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button10.Visible = false;
             txtFieldComment.Visible = false;
@@ -424,10 +395,6 @@ namespace FlowstorageDesktop {
 
         private void guna2Button11_Click_1(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void guna2PictureBox1_Click(object sender, EventArgs e) {
-
         }
 
         private List<string> GetImageBase64Encoded() {
@@ -468,43 +435,46 @@ namespace FlowstorageDesktop {
                     .Where(label => label.Text.Contains('.'))
                     .Select(label => label.Text.ToLower()));
 
-                int currentFileIndex = fileNames.IndexOf(lblFileName.Text);
+                int currentFileIndex = fileNames.IndexOf(lblFileName.Text.ToLower());
 
                 int nextFileIndex = direction == -1 ? currentFileIndex - 1 : currentFileIndex + 1;
+
                 string fileName = fileNames[nextFileIndex];
                 string imageBase64Encoded = GetImageBase64Encoded().ElementAt(nextFileIndex);
 
                 byte[] imageBytes = Convert.FromBase64String(imageBase64Encoded);
                 using (MemoryStream stream = new MemoryStream(imageBytes)) {
 
-                    Bitmap defaultImage = new Bitmap(stream);
+                    var defaultImage = new Bitmap(stream);
 
                     int width = defaultImage.Width;
                     int height = defaultImage.Height;
 
                     if(_tableName == GlobalsTable.homeImageTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.homeImageTable, String.Empty, tempDataUser.Username);
-                        displayPic.Show();
+                        new PicForm(
+                            defaultImage, width, height, fileName, GlobalsTable.homeImageTable, string.Empty, tempDataUser.Username).Show();
 
                     } else if (_tableName == GlobalsTable.folderUploadTable) {
-                        PicForm displayPic = new PicForm(defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, String.Empty, tempDataUser.Username);
-                        displayPic.Show();
+                        new PicForm(
+                            defaultImage, width, height, fileName, GlobalsTable.folderUploadTable, string.Empty, tempDataUser.Username).Show();
 
                     } 
 
                     this.Close();
 
                 }
-    
-            } catch (ArgumentOutOfRangeException) {};
+
+            } catch (ArgumentOutOfRangeException) { };
+
         }
 
-        private void guna2Button9_Click_1(object sender, EventArgs e) {
+        private void btnNextImage_Click(object sender, EventArgs e) {
             SwitchImageImplementation(1);
         }
 
-        private void guna2Button12_Click(object sender, EventArgs e) {
+        private void btnPreviousImage_Click(object sender, EventArgs e) {
             SwitchImageImplementation(-1);
         }
+
     }
 }

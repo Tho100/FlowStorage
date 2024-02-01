@@ -22,7 +22,7 @@ namespace FlowstorageDesktop {
         /// <param name="_Directory"></param>
         /// <param name="_UploaderName"></param>
 
-        public WordDocForm(String fileName, String tableName, String directoryName, String uploaderName, bool isFromShared = false, bool isFromSharing = true) {
+        public WordDocForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = true) {
 
             InitializeComponent();
 
@@ -32,26 +32,30 @@ namespace FlowstorageDesktop {
             this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            if (_isFromShared == true) {
-                label4.Text = "Shared To";
+            label4.Text = isFromShared ? "Shared To" : "Uploaded By";
+
+            lblUserComment.Visible = true;
+
+            if (isFromShared) {
+                string comment = GetComment.getCommentSharedToOthers(fileName: fileName);
+                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
                 btnEditComment.Visible = true;
                 btnShareFile.Visible = false;
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToOthers(fileName: fileName) != "" ? GetComment.getCommentSharedToOthers(fileName: fileName) : "(No Comment)";
 
             } else {
-                label4.Text = "Uploaded By";
-                lblUserComment.Visible = true;
-                lblUserComment.Text = GetComment.getCommentSharedToMe(fileName: fileName) != "" ? GetComment.getCommentSharedToMe(fileName: fileName) : "(No Comment)";
 
-            }
+                if (GlobalsTable.publicTables.Contains(tableName) || tableName == GlobalsTable.directoryUploadTable || tableName == GlobalsTable.folderUploadTable) {
+                    lblUserComment.Text = "(No Comment)";
 
-            if (GlobalsTable.publicTablesPs.Contains(tableName)) {
-                label4.Text = "Uploaded By";
-                string comment = GetComment.getCommentPublicStorage(fileName: fileName);
-                lblUserComment.Visible = true;
-                lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+                } else if (GlobalsTable.publicTablesPs.Contains(tableName)) {
+                    string comment = GetComment.getCommentPublicStorage(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
 
+                } else {
+                    string comment = GetComment.getCommentSharedToMe(fileName: fileName);
+                    lblUserComment.Text = string.IsNullOrEmpty(comment) ? "(No Comment)" : comment;
+
+                }
             }
 
             lblUploaderName.Text = uploaderName;
@@ -81,13 +85,9 @@ namespace FlowstorageDesktop {
             }
 
         }
-        private void wordFORM_Load(object sender, EventArgs e) {
 
-        }
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
+        
         /// <summary>
         /// Download file
         /// </summary>
@@ -139,10 +139,6 @@ namespace FlowstorageDesktop {
             this.TopMost = false;
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
         /// <summary>
         /// 
         /// Open share file form
@@ -151,12 +147,8 @@ namespace FlowstorageDesktop {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void guna2Button5_Click(object sender, EventArgs e) {
-            new shareFileFORM(
+            new ShareSelectedFileForm(
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
-
-        }
-
-        private void label6_Click(object sender, EventArgs e) {
 
         }
 
@@ -174,7 +166,7 @@ namespace FlowstorageDesktop {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
             }
 
-            lblUserComment.Text = txtFieldComment.Text != String.Empty ? txtFieldComment.Text : lblUserComment.Text;
+            lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
             guna2Button12.Visible = false;
             txtFieldComment.Visible = false;
@@ -182,28 +174,5 @@ namespace FlowstorageDesktop {
             lblUserComment.Refresh();
         }
 
-        private void guna2TextBox4_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void docDocumentViewer1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Separator1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e) {
-
-        }
-
-        private void docViewer1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void documentViewer1_Click(object sender, EventArgs e) {
-
-        }
     }
 }

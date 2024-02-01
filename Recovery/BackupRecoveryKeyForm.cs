@@ -9,8 +9,6 @@ using System.Windows.Forms;
 namespace FlowstorageDesktop {
     public partial class BackupRecoveryKeyForm : Form {
 
-        readonly private MySqlConnection con = ConnectionModel.con;
-
         readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
         readonly private TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
@@ -18,22 +16,13 @@ namespace FlowstorageDesktop {
             InitializeComponent();
         }
 
-        private void label4_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void RecovFORM_Load(object sender, EventArgs e) {
-
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
         private void SaveRecoveryTokenToLocal(string contentValue) {
 
-            var saveDialog  = new SaveFileDialog();
-            saveDialog.FileName = "FlowstorageRECOVERYKEY.txt";
+            var saveDialog = new SaveFileDialog {
+                FileName = "FlowstorageRECOVERYKEY.txt"
+            };
 
             if (saveDialog.ShowDialog() == DialogResult.OK) {
                 File.WriteAllText(saveDialog.FileName, contentValue);
@@ -79,8 +68,5 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
     }
 }

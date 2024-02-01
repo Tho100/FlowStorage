@@ -67,7 +67,7 @@ namespace FlowstorageDesktop {
                 int indexOfImage = filesName.IndexOf(fileName.ToLower());
 
                 if (Globals.imageTypes.Contains($".{fileExtension}") 
-                && (GlobalsTable.publicTables.Contains(tableName) || (GlobalsTable.publicTablesPs.Contains(tableName) && isFromMyPs == true))) {
+                && (GlobalsTable.publicTables.Contains(tableName) || (GlobalsTable.publicTablesPs.Contains(tableName) && isFromMyPs))) {
 
                     string imageBase64Encoded = null;
 
@@ -118,7 +118,7 @@ namespace FlowstorageDesktop {
 
                 } else if (tableName == GlobalsTable.folderUploadTable) {
 
-                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_TITLE = @foldtitle";
+                    string selectFileDataQuery = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND FOLDER_NAME = @foldtitle";
 
                     using (var command = new MySqlCommand(selectFileDataQuery, con)) {
                         command.Parameters.AddWithValue("@username", tempDataUser.Username);
@@ -173,7 +173,7 @@ namespace FlowstorageDesktop {
                         }
                     }
 
-                } else if (tableName == GlobalsTable.sharingTable && isFromShared == true) {
+                } else if (tableName == GlobalsTable.sharingTable && isFromShared) {
 
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_FROM = @username AND CUST_FILE_PATH = @filename";
 
@@ -200,8 +200,8 @@ namespace FlowstorageDesktop {
                             }
                         }
                     }
-
-                } else if (tableName == GlobalsTable.sharingTable && isFromShared == false) {
+                    
+                } else if (tableName == GlobalsTable.sharingTable && !isFromShared) {
 
                     const string selectFileDataQuery = "SELECT CUST_FILE FROM cust_sharing WHERE CUST_TO = @username AND CUST_FILE_PATH = @filename";
 
