@@ -3553,7 +3553,7 @@ namespace FlowstorageDesktop {
             }
         }
 
-        private void guna2Button28_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
+        private void btnClosePnlFileOptions_Click(object sender, EventArgs e) => pnlFileOptions.Visible = false;
 
         /// <summary>
         /// 

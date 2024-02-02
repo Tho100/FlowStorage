@@ -93,6 +93,9 @@
             this.lblFileNameOnPanel = new System.Windows.Forms.Label();
             this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
             this.pnlPublicStorage = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
+            this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             this.pnlPsSubDetails = new Guna.UI2.WinForms.Guna2Panel();
             this.lblUsagePercentagePs = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -138,6 +141,7 @@
             this.pnlFilterType.SuspendLayout();
             this.pnlFileOptions.SuspendLayout();
             this.pnlPublicStorage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.pnlPsSubDetails.SuspendLayout();
             this.pnlExceedStorage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgDiscover)).BeginInit();
@@ -178,9 +182,9 @@
             // 
             this.guna2Separator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.guna2Separator1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.guna2Separator1.Location = new System.Drawing.Point(17, 82);
+            this.guna2Separator1.Location = new System.Drawing.Point(15, 82);
             this.guna2Separator1.Name = "guna2Separator1";
-            this.guna2Separator1.Size = new System.Drawing.Size(175, 10);
+            this.guna2Separator1.Size = new System.Drawing.Size(177, 10);
             this.guna2Separator1.TabIndex = 34;
             // 
             // lblEssentials
@@ -247,9 +251,9 @@
             this.btnFileSharing.ImageSize = new System.Drawing.Size(30, 30);
             this.btnFileSharing.Location = new System.Drawing.Point(6, 333);
             this.btnFileSharing.Name = "btnFileSharing";
-            this.btnFileSharing.Size = new System.Drawing.Size(148, 33);
+            this.btnFileSharing.Size = new System.Drawing.Size(133, 33);
             this.btnFileSharing.TabIndex = 26;
-            this.btnFileSharing.Text = "File Sharing";
+            this.btnFileSharing.Text = "Share File";
             this.btnFileSharing.TextOffset = new System.Drawing.Point(1, 0);
             this.btnFileSharing.Click += new System.EventHandler(this.btnOpenMainShare_Click);
             // 
@@ -568,11 +572,11 @@
             // 
             this.lblCurrentPageText.AutoEllipsis = true;
             this.lblCurrentPageText.BackColor = System.Drawing.Color.Transparent;
-            this.lblCurrentPageText.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentPageText.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentPageText.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblCurrentPageText.Location = new System.Drawing.Point(293, 72);
+            this.lblCurrentPageText.Location = new System.Drawing.Point(293, 75);
             this.lblCurrentPageText.Name = "lblCurrentPageText";
-            this.lblCurrentPageText.Size = new System.Drawing.Size(439, 31);
+            this.lblCurrentPageText.Size = new System.Drawing.Size(439, 27);
             this.lblCurrentPageText.TabIndex = 21;
             this.lblCurrentPageText.Text = "Public Storage";
             // 
@@ -1164,7 +1168,7 @@
             this.btnClosePnlFileOptions.Name = "btnClosePnlFileOptions";
             this.btnClosePnlFileOptions.Size = new System.Drawing.Size(35, 32);
             this.btnClosePnlFileOptions.TabIndex = 49;
-            this.btnClosePnlFileOptions.Click += new System.EventHandler(this.guna2Button28_Click);
+            this.btnClosePnlFileOptions.Click += new System.EventHandler(this.btnClosePnlFileOptions_Click);
             // 
             // lblFileNameOnPanel
             // 
@@ -1183,6 +1187,9 @@
             this.pnlPublicStorage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlPublicStorage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.pnlPublicStorage.Controls.Add(this.pictureBox2);
+            this.pnlPublicStorage.Controls.Add(this.guna2Separator3);
+            this.pnlPublicStorage.Controls.Add(this.guna2Separator2);
             this.pnlPublicStorage.Controls.Add(this.pnlPsSubDetails);
             this.pnlPublicStorage.Controls.Add(this.btnMyPsFiles);
             this.pnlPublicStorage.Controls.Add(this.lblOptions);
@@ -1194,6 +1201,34 @@
             this.pnlPublicStorage.Size = new System.Drawing.Size(207, 668);
             this.pnlPublicStorage.TabIndex = 52;
             this.pnlPublicStorage.Visible = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(12, 17);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(182, 57);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 37;
+            this.pictureBox2.TabStop = false;
+            // 
+            // guna2Separator3
+            // 
+            this.guna2Separator3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.guna2Separator3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.guna2Separator3.Location = new System.Drawing.Point(16, 81);
+            this.guna2Separator3.Name = "guna2Separator3";
+            this.guna2Separator3.Size = new System.Drawing.Size(177, 10);
+            this.guna2Separator3.TabIndex = 38;
+            // 
+            // guna2Separator2
+            // 
+            this.guna2Separator2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.guna2Separator2.Location = new System.Drawing.Point(22, 181);
+            this.guna2Separator2.Name = "guna2Separator2";
+            this.guna2Separator2.Size = new System.Drawing.Size(168, 10);
+            this.guna2Separator2.TabIndex = 41;
             // 
             // pnlPsSubDetails
             // 
@@ -1325,23 +1360,21 @@
             // 
             this.btnMyPsFiles.Animated = true;
             this.btnMyPsFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnMyPsFiles.BorderRadius = 10;
-            this.btnMyPsFiles.DefaultAutoSize = true;
+            this.btnMyPsFiles.BorderRadius = 16;
             this.btnMyPsFiles.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnMyPsFiles.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnMyPsFiles.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnMyPsFiles.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnMyPsFiles.FillColor = System.Drawing.Color.Empty;
+            this.btnMyPsFiles.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.btnMyPsFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMyPsFiles.ForeColor = System.Drawing.Color.LightGray;
-            this.btnMyPsFiles.Image = global::FlowstorageDesktop.Properties.Resources.icons8_documents_folder_48__2_;
             this.btnMyPsFiles.ImageSize = new System.Drawing.Size(24, 24);
-            this.btnMyPsFiles.Location = new System.Drawing.Point(9, 134);
+            this.btnMyPsFiles.Location = new System.Drawing.Point(15, 202);
             this.btnMyPsFiles.Name = "btnMyPsFiles";
-            this.btnMyPsFiles.Size = new System.Drawing.Size(113, 33);
+            this.btnMyPsFiles.Size = new System.Drawing.Size(177, 49);
             this.btnMyPsFiles.TabIndex = 40;
-            this.btnMyPsFiles.Text = "My files";
-            this.btnMyPsFiles.TextOffset = new System.Drawing.Point(4, 0);
+            this.btnMyPsFiles.Text = "My Files";
+            this.btnMyPsFiles.TextOffset = new System.Drawing.Point(1, 0);
             this.btnMyPsFiles.Click += new System.EventHandler(this.btnMyPsFiles_Click);
             // 
             // lblOptions
@@ -1350,7 +1383,7 @@
             this.lblOptions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.lblOptions.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOptions.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblOptions.Location = new System.Drawing.Point(14, 50);
+            this.lblOptions.Location = new System.Drawing.Point(12, 103);
             this.lblOptions.Name = "lblOptions";
             this.lblOptions.Size = new System.Drawing.Size(62, 20);
             this.lblOptions.TabIndex = 38;
@@ -1371,11 +1404,11 @@
             this.btnUploadPs.ForeColor = System.Drawing.Color.LightGray;
             this.btnUploadPs.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadPs.Image")));
             this.btnUploadPs.ImageSize = new System.Drawing.Size(26, 26);
-            this.btnUploadPs.Location = new System.Drawing.Point(8, 86);
+            this.btnUploadPs.Location = new System.Drawing.Point(6, 137);
             this.btnUploadPs.Name = "btnUploadPs";
-            this.btnUploadPs.Size = new System.Drawing.Size(139, 33);
+            this.btnUploadPs.Size = new System.Drawing.Size(141, 33);
             this.btnUploadPs.TabIndex = 37;
-            this.btnUploadPs.Text = "Upload file";
+            this.btnUploadPs.Text = "Upload File";
             this.btnUploadPs.TextOffset = new System.Drawing.Point(4, 0);
             this.btnUploadPs.Click += new System.EventHandler(this.btnUploadPs_Click_1);
             // 
@@ -1435,7 +1468,6 @@
             this.btnCloseHomePage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
             this.btnCloseHomePage.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnCloseHomePage.ForeColor = System.Drawing.Color.White;
-            this.btnCloseHomePage.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseHomePage.Image")));
             this.btnCloseHomePage.Location = new System.Drawing.Point(457, 12);
             this.btnCloseHomePage.Name = "btnCloseHomePage";
             this.btnCloseHomePage.Size = new System.Drawing.Size(38, 31);
@@ -1479,11 +1511,11 @@
             // 
             this.lblDiscover.AutoEllipsis = true;
             this.lblDiscover.BackColor = System.Drawing.Color.Transparent;
-            this.lblDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDiscover.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblDiscover.Location = new System.Drawing.Point(480, 72);
+            this.lblDiscover.Location = new System.Drawing.Point(468, 75);
             this.lblDiscover.Name = "lblDiscover";
-            this.lblDiscover.Size = new System.Drawing.Size(110, 31);
+            this.lblDiscover.Size = new System.Drawing.Size(110, 26);
             this.lblDiscover.TabIndex = 55;
             this.lblDiscover.Text = "Discover";
             this.lblDiscover.Visible = false;
@@ -1494,7 +1526,7 @@
             this.dotDiscover.BackColor = System.Drawing.Color.Transparent;
             this.dotDiscover.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dotDiscover.ForeColor = System.Drawing.Color.Gainsboro;
-            this.dotDiscover.Location = new System.Drawing.Point(438, 72);
+            this.dotDiscover.Location = new System.Drawing.Point(426, 72);
             this.dotDiscover.Name = "dotDiscover";
             this.dotDiscover.Size = new System.Drawing.Size(19, 21);
             this.dotDiscover.TabIndex = 57;
@@ -1526,9 +1558,9 @@
             // 
             this.imgDiscover.BackColor = System.Drawing.Color.Transparent;
             this.imgDiscover.Image = global::FlowstorageDesktop.Properties.Resources.icons8_compass_48;
-            this.imgDiscover.Location = new System.Drawing.Point(457, 78);
+            this.imgDiscover.Location = new System.Drawing.Point(447, 79);
             this.imgDiscover.Name = "imgDiscover";
-            this.imgDiscover.Size = new System.Drawing.Size(22, 22);
+            this.imgDiscover.Size = new System.Drawing.Size(20, 20);
             this.imgDiscover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgDiscover.TabIndex = 56;
             this.imgDiscover.TabStop = false;
@@ -1822,7 +1854,6 @@
             this.Text = "Flowstorage";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.HomePage_Load);
-
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -1842,6 +1873,7 @@
             this.pnlFileOptions.PerformLayout();
             this.pnlPublicStorage.ResumeLayout(false);
             this.pnlPublicStorage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.pnlPsSubDetails.ResumeLayout(false);
             this.pnlPsSubDetails.PerformLayout();
             this.pnlExceedStorage.ResumeLayout(false);
@@ -1950,6 +1982,9 @@
         public Guna.UI2.WinForms.Guna2Button btnSharedToMe;
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label lblFilterType;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
     }
 }
 
