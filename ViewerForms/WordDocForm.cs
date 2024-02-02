@@ -86,14 +86,14 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
+        private void btnClose_Click(object sender, EventArgs e) => this.Close();
         
         /// <summary>
         /// Download file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void guna2Button4_Click(object sender, EventArgs e) {
+        private void btnDownload_Click(object sender, EventArgs e) {
             this.TopMost = false;
             SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
             this.TopMost = true;

@@ -1308,7 +1308,6 @@ C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.LimitedDirAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.ValidateRecoveryEmail.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.exeFORM.resources
-C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.RecoveryFailedAlert.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.HomePage.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.DirectoryForm.resources
 C:\Users\USER\source\repos\FlowSERVER1\FlowSERVER1\obj\Debug\FlowstorageDesktop.CreateDirectoryForm.resources
