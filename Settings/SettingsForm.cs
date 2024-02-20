@@ -56,6 +56,15 @@ namespace FlowstorageDesktop {
             InitializeSettingsAsync();
         }
 
+        private void btnCloseForm_Click(object sender, EventArgs e) => this.Close();
+        private void btnOpenRemoveAccount_Click(object sender, EventArgs e) => new RemoveAccountForm().Show();
+        private void btnOpenAddSharingAuth_Click(object sender, EventArgs e) => new AddAuthSharing().Show();
+        private void btnOpenUpdateAuth_Click(object sender, EventArgs e) => new ChangeAuthForm().Show();
+        private void btnOpenBackupRecovery_Click(object sender, EventArgs e) => new BackupRecoveryKeyForm().Show();
+        private void btnOpenCancelPlan_Click(object sender, EventArgs e) => new CancelPlanForm().Show();
+        private void copyUsername_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Username);
+        private void copyEmail_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Email);
+
         private async void InitializeSettingsAsync() {
 
             try {
@@ -284,22 +293,6 @@ namespace FlowstorageDesktop {
         }
       
         #endregion END - User statistics section
-
-
-        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
-
-        private void guna2Button3_Click(object sender, EventArgs e) => this.Close();
-
-        private void guna2Button25_Click_1(object sender, EventArgs e) => this.Close();
-
-        private void guna2Button1_Click(object sender, EventArgs e) => new RemoveAccountForm().Show();
-
-        private void guna2Button23_Click(object sender, EventArgs e) => new AddAuthSharing().Show();
-        private void guna2Button12_Click(object sender, EventArgs e) => new ChangeAuthForm().Show();
-        private void guna2Button1_Click_2(object sender, EventArgs e) => new BackupRecoveryKeyForm().Show();
-        private void label5_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Username);
-        private void label76_Click(object sender, EventArgs e) => Clipboard.SetText(tempDataUser.Email);
-        private void guna2Button2_Click_2(object sender, EventArgs e) => new CancelPlanForm().Show();
 
         public void InitiailizeUIOnAccountType(string selectedAcc) {
 

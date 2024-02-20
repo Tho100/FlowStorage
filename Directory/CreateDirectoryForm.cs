@@ -229,7 +229,7 @@ namespace FlowstorageDesktop {
                 if (currentTotalFiles != maxFilesCount && countTotalDir != maxDirCount) {
 
                     if (HomePage.instance.lblCurrentPageText.Text != "Home") {
-                        MessageBox.Show("You can only create a directory on Home folder.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("You can only create directory at Home.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     } else {
 

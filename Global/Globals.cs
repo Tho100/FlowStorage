@@ -23,13 +23,7 @@ namespace FlowstorageDesktop {
         static public readonly Image MSIImage = Properties.Resources.icons8_software_installer_32;
         static public readonly Image EXEImage = Properties.Resources.icons8_exe_48;
 
-        static private readonly Image TextImage = Properties.Resources.icons8_txt_48;
-        static private readonly Image CSVImage = Properties.Resources.icons8_csv_48;
-        static private readonly Image CssImage = Properties.Resources.icons8_css_filetype_48__1_;
-        static private readonly Image JsImage = Properties.Resources.icons8_javascript_50;
-        static private readonly Image HTMLImage = Properties.Resources.icons8_html_filetype_48__1_;
-        static private readonly Image SQLImage = Properties.Resources.icons8_database_50__1_;
-        static private readonly Image PYImage = Properties.Resources.icons8_python_file_48;
+        static public readonly Image TextImage = Properties.Resources.icons8_txt_48;
 
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
         {"png","jpg","jpeg"};
@@ -83,32 +77,6 @@ namespace FlowstorageDesktop {
             { "Max", 5 },
             { "Express", 10 },
             { "Supreme", 20 },
-        };
-
-        static public readonly Dictionary<string, Image> textTypeToImage = new Dictionary<string, Image> 
-        {
-            { "txt", TextImage},
-            { "md", TextImage},
-            { "csv", CSVImage},
-            { "js", JsImage},
-            { "css", CssImage},
-            { "html", HTMLImage},
-            { "sql", SQLImage},
-            { "py", PYImage},
-            { "xml", TextImage},
-        };
-
-        static public readonly Dictionary<string, Image> textTypeToImageFolder = new Dictionary<string, Image>
-        {
-            { "txt", TextImage},
-            { "md", TextImage},
-            { "csv", CSVImage},
-            { "js", JsImage},
-            { "css", CssImage},
-            { "html", HTMLImage},
-            { "sql", SQLImage},
-            { "py", PYImage},
-            { "xml", TextImage},
         };
 
         static public readonly string filterFileType = "All Files|*.*|Image|*.jpg;*.jpeg;*.png;|Video|*.mp4;*.avi;.*mov;.*wmv;.*mkv|Text|*.txt;*.md|Excel|*.xlsx;*.xls|Powerpoint|*.pptx;*.ppt|Executable|*.exe|Audio Files|*.mp3;*.wav|Programming/Scripting|*.py;*.sql;*.js;|Markup|*.html;*.css;*.xml|Document|*.pdf;*.csv;*.docx";

@@ -72,7 +72,6 @@ namespace FlowstorageDesktop {
 
                         }
 
-
                         var base64Encoded = reader.GetString(0);
                         var decryptValues = UniqueFile.IgnoreEncryption(fileType) 
                                           ? base64Encoded : EncryptionModel.Decrypt(base64Encoded);
@@ -105,7 +104,6 @@ namespace FlowstorageDesktop {
                             stopFileRetrievalLoad = false;
 
                         }
-
 
                         var base64Encoded = reader.GetString(0);
                         var decryptValues = UniqueFile.IgnoreEncryption(fileType) 
