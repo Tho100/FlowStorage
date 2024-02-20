@@ -101,18 +101,20 @@ namespace FlowstorageDesktop.AuthenticationQuery {
         /// </summary>
         private string RandomString(int size, bool lowerCase = true) {
 
-            Random _setRandom = new Random();
+            Random random = new Random();
 
             var builder = new StringBuilder(size);
             char offset = lowerCase ? 'a' : 'A';
+
             const int lettersOffset = 26;
 
-            for (var i = 0; i < size; i++) {
-                var @char = (char)_setRandom.Next(offset, offset + lettersOffset);
+            for (int i = 0; i < size; i++) {
+                var @char = (char) random.Next(offset, offset + lettersOffset);
                 builder.Append(@char);
             }
 
             return lowerCase ? builder.ToString().ToLower() : builder.ToString();
+
         }
 
     }

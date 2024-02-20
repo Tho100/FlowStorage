@@ -225,8 +225,7 @@ namespace FlowstorageDesktop {
 
                 if (Globals.textTypes.Contains(typeValues[i])) {
 
-                    string textTypes = fileName.Split('.').Last();
-                    imageValues.Add(Globals.textTypeToImage[textTypes]);
+                    imageValues.Add(Globals.TextImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
                         TextForm displayPic = new TextForm(GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, tempDataUser.Username);
@@ -358,7 +357,7 @@ namespace FlowstorageDesktop {
 
             string fileName = Path.GetFileName(fileFullPath);
 
-            var panelTxt = new Guna2Panel() {
+            var panel = new Guna2Panel() {
                 Name = panName + itemCurr,
                 Width = 200,
                 Height = 222,
@@ -371,84 +370,73 @@ namespace FlowstorageDesktop {
 
             Globals.PANEL_GAP_TOP += Globals.PANEL_GAP_HEIGHT;
 
-            var mainPanelTxt = panelTxt;
+            var panelImage = new Guna2PictureBox();
+            panel.Controls.Add(panelImage);
+            panelImage.Name = "TxtBox" + itemCurr;
+            panelImage.BorderRadius = 8;
+            panelImage.Width = 190;
+            panelImage.Height = 145;
+            panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
 
-            var textboxPic = new Guna2PictureBox();
-            mainPanelTxt.Controls.Add(textboxPic);
-            textboxPic.Name = "TxtBox" + itemCurr;
-            textboxPic.BorderRadius = 8;
-            textboxPic.Width = 190;
-            textboxPic.Height = 145;
-            textboxPic.SizeMode = PictureBoxSizeMode.CenterImage;
-            textboxPic.Enabled = true;
-            textboxPic.Visible = true;
+            panelImage.Anchor = AnchorStyles.None;
 
-            textboxPic.Anchor = AnchorStyles.None;
+            int picMain_Q_x = (panel.Width - panelImage.Width) / 2;
 
-            int picMain_Q_x = (mainPanelTxt.Width - textboxPic.Width) / 2;
+            panelImage.Location = new Point(picMain_Q_x, 10);
 
-            textboxPic.Location = new Point(picMain_Q_x, 10);
-
-            Label dateLabTxt = new Label();
-            mainPanelTxt.Controls.Add(dateLabTxt);
-            dateLabTxt.Name = "LabTxtUp" + itemCurr;
-            dateLabTxt.Font = GlobalStyle.DateLabelFont;
-            dateLabTxt.ForeColor = GlobalStyle.DarkGrayColor;
-            dateLabTxt.Visible = true;
-            dateLabTxt.Enabled = true;
-            dateLabTxt.Location = GlobalStyle.DateLabelLoc;
-            dateLabTxt.Text = _todayDate;
+            Label dateLabel = new Label();
+            panel.Controls.Add(dateLabel);
+            dateLabel.Name = "LabTxtUp" + itemCurr;
+            dateLabel.Font = GlobalStyle.DateLabelFont;
+            dateLabel.ForeColor = GlobalStyle.DarkGrayColor;
+            dateLabel.Location = GlobalStyle.DateLabelLoc;
+            dateLabel.Text = _todayDate;
 
             Label titleLab = new Label();
-            mainPanelTxt.Controls.Add(titleLab);
+            panel.Controls.Add(titleLab);
             titleLab.Name = "LabVidUp" + itemCurr;
             titleLab.Font = GlobalStyle.TitleLabelFont;
             titleLab.ForeColor = GlobalStyle.GainsboroColor;
-            titleLab.Visible = true;
-            titleLab.Enabled = true;
             titleLab.Location = GlobalStyle.TitleLabelLoc;
             titleLab.Width = 160;
             titleLab.Height = 20;
             titleLab.AutoEllipsis = true;
             titleLab.Text = fileName;
 
-            Guna2Button remButTxt = new Guna2Button();
-            mainPanelTxt.Controls.Add(remButTxt);
-            remButTxt.Name = "RemTxtBut" + itemCurr;
-            remButTxt.Width = 29;
-            remButTxt.Height = 26;
-            remButTxt.ImageOffset = new Point(2, 0);
-            remButTxt.FillColor = GlobalStyle.TransparentColor;
-            remButTxt.BorderRadius = 6;
-            remButTxt.BorderThickness = 1;
-            remButTxt.BorderColor = GlobalStyle.TransparentColor;
-            remButTxt.Image = GlobalStyle.GarbageImage;
-            remButTxt.Visible = true;
-            remButTxt.Location = GlobalStyle.GarbageButtonLoc;
-            remButTxt.BringToFront();
+            Guna2Button moreOptionsButton = new Guna2Button();
+            panel.Controls.Add(moreOptionsButton);
+            moreOptionsButton.Name = "RemTxtBut" + itemCurr;
+            moreOptionsButton.Width = 29;
+            moreOptionsButton.Height = 26;
+            moreOptionsButton.ImageOffset = new Point(2, 0);
+            moreOptionsButton.FillColor = GlobalStyle.TransparentColor;
+            moreOptionsButton.BorderRadius = 6;
+            moreOptionsButton.BorderThickness = 1;
+            moreOptionsButton.BorderColor = GlobalStyle.TransparentColor;
+            moreOptionsButton.Image = GlobalStyle.GarbageImage;
+            moreOptionsButton.Location = GlobalStyle.GarbageButtonLoc;
 
-            remButTxt.Click += (sender_tx, e_tx) => {
-
+            moreOptionsButton.Click += (sender_tx, e_tx) => {
                 pnlFileOptions.Visible = true;
                 lblFileNameOnPanel.Text = titleLab.Text;
-                lblFilePanelName.Text = panelTxt.Name;
+                lblFilePanelName.Text = panel.Name;
             };
 
-            textboxPic.MouseHover += (_senderM, _ev) => {
-                panelTxt.ShadowDecoration.Enabled = true;
-                panelTxt.ShadowDecoration.BorderRadius = 8;
+            panelImage.MouseHover += (_senderM, _ev) => {
+                panel.ShadowDecoration.Enabled = true;
+                panel.ShadowDecoration.BorderRadius = 8;
             };
 
-            textboxPic.MouseLeave += (_senderQ, _evQ) => {
-                panelTxt.ShadowDecoration.Enabled = false;
+            panelImage.MouseLeave += (_senderQ, _evQ) => {
+                panel.ShadowDecoration.Enabled = false;
             };
 
             if (tableName == GlobalsTable.homeImageTable) {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = new Bitmap(fileFullPath);
-                textboxPic.Click += (sender_f, e_f) => {
+                panelImage.Image = new Bitmap(fileFullPath);
+                panelImage.Click += (sender_f, e_f) => {
 
                     var getImgName = (Guna2PictureBox)sender_f;
                     var getWidth = getImgName.Image.Width;
@@ -465,10 +453,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                string textType = titleLab.Text.Split('.').Last();
-                textboxPic.Image = Globals.textTypeToImage[textType];
-
-                textboxPic.Click += (sender_t, e_t) => {
+                panelImage.Image = Globals.TextImage;
+                panelImage.Click += (sender_t, e_t) => {
                     new TextForm(
                         GlobalsTable.directoryUploadTable, fileName, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -478,8 +464,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.EXEImage;
-                textboxPic.Click += (sender_ex, e_ex) => {
+                panelImage.Image = Globals.EXEImage;
+                panelImage.Click += (sender_ex, e_ex) => {
                     new ExeForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -491,9 +477,9 @@ namespace FlowstorageDesktop {
 
                 ShellFile shellFile = ShellFile.FromFilePath(fileFullPath);
                 Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
-                textboxPic.Image = toBitMap;
+                panelImage.Image = toBitMap;
 
-                textboxPic.Click += (sender_ex, e_ex) => {
+                panelImage.Click += (sender_ex, e_ex) => {
                     var getImgName = (Guna2PictureBox)sender_ex;
                     var getWidth = getImgName.Image.Width;
                     var getHeight = getImgName.Image.Height;
@@ -509,8 +495,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.AudioImage;
-                textboxPic.Click += (sender_ex, e_ex) => {
+                panelImage.Image = Globals.AudioImage;
+                panelImage.Click += (sender_ex, e_ex) => {
                     new AudioForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -520,8 +506,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.EXCELImage;
-                textboxPic.Click += (sender_ex, e_ex) => {
+                panelImage.Image = Globals.EXCELImage;
+                panelImage.Click += (sender_ex, e_ex) => {
                     new ExcelForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -531,8 +517,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.APKImage;
-                textboxPic.Click += (sender_gi, e_gi) => {
+                panelImage.Image = Globals.APKImage;
+                panelImage.Click += (sender_gi, e_gi) => {
                     new ApkForm(
                         fileName, tempDataUser.Username, GlobalsTable.directoryUploadTable, lblDirectoryName.Text).ShowDialog();
                 };
@@ -541,8 +527,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.PDFImage;
-                textboxPic.Click += (sender_pd, e_pd) => {
+                panelImage.Image = Globals.PDFImage;
+                panelImage.Click += (sender_pd, e_pd) => {
                     new PdfForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -551,8 +537,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.PTXImage;
-                textboxPic.Click += (sender_ptx, e_ptx) => {
+                panelImage.Image = Globals.PTXImage;
+                panelImage.Click += (sender_ptx, e_ptx) => {
                     new PtxForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -561,8 +547,8 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.MSIImage;
-                textboxPic.Click += (sender_ptx, e_ptx) => {
+                panelImage.Image = Globals.MSIImage;
+                panelImage.Click += (sender_ptx, e_ptx) => {
                     new MsiForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
@@ -572,14 +558,14 @@ namespace FlowstorageDesktop {
 
                 await InsertFileData(fileName, keyVal);
 
-                textboxPic.Image = Globals.DOCImage;
-                textboxPic.Click += (sender_ptx, e_ptx) => {
+                panelImage.Image = Globals.DOCImage;
+                panelImage.Click += (sender_ptx, e_ptx) => {
                     new WordDocForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
 
-            flwLayoutDirectory.Controls.Add(panelTxt);
+            flwLayoutDirectory.Controls.Add(panel);
 
             ClosePopupForm.CloseUploadingPopup();
 

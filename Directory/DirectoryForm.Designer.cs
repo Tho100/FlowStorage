@@ -154,8 +154,6 @@
             this.btnCloseDirectory.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnCloseDirectory.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnCloseDirectory.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.btnCloseDirectory.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnCloseDirectory.ForeColor = System.Drawing.Color.White;
             this.btnCloseDirectory.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseDirectory.Image")));
             this.btnCloseDirectory.Location = new System.Drawing.Point(1076, 12);
             this.btnCloseDirectory.Name = "btnCloseDirectory";

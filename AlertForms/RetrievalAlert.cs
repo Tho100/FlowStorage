@@ -20,16 +20,8 @@ namespace FlowstorageDesktop {
 
             if(isFromLogin) {
                 btnCancelRetrieval.Visible = false;
-
-            } else {
-                btnCancelRetrieval.Visible = true;
-
             }
             
-        }
-
-        private void RetrievalAlert_Load(object sender, EventArgs e) {
-
         }
 
         private void btnCancelRetrieval_Click(object sender, EventArgs e) {

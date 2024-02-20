@@ -41,7 +41,7 @@
             this.tabControlSettings = new Guna.UI2.WinForms.Guna2TabControl();
             this.tabAccountPage = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnBackupRecoveryKey = new Guna.UI2.WinForms.Guna2Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -193,7 +193,7 @@
             // 
             this.tabAccountPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.tabAccountPage.Controls.Add(this.label19);
-            this.tabAccountPage.Controls.Add(this.guna2Button1);
+            this.tabAccountPage.Controls.Add(this.btnBackupRecoveryKey);
             this.tabAccountPage.Controls.Add(this.label6);
             this.tabAccountPage.Controls.Add(this.label16);
             this.tabAccountPage.Controls.Add(this.label5);
@@ -234,30 +234,30 @@
             this.label19.TabIndex = 50;
             this.label19.Text = "Others";
             // 
-            // guna2Button1
+            // btnBackupRecoveryKey
             // 
-            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.BorderColor = System.Drawing.Color.Empty;
-            this.guna2Button1.BorderRadius = 5;
-            this.guna2Button1.BorderThickness = 1;
-            this.guna2Button1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.Empty;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button1.ForeColor = System.Drawing.Color.Firebrick;
-            this.guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button1.ImageOffset = new System.Drawing.Point(-8, 1);
-            this.guna2Button1.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button1.Location = new System.Drawing.Point(841, 346);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(123, 30);
-            this.guna2Button1.TabIndex = 44;
-            this.guna2Button1.Text = "Backup";
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click_2);
+            this.btnBackupRecoveryKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBackupRecoveryKey.BackColor = System.Drawing.Color.Transparent;
+            this.btnBackupRecoveryKey.BorderColor = System.Drawing.Color.Empty;
+            this.btnBackupRecoveryKey.BorderRadius = 5;
+            this.btnBackupRecoveryKey.BorderThickness = 1;
+            this.btnBackupRecoveryKey.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnBackupRecoveryKey.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnBackupRecoveryKey.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnBackupRecoveryKey.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnBackupRecoveryKey.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnBackupRecoveryKey.FillColor = System.Drawing.Color.Empty;
+            this.btnBackupRecoveryKey.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackupRecoveryKey.ForeColor = System.Drawing.Color.Firebrick;
+            this.btnBackupRecoveryKey.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnBackupRecoveryKey.ImageOffset = new System.Drawing.Point(-8, 1);
+            this.btnBackupRecoveryKey.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnBackupRecoveryKey.Location = new System.Drawing.Point(841, 346);
+            this.btnBackupRecoveryKey.Name = "btnBackupRecoveryKey";
+            this.btnBackupRecoveryKey.Size = new System.Drawing.Size(123, 30);
+            this.btnBackupRecoveryKey.TabIndex = 44;
+            this.btnBackupRecoveryKey.Text = "Backup";
+            this.btnBackupRecoveryKey.Click += new System.EventHandler(this.btnOpenBackupRecovery_Click);
             // 
             // label6
             // 
@@ -331,7 +331,7 @@
             this.btnUpdatePassword.Size = new System.Drawing.Size(123, 30);
             this.btnUpdatePassword.TabIndex = 25;
             this.btnUpdatePassword.Text = "Update";
-            this.btnUpdatePassword.Click += new System.EventHandler(this.guna2Button12_Click);
+            this.btnUpdatePassword.Click += new System.EventHandler(this.btnOpenUpdateAuth_Click);
             // 
             // lblUserEmail
             // 
@@ -345,7 +345,7 @@
             this.lblUserEmail.Size = new System.Drawing.Size(404, 21);
             this.lblUserEmail.TabIndex = 41;
             this.lblUserEmail.Text = "domain@gmail.com";
-            this.lblUserEmail.Click += new System.EventHandler(this.label76_Click);
+            this.lblUserEmail.Click += new System.EventHandler(this.copyEmail_Click);
             // 
             // label75
             // 
@@ -446,7 +446,7 @@
             this.lblUserUsername.Size = new System.Drawing.Size(200, 21);
             this.lblUserUsername.TabIndex = 27;
             this.lblUserUsername.Text = "danish";
-            this.lblUserUsername.Click += new System.EventHandler(this.label5_Click);
+            this.lblUserUsername.Click += new System.EventHandler(this.copyUsername_Click);
             // 
             // label4
             // 
@@ -506,7 +506,7 @@
             this.btnDltAccount.Size = new System.Drawing.Size(145, 33);
             this.btnDltAccount.TabIndex = 0;
             this.btnDltAccount.Text = "Delete Account";
-            this.btnDltAccount.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnDltAccount.Click += new System.EventHandler(this.btnOpenRemoveAccount_Click);
             // 
             // lblSettings
             // 
@@ -530,14 +530,12 @@
             this.btnCloseTab1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnCloseTab1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnCloseTab1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.btnCloseTab1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCloseTab1.ForeColor = System.Drawing.Color.GhostWhite;
             this.btnCloseTab1.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab1.Image")));
             this.btnCloseTab1.Location = new System.Drawing.Point(10, 15);
             this.btnCloseTab1.Name = "btnCloseTab1";
             this.btnCloseTab1.Size = new System.Drawing.Size(36, 30);
             this.btnCloseTab1.TabIndex = 30;
-            this.btnCloseTab1.Click += new System.EventHandler(this.guna2Button3_Click);
+            this.btnCloseTab1.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
             // pnlCancelPlan
             // 
@@ -573,7 +571,7 @@
             this.btnCancelPanel.Size = new System.Drawing.Size(123, 30);
             this.btnCancelPanel.TabIndex = 45;
             this.btnCancelPanel.Text = "Cancel Plan";
-            this.btnCancelPanel.Click += new System.EventHandler(this.guna2Button2_Click_2);
+            this.btnCancelPanel.Click += new System.EventHandler(this.btnOpenCancelPlan_Click);
             // 
             // label18
             // 
@@ -953,14 +951,12 @@
             this.btnCloseTab2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnCloseTab2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnCloseTab2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.btnCloseTab2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCloseTab2.ForeColor = System.Drawing.Color.GhostWhite;
             this.btnCloseTab2.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab2.Image")));
             this.btnCloseTab2.Location = new System.Drawing.Point(10, 15);
             this.btnCloseTab2.Name = "btnCloseTab2";
             this.btnCloseTab2.Size = new System.Drawing.Size(36, 30);
             this.btnCloseTab2.TabIndex = 1;
-            this.btnCloseTab2.Click += new System.EventHandler(this.guna2Button2_Click);
+            this.btnCloseTab2.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
             // tabSharingPage
             // 
@@ -1120,7 +1116,7 @@
             this.btnAddSharingAuth.Size = new System.Drawing.Size(142, 30);
             this.btnAddSharingAuth.TabIndex = 25;
             this.btnAddSharingAuth.Text = "Set Password";
-            this.btnAddSharingAuth.Click += new System.EventHandler(this.guna2Button23_Click);
+            this.btnAddSharingAuth.Click += new System.EventHandler(this.btnOpenAddSharingAuth_Click);
             // 
             // lblDescSetAuthSharing
             // 
@@ -1169,14 +1165,12 @@
             this.btnCloseTab3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnCloseTab3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnCloseTab3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.btnCloseTab3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCloseTab3.ForeColor = System.Drawing.Color.GhostWhite;
             this.btnCloseTab3.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTab3.Image")));
             this.btnCloseTab3.Location = new System.Drawing.Point(10, 15);
             this.btnCloseTab3.Name = "btnCloseTab3";
             this.btnCloseTab3.Size = new System.Drawing.Size(36, 30);
             this.btnCloseTab3.TabIndex = 32;
-            this.btnCloseTab3.Click += new System.EventHandler(this.guna2Button25_Click_1);
+            this.btnCloseTab3.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
             // tabUpgradePage
             // 
@@ -1843,7 +1837,7 @@
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label label5;
-        public Guna.UI2.WinForms.Guna2Button guna2Button1;
+        public Guna.UI2.WinForms.Guna2Button btnBackupRecoveryKey;
         public Guna.UI2.WinForms.Guna2Button btnCancelPanel;
         public System.Windows.Forms.Label label6;
         public System.Windows.Forms.Label label12;
