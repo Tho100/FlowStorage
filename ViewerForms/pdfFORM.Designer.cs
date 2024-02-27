@@ -187,7 +187,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.icons8_pdf_60__1_;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.pdf_icon;
             this.pictureBox1.Location = new System.Drawing.Point(365, 14);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(38, 38);

@@ -462,9 +462,7 @@
             this.btnReplayAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnReplayAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnReplayAudio.FillColor = System.Drawing.Color.Empty;
-            this.btnReplayAudio.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnReplayAudio.ForeColor = System.Drawing.Color.White;
-            this.btnReplayAudio.Image = global::FlowstorageDesktop.Properties.Resources.icons8_restart_500__1_;
+            this.btnReplayAudio.Image = global::FlowstorageDesktop.Properties.Resources.restart_icon;
             this.btnReplayAudio.ImageSize = new System.Drawing.Size(27, 27);
             this.btnReplayAudio.Location = new System.Drawing.Point(1076, 568);
             this.btnReplayAudio.Name = "btnReplayAudio";

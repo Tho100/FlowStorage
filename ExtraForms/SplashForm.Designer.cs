@@ -45,7 +45,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.Untitled__83_;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.splash_banner;
             this.pictureBox1.Location = new System.Drawing.Point(0, -11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(578, 244);

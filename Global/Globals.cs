@@ -7,23 +7,23 @@ namespace FlowstorageDesktop {
         static public int PANEL_GAP_TOP = 275;
         static public int PANEL_GAP_HEIGHT = 100;
 
-        static public readonly Image VerticalMenuImage = Properties.Resources.icons8_menu_vertical_30;
-        static public readonly Image DirectoryGarbageImage = Properties.Resources.icons8_garbage_66__1_;
-        static public readonly Image DIRIcon = Properties.Resources.DirIcon;
+        static public readonly Image VerticalMenuImage = Properties.Resources.more_options_icon;
+        static public readonly Image DirectoryGarbageImage = Properties.Resources.delete_directory_icon;
+        static public readonly Image DIRIcon = Properties.Resources.directory_icon;
 
-        static public readonly Image PDFImage = Properties.Resources.icons8_pdf_60__1_;
-        static public readonly Image AudioImage = Properties.Resources.icons8_audio_file_60;
+        static public readonly Image PDFImage = Properties.Resources.pdf_icon;
+        static public readonly Image AudioImage = Properties.Resources.audio_icon;
         static public readonly Image VideoImage = Properties.Resources.video_image;
 
-        static public readonly Image DOCImage = Properties.Resources.icons8_microsoft_word_60;
-        static public readonly Image PTXImage = Properties.Resources.icons8_microsoft_powerpoint_60;
-        static public readonly Image APKImage = Properties.Resources.icons8_microsoft_powerpoint_60;
+        static public readonly Image DOCImage = Properties.Resources.doc_icon;
+        static public readonly Image PTXImage = Properties.Resources.presentation_icon;
+        static public readonly Image APKImage = Properties.Resources.apk_icon;
 
-        static public readonly Image EXCELImage = Properties.Resources.excelIcon;
-        static public readonly Image MSIImage = Properties.Resources.icons8_software_installer_32;
-        static public readonly Image EXEImage = Properties.Resources.icons8_exe_48;
+        static public readonly Image EXCELImage = Properties.Resources.excel_icon;
+        static public readonly Image MSIImage = Properties.Resources.installer_icon;
+        static public readonly Image EXEImage = Properties.Resources.exe_icon;
 
-        static public readonly Image TextImage = Properties.Resources.icons8_txt_48;
+        static public readonly Image TextImage = Properties.Resources.text_icon;
 
         static public readonly HashSet<string> imageTypes = new HashSet<string> 
         {"png","jpg","jpeg"};

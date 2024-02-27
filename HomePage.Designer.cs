@@ -473,7 +473,7 @@
             this.btnLogout.FillColor = System.Drawing.Color.Empty;
             this.btnLogout.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.Firebrick;
-            this.btnLogout.Image = global::FlowstorageDesktop.Properties.Resources.icons8_logout_64__1_;
+            this.btnLogout.Image = global::FlowstorageDesktop.Properties.Resources.sign_out_icon;
             this.btnLogout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnLogout.ImageOffset = new System.Drawing.Point(-18, 1);
             this.btnLogout.ImageSize = new System.Drawing.Size(35, 35);
@@ -486,7 +486,7 @@
             // 
             // guna2PictureBox1
             // 
-            this.guna2PictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.DirIcon;
+            this.guna2PictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.directory_icon;
             this.guna2PictureBox1.ImageRotate = 0F;
             this.guna2PictureBox1.Location = new System.Drawing.Point(16, 102);
             this.guna2PictureBox1.Name = "guna2PictureBox1";
@@ -615,10 +615,8 @@
             this.btnShowPs.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnShowPs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnShowPs.FillColor = System.Drawing.Color.Transparent;
-            this.btnShowPs.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnShowPs.ForeColor = System.Drawing.Color.White;
             this.btnShowPs.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnShowPs.Image = global::FlowstorageDesktop.Properties.Resources.icons8_open_parcel_24;
+            this.btnShowPs.Image = global::FlowstorageDesktop.Properties.Resources.public_storage_icon;
             this.btnShowPs.ImageSize = new System.Drawing.Size(24, 24);
             this.btnShowPs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnShowPs.Location = new System.Drawing.Point(6, 126);
@@ -637,10 +635,8 @@
             this.btnShowFolderPage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnShowFolderPage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnShowFolderPage.FillColor = System.Drawing.Color.Transparent;
-            this.btnShowFolderPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnShowFolderPage.ForeColor = System.Drawing.Color.White;
             this.btnShowFolderPage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnShowFolderPage.Image = global::FlowstorageDesktop.Properties.Resources.icons8_folder_48;
+            this.btnShowFolderPage.Image = global::FlowstorageDesktop.Properties.Resources.folder_tab_icon;
             this.btnShowFolderPage.ImageSize = new System.Drawing.Size(29, 29);
             this.btnShowFolderPage.Location = new System.Drawing.Point(6, 78);
             this.btnShowFolderPage.Name = "btnShowFolderPage";
@@ -657,10 +653,8 @@
             this.btnGoHomePage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnGoHomePage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnGoHomePage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnGoHomePage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnGoHomePage.ForeColor = System.Drawing.Color.White;
             this.btnGoHomePage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(19)))), ((int)(((byte)(191)))));
-            this.btnGoHomePage.Image = global::FlowstorageDesktop.Properties.Resources.icons8_home_page_32;
+            this.btnGoHomePage.Image = global::FlowstorageDesktop.Properties.Resources.home_tab_icon;
             this.btnGoHomePage.ImageSize = new System.Drawing.Size(22, 22);
             this.btnGoHomePage.Location = new System.Drawing.Point(7, 30);
             this.btnGoHomePage.Name = "btnGoHomePage";
@@ -731,7 +725,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.download_ico;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.download_icon;
             this.pictureBox1.Location = new System.Drawing.Point(505, 181);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(52, 47);
@@ -1019,7 +1013,7 @@
             this.btnDeleteFile.FillColor = System.Drawing.Color.Empty;
             this.btnDeleteFile.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.btnDeleteFile.ForeColor = System.Drawing.Color.LightGray;
-            this.btnDeleteFile.Image = global::FlowstorageDesktop.Properties.Resources.icons8_garbage_66;
+            this.btnDeleteFile.Image = global::FlowstorageDesktop.Properties.Resources.delete_file_icon;
             this.btnDeleteFile.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnDeleteFile.ImageSize = new System.Drawing.Size(26, 26);
             this.btnDeleteFile.Location = new System.Drawing.Point(11, 177);
@@ -1544,9 +1538,7 @@
             this.btnFilterType.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnFilterType.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnFilterType.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnFilterType.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnFilterType.ForeColor = System.Drawing.Color.White;
-            this.btnFilterType.Image = global::FlowstorageDesktop.Properties.Resources.icons8_tune_48;
+            this.btnFilterType.Image = global::FlowstorageDesktop.Properties.Resources.filter_type_icon;
             this.btnFilterType.ImageSize = new System.Drawing.Size(19, 19);
             this.btnFilterType.Location = new System.Drawing.Point(886, 13);
             this.btnFilterType.Name = "btnFilterType";
@@ -1601,9 +1593,7 @@
             this.btnRefreshFiles.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnRefreshFiles.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnRefreshFiles.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
-            this.btnRefreshFiles.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefreshFiles.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshFiles.Image = global::FlowstorageDesktop.Properties.Resources.icons8_update_left_rotation_24;
+            this.btnRefreshFiles.Image = global::FlowstorageDesktop.Properties.Resources.refresh_icon;
             this.btnRefreshFiles.Location = new System.Drawing.Point(1259, 13);
             this.btnRefreshFiles.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnRefreshFiles.Name = "btnRefreshFiles";

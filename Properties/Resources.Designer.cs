@@ -63,9 +63,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DirIcon {
+        internal static System.Drawing.Bitmap apk_icon {
             get {
-                object obj = ResourceManager.GetObject("DirIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("apk_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap download_ico {
+        internal static System.Drawing.Bitmap app_main_icon {
             get {
-                object obj = ResourceManager.GetObject("download_ico", resourceCulture);
+                object obj = ResourceManager.GetObject("app_main_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap excelIcon {
+        internal static System.Drawing.Bitmap audio_icon {
             get {
-                object obj = ResourceManager.GetObject("excelIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("audio_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,99 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap flowstorageLogo__15_ {
+        internal static System.Drawing.Bitmap delete_directory_icon {
             get {
-                object obj = ResourceManager.GetObject("flowstorageLogo (15)", resourceCulture);
+                object obj = ResourceManager.GetObject("delete_directory_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete_file_icon {
+            get {
+                object obj = ResourceManager.GetObject("delete_file_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap directory_icon {
+            get {
+                object obj = ResourceManager.GetObject("directory_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap doc_icon {
+            get {
+                object obj = ResourceManager.GetObject("doc_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap download_icon {
+            get {
+                object obj = ResourceManager.GetObject("download_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap excel_icon {
+            get {
+                object obj = ResourceManager.GetObject("excel_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap exe_icon {
+            get {
+                object obj = ResourceManager.GetObject("exe_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap filter_type_icon {
+            get {
+                object obj = ResourceManager.GetObject("filter_type_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flowstorage_logo {
+            get {
+                object obj = ResourceManager.GetObject("flowstorage_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_tab_icon {
+            get {
+                object obj = ResourceManager.GetObject("folder_tab_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +233,19 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_android_os_50 {
+        internal static System.Drawing.Bitmap home_banner {
             get {
-                object obj = ResourceManager.GetObject("icons8-android-os-50", resourceCulture);
+                object obj = ResourceManager.GetObject("home_banner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap home_tab_icon {
+            get {
+                object obj = ResourceManager.GetObject("home_tab_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,16 +256,6 @@ namespace FlowstorageDesktop.Properties {
         internal static System.Drawing.Bitmap icons8_api_32__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-api-32 (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_audio_file_60 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-audio-file-60", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,26 +353,6 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_exe_48 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-exe-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_exe_96 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-exe-96", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icons8_eye_24 {
             get {
                 object obj = ResourceManager.GetObject("icons8-eye-24", resourceCulture);
@@ -303,99 +373,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_folder_48 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-folder-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_garbage_66 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-garbage-66", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_garbage_66__1_ {
-            get {
-                object obj = ResourceManager.GetObject("icons8-garbage-66 (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_home_page_32 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-home-page-32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icons8_login_rounded_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-login-rounded-50", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_logout_64__1_ {
-            get {
-                object obj = ResourceManager.GetObject("icons8-logout-64 (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_menu_vertical_30 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-menu-vertical-30", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_microsoft_powerpoint_60 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-microsoft-powerpoint-60", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_microsoft_word_60 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-microsoft-word-60", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_open_parcel_24 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-open-parcel-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -416,26 +396,6 @@ namespace FlowstorageDesktop.Properties {
         internal static System.Drawing.Bitmap icons8_password_52 {
             get {
                 object obj = ResourceManager.GetObject("icons8-password-52", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_pdf_60__1_ {
-            get {
-                object obj = ResourceManager.GetObject("icons8-pdf-60 (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_restart_500__1_ {
-            get {
-                object obj = ResourceManager.GetObject("icons8-restart-500 (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -483,59 +443,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_software_installer_32 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-software-installer-32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icons8_subtract_30 {
             get {
                 object obj = ResourceManager.GetObject("icons8-subtract-30", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_tune_24 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-tune-24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_tune_48 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-tune-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_txt_48 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-txt-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_update_left_rotation_24 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-update-left-rotation-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -563,9 +473,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled__80_ {
+        internal static System.Drawing.Bitmap installer_icon {
             get {
-                object obj = ResourceManager.GetObject("Untitled (80)", resourceCulture);
+                object obj = ResourceManager.GetObject("installer_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -573,9 +483,9 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled__82_1 {
+        internal static System.Drawing.Bitmap more_options_icon {
             get {
-                object obj = ResourceManager.GetObject("Untitled (82)1", resourceCulture);
+                object obj = ResourceManager.GetObject("more_options_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -583,9 +493,79 @@ namespace FlowstorageDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled__83_ {
+        internal static System.Drawing.Bitmap pdf_icon {
             get {
-                object obj = ResourceManager.GetObject("Untitled (83)", resourceCulture);
+                object obj = ResourceManager.GetObject("pdf_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap presentation_icon {
+            get {
+                object obj = ResourceManager.GetObject("presentation_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap public_storage_icon {
+            get {
+                object obj = ResourceManager.GetObject("public_storage_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refresh_icon {
+            get {
+                object obj = ResourceManager.GetObject("refresh_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap restart_icon {
+            get {
+                object obj = ResourceManager.GetObject("restart_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sign_out_icon {
+            get {
+                object obj = ResourceManager.GetObject("sign_out_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap splash_banner {
+            get {
+                object obj = ResourceManager.GetObject("splash_banner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap text_icon {
+            get {
+                object obj = ResourceManager.GetObject("text_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -113,7 +113,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::FlowstorageDesktop.Properties.Resources.download_ico;
+            this.pictureBox2.Image = global::FlowstorageDesktop.Properties.Resources.download_icon;
             this.pictureBox2.Location = new System.Drawing.Point(14, 22);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(46, 41);
