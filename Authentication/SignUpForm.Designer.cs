@@ -52,7 +52,7 @@
             // 
             this.bannerPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.bannerPictureBox.Image = global::FlowstorageDesktop.Properties.Resources.Untitled__82_1;
+            this.bannerPictureBox.Image = global::FlowstorageDesktop.Properties.Resources.home_banner;
             this.bannerPictureBox.Location = new System.Drawing.Point(-5, 0);
             this.bannerPictureBox.Name = "bannerPictureBox";
             this.bannerPictureBox.Size = new System.Drawing.Size(562, 665);

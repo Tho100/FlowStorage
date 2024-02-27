@@ -305,9 +305,7 @@
             this.btnReplayVideo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnReplayVideo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnReplayVideo.FillColor = System.Drawing.Color.Empty;
-            this.btnReplayVideo.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnReplayVideo.ForeColor = System.Drawing.Color.White;
-            this.btnReplayVideo.Image = global::FlowstorageDesktop.Properties.Resources.icons8_restart_500__1_;
+            this.btnReplayVideo.Image = global::FlowstorageDesktop.Properties.Resources.restart_icon;
             this.btnReplayVideo.ImageSize = new System.Drawing.Size(27, 27);
             this.btnReplayVideo.Location = new System.Drawing.Point(1071, 575);
             this.btnReplayVideo.Name = "btnReplayVideo";

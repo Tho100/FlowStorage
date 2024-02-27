@@ -337,7 +337,7 @@
             this.btnDelete.FillColor = System.Drawing.Color.Empty;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.btnDelete.ForeColor = System.Drawing.Color.LightGray;
-            this.btnDelete.Image = global::FlowstorageDesktop.Properties.Resources.icons8_garbage_66;
+            this.btnDelete.Image = global::FlowstorageDesktop.Properties.Resources.delete_file_icon;
             this.btnDelete.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnDelete.ImageSize = new System.Drawing.Size(26, 26);
             this.btnDelete.Location = new System.Drawing.Point(10, 179);

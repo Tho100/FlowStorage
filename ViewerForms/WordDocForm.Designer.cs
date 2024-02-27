@@ -162,7 +162,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.icons8_microsoft_word_60;
+            this.pictureBox1.Image = global::FlowstorageDesktop.Properties.Resources.doc_icon;
             this.pictureBox1.Location = new System.Drawing.Point(364, 14);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(42, 38);

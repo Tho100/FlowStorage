@@ -91,7 +91,7 @@ namespace FlowstorageDesktop {
                 Guna2PictureBox picBanner = new Guna2PictureBox();
                 panel.Controls.Add(picBanner);
                 picBanner.Name = "PicBanner" + currParameter;
-                picBanner.Image = FlowstorageDesktop.Properties.Resources.DirIcon;
+                picBanner.Image = Globals.DIRIcon;
                 picBanner.SizeMode = PictureBoxSizeMode.CenterImage;
                 picBanner.BorderRadius = 8;
                 picBanner.Width = 226;
