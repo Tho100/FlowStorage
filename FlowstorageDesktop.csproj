@@ -437,6 +437,11 @@
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\AutoLoginModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Query\DataCaller\DirectoryDataCaller.cs" />
     <Compile Include="Query\DataCaller\FolderDataCaller.cs" />
     <Compile Include="Query\DataCaller\HomeDataCaller.cs" />
@@ -482,11 +487,6 @@
     </Compile>
     <Compile Include="Helper\GetComment.cs" />
     <Compile Include="Model\StripeModel.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Settings\CancelPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -945,7 +945,6 @@
     <None Include="Resources\icons8-microsoft-powerpoint-60.png" />
     <None Include="Resources\image_icon.png" />
     <None Include="Resources\icons8-audio-file-60.png" />
-    <None Include="Resources\icons8-csv-48.png" />
     <None Include="Resources\icons8-txt-48.png" />
     <None Include="Resources\icons8-microsoft-word-60.png" />
     <None Include="Resources\excelIcon.png" />
@@ -975,13 +974,9 @@
     <None Include="Resources\icons8-logout-64 %281%29.png" />
     <None Include="Resources\icons8-database-50.png" />
     <None Include="Resources\icons8-software-installer-32.png" />
-    <None Include="Resources\icons8-javascript-50.png" />
     <None Include="Resources\icons8-exe-96.png" />
     <None Include="Resources\icons8-garbage-66.png" />
     <None Include="Resources\icons8-garbage-66 %281%29.png" />
-    <None Include="Resources\icons8-python-file-48.png" />
-    <None Include="Resources\icons8-html-filetype-48 %281%29.png" />
-    <None Include="Resources\icons8-css-filetype-48 %281%29.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
