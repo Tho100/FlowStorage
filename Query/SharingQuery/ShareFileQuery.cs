@@ -3,7 +3,9 @@ using FlowstorageDesktop.Temporary;
 using MySql.Data.MySqlClient;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FlowstorageDesktop.SharingQuery {
     public class ShareFileQuery {
@@ -45,8 +47,6 @@ namespace FlowstorageDesktop.SharingQuery {
         /// <returns></returns>
         public async Task<int> CountReceiverTotalShared(string username) {
 
-            int fileCount = 0;
-
             const string countFileSharedQuery = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_TO = @receiver";
 
             using (MySqlCommand command = new MySqlCommand(countFileSharedQuery, con)) {
@@ -54,11 +54,11 @@ namespace FlowstorageDesktop.SharingQuery {
 
                 object result = await command.ExecuteScalarAsync();
                 if (result != null && result != DBNull.Value) {
-                    fileCount = Convert.ToInt32(result);
+                    return Convert.ToInt32(result);
                 }
             }
 
-            return fileCount;
+            return 0;
 
         }
 
@@ -118,8 +118,6 @@ namespace FlowstorageDesktop.SharingQuery {
 
         private async Task<string> GetFileMetadataExtra(string tableName, string columnName, string directoryName, string fileName) {
 
-            string base64String = "";
-
             string queryGetFileByte = $"SELECT CUST_FILE FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {columnName} = @dirname LIMIT 1;";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
@@ -127,17 +125,15 @@ namespace FlowstorageDesktop.SharingQuery {
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
-                        base64String = readData.GetString(0);
+                        return readData.GetString(0);
                     }
                 }
             }
 
-            return base64String;
+            return string.Empty;
         }
 
         private async Task<string> RetrieveThumbnails(string tableName, string fileName) {
-
-            string GetBase64String = "";
 
             string queryGetFileByte = $"SELECT CUST_THUMB FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
@@ -145,17 +141,16 @@ namespace FlowstorageDesktop.SharingQuery {
                 command.Parameters.AddWithValue("@filename", EncryptionModel.Encrypt(fileName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
-                        GetBase64String = readData.GetString(0);
+                        return readData.GetString(0);
                     }
                 }
             }
 
-            return GetBase64String;
+            return string.Empty;
+
         }
 
         private async Task<string> RetrieveThumbnailsExtra(string tableName, string columnName, string directoryName, string fileName) {
-
-            string GetBase64String = "";
 
             string queryGetFileByte = $"SELECT CUST_THUMB FROM {tableName} WHERE CUST_USERNAME = @username AND CUST_FILE_PATH = @filename AND {columnName} = @dirname";
             using (MySqlCommand command = new MySqlCommand(queryGetFileByte, con)) {
@@ -164,12 +159,13 @@ namespace FlowstorageDesktop.SharingQuery {
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
                 using (MySqlDataReader readData = (MySqlDataReader)await command.ExecuteReaderAsync()) {
                     while (await readData.ReadAsync()) {
-                        GetBase64String = readData.GetString(0);
+                        return readData.GetString(0);
                     }
                 }
             }
 
-            return GetBase64String;
+            return string.Empty;
+
         }
 
         private async Task<string> RetrieveThumbnailShared(string fileName, string columnName) {
@@ -223,7 +219,7 @@ namespace FlowstorageDesktop.SharingQuery {
             this._isFromShared = isFromShared;
             this._tableName = tableName;
             this._directoryName = directoryName;
-            this._fileExtension = Path.GetExtension(fileName);
+            this._fileExtension = fileName.Split('.').Last();
 
             if (!_isFromShared && _tableName == GlobalsTable.sharingTable) {
                 string getThumbnails = await RetrieveThumbnailShared(_fileName, "CUST_TO");

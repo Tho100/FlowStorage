@@ -1,5 +1,6 @@
 ﻿using FlowstorageDesktop.AlertForms;
 using FlowstorageDesktop.AuthenticationQuery;
+using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using FlowstorageDesktop.SharingQuery;
 using FlowstorageDesktop.Temporary;
@@ -77,9 +78,13 @@ namespace FlowstorageDesktop {
                 string fileType = _fileName.Split('.').Last();
 
                 string receiverUsername = txtFieldShareToName.Text;
+                string comment = txtFieldComment.Text;
 
                 string encryptedFileName = EncryptionModel.Encrypt(_fileName);
-                string encryptedComment = EncryptionModel.Encrypt(txtFieldComment.Text);
+                string encryptedComment = string.IsNullOrEmpty(comment)
+                    ? string.Empty : EncryptionModel.Encrypt(comment);
+
+                string thumbnail = thumbnailBase64 ?? string.Empty;
 
                 string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -96,11 +101,13 @@ namespace FlowstorageDesktop {
                     command.Parameters.AddWithValue("@date", todayDate);
                     command.Parameters.AddWithValue("@file_data", compressedFileData);
                     command.Parameters.AddWithValue("@comment", encryptedComment);
-                    command.Parameters.AddWithValue("@thumbnail", thumbnailBase64);
+                    command.Parameters.AddWithValue("@thumbnail", thumbnail);
                     command.Prepare();
 
                     await command.ExecuteNonQueryAsync();
                 }
+
+                GlobalsData.base64EncodedImageSharedOthers.Clear();
 
             } catch (Exception) {
                 new CustomAlert(
@@ -229,6 +236,12 @@ namespace FlowstorageDesktop {
                 if (await sharingOptions.UserExistVerification(receiverUsername) == 0) {
                     new CustomAlert(
                         title: "Sharing failed", subheader: $"The user {receiverUsername} does not exist.").Show();
+                    return;
+                }
+
+                if (await sharingOptions.RetrieveIsOnShareLimit()) {
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "You've reached sharing limit.").Show();
                     return;
                 }
 

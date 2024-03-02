@@ -89,6 +89,22 @@ namespace FlowstorageDesktop.SharingQuery {
 
         }
 
+        public async Task<bool> RetrieveIsOnShareLimit() {
+
+            var shareLimit = Globals.uploadFileLimit[tempDataUser.AccountType];
+
+            const string querySelectShareCount = "SELECT COUNT(*) FROM cust_sharing WHERE CUST_FROM = @username";
+            using (MySqlCommand command = new MySqlCommand(querySelectShareCount, con)) {
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+
+                int shareCount = Convert.ToInt32(await command.ExecuteScalarAsync());
+                
+                return shareCount >= shareLimit;
+
+            }
+
+        }
+
         /// <summary>
         /// This function will do check if the 
         /// receiver has password enabled for their file sharing

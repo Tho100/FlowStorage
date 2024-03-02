@@ -72,8 +72,6 @@
             this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(0)))), ((int)(((byte)(179)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Dubai", 14.25F, System.Drawing.FontStyle.Bold);
-            this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
             this.guna2Button2.Location = new System.Drawing.Point(456, 10);
             this.guna2Button2.Name = "guna2Button2";
@@ -97,7 +95,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Shared";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.sucessShare_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
