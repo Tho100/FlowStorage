@@ -77,6 +77,12 @@ namespace FlowstorageDesktop {
                     return;
                 }
 
+                if (await sharingOptions.RetrieveIsOnShareLimit()) {
+                    new CustomAlert(
+                        title: "Sharing failed", subheader: "You've reached sharing limit.").Show();
+                    return;
+                }
+
                 if (await shareFile.FileIsUploadedVerification(txtFieldShareToName.Text, _fileName) > 0) {
                     new CustomAlert(
                         title: "Sharing failed", subheader: "This file is already shared.").Show();
@@ -100,8 +106,8 @@ namespace FlowstorageDesktop {
             } catch (Exception) {
                 MessageBox.Show(
                     "An unknown error occurred.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
+
         }
 
         private void guna2TextBox4_TextChanged(object sender, EventArgs e) {

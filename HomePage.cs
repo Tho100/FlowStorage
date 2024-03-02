@@ -1610,7 +1610,6 @@ namespace FlowstorageDesktop {
 
                 onMoreOptionButtonPressed.Add(moreOptionOnPressedEvent);
 
-
                 if (Globals.imageTypes.Contains(typeValues[i])) {
 
                     if (GlobalsData.base64EncodedImageSharedOthers.Count > i) {
@@ -3685,8 +3684,8 @@ namespace FlowstorageDesktop {
             lblCurrentPageText.Text = "Shared Files";
             lblCurrentPageText.Visible = true;
 
+            pnlSubPanelDetails.Visible = true;
             btnDeleteFolder.Visible = false;
-            pnlSubPanelDetails.Visible = false;
 
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
 
@@ -3709,7 +3708,7 @@ namespace FlowstorageDesktop {
             lblCurrentPageText.Text = "Shared To Me";
             lblCurrentPageText.Visible = true;
 
-            pnlSubPanelDetails.Visible = true;
+            pnlSubPanelDetails.Visible = false;
             btnDeleteFolder.Visible = false;
 
             btnGoHomePage.FillColor = GlobalStyle.TransparentColor;
