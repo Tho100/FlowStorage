@@ -363,7 +363,7 @@ namespace FlowstorageDesktop {
                 Height = 222,
                 BorderColor = GlobalStyle.BorderColor,
                 BorderThickness = 1,
-                BorderRadius = 8,
+                BorderRadius = 12,
                 BackColor = GlobalStyle.TransparentColor,
                 Location = new Point(600, Globals.PANEL_GAP_TOP)
             };
@@ -372,8 +372,8 @@ namespace FlowstorageDesktop {
 
             var panelImage = new Guna2PictureBox();
             panel.Controls.Add(panelImage);
-            panelImage.Name = "TxtBox" + itemCurr;
-            panelImage.BorderRadius = 8;
+            panelImage.Name = "panelImage" + itemCurr;
+            panelImage.BorderRadius = 12;
             panelImage.Width = 190;
             panelImage.Height = 145;
             panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -386,7 +386,7 @@ namespace FlowstorageDesktop {
 
             Label dateLabel = new Label();
             panel.Controls.Add(dateLabel);
-            dateLabel.Name = "LabTxtUp" + itemCurr;
+            dateLabel.Name = "dateLbl" + itemCurr;
             dateLabel.Font = GlobalStyle.DateLabelFont;
             dateLabel.ForeColor = GlobalStyle.DarkGrayColor;
             dateLabel.Location = GlobalStyle.DateLabelLoc;
@@ -394,7 +394,7 @@ namespace FlowstorageDesktop {
 
             Label titleLab = new Label();
             panel.Controls.Add(titleLab);
-            titleLab.Name = "LabVidUp" + itemCurr;
+            titleLab.Name = "titleLbl" + itemCurr;
             titleLab.Font = GlobalStyle.TitleLabelFont;
             titleLab.ForeColor = GlobalStyle.GainsboroColor;
             titleLab.Location = GlobalStyle.TitleLabelLoc;
@@ -405,7 +405,7 @@ namespace FlowstorageDesktop {
 
             Guna2Button moreOptionsButton = new Guna2Button();
             panel.Controls.Add(moreOptionsButton);
-            moreOptionsButton.Name = "RemTxtBut" + itemCurr;
+            moreOptionsButton.Name = "moreBtn" + itemCurr;
             moreOptionsButton.Width = 29;
             moreOptionsButton.Height = 26;
             moreOptionsButton.ImageOffset = new Point(2, 0);
@@ -424,7 +424,7 @@ namespace FlowstorageDesktop {
 
             panelImage.MouseHover += (_senderM, _ev) => {
                 panel.ShadowDecoration.Enabled = true;
-                panel.ShadowDecoration.BorderRadius = 8;
+                panel.ShadowDecoration.BorderRadius = 12;
             };
 
             panelImage.MouseLeave += (_senderQ, _evQ) => {
