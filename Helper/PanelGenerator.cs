@@ -17,7 +17,7 @@ namespace FlowstorageDesktop.Helper {
                     Height = 222, 
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
-                    BorderRadius = 8,
+                    BorderRadius = 12,
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
@@ -54,7 +54,7 @@ namespace FlowstorageDesktop.Helper {
                 panel.Controls.Add(panelImage);
                 panelImage.Name = "ImgG" + i;
                 panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
-                panelImage.BorderRadius = 8;
+                panelImage.BorderRadius = 12;
                 panelImage.Width = 190; 
                 panelImage.Height = 145; 
                 panelImage.Click += onPressed[i];
@@ -67,7 +67,7 @@ namespace FlowstorageDesktop.Helper {
 
                 panelImage.MouseHover += (_senderM, _ev) => {
                     panel.ShadowDecoration.Enabled = true;
-                    panel.ShadowDecoration.BorderRadius = 8;
+                    panel.ShadowDecoration.BorderRadius = 12;
                 };
 
                 panelImage.MouseLeave += (_senderQ, _evQ) => {
@@ -106,7 +106,7 @@ namespace FlowstorageDesktop.Helper {
                     Height = 288,
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
-                    BorderRadius = 8,
+                    BorderRadius = 12,
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
@@ -176,7 +176,7 @@ namespace FlowstorageDesktop.Helper {
                 panel.Controls.Add(panelImage);
                 panelImage.Name = "ImgG" + i;
                 panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
-                panelImage.BorderRadius = 8;
+                panelImage.BorderRadius = 12;
                 panelImage.Width = 238;
                 panelImage.Height = 165;
                 panelImage.Click += onPressed[i];
@@ -189,7 +189,7 @@ namespace FlowstorageDesktop.Helper {
 
                 panelImage.MouseHover += (_senderM, _ev) => {
                     panel.ShadowDecoration.Enabled = true;
-                    panel.ShadowDecoration.BorderRadius = 8;
+                    panel.ShadowDecoration.BorderRadius = 12;
                 };
 
                 panelImage.MouseLeave += (_senderQ, _evQ) => {

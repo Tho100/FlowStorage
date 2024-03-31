@@ -471,7 +471,7 @@ namespace FlowstorageDesktop {
                 Height = 222,
                 BorderColor = GlobalStyle.BorderColor,
                 BorderThickness = 1,
-                BorderRadius = 8,
+                BorderRadius = 12,
                 BackColor = GlobalStyle.TransparentColor,
                 Location = new Point(600, Globals.PANEL_GAP_TOP)
             };
@@ -480,8 +480,8 @@ namespace FlowstorageDesktop {
 
             var panelImage = new Guna2PictureBox();
             panel.Controls.Add(panelImage);
-            panelImage.Name = "TxtBox" + itemCurr;
-            panelImage.BorderRadius = 8;
+            panelImage.Name = "imagePnl" + itemCurr;
+            panelImage.BorderRadius = 12;
             panelImage.Width = 190;
             panelImage.Height = 145;
             panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -494,7 +494,7 @@ namespace FlowstorageDesktop {
 
             Label dateLabel = new Label();
             panel.Controls.Add(dateLabel);
-            dateLabel.Name = "LabTxtUp" + itemCurr;
+            dateLabel.Name = "dateLbl" + itemCurr;
             dateLabel.Font = GlobalStyle.DateLabelFont;
             dateLabel.ForeColor = GlobalStyle.DarkGrayColor;
             dateLabel.Location = GlobalStyle.DateLabelLoc;
@@ -502,7 +502,7 @@ namespace FlowstorageDesktop {
 
             Label titleLabel = new Label();
             panel.Controls.Add(titleLabel);
-            titleLabel.Name = "LabVidUp" + itemCurr;
+            titleLabel.Name = "titleLbl" + itemCurr;
             titleLabel.Font = GlobalStyle.TitleLabelFont;
             titleLabel.ForeColor = GlobalStyle.GainsboroColor;
             titleLabel.Location = GlobalStyle.TitleLabelLoc;
@@ -533,7 +533,7 @@ namespace FlowstorageDesktop {
 
             panelImage.MouseHover += (_senderM, _ev) => {
                 panel.ShadowDecoration.Enabled = true;
-                panel.ShadowDecoration.BorderRadius = 8;
+                panel.ShadowDecoration.BorderRadius = 12;
             };
 
             panelImage.MouseLeave += (_senderQ, _evQ) => {
@@ -1126,7 +1126,7 @@ namespace FlowstorageDesktop {
                 Height = 268,
                 BorderColor = GlobalStyle.BorderColor,
                 BorderThickness = 1,
-                BorderRadius = 8,
+                BorderRadius = 12,
                 BackColor = GlobalStyle.TransparentColor,
                 Location = new Point(600, Globals.PANEL_GAP_TOP)
             };
@@ -1135,8 +1135,8 @@ namespace FlowstorageDesktop {
 
             var panelImage = new Guna2PictureBox();
             panel.Controls.Add(panelImage);
-            panelImage.Name = "TxtBox" + itemCurr;
-            panelImage.BorderRadius = 8;
+            panelImage.Name = "pnlImage" + itemCurr;
+            panelImage.BorderRadius = 12;
             panelImage.Width = 270;
             panelImage.Height = 165;
             panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1149,7 +1149,7 @@ namespace FlowstorageDesktop {
 
             Label dateLabel = new Label();
             panel.Controls.Add(dateLabel);
-            dateLabel.Name = "LabTxtUp" + itemCurr;
+            dateLabel.Name = "dateLbl" + itemCurr;
             dateLabel.BackColor = GlobalStyle.TransparentColor;
             dateLabel.Font = GlobalStyle.DateLabelFont;
             dateLabel.ForeColor = GlobalStyle.DarkGrayColor;
@@ -1182,7 +1182,7 @@ namespace FlowstorageDesktop {
 
             Label titleLabel = new Label();
             panel.Controls.Add(titleLabel);
-            titleLabel.Name = "LabVidUp" + itemCurr;
+            titleLabel.Name = "titleLbl" + itemCurr;
             titleLabel.Font = GlobalStyle.TitleLabelFont;
             titleLabel.ForeColor = GlobalStyle.GainsboroColor;
             titleLabel.Location = new Point(12, 218);
@@ -1193,7 +1193,7 @@ namespace FlowstorageDesktop {
 
             panelImage.MouseHover += (_senderM, _ev) => {
                 panel.ShadowDecoration.Enabled = true;
-                panel.ShadowDecoration.BorderRadius = 8;
+                panel.ShadowDecoration.BorderRadius = 12;
             };
 
             panelImage.MouseLeave += (_senderQ, _evQ) => {
@@ -2379,7 +2379,7 @@ namespace FlowstorageDesktop {
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
-                    BorderRadius = 8,
+                    BorderRadius = 12,
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
@@ -2388,7 +2388,7 @@ namespace FlowstorageDesktop {
 
                 Label titleLabel = new Label();
                 panel.Controls.Add(titleLabel);
-                titleLabel.Name = $"titleImgL{curr}";
+                titleLabel.Name = $"titleLbl{curr}";
                 titleLabel.Font = GlobalStyle.TitleLabelFont;
                 titleLabel.ForeColor = GlobalStyle.GainsboroColor;
                 titleLabel.Location = GlobalStyle.TitleLabelLoc;
@@ -2399,11 +2399,11 @@ namespace FlowstorageDesktop {
 
                 var panelImage = new Guna2PictureBox();
                 panel.Controls.Add(panelImage);
-                panelImage.Name = $"ExeExlFold{curr}";
+                panelImage.Name = $"imagePnl{curr}";
                 panelImage.Width = 190;
                 panelImage.Height = 145;
                 panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
-                panelImage.BorderRadius = 8;
+                panelImage.BorderRadius = 12;
 
                 panelImage.Anchor = AnchorStyles.None;
 
@@ -2413,7 +2413,7 @@ namespace FlowstorageDesktop {
 
                 panelImage.MouseHover += (_senderM, _ev) => {
                     panel.ShadowDecoration.Enabled = true;
-                    panel.ShadowDecoration.BorderRadius = 8;
+                    panel.ShadowDecoration.BorderRadius = 12;
                 };
 
                 panelImage.MouseLeave += (_senderQ, _evQ) => {
@@ -2444,7 +2444,7 @@ namespace FlowstorageDesktop {
 
                 Label dateLabExl = new Label();
                 panel.Controls.Add(dateLabExl);
-                dateLabExl.Name = $"LabExlUpFold{curr}";
+                dateLabExl.Name = $"dateLbl{curr}";
                 dateLabExl.Font = GlobalStyle.DateLabelFont;
                 dateLabExl.ForeColor = GlobalStyle.DarkGrayColor;
                 dateLabExl.Location = GlobalStyle.DateLabelLoc;
@@ -2888,7 +2888,7 @@ namespace FlowstorageDesktop {
                     Height = 222,
                     BorderColor = GlobalStyle.BorderColor,
                     BorderThickness = 1,
-                    BorderRadius = 8,
+                    BorderRadius = 12,
                     BackColor = GlobalStyle.TransparentColor,
                     Location = new Point(600, Globals.PANEL_GAP_TOP)
                 };
@@ -2907,7 +2907,7 @@ namespace FlowstorageDesktop {
 
                 Label titleLabel = new Label();
                 panel.Controls.Add(titleLabel);
-                titleLabel.Name = "titleImgL" + i;
+                titleLabel.Name = "titleLab" + i;
                 titleLabel.Font = GlobalStyle.TitleLabelFont;
                 titleLabel.ForeColor = GlobalStyle.GainsboroColor;
                 titleLabel.Location = GlobalStyle.TitleLabelLoc;
@@ -2918,9 +2918,9 @@ namespace FlowstorageDesktop {
 
                 Guna2PictureBox panelImage = new Guna2PictureBox();
                 panel.Controls.Add(panelImage);
-                panelImage.Name = "ImgG" + i;
+                panelImage.Name = "imagePnl" + i;
                 panelImage.SizeMode = PictureBoxSizeMode.CenterImage;
-                panelImage.BorderRadius = 8;
+                panelImage.BorderRadius = 12;
                 panelImage.Width = 190;
                 panelImage.Height = 145;
 
@@ -2931,7 +2931,7 @@ namespace FlowstorageDesktop {
 
                 panelImage.MouseHover += (_senderM, _ev) => {
                     panel.ShadowDecoration.Enabled = true;
-                    panel.ShadowDecoration.BorderRadius = 8;
+                    panel.ShadowDecoration.BorderRadius = 12;
                 };
 
                 panelImage.MouseLeave += (_senderQ, _evQ) => {
