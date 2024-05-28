@@ -51,7 +51,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@foldtitle", folderName);
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         var fileName = EncryptionModel.Decrypt(reader.GetString(0));
                         var base64Encoded = EncryptionModel.Decrypt(reader.GetString(1));

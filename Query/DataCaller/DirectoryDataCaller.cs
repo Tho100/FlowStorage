@@ -38,7 +38,7 @@ namespace FlowstorageDesktop.Query.DataCaller {
             using (var command = new MySqlCommand(query, con)) {
                 command.Parameters.AddWithValue("@username", tempDataUser.Username);
                 command.Parameters.AddWithValue("@dirname", EncryptionModel.Encrypt(directoryName));
-                using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync()) {
+                using (var reader = (MySqlDataReader) await command.ExecuteReaderAsync()) {
                     while (await reader.ReadAsync()) {
                         base64EncodedImage.Add(EncryptionModel.Decrypt(reader.GetString(0)));
                     }

@@ -66,9 +66,9 @@ namespace FlowstorageDesktop.Helper {
 
                         await Task.Run(() => UpdateUI(conversionRate));
 
-                    }
-                    else {
+                    } else {
                         throw new Exception("Failed to load exchange rates");
+
                     }
                    
                 }
@@ -95,8 +95,7 @@ namespace FlowstorageDesktop.Helper {
                     var data = JsonConvert.DeserializeObject<IpApiResponse>(content);
                     return data.CountryCode;
 
-                }
-                else {
+                } else {
                     throw new Exception("Failed to load user country");
 
                 }
