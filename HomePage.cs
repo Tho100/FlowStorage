@@ -431,7 +431,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            WordDocForm displayMsi = new WordDocForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username);
+                            WordsForm displayMsi = new WordsForm(filesInfo[accessIndex].Item1, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username);
                             displayMsi.Show();
                         }
 
@@ -674,7 +674,7 @@ namespace FlowstorageDesktop {
 
                 panelImage.Image = Globals.DOCImage;
                 panelImage.Click += (sender_ptx, e_ptx) => {
-                    new WordDocForm(
+                    new WordsForm(
                         titleLabel.Text, GlobalsTable.homeWordTable, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
@@ -1093,7 +1093,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(
+                            new WordsForm(
                                 filesInfo[accessIndex].Item1, GlobalsTable.psWord, string.Empty, uploaderName).ShowDialog();
                         }
 
@@ -1332,7 +1332,7 @@ namespace FlowstorageDesktop {
 
                 panelImage.Image = Globals.DOCImage;
                 panelImage.Click += (sender_ptx, e_ptx) => {
-                    new WordDocForm(
+                    new WordsForm(
                         titleLabel.Text, GlobalsTable.psWord, string.Empty, tempDataUser.Username).ShowDialog();
                 };
             }
@@ -1755,7 +1755,7 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.DOCImage);
 
                     void wordOnPressed(object sender, EventArgs e) {
-                        new WordDocForm(
+                        new WordsForm(
                             filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
@@ -1993,7 +1993,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(
+                            new WordsForm(
                                 filesInfoSharedToMe[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploaderUsername, false).ShowDialog();
                         }
                         onPressedEvent.Add(wordOnPressed);
@@ -2333,7 +2333,7 @@ namespace FlowstorageDesktop {
                         imageValues.Add(Globals.DOCImage);
 
                         void wordOnPressed(object sender, EventArgs e) {
-                            new WordDocForm(
+                            new WordsForm(
                                 fileName, GlobalsTable.folderUploadTable, folderName, tempDataUser.Username).ShowDialog();
                         }
 
@@ -2564,7 +2564,7 @@ namespace FlowstorageDesktop {
 
                         panelImage.Image = Globals.DOCImage;
                         panelImage.Click += (sender_pdf, e_pdf) => {
-                            new WordDocForm(
+                            new WordsForm(
                                 titleLabel.Text, GlobalsTable.folderUploadTable, selectedFolder, tempDataUser.Username).ShowDialog();
                         };
                     }

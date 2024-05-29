@@ -322,7 +322,7 @@ namespace FlowstorageDesktop {
                     imageValues.Add(Globals.DOCImage);
 
                     void videoOnPressed(object sender, EventArgs e) {
-                        new WordDocForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).Show();
+                        new WordsForm(fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).Show();
                     }
 
                     onPressedEvent.Add(videoOnPressed);
@@ -560,7 +560,7 @@ namespace FlowstorageDesktop {
 
                 panelImage.Image = Globals.DOCImage;
                 panelImage.Click += (sender_ptx, e_ptx) => {
-                    new WordDocForm(
+                    new WordsForm(
                         fileName, GlobalsTable.directoryUploadTable, lblDirectoryName.Text, tempDataUser.Username).ShowDialog();
                 };
             }
