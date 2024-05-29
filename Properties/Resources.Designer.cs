@@ -205,7 +205,17 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap giphy__10_ {
             get {
-                object obj = ResourceManager.GetObject("giphy (10)", resourceCulture);
+                object obj = ResourceManager.GetObject("giphy__10_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap giphy__9_ {
+            get {
+                object obj = ResourceManager.GetObject("giphy__9_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -215,7 +225,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Group_1 {
             get {
-                object obj = ResourceManager.GetObject("Group 1", resourceCulture);
+                object obj = ResourceManager.GetObject("Group_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -225,7 +235,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Group_15__2_ {
             get {
-                object obj = ResourceManager.GetObject("Group 15 (2)", resourceCulture);
+                object obj = ResourceManager.GetObject("Group_15__2_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -255,7 +265,27 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_api_32__1_ {
             get {
-                object obj = ResourceManager.GetObject("icons8-api-32 (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_api_32__1_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_check_25 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_check_25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_check_251 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_check_251", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -265,7 +295,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_closed_eye_24 {
             get {
-                object obj = ResourceManager.GetObject("icons8-closed-eye-24", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_closed_eye_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -275,7 +305,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_closed_eye_241 {
             get {
-                object obj = ResourceManager.GetObject("icons8-closed-eye-241", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_closed_eye_241", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -285,27 +315,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_compass_48 {
             get {
-                object obj = ResourceManager.GetObject("icons8-compass-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_database_50 {
-            get {
-                object obj = ResourceManager.GetObject("icons8-database-50", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icons8_database_50__1_ {
-            get {
-                object obj = ResourceManager.GetObject("icons8-database-50 (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_compass_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -315,7 +325,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_documents_folder_48__2_ {
             get {
-                object obj = ResourceManager.GetObject("icons8-documents-folder-48 (2)", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_documents_folder_48__2_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -325,7 +335,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_done_26 {
             get {
-                object obj = ResourceManager.GetObject("icons8-done-26", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_done_26", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -335,7 +345,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_edit_48 {
             get {
-                object obj = ResourceManager.GetObject("icons8-edit-48", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_edit_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -345,7 +355,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_edit_48__1_ {
             get {
-                object obj = ResourceManager.GetObject("icons8-edit-48 (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_edit_48__1_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -355,7 +365,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_eye_24 {
             get {
-                object obj = ResourceManager.GetObject("icons8-eye-24", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_eye_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -365,7 +375,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_feedback_48 {
             get {
-                object obj = ResourceManager.GetObject("icons8-feedback-48", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_feedback_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -375,7 +385,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_login_rounded_50 {
             get {
-                object obj = ResourceManager.GetObject("icons8-login-rounded-50", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_login_rounded_50", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -385,7 +395,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_partying_face_96 {
             get {
-                object obj = ResourceManager.GetObject("icons8-partying-face-96", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_partying_face_96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -395,7 +405,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_password_52 {
             get {
-                object obj = ResourceManager.GetObject("icons8-password-52", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_password_52", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -405,7 +415,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_search_30__1_ {
             get {
-                object obj = ResourceManager.GetObject("icons8-search-30 (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_search_30__1_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -415,7 +425,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_share_26 {
             get {
-                object obj = ResourceManager.GetObject("icons8-share-26", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_share_26", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -425,7 +435,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_share_64 {
             get {
-                object obj = ResourceManager.GetObject("icons8-share-64", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_share_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -435,7 +445,17 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_share_641 {
             get {
-                object obj = ResourceManager.GetObject("icons8-share-641", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_share_641", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_sort_down_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_sort_down_50", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -445,7 +465,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_subtract_30 {
             get {
-                object obj = ResourceManager.GetObject("icons8-subtract-30", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_subtract_30", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -455,7 +475,7 @@ namespace FlowstorageDesktop.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap icons8_voice_50 {
             get {
-                object obj = ResourceManager.GetObject("icons8-voice-50", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8_voice_50", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

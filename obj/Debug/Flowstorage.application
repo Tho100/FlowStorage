@@ -14,14 +14,14 @@
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Flowstorage.exe.manifest" size="548691">
+    <dependentAssembly dependencyType="install" codebase="Flowstorage.exe.manifest" size="539372">
       <assemblyIdentity name="Flowstorage.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>QFdQjVs2HJXfOvhGHsJb2nxGrmK9qwf0SAQF/W5d8Qw=</dsig:DigestValue>
+        <dsig:DigestValue>vbeD0lEZv7ZtMIgbNkirwmjL8flxb0+94Fb/L794i+g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

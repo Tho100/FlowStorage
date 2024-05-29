@@ -1,40 +1,31 @@
 ﻿using FlowstorageDesktop.Global;
 using FlowstorageDesktop.Helper;
 using System;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace FlowstorageDesktop {
-
-    /// <summary>
-    /// PDF Viewer form
-    /// </summary>
-    /// 
     public partial class PdfForm : Form {
 
-        private string _tableName { get; set; }
-        private string _directoryName { get; set; }
+        readonly public PdfForm instance;
+        public string _tableName { get; set; }
+        public string _directoryName { get; set; }
+        private bool _isFromShared { get; set; }
         private bool _isFromSharing { get; set; }
-
-        /// <summary>
-        /// Load file based on table name 
-        /// </summary>
-        /// <param name="_FileTitle"></param>
-        /// <param name="_tableName"></param>
-        /// <param name="_DirectoryName"></param>
-        /// <param name="_UploaderName"></param>
 
         public PdfForm(string fileName, string tableName, string directoryName, string uploaderName, bool isFromShared = false, bool isFromSharing = false) {
 
             InitializeComponent();
 
-            this.lblFileName.Text = fileName;
+            instance = this;
+
+            lblFileName.Text = fileName;
+
             this._tableName = tableName;
             this._directoryName = directoryName;
+            this._isFromShared = isFromShared;
             this._isFromSharing = isFromSharing;
 
-            label4.Text = isFromShared ? "Shared To" : "Uploaded By";
+            label6.Text = isFromShared ? "Shared To" : "Uploaded By";
 
             lblUserComment.Visible = true;
 
@@ -62,99 +53,12 @@ namespace FlowstorageDesktop {
 
             lblUploaderName.Text = uploaderName;
 
-            try {
-
-                StartPopupForm.StartRetrievalPopup();
-
-                InitializePDF(LoaderModel.LoadFile(tableName, directoryName, lblFileName.Text, isFromShared));
-
-            } catch (Exception) {
-                MessageBox.Show(
-                    "Failed to load this file.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-
         }
 
-        /// <summary>
-        /// 
-        /// Convert PDF bytes to stream and load it into viewer
-        /// 
-        /// </summary>
-        /// <param name="pdfBytes"></param>
-        private void InitializePDF(byte[] pdfBytes) {
-            if (pdfBytes != null) {
-                lblFileSize.Text = $"{GetFileSize.fileSize(pdfBytes):F2}Mb";
-                MemoryStream convertToStream = new MemoryStream(pdfBytes);
-                pdfDocumentViewer1.LoadFromStream(convertToStream);
-            }
-        }
+        private void guna2Button2_Click(object sender, EventArgs e) => this.Close();
 
-        private void guna2Button2_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
-        private void guna2Button3_Click(object sender, EventArgs e) {
-            this.guna2BorderlessForm1.BorderRadius = 12;
-            this.WindowState = FormWindowState.Normal;
-            guna2Button1.Visible = true;
-            guna2Button3.Visible = false;
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e) {
-            this.guna2BorderlessForm1.BorderRadius = 0;
-            this.WindowState = FormWindowState.Maximized;
-            guna2Button1.Visible = false;
-            guna2Button3.Visible = true;
-        }
-
-        private void pdfFORM_Load(object sender, EventArgs e) {
-
-        }
-        /// <summary>
-        /// Save file 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void guna2Button4_Click(object sender, EventArgs e) {
-            this.TopMost = false;
-
-            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromSharing);
-
-            this.TopMost = true;
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void pdfViewer1_Load(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void pdfRenderer1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button8_Click(object sender, EventArgs e) {
-            this.WindowState = FormWindowState.Minimized;
-            Application.OpenForms
-              .OfType<Form>()
-              .Where(form => form.Name == "bgBlurForm")
-              .ToList()
-              .ForEach(form => form.Hide());
-        }
-
-        private void pdfDocumentViewer1_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e) {
-
+            SaverModel.SaveSelectedFile(lblFileName.Text, _tableName, _directoryName, _isFromShared);
         }
 
         private void guna2Button5_Click(object sender, EventArgs e) {
@@ -162,28 +66,16 @@ namespace FlowstorageDesktop {
                 lblFileName.Text, _isFromSharing, _tableName, _directoryName).Show();
         }
 
-        private void label6_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label15_Click(object sender, EventArgs e) {
-
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e) {
+        private void guna2Button3_Click(object sender, EventArgs e) {
             txtFieldComment.Enabled = true;
             txtFieldComment.Visible = true;
             btnEditComment.Visible = false;
-            guna2Button7.Visible = true;
+            guna2Button9.Visible = true;
             lblUserComment.Visible = false;
             txtFieldComment.Text = lblUserComment.Text;
         }
 
-        private async void guna2Button7_Click(object sender, EventArgs e) {
+        private async void guna2Button9_Click(object sender, EventArgs e) {
 
             if (lblUserComment.Text != txtFieldComment.Text) {
                 await new UpdateComment().SaveChangesComment(txtFieldComment.Text, lblFileName.Text);
@@ -191,15 +83,12 @@ namespace FlowstorageDesktop {
 
             lblUserComment.Text = txtFieldComment.Text != string.Empty ? txtFieldComment.Text : lblUserComment.Text;
             btnEditComment.Visible = true;
-            guna2Button7.Visible = false;
+            guna2Button9.Visible = false;
             txtFieldComment.Visible = false;
             lblUserComment.Visible = true;
             lblUserComment.Refresh();
 
         }
 
-        private void guna2Separator1_Click(object sender, EventArgs e) {
-
-        }
     }
 }

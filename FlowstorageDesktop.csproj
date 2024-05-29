@@ -123,9 +123,6 @@
     <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
-    <Reference Include="GemBox.Document, Version=35.0.0.1423, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
-      <HintPath>..\packages\GemBox.Document.35.0.1423\lib\net461\GemBox.Document.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Protobuf, Version=3.24.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.24.0-rc1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -246,44 +243,11 @@
     <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.Fonts.1.0.0-beta19\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Barcode, Version=7.2.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.Barcode.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.DataExport, Version=4.9.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.DataExport.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.DataExport.ResourceMgr, Version=2.1.0.0, Culture=neutral, PublicKeyToken=4bc1500157862925, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.DataExport.ResourceMgr.dll</HintPath>
-    </Reference>
     <Reference Include="Spire.Doc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
       <HintPath>..\packages\Spire.Doc.11.7.0\lib\net40\Spire.Doc.dll</HintPath>
     </Reference>
     <Reference Include="Spire.DocViewer.Forms, Version=8.5.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
       <HintPath>..\packages\Spire.DocViewer.8.5.3\lib\net40\Spire.DocViewer.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Email, Version=6.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.Email.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.OfficeViewer.Forms, Version=8.7.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.OfficeViewer.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Pdf, Version=9.7.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.Pdf.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.PdfViewer.Asp, Version=7.11.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.PdfViewer.Asp.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.PdfViewer.Forms, Version=7.11.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.PdfViewer.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Presentation, Version=8.7.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.Presentation.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Spreadsheet, Version=7.4.2.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.Spreadsheet.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.XLS, Version=13.7.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.8.7.0\lib\net40\Spire.XLS.dll</HintPath>
     </Reference>
     <Reference Include="Stripe.net, Version=41.23.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stripe.net.41.23.0\lib\net461\Stripe.net.dll</HintPath>
@@ -437,6 +401,7 @@
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\AutoLoginModel.cs" />
+    <Compile Include="Model\ThirdPartyApp.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -559,11 +524,29 @@
       <DependentUpon>AccountRecoveryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\EncryptionModel.cs" />
-    <Compile Include="ViewerForms\exeFORM.cs">
+    <Compile Include="ViewerForms\PtxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewerForms\exeFORM.Designer.cs">
-      <DependentUpon>exeFORM.cs</DependentUpon>
+    <Compile Include="ViewerForms\PtxForm.Designer.cs">
+      <DependentUpon>PtxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewerForms\WordsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewerForms\WordsForm.Designer.cs">
+      <DependentUpon>WordsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewerForms\PdfForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewerForms\PdfForm.Designer.cs">
+      <DependentUpon>PdfForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewerForms\ExeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewerForms\ExeForm.Designer.cs">
+      <DependentUpon>ExeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\GetFileSize.cs" />
     <Compile Include="HomePage.cs">
@@ -610,12 +593,6 @@
     <Compile Include="SharingForms\AddAuthSharing.Designer.cs">
       <DependentUpon>AddAuthSharing.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\PdfForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewerForms\PdfForm.Designer.cs">
-      <DependentUpon>PdfForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewerForms\PicForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -629,12 +606,6 @@
     </Compile>
     <Compile Include="Authentication\SignInForm.Designer.cs">
       <DependentUpon>SignInForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewerForms\PtxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewerForms\PtxForm.Designer.cs">
-      <DependentUpon>PtxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Recovery\BackupRecoveryKeyForm.cs">
       <SubType>Form</SubType>
@@ -745,12 +716,6 @@
     <Compile Include="ViewerForms\VideoForm.Designer.cs">
       <DependentUpon>VideoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewerForms\WordDocForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewerForms\WordDocForm.Designer.cs">
-      <DependentUpon>WordDocForm.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="AlertForms\CustomAlert.resx">
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </EmbeddedResource>
@@ -772,6 +737,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\ApkForm.resx">
       <DependentUpon>ApkForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SharingForms\AskSharingAuthForm.resx">
       <DependentUpon>AskSharingAuthForm.cs</DependentUpon>
@@ -797,8 +763,21 @@
     <EmbeddedResource Include="Recovery\AccountRecoveryForm.resx">
       <DependentUpon>AccountRecoveryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\exeFORM.resx">
-      <DependentUpon>exeFORM.cs</DependentUpon>
+    <EmbeddedResource Include="ViewerForms\PtxForm.resx">
+      <DependentUpon>PtxForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewerForms\WordsForm.resx">
+      <DependentUpon>WordsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewerForms\PdfForm.resx">
+      <DependentUpon>PdfForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewerForms\ExeForm.resx">
+      <DependentUpon>ExeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
@@ -823,9 +802,6 @@
     <EmbeddedResource Include="SharingForms\AddAuthSharing.resx">
       <DependentUpon>AddAuthSharing.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\PdfForm.resx">
-      <DependentUpon>PdfForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ViewerForms\PicForm.resx">
       <DependentUpon>PicForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -837,9 +813,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\PtxForm.resx">
-      <DependentUpon>PtxForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Recovery\BackupRecoveryKeyForm.resx">
       <DependentUpon>BackupRecoveryKeyForm.cs</DependentUpon>
@@ -896,9 +869,6 @@
     <EmbeddedResource Include="ViewerForms\VideoForm.resx">
       <DependentUpon>VideoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewerForms\WordDocForm.resx">
-      <DependentUpon>WordDocForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="mycert.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -917,64 +887,60 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MainIco.ico" />
-    <Content Include="Resources\directory_icon.png" />
-    <None Include="Resources\icons8-tune-48.png" />
-    <None Include="Resources\icons8-compass-48.png" />
-    <None Include="Resources\icons8-tune-24.png" />
-    <None Include="Resources\icons8-documents-folder-48 %282%29.png" />
-    <None Include="Resources\icons8-feedback-48.png" />
-    <None Include="Resources\icons8-open-parcel-24.png" />
-    <None Include="Resources\icons8-open-delivered-box-50.png" />
-    <None Include="Resources\icons8-menu-vertical-30.png" />
-    <None Include="Resources\Group 15 %282%29.png" />
+    <None Include="Resources\giphy %289%29.gif" />
     <None Include="Resources\fs_logo.png" />
-    <None Include="Resources\icons8-api-32 %281%29.png" />
-    <None Include="Resources\icons8-sort-down-50.png" />
-    <None Include="Resources\download_icon.png" />
-    <None Include="Resources\icons8-done-26.png" />
-    <None Include="Resources\Untitled %2880%29.png" />
-    <None Include="Resources\Group 1.png" />
-    <None Include="Resources\icons8-edit-48.png" />
-    <None Include="Resources\icons8-edit-48 %281%29.png" />
-    <None Include="Resources\icons8-folder-48.png" />
-    <None Include="Resources\icons8-home-page-32.png" />
+    <None Include="Resources\folder_tab_icon.png" />
+    <None Include="Resources\flowstorage_logo.png" />
+    <None Include="Resources\filter_type_icon.png" />
     <None Include="Resources\exe_icon.png" />
+    <None Include="Resources\excel_icon.png" />
+    <None Include="Resources\download_icon.png" />
+    <None Include="Resources\doc_icon.png" />
+    <None Include="Resources\directory_icon.png" />
+    <None Include="Resources\delete_file_icon.png" />
+    <None Include="Resources\delete_directory_icon.png" />
+    <None Include="Resources\audio_icon.png" />
+    <None Include="Resources\app_main_icon.png" />
     <None Include="Resources\apk_icon.png" />
     <None Include="Resources\video_image.png" />
-    <None Include="Resources\presentation_icon.png" />
-    <None Include="Resources\image_icon.png" />
-    <None Include="Resources\audio_icon.png" />
     <None Include="Resources\text_icon.png" />
-    <None Include="Resources\word_icon.png" />
-    <None Include="Resources\excel_icon.png" />
-    <None Include="Resources\icons8-pdf-60 %281%29.png" />
-    <None Include="Resources\icons8-share-26.png" />
-    <None Include="Resources\icons8-restart-500 %281%29.png" />
-    <None Include="Resources\Untitled %2882%291.png" />
-    <None Include="Resources\Untitled %2883%29.png" />
-    <None Include="Resources\icons8-login-rounded-50.png" />
-    <None Include="Resources\flowstorage_logo.png" />
-    <None Include="Resources\icons8-search-30 %281%29.png" />
-    <None Include="Resources\icons8-closed-eye-241.png" />
-    <None Include="Resources\icons8-eye-24.png" />
-    <None Include="Resources\icons8-closed-eye-24.png" />
-    <None Include="Resources\icons8-database-50 %281%29.png" />
-    <None Include="Resources\icons8-password-52.png" />
-    <None Include="Resources\giphy %2810%29.gif" />
-    <None Include="Resources\giphy %289%29.gif" />
-    <None Include="Resources\icons8-share-641.png" />
-    <None Include="Resources\icons8-update-left-rotation-24.png" />
-    <None Include="Resources\icons8-share-64.png" />
-    <None Include="Resources\icons8-rename-48.png" />
-    <None Include="Resources\icons8-partying-face-96.png" />
-    <None Include="Resources\icons8-subtract-30.png" />
-    <None Include="Resources\icons8-voice-50.png" />
-    <None Include="Resources\icons8-block-64.png" />
-    <None Include="Resources\icons8-logout-64 %281%29.png" />
-    <None Include="Resources\icons8-database-50.png" />
+    <None Include="Resources\splash_banner.png" />
+    <None Include="Resources\sign_out_icon.png" />
+    <None Include="Resources\restart_icon.png" />
+    <None Include="Resources\refresh_icon.png" />
+    <None Include="Resources\public_storage_icon.png" />
+    <None Include="Resources\presentation_icon.png" />
+    <None Include="Resources\pdf_icon.png" />
+    <None Include="Resources\more_options_icon.png" />
     <None Include="Resources\installer_icon.png" />
-    <None Include="Resources\icons8-garbage-66.png" />
-    <None Include="Resources\icons8-garbage-66 %281%29.png" />
+    <None Include="Resources\image_icon.png" />
+    <None Include="Resources\icons8-voice-50.png" />
+    <None Include="Resources\icons8-subtract-30.png" />
+    <None Include="Resources\icons8-sort-down-50.png" />
+    <None Include="Resources\icons8-share-641.png" />
+    <None Include="Resources\icons8-share-64.png" />
+    <None Include="Resources\icons8-share-26.png" />
+    <None Include="Resources\icons8-search-30 %281%29.png" />
+    <None Include="Resources\icons8-password-52.png" />
+    <None Include="Resources\icons8-partying-face-96.png" />
+    <None Include="Resources\icons8-login-rounded-50.png" />
+    <None Include="Resources\icons8-feedback-48.png" />
+    <None Include="Resources\icons8-eye-24.png" />
+    <None Include="Resources\icons8-edit-48.png" />
+    <None Include="Resources\icons8-edit-48 %281%29.png" />
+    <None Include="Resources\icons8-done-26.png" />
+    <None Include="Resources\icons8-documents-folder-48 %282%29.png" />
+    <None Include="Resources\icons8-compass-48.png" />
+    <None Include="Resources\icons8-closed-eye-241.png" />
+    <None Include="Resources\icons8-closed-eye-24.png" />
+    <None Include="Resources\icons8-check-251.png" />
+    <None Include="Resources\icons8-check-25.png" />
+    <None Include="Resources\icons8-api-32 %281%29.png" />
+    <None Include="Resources\home_tab_icon.png" />
+    <None Include="Resources\home_banner.png" />
+    <None Include="Resources\Group 15 %282%29.png" />
+    <None Include="Resources\Group 1.png" />
+    <None Include="Resources\giphy %2810%29.gif" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -1007,6 +973,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
