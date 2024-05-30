@@ -19,7 +19,6 @@ namespace FlowstorageDesktop {
 
         public static CreateDirectoryForm instance;
 
-        private readonly MySqlConnection con = ConnectionModel.con;
         private readonly TemporaryDataUser tempDataUser = new TemporaryDataUser();
 
         public CreateDirectoryForm() {

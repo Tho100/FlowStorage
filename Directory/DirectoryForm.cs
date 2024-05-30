@@ -790,7 +790,7 @@ namespace FlowstorageDesktop {
                 Control[] matches = this.Controls.Find(panelname, true);
 
                 if (matches.Length > 0 && matches[0] is Guna2Panel) {
-                    var filePanel = (Guna2Panel) matches[0];
+                    var filePanel = matches[0];
                     filePanel.Dispose();
                 }
 
