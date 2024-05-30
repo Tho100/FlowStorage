@@ -401,7 +401,6 @@
       <DependentUpon>CustomAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\AutoLoginModel.cs" />
-    <Compile Include="Model\ThirdPartyApp.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
