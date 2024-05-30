@@ -341,24 +341,14 @@ namespace FlowstorageDesktop {
         /// Initialize file panel variable (for increment)
         /// </summary>
 
-        int curr = 0;
-        int txtCurr = 0;
-        int exeCurr = 0;
-        int vidCurr = 0;
-        int exlCurr = 0;
-        int audCurr = 0;
-        int apkCurr = 0;
-        int pdfCurr = 0;
-        int ptxCurr = 0;
-        int msiCurr = 0;
-        int docxCurr = 0;
+        int paramCurr = 0;
 
-        private async Task CreateFilePanel(string fileFullPath, string tableName, string panName, int itemCurr, string keyVal) {
+        private async Task CreateFilePanel(string fileFullPath, string tableName, string parameterName, string fileData) {
 
             string fileName = Path.GetFileName(fileFullPath);
 
             var panel = new Guna2Panel() {
-                Name = panName + itemCurr,
+                Name = parameterName + paramCurr,
                 Width = 200,
                 Height = 222,
                 BorderColor = GlobalStyle.BorderColor,
@@ -372,7 +362,7 @@ namespace FlowstorageDesktop {
 
             var panelImage = new Guna2PictureBox();
             panel.Controls.Add(panelImage);
-            panelImage.Name = "panelImage" + itemCurr;
+            panelImage.Name = "panelImage" + paramCurr;
             panelImage.BorderRadius = 12;
             panelImage.Width = 190;
             panelImage.Height = 145;
@@ -386,7 +376,7 @@ namespace FlowstorageDesktop {
 
             Label dateLabel = new Label();
             panel.Controls.Add(dateLabel);
-            dateLabel.Name = "dateLbl" + itemCurr;
+            dateLabel.Name = "dateLbl" + paramCurr;
             dateLabel.Font = GlobalStyle.DateLabelFont;
             dateLabel.ForeColor = GlobalStyle.DarkGrayColor;
             dateLabel.Location = GlobalStyle.DateLabelLoc;
@@ -394,7 +384,7 @@ namespace FlowstorageDesktop {
 
             Label titleLab = new Label();
             panel.Controls.Add(titleLab);
-            titleLab.Name = "titleLbl" + itemCurr;
+            titleLab.Name = "titleLbl" + paramCurr;
             titleLab.Font = GlobalStyle.TitleLabelFont;
             titleLab.ForeColor = GlobalStyle.GainsboroColor;
             titleLab.Location = GlobalStyle.TitleLabelLoc;
@@ -405,7 +395,7 @@ namespace FlowstorageDesktop {
 
             Guna2Button moreOptionsButton = new Guna2Button();
             panel.Controls.Add(moreOptionsButton);
-            moreOptionsButton.Name = "moreBtn" + itemCurr;
+            moreOptionsButton.Name = "moreBtn" + paramCurr;
             moreOptionsButton.Width = 29;
             moreOptionsButton.Height = 26;
             moreOptionsButton.ImageOffset = new Point(2, 0);
@@ -433,7 +423,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeImageTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = new Bitmap(fileFullPath);
                 panelImage.Click += (sender_f, e_f) => {
@@ -451,7 +441,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeTextTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.TextImage;
                 panelImage.Click += (sender_t, e_t) => {
@@ -462,7 +452,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeExeTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.EXEImage;
                 panelImage.Click += (sender_ex, e_ex) => {
@@ -473,7 +463,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeVideoTable) {
 
-                await InsertFileDataVideo(fileFullPath, keyVal);
+                await InsertFileDataVideo(fileFullPath, fileData);
 
                 ShellFile shellFile = ShellFile.FromFilePath(fileFullPath);
                 Bitmap toBitMap = shellFile.Thumbnail.Bitmap;
@@ -493,7 +483,7 @@ namespace FlowstorageDesktop {
             }
             if (tableName == GlobalsTable.homeAudioTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.AudioImage;
                 panelImage.Click += (sender_ex, e_ex) => {
@@ -504,7 +494,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeExcelTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.EXCELImage;
                 panelImage.Click += (sender_ex, e_ex) => {
@@ -515,7 +505,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeApkTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.APKImage;
                 panelImage.Click += (sender_gi, e_gi) => {
@@ -525,7 +515,7 @@ namespace FlowstorageDesktop {
             }
             if (tableName == GlobalsTable.homePdfTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.PDFImage;
                 panelImage.Click += (sender_pd, e_pd) => {
@@ -535,7 +525,7 @@ namespace FlowstorageDesktop {
             }
             if (tableName == GlobalsTable.homePtxTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.PTXImage;
                 panelImage.Click += (sender_ptx, e_ptx) => {
@@ -545,7 +535,7 @@ namespace FlowstorageDesktop {
             }
             if (tableName == GlobalsTable.homeMsiTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.MSIImage;
                 panelImage.Click += (sender_ptx, e_ptx) => {
@@ -556,7 +546,7 @@ namespace FlowstorageDesktop {
 
             if (tableName == GlobalsTable.homeWordTable) {
 
-                await InsertFileData(fileName, keyVal);
+                await InsertFileData(fileName, fileData);
 
                 panelImage.Image = Globals.DOCImage;
                 panelImage.Click += (sender_ptx, e_ptx) => {
@@ -633,8 +623,6 @@ namespace FlowstorageDesktop {
                             ? toBase64String : EncryptionModel.Encrypt(toBase64String);
 
                         if (Globals.imageTypes.Contains(fileType)) {
-                            curr++;
-
                             var getImg = new Bitmap(selectedItems);
                             var imgWidth = getImg.Width;
                             var imgHeight = getImg.Height;
@@ -642,11 +630,9 @@ namespace FlowstorageDesktop {
                             string compressedImageBase64 = compressor.compressImageToBase64(selectedItems);
                             string encryptedImage = EncryptionModel.Encrypt(compressedImageBase64);
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeImageTable, "PanImg", curr, encryptedImage);
+                                selectedItems, GlobalsTable.homeImageTable, "PanImg", encryptedImage);
                                 
                         } else if (Globals.textTypes.Contains(fileType)) {
-                            txtCurr++;
-
                             string nonLine = "";
                             using (StreamReader ReadFileTxt = new StreamReader(selectedItems)) {
                                 nonLine = ReadFileTxt.ReadToEnd();
@@ -658,52 +644,43 @@ namespace FlowstorageDesktop {
                             string encryptEncodedText = EncryptionModel.Encrypt(getEncoded);
 
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeTextTable, "PanTxt", txtCurr, encryptEncodedText);
+                                selectedItems, GlobalsTable.homeTextTable, "PanTxt", encryptEncodedText);
 
                         } else if (fileType == "exe") {
-                            exeCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeExeTable, "PanExe", exeCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeExeTable, "PanExe", encryptBase64String);
 
                         } else if (Globals.videoTypes.Contains(fileType)) {
-                            vidCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeVideoTable, "PanVid", vidCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeVideoTable, "PanVid", encryptBase64String);
 
                         } else if (Globals.excelTypes.Contains(fileType)) {
-                            exlCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeExcelTable, "PanExl", exlCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeExcelTable, "PanExl", encryptBase64String);
 
                         } else if (Globals.audioTypes.Contains(fileType)) {
-                            audCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeAudioTable, "PanAud", audCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeAudioTable, "PanAud", encryptBase64String);
 
                         } else if (fileType == "apk") {
-                            apkCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeApkTable, "PanApk", apkCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeApkTable, "PanApk", encryptBase64String);
 
                         } else if (fileType == "pdf") {
-                            pdfCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homePdfTable, "PanPdf", pdfCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homePdfTable, "PanPdf", encryptBase64String);
 
                         } else if (Globals.ptxTypes.Contains(fileType)) {
-                            ptxCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homePtxTable, "PanPtx", ptxCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homePtxTable, "PanPtx", encryptBase64String);
 
                         } else if (fileType == "msi") {
-                            msiCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeMsiTable, "PanMsi", msiCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeMsiTable, "PanMsi", encryptBase64String);
 
                         } else if (Globals.wordTypes.Contains(fileType)) {
-                            docxCurr++;
                             await CreateFilePanel(
-                                selectedItems, GlobalsTable.homeWordTable, "PanDoc", docxCurr, encryptBase64String);
+                                selectedItems, GlobalsTable.homeWordTable, "PanDoc", encryptBase64String);
 
                         } else {
                             new CustomAlert(
@@ -715,6 +692,7 @@ namespace FlowstorageDesktop {
 
                     } catch (Exception) {
                         OnUploadFailed();
+
                     }
                 }
             }
