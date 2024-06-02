@@ -791,6 +791,8 @@ namespace FlowstorageDesktop {
             string panelName = lblFilePanelName.Text;
             string dirName = lblDirectoryName.Text;
 
+            pnlFileOptions.Visible = false;
+
             new RenameFileForm(titleFile, tableName, panelName, dirName).Show();
 
         }
@@ -800,6 +802,8 @@ namespace FlowstorageDesktop {
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
 
+            pnlFileOptions.Visible = false;
+
             SaverModel.SaveSelectedFile(titleFile, GlobalsTable.directoryUploadTable, dirName);
 
         }
@@ -808,6 +812,8 @@ namespace FlowstorageDesktop {
 
             string titleFile = lblFileNameOnPanel.Text;
             string dirName = lblDirectoryName.Text;
+
+            pnlFileOptions.Visible = false;
 
             new ShareSelectedFileForm(
                 titleFile, false, GlobalsTable.directoryUploadTable, dirName).Show();
