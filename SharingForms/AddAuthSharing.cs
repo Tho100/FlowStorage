@@ -33,35 +33,37 @@ namespace FlowstorageDesktop {
         /// <param name="e"></param>
         private void guna2Button2_Click(object sender, EventArgs e) {
 
-            if (txtFieldAuth.Text != string.Empty) {
-                if (MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
-
-                    SettingsForm.instance.btnAddSharingAuth.Visible = false;
-                    SettingsForm.instance.btnAddSharingAuth.Enabled = false;
-
-                    SettingsForm.instance.btnRmvSharingAuth.Visible = true;
-                    SettingsForm.instance.btnRmvSharingAuth.Enabled = true;
-
-                    const string addSharingAuthQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
-                    using (MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {
-                        command.Parameters.AddWithValue("@getval", EncryptionModel.computeAuthCase(txtFieldAuth.Text));
-                        command.Parameters.AddWithValue("@username", tempDataUser.Username);
-                        command.ExecuteNonQuery();
-                    }
-
-                    new TemporaryDataSharing().SharingAuthStatus = "notNull";
-
-                    MessageBox.Show("You've successfully added a password for File Sharing.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-
-            } else {
+            if(txtFieldAuth.Text == string.Empty) {
                 lblAlert.Visible = true;
-
+                return;
             }
+
+            DialogResult verifyDialog = MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (verifyDialog != DialogResult.Yes) {
+                return;
+            }
+
+            SettingsForm.instance.btnAddSharingAuth.Visible = false;
+            SettingsForm.instance.btnAddSharingAuth.Enabled = false;
+
+            SettingsForm.instance.btnRmvSharingAuth.Visible = true;
+            SettingsForm.instance.btnRmvSharingAuth.Enabled = true;
+
+            const string addSharingAuthQuery = "UPDATE sharing_info SET SET_PASS = @getval WHERE CUST_USERNAME = @username";
+            using (MySqlCommand command = new MySqlCommand(addSharingAuthQuery, con)) {
+                command.Parameters.AddWithValue("@getval", EncryptionModel.computeAuthCase(txtFieldAuth.Text));
+                command.Parameters.AddWithValue("@username", tempDataUser.Username);
+                command.ExecuteNonQuery();
+            }
+
+            new TemporaryDataSharing().SharingAuthStatus = "notNull";
+
+            MessageBox.Show("You've successfully added a password for File Sharing.", "Flowstorage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button4_Click(object sender, EventArgs e) => this.Close();
+
     }
 }
