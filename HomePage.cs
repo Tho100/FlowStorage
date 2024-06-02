@@ -1665,7 +1665,7 @@ namespace FlowstorageDesktop {
 
                     void exeOnPressed(object sender, EventArgs e) {
                         new ExeForm(
-                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.homeExeTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
+                            filesInfoSharedOthers[accessIndex].Item1, GlobalsTable.sharingTable, lblGreetingText.Text, uploadToName, true).ShowDialog();
                     }
 
                     onPressedEvent.Add(exeOnPressed);
