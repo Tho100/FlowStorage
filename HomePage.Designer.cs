@@ -1825,6 +1825,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.ClientSize = new System.Drawing.Size(1325, 661);
             this.Controls.Add(this.pnlFilterType);
+            this.Controls.Add(this.pnlFileOptions);
             this.Controls.Add(this.pnlShared);
             this.Controls.Add(this.btnShared);
             this.Controls.Add(this.txtBoxSearchFile);
@@ -1835,7 +1836,6 @@
             this.Controls.Add(this.btnDeleteFolder);
             this.Controls.Add(this.pnlExceedStorage);
             this.Controls.Add(this.pnlPublicStorage);
-            this.Controls.Add(this.pnlFileOptions);
             this.Controls.Add(this.pnlDragAndDropUpload);
             this.Controls.Add(this.btnRefreshFiles);
             this.Controls.Add(this.richTextBox1);

@@ -38,7 +38,7 @@ namespace FlowstorageDesktop {
                 return;
             }
 
-            DialogResult verifyDialog = MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var verifyDialog = MessageBox.Show("Confirm password for File Sharing?.", "Flowstorage", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (verifyDialog != DialogResult.Yes) {
                 return;

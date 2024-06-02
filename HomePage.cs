@@ -3499,7 +3499,6 @@ namespace FlowstorageDesktop {
                     myPanel.Dispose();
                 }
 
-
                 UpdateProgressBarValue();
                 BuildRedundaneVisibility();
 
@@ -3516,6 +3515,8 @@ namespace FlowstorageDesktop {
             string sharedToName = lblSharedToName.Text;
             string dirName = lblSelectedDirName.Text;
 
+            pnlFileOptions.Visible = false;
+
             new RenameFileForm(titleFile, tableName, panelName, dirName, sharedToName).Show();
 
         }
@@ -3525,6 +3526,8 @@ namespace FlowstorageDesktop {
             string titleFile = lblFileNameOnPanel.Text;
             string tableName = lblFileTableName.Text;
             string dirName = lblSelectedDirName.Text;
+
+            pnlFileOptions.Visible = false;
 
             if (tableName == GlobalsTable.folderUploadTable) {
                 SaverModel.SaveSelectedFile(titleFile, GlobalsTable.folderUploadTable, dirName);
@@ -3552,6 +3555,8 @@ namespace FlowstorageDesktop {
 
             string selectedFolder = lstFoldersPage.GetItemText(lstFoldersPage.SelectedItem);
             bool fromSharedFiles = selectedFolder == "Shared Files";
+
+            pnlFileOptions.Visible = false;
 
             new ShareSelectedFileForm(titleFile, fromSharedFiles, tempDataUser.Username, dirName).Show();
 
