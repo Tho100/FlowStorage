@@ -137,46 +137,22 @@ namespace FlowstorageDesktop {
                     byte[] compressedBytes = new GeneralCompressor().compressFileData(_fileBytes);
                     string fileBase64Data = Convert.ToBase64String(compressedBytes);
 
-                    if (Globals.imageTypes.Contains(_fileExtension)) {
+                    if(Globals.imageTypes.Contains(_fileExtension)) {
                         string compressedImageBase64 = compressor.compressImageToBase64(_fileFullPath);
                         await InsertFileData(compressedImageBase64);
-
-                    } else if (Globals.wordTypes.Contains(_fileExtension)) {
-                        await InsertFileData(fileBase64Data);      
-                        
-                    } else if (Globals.ptxTypes.Contains(_fileExtension)) {
-                        await InsertFileData(fileBase64Data);
-
-                    } else if (_fileExtension == "exe") {
-                        await InsertFileData(fileBase64Data);
-
-                    } else if (_fileExtension == "msi") {
-                        await InsertFileData(fileBase64Data);
-
-                    } else if (Globals.audioTypes.Contains(_fileExtension)) {
-                        await InsertFileData(fileBase64Data);
-
-                    } else if (_fileExtension == "pdf") {
-                        await InsertFileData(fileBase64Data);
-
-                    } else if (_fileExtension == "apk") {
-                        await InsertFileData(fileBase64Data);
-
-                    } else if (Globals.excelTypes.Contains(_fileExtension)) {
-                        await InsertFileData(fileBase64Data);
 
                     } else if (Globals.textTypes.Contains(_fileExtension)) {
 
                         var nonLine = "";
-                        using (StreamReader ReadFileTxt = new StreamReader(_fileFullPath)) { 
-                            nonLine = ReadFileTxt.ReadToEnd();  
+                        using (StreamReader ReadFileTxt = new StreamReader(_fileFullPath)) {
+                            nonLine = ReadFileTxt.ReadToEnd();
                         }
 
                         byte[] getBytes = System.Text.Encoding.UTF8.GetBytes(nonLine);
                         byte[] compressedTextBytes = new GeneralCompressor().compressFileData(getBytes);
 
                         string encodedBase64 = Convert.ToBase64String(compressedTextBytes);
-                        
+
                         await InsertFileData(encodedBase64);
 
                     } else if (Globals.videoTypes.Contains(_fileExtension)) {
@@ -191,6 +167,9 @@ namespace FlowstorageDesktop {
                         }
 
                         await InsertFileData(fileBase64Data, toBase64Thumbnail);
+
+                    } else {
+                        await InsertFileData(fileBase64Data);
 
                     }
 

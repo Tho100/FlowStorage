@@ -15,8 +15,6 @@ namespace FlowstorageDesktop {
         private bool _isFromShared { get; set; }
         private string _userComment { get; set; }
 
-        readonly private Crud crud = new Crud();
-
         readonly private SharingOptionsQuery sharingOptionsQuery = new SharingOptionsQuery();
         readonly private ShareFileQuery shareFileQuery = new ShareFileQuery();
         readonly private UserAuthenticationQuery userAuthQuery = new UserAuthenticationQuery();
@@ -40,9 +38,7 @@ namespace FlowstorageDesktop {
             txtFieldReceiverAuth.PasswordChar = '\0';
         }
 
-        private void guna2Button4_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        private void guna2Button4_Click(object sender, EventArgs e) => this.Close();
 
         private async Task StartSharingFile() {
 
@@ -85,8 +81,5 @@ namespace FlowstorageDesktop {
 
         }
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e) {
-
-        }
     }
 }
